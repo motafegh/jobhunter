@@ -37,7 +37,7 @@ class Settings(BaseModel):
     log_level: str = "INFO"
 
     @model_validator(mode="after")
-    def normalize(self) -> "Settings":
+    def normalize(self) -> Settings:
         self.data_dir = self.data_dir.expanduser()
         self.evidence_dir = (self.evidence_dir or self.data_dir / "evidence").expanduser()
         self.database_path = (
@@ -62,7 +62,7 @@ class Settings(BaseModel):
         return self
 
     @classmethod
-    def load(cls, config_path: str | Path | None = None) -> "Settings":
+    def load(cls, config_path: str | Path | None = None) -> Settings:
         """Load settings from TOML and environment overrides.
 
         The default file is ``jobhunter.toml`` in the current directory. A
