@@ -151,7 +151,7 @@ class LMStudioProvider:
         try:
             structured = json.loads(content.strip())
         except json.JSONDecodeError as exc:
-            preview = content[:240].replace("\n", "\\n")
+            preview = content[:240]
             raise InferenceResponseError(
                 "LM Studio model did not return valid structured JSON "
                 f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
