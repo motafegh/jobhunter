@@ -20,6 +20,7 @@ dist/
 *.egg-info/
 
 # Local configuration and secrets
+jobhunter.toml
 .env
 .env.*
 !.env.example
@@ -33,7 +34,11 @@ config/local.*
 *.db-shm
 *.db-wal
 *.sqlite
+*.sqlite-shm
+*.sqlite-wal
 *.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
 /backups/
 /exports/
 /logs/
