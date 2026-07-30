@@ -92,14 +92,14 @@ class LMStudioProvider:
         return model_ids
 
     def structured_smoke_test(self, model: str | None = None) -> str:
-        """Verify a bounded schema-conforming response from one local model."""
+        """Verify a bounded schema-conforming response from one configured model."""
 
         selected_model = model or self._configured_model
         if not selected_model:
-            available_models = self.list_models()
-            if not available_models:
-                raise InferenceResponseError("LM Studio reports no available models")
-            selected_model = available_models[0]
+            raise InferenceResponseError(
+                "No LM Studio model is configured for structured inference; "
+                "set lm_studio_model to an exact identifier returned by /v1/models"
+            )
 
         request_body = {
             "model": selected_model,
@@ -114,7 +114,8 @@ class LMStudioProvider:
                 },
             ],
             "temperature": 0,
-            "max_tokens": 32,
+            "max_tokens": 128,
+            "stream": False,
             "response_format": {
                 "type": "json_schema",
                 "json_schema": {
@@ -122,7 +123,9 @@ class LMStudioProvider:
                     "strict": True,
                     "schema": {
                         "type": "object",
-                        "properties": {"status": {"type": "string", "const": "ok"}},
+                        "properties": {
+                            "status": {"type": "string", "enum": ["ok"]}
+                        },
                         "required": ["status"],
                         "additionalProperties": False,
                     },
@@ -134,7 +137,8 @@ class LMStudioProvider:
             self._request("POST", "chat/completions", json=request_body)
         )
         try:
-            content = payload["choices"][0]["message"]["content"]
+            first_choice = payload["choices"][0]
+            content = first_choice["message"]["content"]
         except (KeyError, IndexError, TypeError) as exc:
             raise InferenceResponseError(
                 "LM Studio chat response is missing choices[0].message.content"
@@ -143,15 +147,21 @@ class LMStudioProvider:
         if not isinstance(content, str):
             raise InferenceResponseError("LM Studio structured response content is not text")
 
+        finish_reason = first_choice.get("finish_reason")
         try:
-            structured = json.loads(content)
+            structured = json.loads(content.strip())
         except json.JSONDecodeError as exc:
+            preview = content[:240].replace("\n", "\\n")
             raise InferenceResponseError(
-                "LM Studio model did not return valid structured JSON"
+                "LM Studio model did not return valid structured JSON "
+                f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
+                f"content_preview={preview!r})"
             ) from exc
 
         if structured != {"status": "ok"}:
             raise InferenceResponseError(
-                f"Unexpected structured smoke result: {structured!r}"
+                "Unexpected structured smoke result "
+                f"from {selected_model!r} (finish_reason={finish_reason!r}): "
+                f"{structured!r}"
             )
         return selected_model
