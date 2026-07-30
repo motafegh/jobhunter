@@ -117,7 +117,7 @@ def run_doctor(
             CheckResult(
                 "Configured model",
                 CheckStatus.WARNING,
-                "No model is configured; the first visible model will be used for smoke tests",
+                "No model is configured; set lm_studio_model before structured inference",
             )
         )
 
