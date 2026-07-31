@@ -138,17 +138,22 @@ Phase 5 will add:
 
 ## 10. Current authorized implementation
 
-The current target is **P1.1 — Jobinja discovery foundation**.
-
-The active code increment must support:
+P1.1 discovery is accepted. The current target is the first complete-job vertical slice covering the minimum useful parts of P1.3 and P1.4:
 
 ```text
-one configured or command-line Jobinja search URL
-→ bounded HTTP fetch
-→ raw search-page evidence
-→ job-link canonicalization
-→ repeat-safe SQLite discovery records
-→ concise CLI summary
+discovered Jobinja job ID
+→ validated public detail-page acquisition
+→ immutable raw HTML and metadata evidence
+→ content-addressed local version
+→ deterministic extraction of explicit Jobinja fields
+→ local inspection through the CLI
 ```
 
-It must not require LM Studio and must stop before full job-detail parsing or analysis.
+The active commands are:
+
+```text
+jobhunter jobinja fetch <job-id>
+jobhunter jobs show <job-id>
+```
+
+This increment must remain independent from LM Studio. It may preserve and expose explicit source fields and complete source text, but it must stop before model interpretation, responsibility classification, personal relevance, gap analysis, or career recommendations.
