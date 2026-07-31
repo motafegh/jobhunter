@@ -63,7 +63,11 @@ def canonicalize_search_url(url: str) -> str:
     if path.rstrip("/") != "/jobs":
         raise JobinjaUrlError("Jobinja search URL path must be /jobs")
 
-    query_items = [(key, value) for key, value in parse_qsl(query, keep_blank_values=True) if key != "page"]
+    query_items = [
+        (key, value)
+        for key, value in parse_qsl(query, keep_blank_values=True)
+        if key != "page"
+    ]
     canonical_query = urlencode(query_items, doseq=True)
     return urlunsplit(("https", "jobinja.ir", "/jobs", canonical_query, ""))
 
@@ -84,7 +88,11 @@ def with_search_page(search_url: str, page_number: int) -> str:
     )
 
 
-def canonicalize_job_url(raw_url: str, *, base_url: str = "https://jobinja.ir/") -> DiscoveredJobLink:
+def canonicalize_job_url(
+    raw_url: str,
+    *,
+    base_url: str = "https://jobinja.ir/",
+) -> DiscoveredJobLink:
     """Convert a Jobinja job link into a stable source identity."""
 
     absolute_url = urljoin(base_url, raw_url.strip())
