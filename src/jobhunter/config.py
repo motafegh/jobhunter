@@ -191,14 +191,13 @@ class Settings(BaseModel):
             for group in self.jobinja_keyword_groups
             if group.enabled
         )
-        searches = expand_keyword_searches(
+        return expand_keyword_searches(
             pack_names=tuple(self.jobinja_search_packs),
             profile_names=tuple(self.jobinja_search_profiles),
             custom_groups=custom_groups,
             excluded_terms=tuple(self.jobinja_excluded_terms),
             default_max_pages=self.jobinja_default_keyword_max_pages,
         )
-        return searches[: self.jobinja_max_expanded_searches]
 
     @classmethod
     def load(cls, config_path: str | Path | None = None) -> Settings:
