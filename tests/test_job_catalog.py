@@ -63,3 +63,21 @@ def test_lists_available_and_missing_jobs(tmp_path: Path) -> None:
         in format_job_list(all_jobs)
     )
     assert "xyz2 [missing] Security Engineer" in format_job_list(all_jobs)
+
+
+def test_prioritizes_preferred_missing_jobs_without_losing_fallbacks(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    store = JobHunterStore(database_path)
+    store.initialize()
+    _add_job(store, source_job_id="old1", title="Old role")
+    _add_job(store, source_job_id="current1", title="Current role")
+    _add_job(store, source_job_id="current2", title="Another current role")
+
+    selected = JobCatalog(database_path).missing_job_ids(
+        limit=3,
+        preferred_ids=("current2", "missing-id", "current1", "current2"),
+    )
+
+    assert selected == ("current2", "current1", "old1")
