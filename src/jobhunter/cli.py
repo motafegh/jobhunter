@@ -16,10 +16,14 @@ from jobhunter.config import ConfigLoadError, JobinjaSearchDefinition, Settings
 from jobhunter.doctor import format_report, run_doctor
 from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
+from jobhunter.job_catalog import JobCatalog, format_job_list
+from jobhunter.jobinja_batch import (
+    JobinjaBatchFetchService,
+    format_batch_fetch_summary,
+)
 from jobhunter.jobinja_detail_service import (
     JobinjaDetailService,
     JobNotFoundError,
-    format_fetch_summary,
     format_job_detail,
 )
 from jobhunter.jobinja_discovery import (
@@ -27,7 +31,7 @@ from jobhunter.jobinja_discovery import (
     JobinjaDiscoveryService,
     format_discovery_summary,
 )
-from jobhunter.sources import JobinjaAcquisitionError, JobinjaClient
+from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
 
 DEFAULT_CONFIG = """# JobHunter local configuration
@@ -70,6 +74,26 @@ def _bounded_page_count(value: str) -> int:
     if not 1 <= page_count <= 50:
         raise argparse.ArgumentTypeError("page count must be between 1 and 50")
     return page_count
+
+
+def _bounded_batch_count(value: str) -> int:
+    try:
+        count = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("batch limit must be an integer") from exc
+    if not 1 <= count <= 50:
+        raise argparse.ArgumentTypeError("batch limit must be between 1 and 50")
+    return count
+
+
+def _bounded_list_count(value: str) -> int:
+    try:
+        count = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("list limit must be an integer") from exc
+    if not 1 <= count <= 500:
+        raise argparse.ArgumentTypeError("list limit must be between 1 and 500")
+    return count
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -149,8 +173,19 @@ def build_parser() -> argparse.ArgumentParser:
     )
     fetch_parser.add_argument(
         "job_ids",
-        nargs="+",
-        help="One or more stable Jobinja job IDs already present in the local database",
+        nargs="*",
+        help="Stable Jobinja job IDs already present in the local database",
+    )
+    fetch_parser.add_argument(
+        "--missing",
+        action="store_true",
+        help="Fetch discovered jobs that do not yet have local detail content",
+    )
+    fetch_parser.add_argument(
+        "--limit",
+        type=_bounded_batch_count,
+        default=None,
+        help="Maximum jobs selected by --missing (default: 5, maximum: 50)",
     )
 
     jobs_parser = subparsers.add_parser(
@@ -158,6 +193,22 @@ def build_parser() -> argparse.ArgumentParser:
         help="Inspect locally stored job records",
     )
     jobs_subparsers = jobs_parser.add_subparsers(dest="jobs_command", required=True)
+    list_parser = jobs_subparsers.add_parser(
+        "list",
+        help="List discovered jobs and their local detail status",
+    )
+    list_parser.add_argument(
+        "--details",
+        choices=("all", "missing", "available"),
+        default="all",
+        help="Filter by local detail availability",
+    )
+    list_parser.add_argument(
+        "--limit",
+        type=_bounded_list_count,
+        default=50,
+        help="Maximum jobs to display (default: 50, maximum: 500)",
+    )
     show_parser = jobs_subparsers.add_parser(
         "show",
         help="Show the latest locally stored complete job detail",
@@ -277,18 +328,42 @@ def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) ->
     return 0 if summary.succeeded else 1
 
 
-def _run_jobinja_fetch(settings: Settings, job_ids: Sequence[str]) -> int:
-    service = _detail_service(settings)
-    failures = 0
-    for index, job_id in enumerate(job_ids):
-        if index:
-            print()
-        try:
-            print(format_fetch_summary(service.fetch(job_id)))
-        except (JobNotFoundError, JobinjaAcquisitionError, OSError) as exc:
-            failures += 1
-            print(f"Job {job_id} failed: {exc}", file=sys.stderr)
-    return 1 if failures else 0
+def _run_jobinja_fetch(settings: Settings, arguments: argparse.Namespace) -> int:
+    if arguments.missing and arguments.job_ids:
+        print("Pass explicit job IDs or --missing, not both.", file=sys.stderr)
+        return 2
+    if not arguments.missing and arguments.limit is not None:
+        print("--limit is only valid with --missing.", file=sys.stderr)
+        return 2
+
+    if arguments.missing:
+        limit = arguments.limit or 5
+        job_ids = JobCatalog(settings.database_path).missing_job_ids(limit=limit)
+        if not job_ids:
+            print("No discovered jobs are missing local detail content.")
+            return 0
+    else:
+        job_ids = tuple(arguments.job_ids)
+        if not job_ids:
+            print("Pass one or more job IDs, or use --missing.", file=sys.stderr)
+            return 2
+
+    service = JobinjaBatchFetchService(
+        detail_service=_detail_service(settings),
+        request_delay_seconds=settings.jobinja_request_delay_seconds,
+    )
+    summary = service.run(job_ids)
+    print(format_batch_fetch_summary(summary))
+    return 1 if summary.failures else 0
+
+
+def _list_jobs(settings: Settings, arguments: argparse.Namespace) -> int:
+    entries = JobCatalog(settings.database_path).list_jobs(
+        detail_filter=arguments.details,
+        limit=arguments.limit,
+    )
+    print(format_job_list(entries))
+    return 0
 
 
 def _show_job(settings: Settings, job_id: str) -> int:
@@ -333,7 +408,9 @@ def main(argv: Sequence[str] | None = None) -> int:
     if arguments.command == "jobinja" and arguments.jobinja_command == "discover":
         return _run_jobinja_discovery(settings, arguments)
     if arguments.command == "jobinja" and arguments.jobinja_command == "fetch":
-        return _run_jobinja_fetch(settings, arguments.job_ids)
+        return _run_jobinja_fetch(settings, arguments)
+    if arguments.command == "jobs" and arguments.jobs_command == "list":
+        return _list_jobs(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "show":
         return _show_job(settings, arguments.job_id)
 
