@@ -205,11 +205,11 @@ def format_job_detail(detail: JobDetailView) -> str:
         [
             "",
             f"Source URL: {detail.final_url}",
-            f"Fetched at: {detail.fetched_at}",
+            f"Semantic version first recorded at: {detail.fetched_at}",
             f"Semantic SHA-256: {detail.semantic_sha256}",
-            f"Raw HTML SHA-256: {detail.content_sha256}",
-            f"Raw evidence: {detail.evidence_path}",
-            f"Metadata: {detail.metadata_path}",
+            f"Version evidence raw HTML SHA-256: {detail.content_sha256}",
+            f"Version-defining raw evidence: {detail.evidence_path}",
+            f"Version-defining metadata: {detail.metadata_path}",
         ]
     )
     return "\n".join(lines)
