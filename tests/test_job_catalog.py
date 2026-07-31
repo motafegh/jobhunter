@@ -58,5 +58,8 @@ def test_lists_available_and_missing_jobs(tmp_path: Path) -> None:
     assert available[0].semantic_versions == 1
     assert [job.source_job_id for job in missing] == ["xyz2"]
     assert catalog.missing_job_ids(limit=5) == ("xyz2",)
-    assert "abc1 [parsed, v1] Python Developer" in format_job_list(all_jobs)
+    assert (
+        "abc1 [parsed, 1 semantic version] Python Developer"
+        in format_job_list(all_jobs)
+    )
     assert "xyz2 [missing] Security Engineer" in format_job_list(all_jobs)
