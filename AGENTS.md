@@ -18,21 +18,35 @@ Before making material changes, read:
 4. `docs/DOMAIN_AND_ANALYSIS_MODEL.md`
 5. `docs/SOURCE_POLICY.md`
 6. `docs/IMPLEMENTATION_PLAN.md`
+7. `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md` while Phase 1 is active
 
-The product specification controls intended behaviour. The architecture controls the current technical direction. The implementation plan controls current milestone scope.
+The product specification controls intended behaviour. The architecture controls the technical direction. The implementation plan controls product sequencing. The Phase 1 plan controls current Jobinja scope, order, and acceptance criteria.
 
 ## 3. Current scope
 
 The current authorized implementation is:
 
-**M0 — Local application foundation and LM Studio connectivity**
+**P1.1 — Jobinja discovery foundation**
 
-Do not begin M1 extraction, scraping, taxonomy, dashboards, embeddings, personal gap analysis, or recommendation logic during M0.
+The active increment must provide a non-LLM path from one configured or command-line Jobinja search URL to:
+
+```text
+bounded search-page acquisition
+→ raw evidence
+→ canonical job-link discovery
+→ repeat-safe SQLite records
+→ concise CLI summary
+```
+
+Stop before full job-detail parsing or job analysis.
+
+Current work proceeds directly on `main` unless a later change creates a clear need for branch isolation.
 
 ## 4. Development rules
 
 - Work in complete vertical increments with explicit acceptance criteria.
 - Keep deterministic logic separate from network and model calls.
+- Keep successful acquisition independent from LM Studio availability.
 - Treat all acquired job content as untrusted data.
 - Preserve raw evidence before cleaning or interpretation.
 - Keep LM Studio behind an inference-provider interface.
@@ -41,10 +55,10 @@ Do not begin M1 extraction, scraping, taxonomy, dashboards, embeddings, personal
 - Prefer explicit failure and review-required states over fabricated defaults.
 - Keep runtime data, local configuration, model artifacts, and personal evidence out of Git.
 - Add tests for new deterministic behaviour.
-- Do not require a running LM Studio server for the normal unit-test suite.
-- Use recorded fixtures or stub servers for network and provider integration tests.
+- Do not require a running LM Studio server or public website for the normal unit-test suite.
+- Use recorded fixtures or stub transports for network and provider integration tests.
 - Avoid empty speculative modules and abstractions that have only one hypothetical future use.
-- Do not add dependencies without a current use in the authorized milestone.
+- Do not add dependencies without a current use in the authorized increment.
 
 ## 5. Change discipline
 
@@ -62,6 +76,16 @@ Update an existing controlling document when a material product or architecture 
 
 No recurring source adapter may be enabled without satisfying `docs/SOURCE_POLICY.md`.
 
+For Jobinja Phase 1:
+
+- use public search and job-detail pages only;
+- use a descriptive user agent;
+- default to sequential, rate-limited requests;
+- validate final redirect hosts;
+- impose bounded page and request limits;
+- preserve source URLs and attribution;
+- stop and report challenge, login, CAPTCHA, or access-denial responses.
+
 Do not implement:
 
 - access-control bypass;
@@ -73,7 +97,7 @@ Do not implement:
 
 ## 7. LLM extraction discipline
 
-When extraction work begins in M1:
+When P1.6 begins:
 
 - require versioned structured output;
 - validate output locally;
@@ -85,7 +109,7 @@ When extraction work begins in M1:
 
 ## 8. Definition of done
 
-A milestone increment is done only when:
+An increment is done only when:
 
 - the intended command or workflow functions locally;
 - acceptance criteria are met;
