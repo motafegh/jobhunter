@@ -7,7 +7,7 @@ import json
 import os
 import re
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -70,13 +70,13 @@ class EvidenceStore:
                 f"Could not create evidence directory {directory}: {exc}"
             ) from exc
 
-        timestamp_text = captured_at.astimezone(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
+        timestamp_text = captured_at.astimezone(UTC).strftime("%Y%m%dT%H%M%S.%fZ")
         stem = f"{timestamp_text}_{stem_prefix}_{content_sha256[:12]}"
         content_path = directory / f"{stem}.html"
         metadata_path = directory / f"{stem}.json"
         complete_metadata = {
             **metadata,
-            "captured_at": captured_at.astimezone(timezone.utc).isoformat(),
+            "captured_at": captured_at.astimezone(UTC).isoformat(),
             "content_sha256": content_sha256,
             "content_bytes": len(content),
             "content_path": str(content_path),
@@ -114,7 +114,7 @@ class EvidenceStore:
     ) -> EvidenceSnapshot:
         """Persist one raw Jobinja search page and a metadata sidecar."""
 
-        timestamp = captured_at or datetime.now(timezone.utc)
+        timestamp = captured_at or datetime.now(UTC)
         return self._write_html_snapshot(
             directory=self._root / "jobinja" / "search-pages" / _safe_segment(search_name),
             stem_prefix=f"p{page_number:04d}",
@@ -141,7 +141,7 @@ class EvidenceStore:
     ) -> EvidenceSnapshot:
         """Persist one raw Jobinja job page before parsing it."""
 
-        timestamp = captured_at or datetime.now(timezone.utc)
+        timestamp = captured_at or datetime.now(UTC)
         return self._write_html_snapshot(
             directory=self._root / "jobinja" / "job-pages" / _safe_segment(source_job_id),
             stem_prefix="detail",
