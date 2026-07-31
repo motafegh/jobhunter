@@ -489,6 +489,33 @@ The following remain outside Phase 1 unless strictly necessary to complete the w
 
 ## 15. Current authorized implementation
 
-The current implementation target is **P1.1 — Jobinja discovery foundation**.
+P1.1 is accepted. A bounded detail-acquisition and parser-v2 vertical slice spanning parts of P1.3 and P1.4 is also accepted against five structurally varied live Jobinja advertisements. Those five latest semantic versions pass the deterministic local structural audit.
 
-The first code increment must provide a non-LLM path from a Jobinja search URL to raw search-page evidence and repeat-safe persisted job identities. It should not begin full detail-page parsing or job analysis in the same increment.
+The current implementation and live acceptance target is **P1.2 — pagination and repeat-safe daily discovery**.
+
+The active P1.2 path is:
+
+```text
+enabled Jobinja searches
+→ sequential rate-limited search-page requests
+→ immutable raw search-page evidence
+→ canonical source job IDs
+→ empty-page or repeated-result-set termination
+→ cross-search identity deduplication and provenance
+→ per-search page, job, overlap, stop, and failure summaries
+→ combined unique, new, known, overlap, and failure totals
+```
+
+P1.2 must:
+
+- fingerprint repeated result pages by sorted stable Jobinja job IDs rather than raw HTML;
+- preserve a fetched page before parsing or stopping;
+- delay only between actual requests;
+- continue other searches when one search is invalid or fails;
+- distinguish cross-search overlap from duplicate JobPosting identities;
+- report one explicit stop reason per search;
+- remain independent from job-detail acquisition and LM Studio.
+
+The already accepted detail commands remain available for bounded manual and missing-only acquisition, but they are not part of the current discovery acceptance test.
+
+P1.5 lifecycle work remains incomplete. Local LLM interpretation, individual analysis, combined reports, personal relevance, career recommendations, and `jobhunter run` remain outside the active increment.
