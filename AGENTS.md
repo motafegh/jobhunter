@@ -24,23 +24,30 @@ The product specification controls intended behaviour. The architecture controls
 
 ## 3. Current scope
 
-P1.1 discovery is accepted. The current authorized implementation is the first complete-job vertical slice spanning the minimum useful parts of P1.3 and P1.4:
+P1.1 discovery and the first real complete-job vertical slice are accepted. The current authorized implementation is bounded detail acquisition and parser validation across representative Jobinja layouts:
 
 ```text
-discovered Jobinja job ID
-→ validated public detail-page acquisition
-→ raw HTML and metadata evidence
-→ content-addressed local version
-→ deterministic labelled-field extraction
+discovered Jobinja jobs
+→ local detail-status catalog
+→ explicit or missing-only bounded selection
+→ sequential rate-limited detail acquisition
+→ isolated per-job failures
+→ immutable raw evidence
+→ deterministic parser-v2 fields
+→ semantic versioning
 → local CLI inspection
 ```
 
 The active commands are:
 
 ```text
-jobhunter jobinja fetch <job-id>
+jobhunter jobs list
+jobhunter jobinja fetch <job-id> [<job-id> ...]
+jobhunter jobinja fetch --missing --limit <count>
 jobhunter jobs show <job-id>
 ```
+
+Batches must remain sequential, use the configured request delay, and contain at most 50 jobs. `--missing` may select only jobs with no existing local detail version. Do not introduce unrestricted crawling or automatic refresh of every known job during this slice.
 
 This slice may extract only explicit source fields and complete source text. It must not yet infer responsibilities, preferred versus required qualifications, personal relevance, skill gaps, or career recommendations. Those remain P1.6 and later work.
 
