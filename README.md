@@ -47,22 +47,53 @@ Phase 1 automates the user's existing Jobinja workflow:
 8. analyse new or changed postings through the configured local model;
 9. produce individual and combined career results.
 
-The current implementation target is **P1.1 — Jobinja discovery foundation**:
+See [Phase 1 — Jobinja Workflow Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
+
+## P1.1 Jobinja discovery
+
+The current implementation supports:
 
 ```text
 Jobinja search URL
-→ search-page fetch
-→ raw evidence snapshot
+→ bounded search-page fetch
+→ raw HTML and metadata evidence
 → canonical job-link discovery
 → repeat-safe SQLite records
 → CLI summary
 ```
 
-See [Phase 1 — Jobinja Workflow Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
+Run a one-off search directly:
+
+```bash
+jobhunter jobinja discover \
+  --url 'https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=...' \
+  --pages 1 \
+  --show-jobs
+```
+
+The URL represents one search, not one job. JobHunter discovers individual advertisement URLs from that result page automatically.
+
+To configure a reusable search in `jobhunter.toml`:
+
+```toml
+[[jobhunter.jobinja_searches]]
+name = "Artificial intelligence roles"
+url = "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=..."
+enabled = true
+max_pages = 3
+```
+
+Then run:
+
+```bash
+jobhunter jobinja discover --show-jobs
+```
+
+P1.1 intentionally stops before fetching complete job-detail pages or using the LLM.
 
 ## Existing M0 foundation
 
-The repository already provides:
+The repository also provides:
 
 - an installable Python package and `jobhunter` command;
 - validated TOML configuration with environment-variable overrides;
@@ -70,7 +101,7 @@ The repository already provides:
 - an isolated LM Studio inference provider;
 - model discovery through LM Studio's OpenAI-compatible API;
 - optional structured-output smoke testing;
-- deterministic tests that do not require a live model.
+- deterministic tests that do not require a live model or Jobinja.
 
 ## Local setup
 
@@ -121,4 +152,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 is complete and consolidated into `main`. Phase 1 is active, and all current implementation work proceeds directly on `main` unless a later change justifies branch isolation.
+M0 is complete and consolidated into `main`. P1.1 is implemented on `main`; local validation against a live Jobinja search is the next operational check before extending pagination and detail acquisition.
