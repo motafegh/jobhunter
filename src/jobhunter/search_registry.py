@@ -386,7 +386,7 @@ def expand_keyword_searches(
     return tuple(expanded)
 
 
-def format_search_catalog() -> str:
+def format_search_catalog(*, show_terms: bool = False) -> str:
     """Format built-in profiles and packs for terminal inspection."""
 
     lines = ["Built-in Jobinja search profiles:"]
@@ -397,6 +397,9 @@ def format_search_catalog() -> str:
     for pack in BUILTIN_SEARCH_PACKS.values():
         lines.append(f"- {pack.name}: {len(pack.terms)} terms")
         lines.append(f"  {pack.description}")
+        if show_terms:
+            lines.append("  Terms:")
+            lines.extend(f"  - {term}" for term in pack.terms)
     return "\n".join(lines)
 
 
