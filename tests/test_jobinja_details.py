@@ -106,3 +106,24 @@ def test_prefers_visible_jobinja_scalars_and_ignores_following_page_ui() -> None
     assert detail.employment_type == "تمام‌وقت و حضوری"
     assert detail.salary == "۵ میلیون تومان در ماه"
     assert detail.education == "کارشناسی"
+
+
+def test_formats_country_schema_object_without_python_repr() -> None:
+    html = """
+    <script type="application/ld+json">
+    {
+      "@type": "JobPosting",
+      "title": "Remote AI Engineer",
+      "description": "Build models",
+      "jobLocation": {
+        "address": {
+          "addressCountry": {"@type": "Country", "name": "IR"}
+        }
+      }
+    }
+    </script>
+    """
+
+    detail = parse_jobinja_detail(html)
+
+    assert detail.location == "IR"
