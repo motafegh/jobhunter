@@ -9,7 +9,7 @@ from html import unescape
 from html.parser import HTMLParser
 from typing import Any
 
-PARSER_VERSION = "jobinja-detail-v1"
+PARSER_VERSION = "jobinja-detail-v2"
 
 _LABELS: dict[str, tuple[str, ...]] = {
     "job_category": ("دسته‌بندی شغلی", "دسته بندی شغلی"),
@@ -226,10 +226,10 @@ def _format_location(value: Any) -> str | None:
         if not isinstance(address, dict):
             continue
         parts = [
-            _clean(address.get("addressLocality")),
-            _clean(address.get("addressRegion")),
-            _clean(address.get("streetAddress")),
-            _clean(address.get("addressCountry")),
+            _schema_text(address.get("addressLocality")),
+            _schema_text(address.get("addressRegion")),
+            _schema_text(address.get("streetAddress")),
+            _schema_text(address.get("addressCountry")),
         ]
         text = "، ".join(part for part in parts if part)
         if text and text not in rendered:
@@ -242,17 +242,21 @@ def _format_salary(value: Any) -> str | None:
         return None
     if not isinstance(value, dict):
         return _clean(value)
-    currency = _clean(value.get("currency"))
+    currency = _schema_text(value.get("currency"))
     nested = value.get("value")
     if isinstance(nested, dict):
         parts = [
-            _clean(nested.get("minValue")),
-            _clean(nested.get("maxValue")),
-            _clean(nested.get("unitText")),
+            _schema_text(nested.get("minValue")),
+            _schema_text(nested.get("maxValue")),
+            _schema_text(nested.get("value")),
+            _schema_text(nested.get("unitText")),
             currency,
         ]
         return " ".join(part for part in parts if part) or None
-    return _clean(nested) or currency
+    rendered = _schema_text(nested)
+    if rendered and currency:
+        return f"{rendered} {currency}"
+    return rendered or currency
 
 
 def _visible_lines(collector: _PageCollector) -> list[str]:
@@ -307,7 +311,7 @@ def _scalar_section(
     field: str,
 ) -> str | None:
     values = sections.get(field, [])
-    return _clean(" | ".join(values[:4]))
+    return _clean(values[0]) if values else None
 
 
 def _text_section(
@@ -378,20 +382,20 @@ def parse_jobinja_detail(html: str) -> ParsedJobDetail:
         company=_clean(company),
         job_category=_scalar_section(sections, "job_category"),
         location=(
-            _format_location(structured.get("jobLocation"))
-            or _scalar_section(sections, "location")
+            _scalar_section(sections, "location")
+            or _format_location(structured.get("jobLocation"))
         ),
         employment_type=(
-            _clean(employment)
-            or _scalar_section(sections, "employment_type")
+            _scalar_section(sections, "employment_type")
+            or _clean(employment)
         ),
         minimum_experience=(
-            _schema_text(structured.get("experienceRequirements"))
-            or _scalar_section(sections, "minimum_experience")
+            _scalar_section(sections, "minimum_experience")
+            or _schema_text(structured.get("experienceRequirements"))
         ),
         salary=(
-            _format_salary(structured.get("baseSalary"))
-            or _scalar_section(sections, "salary")
+            _scalar_section(sections, "salary")
+            or _format_salary(structured.get("baseSalary"))
         ),
         description=description,
         skills=_skills(
@@ -401,8 +405,8 @@ def parse_jobinja_detail(html: str) -> ParsedJobDetail:
         gender=_scalar_section(sections, "gender"),
         military_service=_scalar_section(sections, "military_service"),
         education=(
-            _schema_text(structured.get("educationRequirements"))
-            or _scalar_section(sections, "education")
+            _scalar_section(sections, "education")
+            or _schema_text(structured.get("educationRequirements"))
         ),
         company_description=company_description,
         date_posted=_clean(structured.get("datePosted")),
