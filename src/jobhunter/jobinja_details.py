@@ -160,7 +160,7 @@ class _PageCollector(HTMLParser):
 def _clean(value: Any) -> str | None:
     if value is None:
         return None
-    text = " ".join(unescape(str(value)).replace("\u200c", " ").split())
+    text = " ".join(unescape(str(value)).split())
     return text or None
 
 
@@ -288,10 +288,11 @@ def _label_sections(lines: list[str]) -> dict[str, list[str]]:
 
     sections: dict[str, list[str]] = {}
     for marker_index, (line_index, field) in enumerate(markers):
-        if marker_index + 1 < len(markers):
-            end = markers[marker_index + 1][0]
-        else:
-            end = len(lines)
+        end = (
+            markers[marker_index + 1][0]
+            if marker_index + 1 < len(markers)
+            else len(lines)
+        )
         values = lines[line_index + 1 : end]
         if not values:
             continue
