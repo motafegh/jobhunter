@@ -156,7 +156,11 @@ def format_job_list(entries: tuple[LocalJobSummary, ...]) -> str:
     lines.append("Jobs:")
     for entry in entries:
         if entry.semantic_versions:
-            status = f"{entry.detail_status}, v{entry.semantic_versions}"
+            version_word = "version" if entry.semantic_versions == 1 else "versions"
+            status = (
+                f"{entry.detail_status}, "
+                f"{entry.semantic_versions} semantic {version_word}"
+            )
         else:
             status = "missing"
         title = entry.title or "(title unavailable)"
