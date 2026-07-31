@@ -33,6 +33,7 @@ def _service(
     *,
     sleep=lambda _seconds: None,
     request_delay_seconds: float = 0,
+    request_budget: int = 40,
 ) -> tuple[JobinjaDiscoveryService, JobHunterStore]:
     store = JobHunterStore(tmp_path / "jobhunter.sqlite3")
     service = JobinjaDiscoveryService(
@@ -44,6 +45,7 @@ def _service(
         evidence_store=EvidenceStore(tmp_path / "evidence"),
         store=store,
         request_delay_seconds=request_delay_seconds,
+        request_budget=request_budget,
         sleep=sleep,
         clock=_clock(),
     )
@@ -88,6 +90,8 @@ def test_discovery_preserves_evidence_and_is_repeat_safe(tmp_path: Path) -> None
     assert first.new_jobs == 2
     assert first.known_jobs == 0
     assert first.search_summaries[0].stop_reason == "page_limit_reached"
+    assert first.requests_attempted == 1
+    assert first.request_budget == 40
     assert second.unique_jobs == 2
     assert second.new_jobs == 0
     assert second.known_jobs == 2
@@ -256,3 +260,31 @@ def test_one_search_failure_does_not_discard_other_searches(tmp_path: Path) -> N
     assert summary.search_summaries[1].stop_reason == "page_limit_reached"
     assert delays == [0.25]
     assert store.count_job_postings() == 1
+
+
+def test_global_request_budget_skips_remaining_searches(tmp_path: Path) -> None:
+    requested_urls: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requested_urls.append(str(request.url))
+        return httpx.Response(
+            200,
+            request=request,
+            headers={"content-type": "text/html"},
+            text=_html((f"job{len(requested_urls)}", "Role")),
+        )
+
+    service, _store = _service(tmp_path, handler, request_budget=2)
+    summary = service.run(
+        [
+            DiscoverySearch(name="one", url="https://jobinja.ir/jobs?q=one"),
+            DiscoverySearch(name="two", url="https://jobinja.ir/jobs?q=two"),
+            DiscoverySearch(name="three", url="https://jobinja.ir/jobs?q=three"),
+        ]
+    )
+
+    assert len(requested_urls) == 2
+    assert summary.requests_attempted == 2
+    assert summary.pages_fetched == 2
+    assert summary.search_summaries[2].stop_reason == "request_budget_reached"
+    assert "Page requests attempted: 2/2" in format_discovery_summary(summary)
