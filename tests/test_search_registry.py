@@ -43,6 +43,20 @@ def test_expands_profile_with_persian_and_english_terms_and_deduplicates() -> No
     assert len(terms) == len(searches)
 
 
+def test_broad_profile_interleaves_all_selected_packs_in_first_window() -> None:
+    searches = expand_keyword_searches(profile_names=("ai-security-python",))
+    first_window_origins = {search.origin for search in searches[:12]}
+
+    assert first_window_origins == {
+        "pack:ai-ml",
+        "pack:llm-applications",
+        "pack:python-data",
+        "pack:defensive-security",
+        "pack:ai-security",
+        "pack:network-platform",
+    }
+
+
 def test_custom_terms_are_deduplicated_against_persian_variants() -> None:
     searches = expand_keyword_searches(
         extra_terms=("امنیت\u200cسایبری", "امنيت سایبری", "Cybersecurity"),
