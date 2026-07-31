@@ -6,7 +6,11 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 
 from jobhunter.evidence import EvidenceStore
-from jobhunter.jobinja_details import PARSER_VERSION, ParsedJobDetail, parse_jobinja_detail
+from jobhunter.jobinja_details import (
+    PARSER_VERSION,
+    ParsedJobDetail,
+    parse_jobinja_detail,
+)
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobDetailView, JobHunterStore
 
@@ -44,7 +48,8 @@ class JobinjaDetailService:
         job = self._store.get_job(source_job_id)
         if job is None:
             raise JobNotFoundError(
-                f"Job {source_job_id!r} is not in the local database. Run discovery first."
+                f"Job {source_job_id!r} is not in the local database. "
+                "Run discovery first."
             )
 
         fetched_at = datetime.now(timezone.utc)
@@ -84,7 +89,9 @@ class JobinjaDetailService:
         if detail is None:
             job = self._store.get_job(source_job_id)
             if job is None:
-                raise JobNotFoundError(f"Job {source_job_id!r} is not in the local database.")
+                raise JobNotFoundError(
+                    f"Job {source_job_id!r} is not in the local database."
+                )
             raise JobNotFoundError(
                 f"Job {source_job_id!r} has no local detail page. "
                 f"Run: jobhunter jobinja fetch {source_job_id}"
@@ -101,7 +108,10 @@ def _parse_status(detail: ParsedJobDetail) -> str:
 
 
 def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
-    version_state = "new content version" if summary.is_new_version else "unchanged content"
+    if summary.is_new_version:
+        version_state = "new content version"
+    else:
+        version_state = "unchanged content"
     return "\n".join(
         [
             f"Jobinja job fetched: {summary.source_job_id}",
@@ -118,16 +128,30 @@ def format_job_detail(detail: JobDetailView) -> str:
     fields = detail.fields
     lines = [
         f"Job: {detail.source_job_id}",
-        f"Title: {fields.get('title') or detail.title_observed or '(not available)'}",
+        (
+            "Title: "
+            f"{fields.get('title') or detail.title_observed or '(not available)'}"
+        ),
         f"Company: {fields.get('company') or '(not available)'}",
         f"Category: {fields.get('job_category') or '(not available)'}",
         f"Location: {fields.get('location') or '(not available)'}",
-        f"Employment type: {fields.get('employment_type') or '(not available)'}",
-        f"Minimum experience: {fields.get('minimum_experience') or '(not available)'}",
+        (
+            "Employment type: "
+            f"{fields.get('employment_type') or '(not available)'}"
+        ),
+        (
+            "Minimum experience: "
+            f"{fields.get('minimum_experience') or '(not available)'}"
+        ),
         f"Education: {fields.get('education') or '(not available)'}",
         f"Salary: {fields.get('salary') or '(not available)'}",
         f"Gender: {fields.get('gender') or '(not available)'}",
-        f"Military service: {fields.get('military_service') or '(not available)'}",
+        (
+            "Military service: "
+            f"{fields.get('military_service') or '(not available)'}"
+        ),
+        f"Date posted: {fields.get('date_posted') or '(not available)'}",
+        f"Valid through: {fields.get('valid_through') or '(not available)'}",
         f"Language: {fields.get('language') or 'unknown'}",
         f"Parse status: {detail.parse_status}",
         "",
@@ -138,9 +162,21 @@ def format_job_detail(detail: JobDetailView) -> str:
     if not skills:
         lines.append("(not available)")
 
-    lines.extend(["", "Job description:", fields.get("description") or "(not available)"])
+    lines.extend(
+        [
+            "",
+            "Job description:",
+            fields.get("description") or "(not available)",
+        ]
+    )
     if fields.get("company_description"):
-        lines.extend(["", "Company description:", str(fields["company_description"])])
+        lines.extend(
+            [
+                "",
+                "Company description:",
+                str(fields["company_description"]),
+            ]
+        )
     lines.extend(
         [
             "",
