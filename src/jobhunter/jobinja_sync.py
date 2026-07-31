@@ -14,7 +14,10 @@ from datetime import UTC, datetime
 from jobhunter.job_audit import JobAuditReport, JobDetailAuditor
 from jobhunter.job_catalog import JobCatalog
 from jobhunter.job_detail_observations import JobDetailObservationStore
-from jobhunter.jobinja_batch import JobinjaBatchFetchService, JobinjaBatchFetchSummary
+from jobhunter.jobinja_batch import (
+    JobinjaBatchFetchService,
+    JobinjaBatchFetchSummary,
+)
 from jobhunter.jobinja_discovery import (
     DiscoverySearch,
     DiscoverySummary,
@@ -36,7 +39,11 @@ class JobinjaSyncSummary:
     @property
     def succeeded(self) -> bool:
         detail_failures = self.detail_fetch.failures if self.detail_fetch else ()
-        return not self.discovery.failures and not detail_failures and not self.audit.needs_review
+        return (
+            not self.discovery.failures
+            and not detail_failures
+            and not self.audit.needs_review
+        )
 
 
 def _utc_now() -> datetime:
@@ -84,7 +91,10 @@ class JobinjaSyncService:
 
         discovery = self._discovery_service.run(searches)
         missing_selected = (
-            self._catalog.missing_job_ids(limit=missing_limit)
+            self._catalog.missing_job_ids(
+                limit=missing_limit,
+                preferred_ids=discovery.discovered_job_ids,
+            )
             if missing_limit
             else ()
         )
