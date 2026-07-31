@@ -66,3 +66,43 @@ def test_falls_back_to_persian_label_sections() -> None:
     assert detail.description == "طراحی و نگهداری ابزارهای امنیتی"
     assert detail.skills == ("Python", "Linux")
     assert detail.company_description == "یک شرکت فناوری"
+
+
+def test_prefers_visible_jobinja_scalars_and_ignores_following_page_ui() -> None:
+    html = """
+    <html>
+      <head>
+        <script type="application/ld+json">
+        {
+          "@type": "JobPosting",
+          "title": "AI Developer",
+          "description": "Build AI systems",
+          "jobLocation": {
+            "address": {
+              "addressCountry": {"@type": "Country", "name": "IR"}
+            }
+          },
+          "employmentType": "FULL_TIME",
+          "baseSalary": {"value": 5000000}
+        }
+        </script>
+      </head>
+      <body>
+        <h1>AI Developer</h1>
+        <section>موقعیت مکانی</section><div>تهران</div>
+        <section>نوع همکاری</section><div>تمام‌وقت و حضوری</div>
+        <section>حقوق</section><div>۵ میلیون تومان در ماه</div>
+        <section>حداقل مدرک تحصیلی</section><div>کارشناسی</div>
+        <div>مشاغل مشابه</div>
+        <div>اطلاع‌رسانی از طریق ایمیل</div>
+        <div>پشتیبان سایت</div>
+      </body>
+    </html>
+    """
+
+    detail = parse_jobinja_detail(html)
+
+    assert detail.location == "تهران"
+    assert detail.employment_type == "تمام‌وقت و حضوری"
+    assert detail.salary == "۵ میلیون تومان در ماه"
+    assert detail.education == "کارشناسی"
