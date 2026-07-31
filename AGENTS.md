@@ -35,6 +35,7 @@ discovered Jobinja jobs
 → immutable raw evidence
 → deterministic parser-v2 fields
 → semantic versioning
+→ local structural parser audit
 → local CLI inspection
 ```
 
@@ -44,10 +45,14 @@ The active commands are:
 jobhunter jobs list
 jobhunter jobinja fetch <job-id> [<job-id> ...]
 jobhunter jobinja fetch --missing --limit <count>
+jobhunter jobs audit [<job-id> ...]
+jobhunter jobs audit --only-issues
 jobhunter jobs show <job-id>
 ```
 
 Batches must remain sequential, use the configured request delay, and contain at most 50 jobs. `--missing` may select only jobs with no existing local detail version. Do not introduce unrestricted crawling or automatic refresh of every known job during this slice.
+
+The deterministic audit may flag structural extraction risks and report optional-field coverage, but it must not claim semantic correctness or employer intent. Missing optional fields alone are not parser failures.
 
 This slice may extract only explicit source fields and complete source text. It must not yet infer responsibilities, preferred versus required qualifications, personal relevance, skill gaps, or career recommendations. Those remain P1.6 and later work.
 
