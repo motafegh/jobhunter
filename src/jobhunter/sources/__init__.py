@@ -2,6 +2,7 @@
 
 from jobhunter.sources.jobinja import (
     DiscoveredJobLink,
+    FetchedJobPage,
     FetchedSearchPage,
     JobinjaAcquisitionError,
     JobinjaClient,
@@ -14,6 +15,7 @@ from jobhunter.sources.jobinja import (
 
 __all__ = [
     "DiscoveredJobLink",
+    "FetchedJobPage",
     "FetchedSearchPage",
     "JobinjaAcquisitionError",
     "JobinjaClient",
