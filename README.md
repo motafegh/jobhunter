@@ -111,7 +111,7 @@ Each batch:
 - uses `jobinja_request_delay_seconds` between requests;
 - isolates one job's failure without discarding successful jobs;
 - accepts no more than 50 jobs;
-- reports new semantic versions, unchanged content, and failures.
+- reports new semantic versions, unchanged content, observation IDs, and failures.
 
 List locally known jobs and their detail status:
 
@@ -131,13 +131,30 @@ jobhunter jobs audit --only-issues
 
 The audit reports parser version, description length, explicit-field coverage, source skill-tag count, and structural findings. It flags missing title or description, non-scalar values, obvious page-interface contamination, implausibly long scalar fields, malformed skill tags, and outdated parser versions. Missing optional fields such as salary or education are shown as coverage gaps rather than automatically treated as parser failures.
 
-Once representative layouts have been reviewed, fetch a bounded number of jobs that have no local detail version:
+Fetch a bounded number of jobs that have no local detail version:
 
 ```bash
 jobhunter jobinja fetch --missing --limit 5
 ```
 
-`--missing` does not refresh already acquired jobs. It selects the oldest discovered jobs with no detail content and defaults to five jobs. Explicit IDs and `--missing` cannot be combined.
+`--missing` does not refresh already acquired jobs. It selects the oldest discovered jobs with no detail content and defaults to five jobs.
+
+Refresh acquired jobs whose latest recorded check is old enough:
+
+```bash
+jobhunter jobinja fetch --refresh-due --older-than-hours 24 --limit 5
+```
+
+Refresh selection excludes jobs with no detail version, uses the newest fetch observation when available, and falls back to the semantic-version timestamp for data created before observation tracking existed. Explicit IDs, `--missing`, and `--refresh-due` are mutually exclusive.
+
+Inspect successful, unchanged, and failed checks for one job:
+
+```bash
+jobhunter jobs checks tpLF
+jobhunter jobs checks tpLF --limit 50
+```
+
+Every new fetch records an operational observation. A semantic version describes what an advertisement says; raw evidence preserves one exact HTTP response; a fetch observation records when JobHunter checked, whether semantic content changed, or why acquisition failed.
 
 Inspect the latest locally stored semantic detail without another network request:
 
@@ -153,6 +170,7 @@ Detail acquisition:
 - saves raw HTML and metadata before parsing;
 - extracts explicit source fields from Jobinja labels and embedded `JobPosting` metadata;
 - stores semantic versions separately from volatile raw-HTML snapshots;
+- records every successful or failed fetch attempt separately;
 - recognizes unchanged job content even when Jobinja's surrounding HTML changes.
 
 The output can include title, company, category, location, cooperation type, experience, education, salary, gender, military-service requirement, skill tags, complete description, source URL, retrieval time, semantic hash, raw hash, and evidence paths. Missing fields are displayed as unavailable rather than guessed.
@@ -226,4 +244,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 and P1.1 are complete on `main`. The bounded complete-job acquisition and parser-v2 slice is accepted against five structurally varied live Jobinja advertisements, with all five passing the local structural audit. P1.2 repeat-safe pagination and multi-search summaries are implemented and are the current live acceptance target. Local LLM interpretation remains outside the active increment.
+M0, P1.1, and P1.2 are accepted on `main`. Repeat-safe discovery was validated live across two two-page searches: 79 unique jobs, one cross-search overlap, and zero duplicate jobs on the identical rerun. Fifteen structurally varied advertisements now have complete parser-v2 details and all fifteen pass the deterministic local structural audit. The current P1.3 acceptance target is persistent detail-fetch observations and bounded refresh-due scheduling. Challenge/login classification, retry policy refinement, and lifecycle inference remain incomplete. Local LLM interpretation remains outside the active increment.
