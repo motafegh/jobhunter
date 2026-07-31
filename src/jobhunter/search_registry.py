@@ -302,6 +302,29 @@ def resolve_pack_names(
     return unique
 
 
+def _interleaved_pack_candidates(
+    pack_names: tuple[str, ...],
+    *,
+    max_pages: int,
+) -> list[tuple[str, str, int]]:
+    """Round-robin terms so bounded windows represent every selected pack."""
+
+    packs = tuple(BUILTIN_SEARCH_PACKS[name] for name in pack_names)
+    if not packs:
+        return []
+
+    candidates: list[tuple[str, str, int]] = []
+    longest_pack = max(len(pack.terms) for pack in packs)
+    for term_index in range(longest_pack):
+        for pack in packs:
+            if term_index >= len(pack.terms):
+                continue
+            candidates.append(
+                (f"pack:{pack.name}", pack.terms[term_index], max_pages)
+            )
+    return candidates
+
+
 def expand_keyword_searches(
     *,
     pack_names: tuple[str, ...] = (),
@@ -316,22 +339,32 @@ def expand_keyword_searches(
     if not 1 <= default_max_pages <= 50:
         raise ValueError("default_max_pages must be between 1 and 50")
 
-    excluded = {normalize_search_term(term) for term in excluded_terms if term.strip()}
-    candidates: list[tuple[str, str, int]] = []
-
-    for pack_name in resolve_pack_names(
+    excluded = {
+        normalize_search_term(term)
+        for term in excluded_terms
+        if term.strip()
+    }
+    resolved_packs = resolve_pack_names(
         pack_names=pack_names,
         profile_names=profile_names,
-    ):
-        pack = BUILTIN_SEARCH_PACKS[pack_name]
-        candidates.extend((f"pack:{pack.name}", term, default_max_pages) for term in pack.terms)
+    )
+    candidates = _interleaved_pack_candidates(
+        resolved_packs,
+        max_pages=default_max_pages,
+    )
 
     for group_name, terms, max_pages in custom_groups:
         if not 1 <= max_pages <= 50:
             raise ValueError("custom group max_pages must be between 1 and 50")
-        candidates.extend((f"group:{group_name}", term, max_pages) for term in terms)
+        candidates.extend(
+            (f"group:{group_name}", term, max_pages)
+            for term in terms
+        )
 
-    candidates.extend(("term:adhoc", term, default_max_pages) for term in extra_terms)
+    candidates.extend(
+        ("term:adhoc", term, default_max_pages)
+        for term in extra_terms
+    )
 
     seen_terms: set[str] = set()
     expanded: list[ExpandedKeywordSearch] = []
@@ -385,7 +418,8 @@ def format_search_plan(
     ]
     if planned_requests > request_budget:
         lines.append(
-            "Plan exceeds the request budget; later searches will be reported as budget-skipped."
+            "Plan exceeds the request budget; later searches will be "
+            "reported as budget-skipped."
         )
     if not searches:
         lines.append("No keyword searches are configured.")
