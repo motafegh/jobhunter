@@ -29,6 +29,33 @@ inference_max_retries = 2
     assert settings.log_level == "DEBUG"
 
 
+def test_loads_and_canonicalizes_jobinja_searches(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+jobinja_request_delay_seconds = 2.5
+
+[[jobhunter.jobinja_searches]]
+name = "AI roles"
+url = "https://www.jobinja.ir/jobs/?filters%5Bkeywords%5D%5B0%5D=ai&page=4"
+enabled = true
+max_pages = 3
+""".strip(),
+        encoding="utf-8",
+    )
+
+    settings = Settings.load(config_path)
+
+    assert settings.jobinja_request_delay_seconds == 2.5
+    assert len(settings.jobinja_searches) == 1
+    assert settings.jobinja_searches[0].name == "AI roles"
+    assert settings.jobinja_searches[0].url == (
+        "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=ai"
+    )
+    assert settings.jobinja_searches[0].max_pages == 3
+
+
 def test_missing_explicit_configuration_is_an_error(tmp_path: Path) -> None:
     with pytest.raises(ConfigLoadError, match="does not exist"):
         Settings.load(tmp_path / "missing.toml")
@@ -45,4 +72,25 @@ unknown_setting = true
     )
 
     with pytest.raises(ValidationError):
+        Settings.load(config_path)
+
+
+def test_duplicate_jobinja_search_names_are_rejected(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+
+[[jobhunter.jobinja_searches]]
+name = "AI roles"
+url = "https://jobinja.ir/jobs?q=ai"
+
+[[jobhunter.jobinja_searches]]
+name = "ai ROLES"
+url = "https://jobinja.ir/jobs?q=python"
+""".strip(),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="Duplicate Jobinja search name"):
         Settings.load(config_path)
