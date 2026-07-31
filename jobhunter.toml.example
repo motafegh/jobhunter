@@ -1,0 +1,13 @@
+# Copy this file to jobhunter.toml and adjust local values.
+[jobhunter]
+data_dir = "data"
+evidence_dir = "data/evidence"
+database_path = "data/jobhunter.sqlite3"
+
+lm_studio_base_url = "http://127.0.0.1:1234/v1"
+# Use an exact identifier returned by: jobhunter doctor
+# lm_studio_model = "your-model-identifier"
+
+inference_timeout_seconds = 30.0
+inference_max_retries = 1
+log_level = "INFO"
