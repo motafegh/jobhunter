@@ -141,32 +141,39 @@ class _AnchorCollector(HTMLParser):
 
 
 def extract_job_links(html: str, *, base_url: str) -> tuple[DiscoveredJobLink, ...]:
-    """Extract unique Jobinja job identities from one search-page document."""
+    """Extract unique Jobinja job identities from one search-page document.
+
+    Jobinja can link the same advertisement more than once inside one result
+    card. A decorative or image link may appear before the title-bearing link,
+    so a later duplicate is allowed to fill a previously missing title.
+    """
 
     collector = _AnchorCollector()
     collector.feed(html)
     collector.close()
 
-    discovered: list[DiscoveredJobLink] = []
-    seen_job_ids: set[str] = set()
+    job_order: list[str] = []
+    discovered_by_id: dict[str, DiscoveredJobLink] = {}
     for href, observed_text in collector.anchors:
         try:
             identity = canonicalize_job_url(href, base_url=base_url)
         except JobinjaUrlError:
             continue
-        if identity.source_job_id in seen_job_ids:
-            continue
-        seen_job_ids.add(identity.source_job_id)
-        discovered.append(
-            DiscoveredJobLink(
-                source_job_id=identity.source_job_id,
-                company_slug=identity.company_slug,
-                canonical_url=identity.canonical_url,
-                observed_text=observed_text or None,
-            )
-        )
 
-    return tuple(discovered)
+        candidate = DiscoveredJobLink(
+            source_job_id=identity.source_job_id,
+            company_slug=identity.company_slug,
+            canonical_url=identity.canonical_url,
+            observed_text=observed_text or None,
+        )
+        existing = discovered_by_id.get(identity.source_job_id)
+        if existing is None:
+            job_order.append(identity.source_job_id)
+            discovered_by_id[identity.source_job_id] = candidate
+        elif existing.observed_text is None and candidate.observed_text is not None:
+            discovered_by_id[identity.source_job_id] = candidate
+
+    return tuple(discovered_by_id[source_job_id] for source_job_id in job_order)
 
 
 class JobinjaClient:
