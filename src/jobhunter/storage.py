@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 from dataclasses import dataclass
@@ -36,7 +37,7 @@ class JobPostingRecord:
 
 @dataclass(frozen=True, slots=True)
 class JobDetailUpsertResult:
-    """Result of recording one acquired detail-page content version."""
+    """Result of recording one acquired detail-page semantic version."""
 
     version_id: int
     is_new_version: bool
@@ -52,10 +53,27 @@ class JobDetailView:
     fetched_at: str
     final_url: str
     content_sha256: str
+    semantic_sha256: str
     evidence_path: str
     metadata_path: str
     parse_status: str
     fields: dict[str, Any]
+
+
+def _semantic_hash_from_fields_json(fields_json: str) -> str:
+    fields = json.loads(fields_json)
+    semantic_fields = {
+        key: value
+        for key, value in fields.items()
+        if key not in {"language", "parser_version"}
+    }
+    canonical = json.dumps(
+        semantic_fields,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
 
 
 class JobHunterStore:
@@ -73,7 +91,7 @@ class JobHunterStore:
         return connection
 
     def initialize(self) -> None:
-        """Create the repeat-safe Phase 1 discovery and detail schema."""
+        """Create and migrate the repeat-safe Phase 1 schema."""
 
         with self._connect() as connection:
             connection.executescript(
@@ -155,6 +173,7 @@ class JobHunterStore:
                     final_url TEXT NOT NULL,
                     status_code INTEGER NOT NULL,
                     content_sha256 TEXT NOT NULL,
+                    semantic_sha256 TEXT,
                     evidence_path TEXT NOT NULL,
                     metadata_path TEXT NOT NULL,
                     parser_version TEXT NOT NULL,
@@ -165,6 +184,28 @@ class JobHunterStore:
                 );
                 """
             )
+            columns = {
+                str(row["name"])
+                for row in connection.execute("PRAGMA table_info(job_detail_versions)")
+            }
+            if "semantic_sha256" not in columns:
+                connection.execute(
+                    "ALTER TABLE job_detail_versions ADD COLUMN semantic_sha256 TEXT"
+                )
+
+            legacy_rows = connection.execute(
+                """
+                SELECT id, fields_json
+                FROM job_detail_versions
+                WHERE semantic_sha256 IS NULL OR semantic_sha256 = ''
+                """
+            ).fetchall()
+            for row in legacy_rows:
+                semantic_sha256 = _semantic_hash_from_fields_json(str(row["fields_json"]))
+                connection.execute(
+                    "UPDATE job_detail_versions SET semantic_sha256 = ? WHERE id = ?",
+                    (semantic_sha256, int(row["id"])),
+                )
 
     def start_run(self, *, source: str, started_at: datetime) -> int:
         with self._connect() as connection:
@@ -387,13 +428,14 @@ class JobHunterStore:
         final_url: str,
         status_code: int,
         content_sha256: str,
+        semantic_sha256: str,
         evidence_path: Path,
         metadata_path: Path,
         parser_version: str,
         parse_status: str,
         fields: dict[str, Any],
     ) -> JobDetailUpsertResult:
-        """Record a content-addressed detail version and retain unchanged fetch evidence."""
+        """Record a semantic detail version while retaining raw fetch evidence."""
 
         fields_json = json.dumps(fields, ensure_ascii=False, sort_keys=True)
         with self._connect() as connection:
@@ -401,9 +443,11 @@ class JobHunterStore:
                 """
                 SELECT id
                 FROM job_detail_versions
-                WHERE job_posting_id = ? AND content_sha256 = ?
+                WHERE job_posting_id = ? AND semantic_sha256 = ?
+                ORDER BY id DESC
+                LIMIT 1
                 """,
-                (job_posting_id, content_sha256),
+                (job_posting_id, semantic_sha256),
             ).fetchone()
             if existing is not None:
                 return JobDetailUpsertResult(int(existing["id"]), False)
@@ -412,10 +456,10 @@ class JobHunterStore:
                 """
                 INSERT INTO job_detail_versions(
                     job_posting_id, fetched_at, requested_url, final_url, status_code,
-                    content_sha256, evidence_path, metadata_path, parser_version,
-                    parse_status, fields_json
+                    content_sha256, semantic_sha256, evidence_path, metadata_path,
+                    parser_version, parse_status, fields_json
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     job_posting_id,
@@ -424,6 +468,7 @@ class JobHunterStore:
                     final_url,
                     status_code,
                     content_sha256,
+                    semantic_sha256,
                     str(evidence_path),
                     str(metadata_path),
                     parser_version,
@@ -440,18 +485,19 @@ class JobHunterStore:
             return JobDetailUpsertResult(int(cursor.lastrowid), True)
 
     def get_latest_job_detail(self, source_job_id: str) -> JobDetailView | None:
-        """Return the latest locally stored detail version for one Jobinja job."""
+        """Return the latest locally stored semantic detail version."""
 
         with self._connect() as connection:
             row = connection.execute(
                 """
                 SELECT p.source_job_id, p.canonical_url, p.title_observed,
                        v.fetched_at, v.final_url, v.content_sha256,
-                       v.evidence_path, v.metadata_path, v.parse_status, v.fields_json
+                       v.semantic_sha256, v.evidence_path, v.metadata_path,
+                       v.parse_status, v.fields_json
                 FROM job_postings AS p
                 JOIN job_detail_versions AS v ON v.job_posting_id = p.id
                 WHERE p.source = 'jobinja' AND p.source_job_id = ?
-                ORDER BY v.fetched_at DESC, v.id DESC
+                ORDER BY v.id DESC
                 LIMIT 1
                 """,
                 (source_job_id,),
@@ -465,6 +511,7 @@ class JobHunterStore:
             fetched_at=str(row["fetched_at"]),
             final_url=str(row["final_url"]),
             content_sha256=str(row["content_sha256"]),
+            semantic_sha256=str(row["semantic_sha256"]),
             evidence_path=str(row["evidence_path"]),
             metadata_path=str(row["metadata_path"]),
             parse_status=str(row["parse_status"]),
@@ -515,8 +562,23 @@ class JobHunterStore:
             )
 
     def count_job_postings(self) -> int:
-        """Return the number of logical Jobinja jobs, primarily for tests and diagnostics."""
+        """Return the number of logical Jobinja jobs."""
 
         with self._connect() as connection:
             row = connection.execute("SELECT COUNT(*) AS count FROM job_postings").fetchone()
+            return int(row["count"])
+
+    def count_job_detail_versions(self, source_job_id: str) -> int:
+        """Return stored semantic versions for one Jobinja job."""
+
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT COUNT(*) AS count
+                FROM job_detail_versions AS v
+                JOIN job_postings AS p ON p.id = v.job_posting_id
+                WHERE p.source = 'jobinja' AND p.source_job_id = ?
+                """,
+                (source_job_id,),
+            ).fetchone()
             return int(row["count"])
