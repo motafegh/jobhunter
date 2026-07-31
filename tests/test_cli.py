@@ -43,3 +43,15 @@ def test_discovery_rejects_non_jobinja_command_line_url(
     monkeypatch.chdir(tmp_path)
 
     assert main(["jobinja", "discover", "--url", "https://example.com/jobs"]) == 2
+
+
+def test_fetch_requires_a_previously_discovered_job(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobinja", "fetch", "missing"]) == 1
+
+
+def test_show_requires_a_local_detail_version(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobs", "show", "missing"]) == 1
