@@ -108,10 +108,11 @@ def _parse_status(detail: ParsedJobDetail) -> str:
 
 
 def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
-    if summary.is_new_version:
-        version_state = "new content version"
-    else:
-        version_state = "unchanged content"
+    version_state = (
+        "new content version"
+        if summary.is_new_version
+        else "unchanged content"
+    )
     return "\n".join(
         [
             f"Jobinja job fetched: {summary.source_job_id}",
