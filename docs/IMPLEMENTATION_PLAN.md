@@ -138,43 +138,41 @@ Phase 5 will add:
 
 ## 10. Current authorized implementation
 
-P1.1 discovery is accepted. A bounded vertical slice across P1.3 and P1.4 is also accepted against five structurally varied live Jobinja advertisements:
+M0, P1.1, and P1.2 are accepted. Repeat-safe discovery was validated live across two two-page searches with 79 combined unique jobs, one cross-search overlap, and zero new jobs on the identical rerun.
+
+A bounded parser-v2 slice across P1.3 and P1.4 is also accepted against fifteen structurally varied live Jobinja advertisements. All fifteen latest semantic versions pass the deterministic local structural audit.
+
+The current implementation and live acceptance target is the operational core of **P1.3 — job-detail acquisition and immutable evidence**:
 
 ```text
-discovered Jobinja job ID
-→ validated public detail-page acquisition
-→ immutable raw HTML and metadata evidence
-→ deterministic parser-v2 source fields
-→ semantic versioning
-→ local structural audit
-→ local CLI inspection
+explicit, missing-only, or refresh-due bounded selection
+→ sequential rate-limited detail requests
+→ immutable raw detail HTML and metadata
+→ deterministic parser-v2 fields
+→ semantic new / unchanged decision
+→ persistent successful or failed fetch observation
+→ inspectable check history
+→ bounded refresh scheduling
 ```
 
-That accepted slice remains available through:
+The active commands are:
 
 ```text
 jobhunter jobinja fetch <job-id> [<job-id> ...]
 jobhunter jobinja fetch --missing --limit <count>
+jobhunter jobinja fetch --refresh-due --older-than-hours <hours> --limit <count>
+jobhunter jobs checks <job-id> [--limit <count>]
 jobhunter jobs list
 jobhunter jobs audit
 jobhunter jobs show <job-id>
 ```
 
-The current implementation and live acceptance target is **P1.2 — bounded pagination, multiple searches, and repeat-safe daily discovery**:
+This increment must keep three records distinct:
 
-```text
-enabled Jobinja searches
-→ sequential rate-limited page requests
-→ raw search-page evidence
-→ canonical job identities
-→ empty-page and repeated-result-set stop conditions
-→ cross-search deduplication and provenance
-→ per-search summaries and stop reasons
-→ combined new, known, unique, overlap, and failure totals
-```
+- semantic versions describe meaningful advertisement content;
+- raw evidence identifies one exact HTTP response;
+- fetch observations record when a check happened, whether it changed, or why it failed.
 
-P1.2 must compare repeated pages by sorted stable source job IDs rather than volatile HTML, preserve successful searches when another search fails, and remain independent from detail acquisition and LM Studio.
+Refresh-due selection must use the latest fetch observation and fall back to a semantic-version timestamp for legacy data. It must remain bounded, sequential, user-controlled, and independent from LM Studio.
 
-P1.5 is only partially represented by semantic detail versions. Reposted, duplicate, refresh-due, expiration, removal, and lifecycle behavior remain incomplete and must not be described as finished.
-
-Local model interpretation, responsibility classification, personal relevance, gap analysis, career recommendations, aggregate reports, and `jobhunter run` remain outside the active increment.
+Challenge/login classification, retry-backoff refinement, expiration/removal decisions, repost and duplicate-content classification, and full lifecycle transitions remain incomplete. P1.4 still requires broader language and expired-page fixtures before completion. Local model interpretation, responsibility classification, personal relevance, gap analysis, career recommendations, aggregate reports, and `jobhunter run` remain outside the active increment.
