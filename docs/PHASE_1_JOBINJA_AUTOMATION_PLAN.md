@@ -245,6 +245,20 @@ The implementation should introduce only the records needed for this workflow.
 - version classification;
 - language metadata.
 
+### JobDetailFetchObservation
+
+- posting reference;
+- check timestamp;
+- new-version, unchanged, or failed outcome;
+- requested and final URLs when available;
+- HTTP status and exact raw-response hash when available;
+- semantic hash and semantic-version reference when available;
+- parser version and parse status when available;
+- raw evidence paths for successful checks;
+- error type and message for failed checks.
+
+A fetch observation is operational history. It must remain separate from semantic versions and raw snapshots so repeated unchanged checks are visible without creating false content versions.
+
 ### AnalysisRun
 
 - posting version;
@@ -362,17 +376,20 @@ Deliverables:
 - bounded job-detail fetch queue;
 - new and refresh-due selection;
 - raw detail HTML and metadata snapshots;
+- persistent observation of every successful or expected failed check;
 - challenge, login, error, expired, and irrelevant page detection;
 - acquisition retry rules;
-- inspectable evidence paths;
+- inspectable evidence and check-history paths;
 - detail-acquisition CLI support.
 
 Acceptance:
 
 - newly discovered jobs can be fetched automatically;
 - raw content is written before parsing;
-- unchanged pages are recognized by content hash;
-- failures remain retryable without losing discovery data.
+- unchanged semantic content does not create false versions;
+- unchanged checks still create inspectable operational observations;
+- refresh-due selection uses the latest known check and remains bounded;
+- failures remain retryable without losing discovery or earlier detail data.
 
 ### P1.4 — Jobinja field parser and language normalization
 
@@ -400,7 +417,7 @@ Deliverables:
 - normalized content fingerprints;
 - new, unchanged, changed, reposted, and duplicate classifications;
 - JobPostingVersion persistence;
-- first-seen, last-seen, and last-fetched tracking;
+- first-seen, last-seen, last-checked, and last-successful-fetch tracking;
 - cautious expiration/removal detection;
 - inspection commands.
 
@@ -489,33 +506,42 @@ The following remain outside Phase 1 unless strictly necessary to complete the w
 
 ## 15. Current authorized implementation
 
-P1.1 is accepted. A bounded detail-acquisition and parser-v2 vertical slice spanning parts of P1.3 and P1.4 is also accepted against five structurally varied live Jobinja advertisements. Those five latest semantic versions pass the deterministic local structural audit.
+M0, P1.1, and P1.2 are accepted. Repeat-safe discovery was validated live across two two-page Jobinja searches with 79 unique jobs, one cross-search overlap, and zero new jobs on the identical rerun.
 
-The current implementation and live acceptance target is **P1.2 — pagination and repeat-safe daily discovery**.
+A bounded parser-v2 slice spanning parts of P1.3 and P1.4 is accepted against fifteen structurally varied live Jobinja advertisements. All fifteen latest semantic versions pass the deterministic local structural audit.
 
-The active P1.2 path is:
+The current implementation and live acceptance target is the operational core of **P1.3 — job-detail acquisition and immutable evidence**.
+
+The active P1.3 path is:
 
 ```text
-enabled Jobinja searches
-→ sequential rate-limited search-page requests
-→ immutable raw search-page evidence
-→ canonical source job IDs
-→ empty-page or repeated-result-set termination
-→ cross-search identity deduplication and provenance
-→ per-search page, job, overlap, stop, and failure summaries
-→ combined unique, new, known, overlap, and failure totals
+explicit, missing-only, or refresh-due bounded selection
+→ sequential rate-limited detail requests
+→ immutable raw detail evidence
+→ deterministic parser-v2 extraction
+→ semantic new / unchanged decision
+→ persistent successful or failed fetch observation
+→ inspectable per-job check history
+→ bounded refresh scheduling
 ```
 
-P1.2 must:
+P1.3 must:
 
-- fingerprint repeated result pages by sorted stable Jobinja job IDs rather than raw HTML;
-- preserve a fetched page before parsing or stopping;
-- delay only between actual requests;
-- continue other searches when one search is invalid or fails;
-- distinguish cross-search overlap from duplicate JobPosting identities;
-- report one explicit stop reason per search;
-- remain independent from job-detail acquisition and LM Studio.
+- preserve semantic versions, raw HTTP snapshots, and fetch observations as distinct records;
+- record every successful check even when content is unchanged;
+- record expected acquisition and evidence-write failures without deleting prior data;
+- select refresh-due jobs only when a local detail version exists;
+- use the latest observation timestamp and a semantic-version fallback for legacy data;
+- remain sequential, bounded to 50 jobs, user-controlled, and independent from LM Studio;
+- avoid lifecycle conclusions from one failure or one search disappearance.
 
-The already accepted detail commands remain available for bounded manual and missing-only acquisition, but they are not part of the current discovery acceptance test.
+The active commands are:
 
-P1.5 lifecycle work remains incomplete. Local LLM interpretation, individual analysis, combined reports, personal relevance, career recommendations, and `jobhunter run` remain outside the active increment.
+```text
+jobhunter jobinja fetch <job-id> [<job-id> ...]
+jobhunter jobinja fetch --missing --limit <count>
+jobhunter jobinja fetch --refresh-due --older-than-hours <hours> --limit <count>
+jobhunter jobs checks <job-id> [--limit <count>]
+```
+
+Challenge/login classification, retry-backoff refinement, expired and irrelevant page classification, and full lifecycle decisions remain incomplete. Local LLM interpretation, individual analysis, combined reports, personal relevance, career recommendations, and `jobhunter run` remain outside the active increment.
