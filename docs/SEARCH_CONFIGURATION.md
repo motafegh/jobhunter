@@ -180,7 +180,16 @@ When the budget is reached:
 - remaining searches receive `request_budget_reached` as their stop reason;
 - budget exhaustion is not classified as an acquisition failure.
 
-## 7. Search windows and broad-profile coverage
+## 7. Search ordering, windows, and broad-profile coverage
+
+Terms from selected built-in packs are ordered **round-robin by pack**. For the
+`ai-security-python` profile, the plan takes one term from `ai-ml`, then one from
+`llm-applications`, `python-data`, `defensive-security`, `ai-security`, and
+`network-platform`, and repeats that cycle.
+
+This matters because a bounded first window must represent the whole career
+profile rather than exhausting the AI pack before reaching Python or security.
+Custom groups and one-off terms follow the built-in round-robin portion.
 
 Use `--search-limit` and `--search-offset` to process a large catalog in
 predictable windows.
@@ -299,6 +308,7 @@ When updating built-in vocabulary:
 - avoid terms so broad that they dominate unrelated jobs;
 - preserve pack identifiers once published;
 - add normalization and expansion tests;
+- verify that early bounded windows still represent every selected pack;
 - inspect the generated plan before live acquisition;
 - use exclusions rather than deleting useful built-in terms for one user-specific reason.
 
