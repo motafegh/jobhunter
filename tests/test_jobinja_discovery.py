@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import httpx
@@ -33,7 +33,7 @@ def test_discovery_preserves_evidence_and_is_repeat_safe(tmp_path: Path) -> None
 
     def clock() -> datetime:
         nonlocal counter
-        value = datetime(2026, 7, 31, 12, 0, tzinfo=timezone.utc) + timedelta(
+        value = datetime(2026, 7, 31, 12, 0, tzinfo=UTC) + timedelta(
             seconds=counter
         )
         counter += 1
