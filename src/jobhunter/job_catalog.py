@@ -113,8 +113,13 @@ class JobCatalog:
                 break
         return tuple(entries)
 
-    def missing_job_ids(self, *, limit: int) -> tuple[str, ...]:
-        """Return oldest discovered jobs that have no local detail version."""
+    def missing_job_ids(
+        self,
+        *,
+        limit: int,
+        preferred_ids: tuple[str, ...] = (),
+    ) -> tuple[str, ...]:
+        """Return missing-detail jobs, prioritizing supplied source IDs."""
 
         if not 1 <= limit <= 50:
             raise ValueError("limit must be between 1 and 50")
@@ -132,11 +137,30 @@ class JobCatalog:
                       WHERE v.job_posting_id = p.id
                   )
                 ORDER BY p.id ASC
-                LIMIT ?
-                """,
-                (limit,),
+                """
             ).fetchall()
-        return tuple(str(row["source_job_id"]) for row in rows)
+
+        available = tuple(str(row["source_job_id"]) for row in rows)
+        available_set = set(available)
+        preferred = tuple(
+            dict.fromkeys(
+                source_job_id.strip()
+                for source_job_id in preferred_ids
+                if source_job_id.strip()
+            )
+        )
+        prioritized = [
+            source_job_id
+            for source_job_id in preferred
+            if source_job_id in available_set
+        ]
+        prioritized_set = set(prioritized)
+        prioritized.extend(
+            source_job_id
+            for source_job_id in available
+            if source_job_id not in prioritized_set
+        )
+        return tuple(prioritized[:limit])
 
 
 def format_job_list(entries: tuple[LocalJobSummary, ...]) -> str:
