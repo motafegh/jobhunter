@@ -2,333 +2,153 @@
 
 ## 1. Purpose
 
-This plan sequences product delivery. It is not a learning roadmap and does not prescribe sessions or study milestones.
+This document defines the product-level delivery order. It is not a learning roadmap and does not prescribe study sessions.
 
-Each milestone must produce an operable increment, have explicit acceptance criteria, and stop before unrelated features are added.
+Detailed Phase 1 execution is controlled by [Phase 1 — Jobinja Workflow Automation Plan](PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
 
 ## 2. Delivery rules
 
-- Build vertical slices rather than completing speculative layers in isolation.
-- Keep the application runnable after each milestone.
-- Prefer one reliable path over several partial integrations.
-- Do not begin aggregate career recommendations until source evidence and extraction are trustworthy.
-- Add a dependency only for a current requirement.
-- Record material architecture changes in the relevant existing document rather than creating excessive governance files.
-- Tests must cover deterministic product behaviour; local-model quality is evaluated through a separate golden corpus.
+- Build operable vertical slices.
+- Keep successful acquisition independent from local-model availability.
+- Preserve raw evidence before parsing or analysis.
+- Prefer one reliable source adapter over several incomplete integrations.
+- Add dependencies only for active requirements.
+- Keep failures inspectable and retryable.
+- Require deterministic tests for acquisition, identity, parsing, and persistence.
+- Evaluate model quality separately on a manually reviewed corpus.
+- Do not add architecture or governance artifacts that do not improve implementation or operation.
 
-## 3. Milestone overview
+## 3. Product delivery overview
 
-| Milestone | Outcome |
+| Stage | Outcome | Status |
+|---|---|---|
+| M0 | Runnable local foundation, SQLite checks, and LM Studio provider boundary | Complete |
+| Phase 1 | Full automation of the user's current Jobinja workflow | Active |
+| Phase 2 | Canonical career taxonomy and reliable market matrices | Deferred until Phase 1 evidence is trustworthy |
+| Phase 3 | Personal capability evidence and gap analysis | Deferred |
+| Phase 4 | Explainable actions, application readiness, and daily career decisions | Deferred |
+| Phase 5 | Trends, quality hardening, backup, restore, and sustained operation | Deferred |
+
+## 4. M0 — Local application foundation
+
+M0 established:
+
+- installable Python package and CLI;
+- typed TOML configuration;
+- local data and evidence directories;
+- SQLite health validation;
+- isolated LM Studio provider;
+- model discovery and optional structured inference smoke testing;
+- deterministic tests and lint configuration;
+- protected local runtime data and secrets.
+
+M0 is complete. Local structured-output capability remains model-specific and must not block acquisition.
+
+## 5. Phase 1 — Jobinja workflow automation
+
+### Goal
+
+Replace and improve the user's manual process of searching Jobinja, opening jobs, copying relevant fields into files, and sending those files to an AI assistant.
+
+### Required result
+
+A local run must:
+
+```text
+saved Jobinja searches
+→ discover job advertisements
+→ preserve raw evidence
+→ identify new and changed postings
+→ parse known Jobinja fields
+→ analyse new or changed content locally
+→ produce individual and combined results
+```
+
+### Delivery increments
+
+| Increment | Outcome |
 |---|---|
-| M0 | Runnable local foundation and verified LM Studio connectivity |
-| M1 | Pasted-text ingestion through persisted structured extraction |
-| M2 | Permitted URL and file ingestion with evidence storage |
-| M3 | Reliable identity, versioning, deduplication, and review workflow |
-| M4 | Approved recurring sources and daily run operation |
-| M5 | Canonical career taxonomy and aggregate market matrices |
-| M6 | Personal capability evidence and gap analysis |
-| M7 | Explainable recommendations and daily career report |
-| M8 | Trend analysis, quality hardening, backup, and sustained operation |
+| P1.0 | Repository alignment and controlling Phase 1 plan |
+| P1.1 | Search-page acquisition and persisted Jobinja job discovery |
+| P1.2 | Bounded pagination, multiple searches, and repeat-safe daily discovery |
+| P1.3 | Job-detail acquisition and immutable raw evidence |
+| P1.4 | Deterministic Jobinja field parsing and multilingual normalization |
+| P1.5 | Posting identity, versions, deduplication, and lifecycle |
+| P1.6 | Evidence-backed local LLM analysis and review states |
+| P1.7 | Individual outputs, combined analysis, and `jobhunter run` |
 
-## 4. M0 — Local application foundation and LM Studio connectivity
+All requirements, stop lines, records, and acceptance criteria are defined in the Phase 1 plan.
 
-### Goal
+## 6. Phase 2 — Career taxonomy and market intelligence
 
-Create a small, installable application that can validate local configuration and communicate with the configured LM Studio server.
+After Phase 1 produces a trustworthy accepted corpus, Phase 2 will add:
 
-### Deliverables
-
-- Python project configuration;
-- `src` package and CLI entry point;
-- typed application settings;
-- example configuration and environment file;
-- structured logging foundation;
-- LM Studio provider interface and implementation;
-- `jobhunter doctor` command;
-- unit tests and provider stub integration test;
-- developer commands for install, test, lint, and run;
-- ignored local data and secret files.
-
-### `doctor` checks
-
-- configuration loads;
-- data directories are writable;
-- SQLite can be opened or initialized;
-- LM Studio base URL is reachable;
-- available models can be listed;
-- configured model is present or a clear warning is shown;
-- a bounded structured-output smoke request can be performed optionally.
-
-### Acceptance criteria
-
-- a clean local checkout can be installed using documented commands;
-- `jobhunter --help` runs;
-- `jobhunter doctor` gives actionable pass, warning, and failure output;
-- tests run without requiring a live model;
-- live LM Studio testing is optional and separately marked;
-- no job acquisition or analysis code is faked merely to make the milestone appear larger.
-
-### Stop line
-
-Do not add scraping, job schemas, dashboards, embeddings, taxonomy, or recommendation logic during M0.
-
-## 5. M1 — Pasted-text extraction vertical slice
-
-### Goal
-
-Convert one pasted job description into a validated, persisted, evidence-backed local analysis.
-
-### Deliverables
-
-- initial versioned job-extraction schema;
-- prompt template and prompt versioning;
-- pasted-text ingestion command;
-- raw and cleaned evidence storage;
-- SQLite schema and first migration;
-- extraction request to LM Studio;
-- local schema validation;
-- exact evidence passage requirements;
-- persistence of request metadata and raw response;
-- inspect command for the resulting record;
-- fixtures and golden examples.
-
-### Initial extracted fields
-
-- source label;
-- title and company when stated;
-- location and work arrangement when stated;
-- role purpose;
-- responsibilities;
-- required qualifications;
-- preferred qualifications;
-- technologies and tools;
-- knowledge and practice expectations;
-- experience and education;
-- constraints;
-- evidence and confidence for each material item.
-
-### Acceptance criteria
-
-- the same pasted content does not create uncontrolled duplicate evidence;
-- invalid model output is rejected or retried within a bounded rule;
-- important fields without supporting evidence enter review;
-- original, cleaned, request, response, and normalized records remain inspectable;
-- at least a small manually reviewed golden set passes agreed quality checks.
-
-### Stop line
-
-Do not add recurring crawling or personal skill recommendations until this path is trustworthy.
-
-## 6. M2 — Public URL and local file ingestion
-
-### Goal
-
-Support real inputs while preserving the same extraction and evidence guarantees established in M1.
-
-### Deliverables
-
-- generic single public URL ingestion with allowlist and SSRF protections;
-- supported local text, HTML, JSON, and PDF import;
-- content-type and size validation;
-- HTML cleaning with structural preservation;
-- canonical URL handling;
-- clear detection of login, challenge, error, and irrelevant pages;
-- acquisition attempt records;
-- recorded HTTP fixtures for tests.
-
-### Acceptance criteria
-
-- network input cannot target blocked local/private addresses by default;
-- redirects are revalidated;
-- raw bodies are saved before cleaning;
-- extraction works consistently across pasted text and supported files;
-- source failures do not corrupt existing records;
-- a user can identify exactly why an input failed.
-
-### Stop line
-
-Do not turn the generic URL command into an unrestricted crawler.
-
-## 7. M3 — Identity, versioning, deduplication, and review
-
-### Goal
-
-Make repeated operation safe and make uncertain results correctable.
-
-### Deliverables
-
-- logical JobPosting and JobPostingVersion records;
-- exact and normalized fingerprinting;
-- unchanged, changed, repost, duplicate, and new classifications;
-- extraction and review states;
-- CLI review workflow;
-- field corrections and audit history;
-- approved alias mapping support;
-- retry and re-extraction commands;
-- extraction comparison between model or prompt versions.
-
-### Acceptance criteria
-
-- rerunning unchanged inputs is idempotent;
-- updated content creates a version rather than overwriting history;
-- user correction is retained and visible;
-- a new extraction does not silently replace an accepted manual correction;
-- failed and review-required items are queryable.
-
-## 8. M4 — Approved recurring sources and daily operation
-
-### Goal
-
-Run JobHunter daily against explicitly approved sources.
-
-### Deliverables
-
-- SourceDefinition configuration;
-- one high-value structured source adapter;
-- one approved company or platform adapter only if justified;
-- candidate discovery and pagination;
-- conditional requests when supported;
-- per-source rate and concurrency limits;
-- run orchestration with stage isolation;
-- resumable failed work;
-- daily run summary;
-- documented operating-system scheduling example.
-
-### Acceptance criteria
-
-- one source failure does not terminate unrelated source work;
-- repeated daily runs remain idempotent;
-- rate limits are observable and configurable;
-- new, changed, unchanged, blocked, failed, and review-required counts are accurate;
-- the user can disable any source without code changes.
-
-### Stop line
-
-Do not add many source adapters before the first recurring source proves useful and maintainable.
-
-## 9. M5 — Taxonomy and market analysis
-
-### Goal
-
-Transform accepted postings into a coherent view of roles, responsibilities, and capability demand.
-
-### Deliverables
-
-- canonical CareerConcept model;
-- original mention and alias preservation;
-- concept mapping review;
-- responsibility family definitions or clustering;
-- initial role-archetype analysis;
+- canonical role, responsibility, skill, tool, knowledge, and practice concepts;
+- original phrase and alias preservation;
 - required/preferred and responsibility-linked counts;
-- filters by date, role, seniority, location, company, and source;
+- role-archetype and responsibility-family analysis;
+- filters by date, role, seniority, language, location, company, and search;
 - co-occurrence analysis;
-- inspectable matrix export;
+- evidence-backed matrix exports;
 - corpus-size and uncertainty warnings.
 
-### Acceptance criteria
+Duplicate and unchanged postings must not inflate market counts.
 
-- duplicate postings do not inflate market counts;
-- every aggregate result can list its supporting postings;
-- filters and date windows are displayed;
-- tool mentions are not automatically treated as applied capabilities;
-- user-approved mappings are stable and reversible.
+## 7. Phase 3 — Personal capability evidence and gap analysis
 
-## 10. M6 — Personal capability evidence and gap analysis
+Phase 3 will add:
 
-### Goal
-
-Compare market evidence with a realistic model of the user's demonstrated capabilities.
-
-### Deliverables
-
-- personal capability records;
-- descriptive depth scale;
-- evidence references and limitations;
-- recency and independence fields;
-- imports or manual links to project evidence;
+- depth-aware personal capability records;
+- project and assessment evidence;
+- recency, independence, and evidence-quality fields;
 - knowledge, practice, depth, integration, evidence, presentation, and constraint gap classes;
-- individual-role and individual-job comparisons;
-- unassessed state rather than forced self-ratings.
+- job-level and role-level comparisons;
+- explicit unknown and unassessed states.
 
-### Acceptance criteria
+Exposure must never be represented as mastery.
 
-- exposure is not represented as mastery;
-- AI-assisted project evidence records the demonstrated capability and limitations;
-- unsupported resume claims are clearly identified;
-- gap conclusions display both market and personal evidence;
-- unknown data remains unknown rather than defaulting to zero capability.
+## 8. Phase 4 — Explainable career actions
 
-## 11. M7 — Explainable actions and daily report
+Phase 4 will convert reliable market and personal evidence into bounded actions:
 
-### Goal
+- learn;
+- practise;
+- build;
+- improve an existing project;
+- document;
+- assess;
+- monitor;
+- ignore for now;
+- investigate;
+- prepare application evidence.
 
-Convert reliable analysis into bounded actions that improve real career decisions.
+Every recommendation must show supporting postings, personal evidence, uncertainty, and the condition that would change it.
 
-### Deliverables
+## 9. Phase 5 — Trends and operational hardening
 
-- action classes: learn, practise, build, improve, document, assess, monitor, ignore, investigate, prepare application evidence;
-- transparent priority calculation;
-- project-evidence opportunity mapping;
-- individual-job readiness report;
-- daily summary of meaningful changes;
-- recommendation acceptance, rejection, deferment, and completion states;
-- reasons and change conditions for every recommendation.
-
-### Acceptance criteria
-
-- a recommendation can be traced to postings and personal evidence;
-- the product does not recommend a new project when documentation, assessment, or a small extension is sufficient;
-- frequency alone cannot dominate priority;
-- low-confidence recommendations are visibly marked;
-- the daily report emphasizes decisions rather than raw counts.
-
-## 12. M8 — Trends and operational hardening
-
-### Goal
-
-Make JobHunter dependable over months of daily local use.
-
-### Deliverables
+Phase 5 will add:
 
 - historical trend calculations;
-- source-corpus change warnings;
+- model and prompt regression evaluation;
 - extraction-quality tracking;
-- prompt/model regression reports;
-- backup, restore, and export commands;
-- retention configuration;
+- backup, restore, retention, and export;
 - database integrity checks;
-- performance profiling;
-- failure recovery exercises;
-- local operational documentation;
-- optional local web interface if CLI review has become inefficient.
+- performance and failure-recovery testing;
+- optional local interface only if CLI operation becomes inefficient.
 
-### Acceptance criteria
+## 10. Current authorized implementation
 
-- historical results remain reproducible by version and corpus;
-- backups restore successfully in a test;
-- model replacement can be evaluated before migration;
-- growth in source data does not make normal daily runs unusable;
-- source and extraction failures are diagnosable from recorded evidence.
+The current target is **P1.1 — Jobinja discovery foundation**.
 
-## 13. Evaluation corpus
+The active code increment must support:
 
-A small manually reviewed corpus should begin during M1 and expand gradually.
+```text
+one configured or command-line Jobinja search URL
+→ bounded HTTP fetch
+→ raw search-page evidence
+→ job-link canonicalization
+→ repeat-safe SQLite discovery records
+→ concise CLI summary
+```
 
-It should include:
-
-- clear and ambiguous responsibility sections;
-- required versus preferred language;
-- missing company or title metadata;
-- duplicated and edited postings;
-- multiple role families;
-- misleading keyword mentions;
-- security, Python, AI, machine-learning, and hybrid roles relevant to the user;
-- malformed or irrelevant pages.
-
-Evaluation should measure fields separately. A single overall score is insufficient.
-
-## 14. Current authorized implementation
-
-The current implementation target is **M0 — Local application foundation and LM Studio connectivity**.
-
-The next code change should create the minimal Python application, configuration system, CLI, provider boundary, `doctor` command, and tests described by M0. It should not begin M1 extraction work in the same change.
+It must not require LM Studio and must stop before full job-detail parsing or analysis.
