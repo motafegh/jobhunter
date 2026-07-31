@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import logging
 import sys
 from collections.abc import Sequence
@@ -11,9 +12,17 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from jobhunter import __version__
-from jobhunter.config import ConfigLoadError, Settings
+from jobhunter.config import ConfigLoadError, JobinjaSearchDefinition, Settings
 from jobhunter.doctor import format_report, run_doctor
+from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
+from jobhunter.jobinja_discovery import (
+    DiscoverySearch,
+    JobinjaDiscoveryService,
+    format_discovery_summary,
+)
+from jobhunter.sources import JobinjaClient
+from jobhunter.storage import JobHunterStore
 
 DEFAULT_CONFIG = """# JobHunter local configuration
 [jobhunter]
@@ -30,8 +39,31 @@ lm_studio_base_url = "http://127.0.0.1:1234/v1"
 
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
+
+# Public Jobinja acquisition settings.
+jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
+jobinja_request_timeout_seconds = 30.0
+jobinja_request_delay_seconds = 1.0
+
+# Configure each search once. JobHunter discovers individual job URLs automatically.
+# [[jobhunter.jobinja_searches]]
+# name = "Artificial intelligence roles"
+# url = "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=..."
+# enabled = true
+# max_pages = 3
+
 log_level = "INFO"
 """
+
+
+def _bounded_page_count(value: str) -> int:
+    try:
+        page_count = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("page count must be an integer") from exc
+    if not 1 <= page_count <= 50:
+        raise argparse.ArgumentTypeError("page count must be between 1 and 50")
+    return page_count
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -72,6 +104,39 @@ def build_parser() -> argparse.ArgumentParser:
         help="Also request a small schema-conforming response from a local model",
     )
 
+    jobinja_parser = subparsers.add_parser(
+        "jobinja",
+        help="Acquire and process approved public Jobinja pages",
+    )
+    jobinja_subparsers = jobinja_parser.add_subparsers(
+        dest="jobinja_command",
+        required=True,
+    )
+    discover_parser = jobinja_subparsers.add_parser(
+        "discover",
+        help="Discover and persist jobs from Jobinja search pages",
+    )
+    discover_parser.add_argument(
+        "--url",
+        action="append",
+        default=[],
+        help=(
+            "One-off Jobinja search URL; repeat for multiple searches. "
+            "When supplied, configured searches are not used."
+        ),
+    )
+    discover_parser.add_argument(
+        "--pages",
+        type=_bounded_page_count,
+        default=None,
+        help="Override the configured maximum pages for this run (1-50)",
+    )
+    discover_parser.add_argument(
+        "--show-jobs",
+        action="store_true",
+        help="Print canonical URLs for newly discovered jobs",
+    )
+
     return parser
 
 
@@ -101,8 +166,77 @@ def _initialize(path: Path, *, force: bool) -> int:
 
     print(f"Created configuration: {path.resolve()}")
     print(f"Created data directory: {settings.data_dir.resolve()}")
-    print("Start LM Studio's local server, then run: jobhunter doctor")
+    print("Run a Jobinja search with: jobhunter jobinja discover --url '<search-url>'")
     return 0
+
+
+def _discovery_searches(
+    settings: Settings,
+    *,
+    command_urls: Sequence[str],
+    page_override: int | None,
+) -> list[DiscoverySearch]:
+    if command_urls:
+        searches: list[DiscoverySearch] = []
+        for url in command_urls:
+            digest = hashlib.sha256(url.encode("utf-8")).hexdigest()[:10]
+            definition = JobinjaSearchDefinition(
+                name=f"adhoc-{digest}",
+                url=url,
+                max_pages=page_override or 1,
+            )
+            searches.append(
+                DiscoverySearch(
+                    name=definition.name,
+                    url=definition.url,
+                    max_pages=definition.max_pages,
+                )
+            )
+        return searches
+
+    return [
+        DiscoverySearch(
+            name=definition.name,
+            url=definition.url,
+            max_pages=page_override or definition.max_pages,
+        )
+        for definition in settings.jobinja_searches
+        if definition.enabled
+    ]
+
+
+def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) -> int:
+    try:
+        searches = _discovery_searches(
+            settings,
+            command_urls=arguments.url,
+            page_override=arguments.pages,
+        )
+    except ValidationError as exc:
+        print(f"Jobinja search configuration error: {exc}", file=sys.stderr)
+        return 2
+
+    if not searches:
+        print(
+            "No enabled Jobinja searches are configured. Add one to jobhunter.toml "
+            "or pass --url.",
+            file=sys.stderr,
+        )
+        return 2
+
+    client = JobinjaClient(
+        user_agent=settings.jobinja_user_agent,
+        timeout_seconds=settings.jobinja_request_timeout_seconds,
+    )
+    service = JobinjaDiscoveryService(
+        client=client,
+        evidence_store=EvidenceStore(settings.evidence_dir),
+        store=JobHunterStore(settings.database_path),
+        request_delay_seconds=settings.jobinja_request_delay_seconds,
+    )
+    summary = service.run(searches)
+    print(format_discovery_summary(summary, show_jobs=arguments.show_jobs))
+    return 0 if summary.succeeded else 1
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -133,6 +267,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         )
         print(format_report(report))
         return 1 if report.has_failures else 0
+
+    if arguments.command == "jobinja" and arguments.jobinja_command == "discover":
+        return _run_jobinja_discovery(settings, arguments)
 
     parser.error(f"Unsupported command: {arguments.command}")
     return 2
