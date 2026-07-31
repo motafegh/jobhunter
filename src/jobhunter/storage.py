@@ -1,11 +1,13 @@
-"""SQLite persistence for JobHunter acquisition and discovery records."""
+"""SQLite persistence for JobHunter acquisition and detail records."""
 
 from __future__ import annotations
 
+import json
 import sqlite3
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
+from typing import Any
 
 from jobhunter.sources import DiscoveredJobLink
 
@@ -16,6 +18,44 @@ class JobUpsertResult:
 
     job_posting_id: int
     is_new: bool
+
+
+@dataclass(frozen=True, slots=True)
+class JobPostingRecord:
+    """One logical Jobinja posting known from search discovery."""
+
+    id: int
+    source_job_id: str
+    company_slug: str
+    canonical_url: str
+    title_observed: str | None
+    first_seen_at: str
+    last_seen_at: str
+    lifecycle_state: str
+
+
+@dataclass(frozen=True, slots=True)
+class JobDetailUpsertResult:
+    """Result of recording one acquired detail-page content version."""
+
+    version_id: int
+    is_new_version: bool
+
+
+@dataclass(frozen=True, slots=True)
+class JobDetailView:
+    """Latest locally stored detail version for one posting."""
+
+    source_job_id: str
+    canonical_url: str
+    title_observed: str | None
+    fetched_at: str
+    final_url: str
+    content_sha256: str
+    evidence_path: str
+    metadata_path: str
+    parse_status: str
+    fields: dict[str, Any]
 
 
 class JobHunterStore:
@@ -33,7 +73,7 @@ class JobHunterStore:
         return connection
 
     def initialize(self) -> None:
-        """Create the minimum repeat-safe Phase 1 discovery schema."""
+        """Create the repeat-safe Phase 1 discovery and detail schema."""
 
         with self._connect() as connection:
             connection.executescript(
@@ -105,6 +145,23 @@ class JobHunterStore:
                     FOREIGN KEY(run_id) REFERENCES acquisition_runs(id),
                     FOREIGN KEY(job_posting_id) REFERENCES job_postings(id),
                     UNIQUE(run_id, job_posting_id, search_name, page_number)
+                );
+
+                CREATE TABLE IF NOT EXISTS job_detail_versions (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    job_posting_id INTEGER NOT NULL,
+                    fetched_at TEXT NOT NULL,
+                    requested_url TEXT NOT NULL,
+                    final_url TEXT NOT NULL,
+                    status_code INTEGER NOT NULL,
+                    content_sha256 TEXT NOT NULL,
+                    evidence_path TEXT NOT NULL,
+                    metadata_path TEXT NOT NULL,
+                    parser_version TEXT NOT NULL,
+                    parse_status TEXT NOT NULL,
+                    fields_json TEXT NOT NULL,
+                    FOREIGN KEY(job_posting_id) REFERENCES job_postings(id),
+                    UNIQUE(job_posting_id, content_sha256)
                 );
                 """
             )
@@ -265,6 +322,32 @@ class JobHunterStore:
             )
             return JobUpsertResult(int(cursor.lastrowid), True)
 
+    def get_job(self, source_job_id: str) -> JobPostingRecord | None:
+        """Return one discovered Jobinja posting by its stable source ID."""
+
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT id, source_job_id, company_slug, canonical_url, title_observed,
+                       first_seen_at, last_seen_at, lifecycle_state
+                FROM job_postings
+                WHERE source = 'jobinja' AND source_job_id = ?
+                """,
+                (source_job_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return JobPostingRecord(
+            id=int(row["id"]),
+            source_job_id=str(row["source_job_id"]),
+            company_slug=str(row["company_slug"]),
+            canonical_url=str(row["canonical_url"]),
+            title_observed=row["title_observed"],
+            first_seen_at=str(row["first_seen_at"]),
+            last_seen_at=str(row["last_seen_at"]),
+            lifecycle_state=str(row["lifecycle_state"]),
+        )
+
     def record_discovery(
         self,
         *,
@@ -294,6 +377,99 @@ class JobHunterStore:
                     discovered_at.isoformat(),
                 ),
             )
+
+    def record_job_detail(
+        self,
+        *,
+        job_posting_id: int,
+        fetched_at: datetime,
+        requested_url: str,
+        final_url: str,
+        status_code: int,
+        content_sha256: str,
+        evidence_path: Path,
+        metadata_path: Path,
+        parser_version: str,
+        parse_status: str,
+        fields: dict[str, Any],
+    ) -> JobDetailUpsertResult:
+        """Record a content-addressed detail version and retain unchanged fetch evidence."""
+
+        fields_json = json.dumps(fields, ensure_ascii=False, sort_keys=True)
+        with self._connect() as connection:
+            existing = connection.execute(
+                """
+                SELECT id
+                FROM job_detail_versions
+                WHERE job_posting_id = ? AND content_sha256 = ?
+                """,
+                (job_posting_id, content_sha256),
+            ).fetchone()
+            if existing is not None:
+                return JobDetailUpsertResult(int(existing["id"]), False)
+
+            cursor = connection.execute(
+                """
+                INSERT INTO job_detail_versions(
+                    job_posting_id, fetched_at, requested_url, final_url, status_code,
+                    content_sha256, evidence_path, metadata_path, parser_version,
+                    parse_status, fields_json
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                (
+                    job_posting_id,
+                    fetched_at.isoformat(),
+                    requested_url,
+                    final_url,
+                    status_code,
+                    content_sha256,
+                    str(evidence_path),
+                    str(metadata_path),
+                    parser_version,
+                    parse_status,
+                    fields_json,
+                ),
+            )
+            title = fields.get("title")
+            if title:
+                connection.execute(
+                    "UPDATE job_postings SET title_observed = ? WHERE id = ?",
+                    (str(title), job_posting_id),
+                )
+            return JobDetailUpsertResult(int(cursor.lastrowid), True)
+
+    def get_latest_job_detail(self, source_job_id: str) -> JobDetailView | None:
+        """Return the latest locally stored detail version for one Jobinja job."""
+
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT p.source_job_id, p.canonical_url, p.title_observed,
+                       v.fetched_at, v.final_url, v.content_sha256,
+                       v.evidence_path, v.metadata_path, v.parse_status, v.fields_json
+                FROM job_postings AS p
+                JOIN job_detail_versions AS v ON v.job_posting_id = p.id
+                WHERE p.source = 'jobinja' AND p.source_job_id = ?
+                ORDER BY v.fetched_at DESC, v.id DESC
+                LIMIT 1
+                """,
+                (source_job_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return JobDetailView(
+            source_job_id=str(row["source_job_id"]),
+            canonical_url=str(row["canonical_url"]),
+            title_observed=row["title_observed"],
+            fetched_at=str(row["fetched_at"]),
+            final_url=str(row["final_url"]),
+            content_sha256=str(row["content_sha256"]),
+            evidence_path=str(row["evidence_path"]),
+            metadata_path=str(row["metadata_path"]),
+            parse_status=str(row["parse_status"]),
+            fields=json.loads(str(row["fields_json"])),
+        )
 
     def complete_run(
         self,
