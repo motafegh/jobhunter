@@ -24,21 +24,25 @@ The product specification controls intended behaviour. The architecture controls
 
 ## 3. Current scope
 
-The current authorized implementation is:
-
-**P1.1 — Jobinja discovery foundation**
-
-The active increment must provide a non-LLM path from one configured or command-line Jobinja search URL to:
+P1.1 discovery is accepted. The current authorized implementation is the first complete-job vertical slice spanning the minimum useful parts of P1.3 and P1.4:
 
 ```text
-bounded search-page acquisition
-→ raw evidence
-→ canonical job-link discovery
-→ repeat-safe SQLite records
-→ concise CLI summary
+discovered Jobinja job ID
+→ validated public detail-page acquisition
+→ raw HTML and metadata evidence
+→ content-addressed local version
+→ deterministic labelled-field extraction
+→ local CLI inspection
 ```
 
-Stop before full job-detail parsing or job analysis.
+The active commands are:
+
+```text
+jobhunter jobinja fetch <job-id>
+jobhunter jobs show <job-id>
+```
+
+This slice may extract only explicit source fields and complete source text. It must not yet infer responsibilities, preferred versus required qualifications, personal relevance, skill gaps, or career recommendations. Those remain P1.6 and later work.
 
 Current work proceeds directly on `main` unless a later change creates a clear need for branch isolation.
 
