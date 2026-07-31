@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from jobhunter.evidence import EvidenceStore
 from jobhunter.jobinja_details import (
@@ -52,7 +52,7 @@ class JobinjaDetailService:
                 "Run discovery first."
             )
 
-        fetched_at = datetime.now(timezone.utc)
+        fetched_at = datetime.now(UTC)
         page = self._client.fetch_job_page(job.canonical_url)
         snapshot = self._evidence_store.write_jobinja_job_page(
             source_job_id=source_job_id,
