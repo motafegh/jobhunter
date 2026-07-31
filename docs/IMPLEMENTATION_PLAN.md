@@ -138,22 +138,43 @@ Phase 5 will add:
 
 ## 10. Current authorized implementation
 
-P1.1 discovery is accepted. The current target is the first complete-job vertical slice covering the minimum useful parts of P1.3 and P1.4:
+P1.1 discovery is accepted. A bounded vertical slice across P1.3 and P1.4 is also accepted against five structurally varied live Jobinja advertisements:
 
 ```text
 discovered Jobinja job ID
 → validated public detail-page acquisition
 → immutable raw HTML and metadata evidence
-→ content-addressed local version
-→ deterministic extraction of explicit Jobinja fields
-→ local inspection through the CLI
+→ deterministic parser-v2 source fields
+→ semantic versioning
+→ local structural audit
+→ local CLI inspection
 ```
 
-The active commands are:
+That accepted slice remains available through:
 
 ```text
-jobhunter jobinja fetch <job-id>
+jobhunter jobinja fetch <job-id> [<job-id> ...]
+jobhunter jobinja fetch --missing --limit <count>
+jobhunter jobs list
+jobhunter jobs audit
 jobhunter jobs show <job-id>
 ```
 
-This increment must remain independent from LM Studio. It may preserve and expose explicit source fields and complete source text, but it must stop before model interpretation, responsibility classification, personal relevance, gap analysis, or career recommendations.
+The current implementation and live acceptance target is **P1.2 — bounded pagination, multiple searches, and repeat-safe daily discovery**:
+
+```text
+enabled Jobinja searches
+→ sequential rate-limited page requests
+→ raw search-page evidence
+→ canonical job identities
+→ empty-page and repeated-result-set stop conditions
+→ cross-search deduplication and provenance
+→ per-search summaries and stop reasons
+→ combined new, known, unique, overlap, and failure totals
+```
+
+P1.2 must compare repeated pages by sorted stable source job IDs rather than volatile HTML, preserve successful searches when another search fails, and remain independent from detail acquisition and LM Studio.
+
+P1.5 is only partially represented by semantic detail versions. Reposted, duplicate, refresh-due, expiration, removal, and lifecycle behavior remain incomplete and must not be described as finished.
+
+Local model interpretation, responsibility classification, personal relevance, gap analysis, career recommendations, aggregate reports, and `jobhunter run` remain outside the active increment.
