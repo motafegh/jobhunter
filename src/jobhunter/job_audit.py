@@ -119,8 +119,13 @@ class JobDetailAuditor:
             raise ValueError("limit must be between 1 and 500")
 
         JobHunterStore(self._database_path).initialize()
-        requested = tuple(dict.fromkeys(job_id.strip() for job_id in source_job_ids if job_id.strip()))
-        requested_set = set(requested)
+        requested = tuple(
+            dict.fromkeys(
+                job_id.strip()
+                for job_id in source_job_ids
+                if job_id.strip()
+            )
+        )
 
         with self._connect() as connection:
             rows = connection.execute(
@@ -146,11 +151,11 @@ class JobDetailAuditor:
             ).fetchall()
 
         by_id = {str(row["source_job_id"]): row for row in rows}
-        if requested:
-            selected_rows = [by_id[job_id] for job_id in requested if job_id in by_id]
-        else:
-            selected_rows = list(rows)
-
+        selected_rows = (
+            [by_id[job_id] for job_id in requested if job_id in by_id]
+            if requested
+            else list(rows)
+        )
         entries = tuple(_audit_row(row) for row in selected_rows[:limit])
         return JobAuditReport(entries=entries)
 
@@ -182,7 +187,10 @@ def _audit_row(row: sqlite3.Row) -> JobAuditEntry:
         findings.append(
             AuditFinding(
                 code="parser-version",
-                message=f"stored parser {parser_version!r} differs from current {PARSER_VERSION!r}",
+                message=(
+                    f"stored parser {parser_version!r} differs from "
+                    f"current {PARSER_VERSION!r}"
+                ),
             )
         )
 
@@ -213,16 +221,23 @@ def _audit_row(row: sqlite3.Row) -> JobAuditEntry:
             findings.append(
                 AuditFinding(
                     code=f"non-scalar-{field}",
-                    message=f"field {field!r} contains {type(value).__name__}, expected text",
+                    message=(
+                        f"field {field!r} contains {type(value).__name__}, "
+                        "expected text"
+                    ),
                 )
             )
             continue
+
         stripped = value.strip()
         if len(stripped) > 240 and field not in {"title", "company"}:
             findings.append(
                 AuditFinding(
                     code=f"long-scalar-{field}",
-                    message=f"field {field!r} is implausibly long ({len(stripped)} characters)",
+                    message=(
+                        f"field {field!r} is implausibly long "
+                        f"({len(stripped)} characters)"
+                    ),
                 )
             )
         if any(marker in stripped for marker in _UI_CONTAMINATION_MARKERS):
@@ -269,13 +284,16 @@ def _audit_row(row: sqlite3.Row) -> JobAuditEntry:
                 break
 
     missing_coverage_fields = tuple(
-        field for field in _COVERAGE_FIELDS if not _present(fields.get(field))
+        field
+        for field in _COVERAGE_FIELDS
+        if not _present(fields.get(field))
     )
     covered_fields = len(_COVERAGE_FIELDS) - len(missing_coverage_fields)
 
+    title = fields.get("title") or row["title_observed"]
     return JobAuditEntry(
         source_job_id=str(row["source_job_id"]),
-        title=fields.get("title") or row["title_observed"],
+        title=str(title) if title is not None else None,
         parse_status=parse_status,
         parser_version=parser_version,
         description_characters=len(description_text.strip()),
@@ -291,7 +309,9 @@ def format_job_audit(report: JobAuditReport, *, only_issues: bool = False) -> st
     """Format a compact audit suitable for terminal review."""
 
     visible_entries = tuple(
-        entry for entry in report.entries if not only_issues or entry.needs_review
+        entry
+        for entry in report.entries
+        if not only_issues or entry.needs_review
     )
     lines = [
         "Local Jobinja detail parser audit",
@@ -309,14 +329,13 @@ def format_job_audit(report: JobAuditReport, *, only_issues: bool = False) -> st
     for entry in visible_entries:
         state = "review" if entry.needs_review else "ok"
         title = entry.title or "(title unavailable)"
-        lines.append(
-            f"- {entry.source_job_id} [{state}] {title}"
-        )
+        lines.append(f"- {entry.source_job_id} [{state}] {title}")
         lines.append(
             "  "
-            f"parser={entry.parser_version}; description={entry.description_characters} chars; "
-            f"skills={entry.skill_count}; coverage={entry.covered_fields}/"
-            f"{entry.total_coverage_fields}"
+            f"parser={entry.parser_version}; "
+            f"description={entry.description_characters} chars; "
+            f"skills={entry.skill_count}; "
+            f"coverage={entry.covered_fields}/{entry.total_coverage_fields}"
         )
         if entry.missing_coverage_fields:
             lines.append(
