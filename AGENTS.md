@@ -24,22 +24,40 @@ The product specification controls intended behaviour. The architecture controls
 
 ## 3. Current scope
 
-P1.1 discovery and the first real complete-job vertical slice are accepted. The current authorized implementation is bounded detail acquisition and parser validation across representative Jobinja layouts:
+P1.1 discovery and the bounded complete-job parser-v2 slice are accepted. Five structurally varied live Jobinja advertisements have complete local details and pass the deterministic structural audit.
+
+The current authorized implementation and acceptance target is **P1.2 repeat-safe daily discovery**:
 
 ```text
-discovered Jobinja jobs
-→ local detail-status catalog
-→ explicit or missing-only bounded selection
-→ sequential rate-limited detail acquisition
-→ isolated per-job failures
-→ immutable raw evidence
-→ deterministic parser-v2 fields
-→ semantic versioning
-→ local structural parser audit
-→ local CLI inspection
+enabled Jobinja searches
+→ sequential rate-limited page acquisition
+→ immutable search-page evidence
+→ canonical job-ID extraction
+→ empty-page and repeated-result-set stopping
+→ cross-search identity deduplication
+→ discovery provenance
+→ per-search stop summaries
+→ combined new, known, unique, overlap, and failure totals
 ```
 
-The active commands are:
+The active discovery command is:
+
+```text
+jobhunter jobinja discover [--url <search-url> ...] [--pages <count>] [--show-jobs]
+```
+
+P1.2 rules:
+
+- compare repeated pages by sorted stable Jobinja job IDs, never raw HTML;
+- preserve each successfully acquired page before parsing or deciding to stop;
+- delay only between actual requests;
+- retain successful searches when another search fails;
+- keep cross-search overlap separate from combined unique-job totals;
+- report one explicit stop reason per search: `page_limit_reached`, `empty_page`, `repeated_result_set`, `page_failed`, or `invalid_search`;
+- do not use advertisement age as a pagination stop condition;
+- do not fetch job-detail pages or invoke LM Studio as part of discovery.
+
+The already accepted detail inspection commands remain available:
 
 ```text
 jobhunter jobs list
@@ -50,11 +68,11 @@ jobhunter jobs audit --only-issues
 jobhunter jobs show <job-id>
 ```
 
-Batches must remain sequential, use the configured request delay, and contain at most 50 jobs. `--missing` may select only jobs with no existing local detail version. Do not introduce unrestricted crawling or automatic refresh of every known job during this slice.
+Detail batches must remain sequential, use the configured request delay, and contain at most 50 jobs. `--missing` may select only jobs with no existing local detail version. Do not introduce unrestricted crawling or automatic refresh of every known job.
 
 The deterministic audit may flag structural extraction risks and report optional-field coverage, but it must not claim semantic correctness or employer intent. Missing optional fields alone are not parser failures.
 
-This slice may extract only explicit source fields and complete source text. It must not yet infer responsibilities, preferred versus required qualifications, personal relevance, skill gaps, or career recommendations. Those remain P1.6 and later work.
+No active increment may infer responsibilities, preferred versus required qualifications, personal relevance, skill gaps, or career recommendations. Those remain P1.6 and later work.
 
 Current work proceeds directly on `main` unless a later change creates a clear need for branch isolation.
 
