@@ -2,9 +2,11 @@
 
 ## 1. Purpose
 
-This document defines the product-level delivery order. It is not a learning roadmap and does not prescribe study sessions.
+This document defines the product-level delivery order. It is not a learning
+roadmap and does not prescribe study sessions.
 
-Detailed Phase 1 execution is controlled by [Phase 1 — Jobinja Workflow Automation Plan](PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
+Detailed Phase 1 execution is controlled by
+[Phase 1 — Jobinja Workflow Automation Plan](PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
 
 ## 2. Delivery rules
 
@@ -12,11 +14,15 @@ Detailed Phase 1 execution is controlled by [Phase 1 — Jobinja Workflow Automa
 - Keep successful acquisition independent from local-model availability.
 - Preserve raw evidence before parsing or analysis.
 - Prefer one reliable source adapter over several incomplete integrations.
+- Make source coverage configurable rather than scattering search constants.
+- Bound pages, requests, detail checks, retries, and model calls.
 - Add dependencies only for active requirements.
 - Keep failures inspectable and retryable.
-- Require deterministic tests for acquisition, identity, parsing, and persistence.
+- Require deterministic tests for configuration, acquisition, identity, parsing,
+  persistence, and orchestration.
 - Evaluate model quality separately on a manually reviewed corpus.
-- Do not add architecture or governance artifacts that do not improve implementation or operation.
+- Do not add architecture or governance artifacts that do not improve
+  implementation or operation.
 
 ## 3. Product delivery overview
 
@@ -42,26 +48,29 @@ M0 established:
 - deterministic tests and lint configuration;
 - protected local runtime data and secrets.
 
-M0 is complete. Local structured-output capability remains model-specific and must not block acquisition.
+M0 is complete. Local structured-output capability remains model-specific and
+must not block acquisition.
 
 ## 5. Phase 1 — Jobinja workflow automation
 
 ### Goal
 
-Replace and improve the user's manual process of searching Jobinja, opening jobs, copying relevant fields into files, and sending those files to an AI assistant.
+Replace and improve the user's manual process of searching Jobinja, opening
+jobs, copying relevant fields into files, and sending those files to an AI
+assistant.
 
 ### Required result
 
-A local run must:
+A local run must eventually provide:
 
 ```text
-saved Jobinja searches
-→ discover job advertisements
-→ preserve raw evidence
-→ identify new and changed postings
-→ parse known Jobinja fields
-→ analyse new or changed content locally
-→ produce individual and combined results
+saved bilingual Jobinja search configuration
+→ repeat-safe job discovery
+→ immutable raw evidence
+→ new / unchanged / changed / failed classification
+→ deterministic source-field parsing
+→ local evidence-backed analysis
+→ individual and combined results
 ```
 
 ### Delivery increments
@@ -77,7 +86,8 @@ saved Jobinja searches
 | P1.6 | Evidence-backed local LLM analysis and review states |
 | P1.7 | Individual outputs, combined analysis, and `jobhunter run` |
 
-All requirements, stop lines, records, and acceptance criteria are defined in the Phase 1 plan.
+All requirements, stop lines, records, and acceptance criteria are defined in
+the Phase 1 plan.
 
 ## 6. Phase 2 — Career taxonomy and market intelligence
 
@@ -101,7 +111,8 @@ Phase 3 will add:
 - depth-aware personal capability records;
 - project and assessment evidence;
 - recency, independence, and evidence-quality fields;
-- knowledge, practice, depth, integration, evidence, presentation, and constraint gap classes;
+- knowledge, practice, depth, integration, evidence, presentation, and
+  constraint gap classes;
 - job-level and role-level comparisons;
 - explicit unknown and unassessed states.
 
@@ -122,7 +133,8 @@ Phase 4 will convert reliable market and personal evidence into bounded actions:
 - investigate;
 - prepare application evidence.
 
-Every recommendation must show supporting postings, personal evidence, uncertainty, and the condition that would change it.
+Every recommendation must show supporting postings, personal evidence,
+uncertainty, and the condition that would change it.
 
 ## 9. Phase 5 — Trends and operational hardening
 
@@ -136,43 +148,110 @@ Phase 5 will add:
 - performance and failure-recovery testing;
 - optional local interface only if CLI operation becomes inefficient.
 
-## 10. Current authorized implementation
+## 10. Accepted implementation
 
-M0, P1.1, and P1.2 are accepted. Repeat-safe discovery was validated live across two two-page searches with 79 combined unique jobs, one cross-search overlap, and zero new jobs on the identical rerun.
+The following are accepted on `main`:
 
-A bounded parser-v2 slice across P1.3 and P1.4 is also accepted against fifteen structurally varied live Jobinja advertisements. All fifteen latest semantic versions pass the deterministic local structural audit.
+- M0 local foundation;
+- P1.1 discovery foundation;
+- P1.2 bounded pagination, multiple searches, cross-search deduplication, and
+  repeat-safe discovery;
+- operational detail acquisition for explicit, missing-only, and refresh-due
+  selections;
+- immutable raw search and detail evidence;
+- parser-v2 deterministic Jobinja extraction;
+- semantic content versioning;
+- persistent successful and failed fetch observations;
+- local job, check-history, and parser-audit inspection.
 
-The current implementation and live acceptance target is the operational core of **P1.3 — job-detail acquisition and immutable evidence**:
+Live evidence currently includes:
+
+- two two-page searches producing 79 unique jobs and one cross-search overlap;
+- zero new jobs on the identical discovery rerun;
+- fifteen structurally varied complete Jobinja advertisements;
+- fifteen of fifteen latest versions passing the deterministic structural audit;
+- unchanged refresh checks producing new observations without false versions.
+
+## 11. Current authorized implementation
+
+The current authorized increment is **configurable bilingual acquisition
+planning and acquisition-only synchronization**.
+
+The active path is:
 
 ```text
-explicit, missing-only, or refresh-due bounded selection
-→ sequential rate-limited detail requests
-→ immutable raw detail HTML and metadata
-→ deterministic parser-v2 fields
-→ semantic new / unchanged decision
-→ persistent successful or failed fetch observation
-→ inspectable check history
-→ bounded refresh scheduling
+built-in profiles and packs
++ custom Persian/English keyword groups
++ optional raw Jobinja URLs
+→ normalized term and URL deduplication
+→ explicit search plan
+→ search limit, cyclic offset, page limit, and global request budget
+→ repeat-safe discovery
+→ bounded missing and refresh-due detail selection
+→ immutable evidence
+→ deterministic parsing and semantic versioning
+→ fetch observations
+→ structural parser audit
+→ one acquisition-only sync summary
 ```
 
-The active commands are:
+Active commands:
 
 ```text
-jobhunter jobinja fetch <job-id> [<job-id> ...]
-jobhunter jobinja fetch --missing --limit <count>
-jobhunter jobinja fetch --refresh-due --older-than-hours <hours> --limit <count>
-jobhunter jobs checks <job-id> [--limit <count>]
+jobhunter jobinja catalog
+jobhunter jobinja plan
+jobhunter jobinja discover
+jobhunter jobinja sync
+jobhunter jobinja fetch
 jobhunter jobs list
+jobhunter jobs show
+jobhunter jobs checks
 jobhunter jobs audit
-jobhunter jobs show <job-id>
 ```
 
-This increment must keep three records distinct:
+Acceptance requires:
 
-- semantic versions describe meaningful advertisement content;
-- raw evidence identifies one exact HTTP response;
-- fetch observations record when a check happened, whether it changed, or why it failed.
+- built-in profile and pack identifiers are validated;
+- Persian/Arabic variants and zero-width joiners deduplicate predictably;
+- original display terms remain visible;
+- custom groups and exclusions require no code changes;
+- keyword terms generate canonical Jobinja search URLs;
+- raw URLs remain supported for source-owned filters;
+- one-run selectors do not silently mix configured searches;
+- search windows are stable under the same configuration and version;
+- the global request budget is enforced inside discovery;
+- budget exhaustion sends no additional request and is not treated as failure;
+- `sync` remains bounded to 50 combined detail checks;
+- `sync` preserves successful earlier stages when later stages need attention;
+- no acquisition command invokes LM Studio.
 
-Refresh-due selection must use the latest fetch observation and fall back to a semantic-version timestamp for legacy data. It must remain bounded, sequential, user-controlled, and independent from LM Studio.
+## 12. Immediate next implementation after acceptance
 
-Challenge/login classification, retry-backoff refinement, expiration/removal decisions, repost and duplicate-content classification, and full lifecycle transitions remain incomplete. P1.4 still requires broader language and expired-page fixtures before completion. Local model interpretation, responsibility classification, personal relevance, gap analysis, career recommendations, aggregate reports, and `jobhunter run` remain outside the active increment.
+After local lint, tests, search-plan inspection, and a bounded live sync validate
+this increment, the next target is completing remaining P1.3/P1.5 source and
+lifecycle states:
+
+- challenge and login-page detection;
+- explicit irrelevant-page detection;
+- cautious expired/inaccessible classification;
+- retry timing and backoff policy;
+- last-successful-fetch and consecutive-failure summaries;
+- lifecycle transitions that require more than one weak signal;
+- duplicate and repost classification only after corpus evidence justifies it.
+
+P1.6 local analysis must not begin until acquisition failures and source-page
+classifications are inspectable enough to protect the analysis corpus.
+
+## 13. Remaining outside current scope
+
+The current increment must not claim completion of:
+
+- challenge/login/expired-page classification;
+- refined retry and lifecycle policy;
+- repost similarity and duplicate-content resolution;
+- local model responsibility and requirement interpretation;
+- required-versus-preferred classification;
+- combined market reports;
+- personal relevance and capability gaps;
+- career recommendations;
+- final `jobhunter run` orchestration including analysis and reporting.
