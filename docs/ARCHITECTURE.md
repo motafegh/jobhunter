@@ -2,400 +2,335 @@
 
 ## 1. Architectural direction
 
-JobHunter will begin as a **local modular monolith** written in Python.
+JobHunter is a **local modular monolith** written in Python.
 
-This means one deployable local application with explicit internal module boundaries. It avoids premature microservices while preserving the option to separate components later if operational evidence requires it.
+It is one local application with explicit internal boundaries for acquisition, evidence, persistence, inference, parsing, analysis, and reporting. Components should be separated only when the code has a real current responsibility; empty speculative packages are not created to imitate a future architecture diagram.
 
-The initial interaction surface is a command-line interface. A local web interface may be added after the ingestion, extraction, persistence, and review workflows are stable.
+The initial interaction surface is a command-line interface. A local web interface may be added only when CLI inspection and review become inefficient.
 
 ## 2. Architectural principles
 
-1. Raw evidence is stored before interpretation.
-2. Deterministic processing is separated from model-dependent processing.
-3. Network acquisition, parsing, inference, persistence, and analysis have explicit boundaries.
-4. LM Studio is accessed through an internal inference-provider interface.
-5. Every pipeline stage is resumable and records its outcome.
-6. Source-specific behaviour lives in adapters.
-7. SQLite is the initial system of record; raw source bodies remain in a content-addressed local evidence store.
-8. User corrections take precedence over later automated guesses unless explicitly reconsidered.
-9. Untrusted job content is data, never executable instruction.
-10. Optional complexity must be justified by observed product need.
+1. Raw evidence is stored before parsing or interpretation.
+2. Successful acquisition does not depend on LM Studio availability.
+3. Deterministic processing is separated from model-dependent processing.
+4. Source-specific behaviour lives in explicit adapters.
+5. Network acquisition, evidence writing, persistence, inference, and analysis have clear boundaries.
+6. SQLite is the initial system of record.
+7. Local source files remain inspectable outside normalized database records.
+8. Every repeated operation is designed for idempotency.
+9. User corrections will take precedence over later automated guesses.
+10. Acquired content is untrusted data, never executable instruction.
+11. Optional complexity must be justified by observed product need.
 
 ## 3. High-level flow
 
 ```text
-Configured sources / pasted text / uploaded files
-                    |
-                    v
-            Acquisition adapters
-                    |
-                    v
-       Raw snapshot + metadata + content hash
-                    |
-                    v
-      Cleaning / segmentation / deduplication
-                    |
-                    v
-     LM Studio inference-provider boundary
-                    |
-                    v
-       Schema validation and evidence checks
-                    |
-                    v
-       Normalized job and requirement records
-                    |
-          +---------+----------+
-          |                    |
-          v                    v
-  Human review queue    Aggregate analysis
-                               |
-                               v
-                   Personal gap and action model
-                               |
-                               v
-                         Daily report
+Configured source searches
+          ↓
+Source-specific acquisition
+          ↓
+Raw page + acquisition metadata
+          ↓
+Candidate identity discovery
+          ↓
+Repeat-safe SQLite records
+          ↓
+Job-detail acquisition
+          ↓
+Deterministic source-field parsing
+          ↓
+Original + normalized job document
+          ↓
+Local inference-provider boundary
+          ↓
+Schema and evidence validation
+          ↓
+Individual and combined analysis
+          ↓
+Daily report and review
 ```
 
-## 4. Initial runtime components
+Each completed stage remains valid if a later stage fails. For example, an acquired posting remains stored in `pending_analysis` when LM Studio is unavailable.
 
-### 4.1 CLI application
+## 4. Current runtime components
 
-Responsibilities:
+### 4.1 CLI
 
-- initialize local configuration and storage;
-- verify LM Studio connectivity;
-- ingest pasted text, files, and URLs;
-- run enabled sources;
-- inspect run summaries;
-- inspect, approve, and correct records;
-- export and back up data.
-
-Tentative command shape:
+Current commands:
 
 ```text
 jobhunter init
 jobhunter doctor
-jobhunter ingest text
-jobhunter ingest url <url>
-jobhunter run
-jobhunter runs show <run-id>
-jobhunter review
-jobhunter report daily
+jobhunter doctor --smoke
+jobhunter jobinja discover
 ```
 
-The exact command syntax may change during implementation.
-
-### 4.2 Configuration module
-
-Configuration should come from a local file plus environment-variable overrides.
-
-Initial settings include:
-
-- database path;
-- raw evidence directory;
-- LM Studio base URL;
-- model identifier;
-- inference timeout;
-- retry limits;
-- maximum input size;
-- enabled sources;
-- user-agent string;
-- per-source request limits;
-- logging level.
-
-Secrets or tokens must not be committed.
-
-### 4.3 Source adapters
-
-Each adapter implements a common contract such as:
+The intended Phase 1 endpoint is:
 
 ```text
-list_candidates() -> candidate references
-fetch(candidate) -> raw acquisition result
-normalize_identity(raw) -> source-specific identity hints
+jobhunter run
 ```
 
-Initial adapters:
+Command handlers assemble application services. They should not contain source parsing, direct SQL, or model-specific protocol logic.
 
-- pasted text;
-- local file;
-- generic permitted public URL.
+### 4.2 Typed configuration
 
-Later adapters may support specific public Applicant Tracking System APIs or company career pages.
+Configuration is loaded from a local TOML file with selected environment-variable overrides.
 
-Browser automation is optional and should only be introduced for approved sources that genuinely require rendered content.
+Current settings include:
+
+- database path;
+- evidence directory;
+- LM Studio base URL and model;
+- inference timeout and retry limits;
+- Jobinja user agent;
+- Jobinja request timeout and delay;
+- enabled Jobinja search definitions;
+- maximum pages per search;
+- logging level.
+
+The real local configuration and secrets remain outside Git.
+
+### 4.3 Jobinja source adapter
+
+The first source adapter is Jobinja-specific.
+
+Its current responsibilities are:
+
+- validate public Jobinja search URLs;
+- normalize search pagination;
+- fetch pages with bounded sequential HTTP requests;
+- validate final redirect hosts and paths;
+- reject unsupported response types;
+- identify Jobinja job links;
+- remove tracking query parameters;
+- extract the source job code and company slug;
+- deduplicate repeated links on one page.
+
+The adapter uses HTTPX and Python's standard `HTMLParser` for P1.1. A focused external HTML parser should be added only when job-detail field extraction demonstrates that the standard parser is insufficient.
+
+Browser automation remains a fallback only for approved content that ordinary HTTP acquisition cannot retrieve.
 
 ### 4.4 Evidence store
 
-The evidence store preserves source bodies outside normalized tables.
+The evidence store writes raw response bytes before downstream parsing.
 
-Suggested layout:
+Current layout:
 
 ```text
 data/
   evidence/
-    sha256-prefix/
-      <full-sha256>.html
-      <full-sha256>.json
-      <full-sha256>.txt
-      <full-sha256>.pdf
+    jobinja/
+      search-pages/
+        <search-name-and-hash>/
+          <timestamp>_p<page>_<hash>.html
+          <timestamp>_p<page>_<hash>.json
 ```
 
-The database stores the hash, media type, relative path, retrieval time, source URL, and related acquisition record.
+The JSON sidecar records:
 
-Identical content is stored once and can be referenced by multiple acquisition attempts.
+- source and evidence kind;
+- search name and page;
+- requested and final URLs;
+- retrieval time;
+- selected HTTP headers;
+- status code;
+- SHA-256 content hash;
+- byte count;
+- raw content path.
 
-### 4.5 Persistence layer
+Writes use a temporary file followed by atomic replacement. A failed metadata write removes the associated raw file rather than leaving an ambiguous partial snapshot.
 
-Initial database: SQLite.
+Later content-addressed deduplication may reduce repeated raw storage after actual corpus growth justifies it.
 
-Reasons:
+### 4.5 SQLite persistence
 
-- local deployment;
-- transactional integrity;
-- simple backup;
-- sufficient scale for a personal job corpus;
-- strong support from Python tooling;
-- no separate service to operate.
+SQLite is accessed through a small repository boundary using Python's standard `sqlite3` module.
 
-Use schema migrations from the beginning. Database access should be isolated behind repositories or service boundaries rather than spread through command handlers.
+Current P1.1 tables represent:
 
-PostgreSQL is not an initial requirement. Migration should occur only if measured concurrency, scale, or analytical needs justify it.
+- configured source searches;
+- acquisition runs;
+- search-page snapshots;
+- logical job postings;
+- search/page discoveries.
 
-### 4.6 Cleaning and document preparation
+This direct approach avoids introducing an Object-Relational Mapper and migration framework before schema evolution requires them.
 
-This component:
+Schema migration tooling must be introduced before incompatible production schema changes, not merely because it may be useful later.
 
-- detects content type and encoding;
-- removes navigation, scripts, style, cookie banners, and repeated boilerplate where safe;
-- preserves headings and list structure;
-- records the relationship between cleaned text and raw source;
-- segments oversized documents without losing section context;
-- identifies obvious acquisition failures such as login pages or bot challenges.
+### 4.6 Discovery orchestration
 
-Cleaning must not overwrite raw evidence.
-
-### 4.7 Duplicate and version resolver
-
-Duplicate handling proceeds in layers:
-
-1. exact source identifier match;
-2. canonical URL match;
-3. exact content-hash match;
-4. normalized text fingerprint;
-5. later, bounded semantic similarity for repost detection.
-
-The resolver must preserve the distinction between repeated acquisition, edited posting, and repost.
-
-### 4.8 Inference-provider boundary
-
-The application calls local models through an interface similar to:
+The Jobinja discovery service coordinates:
 
 ```text
-extract_job(document, schema_version, prompt_version) -> extraction_result
-health_check() -> provider_status
-list_models() -> available_models
+validated searches
+→ bounded fetch
+→ evidence write
+→ deterministic link extraction
+→ job upsert
+→ discovery record
+→ run summary
 ```
 
-The first provider uses LM Studio through a configurable local HTTP endpoint.
+It receives its HTTP client, evidence store, database store, clock, and sleep function through explicit constructor arguments. This keeps network, time, and delay behaviour testable without contacting Jobinja.
 
-Implementation requirements:
+### 4.7 Job-detail acquisition
 
-- no LM Studio-specific calls outside the provider module;
-- configurable model and base URL;
+P1.3 will add a separate detail-acquisition path. It will select new or refresh-due postings, preserve raw detail HTML, and classify challenge, login, invalid, expired, and inaccessible pages.
+
+Search discovery must not become responsible for parsing complete job descriptions.
+
+### 4.8 Deterministic Jobinja parser
+
+P1.4 will extract Jobinja's explicitly labelled fields using deterministic code. It will preserve:
+
+- original field text;
+- complete description content;
+- dedicated source skill tags;
+- Persian, English, and mixed language;
+- a separate normalized analysis copy.
+
+It will exclude navigation, similar-job cards, account controls, and footer content.
+
+### 4.9 Identity and versions
+
+Identity resolution proceeds in layers:
+
+1. Jobinja source job code;
+2. canonical source URL;
+3. raw content hash;
+4. normalized content fingerprint;
+5. later, bounded repost similarity when justified.
+
+Repeated acquisition, edited posting, cross-search discovery, and reposting remain distinct concepts.
+
+### 4.10 Inference-provider boundary
+
+LM Studio remains behind the internal inference-provider interface.
+
+Provider responsibilities include:
+
+- connectivity and model discovery;
 - bounded timeout and retries;
-- structured-output request using a JSON Schema where supported;
-- validation with local application models after receipt;
-- storage of model identifier, parameters, schema version, prompt version, request timing, and raw response;
-- no automatic trust in schema-conforming content without evidence checks.
+- structured-output requests;
+- response diagnostics;
+- model identity reporting.
 
-### 4.9 Extraction pipeline
+No acquisition component imports or calls LM Studio.
 
-Recommended initial stages:
+P1.6 will add real job-analysis requests with versioned prompts and schemas, raw request/response evidence, local validation, and source-evidence requirements.
 
-1. deterministic metadata extraction from URL or embedded structured data;
-2. document cleaning;
-3. section detection;
-4. LLM extraction into a versioned schema;
-5. local schema validation;
-6. evidence-span verification;
-7. normalization preparation;
-8. persistence;
-9. review classification.
+### 4.11 Analysis and reporting
 
-A record enters automatic acceptance only when required fields validate and important claims have evidence. Otherwise it enters review.
+Analysis operates only on validated posting versions explicitly included in a corpus.
 
-### 4.10 Taxonomy and normalization
+Phase 1 reporting will provide:
 
-The taxonomy layer stores:
+- individual job analysis;
+- repeated responsibilities and skills;
+- required versus preferred distinctions;
+- role-family patterns;
+- filters by search, date, language, company, location, and state;
+- links back to posting and evidence records.
 
-- canonical concept;
-- concept type;
-- aliases;
-- broader and narrower relationships;
-- related concepts;
-- external taxonomy identifiers when useful;
-- user-approved mappings;
-- mapping confidence and provenance.
+Personal capability comparison remains a later product phase.
 
-The original employer wording is always retained.
-
-### 4.11 Analysis engine
-
-The analysis engine operates only on accepted or explicitly included records.
-
-It will eventually calculate:
-
-- posting and responsibility counts;
-- required/preferred distributions;
-- role and seniority distributions;
-- concept co-occurrence;
-- expected-depth signals;
-- trends over defined time windows;
-- personal capability gaps;
-- recommendation priorities.
-
-Derived results must record the dataset filter and calculation version used.
-
-### 4.12 Review interface
-
-The initial review interface may be CLI-based. It must support:
-
-- viewing original evidence beside extraction;
-- approving or rejecting a field;
-- correcting text or classification;
-- merging aliases;
-- mapping to a different canonical concept;
-- marking a source document invalid;
-- recording the reason for a correction.
-
-A local browser-based review UI may replace or supplement the CLI later.
-
-## 5. Proposed repository structure
+## 5. Current repository structure
 
 ```text
 jobhunter/
   pyproject.toml
   README.md
+  AGENTS.md
   docs/
   src/
     jobhunter/
       __init__.py
       cli.py
       config.py
-      domain/
-      application/
-      acquisition/
-        adapters/
-      evidence/
+      doctor.py
+      evidence.py
+      jobinja_discovery.py
+      storage.py
       inference/
-        providers/
-      extraction/
-      normalization/
-      analysis/
-      review/
-      persistence/
-      reporting/
+      sources/
+        jobinja.py
   tests/
-    unit/
-    integration/
-    fixtures/
   data/                 # ignored local runtime data
-  config/               # example configuration only
 ```
 
-The exact folder tree should emerge with implementation. Empty speculative packages should not be created merely to mirror this diagram.
+The tree expands only when active responsibilities require it.
 
-## 6. Initial technology direction
+## 6. Current technology choices
 
-The first implementation should use a compact Python stack:
-
-- Python;
-- `uv` or another single project/dependency manager;
-- Pydantic for configuration and schema validation;
-- SQLAlchemy with Alembic for SQLite persistence and migrations;
-- HTTPX for HTTP access;
-- a focused HTML parser;
-- Typer or equivalent for the CLI;
+- Python 3.12 or newer;
+- Pydantic for typed configuration and later schemas;
+- HTTPX for bounded HTTP access and test transports;
+- standard-library `HTMLParser` for initial search-link extraction;
+- standard-library `sqlite3` for current persistence;
+- `argparse` for the current CLI;
 - pytest for tests;
-- Ruff for formatting and linting;
-- structured local logging.
+- Ruff for linting;
+- structured standard-library logging.
 
-A browser engine, embeddings library, vector database, task queue, web framework, or frontend framework is added only when a vertical slice requires it.
+Not currently required:
 
-## 7. Scheduling
+- SQLAlchemy or Alembic;
+- Typer;
+- browser automation;
+- asynchronous task queues;
+- web frameworks;
+- embeddings libraries;
+- vector databases;
+- frontend frameworks.
 
-The application should first support a reliable manual `jobhunter run` command.
+## 7. Security boundaries
 
-After manual runs are stable, daily execution can be scheduled through the operating system:
+- Use public Jobinja pages only.
+- Do not automate login or applications.
+- Do not store platform credentials or cookies.
+- Do not bypass CAPTCHA, access controls, or blocking.
+- Validate final redirect hosts.
+- Use bounded pages, timeouts, and delays.
+- Never execute acquired scripts.
+- Treat page text as untrusted prompt data.
+- Do not grant the extraction model shell, filesystem, browser, or unrestricted network tools.
+- Keep local runtime data and personal evidence outside version control.
 
-- Windows Task Scheduler;
-- cron;
-- systemd timer;
-- another local scheduler selected by the user.
+## 8. Testing strategy
 
-Scheduling remains outside the core acquisition logic. The command itself must be safe to rerun.
+### Deterministic unit and service tests
 
-## 8. Security boundaries
+- Jobinja URL validation and canonicalization;
+- pagination query preservation;
+- job-link extraction and deduplication;
+- raw evidence writing;
+- SQLite identity idempotency;
+- cross-run new versus known classification;
+- configuration validation;
+- source and provider failure reporting.
 
-- Bind LM Studio to localhost by default.
-- Treat retrieved content as untrusted input.
-- Never execute scripts from acquired pages.
-- Never pass page text as system or developer instructions.
-- Escape or isolate source text inside prompts.
-- Do not expose filesystem, shell, browser, or network tools to the extraction model.
-- Enforce maximum response and input sizes.
-- Store no platform passwords, cookies, or session tokens for initial sources.
-- Prevent URLs from targeting local services or private network ranges unless explicitly approved.
-- Keep runtime data and personal capability evidence out of version control.
+### Network tests
 
-## 9. Observability
+Normal tests use HTTPX mock transports or recorded fixtures. They do not contact Jobinja or require LM Studio.
 
-Each run should emit structured events containing:
+A live Jobinja probe and a live LM Studio smoke test remain explicit local operations.
 
-- run identifier;
-- stage;
-- source identifier;
-- posting identifier when known;
-- duration;
-- outcome;
-- retry count;
-- error class;
-- model and schema version for inference;
-- counts of new, changed, unchanged, failed, accepted, and review-required records.
+### Later golden analysis tests
 
-Logs should aid diagnosis without duplicating entire personal records or confidential configuration.
+Real Persian, English, and mixed Jobinja examples will form a manually reviewed corpus for field parsing and model extraction evaluation.
 
-## 10. Testing strategy
+## 9. Current architecture decision
 
-### Unit tests
-
-- canonical URL handling;
-- hashing and evidence storage;
-- deduplication rules;
-- schema validation;
-- confidence and review rules;
-- taxonomy mapping;
-- priority calculations.
-
-### Integration tests
-
-- SQLite migrations;
-- evidence store plus database transaction flow;
-- HTTP adapter against recorded fixtures;
-- LM Studio provider against a stub server;
-- optional live LM Studio smoke test marked separately.
-
-### Golden extraction tests
-
-A small manually reviewed corpus should compare expected versus actual extraction fields. Model changes must not be accepted solely because output appears plausible.
-
-## 11. Current architecture decision
-
-Build the smallest complete local pipeline first:
+The active complete slice is:
 
 ```text
-input -> raw evidence -> cleaning -> LM Studio -> schema validation -> SQLite -> inspectable result
+Jobinja search URL
+→ raw search-page evidence
+→ canonical job identities
+→ repeat-safe SQLite discovery
+→ CLI summary
 ```
 
-No aggregate career recommendation is trustworthy until this path is repeatable and auditable.
+The next slice extends stored identities into raw job-detail evidence. Full LLM analysis begins only after acquisition and deterministic source parsing work against real Jobinja pages.
