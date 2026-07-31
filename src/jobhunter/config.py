@@ -10,6 +10,12 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from jobhunter.search_registry import (
+    ExpandedKeywordSearch,
+    expand_keyword_searches,
+    normalize_search_term,
+    resolve_pack_names,
+)
 from jobhunter.sources import JobinjaUrlError, canonicalize_search_url
 
 
@@ -18,7 +24,7 @@ class ConfigLoadError(RuntimeError):
 
 
 class JobinjaSearchDefinition(BaseModel):
-    """One user-controlled Jobinja search executed by discovery runs."""
+    """One user-controlled raw Jobinja search URL."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -36,6 +42,39 @@ class JobinjaSearchDefinition(BaseModel):
             self.url = canonicalize_search_url(self.url)
         except JobinjaUrlError as exc:
             raise ValueError(str(exc)) from exc
+        return self
+
+
+class JobinjaKeywordGroupDefinition(BaseModel):
+    """One custom bilingual or domain-specific Jobinja keyword group."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    terms: list[str]
+    enabled: bool = True
+    max_pages: int = Field(default=1, ge=1, le=50)
+
+    @model_validator(mode="after")
+    def normalize(self) -> JobinjaKeywordGroupDefinition:
+        self.name = self.name.strip()
+        if not self.name:
+            raise ValueError("Jobinja keyword group name must not be empty")
+
+        unique_terms: list[str] = []
+        seen: set[str] = set()
+        for raw_term in self.terms:
+            term = " ".join(raw_term.split())
+            normalized = normalize_search_term(term)
+            if not normalized or normalized in seen:
+                continue
+            seen.add(normalized)
+            unique_terms.append(term)
+        if not unique_terms:
+            raise ValueError("Jobinja keyword group must contain at least one term")
+        if len(unique_terms) > 200:
+            raise ValueError("Jobinja keyword group may contain at most 200 unique terms")
+        self.terms = unique_terms
         return self
 
 
@@ -62,6 +101,18 @@ class Settings(BaseModel):
     jobinja_request_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     jobinja_request_delay_seconds: float = Field(default=1.0, ge=0, le=60)
     jobinja_searches: list[JobinjaSearchDefinition] = Field(default_factory=list)
+    jobinja_search_profiles: list[str] = Field(default_factory=list)
+    jobinja_search_packs: list[str] = Field(default_factory=list)
+    jobinja_keyword_groups: list[JobinjaKeywordGroupDefinition] = Field(
+        default_factory=list
+    )
+    jobinja_excluded_terms: list[str] = Field(default_factory=list)
+    jobinja_default_keyword_max_pages: int = Field(default=1, ge=1, le=50)
+    jobinja_search_request_budget: int = Field(default=40, ge=1, le=500)
+    jobinja_max_expanded_searches: int = Field(default=100, ge=1, le=500)
+    jobinja_sync_missing_limit: int = Field(default=10, ge=0, le=50)
+    jobinja_sync_refresh_limit: int = Field(default=5, ge=0, le=50)
+    jobinja_refresh_after_hours: float = Field(default=24.0, gt=0, le=8760)
 
     log_level: str = "INFO"
 
@@ -99,7 +150,55 @@ class Settings(BaseModel):
                 raise ValueError(f"Duplicate Jobinja search name: {search.name!r}")
             search_names.add(normalized_name)
 
+        group_names: set[str] = set()
+        for group in self.jobinja_keyword_groups:
+            normalized_name = group.name.casefold()
+            if normalized_name in group_names:
+                raise ValueError(f"Duplicate Jobinja keyword group name: {group.name!r}")
+            group_names.add(normalized_name)
+
+        self.jobinja_search_profiles = list(
+            dict.fromkeys(name.strip() for name in self.jobinja_search_profiles if name.strip())
+        )
+        self.jobinja_search_packs = list(
+            dict.fromkeys(name.strip() for name in self.jobinja_search_packs if name.strip())
+        )
+        try:
+            resolve_pack_names(
+                pack_names=tuple(self.jobinja_search_packs),
+                profile_names=tuple(self.jobinja_search_profiles),
+            )
+        except ValueError as exc:
+            raise ValueError(str(exc)) from exc
+
+        excluded_terms: list[str] = []
+        seen_excluded: set[str] = set()
+        for raw_term in self.jobinja_excluded_terms:
+            term = " ".join(raw_term.split())
+            normalized = normalize_search_term(term)
+            if not normalized or normalized in seen_excluded:
+                continue
+            seen_excluded.add(normalized)
+            excluded_terms.append(term)
+        self.jobinja_excluded_terms = excluded_terms
         return self
+
+    def expanded_keyword_searches(self) -> tuple[ExpandedKeywordSearch, ...]:
+        """Expand configured profiles, packs, and custom groups."""
+
+        custom_groups = tuple(
+            (group.name, tuple(group.terms), group.max_pages)
+            for group in self.jobinja_keyword_groups
+            if group.enabled
+        )
+        searches = expand_keyword_searches(
+            pack_names=tuple(self.jobinja_search_packs),
+            profile_names=tuple(self.jobinja_search_profiles),
+            custom_groups=custom_groups,
+            excluded_terms=tuple(self.jobinja_excluded_terms),
+            default_max_pages=self.jobinja_default_keyword_max_pages,
+        )
+        return searches[: self.jobinja_max_expanded_searches]
 
     @classmethod
     def load(cls, config_path: str | Path | None = None) -> Settings:
@@ -148,6 +247,11 @@ class Settings(BaseModel):
                 "jobinja_request_timeout_seconds"
             ),
             "JOBHUNTER_JOBINJA_REQUEST_DELAY_SECONDS": "jobinja_request_delay_seconds",
+            "JOBHUNTER_JOBINJA_SEARCH_REQUEST_BUDGET": "jobinja_search_request_budget",
+            "JOBHUNTER_JOBINJA_MAX_EXPANDED_SEARCHES": "jobinja_max_expanded_searches",
+            "JOBHUNTER_JOBINJA_SYNC_MISSING_LIMIT": "jobinja_sync_missing_limit",
+            "JOBHUNTER_JOBINJA_SYNC_REFRESH_LIMIT": "jobinja_sync_refresh_limit",
+            "JOBHUNTER_JOBINJA_REFRESH_AFTER_HOURS": "jobinja_refresh_after_hours",
             "JOBHUNTER_LOG_LEVEL": "log_level",
         }
         for environment_name, field_name in environment_fields.items():
