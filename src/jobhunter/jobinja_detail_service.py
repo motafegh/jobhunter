@@ -2,8 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from datetime import UTC, datetime
+from typing import Any
 
 from jobhunter.evidence import EvidenceStore
 from jobhunter.jobinja_details import (
@@ -60,6 +63,8 @@ class JobinjaDetailService:
             captured_at=fetched_at,
         )
         parsed = parse_jobinja_detail(page.text)
+        fields = parsed.to_dict()
+        semantic_sha256 = _semantic_sha256(fields)
         parse_status = _parse_status(parsed)
         result = self._store.record_job_detail(
             job_posting_id=job.id,
@@ -68,11 +73,12 @@ class JobinjaDetailService:
             final_url=page.final_url,
             status_code=page.status_code,
             content_sha256=snapshot.content_sha256,
+            semantic_sha256=semantic_sha256,
             evidence_path=snapshot.content_path,
             metadata_path=snapshot.metadata_path,
             parser_version=PARSER_VERSION,
             parse_status=parse_status,
-            fields=parsed.to_dict(),
+            fields=fields,
         )
         return JobDetailFetchSummary(
             source_job_id=source_job_id,
@@ -99,6 +105,23 @@ class JobinjaDetailService:
         return detail
 
 
+def _semantic_sha256(fields: dict[str, Any]) -> str:
+    """Hash stable extracted source fields, excluding parser-only metadata."""
+
+    semantic_fields = {
+        key: value
+        for key, value in fields.items()
+        if key not in {"language", "parser_version"}
+    }
+    canonical = json.dumps(
+        semantic_fields,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
 def _parse_status(detail: ParsedJobDetail) -> str:
     if detail.title and detail.description:
         return "parsed"
@@ -111,7 +134,7 @@ def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
     version_state = (
         "new content version"
         if summary.is_new_version
-        else "unchanged content"
+        else "unchanged semantic content"
     )
     return "\n".join(
         [
@@ -183,7 +206,8 @@ def format_job_detail(detail: JobDetailView) -> str:
             "",
             f"Source URL: {detail.final_url}",
             f"Fetched at: {detail.fetched_at}",
-            f"Content SHA-256: {detail.content_sha256}",
+            f"Semantic SHA-256: {detail.semantic_sha256}",
+            f"Raw HTML SHA-256: {detail.content_sha256}",
             f"Raw evidence: {detail.evidence_path}",
             f"Metadata: {detail.metadata_path}",
         ]
