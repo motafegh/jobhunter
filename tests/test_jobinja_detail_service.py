@@ -9,16 +9,25 @@ from jobhunter.sources import DiscoveredJobLink, JobinjaClient
 from jobhunter.storage import JobHunterStore
 
 
-def test_fetches_preserves_and_reuses_unchanged_job_detail(tmp_path: Path) -> None:
+def test_fetches_preserves_and_reuses_semantically_unchanged_job_detail(
+    tmp_path: Path,
+) -> None:
     job_url = "https://jobinja.ir/companies/acme/jobs/abc1/python-developer"
-    html = b"""
-    <html><head><script type="application/ld+json">
-    {"@type":"JobPosting","title":"Python Developer","description":"<p>Build APIs</p>",
-     "hiringOrganization":{"name":"Acme"},"employmentType":"FULL_TIME"}
-    </script></head><body><h1>Python Developer</h1></body></html>
-    """
+    request_count = 0
 
     def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal request_count
+        request_count += 1
+        html = f"""
+        <html><head>
+        <meta name="csrf-token" content="dynamic-{request_count}">
+        <script type="application/ld+json">
+        {{"@type":"JobPosting","title":"Python Developer",
+          "description":"<p>Build APIs</p>",
+          "hiringOrganization":{{"name":"Acme"}},
+          "employmentType":"FULL_TIME"}}
+        </script></head><body><h1>Python Developer</h1></body></html>
+        """.encode()
         return httpx.Response(
             200,
             request=request,
@@ -55,6 +64,9 @@ def test_fetches_preserves_and_reuses_unchanged_job_detail(tmp_path: Path) -> No
     assert second.is_new_version is False
     assert first.version_id == second.version_id
     assert Path(first.evidence_path).is_file()
+    assert Path(second.evidence_path).is_file()
+    assert first.evidence_path != second.evidence_path
+    assert store.count_job_detail_versions("abc1") == 1
     assert detail.fields["title"] == "Python Developer"
     assert detail.fields["company"] == "Acme"
     assert detail.fields["description"] == "Build APIs"
