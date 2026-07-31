@@ -75,6 +75,25 @@ def test_extracts_and_deduplicates_job_links() -> None:
     assert links[1].observed_text == "مهندس امنیت"
 
 
+def test_recovers_title_from_later_duplicate_link() -> None:
+    html = """
+    <article>
+      <a href="/companies/acme/jobs/abc1/python-developer">
+        <img src="logo.png" alt="">
+      </a>
+      <a href="/companies/acme/jobs/abc1/python-developer">
+        توسعه دهنده پایتون
+      </a>
+    </article>
+    """
+
+    links = extract_job_links(html, base_url="https://jobinja.ir/jobs")
+
+    assert len(links) == 1
+    assert links[0].source_job_id == "abc1"
+    assert links[0].observed_text == "توسعه دهنده پایتون"
+
+
 def test_fetches_public_search_page_with_expected_headers() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         assert request.url.host == "jobinja.ir"
