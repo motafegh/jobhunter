@@ -53,6 +53,7 @@ class DiscoverySummary:
     cross_search_overlaps: int
     request_budget: int
     requests_attempted: int
+    discovered_job_ids: tuple[str, ...]
     search_summaries: tuple[SearchDiscoverySummary, ...]
     failures: tuple[str, ...]
     newly_discovered: tuple[DiscoveredJobLink, ...]
@@ -271,6 +272,7 @@ class JobinjaDiscoveryService:
             cross_search_overlaps=cross_search_overlaps,
             request_budget=self._request_budget,
             requests_attempted=requests_attempted,
+            discovered_job_ids=tuple(run_jobs),
             search_summaries=tuple(search_summaries),
             failures=tuple(failures),
             newly_discovered=tuple(newly_discovered),
