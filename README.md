@@ -78,6 +78,18 @@ Then run:
 jobhunter jobinja discover --show-jobs
 ```
 
+Discovery is sequential and rate-limited. Every run reports combined totals plus a per-search summary containing fetched pages, unique jobs, cross-search overlap, and an explicit stop reason:
+
+```text
+page_limit_reached
+empty_page
+repeated_result_set
+page_failed
+invalid_search
+```
+
+Repeated-page detection fingerprints the sorted stable Jobinja job IDs, not volatile HTML, so a reordered or dynamically rendered copy of the same result page stops pagination safely.
+
 ## Fetch and inspect complete jobs locally
 
 After discovery, fetch one complete advertisement page by stable Jobinja ID:
@@ -214,4 +226,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 and P1.1 are complete on `main`. Complete-job acquisition, immutable raw evidence, parser-v2 deterministic extraction, semantic versioning, local inspection, bounded explicit batches, missing-detail selection, local catalog listing, and deterministic local parser auditing are implemented. Representative live Jobinja layouts still control parser acceptance before unrestricted routine acquisition is considered reliable.
+M0 and P1.1 are complete on `main`. The bounded complete-job acquisition and parser-v2 slice is accepted against five structurally varied live Jobinja advertisements, with all five passing the local structural audit. P1.2 repeat-safe pagination and multi-search summaries are implemented and are the current live acceptance target. Local LLM interpretation remains outside the active increment.
