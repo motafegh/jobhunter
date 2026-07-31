@@ -17,8 +17,8 @@ from jobhunter.doctor import format_report, run_doctor
 from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
 from jobhunter.jobinja_detail_service import (
-    JobNotFoundError,
     JobinjaDetailService,
+    JobNotFoundError,
     format_fetch_summary,
     format_job_detail,
 )
