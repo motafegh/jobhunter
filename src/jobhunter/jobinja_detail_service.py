@@ -8,13 +8,14 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from jobhunter.evidence import EvidenceStore
+from jobhunter.evidence import EvidenceStore, EvidenceWriteError
+from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.jobinja_details import (
     PARSER_VERSION,
     ParsedJobDetail,
     parse_jobinja_detail,
 )
-from jobhunter.sources import JobinjaClient
+from jobhunter.sources import JobinjaAcquisitionError, JobinjaClient
 from jobhunter.storage import JobDetailView, JobHunterStore
 
 
@@ -30,6 +31,8 @@ class JobDetailFetchSummary:
     is_new_version: bool
     parse_status: str
     evidence_path: str
+    observation_id: int
+    checked_at: str
 
 
 class JobinjaDetailService:
@@ -41,13 +44,16 @@ class JobinjaDetailService:
         client: JobinjaClient,
         evidence_store: EvidenceStore,
         store: JobHunterStore,
+        observation_store: JobDetailObservationStore,
     ) -> None:
         self._client = client
         self._evidence_store = evidence_store
         self._store = store
+        self._observation_store = observation_store
 
     def fetch(self, source_job_id: str) -> JobDetailFetchSummary:
         self._store.initialize()
+        self._observation_store.initialize()
         job = self._store.get_job(source_job_id)
         if job is None:
             raise JobNotFoundError(
@@ -55,20 +61,30 @@ class JobinjaDetailService:
                 "Run discovery first."
             )
 
-        fetched_at = datetime.now(UTC)
-        page = self._client.fetch_job_page(job.canonical_url)
-        snapshot = self._evidence_store.write_jobinja_job_page(
-            source_job_id=source_job_id,
-            fetched_page=page,
-            captured_at=fetched_at,
-        )
+        checked_at = datetime.now(UTC)
+        try:
+            page = self._client.fetch_job_page(job.canonical_url)
+            snapshot = self._evidence_store.write_jobinja_job_page(
+                source_job_id=source_job_id,
+                fetched_page=page,
+                captured_at=checked_at,
+            )
+        except (EvidenceWriteError, JobinjaAcquisitionError, OSError) as exc:
+            self._observation_store.record_failure(
+                job_posting_id=job.id,
+                checked_at=checked_at,
+                requested_url=job.canonical_url,
+                error=exc,
+            )
+            raise
+
         parsed = parse_jobinja_detail(page.text)
         fields = parsed.to_dict()
         semantic_sha256 = _semantic_sha256(fields)
         parse_status = _parse_status(parsed)
         result = self._store.record_job_detail(
             job_posting_id=job.id,
-            fetched_at=fetched_at,
+            fetched_at=checked_at,
             requested_url=page.requested_url,
             final_url=page.final_url,
             status_code=page.status_code,
@@ -80,6 +96,21 @@ class JobinjaDetailService:
             parse_status=parse_status,
             fields=fields,
         )
+        observation_id = self._observation_store.record_success(
+            job_posting_id=job.id,
+            checked_at=checked_at,
+            requested_url=page.requested_url,
+            final_url=page.final_url,
+            status_code=page.status_code,
+            content_sha256=snapshot.content_sha256,
+            semantic_sha256=semantic_sha256,
+            evidence_path=snapshot.content_path,
+            metadata_path=snapshot.metadata_path,
+            parser_version=PARSER_VERSION,
+            parse_status=parse_status,
+            job_detail_version_id=result.version_id,
+            is_new_version=result.is_new_version,
+        )
         return JobDetailFetchSummary(
             source_job_id=source_job_id,
             title=parsed.title or job.title_observed,
@@ -87,6 +118,8 @@ class JobinjaDetailService:
             is_new_version=result.is_new_version,
             parse_status=parse_status,
             evidence_path=str(snapshot.content_path),
+            observation_id=observation_id,
+            checked_at=checked_at.isoformat(),
         )
 
     def show(self, source_job_id: str) -> JobDetailView:
@@ -143,6 +176,8 @@ def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
             f"Result: {version_state}",
             f"Parse status: {summary.parse_status}",
             f"Version ID: {summary.version_id}",
+            f"Fetch observation ID: {summary.observation_id}",
+            f"Checked at: {summary.checked_at}",
             f"Raw evidence: {summary.evidence_path}",
         ]
     )
