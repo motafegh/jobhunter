@@ -10,9 +10,33 @@ from urllib.parse import urlparse
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
+from jobhunter.sources import JobinjaUrlError, canonicalize_search_url
+
 
 class ConfigLoadError(RuntimeError):
     """Raised when a JobHunter configuration file cannot be loaded."""
+
+
+class JobinjaSearchDefinition(BaseModel):
+    """One user-controlled Jobinja search executed by discovery runs."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    name: str
+    url: str
+    enabled: bool = True
+    max_pages: int = Field(default=1, ge=1, le=50)
+
+    @model_validator(mode="after")
+    def normalize(self) -> JobinjaSearchDefinition:
+        self.name = self.name.strip()
+        if not self.name:
+            raise ValueError("Jobinja search name must not be empty")
+        try:
+            self.url = canonicalize_search_url(self.url)
+        except JobinjaUrlError as exc:
+            raise ValueError(str(exc)) from exc
+        return self
 
 
 class Settings(BaseModel):
@@ -33,6 +57,11 @@ class Settings(BaseModel):
     lm_studio_api_token: str | None = None
     inference_timeout_seconds: float = Field(default=30.0, gt=0)
     inference_max_retries: int = Field(default=1, ge=0, le=5)
+
+    jobinja_user_agent: str = "JobHunter/0.1 (local personal career research)"
+    jobinja_request_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
+    jobinja_request_delay_seconds: float = Field(default=1.0, ge=0, le=60)
+    jobinja_searches: list[JobinjaSearchDefinition] = Field(default_factory=list)
 
     log_level: str = "INFO"
 
@@ -58,6 +87,17 @@ class Settings(BaseModel):
             self.lm_studio_model = self.lm_studio_model.strip() or None
         if self.lm_studio_api_token is not None:
             self.lm_studio_api_token = self.lm_studio_api_token.strip() or None
+
+        self.jobinja_user_agent = self.jobinja_user_agent.strip()
+        if not self.jobinja_user_agent:
+            raise ValueError("jobinja_user_agent must not be empty")
+
+        search_names: set[str] = set()
+        for search in self.jobinja_searches:
+            normalized_name = search.name.casefold()
+            if normalized_name in search_names:
+                raise ValueError(f"Duplicate Jobinja search name: {search.name!r}")
+            search_names.add(normalized_name)
 
         return self
 
@@ -103,6 +143,11 @@ class Settings(BaseModel):
             "JOBHUNTER_LM_STUDIO_API_TOKEN": "lm_studio_api_token",
             "JOBHUNTER_INFERENCE_TIMEOUT_SECONDS": "inference_timeout_seconds",
             "JOBHUNTER_INFERENCE_MAX_RETRIES": "inference_max_retries",
+            "JOBHUNTER_JOBINJA_USER_AGENT": "jobinja_user_agent",
+            "JOBHUNTER_JOBINJA_REQUEST_TIMEOUT_SECONDS": (
+                "jobinja_request_timeout_seconds"
+            ),
+            "JOBHUNTER_JOBINJA_REQUEST_DELAY_SECONDS": "jobinja_request_delay_seconds",
             "JOBHUNTER_LOG_LEVEL": "log_level",
         }
         for environment_name, field_name in environment_fields.items():
