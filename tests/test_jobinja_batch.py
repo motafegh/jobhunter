@@ -20,6 +20,8 @@ class _FakeDetailService:
             is_new_version=source_job_id != "known",
             parse_status="parsed",
             evidence_path=f"{source_job_id}.html",
+            observation_id=1,
+            checked_at="2026-08-01T00:00:00+00:00",
         )
 
 
