@@ -2,212 +2,404 @@
 
 ## 1. Architectural direction
 
-JobHunter is a **local modular monolith** written in Python.
+JobHunter is a **local modular monolith** written in Python 3.12 or newer.
 
-It is one local application with explicit internal boundaries for acquisition, evidence, persistence, inference, parsing, analysis, and reporting. Components should be separated only when the code has a real current responsibility; empty speculative packages are not created to imitate a future architecture diagram.
+It is one local application with explicit internal boundaries for configuration,
+search planning, source acquisition, evidence preservation, persistence,
+deterministic parsing, local inference, analysis, and reporting. Components are
+separated when they have a current operational responsibility; speculative
+microservices and empty abstraction layers are not introduced.
 
-The initial interaction surface is a command-line interface. A local web interface may be added only when CLI inspection and review become inefficient.
+The command-line interface is the current interaction surface. A local web
+interface remains optional and must be justified by concrete review or workflow
+friction.
 
-## 2. Architectural principles
+## 2. Permanent architectural principles
 
-1. Raw evidence is stored before parsing or interpretation.
-2. Successful acquisition does not depend on LM Studio availability.
-3. Deterministic processing is separated from model-dependent processing.
-4. Source-specific behaviour lives in explicit adapters.
-5. Network acquisition, evidence writing, persistence, inference, and analysis have clear boundaries.
-6. SQLite is the initial system of record.
-7. Local source files remain inspectable outside normalized database records.
-8. Every repeated operation is designed for idempotency.
-9. User corrections will take precedence over later automated guesses.
-10. Acquired content is untrusted data, never executable instruction.
-11. Optional complexity must be justified by observed product need.
+1. Preserve raw evidence before parsing or interpretation.
+2. Keep successful acquisition independent from LM Studio availability.
+3. Separate deterministic processing from model-dependent processing.
+4. Keep source-specific behavior in explicit adapters and services.
+5. Keep CLI handlers as composition and validation code, not parsing or SQL code.
+6. Use SQLite as the local system of record.
+7. Keep source evidence inspectable outside normalized database records.
+8. Design repeated operations for idempotency.
+9. Keep semantic versions separate from volatile HTTP responses.
+10. Keep operational fetch history separate from semantic versions.
+11. Prefer missing or review-required states over fabricated values.
+12. Treat acquired content as untrusted data, never executable instruction.
+13. Bound pages, requests, detail batches, retries, and model calls.
+14. Make configuration and policy visible rather than scattering constants.
+15. Add complexity only when an observed product need justifies it.
 
-## 3. High-level flow
+## 3. Current acquisition flow
 
 ```text
-Configured source searches
-          ↓
-Source-specific acquisition
-          ↓
-Raw page + acquisition metadata
-          ↓
-Candidate identity discovery
-          ↓
-Repeat-safe SQLite records
-          ↓
-Job-detail acquisition
-          ↓
-Deterministic source-field parsing
-          ↓
-Original + normalized job document
-          ↓
-Local inference-provider boundary
-          ↓
-Schema and evidence validation
-          ↓
-Individual and combined analysis
-          ↓
-Daily report and review
+TOML configuration or explicit CLI selectors
+                ↓
+Bilingual search registry expansion
+                ↓
+Canonical raw-URL and keyword-generated search plan
+                ↓
+Search limit, offset, page limit, and global request budget
+                ↓
+Sequential Jobinja search-page acquisition
+                ↓
+Immutable search-page HTML and metadata evidence
+                ↓
+Canonical Jobinja job-code discovery
+                ↓
+Repeat-safe JobPosting and discovery provenance
+                ↓
+Missing-detail and refresh-due selection
+                ↓
+Sequential Jobinja detail-page acquisition
+                ↓
+Immutable detail HTML and metadata evidence
+                ↓
+Deterministic Jobinja parser v2
+                ↓
+Semantic content fingerprint and version decision
+                ↓
+Fetch observation: new_version / unchanged / failed
+                ↓
+Deterministic structural parser audit
 ```
 
-Each completed stage remains valid if a later stage fails. For example, an acquired posting remains stored in `pending_analysis` when LM Studio is unavailable.
+The current `jobhunter jobinja sync` command implements this acquisition-only
+flow. It deliberately stops before LM Studio analysis.
 
-## 4. Current runtime components
+## 4. Intended complete Phase 1 flow
 
-### 4.1 CLI
+```text
+Accepted acquisition and posting versions
+                ↓
+Pending-analysis selection
+                ↓
+Versioned local-model prompt and schema
+                ↓
+LM Studio provider boundary
+                ↓
+Raw request and response evidence
+                ↓
+Schema and evidence validation
+                ↓
+Accepted / review-required / failed analysis state
+                ↓
+Individual job result
+                ↓
+Combined responsibility, requirement, and role report
+```
 
-Current commands:
+A failure in any later stage must not invalidate evidence or records produced by
+an earlier successful stage.
+
+## 5. Runtime components
+
+### 5.1 CLI composition layer
+
+Current commands include:
 
 ```text
 jobhunter init
-jobhunter doctor
-jobhunter doctor --smoke
+jobhunter doctor [--smoke]
+
+jobhunter jobinja catalog
+jobhunter jobinja plan
 jobhunter jobinja discover
+jobhunter jobinja sync
+jobhunter jobinja fetch
+
+jobhunter jobs list
+jobhunter jobs show <job-id>
+jobhunter jobs checks <job-id>
+jobhunter jobs audit
 ```
 
-The intended Phase 1 endpoint is:
+The CLI:
 
-```text
-jobhunter run
-```
+- parses and validates arguments;
+- loads typed settings;
+- resolves configured or explicit search selectors;
+- assembles application services;
+- prints human-readable summaries;
+- maps controlled findings and failures to exit statuses.
 
-Command handlers assemble application services. They should not contain source parsing, direct SQL, or model-specific protocol logic.
+It does not contain HTML extraction or direct SQL.
 
-### 4.2 Typed configuration
+### 5.2 Typed configuration
 
-Configuration is loaded from a local TOML file with selected environment-variable overrides.
+`config.py` loads TOML and selected `JOBHUNTER_*` environment overrides through
+Pydantic models.
 
-Current settings include:
+Current configuration covers:
 
-- database path;
-- evidence directory;
-- LM Studio base URL and model;
-- inference timeout and retry limits;
-- Jobinja user agent;
-- Jobinja request timeout and delay;
-- enabled Jobinja search definitions;
-- maximum pages per search;
+- local data, evidence, and SQLite paths;
+- LM Studio provider settings;
+- Jobinja user agent, timeout, and request delay;
+- raw Jobinja search URLs;
+- built-in bilingual profiles and packs;
+- custom bilingual keyword groups;
+- excluded terms;
+- default pages per generated keyword search;
+- maximum expanded searches;
+- global search-page request budget;
+- sync missing and refresh limits;
+- refresh age threshold;
 - logging level.
 
-The real local configuration and secrets remain outside Git.
+Unknown fields are rejected. Raw search URLs are canonicalized during validation.
+Pack and profile identifiers are validated before network use.
 
-### 4.3 Jobinja source adapter
+### 5.3 Bilingual search registry
 
-The first source adapter is Jobinja-specific.
+`search_registry.py` owns curated search vocabulary and deterministic expansion.
 
-Its current responsibilities are:
+Responsibilities:
 
-- validate public Jobinja search URLs;
-- normalize search pagination;
-- fetch pages with bounded sequential HTTP requests;
-- validate final redirect hosts and paths;
-- reject unsupported response types;
-- identify Jobinja job links;
-- remove tracking query parameters;
-- extract the source job code and company slug;
-- deduplicate repeated links on one page.
+- define stable built-in pack and profile identifiers;
+- preserve Persian and English display terms;
+- normalize term identity for deduplication;
+- generate canonical Jobinja keyword-filter URLs;
+- combine profiles, packs, custom groups, and one-off terms;
+- apply normalized exclusions;
+- produce inspectable search names containing origin, term, and stable digest;
+- expose catalog and planning output.
 
-The adapter uses HTTPX and Python's standard `HTMLParser` for P1.1. A focused external HTML parser should be added only when job-detail field extraction demonstrates that the standard parser is insufficient.
+Search vocabulary is source acquisition configuration. It must not be confused
+with a later canonical career taxonomy.
 
-Browser automation remains a fallback only for approved content that ordinary HTTP acquisition cannot retrieve.
+### 5.4 Search-plan controls
 
-### 4.4 Evidence store
+The CLI applies deterministic controls after expansion:
 
-The evidence store writes raw response bytes before downstream parsing.
+- canonical URL deduplication;
+- optional page override;
+- cyclic search offset;
+- maximum selected searches;
+- global request budget.
 
-Current layout:
+`--search-offset` and `--search-limit` allow a large catalog to be covered in
+stable windows. The global request budget is enforced again in the discovery
+service so CLI mistakes cannot create unbounded requests.
+
+### 5.5 Jobinja source adapter
+
+`sources/jobinja.py` owns Jobinja URL and HTTP rules.
+
+Responsibilities:
+
+- validate approved Jobinja hosts;
+- canonicalize search and job URLs;
+- generate bounded pagination URLs;
+- fetch public search and job pages with HTTPX;
+- follow redirects while validating final host and path;
+- enforce supported content type and response-size bounds;
+- use a descriptive user agent and Persian/English accept language;
+- extract stable source job codes and company slugs;
+- deduplicate repeated links within a search page.
+
+The adapter does not write evidence, persist records, or invoke a model.
+
+### 5.6 Evidence store
+
+`evidence.py` writes raw response bytes and metadata sidecars before downstream
+parsing.
+
+Current layouts:
 
 ```text
-data/
-  evidence/
-    jobinja/
-      search-pages/
-        <search-name-and-hash>/
-          <timestamp>_p<page>_<hash>.html
-          <timestamp>_p<page>_<hash>.json
+data/evidence/jobinja/search-pages/<search>/...
+data/evidence/jobinja/job-pages/<job-id>/...
 ```
 
-The JSON sidecar records:
+Metadata includes:
 
 - source and evidence kind;
-- search name and page;
+- search or job identity;
 - requested and final URLs;
-- retrieval time;
+- capture time;
 - selected HTTP headers;
 - status code;
 - SHA-256 content hash;
 - byte count;
 - raw content path.
 
-Writes use a temporary file followed by atomic replacement. A failed metadata write removes the associated raw file rather than leaving an ambiguous partial snapshot.
+Writes use temporary files followed by atomic replacement. Partial evidence
+pairs are not silently retained.
 
-Later content-addressed deduplication may reduce repeated raw storage after actual corpus growth justifies it.
+### 5.7 Discovery orchestration
 
-### 4.5 SQLite persistence
-
-SQLite is accessed through a small repository boundary using Python's standard `sqlite3` module.
-
-Current P1.1 tables represent:
-
-- configured source searches;
-- acquisition runs;
-- search-page snapshots;
-- logical job postings;
-- search/page discoveries.
-
-This direct approach avoids introducing an Object-Relational Mapper and migration framework before schema evolution requires them.
-
-Schema migration tooling must be introduced before incompatible production schema changes, not merely because it may be useful later.
-
-### 4.6 Discovery orchestration
-
-The Jobinja discovery service coordinates:
+`jobinja_discovery.py` coordinates:
 
 ```text
 validated searches
-→ bounded fetch
+→ sequential bounded fetch
 → evidence write
 → deterministic link extraction
 → job upsert
-→ discovery record
-→ run summary
+→ discovery provenance
+→ per-search and combined summary
 ```
 
-It receives its HTTP client, evidence store, database store, clock, and sleep function through explicit constructor arguments. This keeps network, time, and delay behaviour testable without contacting Jobinja.
+Stop reasons are explicit:
 
-### 4.7 Job-detail acquisition
+```text
+page_limit_reached
+empty_page
+repeated_result_set
+request_budget_reached
+page_failed
+invalid_search
+```
 
-P1.3 will add a separate detail-acquisition path. It will select new or refresh-due postings, preserve raw detail HTML, and classify challenge, login, invalid, expired, and inaccessible pages.
+Repeated result pages are identified by sorted stable source job IDs rather than
+volatile HTML. One search failure does not discard successful searches.
 
-Search discovery must not become responsible for parsing complete job descriptions.
+### 5.8 Detail acquisition service
 
-### 4.8 Deterministic Jobinja parser
+`jobinja_detail_service.py` owns one-job detail acquisition.
 
-P1.4 will extract Jobinja's explicitly labelled fields using deterministic code. It will preserve:
+Responsibilities:
 
-- original field text;
-- complete description content;
-- dedicated source skill tags;
-- Persian, English, and mixed language;
-- a separate normalized analysis copy.
+- resolve an existing JobPosting;
+- acquire the public detail page;
+- write immutable evidence before parsing;
+- parse deterministic source fields;
+- calculate a semantic fingerprint;
+- insert a semantic version only when content changed;
+- record every successful or expected failed fetch observation;
+- return an inspectable summary.
 
-It will exclude navigation, similar-job cards, account controls, and footer content.
+The detail service does not perform relevance or career analysis.
 
-### 4.9 Identity and versions
+### 5.9 Bounded batch acquisition
 
-Identity resolution proceeds in layers:
+`jobinja_batch.py` performs sequential detail checks for up to 50 unique job IDs.
 
-1. Jobinja source job code;
-2. canonical source URL;
-3. raw content hash;
-4. normalized content fingerprint;
-5. later, bounded repost similarity when justified.
+It:
 
-Repeated acquisition, edited posting, cross-search discovery, and reposting remain distinct concepts.
+- preserves input order;
+- removes duplicate IDs;
+- applies the configured delay between requests;
+- isolates expected failures by job;
+- reports new semantic versions, unchanged checks, and failures;
+- exposes version and observation IDs.
 
-### 4.10 Inference-provider boundary
+### 5.10 Fetch observations and refresh scheduling
 
-LM Studio remains behind the internal inference-provider interface.
+`job_detail_observations.py` stores operational detail-check history separately
+from versions.
+
+A successful observation can reference:
+
+- check timestamp;
+- new-version or unchanged outcome;
+- requested and final URLs;
+- HTTP status;
+- exact raw-response hash;
+- semantic hash and version ID;
+- parser version and parse status;
+- evidence paths.
+
+A failed observation stores the timestamp, requested URL, error type, and error
+message without deleting earlier successful data.
+
+Refresh-due selection:
+
+1. considers only jobs with a local semantic detail version;
+2. uses the latest fetch-observation timestamp;
+3. falls back to the latest version timestamp for legacy data;
+4. applies a configurable age threshold;
+5. returns a bounded ordered selection.
+
+No single failed check changes lifecycle state.
+
+### 5.11 Deterministic Jobinja parser
+
+`jobinja_details.py` implements parser version `jobinja-detail-v2`.
+
+It extracts explicit Jobinja fields and structured `JobPosting` metadata while
+preferring visible source labels where they are more useful.
+
+Current fields include:
+
+- title;
+- company;
+- category;
+- location;
+- employment type;
+- minimum experience;
+- education;
+- salary display;
+- gender;
+- military-service requirement;
+- source skill tags;
+- complete job description;
+- company description;
+- publication and validity dates;
+- language classification.
+
+Missing fields remain missing. Dedicated Jobinja skill tags remain separate from
+skills later inferred from description text.
+
+### 5.12 Semantic versions
+
+`storage.py` stores semantic detail versions in SQLite.
+
+Version identity is based on canonical JSON of deterministic source fields,
+excluding parser-only metadata such as language classification and parser
+version. This prevents volatile HTML tokens or rendering changes from creating
+false content versions.
+
+Each semantic version retains the raw evidence that first defined it. Later
+unchanged checks receive their own raw snapshots and observations.
+
+### 5.13 Local catalog and inspection
+
+`job_catalog.py` provides read-only listing and missing-detail selection.
+
+`jobs show` displays the latest semantic version and its version-defining
+evidence. `jobs checks` displays operational fetch history. These views are
+intentionally separate.
+
+### 5.14 Structural parser audit
+
+`job_audit.py` checks latest local semantic versions without network or model
+calls.
+
+It detects known structural risks such as:
+
+- missing required title or description;
+- partial or failed parse status;
+- outdated parser version;
+- non-scalar values in scalar fields;
+- obvious page-interface contamination;
+- mapping representations accidentally stored as text;
+- implausibly long scalar values or skill tags.
+
+Optional-field absence is reported as coverage, not automatically as failure.
+The audit does not claim semantic interpretation correctness.
+
+### 5.15 Acquisition sync
+
+`jobinja_sync.py` composes accepted acquisition services:
+
+```text
+discovery
+→ bounded missing-detail selection
+→ bounded refresh-due selection
+→ one sequential detail batch
+→ latest-corpus parser audit
+```
+
+The combined missing and refresh limits may not exceed 50. The sync returns an
+attention-required status when discovery or detail failures occur, or when the
+audit finds structural issues.
+
+### 5.16 Inference-provider boundary
+
+LM Studio remains behind `inference/`.
 
 Provider responsibilities include:
 
@@ -215,122 +407,137 @@ Provider responsibilities include:
 - bounded timeout and retries;
 - structured-output requests;
 - response diagnostics;
-- model identity reporting.
+- exact model identity reporting.
 
-No acquisition component imports or calls LM Studio.
+No acquisition component imports or calls LM Studio. P1.6 will add versioned
+analysis schemas, prompt evidence, raw responses, local validation, and review
+states.
 
-P1.6 will add real job-analysis requests with versioned prompts and schemas, raw request/response evidence, local validation, and source-evidence requirements.
+## 6. SQLite record model
 
-### 4.11 Analysis and reporting
-
-Analysis operates only on validated posting versions explicitly included in a corpus.
-
-Phase 1 reporting will provide:
-
-- individual job analysis;
-- repeated responsibilities and skills;
-- required versus preferred distinctions;
-- role-family patterns;
-- filters by search, date, language, company, location, and state;
-- links back to posting and evidence records.
-
-Personal capability comparison remains a later product phase.
-
-## 5. Current repository structure
+Current records include:
 
 ```text
-jobhunter/
-  pyproject.toml
-  README.md
-  AGENTS.md
-  docs/
-  src/
-    jobhunter/
-      __init__.py
-      cli.py
-      config.py
-      doctor.py
-      evidence.py
-      jobinja_discovery.py
-      storage.py
-      inference/
-      sources/
-        jobinja.py
-  tests/
-  data/                 # ignored local runtime data
+source_searches
+acquisition_runs
+search_page_snapshots
+job_postings
+job_discoveries
+job_detail_versions
+job_detail_fetch_observations
 ```
 
-The tree expands only when active responsibilities require it.
+Important distinctions:
 
-## 6. Current technology choices
+```text
+job_postings
+  logical source identity
 
-- Python 3.12 or newer;
-- Pydantic for typed configuration and later schemas;
-- HTTPX for bounded HTTP access and test transports;
-- standard-library `HTMLParser` for initial search-link extraction;
-- standard-library `sqlite3` for current persistence;
-- `argparse` for the current CLI;
-- pytest for tests;
-- Ruff for linting;
-- structured standard-library logging.
+job_discoveries
+  where and when that identity appeared
 
-Not currently required:
+job_detail_versions
+  meaningful deterministic content history
 
-- SQLAlchemy or Alembic;
-- Typer;
-- browser automation;
-- asynchronous task queues;
-- web frameworks;
-- embeddings libraries;
-- vector databases;
-- frontend frameworks.
+job_detail_fetch_observations
+  every successful or failed operational check
 
-## 7. Security boundaries
+raw evidence files
+  exact HTTP response bytes and metadata
+```
 
-- Use public Jobinja pages only.
-- Do not automate login or applications.
-- Do not store platform credentials or cookies.
-- Do not bypass CAPTCHA, access controls, or blocking.
-- Validate final redirect hosts.
-- Use bounded pages, timeouts, and delays.
-- Never execute acquired scripts.
-- Treat page text as untrusted prompt data.
-- Do not grant the extraction model shell, filesystem, browser, or unrestricted network tools.
-- Keep local runtime data and personal evidence outside version control.
+SQLite is accessed through focused repository boundaries using the standard
+`sqlite3` module. A general Object-Relational Mapper remains unnecessary.
+Migration tooling must be introduced before an incompatible production schema
+change, not merely because more tables now exist.
+
+## 7. Current repository structure
+
+```text
+src/jobhunter/
+  cli.py
+  config.py
+  doctor.py
+  evidence.py
+  job_audit.py
+  job_catalog.py
+  job_detail_observations.py
+  jobinja_batch.py
+  jobinja_detail_service.py
+  jobinja_details.py
+  jobinja_discovery.py
+  jobinja_sync.py
+  search_registry.py
+  storage.py
+  inference/
+  sources/
+    jobinja.py
+```
+
+The structure expands by active responsibility rather than by speculative
+future layers.
 
 ## 8. Testing strategy
 
-### Deterministic unit and service tests
+Normal tests do not contact Jobinja or require LM Studio.
 
-- Jobinja URL validation and canonicalization;
-- pagination query preservation;
-- job-link extraction and deduplication;
-- raw evidence writing;
-- SQLite identity idempotency;
-- cross-run new versus known classification;
+Deterministic coverage includes:
+
+- URL validation and canonicalization;
+- bilingual term normalization and deduplication;
+- profile, pack, group, exclusion, and URL expansion;
 - configuration validation;
-- source and provider failure reporting.
+- search-plan limits and CLI validation;
+- global request-budget behavior;
+- repeated-page and empty-page stopping;
+- cross-search identity overlap;
+- raw evidence writing;
+- repeat-safe job identity;
+- parser extraction and contamination regression cases;
+- semantic version identity;
+- unchanged-check observations;
+- failure observations;
+- refresh-due selection and legacy fallback;
+- batch isolation;
+- acquisition-sync composition;
+- local structural audit.
 
-### Network tests
+Live Jobinja runs remain explicit acceptance probes after deterministic tests
+pass.
 
-Normal tests use HTTPX mock transports or recorded fixtures. They do not contact Jobinja or require LM Studio.
+## 9. Security boundaries
 
-A live Jobinja probe and a live LM Studio smoke test remain explicit local operations.
+- Use public Jobinja pages only.
+- Do not automate login or applications.
+- Do not store Jobinja credentials or cookies.
+- Do not bypass CAPTCHA, blocking, authentication, or access controls.
+- Do not use stealth proxy rotation.
+- Validate final redirect hosts and paths.
+- Enforce page, request, response-size, batch, timeout, and delay bounds.
+- Never execute acquired scripts.
+- Treat all page content as untrusted prompt data.
+- Do not grant the future extraction model shell, filesystem, browser, or
+  unrestricted network tools.
+- Keep local runtime data, evidence, personal data, and model files outside Git.
 
-### Later golden analysis tests
+## 10. Current architectural stop line
 
-Real Persian, English, and mixed Jobinja examples will form a manually reviewed corpus for field parsing and model extraction evaluation.
+The current system can configure broad bilingual searches, plan them, discover
+jobs repeat-safely, preserve evidence, fetch missing or refresh-due details,
+parse source fields, version meaningful changes, retain every check, and audit
+structural quality.
 
-## 9. Current architecture decision
+It must not yet infer or claim:
 
-The active complete slice is:
+- role purpose;
+- responsibilities;
+- required versus preferred qualifications;
+- description-derived skills;
+- personal relevance;
+- capability gaps;
+- application readiness;
+- career recommendations;
+- aggregate market conclusions.
 
-```text
-Jobinja search URL
-→ raw search-page evidence
-→ canonical job identities
-→ repeat-safe SQLite discovery
-→ CLI summary
-```
-
-The next slice extends stored identities into raw job-detail evidence. Full LLM analysis begins only after acquisition and deterministic source parsing work against real Jobinja pages.
+Those require the versioned, evidence-backed local analysis boundary defined for
+P1.6 and P1.7.
