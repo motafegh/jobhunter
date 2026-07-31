@@ -5,155 +5,189 @@
 **Status:** Active implementation plan  
 **Scope:** Phase 1 only  
 **Primary source:** Jobinja (`https://jobinja.ir/`)  
-**Repository branch policy for this phase:** Work directly on `main` unless a later change creates a clear need for isolation.
+**Branch policy:** Work directly on `main` unless isolation is clearly required.
 
-This document controls the implementation sequence and completion criteria for Phase 1. The broader product direction remains defined by the product specification, architecture, domain model, and source policy.
+This document controls Phase 1 implementation order, boundaries, records, and
+acceptance criteria. The product specification, architecture, domain model, and
+source policy remain controlling at their respective levels.
 
 ## 2. Phase objective
 
-Phase 1 must replace and improve the user's current manual Jobinja workflow.
+Phase 1 must replace and improve the user's manual Jobinja process:
 
-Today the user:
+```text
+manual keyword searches
+→ open individual advertisements
+→ copy descriptions and skills into files
+→ send files to an AI assistant
+→ request individual and combined analysis
+```
 
-1. opens Jobinja;
-2. searches for keywords or exact positions;
-3. reviews the result list;
-4. opens relevant advertisements;
-5. copies skills, responsibilities, and related sections;
-6. places one or several advertisements into files;
-7. sends those files to an AI assistant;
-8. requests individual and combined career analysis.
-
-At the end of Phase 1, JobHunter must automate that flow for configured Jobinja searches while preserving source evidence and keeping the user able to inspect and correct results.
+The target system must configure searches once, preserve evidence, identify new
+and changed jobs, parse explicit source fields, run local evidence-backed
+analysis, and produce inspectable individual and combined results.
 
 ## 3. Target daily experience
 
-The intended final Phase 1 command is:
+The intended final Phase 1 endpoint is:
 
 ```bash
 jobhunter run
 ```
 
-A successful run will:
+A complete run will eventually:
 
-1. load enabled Jobinja search definitions;
-2. execute each search and follow its bounded pagination;
-3. discover matching job advertisements;
-4. identify new, unchanged, changed, inaccessible, and expired candidates;
-5. fetch new or refresh-due job pages;
-6. preserve raw search and job-detail HTML plus acquisition metadata;
-7. deterministically extract Jobinja's known fields;
-8. preserve Persian, English, and mixed-language source text;
-9. queue new or changed postings for local analysis;
-10. obtain evidence-backed structured analysis through the configured local model;
-11. persist individual results and failure states;
-12. update a combined Phase 1 career report;
-13. print a concise run summary with actionable failures.
+1. load enabled bilingual profiles, packs, custom groups, and raw URLs;
+2. build an inspectable bounded search plan;
+3. acquire search pages sequentially and preserve evidence;
+4. discover stable Jobinja job identities repeat-safely;
+5. select missing and refresh-due job details;
+6. preserve raw detail evidence;
+7. parse explicit Jobinja fields deterministically;
+8. classify semantic content as new, unchanged, or changed;
+9. retain every successful or failed fetch observation;
+10. queue new or changed versions for local analysis;
+11. validate evidence-backed structured model output;
+12. persist individual results and review states;
+13. update a combined report;
+14. print a concise actionable summary.
 
-The system must not require manual copying of individual job URLs or advertisement text.
+The system must not require manual copying of individual job URLs or text.
 
 ## 4. Phase 1 data flow
 
 ```text
-Saved Jobinja searches
+Bilingual search configuration
+        ↓
+Search-plan expansion and bounds
         ↓
 Search-page acquisition
         ↓
 Raw search-page evidence
         ↓
-Result-link discovery and canonicalization
+Job identity and discovery provenance
         ↓
-Job identity and discovery persistence
-        ↓
-New / known / refresh-due decision
+Missing / refresh-due selection
         ↓
 Job-detail acquisition
         ↓
 Raw job-page evidence
         ↓
-Deterministic Jobinja field extraction
+Deterministic Jobinja parsing
         ↓
-Original-language normalized job document
+Semantic version decision
         ↓
-New / unchanged / changed version decision
+Fetch observation
         ↓
 Local LLM structured analysis
         ↓
 Validation and review state
         ↓
-Individual job result
-        ↓
-Combined responsibility, skill, and role analysis
-        ↓
-Daily report and exports
+Individual and combined outputs
 ```
 
-Acquisition must continue to work when LM Studio is unavailable. Such postings remain safely stored in `pending_analysis` or `analysis_failed` state and can be processed later.
+Acquisition must remain useful when LM Studio is unavailable.
 
 ## 5. Source configuration
 
-A Jobinja search is configured once, not once per job.
+### 5.1 Built-in profiles and packs
 
-The first supported configuration form is a saved Jobinja result URL:
+JobHunter supports version-controlled bilingual search vocabulary:
+
+```toml
+jobinja_search_profiles = ["ai-security-python"]
+jobinja_search_packs = ["ai-security"]
+```
+
+Built-in vocabulary is a starting point, not hidden relevance policy.
+
+### 5.2 Custom keyword groups
+
+```toml
+[[jobhunter.jobinja_keyword_groups]]
+name = "My hybrid roles"
+terms = [
+  "مهندس امنیت هوش مصنوعی",
+  "AI Security Engineer",
+  "Python Security Automation",
+]
+enabled = true
+max_pages = 1
+```
+
+### 5.3 Raw Jobinja URLs
+
+Raw result URLs remain supported for source-owned filters:
 
 ```toml
 [[jobhunter.jobinja_searches]]
-name = "Artificial intelligence roles"
+name = "Remote AI roles"
 url = "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=..."
 enabled = true
-max_pages = 3
+max_pages = 2
 ```
 
-JobHunter then discovers all individual advertisement links from the result pages automatically.
+### 5.4 Normalization and exclusions
 
-A later Phase 1 increment may allow keywords and filters to be entered directly in JobHunter and converted into a Jobinja search URL. Saved result URLs remain the initial reliable interface because they preserve Jobinja's own filter semantics.
+Term comparison may normalize Unicode, Persian/Arabic character variants,
+whitespace, case, and zero-width joiners. The displayed original term remains
+visible. Exclusions apply after normalization.
+
+### 5.5 Bounds
+
+Search configuration must support:
+
+- maximum pages per search;
+- maximum selected searches;
+- cyclic search offset;
+- global search-page request budget;
+- sequential request delay;
+- explicit one-run CLI selectors.
+
+Budget exhaustion is a controlled stop, not a failure.
 
 ## 6. Source boundaries and safety
 
 Phase 1 will:
 
-- use only public Jobinja search and job-detail pages;
-- operate for personal, local use;
-- preserve Jobinja attribution and canonical source URLs;
+- use public Jobinja search and detail pages only;
+- operate for personal local use;
+- preserve source attribution and canonical URLs;
 - use a descriptive user agent;
-- use sequential, rate-limited requests by default;
-- enforce configurable page and request limits;
-- validate redirects and remain on approved Jobinja hosts;
-- stop and report access-denial, challenge, CAPTCHA, or login pages;
+- use sequential rate-limited requests;
+- enforce page, request, response-size, and batch limits;
+- validate redirects and approved hosts;
 - retain raw evidence locally;
-- support disabling any search without code changes.
+- report access denial, challenge, CAPTCHA, login, or unsupported pages.
 
 Phase 1 will not:
 
-- automate login;
-- automate job applications;
+- automate login or applications;
 - scrape private profiles or resumes;
 - bypass CAPTCHA, blocking, authentication, or access controls;
+- use stealth proxy rotation;
 - create an unrestricted generic crawler;
 - redistribute collected advertisements publicly;
-- add another job platform before the Jobinja workflow is useful and stable.
+- add another platform before Jobinja is stable and useful.
 
-## 7. Source-specific identity rules
+## 7. Source-specific identity
 
-Observed Jobinja job URLs follow this shape:
+Observed job URLs follow:
 
 ```text
 /companies/{company-slug}/jobs/{job-code}/{title-slug}
 ```
 
-The source job code is the primary external identity for Phase 1.
+The source job code is the primary external identity. Canonicalization must:
 
-Canonicalization must:
-
-- normalize the host to `jobinja.ir`;
+- normalize host to `jobinja.ir`;
 - prefer HTTPS;
-- remove query parameters such as `_ref` and `_t`;
-- remove fragments;
+- remove tracking query parameters and fragments;
 - preserve the meaningful job path;
-- extract `company_slug` and `source_job_code`;
-- reject non-Jobinja and non-job URLs.
+- extract company slug and source job code;
+- reject unsupported hosts and paths.
 
-The title slug is descriptive and must not be treated as the stable identity.
+The title slug is descriptive, not stable identity.
 
 ## 8. Language handling
 
@@ -161,50 +195,46 @@ Jobinja advertisements may be Persian, English, or mixed.
 
 Phase 1 must preserve:
 
-- the exact original text as evidence;
-- the detected language classification;
-- a normalized analysis copy;
-- any later translation as a separately labelled derived artifact.
+- exact original evidence;
+- detected language classification;
+- normalized analysis text;
+- English technical terms embedded in Persian text;
+- any translation as a separately labelled derived artifact.
 
-Normalization may standardize Persian and Arabic character variants, digits, whitespace, and zero-width characters for matching. It must never overwrite the original evidence.
-
-English technical terms embedded in Persian text must remain intact.
+Normalization must never overwrite raw evidence.
 
 ## 9. Deterministic extraction boundary
 
-Jobinja's explicitly labelled fields must be extracted by normal code whenever present, including:
+Explicit Jobinja fields should be extracted by deterministic code when present:
 
 - title;
 - company;
-- job category;
+- category;
 - location;
-- employment/cooperation type;
+- employment type;
 - minimum experience;
 - salary display;
-- required-skill tags;
+- source skill tags;
 - education;
-- gender requirement;
+- gender;
 - military-service requirement;
-- publication/expiration indicators;
+- publication and validity indicators;
 - company metadata;
-- complete free-text job description.
+- complete job description.
 
-The LLM is responsible for interpreting the free-text content, not for rediscovering fields already labelled by Jobinja.
-
-Dedicated Jobinja skill tags and skills inferred from the description must remain separate source categories.
+The LLM interprets free text. It must not rediscover fields already labelled by
+Jobinja. Source skill tags remain separate from description-derived skills.
 
 ## 10. Phase 1 records
-
-The implementation should introduce only the records needed for this workflow.
 
 ### SearchDefinition
 
 - source;
-- user-defined name;
-- search URL;
+- stable name;
+- canonical URL;
+- origin profile, pack, group, term, or raw URL when available;
 - enabled state;
-- maximum pages;
-- request delay or inherited default;
+- page limit;
 - created and updated timestamps.
 
 ### AcquisitionRun
@@ -212,38 +242,42 @@ The implementation should introduce only the records needed for this workflow.
 - run identifier;
 - start and completion timestamps;
 - status;
-- configured searches;
-- page, job, and error counts;
+- search, request, page, job, overlap, and failure counts;
 - failure summary.
 
 ### SearchPageSnapshot
 
-- search and page number;
+- run, search, and page;
 - requested and final URLs;
 - retrieval time;
 - HTTP status and selected headers;
 - content hash;
-- raw evidence path;
-- discovered job count.
+- evidence paths;
+- discovered count.
 
 ### JobPosting
 
 - source and source job code;
-- canonical URL;
-- company slug;
+- canonical URL and company slug;
 - first and last seen times;
-- current lifecycle state;
+- lifecycle state;
 - latest known version reference.
+
+### JobDiscovery
+
+- run;
+- search and page;
+- job posting;
+- discovery timestamp.
 
 ### JobPostingVersion
 
 - posting reference;
 - retrieval time;
-- raw evidence reference;
+- version-defining evidence;
 - deterministic fields;
-- normalized content hash;
-- version classification;
-- language metadata.
+- semantic fingerprint;
+- parser and language metadata.
 
 ### JobDetailFetchObservation
 
@@ -251,18 +285,19 @@ The implementation should introduce only the records needed for this workflow.
 - check timestamp;
 - new-version, unchanged, or failed outcome;
 - requested and final URLs when available;
-- HTTP status and exact raw-response hash when available;
-- semantic hash and semantic-version reference when available;
+- HTTP status and raw-response hash when available;
+- semantic hash and version reference when available;
 - parser version and parse status when available;
-- raw evidence paths for successful checks;
-- error type and message for failed checks.
+- evidence paths for successful checks;
+- error type and message for failures.
 
-A fetch observation is operational history. It must remain separate from semantic versions and raw snapshots so repeated unchanged checks are visible without creating false content versions.
+Fetch observations are operational history and remain separate from semantic
+versions and raw snapshots.
 
 ### AnalysisRun
 
 - posting version;
-- model and prompt versions;
+- model, prompt, and schema versions;
 - request and raw response evidence;
 - validated structured result;
 - success, failure, or review state.
@@ -277,7 +312,7 @@ A fetch observation is operational history. It must remain separate from semanti
 
 ## 11. Processing states
 
-A posting may move through these states:
+Successful progression:
 
 ```text
 discovered
@@ -285,8 +320,7 @@ discovered
 → parsed
 → pending_analysis
 → analysed
-→ review_required
-→ accepted
+→ review_required or accepted
 ```
 
 Failure and lifecycle states remain explicit:
@@ -301,247 +335,192 @@ removed
 unknown
 ```
 
-A failure in a later stage must not delete or invalidate evidence from an earlier successful stage.
+A later-stage failure must not delete earlier successful evidence.
 
 ## 12. Delivery increments
 
-### P1.0 — Repository alignment and controlling plan
+### P1.0 — Repository alignment
+
+Accepted when the controlling documents and implementation live on `main` and
+the next target is unambiguous.
+
+### P1.1 — Discovery foundation
 
 Deliverables:
 
-- M0 consolidated into `main`;
-- this Phase 1 plan;
-- repository entry points updated;
-- acquisition-first implementation order established.
+- validated search URL configuration;
+- Jobinja URL canonicalization;
+- sequential search-page fetcher;
+- raw search-page evidence;
+- link extraction and deduplication;
+- initial SQLite records;
+- `jobhunter jobinja discover`.
 
-Acceptance:
+Accepted.
 
-- `main` contains the complete current implementation;
-- no active implementation depends on the temporary M0 branch;
-- the next build target is unambiguous.
-
-### P1.1 — Jobinja discovery foundation
-
-Goal: turn one configured or command-line Jobinja search URL into persisted discovered job identities.
+### P1.2 — Pagination and repeat-safe discovery
 
 Deliverables:
 
-- validated Jobinja search configuration;
-- source-specific URL canonicalization;
-- sequential HTTP search-page fetcher;
-- raw search-page HTML and metadata evidence;
-- extraction and deduplication of job links;
-- initial SQLite acquisition and discovery tables;
-- `jobhunter jobinja discover` command;
-- bounded page count and request delay;
-- deterministic fixtures and tests.
+- bounded pagination;
+- empty, repeated, invalid, budget, and maximum stop conditions;
+- multiple searches;
+- cross-search deduplication and provenance;
+- per-search summaries;
+- repeat-safe runs.
 
-Acceptance:
+Accepted through live repeated two-search, two-page validation.
 
-- one search URL is fetched without LM Studio;
-- job codes and canonical URLs are discovered automatically;
-- duplicate links on a page produce one source identity;
-- raw HTML is saved before parsing;
-- rerunning records known jobs without creating duplicate JobPosting rows;
-- non-Jobinja URLs and off-domain redirects are rejected;
-- command output reports searches, pages, unique jobs, new jobs, known jobs, and failures.
-
-Stop line:
-
-- do not fetch every job-detail page or invoke the LLM during P1.1.
-
-### P1.2 — Pagination and repeat-safe daily discovery
+### P1.3 — Detail acquisition and evidence
 
 Deliverables:
 
-- automatic bounded pagination;
-- stop conditions for empty, repeated, invalid, or maximum pages;
-- multiple enabled saved searches;
-- cross-search discovery deduplication;
-- acquisition-run completion and failure recording;
-- search disablement through configuration;
-- clear per-search summaries.
+- bounded explicit, missing, and refresh-due queues;
+- raw detail evidence;
+- persistent successful and failed observations;
+- challenge, login, error, expired, and irrelevant-page detection;
+- retry rules;
+- inspectable check history.
 
-Acceptance:
+Operational core accepted. Source-page classification and refined retry policy
+remain incomplete.
 
-- one job found by several searches remains one JobPosting;
-- all matching searches are retained as discovery evidence;
-- one search failure does not discard successful searches;
-- repeated runs are idempotent.
-
-### P1.3 — Job-detail acquisition and immutable evidence
+### P1.4 — Deterministic parser and normalization
 
 Deliverables:
 
-- bounded job-detail fetch queue;
-- new and refresh-due selection;
-- raw detail HTML and metadata snapshots;
-- persistent observation of every successful or expected failed check;
-- challenge, login, error, expired, and irrelevant page detection;
-- acquisition retry rules;
-- inspectable evidence and check-history paths;
-- detail-acquisition CLI support.
-
-Acceptance:
-
-- newly discovered jobs can be fetched automatically;
-- raw content is written before parsing;
-- unchanged semantic content does not create false versions;
-- unchanged checks still create inspectable operational observations;
-- refresh-due selection uses the latest known check and remains bounded;
-- failures remain retryable without losing discovery or earlier detail data.
-
-### P1.4 — Jobinja field parser and language normalization
-
-Deliverables:
-
-- source-specific field parser;
+- source-specific parser;
 - complete description preservation;
 - original and normalized text;
-- Persian/Arabic character normalization;
+- Persian/Arabic normalization;
 - language classification;
-- deterministic field-validation report;
-- representative Persian, English, mixed, active, and expired fixtures.
+- structural validation report;
+- Persian, English, mixed, active, and expired fixtures.
 
-Acceptance:
+Parser v2 is accepted against fifteen varied live advertisements. Expired and
+special-page fixtures remain incomplete.
 
-- known labelled fields are extracted without LLM inference;
-- similar-job cards, navigation, login prompts, and footer content are excluded;
-- missing fields remain missing rather than guessed;
-- source text is never overwritten by normalized or translated text.
-
-### P1.5 — Posting identity, versions, and lifecycle
+### P1.5 — Identity, versions, and lifecycle
 
 Deliverables:
 
-- normalized content fingerprints;
+- semantic fingerprints;
 - new, unchanged, changed, reposted, and duplicate classifications;
-- JobPostingVersion persistence;
+- version persistence;
 - first-seen, last-seen, last-checked, and last-successful-fetch tracking;
 - cautious expiration/removal detection;
 - inspection commands.
 
-Acceptance:
-
-- changed advertisements create versions instead of overwriting history;
-- disappearance from one search is not sufficient to mark a job expired;
-- duplicate postings do not inflate later analysis.
+Semantic versions and fetch observations are implemented. Repost, duplicate,
+and lifecycle classification remain incomplete.
 
 ### P1.6 — Evidence-backed local analysis
 
 Deliverables:
 
-- versioned job-analysis schema;
-- local-model extraction of role purpose, responsibilities, required and preferred qualifications, tools, knowledge, experience, constraints, and evidence passages;
-- Persian, English, and mixed-language prompt handling;
+- versioned analysis schema;
+- role purpose, responsibilities, required and preferred qualifications, tools,
+  knowledge, experience, constraints, and evidence passages;
+- Persian, English, and mixed prompt handling;
 - validated structured output;
-- bounded retries and diagnostic evidence;
+- bounded retries and diagnostics;
 - pending, failed, review-required, and accepted states;
 - reanalysis by model or prompt version;
-- initial manually reviewed golden corpus.
+- manually reviewed golden corpus.
 
-Acceptance:
+Acceptance requires evidence for every material claim and measured model quality.
 
-- every material extracted claim includes source evidence;
-- explicit requirements remain distinct from preferred and inferred capabilities;
-- malformed output does not corrupt accepted data;
-- acquisition continues when the model is unavailable;
-- model quality is measured on real Jobinja examples.
-
-### P1.7 — Individual outputs and combined Phase 1 report
+### P1.7 — Individual outputs and combined report
 
 Deliverables:
 
-- inspectable individual job report;
+- inspectable individual report;
 - Markdown and JSON exports;
-- combined counts for responsibilities, skills, role families, experience, and requirements;
-- required versus preferred separation;
-- filters by search, date, language, company, location, and status;
-- initial user relevance classification;
-- concise daily run report;
-- `jobhunter run` orchestration.
-
-Acceptance:
-
-- the user no longer manually copies job advertisements into files for analysis;
-- every aggregate conclusion can list supporting postings;
-- unchanged and duplicate postings do not inflate counts;
-- individual and combined results preserve links to original evidence;
-- the daily report identifies jobs and analysis failures that require attention.
+- combined responsibility, skill, role, experience, and requirement counts;
+- required-versus-preferred separation;
+- filters;
+- initial relevance classification;
+- concise daily report;
+- final `jobhunter run` orchestration.
 
 ## 13. Phase completion criteria
 
-Phase 1 is complete only when all of the following are true:
+Phase 1 is complete only when:
 
-1. The user configures Jobinja searches once.
-2. A normal run discovers individual advertisements automatically.
-3. Pagination is bounded, observable, and repeat-safe.
-4. New and changed advertisements are preserved as immutable evidence.
-5. Jobinja's known fields are parsed deterministically.
-6. Persian, English, and mixed text are preserved correctly.
-7. Local analysis produces evidence-backed structured results.
-8. Model or parser failures remain inspectable and retryable.
-9. Individual job reports and a combined report are produced.
-10. Rerunning does not duplicate unchanged jobs or inflate analysis.
-11. No login, CAPTCHA bypass, private-data scraping, or application automation is required.
-12. The automated result is materially more useful than the previous manual file-and-AI workflow.
+1. searches are configured once;
+2. a normal run discovers jobs automatically;
+3. pagination and budgets are bounded and observable;
+4. new and changed jobs preserve immutable evidence;
+5. explicit Jobinja fields parse deterministically;
+6. Persian, English, and mixed content remain intact;
+7. local analysis produces evidence-backed structured results;
+8. model and parser failures remain inspectable and retryable;
+9. individual and combined reports exist;
+10. reruns do not duplicate unchanged jobs or inflate analysis;
+11. no access-control bypass or application automation is required;
+12. the result is materially more useful than the manual workflow.
 
 ## 14. Deferred work
 
-The following remain outside Phase 1 unless strictly necessary to complete the workflow:
+Outside Phase 1 unless required for completion:
 
 - other job platforms;
 - generic crawling;
-- automated applications;
+- automated applications and recruiter messaging;
 - resume tailoring and submission;
-- full personal capability evidence graph;
-- deep roadmap modification;
-- market trend analysis over long periods;
-- salary prediction;
-- hiring-probability prediction;
+- full personal capability graph;
+- long-term trend analysis;
+- salary or hiring-probability prediction;
 - mobile or browser-extension interfaces;
 - distributed services;
 - model fine-tuning;
-- embeddings or vector databases without demonstrated need.
+- vector databases without demonstrated need.
 
 ## 15. Current authorized implementation
 
-M0, P1.1, and P1.2 are accepted. Repeat-safe discovery was validated live across two two-page Jobinja searches with 79 unique jobs, one cross-search overlap, and zero new jobs on the identical rerun.
+Accepted evidence:
 
-A bounded parser-v2 slice spanning parts of P1.3 and P1.4 is accepted against fifteen structurally varied live Jobinja advertisements. All fifteen latest semantic versions pass the deterministic local structural audit.
+- M0, P1.1, and P1.2;
+- 79 unique jobs across two two-page searches with one overlap;
+- zero new jobs on the identical discovery rerun;
+- fifteen complete parser-v2 advertisements;
+- fifteen of fifteen latest versions structurally clean;
+- unchanged checks creating observations without false versions;
+- bounded refresh-due selection.
 
-The current implementation and live acceptance target is the operational core of **P1.3 — job-detail acquisition and immutable evidence**.
-
-The active P1.3 path is:
-
-```text
-explicit, missing-only, or refresh-due bounded selection
-→ sequential rate-limited detail requests
-→ immutable raw detail evidence
-→ deterministic parser-v2 extraction
-→ semantic new / unchanged decision
-→ persistent successful or failed fetch observation
-→ inspectable per-job check history
-→ bounded refresh scheduling
-```
-
-P1.3 must:
-
-- preserve semantic versions, raw HTTP snapshots, and fetch observations as distinct records;
-- record every successful check even when content is unchanged;
-- record expected acquisition and evidence-write failures without deleting prior data;
-- select refresh-due jobs only when a local detail version exists;
-- use the latest observation timestamp and a semantic-version fallback for legacy data;
-- remain sequential, bounded to 50 jobs, user-controlled, and independent from LM Studio;
-- avoid lifecycle conclusions from one failure or one search disappearance.
-
-The active commands are:
+Current target: **configurable bilingual search planning and acquisition-only
+synchronization**.
 
 ```text
-jobhunter jobinja fetch <job-id> [<job-id> ...]
-jobhunter jobinja fetch --missing --limit <count>
-jobhunter jobinja fetch --refresh-due --older-than-hours <hours> --limit <count>
-jobhunter jobs checks <job-id> [--limit <count>]
+profiles + packs + custom Persian/English groups + raw URLs
+→ normalized deduplication and exclusions
+→ inspectable plan
+→ search limit + offset + pages + global request budget
+→ repeat-safe discovery
+→ bounded missing and refresh-due details
+→ evidence + parsing + semantic versioning + observations
+→ structural audit
+→ acquisition sync summary
 ```
 
-Challenge/login classification, retry-backoff refinement, expired and irrelevant page classification, and full lifecycle decisions remain incomplete. Local LLM interpretation, individual analysis, combined reports, personal relevance, career recommendations, and `jobhunter run` remain outside the active increment.
+Active commands:
+
+```text
+jobhunter jobinja catalog
+jobhunter jobinja plan
+jobhunter jobinja discover
+jobhunter jobinja sync
+jobhunter jobinja fetch
+jobhunter jobs list
+jobhunter jobs show
+jobhunter jobs checks
+jobhunter jobs audit
+```
+
+Acceptance requires deterministic tests and bounded live validation. Acquisition
+must remain independent from LM Studio.
+
+After acceptance, the next target is challenge/login/irrelevant/expired-page
+classification, retry policy, and cautious lifecycle transitions. P1.6 must not
+begin until acquisition failures are sufficiently classified to protect the
+analysis corpus.
