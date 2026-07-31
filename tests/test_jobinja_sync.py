@@ -19,6 +19,7 @@ class _Discovery:
             cross_search_overlaps=0,
             request_budget=10,
             requests_attempted=2,
+            discovered_job_ids=("new2", "new1", "known1"),
             search_summaries=(),
             failures=(),
             newly_discovered=(),
@@ -26,8 +27,12 @@ class _Discovery:
 
 
 class _Catalog:
-    def missing_job_ids(self, *, limit: int):
-        return ("new1", "new2")[:limit]
+    def __init__(self) -> None:
+        self.preferred_ids = ()
+
+    def missing_job_ids(self, *, limit: int, preferred_ids=()):
+        self.preferred_ids = tuple(preferred_ids)
+        return ("new2", "new1")[:limit]
 
 
 class _Observations:
@@ -71,10 +76,11 @@ class _Auditor:
 
 def test_sync_composes_discovery_missing_refresh_and_audit() -> None:
     batch = _Batch()
+    catalog = _Catalog()
     service = JobinjaSyncService(
         discovery_service=_Discovery(),  # type: ignore[arg-type]
         batch_service=batch,  # type: ignore[arg-type]
-        catalog=_Catalog(),  # type: ignore[arg-type]
+        catalog=catalog,  # type: ignore[arg-type]
         observations=_Observations(),  # type: ignore[arg-type]
         auditor=_Auditor(),  # type: ignore[arg-type]
         clock=lambda: datetime(2026, 8, 1, tzinfo=UTC),
@@ -87,9 +93,10 @@ def test_sync_composes_discovery_missing_refresh_and_audit() -> None:
         refresh_after_hours=24,
     )
 
-    assert summary.missing_selected == ("new1", "new2")
+    assert catalog.preferred_ids == ("new2", "new1", "known1")
+    assert summary.missing_selected == ("new2", "new1")
     assert summary.refresh_selected == ("old1",)
-    assert batch.selected == ("new1", "new2", "old1")
+    assert batch.selected == ("new2", "new1", "old1")
     assert summary.detail_fetch is not None
     assert summary.detail_fetch.new_versions == 2
     assert summary.detail_fetch.unchanged == 1
