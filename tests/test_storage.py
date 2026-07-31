@@ -77,23 +77,52 @@ def test_initialize_migrates_legacy_detail_versions_to_semantic_hashes(
         connection.execute(
             """
             INSERT INTO job_postings(
-                source, source_job_id, company_slug, canonical_url,
-                title_observed, first_seen_at, last_seen_at
-            ) VALUES ('jobinja', 'abc1', 'acme', 'https://jobinja.ir/companies/acme/jobs/abc1/python',
-                      'Python Developer', '2026-07-31T12:00:00+00:00',
-                      '2026-07-31T12:00:00+00:00')
+                source,
+                source_job_id,
+                company_slug,
+                canonical_url,
+                title_observed,
+                first_seen_at,
+                last_seen_at
+            ) VALUES (
+                'jobinja',
+                'abc1',
+                'acme',
+                'https://jobinja.ir/companies/acme/jobs/abc1/python',
+                'Python Developer',
+                '2026-07-31T12:00:00+00:00',
+                '2026-07-31T12:00:00+00:00'
+            )
             """
         )
         for raw_hash in ("raw-one", "raw-two"):
             connection.execute(
                 """
                 INSERT INTO job_detail_versions(
-                    job_posting_id, fetched_at, requested_url, final_url,
-                    status_code, content_sha256, evidence_path, metadata_path,
-                    parser_version, parse_status, fields_json
-                ) VALUES (1, '2026-07-31T12:00:00+00:00', 'https://example',
-                          'https://example', 200, ?, 'page.html', 'page.json',
-                          'jobinja-detail-v1', 'parsed', ?)
+                    job_posting_id,
+                    fetched_at,
+                    requested_url,
+                    final_url,
+                    status_code,
+                    content_sha256,
+                    evidence_path,
+                    metadata_path,
+                    parser_version,
+                    parse_status,
+                    fields_json
+                ) VALUES (
+                    1,
+                    '2026-07-31T12:00:00+00:00',
+                    'https://example',
+                    'https://example',
+                    200,
+                    ?,
+                    'page.html',
+                    'page.json',
+                    'jobinja-detail-v1',
+                    'parsed',
+                    ?
+                )
                 """,
                 (raw_hash, fields_json),
             )
