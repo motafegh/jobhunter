@@ -7,6 +7,7 @@ import hashlib
 import logging
 import sys
 from collections.abc import Sequence
+from datetime import UTC, datetime
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -18,6 +19,10 @@ from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
 from jobhunter.job_audit import JobDetailAuditor, format_job_audit
 from jobhunter.job_catalog import JobCatalog, format_job_list
+from jobhunter.job_detail_observations import (
+    JobDetailObservationStore,
+    format_job_detail_observations,
+)
 from jobhunter.jobinja_batch import (
     JobinjaBatchFetchService,
     format_batch_fetch_summary,
@@ -95,6 +100,28 @@ def _bounded_list_count(value: str) -> int:
     if not 1 <= count <= 500:
         raise argparse.ArgumentTypeError("list limit must be between 1 and 500")
     return count
+
+
+def _bounded_observation_count(value: str) -> int:
+    try:
+        count = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("check-history limit must be an integer") from exc
+    if not 1 <= count <= 200:
+        raise argparse.ArgumentTypeError(
+            "check-history limit must be between 1 and 200"
+        )
+    return count
+
+
+def _positive_hours(value: str) -> float:
+    try:
+        hours = float(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("hours must be a number") from exc
+    if not 0 < hours <= 8760:
+        raise argparse.ArgumentTypeError("hours must be greater than 0 and at most 8760")
+    return hours
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -183,10 +210,24 @@ def build_parser() -> argparse.ArgumentParser:
         help="Fetch discovered jobs that do not yet have local detail content",
     )
     fetch_parser.add_argument(
+        "--refresh-due",
+        action="store_true",
+        help="Fetch acquired jobs whose latest recorded check is old enough",
+    )
+    fetch_parser.add_argument(
+        "--older-than-hours",
+        type=_positive_hours,
+        default=None,
+        help="Age threshold for --refresh-due (default: 24 hours)",
+    )
+    fetch_parser.add_argument(
         "--limit",
         type=_bounded_batch_count,
         default=None,
-        help="Maximum jobs selected by --missing (default: 5, maximum: 50)",
+        help=(
+            "Maximum jobs selected by --missing or --refresh-due "
+            "(default: 5, maximum: 50)"
+        ),
     )
 
     jobs_parser = subparsers.add_parser(
@@ -230,6 +271,18 @@ def build_parser() -> argparse.ArgumentParser:
         "--only-issues",
         action="store_true",
         help="Show only jobs with structural audit findings",
+    )
+
+    checks_parser = jobs_subparsers.add_parser(
+        "checks",
+        help="Show recorded detail-fetch checks for one Jobinja job",
+    )
+    checks_parser.add_argument("job_id", help="Stable Jobinja job ID")
+    checks_parser.add_argument(
+        "--limit",
+        type=_bounded_observation_count,
+        default=20,
+        help="Maximum observations to show (default: 20, maximum: 200)",
     )
 
     show_parser = jobs_subparsers.add_parser(
@@ -313,11 +366,16 @@ def _jobinja_client(settings: Settings) -> JobinjaClient:
     )
 
 
+def _observation_store(settings: Settings) -> JobDetailObservationStore:
+    return JobDetailObservationStore(settings.database_path)
+
+
 def _detail_service(settings: Settings) -> JobinjaDetailService:
     return JobinjaDetailService(
         client=_jobinja_client(settings),
         evidence_store=EvidenceStore(settings.evidence_dir),
         store=JobHunterStore(settings.database_path),
+        observation_store=_observation_store(settings),
     )
 
 
@@ -352,24 +410,46 @@ def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) ->
 
 
 def _run_jobinja_fetch(settings: Settings, arguments: argparse.Namespace) -> int:
-    if arguments.missing and arguments.job_ids:
-        print("Pass explicit job IDs or --missing, not both.", file=sys.stderr)
+    selection_modes = sum(
+        (
+            bool(arguments.job_ids),
+            arguments.missing,
+            arguments.refresh_due,
+        )
+    )
+    if selection_modes != 1:
+        print(
+            "Choose exactly one: explicit job IDs, --missing, or --refresh-due.",
+            file=sys.stderr,
+        )
         return 2
-    if not arguments.missing and arguments.limit is not None:
-        print("--limit is only valid with --missing.", file=sys.stderr)
+    if arguments.older_than_hours is not None and not arguments.refresh_due:
+        print("--older-than-hours is only valid with --refresh-due.", file=sys.stderr)
+        return 2
+    if arguments.limit is not None and arguments.job_ids:
+        print("--limit is only valid with --missing or --refresh-due.", file=sys.stderr)
         return 2
 
+    limit = arguments.limit or 5
     if arguments.missing:
-        limit = arguments.limit or 5
         job_ids = JobCatalog(settings.database_path).missing_job_ids(limit=limit)
         if not job_ids:
             print("No discovered jobs are missing local detail content.")
             return 0
+    elif arguments.refresh_due:
+        older_than_hours = arguments.older_than_hours or 24.0
+        job_ids = _observation_store(settings).refresh_due_job_ids(
+            as_of=datetime.now(UTC),
+            older_than_hours=older_than_hours,
+            limit=limit,
+        )
+        if not job_ids:
+            print(
+                "No acquired jobs are due for a detail refresh at the requested age."
+            )
+            return 0
     else:
         job_ids = tuple(arguments.job_ids)
-        if not job_ids:
-            print("Pass one or more job IDs, or use --missing.", file=sys.stderr)
-            return 2
 
     service = JobinjaBatchFetchService(
         detail_service=_detail_service(settings),
@@ -396,6 +476,20 @@ def _audit_jobs(settings: Settings, arguments: argparse.Namespace) -> int:
     )
     print(format_job_audit(report, only_issues=arguments.only_issues))
     return 1 if report.needs_review else 0
+
+
+def _show_checks(settings: Settings, arguments: argparse.Namespace) -> int:
+    observations = _observation_store(settings).list_for_job(
+        arguments.job_id,
+        limit=arguments.limit,
+    )
+    print(
+        format_job_detail_observations(
+            observations,
+            source_job_id=arguments.job_id,
+        )
+    )
+    return 0
 
 
 def _show_job(settings: Settings, job_id: str) -> int:
@@ -445,6 +539,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _list_jobs(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "audit":
         return _audit_jobs(settings, arguments)
+    if arguments.command == "jobs" and arguments.jobs_command == "checks":
+        return _show_checks(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "show":
         return _show_job(settings, arguments.job_id)
 
