@@ -5,7 +5,7 @@ from __future__ import annotations
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from jobhunter.evidence import EvidenceStore, EvidenceWriteError
 from jobhunter.sources import (
@@ -47,7 +47,7 @@ class DiscoverySummary:
 
 
 def _utc_now() -> datetime:
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 class JobinjaDiscoveryService:
