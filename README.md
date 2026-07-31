@@ -78,31 +78,62 @@ Then run:
 jobhunter jobinja discover --show-jobs
 ```
 
-## Fetch and inspect a complete job locally
+## Fetch and inspect complete jobs locally
 
-After discovery, fetch one or more complete advertisement pages by stable Jobinja ID:
+After discovery, fetch one complete advertisement page by stable Jobinja ID:
 
 ```bash
 jobhunter jobinja fetch tpLF
 ```
 
-This command:
+Fetch a deliberate validation set in one bounded sequential batch:
 
-- loads the canonical URL from SQLite;
-- downloads the public job page;
-- validates redirects and content type;
-- saves raw HTML and metadata before parsing;
-- extracts explicit source fields from embedded `JobPosting` metadata and Jobinja labels;
-- stores a content-addressed detail version;
-- recognizes unchanged content on a repeated fetch.
+```bash
+jobhunter jobinja fetch tmW1 tmkE tmNr tpBO
+```
 
-Inspect the latest locally stored detail without another network request:
+Each batch:
+
+- removes duplicate IDs while preserving order;
+- performs requests sequentially;
+- uses `jobinja_request_delay_seconds` between requests;
+- isolates one job's failure without discarding successful jobs;
+- accepts no more than 50 jobs;
+- reports new semantic versions, unchanged content, and failures.
+
+List locally known jobs and their detail status:
+
+```bash
+jobhunter jobs list
+jobhunter jobs list --details missing
+jobhunter jobs list --details available
+```
+
+Once representative layouts have been reviewed, fetch a bounded number of jobs that have no local detail version:
+
+```bash
+jobhunter jobinja fetch --missing --limit 5
+```
+
+`--missing` does not refresh already acquired jobs. It selects the oldest discovered jobs with no detail content and defaults to five jobs. Explicit IDs and `--missing` cannot be combined.
+
+Inspect the latest locally stored semantic detail without another network request:
 
 ```bash
 jobhunter jobs show tpLF
 ```
 
-The output can include title, company, category, location, cooperation type, experience, education, salary, gender, military-service requirement, skill tags, complete description, source URL, retrieval time, content hash, and evidence paths. Missing fields are displayed as unavailable rather than guessed.
+Detail acquisition:
+
+- loads the canonical URL from SQLite;
+- downloads the public job page;
+- validates redirects, content type, and response size;
+- saves raw HTML and metadata before parsing;
+- extracts explicit source fields from Jobinja labels and embedded `JobPosting` metadata;
+- stores semantic versions separately from volatile raw-HTML snapshots;
+- recognizes unchanged job content even when Jobinja's surrounding HTML changes.
+
+The output can include title, company, category, location, cooperation type, experience, education, salary, gender, military-service requirement, skill tags, complete description, source URL, retrieval time, semantic hash, raw hash, and evidence paths. Missing fields are displayed as unavailable rather than guessed.
 
 Raw detail evidence is stored under:
 
@@ -173,4 +204,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 and P1.1 are complete on `main`. The first complete-job vertical slice is implemented: a discovered Jobinja job can be fetched, preserved, parsed deterministically, versioned, and inspected locally. Live validation against representative Jobinja pages controls the next parser refinements and batch-fetch work.
+M0 and P1.1 are complete on `main`. Complete-job acquisition, immutable raw evidence, parser-v2 deterministic extraction, semantic versioning, local inspection, bounded explicit batches, missing-detail selection, and local catalog listing are implemented. Representative live Jobinja layouts still control parser acceptance before unrestricted routine acquisition is considered reliable.
