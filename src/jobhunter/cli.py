@@ -16,6 +16,7 @@ from jobhunter.config import ConfigLoadError, JobinjaSearchDefinition, Settings
 from jobhunter.doctor import format_report, run_doctor
 from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
+from jobhunter.job_audit import JobDetailAuditor, format_job_audit
 from jobhunter.job_catalog import JobCatalog, format_job_list
 from jobhunter.jobinja_batch import (
     JobinjaBatchFetchService,
@@ -209,6 +210,28 @@ def build_parser() -> argparse.ArgumentParser:
         default=50,
         help="Maximum jobs to display (default: 50, maximum: 500)",
     )
+
+    audit_parser = jobs_subparsers.add_parser(
+        "audit",
+        help="Audit latest local detail parsing without network or LM Studio",
+    )
+    audit_parser.add_argument(
+        "job_ids",
+        nargs="*",
+        help="Optional Jobinja job IDs; defaults to all jobs with local details",
+    )
+    audit_parser.add_argument(
+        "--limit",
+        type=_bounded_list_count,
+        default=50,
+        help="Maximum jobs to audit (default: 50, maximum: 500)",
+    )
+    audit_parser.add_argument(
+        "--only-issues",
+        action="store_true",
+        help="Show only jobs with structural audit findings",
+    )
+
     show_parser = jobs_subparsers.add_parser(
         "show",
         help="Show the latest locally stored complete job detail",
@@ -366,6 +389,15 @@ def _list_jobs(settings: Settings, arguments: argparse.Namespace) -> int:
     return 0
 
 
+def _audit_jobs(settings: Settings, arguments: argparse.Namespace) -> int:
+    report = JobDetailAuditor(settings.database_path).audit(
+        source_job_ids=tuple(arguments.job_ids),
+        limit=arguments.limit,
+    )
+    print(format_job_audit(report, only_issues=arguments.only_issues))
+    return 1 if report.needs_review else 0
+
+
 def _show_job(settings: Settings, job_id: str) -> int:
     try:
         detail = _detail_service(settings).show(job_id)
@@ -411,6 +443,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _run_jobinja_fetch(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "list":
         return _list_jobs(settings, arguments)
+    if arguments.command == "jobs" and arguments.jobs_command == "audit":
+        return _audit_jobs(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "show":
         return _show_job(settings, arguments.job_id)
 
