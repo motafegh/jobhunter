@@ -56,6 +56,38 @@ max_pages = 3
     assert settings.jobinja_searches[0].max_pages == 3
 
 
+def test_loads_profiles_packs_custom_groups_and_exclusions(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+jobinja_search_profiles = ["ai-focused"]
+jobinja_search_packs = ["python-data"]
+jobinja_excluded_terms = ["Python", "  PYTHON  "]
+jobinja_search_request_budget = 25
+
+[[jobhunter.jobinja_keyword_groups]]
+name = "My security roles"
+terms = ["امنیت‌سایبری", "امنيت سایبری", "Security Automation"]
+max_pages = 2
+""".strip(),
+        encoding="utf-8",
+    )
+
+    settings = Settings.load(config_path)
+    searches = settings.expanded_keyword_searches()
+    terms = {search.term for search in searches}
+
+    assert settings.jobinja_search_request_budget == 25
+    assert settings.jobinja_keyword_groups[0].terms == [
+        "امنیت‌سایبری",
+        "Security Automation",
+    ]
+    assert "Python" not in terms
+    assert "هوش مصنوعی" in terms
+    assert "Security Automation" in terms
+
+
 def test_missing_explicit_configuration_is_an_error(tmp_path: Path) -> None:
     with pytest.raises(ConfigLoadError, match="does not exist"):
         Settings.load(tmp_path / "missing.toml")
@@ -93,4 +125,39 @@ url = "https://jobinja.ir/jobs?q=python"
     )
 
     with pytest.raises(ValidationError, match="Duplicate Jobinja search name"):
+        Settings.load(config_path)
+
+
+def test_duplicate_keyword_group_names_are_rejected(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+
+[[jobhunter.jobinja_keyword_groups]]
+name = "Security"
+terms = ["Security Engineer"]
+
+[[jobhunter.jobinja_keyword_groups]]
+name = "SECURITY"
+terms = ["مهندس امنیت"]
+""".strip(),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="Duplicate Jobinja keyword group name"):
+        Settings.load(config_path)
+
+
+def test_unknown_search_profile_is_rejected(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+jobinja_search_profiles = ["does-not-exist"]
+""".strip(),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="Unknown Jobinja search profile"):
         Settings.load(config_path)
