@@ -1,4 +1,4 @@
-"""Jobinja public search acquisition and deterministic job-link parsing."""
+"""Jobinja public-page acquisition and deterministic job-link parsing."""
 
 from __future__ import annotations
 
@@ -10,6 +10,7 @@ from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 import httpx
 
 ALLOWED_JOBINJA_HOSTS = {"jobinja.ir", "www.jobinja.ir"}
+_MAX_HTML_BYTES = 5 * 1024 * 1024
 _JOB_PATH_PATTERN = re.compile(
     r"^/companies/(?P<company_slug>[^/]+)/jobs/(?P<job_code>[^/]+)(?:/.*)?$"
 )
@@ -36,6 +37,18 @@ class DiscoveredJobLink:
 @dataclass(frozen=True, slots=True)
 class FetchedSearchPage:
     """Raw and decoded data returned from one Jobinja search-page request."""
+
+    requested_url: str
+    final_url: str
+    status_code: int
+    headers: dict[str, str]
+    content: bytes
+    text: str
+
+
+@dataclass(frozen=True, slots=True)
+class FetchedJobPage:
+    """Raw and decoded data returned from one Jobinja job-page request."""
 
     requested_url: str
     final_url: str
@@ -176,8 +189,28 @@ def extract_job_links(html: str, *, base_url: str) -> tuple[DiscoveredJobLink, .
     return tuple(discovered_by_id[source_job_id] for source_job_id in job_order)
 
 
+def _selected_headers(response: httpx.Response) -> dict[str, str]:
+    return {
+        key.lower(): value
+        for key, value in response.headers.items()
+        if key.lower() in {"content-type", "etag", "last-modified", "cache-control"}
+    }
+
+
+def _validate_html_response(response: httpx.Response, *, requested_url: str) -> None:
+    content_type = response.headers.get("content-type", "")
+    if content_type and "text/html" not in content_type.lower():
+        raise JobinjaAcquisitionError(
+            f"Jobinja returned unsupported content type {content_type!r} for {requested_url}"
+        )
+    if len(response.content) > _MAX_HTML_BYTES:
+        raise JobinjaAcquisitionError(
+            f"Jobinja response exceeded {_MAX_HTML_BYTES} bytes for {requested_url}"
+        )
+
+
 class JobinjaClient:
-    """Small synchronous client for public Jobinja search pages."""
+    """Small synchronous client for public Jobinja pages."""
 
     def __init__(
         self,
@@ -190,10 +223,7 @@ class JobinjaClient:
         self._timeout_seconds = timeout_seconds
         self._transport = transport
 
-    def fetch_search_page(self, search_url: str, page_number: int) -> FetchedSearchPage:
-        """Fetch one bounded Jobinja search page and validate its final destination."""
-
-        requested_url = with_search_page(search_url, page_number)
+    def _get(self, requested_url: str) -> httpx.Response:
         try:
             with httpx.Client(
                 timeout=self._timeout_seconds,
@@ -213,9 +243,17 @@ class JobinjaClient:
             ) from exc
         except (httpx.ConnectError, httpx.TimeoutException, httpx.NetworkError) as exc:
             raise JobinjaAcquisitionError(
-                f"Could not fetch Jobinja search page {requested_url}: {exc}"
+                f"Could not fetch Jobinja page {requested_url}: {exc}"
             ) from exc
 
+        _validate_html_response(response, requested_url=requested_url)
+        return response
+
+    def fetch_search_page(self, search_url: str, page_number: int) -> FetchedSearchPage:
+        """Fetch one bounded Jobinja search page and validate its final destination."""
+
+        requested_url = with_search_page(search_url, page_number)
+        response = self._get(requested_url)
         final_url = str(response.url)
         final_path, _query, _fragment, _hostname = _validate_jobinja_host(final_url)
         if final_path.rstrip("/") != "/jobs":
@@ -223,22 +261,38 @@ class JobinjaClient:
                 f"Jobinja search redirected to an unsupported path: {final_url}"
             )
 
-        content_type = response.headers.get("content-type", "")
-        if content_type and "text/html" not in content_type.lower():
-            raise JobinjaAcquisitionError(
-                f"Jobinja search returned unsupported content type {content_type!r}"
-            )
-
-        selected_headers = {
-            key.lower(): value
-            for key, value in response.headers.items()
-            if key.lower() in {"content-type", "etag", "last-modified", "cache-control"}
-        }
         return FetchedSearchPage(
             requested_url=requested_url,
             final_url=final_url,
             status_code=response.status_code,
-            headers=selected_headers,
+            headers=_selected_headers(response),
+            content=response.content,
+            text=response.text,
+        )
+
+    def fetch_job_page(self, job_url: str) -> FetchedJobPage:
+        """Fetch one public Jobinja job page and validate its final job identity."""
+
+        requested_identity = canonicalize_job_url(job_url)
+        response = self._get(requested_identity.canonical_url)
+        final_url = str(response.url)
+        try:
+            final_identity = canonicalize_job_url(final_url)
+        except JobinjaUrlError as exc:
+            raise JobinjaAcquisitionError(
+                f"Jobinja job redirected to an unsupported path: {final_url}"
+            ) from exc
+        if final_identity.source_job_id != requested_identity.source_job_id:
+            raise JobinjaAcquisitionError(
+                "Jobinja job redirected to a different job identity: "
+                f"{requested_identity.source_job_id} -> {final_identity.source_job_id}"
+            )
+
+        return FetchedJobPage(
+            requested_url=requested_identity.canonical_url,
+            final_url=final_identity.canonical_url,
+            status_code=response.status_code,
+            headers=_selected_headers(response),
             content=response.content,
             text=response.text,
         )
