@@ -109,6 +109,16 @@ jobhunter jobs list --details missing
 jobhunter jobs list --details available
 ```
 
+Audit the latest locally parsed details without network access or LM Studio:
+
+```bash
+jobhunter jobs audit
+jobhunter jobs audit tmW1 tmkE tmNr tpBO
+jobhunter jobs audit --only-issues
+```
+
+The audit reports parser version, description length, explicit-field coverage, source skill-tag count, and structural findings. It flags missing title or description, non-scalar values, obvious page-interface contamination, implausibly long scalar fields, malformed skill tags, and outdated parser versions. Missing optional fields such as salary or education are shown as coverage gaps rather than automatically treated as parser failures.
+
 Once representative layouts have been reviewed, fetch a bounded number of jobs that have no local detail version:
 
 ```bash
@@ -204,4 +214,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 and P1.1 are complete on `main`. Complete-job acquisition, immutable raw evidence, parser-v2 deterministic extraction, semantic versioning, local inspection, bounded explicit batches, missing-detail selection, and local catalog listing are implemented. Representative live Jobinja layouts still control parser acceptance before unrestricted routine acquisition is considered reliable.
+M0 and P1.1 are complete on `main`. Complete-job acquisition, immutable raw evidence, parser-v2 deterministic extraction, semantic versioning, local inspection, bounded explicit batches, missing-detail selection, local catalog listing, and deterministic local parser auditing are implemented. Representative live Jobinja layouts still control parser acceptance before unrestricted routine acquisition is considered reliable.
