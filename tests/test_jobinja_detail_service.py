@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
@@ -35,7 +35,7 @@ def test_fetches_preserves_and_reuses_unchanged_job_detail(tmp_path: Path) -> No
             canonical_url=job_url,
             observed_text="Python Developer",
         ),
-        observed_at=datetime.now(timezone.utc),
+        observed_at=datetime.now(UTC),
     )
     service = JobinjaDetailService(
         client=JobinjaClient(
