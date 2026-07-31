@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sqlite3
 import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
@@ -82,6 +83,7 @@ class JobinjaBatchFetchService:
                 JobNotFoundError,
                 JobinjaAcquisitionError,
                 OSError,
+                sqlite3.Error,
             ) as exc:
                 failures.append(
                     BatchFetchFailure(
@@ -114,7 +116,8 @@ def format_batch_fetch_summary(summary: JobinjaBatchFetchSummary) -> str:
             state = "new version" if result.is_new_version else "unchanged"
             lines.append(
                 f"- {result.source_job_id}: {state}, "
-                f"version {result.version_id}, {result.parse_status}"
+                f"version {result.version_id}, observation {result.observation_id}, "
+                f"{result.parse_status}"
             )
     if summary.failures:
         lines.append("Failure details:")
