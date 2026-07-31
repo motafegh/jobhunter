@@ -92,15 +92,25 @@ class _PageCollector(HTMLParser):
         self._json_ld_parts: list[str] = []
         self._h1_depth = 0
 
-    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+    def handle_starttag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+    ) -> None:
         lower = tag.lower()
         attributes = {key.lower(): value for key, value in attrs}
         if lower == "meta":
-            key = attributes.get("property") or attributes.get("name") or attributes.get("itemprop")
+            key = (
+                attributes.get("property")
+                or attributes.get("name")
+                or attributes.get("itemprop")
+            )
             content = attributes.get("content")
             if key and content:
                 self.meta[key.lower()] = content.strip()
-        if lower == "script" and (attributes.get("type") or "").lower() == "application/ld+json":
+
+        script_type = (attributes.get("type") or "").lower()
+        if lower == "script" and script_type == "application/ld+json":
             self._json_ld_depth = 1
             self._json_ld_parts = []
             return
@@ -142,9 +152,9 @@ class _PageCollector(HTMLParser):
             return
         if self._ignored_depth:
             return
-        self.text_parts.append(data)
+        self.text_parts.extend((data, " "))
         if self._h1_depth:
-            self.h1_parts.append(data)
+            self.h1_parts.extend((data, " "))
 
 
 def _clean(value: Any) -> str | None:
@@ -160,7 +170,7 @@ def _strip_html(value: str | None) -> str | None:
     collector = _PageCollector()
     collector.feed(value)
     collector.close()
-    return _clean(" ".join(collector.text_parts))
+    return _clean("".join(collector.text_parts))
 
 
 def _iter_json_objects(value: Any):
@@ -187,6 +197,23 @@ def _jobposting_json(collector: _PageCollector) -> dict[str, Any] | None:
             if "JobPosting" in types:
                 return item
     return None
+
+
+def _schema_text(value: Any) -> str | None:
+    if isinstance(value, list):
+        rendered = [_schema_text(item) for item in value]
+        return " | ".join(item for item in rendered if item) or None
+    if isinstance(value, dict):
+        preferred_keys = (
+            "name",
+            "description",
+            "value",
+            "monthsOfExperience",
+            "yearsOfExperience",
+        )
+        rendered = [_schema_text(value.get(key)) for key in preferred_keys]
+        return " ".join(item for item in rendered if item) or None
+    return _clean(value)
 
 
 def _format_location(value: Any) -> str | None:
@@ -230,7 +257,11 @@ def _format_salary(value: Any) -> str | None:
 
 def _visible_lines(collector: _PageCollector) -> list[str]:
     text = "".join(collector.text_parts).replace("\r", "\n")
-    return [cleaned for line in text.split("\n") if (cleaned := _clean(line))]
+    return [
+        cleaned
+        for line in text.split("\n")
+        if (cleaned := _clean(line))
+    ]
 
 
 def _normalize_label(value: str) -> str:
@@ -257,7 +288,10 @@ def _label_sections(lines: list[str]) -> dict[str, list[str]]:
 
     sections: dict[str, list[str]] = {}
     for marker_index, (line_index, field) in enumerate(markers):
-        end = markers[marker_index + 1][0] if marker_index + 1 < len(markers) else len(lines)
+        if marker_index + 1 < len(markers):
+            end = markers[marker_index + 1][0]
+        else:
+            end = len(lines)
         values = lines[line_index + 1 : end]
         if not values:
             continue
@@ -267,9 +301,19 @@ def _label_sections(lines: list[str]) -> dict[str, list[str]]:
     return sections
 
 
-def _scalar_section(sections: dict[str, list[str]], field: str) -> str | None:
+def _scalar_section(
+    sections: dict[str, list[str]],
+    field: str,
+) -> str | None:
     values = sections.get(field, [])
     return _clean(" | ".join(values[:4]))
+
+
+def _text_section(
+    sections: dict[str, list[str]],
+    field: str,
+) -> str | None:
+    return _clean("\n".join(sections.get(field, [])))
 
 
 def _skills(value: Any, section_values: list[str]) -> tuple[str, ...]:
@@ -322,29 +366,45 @@ def parse_jobinja_detail(html: str) -> ParsedJobDetail:
         or _clean("".join(collector.h1_parts))
         or _clean(collector.meta.get("og:title"))
     )
-    description = _strip_html(structured.get("description")) or _scalar_section(
-        sections, "description"
+    description = (
+        _strip_html(structured.get("description"))
+        or _text_section(sections, "description")
     )
-    company_description = _scalar_section(sections, "company_description")
-    parsed = ParsedJobDetail(
+    company_description = _text_section(sections, "company_description")
+
+    return ParsedJobDetail(
         title=title,
         company=_clean(company),
         job_category=_scalar_section(sections, "job_category"),
-        location=_format_location(structured.get("jobLocation"))
-        or _scalar_section(sections, "location"),
-        employment_type=_clean(employment) or _scalar_section(sections, "employment_type"),
-        minimum_experience=_clean(structured.get("experienceRequirements"))
-        or _scalar_section(sections, "minimum_experience"),
-        salary=_format_salary(structured.get("baseSalary")) or _scalar_section(sections, "salary"),
+        location=(
+            _format_location(structured.get("jobLocation"))
+            or _scalar_section(sections, "location")
+        ),
+        employment_type=(
+            _clean(employment)
+            or _scalar_section(sections, "employment_type")
+        ),
+        minimum_experience=(
+            _schema_text(structured.get("experienceRequirements"))
+            or _scalar_section(sections, "minimum_experience")
+        ),
+        salary=(
+            _format_salary(structured.get("baseSalary"))
+            or _scalar_section(sections, "salary")
+        ),
         description=description,
-        skills=_skills(structured.get("skills"), sections.get("skills", [])),
+        skills=_skills(
+            structured.get("skills"),
+            sections.get("skills", []),
+        ),
         gender=_scalar_section(sections, "gender"),
         military_service=_scalar_section(sections, "military_service"),
-        education=_clean(structured.get("educationRequirements"))
-        or _scalar_section(sections, "education"),
+        education=(
+            _schema_text(structured.get("educationRequirements"))
+            or _scalar_section(sections, "education")
+        ),
         company_description=company_description,
         date_posted=_clean(structured.get("datePosted")),
         valid_through=_clean(structured.get("validThrough")),
         language=_language(title, description, company_description),
     )
-    return parsed
