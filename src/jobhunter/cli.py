@@ -16,12 +16,18 @@ from jobhunter.config import ConfigLoadError, JobinjaSearchDefinition, Settings
 from jobhunter.doctor import format_report, run_doctor
 from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
+from jobhunter.jobinja_detail_service import (
+    JobNotFoundError,
+    JobinjaDetailService,
+    format_fetch_summary,
+    format_job_detail,
+)
 from jobhunter.jobinja_discovery import (
     DiscoverySearch,
     JobinjaDiscoveryService,
     format_discovery_summary,
 )
-from jobhunter.sources import JobinjaClient
+from jobhunter.sources import JobinjaAcquisitionError, JobinjaClient
 from jobhunter.storage import JobHunterStore
 
 DEFAULT_CONFIG = """# JobHunter local configuration
@@ -137,6 +143,27 @@ def build_parser() -> argparse.ArgumentParser:
         help="Print canonical URLs for newly discovered jobs",
     )
 
+    fetch_parser = jobinja_subparsers.add_parser(
+        "fetch",
+        help="Fetch and preserve complete pages for discovered Jobinja jobs",
+    )
+    fetch_parser.add_argument(
+        "job_ids",
+        nargs="+",
+        help="One or more stable Jobinja job IDs already present in the local database",
+    )
+
+    jobs_parser = subparsers.add_parser(
+        "jobs",
+        help="Inspect locally stored job records",
+    )
+    jobs_subparsers = jobs_parser.add_subparsers(dest="jobs_command", required=True)
+    show_parser = jobs_subparsers.add_parser(
+        "show",
+        help="Show the latest locally stored complete job detail",
+    )
+    show_parser.add_argument("job_id", help="Stable Jobinja job ID, for example tpLF")
+
     return parser
 
 
@@ -205,6 +232,21 @@ def _discovery_searches(
     ]
 
 
+def _jobinja_client(settings: Settings) -> JobinjaClient:
+    return JobinjaClient(
+        user_agent=settings.jobinja_user_agent,
+        timeout_seconds=settings.jobinja_request_timeout_seconds,
+    )
+
+
+def _detail_service(settings: Settings) -> JobinjaDetailService:
+    return JobinjaDetailService(
+        client=_jobinja_client(settings),
+        evidence_store=EvidenceStore(settings.evidence_dir),
+        store=JobHunterStore(settings.database_path),
+    )
+
+
 def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) -> int:
     try:
         searches = _discovery_searches(
@@ -224,12 +266,8 @@ def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) ->
         )
         return 2
 
-    client = JobinjaClient(
-        user_agent=settings.jobinja_user_agent,
-        timeout_seconds=settings.jobinja_request_timeout_seconds,
-    )
     service = JobinjaDiscoveryService(
-        client=client,
+        client=_jobinja_client(settings),
         evidence_store=EvidenceStore(settings.evidence_dir),
         store=JobHunterStore(settings.database_path),
         request_delay_seconds=settings.jobinja_request_delay_seconds,
@@ -237,6 +275,30 @@ def _run_jobinja_discovery(settings: Settings, arguments: argparse.Namespace) ->
     summary = service.run(searches)
     print(format_discovery_summary(summary, show_jobs=arguments.show_jobs))
     return 0 if summary.succeeded else 1
+
+
+def _run_jobinja_fetch(settings: Settings, job_ids: Sequence[str]) -> int:
+    service = _detail_service(settings)
+    failures = 0
+    for index, job_id in enumerate(job_ids):
+        if index:
+            print()
+        try:
+            print(format_fetch_summary(service.fetch(job_id)))
+        except (JobNotFoundError, JobinjaAcquisitionError, OSError) as exc:
+            failures += 1
+            print(f"Job {job_id} failed: {exc}", file=sys.stderr)
+    return 1 if failures else 0
+
+
+def _show_job(settings: Settings, job_id: str) -> int:
+    try:
+        detail = _detail_service(settings).show(job_id)
+    except JobNotFoundError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+    print(format_job_detail(detail))
+    return 0
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -270,6 +332,10 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if arguments.command == "jobinja" and arguments.jobinja_command == "discover":
         return _run_jobinja_discovery(settings, arguments)
+    if arguments.command == "jobinja" and arguments.jobinja_command == "fetch":
+        return _run_jobinja_fetch(settings, arguments.job_ids)
+    if arguments.command == "jobs" and arguments.jobs_command == "show":
+        return _show_job(settings, arguments.job_id)
 
     parser.error(f"Unsupported command: {arguments.command}")
     return 2
