@@ -51,6 +51,8 @@ class DiscoverySummary:
     new_jobs: int
     known_jobs: int
     cross_search_overlaps: int
+    request_budget: int
+    requests_attempted: int
     search_summaries: tuple[SearchDiscoverySummary, ...]
     failures: tuple[str, ...]
     newly_discovered: tuple[DiscoveredJobLink, ...]
@@ -74,15 +76,19 @@ class JobinjaDiscoveryService:
         evidence_store: EvidenceStore,
         store: JobHunterStore,
         request_delay_seconds: float,
+        request_budget: int = 40,
         sleep: Callable[[float], None] = time.sleep,
         clock: Callable[[], datetime] = _utc_now,
     ) -> None:
         if request_delay_seconds < 0:
             raise ValueError("request_delay_seconds must not be negative")
+        if not 1 <= request_budget <= 500:
+            raise ValueError("request_budget must be between 1 and 500")
         self._client = client
         self._evidence_store = evidence_store
         self._store = store
         self._request_delay_seconds = request_delay_seconds
+        self._request_budget = request_budget
         self._sleep = sleep
         self._clock = clock
 
@@ -111,6 +117,18 @@ class JobinjaDiscoveryService:
             stop_reason = "page_limit_reached"
             search_failure: str | None = None
 
+            if requests_attempted >= self._request_budget:
+                search_summaries.append(
+                    SearchDiscoverySummary(
+                        name=search.name,
+                        pages_fetched=0,
+                        unique_jobs=0,
+                        cross_search_overlaps=0,
+                        stop_reason="request_budget_reached",
+                    )
+                )
+                continue
+
             try:
                 canonical_search_url = canonicalize_search_url(search.url)
             except JobinjaUrlError as exc:
@@ -138,6 +156,9 @@ class JobinjaDiscoveryService:
             )
 
             for page_number in range(1, search.max_pages + 1):
+                if requests_attempted >= self._request_budget:
+                    stop_reason = "request_budget_reached"
+                    break
                 if requests_attempted and self._request_delay_seconds > 0:
                     self._sleep(self._request_delay_seconds)
                 requests_attempted += 1
@@ -201,9 +222,7 @@ class JobinjaDiscoveryService:
                     stop_reason = "empty_page"
                     break
 
-                result_set = tuple(
-                    sorted({link.source_job_id for link in links})
-                )
+                result_set = tuple(sorted({link.source_job_id for link in links}))
                 if result_set in seen_result_sets:
                     stop_reason = "repeated_result_set"
                     break
@@ -250,6 +269,8 @@ class JobinjaDiscoveryService:
             new_jobs=new_jobs,
             known_jobs=known_jobs,
             cross_search_overlaps=cross_search_overlaps,
+            request_budget=self._request_budget,
+            requests_attempted=requests_attempted,
             search_summaries=tuple(search_summaries),
             failures=tuple(failures),
             newly_discovered=tuple(newly_discovered),
@@ -266,6 +287,7 @@ def format_discovery_summary(
     lines = [
         f"Jobinja discovery run: {summary.run_id}",
         f"Searches attempted: {summary.searches_attempted}",
+        f"Page requests attempted: {summary.requests_attempted}/{summary.request_budget}",
         f"Pages fetched: {summary.pages_fetched}",
         f"Unique jobs discovered: {summary.unique_jobs}",
         f"New jobs: {summary.new_jobs}",
