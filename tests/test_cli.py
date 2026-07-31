@@ -27,3 +27,19 @@ def test_init_refuses_to_replace_existing_configuration(
 
     assert exit_code == 1
     assert config_path.read_text(encoding="utf-8") == "existing"
+
+
+def test_discovery_requires_configured_or_command_line_search(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobinja", "discover"]) == 2
+
+
+def test_discovery_rejects_non_jobinja_command_line_url(
+    tmp_path: Path, monkeypatch
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobinja", "discover", "--url", "https://example.com/jobs"]) == 2
