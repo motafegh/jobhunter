@@ -61,3 +61,64 @@ def test_jobs_checks_handles_empty_history(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
 
     assert main(["jobs", "checks", "abc1"]) == 0
+
+
+def test_search_catalog_does_not_require_configuration(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobinja", "catalog"]) == 0
+
+
+def test_search_plan_expands_bilingual_profile_without_network(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert (
+        main(
+            [
+                "jobinja",
+                "plan",
+                "--profile",
+                "ai-security-python",
+                "--search-limit",
+                "8",
+                "--request-budget",
+                "4",
+            ]
+        )
+        == 0
+    )
+
+
+def test_search_plan_rejects_unknown_pack(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert main(["jobinja", "plan", "--pack", "unknown"]) == 2
+
+
+def test_sync_rejects_combined_detail_limit_over_fifty(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+
+    assert (
+        main(
+            [
+                "jobinja",
+                "sync",
+                "--term",
+                "Python",
+                "--missing-limit",
+                "30",
+                "--refresh-limit",
+                "21",
+            ]
+        )
+        == 2
+    )
