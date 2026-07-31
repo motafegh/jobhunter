@@ -49,20 +49,9 @@ Phase 1 automates the user's existing Jobinja workflow:
 
 See [Phase 1 — Jobinja Workflow Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
 
-## P1.1 Jobinja discovery
+## Jobinja discovery
 
-The current implementation supports:
-
-```text
-Jobinja search URL
-→ bounded search-page fetch
-→ raw HTML and metadata evidence
-→ canonical job-link discovery
-→ repeat-safe SQLite records
-→ CLI summary
-```
-
-Run a one-off search directly:
+Run a one-off search:
 
 ```bash
 jobhunter jobinja discover \
@@ -71,9 +60,9 @@ jobhunter jobinja discover \
   --show-jobs
 ```
 
-The URL represents one search, not one job. JobHunter discovers individual advertisement URLs from that result page automatically.
+The URL represents one search, not one job. JobHunter discovers individual advertisement URLs automatically, stores stable Jobinja job IDs, preserves the raw search page, and recognizes known jobs on later runs.
 
-To configure a reusable search in `jobhunter.toml`:
+A reusable search can be configured in `jobhunter.toml`:
 
 ```toml
 [[jobhunter.jobinja_searches]]
@@ -89,7 +78,39 @@ Then run:
 jobhunter jobinja discover --show-jobs
 ```
 
-P1.1 intentionally stops before fetching complete job-detail pages or using the LLM.
+## Fetch and inspect a complete job locally
+
+After discovery, fetch one or more complete advertisement pages by stable Jobinja ID:
+
+```bash
+jobhunter jobinja fetch tpLF
+```
+
+This command:
+
+- loads the canonical URL from SQLite;
+- downloads the public job page;
+- validates redirects and content type;
+- saves raw HTML and metadata before parsing;
+- extracts explicit source fields from embedded `JobPosting` metadata and Jobinja labels;
+- stores a content-addressed detail version;
+- recognizes unchanged content on a repeated fetch.
+
+Inspect the latest locally stored detail without another network request:
+
+```bash
+jobhunter jobs show tpLF
+```
+
+The output can include title, company, category, location, cooperation type, experience, education, salary, gender, military-service requirement, skill tags, complete description, source URL, retrieval time, content hash, and evidence paths. Missing fields are displayed as unavailable rather than guessed.
+
+Raw detail evidence is stored under:
+
+```text
+data/evidence/jobinja/job-pages/
+```
+
+This deterministic detail extraction does not invoke LM Studio. Responsibility and requirement interpretation remains a later Phase 1 increment.
 
 ## Existing M0 foundation
 
@@ -152,4 +173,4 @@ Environment variables use the `JOBHUNTER_` prefix. JobHunter does not automatica
 
 ## Current status
 
-M0 is complete and consolidated into `main`. P1.1 is implemented on `main`; local validation against a live Jobinja search is the next operational check before extending pagination and detail acquisition.
+M0 and P1.1 are complete on `main`. The first complete-job vertical slice is implemented: a discovered Jobinja job can be fetched, preserved, parsed deterministically, versioned, and inspected locally. Live validation against representative Jobinja pages controls the next parser refinements and batch-fetch work.
