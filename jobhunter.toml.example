@@ -11,15 +11,53 @@ lm_studio_base_url = "http://127.0.0.1:1234/v1"
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
 
+# Public Jobinja HTTP controls.
 jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
 jobinja_request_timeout_seconds = 30.0
 jobinja_request_delay_seconds = 1.0
 
-# Configure each Jobinja search once. Individual job links are discovered automatically.
+# Search-planning controls. The request budget is global across the selected
+# searches, so a large vocabulary cannot trigger unbounded acquisition.
+jobinja_search_request_budget = 40
+jobinja_max_expanded_searches = 100
+jobinja_default_keyword_max_pages = 1
+
+# Recommended bilingual profile for the repository owner's target direction.
+# It expands AI/ML, LLM applications, Python/data, defensive security,
+# AI security, and network/platform packs. Inspect it before network use:
+#   jobhunter jobinja catalog
+#   jobhunter jobinja plan
+jobinja_search_profiles = ["ai-security-python"]
+jobinja_search_packs = []
+
+# Terms are normalized for comparison but the original display form is kept.
+# Exclusions apply to built-in packs and custom groups.
+jobinja_excluded_terms = []
+
+# Acquisition-only daily sync controls.
+jobinja_sync_missing_limit = 10
+jobinja_sync_refresh_limit = 5
+jobinja_refresh_after_hours = 24.0
+
+# Add customized Persian and English searches without changing Python code.
+# [[jobhunter.jobinja_keyword_groups]]
+# name = "My highest-priority hybrid roles"
+# terms = [
+#   "مهندس امنیت هوش مصنوعی",
+#   "AI Security Engineer",
+#   "Python Security Automation",
+#   "مهندس تشخیص",
+#   "Detection Engineer",
+# ]
+# enabled = true
+# max_pages = 1
+
+# Raw Jobinja result URLs remain supported for filters that a keyword alone
+# cannot represent, such as a specific location or Jobinja-owned filter.
 # [[jobhunter.jobinja_searches]]
-# name = "Artificial intelligence roles"
+# name = "Tehran remote AI roles"
 # url = "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=..."
 # enabled = true
-# max_pages = 3
+# max_pages = 2
 
 log_level = "INFO"
