@@ -53,7 +53,7 @@ def test_falls_back_to_persian_label_sections() -> None:
       <section>شرح موقعیت شغلی</section>
       <p>طراحی و نگهداری ابزارهای امنیتی</p>
       <section>مهارت‌های مورد نیاز</section>
-      <span>Python</span><span>Linux</span>
+      <div>Python</div><div>Linux</div>
       <section>معرفی شرکت</section><p>یک شرکت فناوری</p>
     </main>
     """
@@ -64,5 +64,5 @@ def test_falls_back_to_persian_label_sections() -> None:
     assert detail.location == "تهران، تهران"
     assert detail.employment_type == "تمام‌وقت"
     assert detail.description == "طراحی و نگهداری ابزارهای امنیتی"
-    assert detail.skills == ("Python Linux",)
+    assert detail.skills == ("Python", "Linux")
     assert detail.company_description == "یک شرکت فناوری"
