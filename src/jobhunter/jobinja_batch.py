@@ -6,6 +6,7 @@ import time
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 
+from jobhunter.evidence import EvidenceWriteError
 from jobhunter.jobinja_detail_service import (
     JobDetailFetchSummary,
     JobinjaDetailService,
@@ -62,7 +63,8 @@ class JobinjaBatchFetchService:
     def run(self, job_ids: Sequence[str]) -> JobinjaBatchFetchSummary:
         """Fetch unique job IDs in order with a delay between requests."""
 
-        unique_job_ids = tuple(dict.fromkeys(job_id.strip() for job_id in job_ids if job_id.strip()))
+        cleaned_ids = (job_id.strip() for job_id in job_ids if job_id.strip())
+        unique_job_ids = tuple(dict.fromkeys(cleaned_ids))
         if not unique_job_ids:
             raise ValueError("At least one Jobinja job ID is required")
         if len(unique_job_ids) > 50:
@@ -75,7 +77,12 @@ class JobinjaBatchFetchService:
                 self._sleep(self._request_delay_seconds)
             try:
                 results.append(self._detail_service.fetch(source_job_id))
-            except (JobNotFoundError, JobinjaAcquisitionError, OSError) as exc:
+            except (
+                EvidenceWriteError,
+                JobNotFoundError,
+                JobinjaAcquisitionError,
+                OSError,
+            ) as exc:
                 failures.append(
                     BatchFetchFailure(
                         source_job_id=source_job_id,
