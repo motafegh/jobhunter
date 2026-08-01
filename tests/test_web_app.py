@@ -151,13 +151,17 @@ def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> Non
 
     app = create_app(settings)
     with TestClient(app) as client:
-        response = client.get("/jobs/tmW5")
+        detail_response = client.get("/jobs/tmW5")
+        list_response = client.get("/jobs")
 
-    assert response.status_code == 200
-    assert "Details not acquired yet" in response.text
-    assert "Fetch details" in response.text
-    assert "Jobinja reference tmW5" in response.text
-    assert "jobhunter jobinja fetch tmW5" not in response.text
+    assert detail_response.status_code == 200
+    assert "Details not acquired yet" in detail_response.text
+    assert "Fetch details" in detail_response.text
+    assert "Jobinja reference tmW5" in detail_response.text
+    assert "jobhunter jobinja fetch tmW5" not in detail_response.text
+    assert "Company: Example Company" in list_response.text
+    assert "Jobinja reference: tmW5" in list_response.text
+    assert "Not fetched" in list_response.text
 
 
 def test_web_app_unknown_job_is_real_404(tmp_path: Path) -> None:
