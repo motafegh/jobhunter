@@ -88,6 +88,77 @@ max_pages = 2
     assert "Security Automation" in terms
 
 
+def test_loads_external_search_catalog_from_configuration(tmp_path: Path) -> None:
+    catalog_path = tmp_path / "catalog.toml"
+    catalog_path.write_text(
+        """
+catalog_version = "personal-v1"
+[profiles]
+personal = ["hybrid"]
+[packs.hybrid]
+description = "Personal"
+terms = ["AI Security Engineer", "مهندس امنیت هوش مصنوعی"]
+""".strip(),
+        encoding="utf-8",
+    )
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        f"""
+[jobhunter]
+jobinja_search_catalog_path = "{catalog_path}"
+jobinja_search_profiles = ["personal"]
+""".strip(),
+        encoding="utf-8",
+    )
+
+    settings = Settings.load(config_path)
+
+    assert settings.search_catalog().version == "personal-v1"
+    assert {item.term for item in settings.expanded_keyword_searches()} == {
+        "AI Security Engineer",
+        "مهندس امنیت هوش مصنوعی",
+    }
+
+
+def test_translation_settings_accept_google_key_from_environment(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+translation_enabled = true
+translation_auto_after_sync = true
+translation_provider = "google-cloud"
+google_translation_model = "nmt"
+""".strip(),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("JOBHUNTER_GOOGLE_TRANSLATION_API_KEY", "  secret-key  ")
+
+    settings = Settings.load(config_path)
+
+    assert settings.translation_enabled is True
+    assert settings.translation_auto_after_sync is True
+    assert settings.google_translation_api_key == "secret-key"
+
+
+def test_translation_auto_sync_requires_translation_enabled(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+translation_enabled = false
+translation_auto_after_sync = true
+""".strip(),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="translation_auto_after_sync"):
+        Settings.load(config_path)
+
+
 def test_missing_explicit_configuration_is_an_error(tmp_path: Path) -> None:
     with pytest.raises(ConfigLoadError, match="does not exist"):
         Settings.load(tmp_path / "missing.toml")
