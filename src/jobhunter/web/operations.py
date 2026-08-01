@@ -5,10 +5,10 @@ from __future__ import annotations
 import threading
 import uuid
 from collections import deque
+from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
-from typing import Callable
 
 
 @dataclass(slots=True)
