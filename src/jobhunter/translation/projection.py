@@ -5,8 +5,9 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable
+from typing import Any
 
 TRANSLATION_SCHEMA_VERSION = "english-projection-v1"
 _PERSIAN_RE = re.compile(r"[\u0600-\u06ff]")
