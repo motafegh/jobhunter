@@ -9,7 +9,13 @@ from pathlib import Path
 
 from jobhunter.storage import JobHunterStore
 
-_TRIAGE_STATES = {"unreviewed", "interested", "review_later", "not_relevant", "reviewed"}
+_TRIAGE_STATES = {
+    "unreviewed",
+    "interested",
+    "review_later",
+    "not_relevant",
+    "reviewed",
+}
 
 _PACK_WEIGHTS = {
     "ai-security": 8,
@@ -100,7 +106,11 @@ class JobWorkflowStore:
     ) -> int:
         if triage_state not in _TRIAGE_STATES:
             raise ValueError(f"Unsupported triage state: {triage_state}")
-        unique_ids = tuple(dict.fromkeys(job_id.strip() for job_id in source_job_ids if job_id.strip()))
+        unique_ids = tuple(
+            dict.fromkeys(
+                job_id.strip() for job_id in source_job_ids if job_id.strip()
+            )
+        )
         if not unique_ids:
             raise ValueError("At least one job is required")
         if len(unique_ids) > 100:
@@ -111,15 +121,20 @@ class JobWorkflowStore:
         with self._connect() as connection:
             for source_job_id in unique_ids:
                 row = connection.execute(
-                    "SELECT id FROM job_postings WHERE source = 'jobinja' AND source_job_id = ?",
+                    """
+                    SELECT id
+                    FROM job_postings
+                    WHERE source = 'jobinja' AND source_job_id = ?
+                    """,
                     (source_job_id,),
                 ).fetchone()
                 if row is None:
                     continue
                 connection.execute(
                     """
-                    INSERT INTO job_user_workflow(job_posting_id, triage_state, note, updated_at)
-                    VALUES (?, ?, ?, ?)
+                    INSERT INTO job_user_workflow(
+                        job_posting_id, triage_state, note, updated_at
+                    ) VALUES (?, ?, ?, ?)
                     ON CONFLICT(job_posting_id) DO UPDATE SET
                         triage_state = excluded.triage_state,
                         note = COALESCE(excluded.note, job_user_workflow.note),
@@ -148,7 +163,9 @@ class JobWorkflowStore:
             source_job_id=str(row["source_job_id"]),
             triage_state=str(row["triage_state"] or "unreviewed"),
             note=str(row["note"]) if row["note"] is not None else None,
-            updated_at=str(row["updated_at"]) if row["updated_at"] is not None else None,
+            updated_at=(
+                str(row["updated_at"]) if row["updated_at"] is not None else None
+            ),
         )
 
     def prioritized_missing_job_ids(self, *, limit: int) -> tuple[JobPriority, ...]:
@@ -173,7 +190,8 @@ class JobWorkflowStore:
                 WHERE p.source = 'jobinja'
                   AND COALESCE(w.triage_state, 'unreviewed') != 'not_relevant'
                   AND NOT EXISTS (
-                      SELECT 1 FROM job_detail_versions AS v WHERE v.job_posting_id = p.id
+                      SELECT 1 FROM job_detail_versions AS v
+                      WHERE v.job_posting_id = p.id
                   )
                 GROUP BY p.id
                 """
@@ -210,5 +228,11 @@ class JobWorkflowStore:
                     signals=tuple(signals),
                 )
             )
-        priorities.sort(key=lambda item: (-item.score, -item.distinct_packs, item.source_job_id))
+        priorities.sort(
+            key=lambda item: (
+                -item.score,
+                -item.distinct_packs,
+                item.source_job_id,
+            )
+        )
         return tuple(priorities[:limit])
