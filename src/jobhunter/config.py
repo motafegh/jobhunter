@@ -115,11 +115,18 @@ class Settings(BaseModel):
 
     translation_enabled: bool = False
     translation_auto_after_sync: bool = False
-    translation_provider: str = "google-cloud"
+    translation_provider: str = "lm-studio"
     translation_target_language: str = "en"
     translation_batch_limit: int = Field(default=20, ge=1, le=50)
     translation_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     translation_max_retries: int = Field(default=1, ge=0, le=5)
+    translation_lm_studio_model: str | None = None
+    translation_lm_studio_max_tokens: int = Field(default=4096, ge=256, le=32768)
+    translation_lm_studio_character_target: int = Field(
+        default=6000,
+        ge=1000,
+        le=100000,
+    )
     google_translation_api_key: str | None = None
     google_translation_model: str = "nmt"
 
@@ -149,6 +156,10 @@ class Settings(BaseModel):
             self.lm_studio_model = self.lm_studio_model.strip() or None
         if self.lm_studio_api_token is not None:
             self.lm_studio_api_token = self.lm_studio_api_token.strip() or None
+        if self.translation_lm_studio_model is not None:
+            self.translation_lm_studio_model = (
+                self.translation_lm_studio_model.strip() or None
+            )
         if self.google_translation_api_key is not None:
             self.google_translation_api_key = self.google_translation_api_key.strip() or None
         self.google_translation_model = self.google_translation_model.strip() or "nmt"
@@ -157,8 +168,11 @@ class Settings(BaseModel):
         if not self.jobinja_user_agent:
             raise ValueError("jobinja_user_agent must not be empty")
 
-        if self.translation_provider not in {"google-cloud"}:
-            raise ValueError("translation_provider currently supports only 'google-cloud'")
+        self.translation_provider = self.translation_provider.strip().lower()
+        if self.translation_provider not in {"lm-studio", "google-cloud"}:
+            raise ValueError(
+                "translation_provider must be 'lm-studio' or 'google-cloud'"
+            )
         if self.translation_target_language != "en":
             raise ValueError("translation_target_language currently supports only 'en'")
         if self.translation_auto_after_sync and not self.translation_enabled:
@@ -215,6 +229,11 @@ class Settings(BaseModel):
             excluded_terms.append(term)
         self.jobinja_excluded_terms = excluded_terms
         return self
+
+    def effective_translation_lm_studio_model(self) -> str | None:
+        """Return the dedicated translation model or the general LM Studio model."""
+
+        return self.translation_lm_studio_model or self.lm_studio_model
 
     def search_catalog(self) -> SearchCatalog:
         """Load the packaged catalog or a user-supplied replacement TOML catalog."""
@@ -292,6 +311,13 @@ class Settings(BaseModel):
             "JOBHUNTER_TRANSLATION_BATCH_LIMIT": "translation_batch_limit",
             "JOBHUNTER_TRANSLATION_TIMEOUT_SECONDS": "translation_timeout_seconds",
             "JOBHUNTER_TRANSLATION_MAX_RETRIES": "translation_max_retries",
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_MODEL": "translation_lm_studio_model",
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS": (
+                "translation_lm_studio_max_tokens"
+            ),
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_CHARACTER_TARGET": (
+                "translation_lm_studio_character_target"
+            ),
             "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY": "google_translation_api_key",
             "JOBHUNTER_GOOGLE_TRANSLATION_MODEL": "google_translation_model",
             "JOBHUNTER_LOG_LEVEL": "log_level",
