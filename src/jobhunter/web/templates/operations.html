@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Operations · JobHunter{% endblock %}
+{% block heading %}Operations{% endblock %}
+{% block eyebrow %}Browser-triggered local work{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <div><p class="eyebrow">Queue</p><h2>Recent app operations</h2></div>
+    {% if active_operation %}<span class="badge warn">1 active</span>{% else %}<span class="badge good">Idle</span>{% endif %}
+  </div>
+  <p class="muted">JobHunter deliberately runs one mutable browser operation at a time. Source acquisition, translation, audit, and export therefore cannot accidentally overlap.</p>
+  {% if operations %}
+  <div class="operation-list large">
+  {% for op in operations %}
+    <a class="operation-row" href="/operations/{{ op.id }}">
+      <span>
+        <strong>{{ op.name }}</strong>
+        <small>{{ op.created_at }}</small>
+      </span>
+      <span class="badge {{ 'good' if op.status == 'completed' else ('bad' if op.status == 'failed' else 'warn') }}">{{ op.status }}</span>
+    </a>
+  {% endfor %}
+  </div>
+  {% else %}<div class="empty-state tall">No operations have been started from the browser yet.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Controls</p><h2>Common maintenance</h2></div></div>
+  <div class="quick-actions horizontal">
+    <form method="post" action="/actions/audit" data-operation-form>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button class="quick-action" type="submit"><strong>Parser audit</strong><span>Read-only structural check.</span></button>
+    </form>
+    <form method="post" action="/actions/translate-missing" data-operation-form>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="limit" value="{{ settings.translation_batch_limit }}">
+      <button class="quick-action" type="submit" {% if not settings.translation_enabled %}disabled{% endif %}><strong>Translate missing</strong><span>Bounded English queue.</span></button>
+    </form>
+    <form method="post" action="/actions/export" data-operation-form>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button class="quick-action" type="submit"><strong>Export corpus</strong><span>Current JSONL dataset.</span></button>
+    </form>
+  </div>
+</section>
+{% endblock %}
