@@ -94,17 +94,19 @@ class Settings(BaseModel):
     lm_studio_api_token: str | None = None
     inference_timeout_seconds: float = Field(default=30.0, gt=0)
     inference_max_retries: int = Field(default=1, ge=0, le=5)
+    analysis_lm_studio_model: str | None = None
+    analysis_max_tokens: int = Field(default=8192, ge=512, le=32768)
+    analysis_batch_limit: int = Field(default=5, ge=1, le=20)
 
     jobinja_user_agent: str = "JobHunter/0.1 (local personal career research)"
     jobinja_request_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     jobinja_request_delay_seconds: float = Field(default=1.0, ge=0, le=60)
+    jobinja_max_retries: int = Field(default=1, ge=0, le=3)
     jobinja_search_catalog_path: Path | None = None
     jobinja_searches: list[JobinjaSearchDefinition] = Field(default_factory=list)
     jobinja_search_profiles: list[str] = Field(default_factory=list)
     jobinja_search_packs: list[str] = Field(default_factory=list)
-    jobinja_keyword_groups: list[JobinjaKeywordGroupDefinition] = Field(
-        default_factory=list
-    )
+    jobinja_keyword_groups: list[JobinjaKeywordGroupDefinition] = Field(default_factory=list)
     jobinja_excluded_terms: list[str] = Field(default_factory=list)
     jobinja_default_keyword_max_pages: int = Field(default=1, ge=1, le=50)
     jobinja_search_request_budget: int = Field(default=40, ge=1, le=500)
@@ -122,11 +124,7 @@ class Settings(BaseModel):
     translation_max_retries: int = Field(default=1, ge=0, le=5)
     translation_lm_studio_model: str | None = None
     translation_lm_studio_max_tokens: int = Field(default=4096, ge=256, le=32768)
-    translation_lm_studio_character_target: int = Field(
-        default=6000,
-        ge=1000,
-        le=100000,
-    )
+    translation_lm_studio_character_target: int = Field(default=6000, ge=1000, le=100000)
     google_translation_api_key: str | None = None
     google_translation_model: str = "nmt"
 
@@ -136,9 +134,7 @@ class Settings(BaseModel):
     def normalize(self) -> Settings:
         self.data_dir = self.data_dir.expanduser()
         self.evidence_dir = (self.evidence_dir or self.data_dir / "evidence").expanduser()
-        self.database_path = (
-            self.database_path or self.data_dir / "jobhunter.sqlite3"
-        ).expanduser()
+        self.database_path = (self.database_path or self.data_dir / "jobhunter.sqlite3").expanduser()
         if self.jobinja_search_catalog_path is not None:
             self.jobinja_search_catalog_path = self.jobinja_search_catalog_path.expanduser()
 
@@ -152,16 +148,16 @@ class Settings(BaseModel):
             raise ValueError("log_level must be DEBUG, INFO, WARNING, ERROR, or CRITICAL")
         self.log_level = normalized_level
 
-        if self.lm_studio_model is not None:
-            self.lm_studio_model = self.lm_studio_model.strip() or None
-        if self.lm_studio_api_token is not None:
-            self.lm_studio_api_token = self.lm_studio_api_token.strip() or None
-        if self.translation_lm_studio_model is not None:
-            self.translation_lm_studio_model = (
-                self.translation_lm_studio_model.strip() or None
-            )
-        if self.google_translation_api_key is not None:
-            self.google_translation_api_key = self.google_translation_api_key.strip() or None
+        for field_name in (
+            "lm_studio_model",
+            "lm_studio_api_token",
+            "analysis_lm_studio_model",
+            "translation_lm_studio_model",
+            "google_translation_api_key",
+        ):
+            value = getattr(self, field_name)
+            if value is not None:
+                setattr(self, field_name, value.strip() or None)
         self.google_translation_model = self.google_translation_model.strip() or "nmt"
 
         self.jobinja_user_agent = self.jobinja_user_agent.strip()
@@ -170,15 +166,11 @@ class Settings(BaseModel):
 
         self.translation_provider = self.translation_provider.strip().lower()
         if self.translation_provider not in {"lm-studio", "google-cloud"}:
-            raise ValueError(
-                "translation_provider must be 'lm-studio' or 'google-cloud'"
-            )
+            raise ValueError("translation_provider must be 'lm-studio' or 'google-cloud'")
         if self.translation_target_language != "en":
             raise ValueError("translation_target_language currently supports only 'en'")
         if self.translation_auto_after_sync and not self.translation_enabled:
-            raise ValueError(
-                "translation_auto_after_sync requires translation_enabled = true"
-            )
+            raise ValueError("translation_auto_after_sync requires translation_enabled = true")
 
         search_names: set[str] = set()
         for search in self.jobinja_searches:
@@ -195,18 +187,10 @@ class Settings(BaseModel):
             group_names.add(normalized_name)
 
         self.jobinja_search_profiles = list(
-            dict.fromkeys(
-                name.strip()
-                for name in self.jobinja_search_profiles
-                if name.strip()
-            )
+            dict.fromkeys(name.strip() for name in self.jobinja_search_profiles if name.strip())
         )
         self.jobinja_search_packs = list(
-            dict.fromkeys(
-                name.strip()
-                for name in self.jobinja_search_packs
-                if name.strip()
-            )
+            dict.fromkeys(name.strip() for name in self.jobinja_search_packs if name.strip())
         )
         catalog = self.search_catalog()
         try:
@@ -235,14 +219,15 @@ class Settings(BaseModel):
 
         return self.translation_lm_studio_model or self.lm_studio_model
 
-    def search_catalog(self) -> SearchCatalog:
-        """Load the packaged catalog or a user-supplied replacement TOML catalog."""
+    def effective_analysis_lm_studio_model(self) -> str | None:
+        """Return the analysis model, then general model, then explicit translation model."""
 
+        return self.analysis_lm_studio_model or self.lm_studio_model or self.translation_lm_studio_model
+
+    def search_catalog(self) -> SearchCatalog:
         return load_search_catalog(self.jobinja_search_catalog_path)
 
     def expanded_keyword_searches(self) -> tuple[ExpandedKeywordSearch, ...]:
-        """Expand configured profiles, packs, and custom groups."""
-
         custom_groups = tuple(
             (group.name, tuple(group.terms), group.max_pages)
             for group in self.jobinja_keyword_groups
@@ -259,12 +244,8 @@ class Settings(BaseModel):
 
     @classmethod
     def load(cls, config_path: str | Path | None = None) -> Settings:
-        """Load settings from TOML and environment overrides."""
-
         explicit_path = config_path is not None
-        selected_path = Path(
-            config_path or os.environ.get("JOBHUNTER_CONFIG", "jobhunter.toml")
-        ).expanduser()
+        selected_path = Path(config_path or os.environ.get("JOBHUNTER_CONFIG", "jobhunter.toml")).expanduser()
 
         values: dict[str, Any] = {}
         if selected_path.exists():
@@ -272,15 +253,10 @@ class Settings(BaseModel):
                 with selected_path.open("rb") as file_handle:
                     parsed = tomllib.load(file_handle)
             except (OSError, tomllib.TOMLDecodeError) as exc:
-                raise ConfigLoadError(
-                    f"Could not load configuration from {selected_path}: {exc}"
-                ) from exc
-
+                raise ConfigLoadError(f"Could not load configuration from {selected_path}: {exc}") from exc
             section = parsed.get("jobhunter", parsed)
             if not isinstance(section, dict):
-                raise ConfigLoadError(
-                    f"Configuration section in {selected_path} must be a table"
-                )
+                raise ConfigLoadError(f"Configuration section in {selected_path} must be a table")
             values.update(section)
         elif explicit_path:
             raise ConfigLoadError(f"Configuration file does not exist: {selected_path}")
@@ -294,11 +270,13 @@ class Settings(BaseModel):
             "JOBHUNTER_LM_STUDIO_API_TOKEN": "lm_studio_api_token",
             "JOBHUNTER_INFERENCE_TIMEOUT_SECONDS": "inference_timeout_seconds",
             "JOBHUNTER_INFERENCE_MAX_RETRIES": "inference_max_retries",
+            "JOBHUNTER_ANALYSIS_LM_STUDIO_MODEL": "analysis_lm_studio_model",
+            "JOBHUNTER_ANALYSIS_MAX_TOKENS": "analysis_max_tokens",
+            "JOBHUNTER_ANALYSIS_BATCH_LIMIT": "analysis_batch_limit",
             "JOBHUNTER_JOBINJA_USER_AGENT": "jobinja_user_agent",
-            "JOBHUNTER_JOBINJA_REQUEST_TIMEOUT_SECONDS": (
-                "jobinja_request_timeout_seconds"
-            ),
+            "JOBHUNTER_JOBINJA_REQUEST_TIMEOUT_SECONDS": "jobinja_request_timeout_seconds",
             "JOBHUNTER_JOBINJA_REQUEST_DELAY_SECONDS": "jobinja_request_delay_seconds",
+            "JOBHUNTER_JOBINJA_MAX_RETRIES": "jobinja_max_retries",
             "JOBHUNTER_JOBINJA_SEARCH_CATALOG_PATH": "jobinja_search_catalog_path",
             "JOBHUNTER_JOBINJA_SEARCH_REQUEST_BUDGET": "jobinja_search_request_budget",
             "JOBHUNTER_JOBINJA_MAX_EXPANDED_SEARCHES": "jobinja_max_expanded_searches",
@@ -312,12 +290,8 @@ class Settings(BaseModel):
             "JOBHUNTER_TRANSLATION_TIMEOUT_SECONDS": "translation_timeout_seconds",
             "JOBHUNTER_TRANSLATION_MAX_RETRIES": "translation_max_retries",
             "JOBHUNTER_TRANSLATION_LM_STUDIO_MODEL": "translation_lm_studio_model",
-            "JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS": (
-                "translation_lm_studio_max_tokens"
-            ),
-            "JOBHUNTER_TRANSLATION_LM_STUDIO_CHARACTER_TARGET": (
-                "translation_lm_studio_character_target"
-            ),
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS": "translation_lm_studio_max_tokens",
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_CHARACTER_TARGET": "translation_lm_studio_character_target",
             "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY": "google_translation_api_key",
             "JOBHUNTER_GOOGLE_TRANSLATION_MODEL": "google_translation_model",
             "JOBHUNTER_LOG_LEVEL": "log_level",
