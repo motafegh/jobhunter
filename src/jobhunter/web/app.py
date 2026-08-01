@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import secrets
-from collections.abc import Sequence
 from pathlib import Path
+from typing import Annotated
 
-from fastapi import FastAPI, Form, HTTPException, Query, Request
+from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -186,7 +186,7 @@ def create_app(
         return response
 
     @app.get("/", response_class=HTMLResponse)
-    def dashboard(request: Request, notice: str = Query(default="")):
+    def dashboard(request: Request, notice: str = ""):
         repository: WebRepository = request.app.state.web_repository
         return _TEMPLATES.TemplateResponse(
             request=request,
@@ -205,10 +205,10 @@ def create_app(
     @app.get("/jobs", response_class=HTMLResponse)
     def jobs(
         request: Request,
-        q: str = Query(default=""),
-        detail: str = Query(default="all"),
-        translation: str = Query(default="all"),
-        lifecycle: str = Query(default="all"),
+        q: str = "",
+        detail: str = "all",
+        translation: str = "all",
+        lifecycle: str = "all",
     ):
         repository: WebRepository = request.app.state.web_repository
         rows = repository.list_jobs(
@@ -335,12 +335,12 @@ def create_app(
     @app.post("/actions/sync")
     def start_sync(
         request: Request,
-        csrf_token: str = Form(...),
-        search_limit: int = Form(...),
-        request_budget: int = Form(...),
-        missing_limit: int = Form(...),
-        refresh_limit: int = Form(...),
-        refresh_after_hours: float = Form(...),
+        csrf_token: Annotated[str, Form()],
+        search_limit: Annotated[int, Form()],
+        request_budget: Annotated[int, Form()],
+        missing_limit: Annotated[int, Form()],
+        refresh_limit: Annotated[int, Form()],
+        refresh_after_hours: Annotated[float, Form()],
     ):
         _csrf(request, csrf_token)
         if not 1 <= search_limit <= 500:
@@ -387,7 +387,7 @@ def create_app(
         return _start_operation(request, "Jobinja sync", action)
 
     @app.post("/actions/audit")
-    def start_audit(request: Request, csrf_token: str = Form(...)):
+    def start_audit(request: Request, csrf_token: Annotated[str, Form()]):
         _csrf(request, csrf_token)
 
         def action() -> str:
@@ -399,8 +399,8 @@ def create_app(
     @app.post("/actions/translate-missing")
     def start_translate_missing(
         request: Request,
-        csrf_token: str = Form(...),
-        limit: int = Form(...),
+        csrf_token: Annotated[str, Form()],
+        limit: Annotated[int, Form()],
     ):
         _csrf(request, csrf_token)
         if not settings.translation_enabled:
@@ -415,7 +415,7 @@ def create_app(
         return _start_operation(request, "Translate missing jobs", action)
 
     @app.post("/actions/export")
-    def start_export(request: Request, csrf_token: str = Form(...)):
+    def start_export(request: Request, csrf_token: Annotated[str, Form()]):
         _csrf(request, csrf_token)
 
         def action() -> str:
@@ -433,7 +433,7 @@ def create_app(
     def start_job_fetch(
         request: Request,
         source_job_id: str,
-        csrf_token: str = Form(...),
+        csrf_token: Annotated[str, Form()],
     ):
         _csrf(request, csrf_token)
 
@@ -447,7 +447,7 @@ def create_app(
     def start_job_translation(
         request: Request,
         source_job_id: str,
-        csrf_token: str = Form(...),
+        csrf_token: Annotated[str, Form()],
     ):
         _csrf(request, csrf_token)
         if not settings.translation_enabled:
