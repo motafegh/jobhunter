@@ -72,7 +72,9 @@ class TranslationService:
         clock=lambda: datetime.now(UTC),
     ) -> None:
         if target_language != "en":
-            raise ValueError("The current English projection pipeline requires target_language='en'")
+            raise ValueError(
+                "The current English projection pipeline requires target_language='en'"
+            )
         self._store = store
         self._provider = provider
         self._target_language = target_language
@@ -266,7 +268,9 @@ class TranslationService:
         """Translate an explicit set or a bounded missing-artifact queue."""
 
         if source_job_ids and missing:
-            raise ValueError("Choose explicit job IDs or missing translation selection, not both")
+            raise ValueError(
+                "Choose explicit job IDs or missing translation selection, not both"
+            )
         if not 1 <= limit <= 50:
             raise ValueError("translation limit must be between 1 and 50")
 
