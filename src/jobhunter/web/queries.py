@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.job_workflow import JobWorkflowStore
@@ -76,9 +77,15 @@ class WebRepository:
         database_path: Path,
         *,
         translation_schema_version: str = TRANSLATION_SCHEMA_VERSION,
+        analysis_model: str | None = None,
+        analysis_prompt_version: str = PROMPT_VERSION,
+        analysis_schema_version: str = ANALYSIS_SCHEMA_VERSION,
     ) -> None:
         self._database_path = database_path
         self._translation_schema_version = translation_schema_version
+        self._analysis_model = analysis_model
+        self._analysis_prompt_version = analysis_prompt_version
+        self._analysis_schema_version = analysis_schema_version
 
     def _initialize(self) -> None:
         JobHunterStore(self._database_path).initialize()
@@ -103,42 +110,57 @@ class WebRepository:
                     (
                         SELECT COUNT(*) FROM job_postings AS p
                         WHERE p.source = 'jobinja'
-                          AND EXISTS (SELECT 1 FROM job_detail_versions AS v WHERE v.job_posting_id = p.id)
+                          AND EXISTS (
+                              SELECT 1 FROM job_detail_versions AS v WHERE v.job_posting_id = p.id
+                          )
                     ) AS detailed_jobs,
                     (
                         SELECT COUNT(*) FROM job_postings AS p
                         JOIN job_detail_versions AS v ON v.id = (
-                            SELECT MAX(v2.id) FROM job_detail_versions AS v2 WHERE v2.job_posting_id = p.id
+                            SELECT MAX(v2.id) FROM job_detail_versions AS v2
+                            WHERE v2.job_posting_id = p.id
                         )
                         WHERE p.source = 'jobinja' AND v.parse_status = 'parsed'
                     ) AS translation_eligible_jobs,
                     (
                         SELECT COUNT(*) FROM job_postings AS p
                         JOIN job_detail_versions AS v ON v.id = (
-                            SELECT MAX(v2.id) FROM job_detail_versions AS v2 WHERE v2.job_posting_id = p.id
+                            SELECT MAX(v2.id) FROM job_detail_versions AS v2
+                            WHERE v2.job_posting_id = p.id
                         )
                         WHERE p.source = 'jobinja' AND v.parse_status = 'parsed'
                           AND EXISTS (
                               SELECT 1 FROM job_translation_artifacts AS a
-                              WHERE a.job_detail_version_id = v.id AND a.target_language = 'en'
+                              WHERE a.job_detail_version_id = v.id
+                                AND a.target_language = 'en'
                                 AND a.translation_schema_version = ?
                           )
                     ) AS translated_jobs,
                     (
                         SELECT COUNT(*) FROM job_postings AS p
                         JOIN job_detail_versions AS v ON v.id = (
-                            SELECT MAX(v2.id) FROM job_detail_versions AS v2 WHERE v2.job_posting_id = p.id
+                            SELECT MAX(v2.id) FROM job_detail_versions AS v2
+                            WHERE v2.job_posting_id = p.id
                         )
                         WHERE p.source = 'jobinja'
                           AND EXISTS (
                               SELECT 1 FROM job_analysis_artifacts AS a
                               WHERE a.job_detail_version_id = v.id
+                                AND a.prompt_version = ?
+                                AND a.schema_version = ?
+                                AND (? IS NULL OR a.model = ?)
                           )
                     ) AS analyzed_jobs,
                     (SELECT COUNT(*) FROM job_detail_fetch_observations) AS detail_checks,
                     (SELECT COUNT(*) FROM acquisition_runs) AS acquisition_runs
                 """,
-                (self._translation_schema_version,),
+                (
+                    self._translation_schema_version,
+                    self._analysis_prompt_version,
+                    self._analysis_schema_version,
+                    self._analysis_model,
+                    self._analysis_model,
+                ),
             ).fetchone()
         discovered = int(row["discovered_jobs"])
         detailed = int(row["detailed_jobs"])
@@ -172,7 +194,15 @@ class WebRepository:
             raise ValueError("translation must be all, available, or missing")
         if analysis not in {"all", "available", "missing"}:
             raise ValueError("analysis must be all, available, or missing")
-        if triage not in {"all", "unreviewed", "interested", "review_later", "not_relevant", "reviewed"}:
+        triage_states = {
+            "all",
+            "unreviewed",
+            "interested",
+            "review_later",
+            "not_relevant",
+            "reviewed",
+        }
+        if triage not in triage_states:
             raise ValueError("unsupported triage filter")
         if not 1 <= limit <= 500:
             raise ValueError("limit must be between 1 and 500")
@@ -201,22 +231,33 @@ class WebRepository:
                     ) AS discovery_matches,
                     EXISTS (
                         SELECT 1 FROM job_translation_artifacts AS a
-                        WHERE a.job_detail_version_id = v.id AND a.target_language = 'en'
+                        WHERE a.job_detail_version_id = v.id
+                          AND a.target_language = 'en'
                           AND a.translation_schema_version = ?
                     ) AS translated,
                     EXISTS (
                         SELECT 1 FROM job_analysis_artifacts AS aa
                         WHERE aa.job_detail_version_id = v.id
+                          AND aa.prompt_version = ?
+                          AND aa.schema_version = ?
+                          AND (? IS NULL OR aa.model = ?)
                     ) AS analyzed
                 FROM job_postings AS p
                 LEFT JOIN job_user_workflow AS w ON w.job_posting_id = p.id
                 LEFT JOIN job_detail_versions AS v ON v.id = (
-                    SELECT MAX(v2.id) FROM job_detail_versions AS v2 WHERE v2.job_posting_id = p.id
+                    SELECT MAX(v2.id) FROM job_detail_versions AS v2
+                    WHERE v2.job_posting_id = p.id
                 )
                 WHERE p.source = 'jobinja'
                 ORDER BY p.last_seen_at DESC, p.id DESC
                 """,
-                (self._translation_schema_version,),
+                (
+                    self._translation_schema_version,
+                    self._analysis_prompt_version,
+                    self._analysis_schema_version,
+                    self._analysis_model,
+                    self._analysis_model,
+                ),
             ).fetchall()
 
         needle = " ".join(query.casefold().split())
@@ -255,7 +296,14 @@ class WebRepository:
             employment_type = str(fields.get("employment_type") or "—")
             source_language = str(fields.get("language") or "unknown")
             haystack = " ".join(
-                (str(row["source_job_id"]), title, company, company_slug, location, employment_type)
+                (
+                    str(row["source_job_id"]),
+                    title,
+                    company,
+                    company_slug,
+                    location,
+                    employment_type,
+                )
             ).casefold()
             if needle and needle not in haystack:
                 continue
@@ -277,8 +325,16 @@ class WebRepository:
                     analyzed=analyzed,
                     discovery_matches=int(row["discovery_matches"] or 0),
                     last_seen_at=str(row["last_seen_at"]),
-                    latest_detail_at=(str(row["latest_detail_at"]) if row["latest_detail_at"] is not None else None),
-                    latest_check_at=(str(row["latest_check_at"]) if row["latest_check_at"] is not None else None),
+                    latest_detail_at=(
+                        str(row["latest_detail_at"])
+                        if row["latest_detail_at"] is not None
+                        else None
+                    ),
+                    latest_check_at=(
+                        str(row["latest_check_at"])
+                        if row["latest_check_at"] is not None
+                        else None
+                    ),
                 )
             )
             if len(result) >= limit:
@@ -304,7 +360,9 @@ class WebRepository:
             RecentRun(
                 id=int(row["id"]),
                 started_at=str(row["started_at"]),
-                completed_at=str(row["completed_at"]) if row["completed_at"] is not None else None,
+                completed_at=(
+                    str(row["completed_at"]) if row["completed_at"] is not None else None
+                ),
                 status=str(row["status"]),
                 searches_attempted=int(row["searches_attempted"]),
                 pages_fetched=int(row["pages_fetched"]),
