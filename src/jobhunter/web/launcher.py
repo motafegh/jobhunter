@@ -117,7 +117,7 @@ def main(argv: list[str] | None = None) -> int:
     if arguments.install_desktop:
         try:
             desktop_path = _install_linux_desktop_launcher(arguments.config)
-        except (OSError, FileNotFoundError) as exc:
+        except OSError as exc:
             raise SystemExit(f"Desktop launcher installation failed: {exc}") from exc
         print(f"Installed JobHunter application launcher: {desktop_path}")
         return 0
