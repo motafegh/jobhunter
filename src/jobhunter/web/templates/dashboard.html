@@ -105,6 +105,22 @@
       </div>
     </div>
     <div class="quick-actions">
+      <form method="post" action="/actions/fetch-missing" data-operation-form>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="quick-action configurable-action">
+          <div>
+            <strong>Fetch missing details</strong>
+            <span>{{ stats.missing_details }} discovered jobs still lack complete source pages. Fetch the next bounded batch without repeating market searches.</span>
+          </div>
+          <div class="quick-action-controls">
+            <label>
+              <span>Jobs</span>
+              <input name="limit" type="number" min="1" max="50" value="{{ settings.jobinja_sync_missing_limit }}">
+            </label>
+            <button class="button ghost" type="submit" {% if stats.missing_details == 0 %}disabled{% endif %}>Fetch next</button>
+          </div>
+        </div>
+      </form>
       <form method="post" action="/actions/audit" data-operation-form>
         <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
         <button class="quick-action" type="submit">
