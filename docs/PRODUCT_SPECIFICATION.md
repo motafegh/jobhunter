@@ -39,15 +39,17 @@ The current browser experience can already:
 
 1. show current corpus/detail/translation coverage;
 2. inspect the configured bilingual search catalog and generated plan;
-3. start a bounded Jobinja sync from a form;
-4. browse/filter local jobs;
-5. inspect original and English representations side by side;
-6. inspect source evidence identity and check history;
-7. refresh one job;
-8. translate one job or a bounded missing queue;
-9. run the deterministic parser audit;
-10. export the current English JSONL corpus;
-11. inspect long-running browser-operation status.
+3. start a guided bounded Jobinja sync from a form with visible safety limits/presets;
+4. browse/filter local jobs using human-readable source states;
+5. accept a focused Quick Add input as a Jobinja job URL, Jobinja search URL, or one
+   Persian/English keyword phrase;
+6. inspect original and English representations side by side;
+7. inspect source evidence identity and check history;
+8. refresh one job;
+9. translate one job or a bounded missing queue;
+10. run the deterministic parser audit;
+11. export the current English JSONL corpus;
+12. inspect long-running browser-operation status.
 
 A future complete Phase 1 run will add:
 
@@ -66,6 +68,8 @@ invalidate successful durable work from the rest of the run.
 - configured profiles and packs;
 - user-defined Persian/English keyword groups;
 - approved public Jobinja result URLs;
+- public Jobinja job URLs supplied directly through Quick Add;
+- one-off Persian/English Quick Add search phrases;
 - public Jobinja job pages discovered by the application;
 - local TOML configuration;
 - local LM Studio configuration;
@@ -82,7 +86,7 @@ capability evidence, and manual review/correction decisions.
 - bounded request/detail selection;
 - immutable search/detail evidence;
 - logical JobPosting identities;
-- discovery provenance;
+- discovery provenance for search-based acquisition;
 - semantic posting versions;
 - successful/failed fetch observations;
 - parser audit findings;
@@ -103,6 +107,8 @@ The English corpus is derived convenience data and never replaces original emplo
 ### Browser outputs
 
 - dashboard metrics;
+- guided sync controls and deterministic presets;
+- Quick Add intake for approved Jobinja inputs;
 - filtered job catalog;
 - source/English job detail views;
 - source-check timeline;
@@ -117,9 +123,14 @@ The English corpus is derived convenience data and never replaces original emplo
 Sources must have explicit type/method/limits/policy. JobHunter must not silently expand
 from approved public acquisition into unrestricted crawling.
 
+Quick Add is an alternate operator input, not a policy bypass. Until another source has a
+dedicated approved adapter, Quick Add must reject non-Jobinja URLs.
+
 ### FR-2: Reproducible evidence
 
 Record acquisition attempts and preserve retrieved bytes/metadata before model processing.
+Directly supplied Jobinja job URLs must enter the same logical job/detail evidence model as
+search-discovered jobs.
 
 ### FR-3: Data-driven bilingual search planning
 
@@ -127,10 +138,15 @@ Search vocabulary must be versioned data rather than Python word constants. Pers
 English terms, normalized identity/deduplication, raw URL escape hatches, plan inspection,
 search windows, and global request bounds must remain supported.
 
+One-off browser phrases and Jobinja search URLs may create focused searches without
+mutating the saved search catalog. These searches must still use the normal request/page
+bounds and evidence persistence.
+
 ### FR-4: Identity/version/check separation
 
 Distinguish logical posting identity, raw HTTP observation, semantic employer-content
-version, and operational source check.
+version, and operational source check. Stable Jobinja codes remain technical identity but
+must be labelled as such in human-facing UI rather than presented as meaningful role data.
 
 ### FR-5: Evidence-preserving deterministic extraction
 
@@ -166,6 +182,12 @@ The browser application must:
 
 - operate on the same services/database as the CLI;
 - provide normal daily controls without requiring CLI knowledge;
+- explain non-obvious run limits in the UI rather than exposing configuration names alone;
+- provide bounded presets without hiding the concrete values they set;
+- support focused Quick Add intake for a Jobinja job URL, Jobinja search URL, or one search
+  phrase;
+- distinguish friendly role/company information from technical Jobinja references;
+- show discovered-but-unfetched jobs as actionable normal states rather than CLI errors;
 - keep source and translated representations visually distinct;
 - expose inspectable errors/summaries for long operations;
 - run at most one mutable browser operation at a time;
@@ -225,13 +247,15 @@ back-up/restorable in later operational hardening.
 - **Resource-aware:** local GPU/RAM/model latency and source-request impact matter.
 - **Private by default:** personal data and local analysis remain local unless explicitly
   configured otherwise.
-- **Bounded:** broad vocabulary and model translation cannot trigger unrestricted work.
+- **Bounded:** broad vocabulary, Quick Add, and model translation cannot trigger
+  unrestricted work.
 - **No duplicate UI state:** browser convenience state must not become a second durable
   database.
 
 ## 8. Current accepted capability boundary
 
-Before the web-app increment, live acceptance established that JobHunter can:
+Before the current guided-UI/Quick-Add increment, live acceptance established that
+JobHunter can:
 
 1. load and inspect bilingual search configuration;
 2. discover jobs repeat-safely;
@@ -243,10 +267,12 @@ Before the web-app increment, live acceptance established that JobHunter can:
 8. create local LM Studio English projections;
 9. recover boundedly from a real long-output translation truncation;
 10. retain 15/15 current English artifacts;
-11. export a 15-record current English corpus.
+11. export a 15-record current English corpus;
+12. launch and browse the local web application successfully against the real local corpus.
 
-The local web application is implemented on top of this accepted foundation and is pending
-its own deterministic/live acceptance.
+The guided sync explanations/presets, human-readable source-reference presentation, and
+Quick Add intake are implemented on top of that accepted foundation and require their own
+local acceptance after the deterministic test suite passes.
 
 ## 9. Current non-capabilities
 
@@ -261,6 +287,9 @@ JobHunter must not yet claim completion of:
 - personal relevance/readiness/gap analysis;
 - career recommendations;
 - final Phase 1 combined analysis/report run.
+
+Quick Add is also not an arbitrary-web ingestion engine. Additional websites require
+explicit source adapters/policy before they become accepted inputs.
 
 ## 10. Explicit exclusions
 
