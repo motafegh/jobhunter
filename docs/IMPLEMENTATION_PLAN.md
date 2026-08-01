@@ -62,14 +62,16 @@ Current evidence includes:
 - bounded recovery from a real output-truncation failure;
 - 15/15 current English artifacts;
 - 15-record current English JSONL export;
-- 103 deterministic tests passing at that acceptance point.
+- 103 deterministic tests passing at that translation acceptance point;
+- successful local browser-app launch against the real corpus;
+- browser rendering of discovered jobs with and without complete detail pages.
 
-## 6. Current interface increment — local web application
+## 6. Current interface increment — guided local web application
 
 ### Goal
 
 Make the accepted acquisition/translation foundation usable as a normal local application
-without requiring the user to remember CLI commands.
+without requiring the user to remember CLI commands or internal configuration terminology.
 
 ### Architecture
 
@@ -90,13 +92,21 @@ no separate frontend database, Node toolchain, or cloud service.
 ```text
 Overview dashboard
 → corpus counts and recent runs
-→ bounded sync form
+→ guided bounded sync form
+→ Light / Normal / Thorough visible-value presets
+→ inline explanations of every sync limit
 → parser audit button
 → translate-missing button
 → English export button
 
 Jobs
 → local text/status filtering
+→ human-readable company/source-state presentation
+→ stable source code labelled as Jobinja reference
+→ Quick Add for one job URL, search URL, or Persian/English keyword
+→ bounded Quick Add page/detail controls
+→ optional translate-after-fetch
+→ discovered-but-unfetched state with Fetch details action
 → original + English side-by-side detail
 → evidence identity
 → source-check timeline
@@ -119,13 +129,57 @@ System
 → current acquisition/translation limits
 ```
 
+### Quick Add behavior
+
+Quick Add intentionally remains inside the Jobinja source boundary.
+
+```text
+Jobinja job URL
+→ validate/canonicalize
+→ upsert logical job
+→ fetch exact detail page
+→ preserve evidence
+→ parse/version/check
+→ optional translation
+
+Jobinja /jobs search URL
+→ validate/canonicalize
+→ bounded search-page acquisition
+→ discover current-run jobs
+→ fetch at most 0–20 details
+→ optional translation of successful detail fetches
+
+Persian/English phrase
+→ build canonical Jobinja keyword search
+→ same bounded search/discovery/detail path
+```
+
+Non-Jobinja URLs are rejected. Quick Add does not create an unrestricted crawler or mutate
+the saved bilingual catalog merely because a one-off phrase was used.
+
+### Guided sync controls
+
+The normal form explains the operational meaning of search breadth, request budget,
+missing-detail fetch limit, refresh limit, and refresh age.
+
+Presets are convenience-only and keep the actual values visible/editable:
+
+```text
+Light      12 searches / 12 requests / 3 missing / 2 refresh / 24h
+Normal     40          / 40          / 10        / 5         / 24h
+Thorough   80          / 80          / 20        / 10        / 72h
+```
+
+The backend remains authoritative for hard bounds; UI presets cannot bypass them.
+
 ### Launcher
 
 ```text
 jobhunter-app
 ```
 
-opens the loopback browser application automatically.
+opens the loopback browser application automatically. WSL prefers the Windows browser
+opener when available instead of dumping Linux `xdg-open` failures.
 
 Linux can install an application-menu entry with:
 
@@ -144,36 +198,43 @@ The browser also receives an installable web-app manifest.
 - restrictive CSP/frame/referrer/cache/content-type headers;
 - no remote/CDN assets;
 - browser actions call existing bounded/rate-limited services;
+- Quick Add rejects unapproved external-source URLs;
 - long UI operations never create a second hidden source lifecycle.
 
 ### Deterministic acceptance
 
-The web increment must pass:
+The guided web increment must pass:
 
 1. Ruff.
 2. Full pytest suite.
 3. Primary page rendering against an empty DB.
-4. Packaged CSS/JS availability.
+4. Packaged CSS/JS/manifest/icon availability.
 5. CSRF rejection.
 6. Operation queue execution/polling.
 7. Safe local filtering.
-8. Package installation containing templates/static/manifest/icon.
+8. Discovered-but-unfetched job rendering.
+9. Unknown-job 404 behavior.
+10. Quick Add job/search/keyword input classification.
+11. Pre-network rejection of non-Jobinja URLs.
+12. Human-readable company fallback and Jobinja-reference labels.
+13. Guided sync/preset UI presence.
 
 ### Live acceptance
 
 Then confirm against the real local corpus:
 
-1. `jobhunter-app` opens the dashboard.
+1. `jobhunter-app` opens/reuses the dashboard without browser-opener noise.
 2. Dashboard displays the current real counts.
-3. Jobs page lists the real discovered corpus.
-4. `tpLF` displays source + English artifact correctly.
-5. Search-plan screen shows the configured bilingual profile.
-6. Browser parser audit completes successfully.
-7. One deliberately bounded browser sync completes and records normal acquisition history.
-8. English export works from the button.
-9. Linux launcher installation works when desired.
+3. Guided sync explanations/presets render correctly.
+4. Jobs page presents companies and Jobinja references clearly.
+5. A known missing-detail posting shows a normal Fetch details state.
+6. Quick Add a harmless one-off keyword with one search page and a small detail limit.
+7. Confirm its discovered/fetched jobs appear immediately in the same Jobs catalog.
+8. Quick Add one direct public Jobinja job URL and confirm one logical job/detail result.
+9. Optional translation works only when deliberately selected.
+10. Parser audit and English export continue to work from buttons.
 
-Do not mark the web layer live-accepted before these checks.
+Do not mark the new Quick Add/guided-controls increment live-accepted before these checks.
 
 ## 7. Next source/lifecycle work after UI acceptance
 
@@ -229,4 +290,5 @@ The project must not yet claim completion of:
 - personal relevance or capability gaps;
 - readiness scores;
 - career recommendations;
+- arbitrary-web Quick Add ingestion;
 - final P1.7 analysis/report automation.
