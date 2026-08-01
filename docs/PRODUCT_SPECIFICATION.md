@@ -35,33 +35,36 @@ maintainability control product decisions.
 
 A complete normal run should eventually:
 
-1. load enabled bilingual search profiles, packs, custom groups, and raw URLs;
+1. load the effective bilingual search catalog, profiles, custom groups, and raw URLs;
 2. build an inspectable bounded search plan;
 3. acquire new and changed postings conservatively;
 4. preserve source material and acquisition metadata;
 5. identify logical jobs, semantic versions, duplicates, reposts, and failures;
-6. clean and normalize without destroying evidence;
-7. send accepted new or changed content to the configured local model;
-8. validate model output against explicit versioned schemas;
-9. store responsibilities, requirements, concepts, confidence, and evidence;
-10. update aggregate role and skill analyses;
-11. compare market evidence with personal capability evidence;
-12. generate an inspectable report;
-13. surface uncertain items for manual review.
+6. parse Jobinja's explicit source fields deterministically;
+7. optionally create a separate English projection for accepted source versions;
+8. send accepted new or changed content to the configured local analysis model;
+9. validate model output against explicit versioned schemas;
+10. store responsibilities, requirements, concepts, confidence, and evidence;
+11. update aggregate role and skill analyses;
+12. compare market evidence with personal capability evidence;
+13. generate an inspectable report;
+14. surface uncertain items for manual review.
 
-One failed search, posting, parser, or model call must not invalidate successful
-work from the rest of the run.
+One failed search, posting, parser, translation, or model call must not invalidate
+successful work from the rest of the run.
 
 ## 4. Inputs
 
 ### 4.1 Current inputs
 
-- built-in bilingual search profiles and packs;
+- packaged or user-supplied bilingual search catalog TOML;
+- built-in/configured search profiles and packs;
 - user-defined Persian and English keyword groups;
 - permitted public Jobinja result URLs;
 - one-off command-line terms or URLs;
 - public Jobinja job pages discovered by the application;
 - local TOML configuration;
+- optional Google Cloud Translation credentials;
 - local LM Studio configuration.
 
 ### 4.2 Later inputs
@@ -88,7 +91,22 @@ work from the rest of the run.
 - parser audit results;
 - concise acquisition summaries.
 
-### 5.2 Per-posting analysis
+### 5.2 Derived English corpus outputs
+
+When enabled, JobHunter must provide:
+
+- one English projection tied to one exact source semantic version;
+- structured English fields;
+- one complete English document;
+- native-versus-translated segment provenance;
+- translation provider, model, schema version, and timestamps;
+- completed, failed, and reused translation attempts;
+- JSONL export containing only current-source-version artifacts.
+
+The English corpus is a derived convenience layer. It must never replace original
+Persian, English, or mixed employer text.
+
+### 5.3 Per-posting analysis
 
 Each analyzed posting should provide:
 
@@ -107,7 +125,7 @@ Each analyzed posting should provide:
 - exact supporting evidence;
 - review status.
 
-### 5.3 Aggregate analysis
+### 5.4 Aggregate analysis
 
 The system should eventually provide:
 
@@ -121,7 +139,7 @@ The system should eventually provide:
 - duplicate and repost patterns;
 - date-bounded market trends.
 
-### 5.4 Personal analysis
+### 5.5 Personal analysis
 
 The system should eventually provide:
 
@@ -150,7 +168,9 @@ configuration. Hash and store retrieved material before model processing.
 
 The application must:
 
-- support built-in and user-defined Persian and English terms;
+- load search vocabulary from versioned data rather than Python word constants;
+- support a complete user-supplied replacement search catalog;
+- support Persian and English terms;
 - retain original display terms;
 - normalize terms only for identity, deduplication, and exclusions;
 - generate inspectable canonical Jobinja keyword URLs;
@@ -176,73 +196,104 @@ Distinguish:
 Every extracted fact must retain supporting source text or a precise location.
 Unsupported model output must not silently become accepted data.
 
-### FR-6: Structured local inference
+### FR-6: Derived English projection
+
+For every accepted source semantic version, JobHunter must be able to create a
+separate English projection that:
+
+- leaves source evidence unchanged;
+- passes native-English segments through without an external translation request;
+- translates Persian-containing segments through an isolated provider;
+- records segment-level `native` versus `translated` provenance;
+- records provider/model/schema identity;
+- is idempotent for the same source/provider/model/schema combination;
+- becomes stale when a newer source semantic version exists;
+- can be exported independently from the source corpus.
+
+### FR-7: Translation-provider isolation
+
+The translation provider must be replaceable without changing parsing or source
+version logic.
+
+The current external provider is Google Cloud Translation Basic v2. Google
+translation must remain disabled by default because it transmits parsed source
+text outside the local machine.
+
+### FR-8: Structured local inference
 
 Validate model responses against versioned schemas. Invalid output must be
 retried within a bounded policy or moved to review without corrupting data.
 
-### FR-7: Requirement classification
+### FR-9: Requirement classification
 
 Distinguish required, preferred, contextual, and inferred concepts. Inferred
 concepts require a reason and confidence.
 
-### FR-8: Canonicalization
+### FR-10: Canonicalization
 
 Aliases such as `AWS` and `Amazon Web Services` must connect to a canonical
 concept without losing original wording.
 
-Search-term normalization is not the same as career-concept canonicalization.
+Search-term normalization, translation, and career-concept canonicalization are
+three different operations and must remain separate.
 
-### FR-9: Human review
+### FR-11: Human review
 
 The user must be able to approve, reject, edit, merge, or remap uncertain
 extraction and taxonomy decisions.
 
-### FR-10: Personal capability evidence
+### FR-12: Personal capability evidence
 
 A capability must include depth, recency, evidence type, evidence references,
 and confidence. Binary known/unknown is insufficient.
 
-### FR-11: Explainable recommendations
+### FR-13: Explainable recommendations
 
 A recommendation must show market evidence, personal evidence, assumptions,
 weighting, uncertainty, and conditions that would change it.
 
-### FR-12: Run reporting
+### FR-14: Run reporting
 
 Every run must summarize new, updated, unchanged, failed, analyzed, and
-review-required items. Acquisition summaries must remain useful before analysis
-exists.
+review-required items. Acquisition and translation summaries must remain useful
+before semantic analysis exists.
 
-### FR-13: Export, backup, and restore
+### FR-15: Export, backup, and restore
 
 Important normalized data must be exportable, and the local database and raw
-evidence store must be back up and restorable.
+evidence store must be back up and restorable. The derived English corpus must be
+exportable as a versioned machine-readable dataset.
 
 ## 7. Non-functional requirements
 
-- **Local-first:** normal operation requires no cloud dependency.
-- **Inspectable:** source, intermediate data, model request, response, and final
-  records remain traceable.
-- **Idempotent:** reruns do not multiply unchanged logical or semantic records.
+- **Local-first by default:** normal acquisition and analysis require no cloud
+  dependency.
+- **Explicit external boundary:** enabling Google translation is a deliberate
+  exception and must be visible in configuration and operation.
+- **Inspectable:** source, intermediate data, translation metadata, model request,
+  response, and final records remain traceable.
+- **Idempotent:** reruns do not multiply unchanged logical, semantic, or derived
+  artifacts.
 - **Recoverable:** interruption does not require restarting the whole pipeline.
-- **Configurable:** model, source vocabulary, limits, paths, and thresholds are
+- **Configurable:** models, source vocabulary, limits, paths, and thresholds are
   configuration rather than scattered constants.
-- **Provider-isolated:** LM Studio remains behind an inference interface.
+- **Provider-isolated:** LM Studio and translation providers remain behind separate
+  interfaces.
 - **Conservative:** missing or review-required data is preferred to certainty
   without evidence.
 - **Testable:** deterministic logic is separated from network and model calls.
 - **Resource-aware:** the application accounts for local model latency,
-  context limits, GPU/RAM, and source request impact.
+  context limits, GPU/RAM, external translation use, and source request impact.
 - **Private by default:** personal evidence and analysis remain local unless the
   user explicitly configures otherwise.
-- **Bounded:** broad vocabulary cannot trigger unrestricted acquisition.
+- **Bounded:** broad vocabulary cannot trigger unrestricted acquisition, and
+  translation batches remain bounded.
 
 ## 8. Current usable boundary
 
 The current application can:
 
-1. configure broad bilingual Jobinja searches;
+1. load a packaged or user-replaced bilingual search catalog;
 2. inspect and window the effective plan;
 3. discover jobs repeat-safely;
 4. preserve immutable search and detail evidence;
@@ -251,7 +302,10 @@ The current application can:
 7. parse explicit Jobinja fields deterministically;
 8. audit structural parser quality;
 9. rerun without false logical or semantic duplicates;
-10. expose failures and check history.
+10. expose failures and check history;
+11. optionally create versioned English projections through Google Cloud;
+12. distinguish native-English from translated segments;
+13. export a current English JSONL corpus for downstream analysis/ML.
 
 ## 9. Phase 1 completion boundary
 
@@ -274,7 +328,7 @@ The product does not include:
 - automatic job applications or recruiter messages;
 - autonomous resume claims;
 - distributed microservices;
-- cloud inference by default;
+- cloud LLM analysis by default;
 - model fine-tuning;
 - hiring-probability or salary prediction;
 - internet-wide real-time crawling;
@@ -284,7 +338,8 @@ The product does not include:
 ## 11. Success standard
 
 JobHunter succeeds when repeated use produces information that changes or
-strengthens a real decision while remaining traceable to trustworthy evidence.
+strengthens a real decision while remaining traceable to trustworthy source
+evidence.
 
-Scraped volume, vocabulary size, technology count, dashboards, and apparent AI
-sophistication are not success metrics by themselves.
+Scraped volume, vocabulary size, translation volume, technology count,
+dashboards, and apparent AI sophistication are not success metrics by themselves.
