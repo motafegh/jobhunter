@@ -684,19 +684,18 @@ def _translation_store(settings: Settings) -> TranslationStore:
 
 def _translation_service(settings: Settings) -> TranslationService:
     provider = None
-    if settings.translation_enabled:
-        if settings.translation_provider == "google-cloud":
-            if not settings.google_translation_api_key:
-                raise ValueError(
-                    "Google translation is enabled but "
-                    "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
-                )
-            provider = GoogleCloudTranslationProvider(
-                api_key=settings.google_translation_api_key,
-                model=settings.google_translation_model,
-                timeout_seconds=settings.translation_timeout_seconds,
-                max_retries=settings.translation_max_retries,
+    if settings.translation_enabled and settings.translation_provider == "google-cloud":
+        if not settings.google_translation_api_key:
+            raise ValueError(
+                "Google translation is enabled but "
+                "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
             )
+        provider = GoogleCloudTranslationProvider(
+            api_key=settings.google_translation_api_key,
+            model=settings.google_translation_model,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+        )
     return TranslationService(
         store=_translation_store(settings),
         provider=provider,
