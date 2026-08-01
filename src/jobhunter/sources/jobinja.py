@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import time
 from dataclasses import dataclass
 from html.parser import HTMLParser
 from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
@@ -14,6 +15,19 @@ _MAX_HTML_BYTES = 5 * 1024 * 1024
 _JOB_PATH_PATTERN = re.compile(
     r"^/companies/(?P<company_slug>[^/]+)/jobs/(?P<job_code>[^/]+)(?:/.*)?$"
 )
+_EXPIRED_MARKERS = (
+    "این موقعیت شغلی منقضی شده",
+    "این فرصت شغلی منقضی شده",
+    "فرصت شغلی منقضی شده",
+    "موقعیت شغلی منقضی شده",
+)
+_CHALLENGE_MARKERS = (
+    "cf-chl-",
+    "hcaptcha",
+    "g-recaptcha",
+    "captcha",
+    "verify you are human",
+)
 
 
 class JobinjaUrlError(ValueError):
@@ -22,6 +36,19 @@ class JobinjaUrlError(ValueError):
 
 class JobinjaAcquisitionError(RuntimeError):
     """Raised when a Jobinja page cannot be acquired safely."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        classification: str = "unknown_error",
+        status_code: int | None = None,
+        retryable: bool = False,
+    ) -> None:
+        super().__init__(message)
+        self.classification = classification
+        self.status_code = status_code
+        self.retryable = retryable
 
 
 @dataclass(frozen=True, slots=True)
@@ -56,6 +83,7 @@ class FetchedJobPage:
     headers: dict[str, str]
     content: bytes
     text: str
+    classification: str = "active"
 
 
 def _validate_jobinja_host(url: str) -> tuple[str, str, str, str]:
@@ -154,12 +182,7 @@ class _AnchorCollector(HTMLParser):
 
 
 def extract_job_links(html: str, *, base_url: str) -> tuple[DiscoveredJobLink, ...]:
-    """Extract unique Jobinja job identities from one search-page document.
-
-    Jobinja can link the same advertisement more than once inside one result
-    card. A decorative or image link may appear before the title-bearing link,
-    so a later duplicate is allowed to fill a previously missing title.
-    """
+    """Extract unique Jobinja job identities from one search-page document."""
 
     collector = _AnchorCollector()
     collector.feed(html)
@@ -201,12 +224,39 @@ def _validate_html_response(response: httpx.Response, *, requested_url: str) -> 
     content_type = response.headers.get("content-type", "")
     if content_type and "text/html" not in content_type.lower():
         raise JobinjaAcquisitionError(
-            f"Jobinja returned unsupported content type {content_type!r} for {requested_url}"
+            f"Jobinja returned unsupported content type {content_type!r} for {requested_url}",
+            classification="unexpected_page",
+            status_code=response.status_code,
         )
     if len(response.content) > _MAX_HTML_BYTES:
         raise JobinjaAcquisitionError(
-            f"Jobinja response exceeded {_MAX_HTML_BYTES} bytes for {requested_url}"
+            f"Jobinja response exceeded {_MAX_HTML_BYTES} bytes for {requested_url}",
+            classification="unexpected_page",
+            status_code=response.status_code,
         )
+
+
+def _status_classification(status_code: int) -> tuple[str, bool]:
+    if status_code == 429:
+        return "rate_limited", True
+    if status_code in {401, 403}:
+        return "access_denied", False
+    if status_code == 404:
+        return "not_found", False
+    if status_code == 410:
+        return "gone", False
+    if 500 <= status_code <= 599:
+        return "server_error", True
+    return "http_error", False
+
+
+def _body_classification(text: str) -> str:
+    folded = text.casefold()
+    if any(marker in folded for marker in _CHALLENGE_MARKERS):
+        return "challenge"
+    if any(marker in text for marker in _EXPIRED_MARKERS):
+        return "expired_explicit"
+    return "active"
 
 
 class JobinjaClient:
@@ -217,37 +267,72 @@ class JobinjaClient:
         *,
         user_agent: str,
         timeout_seconds: float,
+        max_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
+        sleep=time.sleep,
     ) -> None:
+        if not 0 <= max_retries <= 5:
+            raise ValueError("max_retries must be between 0 and 5")
         self._user_agent = user_agent
         self._timeout_seconds = timeout_seconds
+        self._max_retries = max_retries
         self._transport = transport
+        self._sleep = sleep
 
     def _get(self, requested_url: str) -> httpx.Response:
-        try:
-            with httpx.Client(
-                timeout=self._timeout_seconds,
-                follow_redirects=True,
-                transport=self._transport,
-                headers={
-                    "Accept": "text/html,application/xhtml+xml",
-                    "Accept-Language": "fa,en;q=0.8",
-                    "User-Agent": self._user_agent,
-                },
-            ) as client:
-                response = client.get(requested_url)
-                response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            raise JobinjaAcquisitionError(
-                f"Jobinja returned HTTP {exc.response.status_code} for {requested_url}"
-            ) from exc
-        except (httpx.ConnectError, httpx.TimeoutException, httpx.NetworkError) as exc:
-            raise JobinjaAcquisitionError(
-                f"Could not fetch Jobinja page {requested_url}: {exc}"
-            ) from exc
+        last_network_error: Exception | None = None
+        for attempt in range(self._max_retries + 1):
+            try:
+                with httpx.Client(
+                    timeout=self._timeout_seconds,
+                    follow_redirects=True,
+                    transport=self._transport,
+                    headers={
+                        "Accept": "text/html,application/xhtml+xml",
+                        "Accept-Language": "fa,en;q=0.8",
+                        "User-Agent": self._user_agent,
+                    },
+                ) as client:
+                    response = client.get(requested_url)
+            except (httpx.ConnectError, httpx.TimeoutException, httpx.NetworkError) as exc:
+                last_network_error = exc
+                if attempt < self._max_retries:
+                    self._sleep(min(0.5 * (2**attempt), 2.0))
+                    continue
+                raise JobinjaAcquisitionError(
+                    f"Could not fetch Jobinja page {requested_url}: {exc}",
+                    classification="network_error",
+                    retryable=True,
+                ) from exc
 
-        _validate_html_response(response, requested_url=requested_url)
-        return response
+            if response.is_error:
+                classification, retryable = _status_classification(response.status_code)
+                if retryable and attempt < self._max_retries:
+                    self._sleep(min(0.5 * (2**attempt), 2.0))
+                    continue
+                raise JobinjaAcquisitionError(
+                    f"Jobinja returned HTTP {response.status_code} for {requested_url}",
+                    classification=classification,
+                    status_code=response.status_code,
+                    retryable=retryable,
+                )
+
+            _validate_html_response(response, requested_url=requested_url)
+            classification = _body_classification(response.text)
+            if classification == "challenge":
+                raise JobinjaAcquisitionError(
+                    f"Jobinja returned a challenge page for {requested_url}",
+                    classification="challenge",
+                    status_code=response.status_code,
+                    retryable=False,
+                )
+            return response
+
+        raise JobinjaAcquisitionError(
+            f"Could not fetch Jobinja page {requested_url}: {last_network_error}",
+            classification="network_error",
+            retryable=True,
+        )
 
     def fetch_search_page(self, search_url: str, page_number: int) -> FetchedSearchPage:
         """Fetch one bounded Jobinja search page and validate its final destination."""
@@ -258,7 +343,13 @@ class JobinjaClient:
         final_path, _query, _fragment, _hostname = _validate_jobinja_host(final_url)
         if final_path.rstrip("/") != "/jobs":
             raise JobinjaAcquisitionError(
-                f"Jobinja search redirected to an unsupported path: {final_url}"
+                f"Jobinja search redirected to an unsupported path: {final_url}",
+                classification=(
+                    "auth_required"
+                    if "login" in final_path.casefold()
+                    else "unexpected_page"
+                ),
+                status_code=response.status_code,
             )
 
         return FetchedSearchPage(
@@ -276,16 +367,25 @@ class JobinjaClient:
         requested_identity = canonicalize_job_url(job_url)
         response = self._get(requested_identity.canonical_url)
         final_url = str(response.url)
+        final_path = urlsplit(final_url).path
         try:
             final_identity = canonicalize_job_url(final_url)
         except JobinjaUrlError as exc:
             raise JobinjaAcquisitionError(
-                f"Jobinja job redirected to an unsupported path: {final_url}"
+                f"Jobinja job redirected to an unsupported path: {final_url}",
+                classification=(
+                    "auth_required"
+                    if "login" in final_path.casefold()
+                    else "unexpected_page"
+                ),
+                status_code=response.status_code,
             ) from exc
         if final_identity.source_job_id != requested_identity.source_job_id:
             raise JobinjaAcquisitionError(
                 "Jobinja job redirected to a different job identity: "
-                f"{requested_identity.source_job_id} -> {final_identity.source_job_id}"
+                f"{requested_identity.source_job_id} -> {final_identity.source_job_id}",
+                classification="unexpected_page",
+                status_code=response.status_code,
             )
 
         return FetchedJobPage(
@@ -295,4 +395,5 @@ class JobinjaClient:
             headers=_selected_headers(response),
             content=response.content,
             text=response.text,
+            classification=_body_classification(response.text),
         )
