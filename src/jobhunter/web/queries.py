@@ -56,6 +56,11 @@ class RecentRun:
     failures: int
 
 
+def _humanize_company_slug(value: str) -> str:
+    words = value.replace("_", "-").split("-")
+    return " ".join(word[:1].upper() + word[1:] for word in words if word) or value
+
+
 class WebRepository:
     """Focused read-only queries for browser views."""
 
@@ -218,7 +223,9 @@ class WebRepository:
                 continue
 
             title = str(fields.get("title") or row["title_observed"] or "Title unavailable")
-            company = str(fields.get("company") or row["company_slug"])
+            raw_company = str(fields.get("company") or "").strip()
+            company_slug = str(row["company_slug"])
+            company = raw_company or _humanize_company_slug(company_slug)
             location = str(fields.get("location") or "—")
             employment_type = str(fields.get("employment_type") or "—")
             source_language = str(fields.get("language") or "unknown")
@@ -227,6 +234,7 @@ class WebRepository:
                     str(row["source_job_id"]),
                     title,
                     company,
+                    company_slug,
                     location,
                     employment_type,
                 )
@@ -239,7 +247,7 @@ class WebRepository:
                     source_job_id=str(row["source_job_id"]),
                     title=title,
                     company=company,
-                    company_slug=str(row["company_slug"]),
+                    company_slug=company_slug,
                     location=location,
                     employment_type=employment_type,
                     source_language=source_language,
