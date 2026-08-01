@@ -37,6 +37,7 @@ jobhunter = [
   "web/static/*.css",
   "web/static/*.js",
   "web/static/*.svg",
+  "web/static/*.webmanifest",
 ]
 
 [tool.pytest.ini_options]
