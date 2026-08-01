@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
@@ -152,8 +151,13 @@ def _normalize_evidence(value: str) -> str:
     return " ".join(value.replace("\u200c", " ").split()).casefold()
 
 
-def _validate_evidence(analysis: dict[str, Any], source: TranslationSourceVersion) -> None:
-    source_strings = tuple(_normalize_evidence(text) for text in _iter_source_strings(source.fields))
+def _validate_evidence(
+    analysis: dict[str, Any],
+    source: TranslationSourceVersion,
+) -> None:
+    source_strings = tuple(
+        _normalize_evidence(text) for text in _iter_source_strings(source.fields)
+    )
 
     def require_excerpt(evidence: str, *, label: str) -> None:
         normalized = _normalize_evidence(evidence)
@@ -167,7 +171,10 @@ def _validate_evidence(analysis: dict[str, Any], source: TranslationSourceVersio
     role_purpose = analysis.get("role_purpose")
     responsibilities = analysis.get("responsibilities")
     requirements = analysis.get("requirements")
-    if not isinstance(role_purpose, list) or not isinstance(responsibilities, list) or not isinstance(requirements, list):
+    if not all(
+        isinstance(value, list)
+        for value in (role_purpose, responsibilities, requirements)
+    ):
         raise AnalysisValidationError("Analysis root arrays are malformed")
     if len(role_purpose) > 1 or len(responsibilities) > 16 or len(requirements) > 32:
         raise AnalysisValidationError("Analysis exceeded bounded claim counts")
@@ -175,11 +182,17 @@ def _validate_evidence(analysis: dict[str, Any], source: TranslationSourceVersio
     for index, claim in enumerate(role_purpose):
         if not isinstance(claim, dict):
             raise AnalysisValidationError("Role-purpose claim is malformed")
-        require_excerpt(str(claim.get("evidence") or ""), label=f"role_purpose[{index}]")
+        require_excerpt(
+            str(claim.get("evidence") or ""),
+            label=f"role_purpose[{index}]",
+        )
     for index, claim in enumerate(responsibilities):
         if not isinstance(claim, dict):
             raise AnalysisValidationError("Responsibility claim is malformed")
-        require_excerpt(str(claim.get("evidence") or ""), label=f"responsibility[{index}]")
+        require_excerpt(
+            str(claim.get("evidence") or ""),
+            label=f"responsibility[{index}]",
+        )
     for index, item in enumerate(requirements):
         if not isinstance(item, dict):
             raise AnalysisValidationError("Requirement item is malformed")
@@ -188,11 +201,18 @@ def _validate_evidence(analysis: dict[str, Any], source: TranslationSourceVersio
             raise AnalysisValidationError(f"requirement[{index}] has an empty concept")
         requirement_type = str(item.get("requirement_type") or "")
         if requirement_type not in _REQ_TYPES:
-            raise AnalysisValidationError(f"requirement[{index}] has invalid requirement type")
+            raise AnalysisValidationError(
+                f"requirement[{index}] has invalid requirement type"
+            )
         rationale = str(item.get("rationale") or "").strip()
         if requirement_type == "inferred" and not rationale:
-            raise AnalysisValidationError(f"requirement[{index}] inferred concept lacks rationale")
-        require_excerpt(str(item.get("evidence") or ""), label=f"requirement[{index}]")
+            raise AnalysisValidationError(
+                f"requirement[{index}] inferred concept lacks rationale"
+            )
+        require_excerpt(
+            str(item.get("evidence") or ""),
+            label=f"requirement[{index}]",
+        )
 
 
 class JobAnalysisService:
@@ -222,7 +242,9 @@ class JobAnalysisService:
     def analyze_job(self, source_job_id: str) -> AnalysisJobResult:
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
-            raise AnalysisValidationError("Job has no current successfully parsed source version")
+            raise AnalysisValidationError(
+                "Job has no current successfully parsed source version"
+            )
         english = self._translation_service.current_artifact(source_job_id)
         if english is None:
             raise AnalysisValidationError(
@@ -302,8 +324,17 @@ class JobAnalysisService:
             )
             raise
 
-    def run(self, source_job_ids: tuple[str, ...], *, limit: int = 5) -> AnalysisBatchSummary:
-        unique = tuple(dict.fromkeys(job_id.strip() for job_id in source_job_ids if job_id.strip()))
+    def run(
+        self,
+        source_job_ids: tuple[str, ...],
+        *,
+        limit: int = 5,
+    ) -> AnalysisBatchSummary:
+        unique = tuple(
+            dict.fromkeys(
+                job_id.strip() for job_id in source_job_ids if job_id.strip()
+            )
+        )
         if not unique:
             raise ValueError("At least one job is required for analysis")
         if not 1 <= limit <= 20:
@@ -313,8 +344,15 @@ class JobAnalysisService:
         for source_job_id in unique[:limit]:
             try:
                 results.append(self.analyze_job(source_job_id))
-            except (AnalysisValidationError, InferenceProviderError, RuntimeError, ValueError) as exc:
-                failures.append(AnalysisFailure(source_job_id=source_job_id, error=str(exc)))
+            except (
+                AnalysisValidationError,
+                InferenceProviderError,
+                RuntimeError,
+                ValueError,
+            ) as exc:
+                failures.append(
+                    AnalysisFailure(source_job_id=source_job_id, error=str(exc))
+                )
         return AnalysisBatchSummary(
             attempted=min(len(unique), limit),
             results=tuple(results),
@@ -349,5 +387,8 @@ def format_analysis_batch_summary(summary: AnalysisBatchSummary) -> str:
         )
     if summary.failures:
         lines.append("Failures:")
-        lines.extend(f"- {failure.source_job_id}: {failure.error}" for failure in summary.failures)
+        lines.extend(
+            f"- {failure.source_job_id}: {failure.error}"
+            for failure in summary.failures
+        )
     return "\n".join(lines)
