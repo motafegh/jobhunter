@@ -64,8 +64,8 @@ successful work from the rest of the run.
 - one-off command-line terms or URLs;
 - public Jobinja job pages discovered by the application;
 - local TOML configuration;
-- optional Google Cloud Translation credentials;
-- local LM Studio configuration.
+- local LM Studio configuration;
+- optional Google Cloud Translation credentials when that external provider is selected.
 
 ### 4.2 Later inputs
 
@@ -99,9 +99,9 @@ When enabled, JobHunter must provide:
 - structured English fields;
 - one complete English document;
 - native-versus-translated segment provenance;
-- translation provider, model, schema version, and timestamps;
+- translation provider, exact model, schema version, and timestamps;
 - completed, failed, and reused translation attempts;
-- JSONL export containing only current-source-version artifacts.
+- JSONL export containing only current successfully parsed source-version artifacts.
 
 The English corpus is a derived convenience layer. It must never replace original
 Persian, English, or mixed employer text.
@@ -202,22 +202,33 @@ For every accepted source semantic version, JobHunter must be able to create a
 separate English projection that:
 
 - leaves source evidence unchanged;
-- passes native-English segments through without an external translation request;
+- passes native-English segments through without a translation model call;
 - translates Persian-containing segments through an isolated provider;
 - records segment-level `native` versus `translated` provenance;
 - records provider/model/schema identity;
 - is idempotent for the same source/provider/model/schema combination;
 - becomes stale when a newer source semantic version exists;
+- refuses to present an older translation as current when the latest source parse is incomplete;
 - can be exported independently from the source corpus.
 
 ### FR-7: Translation-provider isolation
 
-The translation provider must be replaceable without changing parsing or source
-version logic.
+Translation providers must be replaceable without changing parsing or source-version
+logic.
 
-The current external provider is Google Cloud Translation Basic v2. Google
-translation must remain disabled by default because it transmits parsed source
-text outside the local machine.
+The normal provider is local LM Studio. It must:
+
+- use the configured local LM Studio server;
+- support a dedicated translation model or reuse the general LM Studio model;
+- auto-select a model only when exactly one model is visible;
+- fail closed when model selection is ambiguous;
+- request structured JSON output;
+- validate exact translation count and IDs;
+- preserve a versioned translation instruction contract;
+- use bounded timeout, retries, request size, and output-token limits.
+
+Google Cloud Translation remains an optional external provider. Selecting it must make
+the external-data boundary explicit and must never be required for normal operation.
 
 ### FR-8: Structured local inference
 
@@ -266,9 +277,9 @@ exportable as a versioned machine-readable dataset.
 
 ## 7. Non-functional requirements
 
-- **Local-first by default:** normal acquisition and analysis require no cloud
-  dependency.
-- **Explicit external boundary:** enabling Google translation is a deliberate
+- **Local-first by default:** normal acquisition, translation, and analysis require no
+  cloud dependency when LM Studio is used locally.
+- **Explicit external boundary:** selecting Google translation is a deliberate
   exception and must be visible in configuration and operation.
 - **Inspectable:** source, intermediate data, translation metadata, model request,
   response, and final records remain traceable.
@@ -277,17 +288,17 @@ exportable as a versioned machine-readable dataset.
 - **Recoverable:** interruption does not require restarting the whole pipeline.
 - **Configurable:** models, source vocabulary, limits, paths, and thresholds are
   configuration rather than scattered constants.
-- **Provider-isolated:** LM Studio and translation providers remain behind separate
-  interfaces.
+- **Provider-isolated:** translation and P1.6 analysis remain separate provider
+  boundaries even when both use LM Studio.
 - **Conservative:** missing or review-required data is preferred to certainty
   without evidence.
 - **Testable:** deterministic logic is separated from network and model calls.
 - **Resource-aware:** the application accounts for local model latency,
-  context limits, GPU/RAM, external translation use, and source request impact.
+  context limits, GPU/RAM, optional external translation use, and source request impact.
 - **Private by default:** personal evidence and analysis remain local unless the
   user explicitly configures otherwise.
 - **Bounded:** broad vocabulary cannot trigger unrestricted acquisition, and
-  translation batches remain bounded.
+  translation batches/model requests remain bounded.
 
 ## 8. Current usable boundary
 
@@ -303,9 +314,10 @@ The current application can:
 8. audit structural parser quality;
 9. rerun without false logical or semantic duplicates;
 10. expose failures and check history;
-11. optionally create versioned English projections through Google Cloud;
+11. create versioned English projections through local LM Studio or optional Google Cloud;
 12. distinguish native-English from translated segments;
-13. export a current English JSONL corpus for downstream analysis/ML.
+13. preserve exact translation provider/model/prompt-contract identity;
+14. export a current English JSONL corpus for downstream analysis/ML.
 
 ## 9. Phase 1 completion boundary
 
