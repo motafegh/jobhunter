@@ -406,6 +406,33 @@ def create_app(
 
         return _start_operation(request, "Jobinja sync", action)
 
+    @app.post("/actions/fetch-missing")
+    def start_fetch_missing(
+        request: Request,
+        csrf_token: Annotated[str, Form()],
+        limit: Annotated[int, Form()],
+    ):
+        _csrf(request, csrf_token)
+        if not 1 <= limit <= 50:
+            raise HTTPException(status_code=400, detail="missing-detail limit must be 1-50")
+
+        def action() -> str:
+            job_ids = JobCatalog(settings.database_path).missing_job_ids(limit=limit)
+            if not job_ids:
+                return "Missing-detail backlog\nNo discovered jobs currently need a detail-page fetch."
+            summary = _batch_service(settings).run(job_ids)
+            return "\n".join(
+                [
+                    "Missing-detail backlog",
+                    f"Selected: {len(job_ids)}",
+                    "No market-search pages were requested for this operation.",
+                    "",
+                    format_batch_fetch_summary(summary),
+                ]
+            )
+
+        return _start_operation(request, "Fetch missing details", action)
+
     @app.post("/actions/quick-add")
     def start_quick_add(
         request: Request,
