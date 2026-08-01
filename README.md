@@ -28,8 +28,9 @@ data-driven bilingual search catalog
 → current English corpus export
 ```
 
-Acquisition remains independent from LM Studio. Google Cloud translation is a
-separate, explicit, opt-in external-data boundary.
+Acquisition remains independent from translation and later P1.6 analysis. The
+normal translation path is local LM Studio; Google Cloud remains an optional
+external provider.
 
 ## Quick start
 
@@ -196,8 +197,9 @@ jobhunter jobinja sync \
 The sync performs discovery, missing/refresh-due detail acquisition, semantic
 version decisions, fetch-observation persistence, and structural parser audit.
 
-When translation is deliberately enabled with `translation_auto_after_sync =
-true`, it then processes a bounded missing-English queue.
+When translation is enabled with `translation_auto_after_sync = true`, it then
+processes a bounded missing-English queue using the configured translation
+provider.
 
 ## Targeted detail acquisition
 
@@ -236,50 +238,84 @@ unchanged and is labelled `native`.
 ### Persian or mixed text
 
 Persian-containing strings are translated and labelled `translated`. Technical
-English already embedded in a mixed sentence is translated as part of that
-sentence rather than through a hard-coded terminology dictionary.
+English already embedded in a mixed sentence is handled as part of that semantic
+unit rather than through a hard-coded terminology dictionary.
 
 Per-segment provenance is retained so later ML work can distinguish native
 English from translated English.
 
-## Google Cloud Translation
+## Local LM Studio translation
 
-The implemented external provider uses the official Google Cloud Translation
-Basic v2 REST API.
-
-It is disabled by default because enabling it sends parsed job text to Google.
-
-Enable deliberately:
+LM Studio is the default translation provider:
 
 ```toml
 translation_enabled = true
-translation_auto_after_sync = true
-translation_provider = "google-cloud"
+translation_auto_after_sync = false
+translation_provider = "lm-studio"
 translation_target_language = "en"
 translation_batch_limit = 20
+translation_lm_studio_max_tokens = 4096
+translation_lm_studio_character_target = 6000
+```
+
+The translator uses LM Studio's local OpenAI-compatible `/v1/models` and
+`/v1/chat/completions` endpoints with JSON-schema structured output.
+
+Model selection is fail-closed:
+
+```text
+translation_lm_studio_model
+→ lm_studio_model
+→ automatic only when exactly one model is visible
+```
+
+Inspect exact model identifiers with:
+
+```bash
+jobhunter translations models
+```
+
+The prompt contract is versioned as `lm-studio-translation-v1`. It requires the
+model to preserve requirement strength, modality, negation, numbers, names, and
+technical terminology; it forbids summarization, inference, or additions.
+Malformed or incomplete structured responses are rejected rather than stored.
+
+LM Studio translation keeps job text on the configured local LM Studio server
+boundary. No Google API key is required.
+
+## Optional Google Cloud Translation
+
+Google Cloud remains supported when an external translation provider is
+deliberately desired:
+
+```toml
+translation_provider = "google-cloud"
 google_translation_model = "nmt"
 ```
 
-Keep the API key in the environment:
+Keep the API key outside the repository:
 
 ```bash
 export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='your-restricted-key'
 ```
 
-Do not commit it.
-
-The provider sends the key through the `x-goog-api-key` header, batches provider
-requests, records the model used, and persists completed/failed/reused
-translation attempts separately from successful artifacts.
+Using this provider intentionally sends parsed job text to Google. It is not
+required for normal JobHunter operation.
 
 See [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md).
 
 ## Translation commands
 
-Inspect configuration and coverage without external requests:
+Inspect configuration and corpus coverage without invoking a translator:
 
 ```bash
 jobhunter translations status
+```
+
+Inspect exact LM Studio model IDs:
+
+```bash
+jobhunter translations models
 ```
 
 Create missing English projections:
@@ -312,7 +348,8 @@ Default output:
 data/exports/job_english_corpus.jsonl
 ```
 
-Only artifacts for each job's latest source semantic version are exported.
+Only artifacts for each job's latest successfully parsed semantic version are
+exported.
 
 ## English corpus for later LLM/ML work
 
@@ -330,7 +367,7 @@ This can later support local LLM prompts, embeddings, clustering, text
 classification, information retrieval, and reproducible ML experiments.
 
 The English translation is not the final evidence authority. A future analytical
-claim must remain traceable to the original employer text so translation errors
+claim must remain traceable to original employer text so translation errors
 cannot silently strengthen or weaken a requirement.
 
 ## Local inspection
@@ -393,11 +430,12 @@ records, not replacements for evidence.
 ```bash
 jobhunter doctor
 jobhunter doctor --smoke
+jobhunter translations models
 ```
 
-The current acquisition and translation implementation does not yet perform P1.6
-responsibility/requirement interpretation. LM Studio remains isolated behind the
-inference-provider boundary.
+Acquisition does not require LM Studio. Translation may use LM Studio when
+enabled. P1.6 responsibility/requirement interpretation remains a separate
+future analysis boundary even when it later reuses the same local server.
 
 ## Development checks
 
@@ -406,7 +444,7 @@ ruff check .
 pytest
 ```
 
-Normal tests do not contact Jobinja, Google Cloud, or LM Studio. External services
+Normal tests do not contact Jobinja, Google Cloud, or LM Studio. Provider calls
 are represented with deterministic mock transports.
 
 ## Documentation
@@ -432,14 +470,14 @@ Fifteen structurally varied Jobinja advertisements have complete parser-v2
 details and all fifteen pass the deterministic structural audit. Operational
 fetch observations and bounded refresh scheduling are live-validated.
 
-The current implementation now also includes a data-driven bilingual search
-catalog, custom replacement catalogs, an optional Google Cloud translation
-provider, versioned English artifacts and attempts, native-versus-translated
-segment provenance, automatic bounded translation after sync, and current
+The implementation now also includes a data-driven bilingual search catalog,
+custom replacement catalogs, local LM Studio and optional Google translation
+providers, versioned English artifacts and attempts, native-versus-translated
+segment provenance, bounded automatic translation after sync, and current
 English-corpus JSONL export.
 
-Translation quality still needs live validation against real Persian/mixed jobs
-and later a manually reviewed golden corpus. Challenge/login/expired-page
+Translation quality still requires live acceptance against real Persian/mixed
+jobs and later a manually reviewed golden corpus. Challenge/login/expired-page
 classification, complete lifecycle classification, P1.6 semantic LLM analysis,
 combined reports, personal relevance, and career recommendations remain
 incomplete.
