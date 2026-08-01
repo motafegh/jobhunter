@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Jobs · JobHunter{% endblock %}
+{% block heading %}Jobs{% endblock %}
+{% block eyebrow %}Discovered and acquired opportunities{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/searches">Search coverage</a>{% endblock %}
+
+{% block content %}
+<section class="panel compact-panel">
+  <form class="filter-bar" method="get" action="/jobs">
+    <label class="search-field">
+      <span class="sr-only">Search jobs</span>
+      <input type="search" name="q" value="{{ q }}" placeholder="Search title, company, location, ID…">
+    </label>
+    <label>
+      <span class="sr-only">Detail status</span>
+      <select name="detail">
+        <option value="all" {% if detail == 'all' %}selected{% endif %}>All details</option>
+        <option value="available" {% if detail == 'available' %}selected{% endif %}>Details available</option>
+        <option value="missing" {% if detail == 'missing' %}selected{% endif %}>Details missing</option>
+      </select>
+    </label>
+    <label>
+      <span class="sr-only">Translation status</span>
+      <select name="translation">
+        <option value="all" {% if translation == 'all' %}selected{% endif %}>All translations</option>
+        <option value="available" {% if translation == 'available' %}selected{% endif %}>English available</option>
+        <option value="missing" {% if translation == 'missing' %}selected{% endif %}>English missing</option>
+      </select>
+    </label>
+    <label>
+      <span class="sr-only">Lifecycle</span>
+      <select name="lifecycle">
+        <option value="all" {% if lifecycle == 'all' %}selected{% endif %}>All lifecycle states</option>
+        <option value="active" {% if lifecycle == 'active' %}selected{% endif %}>Active</option>
+      </select>
+    </label>
+    <button class="button primary" type="submit">Filter</button>
+    <a class="button ghost" href="/jobs">Reset</a>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Local catalog</p>
+      <h2>{{ jobs|length }} matching jobs</h2>
+    </div>
+  </div>
+  {% if jobs %}
+  <div class="table-wrap job-table-wrap">
+    <table class="job-table">
+      <thead>
+        <tr><th>Role</th><th>Location</th><th>Details</th><th>English</th><th>Versions</th><th>Last seen</th></tr>
+      </thead>
+      <tbody>
+      {% for job in jobs %}
+        <tr>
+          <td>
+            <a class="job-title" href="/jobs/{{ job.source_job_id }}">{{ job.title }}</a>
+            <div class="job-meta">{{ job.company }} · {{ job.source_job_id }}</div>
+          </td>
+          <td>
+            <div>{{ job.location }}</div>
+            <div class="job-meta">{{ job.employment_type }}</div>
+          </td>
+          <td><span class="badge {{ 'good' if job.detail_status == 'parsed' else ('warn' if job.detail_status == 'missing' else 'bad') }}">{{ job.detail_status }}</span></td>
+          <td>
+            {% if job.translated %}<span class="badge good">ready</span>{% else %}<span class="badge">missing</span>{% endif %}
+          </td>
+          <td>{{ job.semantic_versions }}</td>
+          <td class="mono-small">{{ job.last_seen_at }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">No jobs match the current filters.</div>
+  {% endif %}
+</section>
+{% endblock %}
