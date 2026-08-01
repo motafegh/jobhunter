@@ -4,11 +4,23 @@ from __future__ import annotations
 
 import json
 import time
+from dataclasses import dataclass
 from typing import Any
 
 import httpx
 
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
+
+
+@dataclass(frozen=True, slots=True)
+class StructuredInferenceResult:
+    """Validated JSON result plus raw provider evidence."""
+
+    model: str
+    structured: dict[str, Any]
+    request_body: dict[str, Any]
+    raw_response: dict[str, Any]
+    finish_reason: str | None
 
 
 class LMStudioProvider:
@@ -78,61 +90,61 @@ class LMStudioProvider:
         return payload
 
     def list_models(self) -> list[str]:
-        """List model identifiers visible to LM Studio."""
-
         payload = self._json_object(self._request("GET", "models"))
         data = payload.get("data")
         if not isinstance(data, list):
             raise InferenceResponseError("LM Studio model response is missing a data list")
+        return [
+            item["id"]
+            for item in data
+            if isinstance(item, dict) and isinstance(item.get("id"), str)
+        ]
 
-        model_ids: list[str] = []
-        for item in data:
-            if isinstance(item, dict) and isinstance(item.get("id"), str):
-                model_ids.append(item["id"])
-        return model_ids
-
-    def structured_smoke_test(self, model: str | None = None) -> str:
-        """Verify a bounded schema-conforming response from one configured model."""
-
+    def _selected_model(self, model: str | None = None) -> str:
         selected_model = model or self._configured_model
         if not selected_model:
             raise InferenceResponseError(
                 "No LM Studio model is configured for structured inference; "
-                "set lm_studio_model to an exact identifier returned by /v1/models"
+                "set a dedicated analysis model or lm_studio_model"
             )
+        return selected_model
 
+    def complete_structured(
+        self,
+        *,
+        system_prompt: str,
+        user_payload: dict[str, Any],
+        schema_name: str,
+        schema: dict[str, Any],
+        model: str | None = None,
+        max_tokens: int = 8192,
+        seed: int = 0,
+    ) -> StructuredInferenceResult:
+        """Run one deterministic JSON-schema completion and retain raw request/response."""
+
+        selected_model = self._selected_model(model)
         request_body = {
             "model": selected_model,
             "messages": [
-                {
-                    "role": "system",
-                    "content": "Return only the requested structured health-check result.",
-                },
+                {"role": "system", "content": system_prompt},
                 {
                     "role": "user",
-                    "content": "Report that the JobHunter local inference check is okay.",
+                    "content": json.dumps(user_payload, ensure_ascii=False, sort_keys=True),
                 },
             ],
             "temperature": 0,
-            "max_tokens": 128,
+            "seed": seed,
+            "max_tokens": max_tokens,
             "stream": False,
             "response_format": {
                 "type": "json_schema",
                 "json_schema": {
-                    "name": "jobhunter_health_check",
+                    "name": schema_name,
                     "strict": True,
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "status": {"type": "string", "enum": ["ok"]}
-                        },
-                        "required": ["status"],
-                        "additionalProperties": False,
-                    },
+                    "schema": schema,
                 },
             },
         }
-
         payload = self._json_object(
             self._request("POST", "chat/completions", json=request_body)
         )
@@ -143,11 +155,13 @@ class LMStudioProvider:
             raise InferenceResponseError(
                 "LM Studio chat response is missing choices[0].message.content"
             ) from exc
-
         if not isinstance(content, str):
             raise InferenceResponseError("LM Studio structured response content is not text")
-
         finish_reason = first_choice.get("finish_reason")
+        if finish_reason == "length":
+            raise InferenceResponseError(
+                f"LM Studio structured response was truncated at max_tokens={max_tokens}"
+            )
         try:
             structured = json.loads(content.strip())
         except json.JSONDecodeError as exc:
@@ -157,11 +171,35 @@ class LMStudioProvider:
                 f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
                 f"content_preview={preview!r})"
             ) from exc
+        if not isinstance(structured, dict):
+            raise InferenceResponseError("Structured LM Studio content must be a JSON object")
+        return StructuredInferenceResult(
+            model=selected_model,
+            structured=structured,
+            request_body=request_body,
+            raw_response=payload,
+            finish_reason=str(finish_reason) if finish_reason is not None else None,
+        )
 
-        if structured != {"status": "ok"}:
+    def structured_smoke_test(self, model: str | None = None) -> str:
+        selected_model = self._selected_model(model)
+        result = self.complete_structured(
+            system_prompt="Return only the requested structured health-check result.",
+            user_payload={"instruction": "Report that the JobHunter local inference check is okay."},
+            schema_name="jobhunter_health_check",
+            schema={
+                "type": "object",
+                "properties": {"status": {"type": "string", "enum": ["ok"]}},
+                "required": ["status"],
+                "additionalProperties": False,
+            },
+            model=selected_model,
+            max_tokens=128,
+        )
+        if result.structured != {"status": "ok"}:
             raise InferenceResponseError(
                 "Unexpected structured smoke result "
-                f"from {selected_model!r} (finish_reason={finish_reason!r}): "
-                f"{structured!r}"
+                f"from {selected_model!r} (finish_reason={result.finish_reason!r}): "
+                f"{result.structured!r}"
             )
         return selected_model
