@@ -12,7 +12,9 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from jobhunter.search_registry import (
     ExpandedKeywordSearch,
+    SearchCatalog,
     expand_keyword_searches,
+    load_search_catalog,
     normalize_search_term,
     resolve_pack_names,
 )
@@ -79,11 +81,7 @@ class JobinjaKeywordGroupDefinition(BaseModel):
 
 
 class Settings(BaseModel):
-    """Validated application settings.
-
-    Values are loaded from an optional TOML file and then overridden by
-    ``JOBHUNTER_*`` environment variables.
-    """
+    """Validated application settings loaded from TOML and environment overrides."""
 
     model_config = ConfigDict(extra="forbid")
 
@@ -100,6 +98,7 @@ class Settings(BaseModel):
     jobinja_user_agent: str = "JobHunter/0.1 (local personal career research)"
     jobinja_request_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     jobinja_request_delay_seconds: float = Field(default=1.0, ge=0, le=60)
+    jobinja_search_catalog_path: Path | None = None
     jobinja_searches: list[JobinjaSearchDefinition] = Field(default_factory=list)
     jobinja_search_profiles: list[str] = Field(default_factory=list)
     jobinja_search_packs: list[str] = Field(default_factory=list)
@@ -114,6 +113,16 @@ class Settings(BaseModel):
     jobinja_sync_refresh_limit: int = Field(default=5, ge=0, le=50)
     jobinja_refresh_after_hours: float = Field(default=24.0, gt=0, le=8760)
 
+    translation_enabled: bool = False
+    translation_auto_after_sync: bool = False
+    translation_provider: str = "google-cloud"
+    translation_target_language: str = "en"
+    translation_batch_limit: int = Field(default=20, ge=1, le=50)
+    translation_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
+    translation_max_retries: int = Field(default=1, ge=0, le=5)
+    google_translation_api_key: str | None = None
+    google_translation_model: str = "nmt"
+
     log_level: str = "INFO"
 
     @model_validator(mode="after")
@@ -123,6 +132,8 @@ class Settings(BaseModel):
         self.database_path = (
             self.database_path or self.data_dir / "jobhunter.sqlite3"
         ).expanduser()
+        if self.jobinja_search_catalog_path is not None:
+            self.jobinja_search_catalog_path = self.jobinja_search_catalog_path.expanduser()
 
         self.lm_studio_base_url = self.lm_studio_base_url.rstrip("/")
         parsed = urlparse(self.lm_studio_base_url)
@@ -138,10 +149,22 @@ class Settings(BaseModel):
             self.lm_studio_model = self.lm_studio_model.strip() or None
         if self.lm_studio_api_token is not None:
             self.lm_studio_api_token = self.lm_studio_api_token.strip() or None
+        if self.google_translation_api_key is not None:
+            self.google_translation_api_key = self.google_translation_api_key.strip() or None
+        self.google_translation_model = self.google_translation_model.strip() or "nmt"
 
         self.jobinja_user_agent = self.jobinja_user_agent.strip()
         if not self.jobinja_user_agent:
             raise ValueError("jobinja_user_agent must not be empty")
+
+        if self.translation_provider not in {"google-cloud"}:
+            raise ValueError("translation_provider currently supports only 'google-cloud'")
+        if self.translation_target_language != "en":
+            raise ValueError("translation_target_language currently supports only 'en'")
+        if self.translation_auto_after_sync and not self.translation_enabled:
+            raise ValueError(
+                "translation_auto_after_sync requires translation_enabled = true"
+            )
 
         search_names: set[str] = set()
         for search in self.jobinja_searches:
@@ -163,10 +186,12 @@ class Settings(BaseModel):
         self.jobinja_search_packs = list(
             dict.fromkeys(name.strip() for name in self.jobinja_search_packs if name.strip())
         )
+        catalog = self.search_catalog()
         try:
             resolve_pack_names(
                 pack_names=tuple(self.jobinja_search_packs),
                 profile_names=tuple(self.jobinja_search_profiles),
+                catalog=catalog,
             )
         except ValueError as exc:
             raise ValueError(str(exc)) from exc
@@ -183,6 +208,11 @@ class Settings(BaseModel):
         self.jobinja_excluded_terms = excluded_terms
         return self
 
+    def search_catalog(self) -> SearchCatalog:
+        """Load the packaged catalog or a user-supplied replacement TOML catalog."""
+
+        return load_search_catalog(self.jobinja_search_catalog_path)
+
     def expanded_keyword_searches(self) -> tuple[ExpandedKeywordSearch, ...]:
         """Expand configured profiles, packs, and custom groups."""
 
@@ -197,16 +227,12 @@ class Settings(BaseModel):
             custom_groups=custom_groups,
             excluded_terms=tuple(self.jobinja_excluded_terms),
             default_max_pages=self.jobinja_default_keyword_max_pages,
+            catalog=self.search_catalog(),
         )
 
     @classmethod
     def load(cls, config_path: str | Path | None = None) -> Settings:
-        """Load settings from TOML and environment overrides.
-
-        The default file is ``jobhunter.toml`` in the current directory. A
-        missing default file is valid. An explicitly supplied missing file is
-        an error.
-        """
+        """Load settings from TOML and environment overrides."""
 
         explicit_path = config_path is not None
         selected_path = Path(
@@ -246,11 +272,20 @@ class Settings(BaseModel):
                 "jobinja_request_timeout_seconds"
             ),
             "JOBHUNTER_JOBINJA_REQUEST_DELAY_SECONDS": "jobinja_request_delay_seconds",
+            "JOBHUNTER_JOBINJA_SEARCH_CATALOG_PATH": "jobinja_search_catalog_path",
             "JOBHUNTER_JOBINJA_SEARCH_REQUEST_BUDGET": "jobinja_search_request_budget",
             "JOBHUNTER_JOBINJA_MAX_EXPANDED_SEARCHES": "jobinja_max_expanded_searches",
             "JOBHUNTER_JOBINJA_SYNC_MISSING_LIMIT": "jobinja_sync_missing_limit",
             "JOBHUNTER_JOBINJA_SYNC_REFRESH_LIMIT": "jobinja_sync_refresh_limit",
             "JOBHUNTER_JOBINJA_REFRESH_AFTER_HOURS": "jobinja_refresh_after_hours",
+            "JOBHUNTER_TRANSLATION_ENABLED": "translation_enabled",
+            "JOBHUNTER_TRANSLATION_AUTO_AFTER_SYNC": "translation_auto_after_sync",
+            "JOBHUNTER_TRANSLATION_PROVIDER": "translation_provider",
+            "JOBHUNTER_TRANSLATION_BATCH_LIMIT": "translation_batch_limit",
+            "JOBHUNTER_TRANSLATION_TIMEOUT_SECONDS": "translation_timeout_seconds",
+            "JOBHUNTER_TRANSLATION_MAX_RETRIES": "translation_max_retries",
+            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY": "google_translation_api_key",
+            "JOBHUNTER_GOOGLE_TRANSLATION_MODEL": "google_translation_model",
             "JOBHUNTER_LOG_LEVEL": "log_level",
         }
         for environment_name, field_name in environment_fields.items():
