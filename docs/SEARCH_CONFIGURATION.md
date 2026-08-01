@@ -2,65 +2,122 @@
 
 ## 1. Purpose
 
-JobHunter search configuration turns a career direction into an explicit,
-inspectable set of Jobinja searches. It supports Persian and English wording,
-keeps the vocabulary editable without code changes, and prevents a large search
-catalog from creating unbounded requests.
+JobHunter turns a career direction into an explicit, inspectable set of Jobinja
+searches. It supports Persian and English wording, keeps vocabulary editable as
+data rather than Python code, and prevents a large catalog from creating
+unbounded requests.
 
-The search registry is an acquisition input. It does not decide that a job is
-relevant, suitable, or worth applying to. Those are later evidence-backed
-analysis decisions.
+Search vocabulary is an acquisition input. It does not decide that a discovered
+job is relevant, suitable, or worth applying to.
 
-## 2. Search-definition layers
+## 2. Catalog architecture
 
-JobHunter supports four layers. They can be used separately or combined.
+The packaged default catalog is:
 
-### 2.1 Built-in profiles
+```text
+src/jobhunter/data/search_catalog.toml
+```
 
-A profile combines several built-in packs.
+It contains:
+
+```toml
+catalog_version = "..."
+
+[profiles]
+...
+
+[packs.some-pack]
+description = "..."
+terms = ["English term", "واژه فارسی"]
+```
+
+`search_registry.py` contains loading, validation, normalization, expansion, and
+URL-generation logic. It does **not** contain the career word lists.
+
+Inspect the effective catalog:
+
+```bash
+jobhunter jobinja catalog
+jobhunter jobinja catalog --show-terms
+```
+
+## 3. Complete catalog replacement
+
+A user may replace the packaged vocabulary without editing Python:
+
+```toml
+jobinja_search_catalog_path = "my-search-catalog.toml"
+```
+
+The replacement is complete rather than implicitly merged. This makes the exact
+active vocabulary obvious and reproducible.
+
+Example:
+
+```toml
+catalog_version = "personal-v1"
+
+[profiles]
+personal = ["hybrid"]
+
+[packs.hybrid]
+description = "My target hybrid roles"
+terms = [
+  "AI Security Engineer",
+  "مهندس امنیت هوش مصنوعی",
+  "Python Security Automation",
+]
+```
+
+Then configure:
+
+```toml
+jobinja_search_catalog_path = "my-search-catalog.toml"
+jobinja_search_profiles = ["personal"]
+```
+
+Catalog loading fails before network acquisition if a profile references an
+unknown pack or the TOML structure is invalid.
+
+## 4. Search-definition layers
+
+The effective plan may combine:
+
+1. catalog profiles;
+2. catalog packs;
+3. custom keyword groups in `jobhunter.toml`;
+4. raw Jobinja result URLs;
+5. one-run CLI selectors.
+
+### 4.1 Profiles
+
+Default broad profile:
 
 ```toml
 jobinja_search_profiles = ["ai-security-python"]
 ```
 
-Current profiles:
+It combines:
 
-| Profile | Packs |
-|---|---|
-| `ai-security-python` | `ai-ml`, `llm-applications`, `python-data`, `defensive-security`, `ai-security`, `network-platform` |
-| `ai-focused` | `ai-ml`, `llm-applications`, `ai-security` |
-| `security-focused` | `defensive-security`, `ai-security`, `network-platform` |
+```text
+ai-ml
+llm-applications
+python-data
+defensive-security
+ai-security
+network-platform
+```
 
-Profiles are curated starting points. They are version-controlled and reviewed
-like code, but they are not immutable product truth.
-
-### 2.2 Built-in packs
-
-A pack groups related Persian and English search terms.
+### 4.2 Packs
 
 ```toml
 jobinja_search_packs = ["ai-security", "defensive-security"]
 ```
 
-Current packs:
+### 4.3 Small custom groups
 
-- `ai-ml`: AI, Machine Learning, Deep Learning, NLP, vision, data science, and MLOps;
-- `llm-applications`: LLM, RAG, agents, prompt engineering, chatbots, and vector retrieval;
-- `python-data`: Python application, API, data engineering, and data-platform terms;
-- `defensive-security`: SOC, SIEM, detection, response, AppSec, cloud security, and automation;
-- `ai-security`: AI, ML, LLM, model, agent, and prompt-security terms;
-- `network-platform`: Linux, networking, DevOps, platform, cloud, and container terms.
-
-Inspect exact pack sizes and descriptions with:
-
-```bash
-jobhunter jobinja catalog
-```
-
-### 2.3 Custom keyword groups
-
-Custom groups are the preferred extension point for personal terminology,
-regional wording, or emerging roles.
+Custom groups are useful when only a few personal/regional terms need to be added
+without maintaining a full replacement catalog:
 
 ```toml
 [[jobhunter.jobinja_keyword_groups]]
@@ -76,38 +133,15 @@ enabled = true
 max_pages = 1
 ```
 
-Each term becomes one Jobinja keyword-filter search. A group may contain up to
-200 unique normalized terms.
-
-### 2.4 Raw Jobinja search URLs
+### 4.4 Raw Jobinja URLs
 
 Raw result URLs remain supported for Jobinja-owned filters that a keyword alone
-cannot represent, such as a location, arrangement, or category filter.
+cannot represent, such as location or arrangement filters.
 
-```toml
-[[jobhunter.jobinja_searches]]
-name = "Tehran remote AI roles"
-url = "https://jobinja.ir/jobs?filters%5Bkeywords%5D%5B0%5D=..."
-enabled = true
-max_pages = 2
-```
+## 5. Command-line selectors
 
-Raw URLs and keyword-generated searches are deduplicated by canonical URL before
-acquisition.
-
-## 3. Command-line selectors
-
-Command-line selectors create an explicit one-run plan. When any selector is
-passed, configured searches are not silently mixed into that run.
-
-```bash
-jobhunter jobinja plan \
-  --profile ai-security-python \
-  --term "مهندس امنیت هوش مصنوعی" \
-  --term "AI Security Automation"
-```
-
-Supported selectors:
+Any selector makes that run explicit rather than silently mixing configured
+searches:
 
 ```text
 --url <jobinja-result-url>
@@ -116,37 +150,37 @@ Supported selectors:
 --term <persian-or-english-term>
 ```
 
-Each option can be repeated.
+Example:
 
-## 4. Normalization and deduplication
+```bash
+jobhunter jobinja plan \
+  --profile ai-security-python \
+  --term "مهندس امنیت هوش مصنوعی" \
+  --term "AI Security Automation"
+```
 
-JobHunter retains the original display term but creates a comparison form for
-identity and exclusion checks.
+## 6. Normalization and deduplication
 
-The comparison form:
+The displayed term is preserved, while comparison identity:
 
-1. applies Unicode NFKC normalization;
+1. applies Unicode NFKC;
 2. maps Arabic `ي` to Persian `ی`;
 3. maps Arabic `ك` to Persian `ک`;
-4. treats the zero-width non-joiner as a space for term comparison;
-5. removes directional marks used only for display;
+4. treats zero-width non-joiner as a comparison space;
+5. removes display-only directional marks;
 6. collapses whitespace;
-7. applies case-insensitive comparison.
+7. compares case-insensitively.
 
-This means variants such as the following become one search identity:
+Thus these may deduplicate for search identity:
 
 ```text
 امنیت‌سایبری
 امنيت سایبری
 ```
 
-The original selected spelling is still shown in the plan and persisted search
-name.
+This is not translation and not career-taxonomy canonicalization.
 
-## 5. Exclusions
-
-Exclusions remove noisy or unwanted terms after normalization and before URL
-generation.
+## 7. Exclusions
 
 ```toml
 jobinja_excluded_terms = [
@@ -155,162 +189,121 @@ jobinja_excluded_terms = [
 ]
 ```
 
-Exclusions apply to built-in profiles, built-in packs, custom groups, and
-one-off terms.
+Exclusions apply after normalized comparison and before Jobinja URL generation.
 
-## 6. Request and search bounds
+## 8. Search ordering and bounded coverage
 
-A broad profile can expand to many searches. Two independent limits prevent
-uncontrolled acquisition.
+Selected catalog packs are interleaved round-robin. For the broad profile the
+first cycle is:
+
+```text
+ai-ml
+→ llm-applications
+→ python-data
+→ defensive-security
+→ ai-security
+→ network-platform
+```
+
+This prevents the first bounded search window from being dominated by one pack.
+
+Default operational bounds in the generated/example configuration:
 
 ```toml
 jobinja_search_request_budget = 40
-jobinja_max_expanded_searches = 100
+jobinja_max_expanded_searches = 40
 jobinja_default_keyword_max_pages = 1
 ```
 
-`jobinja_max_expanded_searches` limits the selected search definitions.
-`jobinja_search_request_budget` limits actual search-page requests across the
-whole discovery or sync run.
+The request budget is enforced inside discovery, not only in CLI planning.
 
-When the budget is reached:
-
-- no additional request is sent;
-- already acquired evidence and discoveries remain valid;
-- remaining searches receive `request_budget_reached` as their stop reason;
-- budget exhaustion is not classified as an acquisition failure.
-
-## 7. Search ordering, windows, and broad-profile coverage
-
-Terms from selected built-in packs are ordered **round-robin by pack**. For the
-`ai-security-python` profile, the plan takes one term from `ai-ml`, then one from
-`llm-applications`, `python-data`, `defensive-security`, `ai-security`, and
-`network-platform`, and repeats that cycle.
-
-This matters because a bounded first window must represent the whole career
-profile rather than exhausting the AI pack before reaching Python or security.
-Custom groups and one-off terms follow the built-in round-robin portion.
-
-Use `--search-limit` and `--search-offset` to process a large catalog in
-predictable windows.
+## 9. Windows
 
 ```bash
 jobhunter jobinja plan \
   --profile ai-security-python \
   --search-limit 40 \
   --search-offset 0
-
-jobhunter jobinja plan \
-  --profile ai-security-python \
-  --search-limit 40 \
-  --search-offset 40
 ```
 
-Offset is cyclic: an offset larger than the plan length wraps around. The plan
-is stable for the same configuration and application version, making windows
-reproducible.
+Later windows can rotate with offsets such as `40`, `80`, and `120`. Offset is
+cyclic.
 
-A practical coverage sequence for the broad profile is:
+The exact number of useful windows depends on the current catalog version; use
+`catalog --show-terms` and `plan` rather than assuming a permanent term count.
 
-```text
-offset 0
-→ offset 40
-→ offset 80
-→ offset 120
-```
-
-Inspect the plan before network acquisition. Do not assume a large vocabulary
-should run in full every day.
-
-## 8. Planning commands
-
-List the built-in catalog:
-
-```bash
-jobhunter jobinja catalog
-```
-
-Inspect configured searches without network access:
+## 10. Planning output
 
 ```bash
 jobhunter jobinja plan
-```
-
-Inspect a one-off profile or pack:
-
-```bash
-jobhunter jobinja plan --profile ai-focused
-jobhunter jobinja plan --pack ai-security --pack defensive-security
-```
-
-Include generated URLs:
-
-```bash
 jobhunter jobinja plan --show-urls
 ```
 
-The plan reports:
+The plan reports selected search count, planned page requests, global request
+budget, maximum requests for the run, ordered search names, page limits, and
+optionally generated URLs.
 
-- selected search count;
-- planned page-request count;
-- global request budget;
-- maximum requests possible in that run;
-- ordered search names and page limits;
-- canonical URLs when requested.
+No Jobinja request is sent by `plan`.
 
-## 9. Discovery and sync usage
-
-Run discovery only:
+## 11. Discovery and sync
 
 ```bash
 jobhunter jobinja discover \
   --profile ai-security-python \
   --search-limit 40 \
-  --search-offset 0 \
   --request-budget 40
 ```
-
-Run the complete acquisition-only workflow:
 
 ```bash
 jobhunter jobinja sync \
   --profile ai-security-python \
   --search-limit 40 \
-  --search-offset 0 \
   --request-budget 40 \
   --missing-limit 10 \
   --refresh-limit 5 \
   --refresh-after-hours 24
 ```
 
-`sync` performs:
+`sync` performs source acquisition and parser audit. It invokes translation only
+when both:
 
-```text
-search planning
-→ repeat-safe discovery
-→ missing-detail selection
-→ refresh-due selection
-→ sequential detail acquisition
-→ semantic version decision
-→ fetch-observation persistence
-→ deterministic parser audit
+```toml
+translation_enabled = true
+translation_auto_after_sync = true
 ```
 
-It does not invoke LM Studio.
+are deliberately configured.
 
-## 10. Maintenance rules
+## 12. Search vocabulary versus English translation
 
-When updating built-in vocabulary:
+These are separate systems:
 
-- add terms to the narrowest appropriate pack;
-- include Persian and English forms when both are used in real listings;
-- avoid speculative abbreviations with no demonstrated search value;
-- avoid terms so broad that they dominate unrelated jobs;
-- preserve pack identifiers once published;
-- add normalization and expansion tests;
-- verify that early bounded windows still represent every selected pack;
-- inspect the generated plan before live acquisition;
-- use exclusions rather than deleting useful built-in terms for one user-specific reason.
+```text
+search catalog
+  controls which Jobinja keyword queries are made
 
-Search vocabulary quality should be evaluated by discovered-job usefulness,
-cross-search overlap, noise, and missed role families—not by term count alone.
+translation provider
+  creates a derived English view of already-acquired job content
+```
+
+Google translation does not dynamically invent search terms and JobHunter does
+not translate every possible English word into Persian at runtime to build search
+queries. Search terms remain an explicit, reviewable acquisition configuration.
+
+This separation keeps acquisition reproducible and prevents translator output
+from silently changing the scope of crawling.
+
+## 13. Maintenance rules
+
+When editing the packaged or replacement catalog:
+
+- edit TOML data, not Python word tuples;
+- increment `catalog_version` when vocabulary changes materially;
+- put terms in the narrowest useful pack;
+- include Persian/English forms when real postings use both;
+- avoid speculative abbreviations and overly broad terms;
+- preserve published pack identifiers where practical;
+- run catalog/normalization tests;
+- inspect early bounded windows after changes;
+- evaluate usefulness, overlap, noise, and missed role families rather than term
+  count alone.
