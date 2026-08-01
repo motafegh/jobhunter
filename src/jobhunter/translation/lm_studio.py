@@ -14,6 +14,7 @@ _PROVIDER_NAME = "lm-studio-translation-v1"
 _MAX_TEXTS_PER_REQUEST = 32
 _DEFAULT_CHARACTER_TARGET = 6_000
 _DEFAULT_MAX_TOKENS = 4_096
+_MAX_RECOVERY_TOKENS = 32_768
 
 _SYSTEM_PROMPT = """You are JobHunter's translation engine.
 Translate each supplied Persian or mixed Persian-English job-ad segment into precise,
@@ -27,10 +28,16 @@ Rules:
 - Preserve standard English technical tokens such as Python, Docker, Kubernetes,
   RAG, LLM, NLP, MLOps, SIEM, SOC, GitHub, TensorFlow, and PyTorch when they already
   appear naturally in the source.
+- For proper names or brands written in Persian, transliterate conservatively. Do not
+  guess, correct, or replace them with a different entity.
 - Translate the complete supplied text. Do not summarize, omit, explain, classify,
   infer, or add information.
 - Return exactly one translation for every input id and no extra ids.
 """
+
+
+class _TranslationOutputTruncated(TranslationError):
+    """Internal signal used to recover a bounded truncated model response."""
 
 
 class LMStudioTranslationProvider:
@@ -53,7 +60,7 @@ class LMStudioTranslationProvider:
             raise ValueError("timeout_seconds must be greater than zero")
         if not 0 <= max_retries <= 5:
             raise ValueError("max_retries must be between 0 and 5")
-        if not 256 <= max_tokens <= 32_768:
+        if not 256 <= max_tokens <= _MAX_RECOVERY_TOKENS:
             raise ValueError("max_tokens must be between 256 and 32768")
         if not 1_000 <= request_character_target <= 100_000:
             raise ValueError(
@@ -191,12 +198,10 @@ class LMStudioTranslationProvider:
         *,
         source_language: str | None,
         target_language: str,
+        max_tokens: int,
     ) -> TranslationBatchResult:
         model = self._resolve_model()
-        input_items = [
-            {"id": index, "text": text}
-            for index, text in enumerate(texts)
-        ]
+        input_items = [{"id": index, "text": text} for index, text in enumerate(texts)]
         schema = {
             "type": "object",
             "properties": {
@@ -236,7 +241,7 @@ class LMStudioTranslationProvider:
             ],
             "temperature": 0,
             "seed": 0,
-            "max_tokens": self._max_tokens,
+            "max_tokens": max_tokens,
             "stream": False,
             "response_format": {
                 "type": "json_schema",
@@ -262,6 +267,11 @@ class LMStudioTranslationProvider:
             raise TranslationError("LM Studio translation response content is not text")
 
         finish_reason = first_choice.get("finish_reason")
+        if finish_reason == "length":
+            raise _TranslationOutputTruncated(
+                f"LM Studio translation reached max_tokens={max_tokens}"
+            )
+
         try:
             structured = json.loads(content.strip())
         except json.JSONDecodeError as exc:
@@ -301,6 +311,54 @@ class LMStudioTranslationProvider:
         detected = tuple(source_language for _ in texts)
         return TranslationBatchResult(texts=ordered, detected_languages=detected)
 
+    def _translate_chunk_with_recovery(
+        self,
+        texts: tuple[str, ...],
+        *,
+        source_language: str | None,
+        target_language: str,
+        max_tokens: int,
+    ) -> TranslationBatchResult:
+        try:
+            return self._translate_chunk(
+                texts,
+                source_language=source_language,
+                target_language=target_language,
+                max_tokens=max_tokens,
+            )
+        except _TranslationOutputTruncated as exc:
+            if len(texts) > 1:
+                midpoint = len(texts) // 2
+                left = self._translate_chunk_with_recovery(
+                    texts[:midpoint],
+                    source_language=source_language,
+                    target_language=target_language,
+                    max_tokens=max_tokens,
+                )
+                right = self._translate_chunk_with_recovery(
+                    texts[midpoint:],
+                    source_language=source_language,
+                    target_language=target_language,
+                    max_tokens=max_tokens,
+                )
+                return TranslationBatchResult(
+                    texts=left.texts + right.texts,
+                    detected_languages=left.detected_languages + right.detected_languages,
+                )
+
+            next_max_tokens = min(max_tokens * 2, _MAX_RECOVERY_TOKENS)
+            if next_max_tokens > max_tokens:
+                return self._translate_chunk_with_recovery(
+                    texts,
+                    source_language=source_language,
+                    target_language=target_language,
+                    max_tokens=next_max_tokens,
+                )
+            raise TranslationError(
+                "LM Studio repeatedly truncated one translation segment even at "
+                f"max_tokens={_MAX_RECOVERY_TOKENS}"
+            ) from exc
+
     def translate_texts(
         self,
         texts: tuple[str, ...],
@@ -308,7 +366,7 @@ class LMStudioTranslationProvider:
         source_language: str | None,
         target_language: str,
     ) -> TranslationBatchResult:
-        """Translate an ordered batch locally while preserving exact item count/order."""
+        """Translate an ordered batch with bounded truncation recovery."""
 
         if not texts:
             return TranslationBatchResult(texts=(), detected_languages=())
@@ -318,10 +376,11 @@ class LMStudioTranslationProvider:
         translated: list[str] = []
         detected: list[str | None] = []
         for chunk in self._request_chunks(texts):
-            result = self._translate_chunk(
+            result = self._translate_chunk_with_recovery(
                 chunk,
                 source_language=source_language,
                 target_language=target_language,
+                max_tokens=self._max_tokens,
             )
             translated.extend(result.texts)
             detected.extend(result.detected_languages)
