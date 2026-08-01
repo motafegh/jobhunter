@@ -120,6 +120,36 @@ jobinja_search_profiles = ["personal"]
     }
 
 
+def test_translation_defaults_to_lm_studio_and_inherits_general_model() -> None:
+    settings = Settings(lm_studio_model="  qwen-local  ")
+
+    assert settings.translation_provider == "lm-studio"
+    assert settings.effective_translation_lm_studio_model() == "qwen-local"
+
+
+def test_translation_dedicated_lm_studio_model_overrides_general_model(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+lm_studio_model = "general-model"
+translation_enabled = true
+translation_provider = "lm-studio"
+translation_lm_studio_model = "translation-model"
+""".strip(),
+        encoding="utf-8",
+    )
+    monkeypatch.setenv("JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS", "8192")
+
+    settings = Settings.load(config_path)
+
+    assert settings.effective_translation_lm_studio_model() == "translation-model"
+    assert settings.translation_lm_studio_max_tokens == 8192
+
+
 def test_translation_settings_accept_google_key_from_environment(
     tmp_path: Path,
     monkeypatch,
@@ -156,6 +186,20 @@ translation_auto_after_sync = true
     )
 
     with pytest.raises(ValidationError, match="translation_auto_after_sync"):
+        Settings.load(config_path)
+
+
+def test_unknown_translation_provider_is_rejected(tmp_path: Path) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text(
+        """
+[jobhunter]
+translation_provider = "mystery"
+""".strip(),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(ValidationError, match="translation_provider"):
         Settings.load(config_path)
 
 
