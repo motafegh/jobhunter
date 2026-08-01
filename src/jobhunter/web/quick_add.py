@@ -33,7 +33,7 @@ class QuickAddTarget:
 
 def _looks_like_url(value: str) -> bool:
     lowered = value.casefold()
-    return lowered.startswith(("http://", "https://", "jobinja.ir/", "www.jobinja.ir/"))
+    return "://" in value or lowered.startswith(("jobinja.ir/", "www.jobinja.ir/"))
 
 
 def _normalize_url(value: str) -> str:
