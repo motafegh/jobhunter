@@ -124,19 +124,20 @@ def test_sync_rejects_combined_detail_limit_over_fifty(
     )
 
 
-def test_translation_status_is_offline_and_available_when_disabled(
+def test_translation_status_defaults_to_local_lm_studio(
     tmp_path: Path,
     monkeypatch,
+    capsys,
 ) -> None:
     monkeypatch.chdir(tmp_path)
 
     assert main(["translations", "status"]) == 0
+    output = capsys.readouterr().out
+    assert "Provider: lm-studio" in output
+    assert "External translation service: no" in output
 
 
-def test_translation_run_requires_explicit_external_opt_in(
-    tmp_path: Path,
-    monkeypatch,
-) -> None:
+def test_translation_run_requires_opt_in(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.chdir(tmp_path)
 
     assert main(["translations", "run", "--missing"]) == 2
