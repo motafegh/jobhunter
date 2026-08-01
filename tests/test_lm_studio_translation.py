@@ -170,3 +170,55 @@ def test_lm_studio_translation_rejects_missing_ids() -> None:
             source_language="fa",
             target_language="en",
         )
+
+
+def test_lm_studio_translation_chunks_large_batches_and_sends_api_token() -> None:
+    request_sizes: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        assert request.headers["authorization"] == "Bearer local-secret"
+        payload = json.loads(request.read())
+        user_payload = json.loads(payload["messages"][1]["content"])
+        items = user_payload["items"]
+        request_sizes.append(len(items))
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "translations": [
+                                        {
+                                            "id": item["id"],
+                                            "translation": f"translated-{item['id']}",
+                                        }
+                                        for item in items
+                                    ]
+                                }
+                            )
+                        },
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="local-model",
+        api_token="local-secret",
+        max_retries=0,
+        request_character_target=100_000,
+        transport=httpx.MockTransport(handler),
+    )
+    result = provider.translate_texts(
+        tuple(f"متن {index}" for index in range(33)),
+        source_language="fa",
+        target_language="en",
+    )
+
+    assert request_sizes == [32, 1]
+    assert len(result.texts) == 33
