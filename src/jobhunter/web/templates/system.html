@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}System · JobHunter{% endblock %}
+{% block heading %}System{% endblock %}
+{% block eyebrow %}Local runtime and configuration{% endblock %}
+
+{% block content %}
+<section class="metric-grid three">
+  <article class="metric-card accent"><span class="metric-label">Translation provider</span><strong class="metric-value small-value">{{ settings.translation_provider }}</strong><span class="metric-help">{{ settings.effective_translation_lm_studio_model() or 'Automatic model selection' }}</span></article>
+  <article class="metric-card"><span class="metric-label">Parsed source versions</span><strong class="metric-value">{{ parsed_versions }}</strong><span class="metric-help">Eligible for English projection</span></article>
+  <article class="metric-card"><span class="metric-label">Current English artifacts</span><strong class="metric-value">{{ english_artifacts }}</strong><span class="metric-help">{{ parsed_versions - english_artifacts }} missing</span></article>
+</section>
+
+<div class="dashboard-grid">
+  <section class="panel">
+    <div class="panel-header"><div><p class="eyebrow">Storage</p><h2>Local data boundary</h2></div><span class="badge good">Local</span></div>
+    <dl class="metadata-list">
+      <div><dt>Database</dt><dd class="mono-small">{{ settings.database_path }}</dd></div>
+      <div><dt>Evidence</dt><dd class="mono-small">{{ settings.evidence_dir }}</dd></div>
+      <div><dt>Exports</dt><dd class="mono-small">{{ settings.data_dir }}/exports</dd></div>
+      <div><dt>Log level</dt><dd>{{ settings.log_level }}</dd></div>
+    </dl>
+  </section>
+
+  <section class="panel">
+    <div class="panel-header"><div><p class="eyebrow">LM Studio</p><h2>Local model boundary</h2></div><span class="badge {{ 'good' if settings.translation_provider == 'lm-studio' else '' }}">{{ 'Active translator' if settings.translation_provider == 'lm-studio' else 'Available' }}</span></div>
+    <dl class="metadata-list">
+      <div><dt>Base URL</dt><dd class="mono-small">{{ settings.lm_studio_base_url }}</dd></div>
+      <div><dt>General model</dt><dd>{{ settings.lm_studio_model or 'Not explicitly configured' }}</dd></div>
+      <div><dt>Translation model</dt><dd>{{ settings.translation_lm_studio_model or 'Fallback / auto' }}</dd></div>
+      <div><dt>Translation enabled</dt><dd>{{ 'Yes' if settings.translation_enabled else 'No' }}</dd></div>
+      <div><dt>Auto after sync</dt><dd>{{ 'Yes' if settings.translation_auto_after_sync else 'No' }}</dd></div>
+    </dl>
+  </section>
+</div>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Acquisition controls</p><h2>Current safe bounds</h2></div></div>
+  <div class="settings-grid">
+    <div><span>Search request budget</span><strong>{{ settings.jobinja_search_request_budget }}</strong></div>
+    <div><span>Expanded searches</span><strong>{{ settings.jobinja_max_expanded_searches }}</strong></div>
+    <div><span>Request delay</span><strong>{{ settings.jobinja_request_delay_seconds }}s</strong></div>
+    <div><span>Missing detail batch</span><strong>{{ settings.jobinja_sync_missing_limit }}</strong></div>
+    <div><span>Refresh batch</span><strong>{{ settings.jobinja_sync_refresh_limit }}</strong></div>
+    <div><span>Refresh age</span><strong>{{ settings.jobinja_refresh_after_hours }}h</strong></div>
+    <div><span>Translation batch</span><strong>{{ settings.translation_batch_limit }}</strong></div>
+    <div><span>Translation token budget</span><strong>{{ settings.translation_lm_studio_max_tokens }}</strong></div>
+  </div>
+  <p class="muted settings-note">The browser exposes per-run controls for daily operation. Advanced persistent configuration remains in <code>jobhunter.toml</code> so configuration stays explicit and versionable rather than becoming hidden UI state.</p>
+</section>
+{% endblock %}
