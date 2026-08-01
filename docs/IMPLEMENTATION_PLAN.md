@@ -12,12 +12,12 @@ Detailed Phase 1 source/analysis work is controlled by
 - Build operable vertical slices.
 - Keep acquisition usable when LM Studio is unavailable.
 - Preserve raw evidence before parsing, translation, or analysis.
-- Keep translation derived from source versions.
+- Keep source, translation, model analysis, and personal/user state separate.
 - Prefer local-first providers when they satisfy the requirement.
-- Keep search coverage data-driven.
-- Bound pages, requests, detail checks, translation/model calls, and retries.
-- Keep failures inspectable/retryable.
+- Keep search coverage data-driven and acquisition bounded.
+- Keep failures inspectable/retryable only when their classification permits retry.
 - Require deterministic tests before live acceptance.
+- Require reviewed live examples before trusting model-derived layers at scale.
 - Let the web UI and CLI share application services/database rather than fork logic.
 - Add product/UI complexity only where it improves repeated operation.
 
@@ -26,7 +26,7 @@ Detailed Phase 1 source/analysis work is controlled by
 | Stage | Outcome | Status |
 |---|---|---|
 | M0 | Runnable local foundation, SQLite, LM Studio boundary, tests | Complete |
-| Phase 1 | Full automation of the Jobinja workflow through analysis/reporting | Active |
+| Phase 1 | Full Jobinja workflow through evidence-backed analysis/reporting | Active |
 | Phase 2 | Canonical career taxonomy and reliable market matrices | Deferred |
 | Phase 3 | Personal capability evidence and gap analysis | Deferred |
 | Phase 4 | Explainable actions and application readiness | Deferred |
@@ -39,235 +39,248 @@ Detailed Phase 1 source/analysis work is controlled by
 | P1.0 | Repository alignment and controlling plan | Accepted |
 | P1.1 | Search acquisition and persisted Jobinja discovery | Accepted |
 | P1.2 | Bounded pagination, multiple searches, repeat-safe discovery | Accepted |
-| P1.3 | Detail acquisition and immutable evidence | Operational core accepted; response classification remains |
-| P1.4 | Deterministic parser, multilingual handling, English projection | Parser + translation foundation live-accepted |
-| P1.5 | Posting identity, versions, deduplication, lifecycle | Semantic versions/observations implemented; lifecycle/reposts remain |
-| P1.6 | Evidence-backed local LLM semantic analysis | Not started |
-| P1.7 | Individual outputs, combined analysis, final `jobhunter run` | Not started |
+| P1.3 | Detail acquisition, immutable evidence, response classification | Classification/retry implementation pending live acceptance |
+| P1.4 | Deterministic parser, multilingual handling, English projection | Parser accepted; hardened translation v2 pending migration/live acceptance |
+| P1.5 | Posting identity, versions, lifecycle, triage/prioritization | Semantic versions accepted; lifecycle/triage implementation pending acceptance |
+| P1.6 | Evidence-backed local LLM semantic analysis | Implemented; pending deterministic + first reviewed live acceptance |
+| P1.7 | Individual/aggregate views and final `jobhunter run` | Partial: job analysis UI + first market view implemented |
 
-## 5. Accepted live foundation
+## 5. Previously accepted live foundation
 
-Current evidence includes:
+Before the current hardening/analysis increment, live evidence established:
 
-- repeat-safe discovery producing 79 unique jobs and one overlap;
-- identical rerun producing zero new logical jobs;
-- 15 structurally varied current Jobinja details;
-- 15/15 source versions clean under parser-v2 structural audit;
-- repeated unchanged detail checks reusing semantic versions;
-- durable successful/failed fetch observations;
-- refresh-due selection based on operational checks;
+- repeat-safe discovery and identical-rerun idempotency;
+- a later browser sync with 40/40 search requests, 273 unique postings, 241 new postings,
+  32 known postings, and zero search failures;
+- bounded detail acquisition with 10/10 selected details succeeding in that browser run;
+- 26/26 current parsed jobs structurally clean under parser-v2 audit at that point;
+- raw response evidence, semantic versions, and fetch observations remaining distinct;
 - data-driven Persian/English search profiles and packs;
-- local LM Studio translation with structured output;
-- idempotent translation-artifact reuse;
-- bounded recovery from a real output-truncation failure;
-- 15/15 current English artifacts;
-- 15-record current English JSONL export;
-- 103 deterministic tests passing at that translation acceptance point;
-- successful local browser-app launch against the real corpus;
-- browser rendering of discovered jobs with and without complete detail pages.
+- local LM Studio translation, artifact reuse, and bounded output-truncation recovery;
+- 15/15 English artifacts under translation v1 before a real field-association defect was
+  discovered on later translations;
+- local browser application, guided sync controls, Quick Add, concise operation summaries,
+  and missing-detail backlog acquisition functioning against the real corpus.
 
-## 6. Current interface increment — guided local web application
+The translation field-association defect is why v1 is now historical rather than trusted
+as the current downstream-analysis contract.
 
-### Goal
+## 6. Current hardening and intelligence increment
 
-Make the accepted acquisition/translation foundation usable as a normal local application
-without requiring the user to remember CLI commands or internal configuration terminology.
+### 6.1 Hardened English projection v2
 
-### Architecture
+`english-projection-v2` and `lm-studio-translation-v2` replace v1 as the current contract.
+V1 artifacts are preserved historically; they are not deleted or silently rewritten.
+
+The v2 path:
 
 ```text
-browser UI                    CLI
-     \                         /
-      shared JobHunter services
-                ↓
-             SQLite
-        + evidence files
+current parsed source version
+→ collect Persian/mixed semantic strings
+→ one semantic segment per LM Studio request
+→ content-derived response identity
+→ structured response validation
+→ deterministic source/English integrity audit
+→ persist v2 artifact only when clean
 ```
 
-The UI is server-rendered FastAPI/Jinja with packaged CSS/vanilla JavaScript. It introduces
-no separate frontend database, Node toolchain, or cloud service.
+This intentionally spends more local model calls to remove cross-field permutation risk.
+Current English export and P1.6 analysis accept only v2 projections.
 
-### Implemented browser capabilities
+### 6.2 Human triage and acquisition priority
+
+User workflow state is separate from employer/source truth:
 
 ```text
-Overview dashboard
-→ corpus counts and recent runs
-→ guided bounded sync form
-→ Light / Normal / Thorough visible-value presets
-→ inline explanations of every sync limit
-→ parser audit button
-→ translate-missing button
-→ English export button
+unreviewed
+interested
+review_later
+reviewed
+not_relevant
+```
+
+Jobs marked `not_relevant` remain in evidence/history but are excluded from automatic
+missing-detail priority selection.
+
+Priority is deterministic acquisition evidence, not career fit. It currently uses:
+
+- number of distinct searches finding the posting;
+- number/type of configured search packs finding it;
+- conservative title signals relevant to AI/ML/security/Python/platform work.
+
+### 6.3 Classified source checks and cautious lifecycle
+
+Jobinja acquisition now classifies important response conditions including:
+
+```text
+active
+rate_limited
+access_denied
+challenge
+auth_required
+not_found
+gone
+server_error
+network_error
+unexpected_page
+expired_explicit
+```
+
+Only transient network/429/5xx classes receive bounded automatic retry.
+
+Lifecycle transitions are deliberately conservative:
+
+- normal successful detail fetch -> `active`;
+- explicit employer/site expiry signal -> `expired`;
+- first 404/410 -> `possibly_unavailable`;
+- two consecutive 404/410 signals -> `removed`;
+- rate limits, access failures, challenges, server failures, and network failures do not
+  become destructive lifecycle conclusions.
+
+### 6.4 Search-effectiveness evidence
+
+The Search Plan screen now measures observed acquisition contribution:
+
+- distinct jobs per search;
+- distinct search/job/run matches;
+- runs in which the search participated;
+- unique contributions where a posting was found by only that search in the run.
+
+High overlap is not treated as failure automatically. Cross-domain roles may legitimately
+match several terms/packs. JobHunter reports the evidence but does not auto-prune the
+catalog.
+
+### 6.5 P1.6 evidence-backed semantic analysis
+
+P1.6 is now implemented as a separate derived artifact layer.
+
+Each analysis is tied to:
+
+```text
+source semantic version
++ current hardened English artifact
++ exact LM Studio model
++ prompt version
++ analysis schema version
+```
+
+The analysis schema currently supports:
+
+- role purpose;
+- responsibilities;
+- requirements;
+- requirement strength: required / preferred / contextual / inferred;
+- concept type: tool / skill / knowledge / practice / domain / experience / education / other;
+- confidence;
+- original source evidence excerpt;
+- rationale for inferred concepts.
+
+The original employer/source fields remain authoritative. The English v2 projection is a
+comprehension aid only.
+
+Every material claim must carry an evidence excerpt that JobHunter can locate in the
+original source fields. Invalid/hallucinated evidence prevents artifact acceptance.
+Raw structured-inference request and response payloads are retained with the analysis
+artifact for auditability.
+
+### 6.6 First market aggregation
+
+The Market screen aggregates only accepted current semantic-analysis artifacts and exposes:
+
+- analyzed sample size;
+- responsibility-claim count;
+- requirement-claim count;
+- posting-level concept demand;
+- required/preferred/contextual/inferred counts separately.
+
+This is not yet Phase 2 canonical taxonomy. Alias consolidation such as `Postgres` versus
+`PostgreSQL` remains future reviewed canonicalization.
+
+## 7. Browser workflow after this increment
+
+```text
+Overview
+→ run bounded market sync
+→ fetch priority missing details without re-running searches
+→ repair/build current English v2
+→ analyze a small ready batch
+→ inspect aggregate Market view
 
 Jobs
-→ local text/status filtering
-→ human-readable company/source-state presentation
-→ stable source code labelled as Jobinja reference
-→ Quick Add for one job URL, search URL, or Persian/English keyword
-→ bounded Quick Add page/detail controls
-→ optional translate-after-fetch
-→ discovered-but-unfetched state with Fetch details action
-→ original + English side-by-side detail
-→ evidence identity
-→ source-check timeline
-→ per-job source refresh
-→ per-job translation
+→ filter source / English / analysis / lifecycle / triage state
+→ bulk triage up to 50 jobs
+→ bulk fetch / translate / analyze with existing service bounds
+→ inspect one job's source, English v2, semantic analysis, discovery provenance,
+  lifecycle events, source checks, and evidence identity
 
 Search plan
-→ catalog version
-→ profiles/packs/terms
-→ current bounded generated search window
+→ inspect configured catalog + observed search effectiveness
 
-Operations
-→ one-worker mutable action queue
-→ live polling
-→ inspectable summaries/errors
-
-System
-→ storage paths
-→ LM Studio/provider/model state
-→ current acquisition/translation limits
+Market
+→ inspect aggregate requirements only from accepted current analyses
 ```
 
-### Quick Add behavior
+## 8. Acceptance order for the current increment
 
-Quick Add intentionally remains inside the Jobinja source boundary.
+Do not scale model work until each gate passes in order.
 
-```text
-Jobinja job URL
-→ validate/canonicalize
-→ upsert logical job
-→ fetch exact detail page
-→ preserve evidence
-→ parse/version/check
-→ optional translation
-
-Jobinja /jobs search URL
-→ validate/canonicalize
-→ bounded search-page acquisition
-→ discover current-run jobs
-→ fetch at most 0–20 details
-→ optional translation of successful detail fetches
-
-Persian/English phrase
-→ build canonical Jobinja keyword search
-→ same bounded search/discovery/detail path
-```
-
-Non-Jobinja URLs are rejected. Quick Add does not create an unrestricted crawler or mutate
-the saved bilingual catalog merely because a one-off phrase was used.
-
-### Guided sync controls
-
-The normal form explains the operational meaning of search breadth, request budget,
-missing-detail fetch limit, refresh limit, and refresh age.
-
-Presets are convenience-only and keep the actual values visible/editable:
-
-```text
-Light      12 searches / 12 requests / 3 missing / 2 refresh / 24h
-Normal     40          / 40          / 10        / 5         / 24h
-Thorough   80          / 80          / 20        / 10        / 72h
-```
-
-The backend remains authoritative for hard bounds; UI presets cannot bypass them.
-
-### Launcher
-
-```text
-jobhunter-app
-```
-
-opens the loopback browser application automatically. WSL prefers the Windows browser
-opener when available instead of dumping Linux `xdg-open` failures.
-
-Linux can install an application-menu entry with:
-
-```text
-jobhunter-app --install-desktop
-```
-
-The browser also receives an installable web-app manifest.
-
-### Safety requirements
-
-- loopback-only by default;
-- explicit override required for LAN binding;
-- CSRF token for every mutating form;
-- one mutable browser operation at a time;
-- restrictive CSP/frame/referrer/cache/content-type headers;
-- no remote/CDN assets;
-- browser actions call existing bounded/rate-limited services;
-- Quick Add rejects unapproved external-source URLs;
-- long UI operations never create a second hidden source lifecycle.
-
-### Deterministic acceptance
-
-The guided web increment must pass:
+### Deterministic gate
 
 1. Ruff.
 2. Full pytest suite.
-3. Primary page rendering against an empty DB.
-4. Packaged CSS/JS/manifest/icon availability.
-5. CSRF rejection.
-6. Operation queue execution/polling.
-7. Safe local filtering.
-8. Discovered-but-unfetched job rendering.
-9. Unknown-job 404 behavior.
-10. Quick Add job/search/keyword input classification.
-11. Pre-network rejection of non-Jobinja URLs.
-12. Human-readable company fallback and Jobinja-reference labels.
-13. Guided sync/preset UI presence.
+3. `pytest -W error`.
+4. Translation v1 -> v2 migration behavior.
+5. Translation field-permutation/integrity rejection tests.
+6. One-segment LM translation association tests.
+7. Source response classification/retry tests.
+8. Cautious lifecycle transition tests.
+9. Triage/priority tests.
+10. Evidence-validation analysis tests.
+11. Search-effectiveness/market aggregate tests.
+12. Browser rendering/action tests.
 
-### Live acceptance
+### Live translation gate
 
-Then confirm against the real local corpus:
+1. Repair one posting that previously showed field-association corruption.
+2. Confirm source and English scalar fields align correctly.
+3. Confirm the artifact identifies `lm-studio-translation-v2` and
+   `english-projection-v2`.
+4. Repair a second previously affected posting.
+5. Only then repair the wider parsed corpus in bounded batches.
 
-1. `jobhunter-app` opens/reuses the dashboard without browser-opener noise.
-2. Dashboard displays the current real counts.
-3. Guided sync explanations/presets render correctly.
-4. Jobs page presents companies and Jobinja references clearly.
-5. A known missing-detail posting shows a normal Fetch details state.
-6. Quick Add a harmless one-off keyword with one search page and a small detail limit.
-7. Confirm its discovered/fetched jobs appear immediately in the same Jobs catalog.
-8. Quick Add one direct public Jobinja job URL and confirm one logical job/detail result.
-9. Optional translation works only when deliberately selected.
-10. Parser audit and English export continue to work from buttons.
+### Live P1.6 gate
 
-Do not mark the new Quick Add/guided-controls increment live-accepted before these checks.
+1. Select one reviewed, current v2 job.
+2. Run per-job analysis.
+3. Inspect every extracted responsibility/requirement and its original-language evidence.
+4. Confirm required/preferred strength was not inflated.
+5. Confirm unsupported concepts were omitted/rejected.
+6. Then analyze a small batch (default 5), not the entire discovery corpus.
+7. Inspect the Market screen only after that reviewed sample is acceptable.
 
-## 7. Next source/lifecycle work after UI acceptance
+## 9. Remaining Phase 1 work after acceptance
 
-Complete remaining P1.3/P1.5 behavior:
+- broaden real fixtures for expired/challenge/access/rate-limit states;
+- preserve error-response evidence where useful and permitted;
+- expose last-successful source check and consecutive failure summaries more prominently;
+- add repost/near-duplicate classification when corpus evidence justifies it;
+- add reviewed translation golden-corpus benchmarks for model comparison;
+- add review/correction workflow for uncertain semantic claims if live P1.6 evidence shows
+  the need;
+- finish P1.7 combined reporting and final `jobhunter run` orchestration.
 
-- classify challenge/login/CAPTCHA/error/expired/inaccessible pages;
-- define cautious retry/backoff from classified failures;
-- expose last-successful-check and consecutive-failure summaries;
-- require multiple signals for destructive lifecycle transitions;
-- classify repost/duplicate content when corpus evidence justifies it.
-
-## 8. Then P1.6 — semantic local analysis
-
-P1.6 will transform accepted source/English representations into validated analytical
-records such as responsibilities, requirements, source-explicit versus inferred concepts,
-confidence, and evidence passages.
-
-English projection may be a model convenience, but material claims must remain traceable
-to original employer text.
-
-Translation quality should later receive a reviewed Persian→English golden corpus so
-provider/model changes can be compared rather than guessed.
-
-## 9. Later phases
+## 10. Later phases
 
 ### Phase 2
 
-Canonical career concepts, role archetypes, responsibility families, demand counts,
-co-occurrence, and market matrices.
+Reviewed canonical career concepts, aliases, role archetypes, responsibility families,
+demand matrices, and co-occurrence.
 
 ### Phase 3
 
-Depth-aware personal capability evidence and gap classes.
+Depth-aware personal capability evidence and gap classes. This remains deliberately
+unimplemented until a reviewed personal-evidence schema/record exists; JobHunter must not
+invent a personal capability profile from conversational assumptions.
 
 ### Phase 4
 
@@ -275,20 +288,18 @@ Evidence-backed career actions and application readiness.
 
 ### Phase 5
 
-Historical trends, backup/restore, regression quality, retention, performance, and sustained
-operation.
+Historical trends, backup/restore, regression quality, retention, performance, and
+sustained operation.
 
-## 10. Remaining non-claims
+## 11. Remaining non-claims
 
-The project must not yet claim completion of:
+Until the current increment is live-accepted, JobHunter must not claim:
 
-- full job lifecycle classification;
-- repost/duplicate resolution;
-- semantic responsibility extraction;
-- required/preferred qualification classification;
-- aggregate market conclusions;
-- personal relevance or capability gaps;
-- readiness scores;
-- career recommendations;
+- translation v2 quality across the full corpus;
+- complete source lifecycle/repost resolution;
+- production-quality semantic extraction across all role types;
+- canonical market taxonomy;
+- full-market conclusions from a small analyzed sample;
+- personal capability gaps, readiness scores, or career recommendations;
 - arbitrary-web Quick Add ingestion;
-- final P1.7 analysis/report automation.
+- final P1.7 end-to-end analysis/report automation.
