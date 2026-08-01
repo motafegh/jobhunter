@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import argparse
 import ipaddress
+import os
 import shutil
+import subprocess
 import sys
 import threading
-import webbrowser
 from pathlib import Path
 
 import httpx
@@ -47,6 +48,61 @@ def _is_loopback(host: str) -> bool:
         return ipaddress.ip_address(host).is_loopback
     except ValueError:
         return False
+
+
+def _is_wsl() -> bool:
+    if os.environ.get("WSL_INTEROP") or os.environ.get("WSL_DISTRO_NAME"):
+        return True
+    try:
+        release = Path("/proc/sys/kernel/osrelease").read_text().casefold()
+    except OSError:
+        return False
+    return "microsoft" in release or "wsl" in release
+
+
+def _run_opener(command: list[str]) -> bool:
+    try:
+        result = subprocess.run(
+            command,
+            check=False,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            timeout=3.0,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return result.returncode == 0
+
+
+def _open_browser(url: str) -> bool:
+    """Open the local UI without leaking platform-opener diagnostics to the terminal."""
+
+    if _is_wsl():
+        command = shutil.which("cmd.exe")
+        fallback = Path("/mnt/c/Windows/System32/cmd.exe")
+        if not command and fallback.exists():
+            command = str(fallback)
+        if command and _run_opener([command, "/c", "start", "", url]):
+            return True
+
+    if sys.platform == "darwin":
+        opener = shutil.which("open")
+        return bool(opener and _run_opener([opener, url]))
+
+    if sys.platform.startswith("win"):
+        command = shutil.which("cmd.exe") or "cmd.exe"
+        return _run_opener([command, "/c", "start", "", url])
+
+    opener = shutil.which("xdg-open")
+    return bool(opener and _run_opener([opener, url]))
+
+
+def _open_or_report(url: str) -> None:
+    if not _open_browser(url):
+        print(
+            f"Could not open a browser automatically. Open this address manually: {url}",
+            file=sys.stderr,
+        )
 
 
 def _desktop_quote(value: str) -> str:
@@ -140,11 +196,11 @@ def main(argv: list[str] | None = None) -> int:
     if _is_loopback(arguments.host) and _existing_jobhunter(url):
         print(f"JobHunter is already running: {url}")
         if not arguments.no_browser:
-            webbrowser.open(url)
+            _open_or_report(url)
         return 0
 
     if not arguments.no_browser:
-        threading.Timer(0.8, webbrowser.open, args=(url,)).start()
+        threading.Timer(0.8, _open_or_report, args=(url,)).start()
 
     print(f"JobHunter app: {url}")
     print("Press Ctrl+C to stop the local app server.")
