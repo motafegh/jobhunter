@@ -15,12 +15,12 @@
   <article class="metric-card accent">
     <span class="metric-label">Discovered jobs</span>
     <strong class="metric-value">{{ stats.discovered_jobs }}</strong>
-    <span class="metric-help">Unique Jobinja identities</span>
+    <span class="metric-help">Unique Jobinja opportunities known locally</span>
   </article>
   <article class="metric-card">
     <span class="metric-label">Complete details</span>
     <strong class="metric-value">{{ stats.detailed_jobs }}</strong>
-    <span class="metric-help">{{ stats.missing_details }} still missing</span>
+    <span class="metric-help">{{ stats.missing_details }} still need a detail-page fetch</span>
   </article>
   <article class="metric-card">
     <span class="metric-label">English corpus</span>
@@ -30,7 +30,7 @@
   <article class="metric-card">
     <span class="metric-label">Detail checks</span>
     <strong class="metric-value">{{ stats.detail_checks }}</strong>
-    <span class="metric-help">Operational observations retained</span>
+    <span class="metric-help">Source rechecks retained as operational history</span>
   </article>
 </section>
 
@@ -43,33 +43,58 @@
       </div>
       <span class="badge">Safe defaults</span>
     </div>
-    <p class="muted">Search configured bilingual terms, discover jobs, fetch a bounded detail batch, refresh due jobs, and audit the parser.</p>
-    <form class="form-grid" method="post" action="/actions/sync" data-operation-form>
+    <p class="muted">Search your configured bilingual market terms, discover opportunities, fetch a controlled number of missing details, recheck older jobs, and audit the parser.</p>
+
+    <div class="preset-row" aria-label="Sync presets">
+      <span class="field-help">Preset:</span>
+      <button class="preset-button" type="button" data-sync-preset="light">Light scan</button>
+      <button class="preset-button active" type="button" data-sync-preset="normal">Normal</button>
+      <button class="preset-button" type="button" data-sync-preset="thorough">Thorough</button>
+    </div>
+
+    <form class="form-grid guided-form" method="post" action="/actions/sync" data-operation-form data-sync-form>
       <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
       <label>
-        <span>Searches</span>
+        <span>Search terms to try</span>
         <input name="search_limit" type="number" min="1" max="500" value="{{ settings.jobinja_max_expanded_searches }}">
+        <small class="field-help">How many configured keyword searches enter this run. <strong>12</strong> is a quick cross-domain sample; <strong>40</strong> is the normal default.</small>
       </label>
       <label>
-        <span>Request budget</span>
+        <span>Search-page request limit</span>
         <input name="request_budget" type="number" min="1" max="500" value="{{ settings.jobinja_search_request_budget }}">
+        <small class="field-help">Hard ceiling on Jobinja search-page HTTP requests. With one page per term, keep this equal to the search count. Lower values stop safely earlier.</small>
       </label>
       <label>
-        <span>Missing details</span>
+        <span>New jobs to fully fetch</span>
         <input name="missing_limit" type="number" min="0" max="50" value="{{ settings.jobinja_sync_missing_limit }}">
+        <small class="field-help">From jobs whose detail page is still missing, fetch at most this many. <strong>5–10</strong> is normal; <strong>0</strong> means discovery only.</small>
       </label>
       <label>
-        <span>Refresh due</span>
+        <span>Old jobs to recheck</span>
         <input name="refresh_limit" type="number" min="0" max="50" value="{{ settings.jobinja_sync_refresh_limit }}">
+        <small class="field-help">Revisit up to this many already-acquired jobs that are old enough. <strong>5</strong> is a conservative normal run; <strong>0</strong> skips rechecks.</small>
       </label>
       <label>
-        <span>Refresh age (hours)</span>
-        <input name="refresh_after_hours" type="number" min="0.1" step="0.1" value="{{ settings.jobinja_refresh_after_hours }}">
+        <span>Recheck after</span>
+        <div class="input-with-suffix">
+          <input name="refresh_after_hours" type="number" min="0.1" step="0.1" value="{{ settings.jobinja_refresh_after_hours }}">
+          <span>hours</span>
+        </div>
+        <small class="field-help"><strong>24 hours</strong> means a job becomes eligible for recheck one day after its last check. Use 72–168 for less frequent refreshes.</small>
       </label>
       <div class="form-action">
-        <button class="button primary" type="submit">Run sync</button>
+        <button class="button primary" type="submit">Run market sync</button>
       </div>
     </form>
+
+    <details class="guide-box">
+      <summary>How these limits work together</summary>
+      <div class="guide-content">
+        <p><strong>Search terms</strong> controls breadth. <strong>Request limit</strong> is the network safety brake. <strong>New jobs</strong> and <strong>old jobs</strong> control the more expensive full detail-page checks.</p>
+        <p>JobHunter never fetches more than <strong>50 total detail pages</strong> in one sync, so “New jobs to fully fetch” + “Old jobs to recheck” must stay at or below 50.</p>
+        <p>The defaults are intentionally conservative. Increasing the numbers does not improve data quality by itself—it mainly increases coverage, runtime, stored evidence, and requests to Jobinja.</p>
+      </div>
+    </details>
   </section>
 
   <section class="panel">
