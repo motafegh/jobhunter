@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import secrets
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
 
@@ -17,8 +18,12 @@ from jobhunter.job_audit import JobDetailAuditor, format_job_audit
 from jobhunter.job_catalog import JobCatalog
 from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.jobinja_batch import JobinjaBatchFetchService, format_batch_fetch_summary
-from jobhunter.jobinja_detail_service import JobinjaDetailService, JobNotFoundError
-from jobhunter.jobinja_discovery import DiscoverySearch, JobinjaDiscoveryService
+from jobhunter.jobinja_detail_service import JobinjaDetailService
+from jobhunter.jobinja_discovery import (
+    DiscoverySearch,
+    JobinjaDiscoveryService,
+    format_discovery_summary,
+)
 from jobhunter.jobinja_sync import JobinjaSyncService, format_sync_summary
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
@@ -28,6 +33,7 @@ from jobhunter.translation_service import TranslationService, format_translation
 from jobhunter.translation_store import TranslationStore
 from jobhunter.web.operations import OperationBusyError, WebOperationManager
 from jobhunter.web.queries import WebRepository
+from jobhunter.web.quick_add import parse_quick_add_input
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
@@ -153,6 +159,18 @@ def _template_context(request: Request, **extra):
     return context
 
 
+def _translation_output(
+    settings: Settings,
+    job_ids: tuple[str, ...],
+    *,
+    requested: bool,
+) -> str:
+    if not requested or not job_ids:
+        return ""
+    summary = _translation_service(settings).run(source_job_ids=job_ids)
+    return "\n\n" + format_translation_batch_summary(summary)
+
+
 def create_app(
     settings: Settings,
     *,
@@ -228,17 +246,18 @@ def create_app(
                 detail=detail,
                 translation=translation,
                 lifecycle=lifecycle,
+                translation_enabled=settings.translation_enabled,
             ),
         )
 
     @app.get("/jobs/{source_job_id}", response_class=HTMLResponse)
     def job_detail(request: Request, source_job_id: str):
-        detail = None
-        error = None
-        try:
-            detail = _detail_service(settings).show(source_job_id)
-        except JobNotFoundError as exc:
-            error = str(exc)
+        store = JobHunterStore(settings.database_path)
+        store.initialize()
+        posting = store.get_job(source_job_id)
+        if posting is None:
+            raise HTTPException(status_code=404, detail="Job not found in the local catalog")
+        detail = store.get_latest_job_detail(source_job_id)
         translation = TranslationStore(settings.database_path).latest_artifact(source_job_id)
         observations = _observation_store(settings).list_for_job(source_job_id, limit=20)
         audit = JobDetailAuditor(settings.database_path).audit(
@@ -252,11 +271,11 @@ def create_app(
                 request,
                 page="jobs",
                 source_job_id=source_job_id,
+                posting=posting,
                 detail=detail,
                 translation=translation,
                 observations=observations,
                 audit=audit,
-                error=error,
                 translation_enabled=settings.translation_enabled,
             ),
         )
@@ -385,6 +404,84 @@ def create_app(
             return output
 
         return _start_operation(request, "Jobinja sync", action)
+
+    @app.post("/actions/quick-add")
+    def start_quick_add(
+        request: Request,
+        csrf_token: Annotated[str, Form()],
+        value: Annotated[str, Form()],
+        pages: Annotated[int, Form()],
+        detail_limit: Annotated[int, Form()],
+        translate_after: Annotated[bool, Form()] = False,
+    ):
+        _csrf(request, csrf_token)
+        if not 1 <= pages <= 3:
+            raise HTTPException(status_code=400, detail="Quick Add pages must be 1-3")
+        if not 0 <= detail_limit <= 20:
+            raise HTTPException(status_code=400, detail="Quick Add detail limit must be 0-20")
+        if translate_after and not settings.translation_enabled:
+            raise HTTPException(status_code=400, detail="Translation is disabled")
+        try:
+            target = parse_quick_add_input(value)
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+        def action() -> str:
+            if target.kind == "job":
+                assert target.job is not None
+                store = JobHunterStore(settings.database_path)
+                store.initialize()
+                upserted = store.upsert_job(job=target.job, observed_at=datetime.now(UTC))
+                detail_summary = _batch_service(settings).run((target.job.source_job_id,))
+                successful_ids = tuple(item.source_job_id for item in detail_summary.results)
+                state = "new local job" if upserted.is_new else "already known locally"
+                output = "\n".join(
+                    [
+                        "Quick Add — direct Jobinja job",
+                        f"Jobinja reference: {target.job.source_job_id}",
+                        f"Catalog state: {state}",
+                        "",
+                        format_batch_fetch_summary(detail_summary),
+                    ]
+                )
+                return output + _translation_output(
+                    settings,
+                    successful_ids,
+                    requested=translate_after,
+                )
+
+            assert target.search_url is not None
+            search = DiscoverySearch(
+                name=target.search_name(),
+                url=target.search_url,
+                max_pages=pages,
+            )
+            discovery = _discovery_service(settings, request_budget=pages).run((search,))
+            selected_ids = discovery.discovered_job_ids[:detail_limit]
+            output = "\n".join(
+                [
+                    f"Quick Add — {target.kind}",
+                    f"Input: {target.display_value}",
+                    "",
+                    format_discovery_summary(discovery),
+                ]
+            )
+            if not selected_ids:
+                return output + "\n\nNo detail pages selected."
+
+            detail_summary = _batch_service(settings).run(selected_ids)
+            successful_ids = tuple(item.source_job_id for item in detail_summary.results)
+            output += "\n\n" + format_batch_fetch_summary(detail_summary)
+            return output + _translation_output(
+                settings,
+                successful_ids,
+                requested=translate_after,
+            )
+
+        label = target.display_value
+        if len(label) > 54:
+            label = label[:51] + "..."
+        return _start_operation(request, f"Quick Add: {label}", action)
 
     @app.post("/actions/audit")
     def start_audit(request: Request, csrf_token: Annotated[str, Form()]):
