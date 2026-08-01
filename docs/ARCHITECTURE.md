@@ -34,7 +34,8 @@ friction.
 15. Treat acquired content as untrusted data, never executable instruction.
 16. Bound pages, requests, detail batches, retries, translation batches, and model calls.
 17. Make configuration and policy visible rather than scattering constants.
-18. Add complexity only when an observed product need justifies it.
+18. Keep local-first providers as the normal path when they satisfy the product need.
+19. Add complexity only when an observed product need justifies it.
 
 ## 3. Current acquisition and translation flow
 
@@ -72,6 +73,8 @@ deterministic structural parser audit
 optional English-projection queue
                 ↓
 source-identity or configured TranslationProvider
+        ├─ LM Studio local structured translation (default)
+        └─ Google Cloud Translation (optional external provider)
                 ↓
 versioned JobTranslationArtifact
                 ↓
@@ -94,7 +97,7 @@ pending-analysis selection
         ↓
 versioned local-model prompt and schema
         ↓
-LM Studio provider boundary
+LM Studio analysis provider boundary
         ↓
 raw request and response evidence
         ↓
@@ -132,6 +135,7 @@ jobhunter jobs checks <job-id>
 jobhunter jobs audit
 
 jobhunter translations status
+jobhunter translations models
 jobhunter translations run
 jobhunter translations show <job-id>
 jobhunter translations export
@@ -148,7 +152,7 @@ Pydantic models.
 Configuration covers:
 
 - local data, evidence, and SQLite paths;
-- LM Studio provider settings;
+- LM Studio server, analysis model, and optional API token;
 - Jobinja HTTP controls;
 - raw Jobinja search URLs;
 - data-driven bilingual search profiles and packs;
@@ -157,8 +161,9 @@ Configuration covers:
 - search/page/request budgets;
 - sync missing/refresh limits;
 - translation enablement and auto-after-sync policy;
-- translation provider/model, timeout, retries, and batch size;
-- Google Cloud Translation API key through configuration/environment;
+- translation provider, timeout, retries, and batch size;
+- optional dedicated LM Studio translation model and request bounds;
+- optional Google Cloud Translation API key/model;
 - logging level.
 
 Unknown fields are rejected.
@@ -277,10 +282,30 @@ provider model
 translate ordered text batch
 ```
 
-`translation/google_cloud.py` implements the official Google Cloud Translation
-Basic v2 REST provider.
+Current implementations:
+
+```text
+translation/lm_studio.py
+  local-first structured translation through LM Studio
+
+translation/google_cloud.py
+  optional external Google Cloud Translation Basic v2 provider
+```
 
 Provider concerns stay outside parsing and persistence logic.
+
+The LM Studio provider uses `/v1/models` and `/v1/chat/completions` with JSON-schema
+structured output. It validates exact item count/IDs and rejects malformed output.
+Its provider contract is versioned as `lm-studio-translation-v1` so a material prompt
+policy change creates distinct derived artifacts.
+
+Model selection priority is:
+
+```text
+translation_lm_studio_model
+→ lm_studio_model
+→ automatic only when exactly one model is visible
+```
 
 ### 5.12 English projection
 
@@ -312,13 +337,13 @@ Artifact identity includes:
 ```text
 source detail-version ID
 + target language
-+ provider
++ provider contract
 + provider model
 + translation schema version
 ```
 
-Therefore a translator/model/schema change creates a new derived artifact, not a
-new employer-content version.
+Therefore a translator/model/schema/prompt-contract change creates a new derived
+artifact, not a new employer-content version.
 
 Attempts retain `completed`, `failed`, or `reused` outcomes.
 
@@ -337,7 +362,7 @@ Attempts retain `completed`, `failed`, or `reused` outcomes.
 ### 5.15 English corpus export
 
 `translation_export.py` writes UTF-8 JSON Lines containing only English artifacts
-for each job's **latest semantic source version**.
+for each job's **latest successfully parsed semantic source version**.
 
 Each record includes source-version identity, provider/model/schema metadata,
 segment provenance, structured English fields, and the complete English document.
@@ -347,7 +372,7 @@ Stale translations of older source versions are deliberately excluded.
 ### 5.16 Structural audit
 
 `job_audit.py` checks source parser structure only. Translation quality is a
-separate future evaluation problem and must not be conflated with parser quality.
+separate evaluation problem and must not be conflated with parser quality.
 
 ### 5.17 Acquisition sync
 
@@ -361,16 +386,23 @@ translation_enabled = true
 translation_auto_after_sync = true
 ```
 
-This external translation step remains independently visible and can fail without
-invalidating acquired source evidence.
+With the default `lm-studio` provider, that step remains local. Translation may
+fail independently without invalidating acquired source evidence.
 
-### 5.18 LM Studio inference boundary
+### 5.18 LM Studio analysis boundary
 
-LM Studio remains behind `inference/`. P1.6 will add versioned analysis schemas,
-prompt evidence, raw responses, validation, and review states.
+The P1.6 analysis provider remains behind `inference/` and is logically separate
+from translation even when both use the same LM Studio server.
 
-Translation does not replace LM Studio analysis; it prepares a normalized English
-view that P1.6 may consume.
+This separation allows:
+
+- a dedicated translation model and a different analysis model;
+- independent prompt/schema versioning;
+- independent failure/retry policies;
+- translation quality evaluation without coupling to career-analysis quality.
+
+P1.6 will add versioned analysis schemas, prompt evidence, raw responses,
+validation, and review states.
 
 ## 6. SQLite record model
 
@@ -441,6 +473,7 @@ src/jobhunter/
     __init__.py
     base.py
     google_cloud.py
+    lm_studio.py
     projection.py
 ```
 
@@ -458,15 +491,17 @@ Deterministic tests cover:
 - parser regressions;
 - semantic versions;
 - fetch observations and refresh scheduling;
-- Google translation request shape, header authentication, and 128-item chunking;
+- LM Studio structured translation request/response validation;
+- LM Studio exact-one-model auto-selection and ambiguous-model refusal;
+- Google translation request shape/header authentication/chunking;
 - mixed-language English projection and segment provenance;
 - native-English zero-provider behavior;
 - translation artifact reuse;
 - new-source-version translation invalidation;
 - current-version-only English JSONL export;
-- CLI privacy/configuration gates.
+- provider-aware CLI configuration gates.
 
-Live external acceptance remains explicit after deterministic tests pass.
+Live acceptance remains explicit after deterministic tests pass.
 
 ## 9. Security and privacy boundaries
 
@@ -476,19 +511,20 @@ Live external acceptance remains explicit after deterministic tests pass.
 - Bound source requests and detail batches.
 - Treat source text as untrusted data.
 - Keep runtime data and secrets out of Git.
-- Keep Google translation disabled by default.
-- When Google translation is enabled, parsed source text is intentionally sent to
-  Google Cloud and this must remain explicit in configuration/operation.
-- Store the Google API key only in local configuration/environment; prefer a
-  restricted environment-provided key.
-- Never treat a translation as stronger evidence than the original employer text.
+- Prefer local LM Studio translation by default.
+- A loopback LM Studio server keeps translation text on the local machine boundary.
+- If LM Studio is exposed to another host/interface, that network boundary must be
+  treated as deliberate deployment configuration.
+- Google translation is optional and explicitly external; when enabled, parsed source
+  text is intentionally sent to Google Cloud.
+- Never treat a translation as stronger evidence than original employer text.
 
 ## 10. Current stop line
 
-The system can now configure data-driven bilingual searches, discover jobs
+The system can configure data-driven bilingual searches, discover jobs
 repeat-safely, preserve evidence, fetch and version deterministic source details,
 retain check history, audit parser structure, and optionally create/export a
-versioned English corpus.
+versioned English corpus through local LM Studio or Google Cloud.
 
 It must not yet infer or claim:
 
