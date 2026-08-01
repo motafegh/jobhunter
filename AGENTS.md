@@ -5,12 +5,9 @@ this repository.
 
 ## 1. Product priority
 
-JobHunter is a real personal utility intended for repeated local use. It is not
-primarily a learning exercise.
-
-Prefer a smaller dependable implementation over an impressive but unreliable
-one. Speed means completing coherent useful increments, not bypassing evidence,
-limits, tests, or explicit state.
+JobHunter is a real personal utility for repeated local use. Prefer dependable,
+inspectable behavior over impressive complexity. Speed means coherent useful
+increments, not bypassing evidence, bounds, tests, or state.
 
 ## 2. Required reading order
 
@@ -20,65 +17,48 @@ Before material changes, read:
 2. `docs/PRODUCT_SPECIFICATION.md`
 3. `docs/ARCHITECTURE.md`
 4. `docs/SEARCH_CONFIGURATION.md`
-5. `docs/ACQUISITION_OPERATIONS.md`
-6. `docs/DOMAIN_AND_ANALYSIS_MODEL.md`
-7. `docs/SOURCE_POLICY.md`
-8. `docs/IMPLEMENTATION_PLAN.md`
-9. `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
+5. `docs/TRANSLATION_AND_ENGLISH_CORPUS.md`
+6. `docs/ACQUISITION_OPERATIONS.md`
+7. `docs/DOMAIN_AND_ANALYSIS_MODEL.md`
+8. `docs/SOURCE_POLICY.md`
+9. `docs/IMPLEMENTATION_PLAN.md`
+10. `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
 
-The product specification controls intended behavior. Architecture controls
-technical boundaries. The implementation and Phase 1 plans control sequencing
-and acceptance.
+## 3. Accepted source state
 
-## 3. Accepted state
-
-Accepted on `main`:
+Accepted on `main` before the current translation acceptance:
 
 - M0 local foundation;
-- P1.1 discovery foundation;
-- P1.2 bounded pagination, multiple searches, overlap handling, and repeat-safe
-  discovery;
-- explicit, missing-only, and refresh-due detail acquisition;
-- immutable raw search and detail evidence;
+- P1.1 discovery;
+- P1.2 bounded repeat-safe multi-search discovery;
+- explicit/missing/refresh-due detail acquisition;
+- immutable raw search/detail evidence;
 - parser-v2 deterministic Jobinja extraction;
-- semantic versions independent from volatile HTML;
-- successful and failed fetch observations;
-- local job, check-history, and structural audit commands.
+- semantic source versions independent from volatile HTML;
+- successful/failed fetch observations;
+- local job/check-history/parser-audit commands.
 
-Live validation includes:
+Live source validation includes 79 unique discovered jobs, one overlap, zero new
+jobs on identical rerun, fifteen varied complete advertisements, fifteen of
+fifteen structurally clean parser versions, and unchanged refresh checks without
+false semantic versions.
 
-- 79 unique jobs across two two-page searches;
-- one cross-search overlap;
-- zero new jobs on the identical rerun;
-- fifteen complete varied advertisements;
-- fifteen of fifteen latest versions structurally clean;
-- unchanged checks producing observations without false versions.
+## 4. Current authorized increment
 
-## 4. Current authorized implementation
-
-The active increment is **configurable bilingual acquisition planning and
-acquisition-only synchronization**:
+Current acceptance target combines:
 
 ```text
-built-in profiles and packs
-+ custom Persian/English groups
-+ optional raw Jobinja URLs
-→ normalized term and URL deduplication
-→ inspectable search plan
-→ search limit, cyclic offset, pages, and global request budget
-→ repeat-safe discovery
-→ bounded missing and refresh-due details
-→ immutable evidence
-→ deterministic parsing and semantic versioning
-→ fetch observations
-→ structural audit
-→ acquisition sync summary
+data-driven bilingual search catalog
+→ bounded search planning/acquisition
+→ deterministic source semantic versions
+→ optional derived English projection
+→ current English corpus export
 ```
 
 Active commands:
 
 ```text
-jobhunter jobinja catalog
+jobhunter jobinja catalog [--show-terms]
 jobhunter jobinja plan
 jobhunter jobinja discover
 jobhunter jobinja sync
@@ -87,38 +67,38 @@ jobhunter jobs list
 jobhunter jobs show
 jobhunter jobs checks
 jobhunter jobs audit
+jobhunter translations status
+jobhunter translations run
+jobhunter translations show
+jobhunter translations export
 ```
 
-## 5. Search-registry rules
+## 5. Search-catalog rules
 
-- Keep built-in profile and pack identifiers stable.
-- Add a term to the narrowest relevant pack.
-- Include Persian and English forms when both appear in real listings.
-- Preserve the original display term.
-- Normalize only for identity, deduplication, and exclusions.
-- Keep custom groups and exclusions configuration-driven.
-- Keep raw URLs for Jobinja-owned filters that keyword generation cannot express.
-- Inspect plans before live acquisition.
-- Do not equate search vocabulary with accepted career taxonomy or relevance.
-- Do not optimize for term count alone; evaluate discovered-job usefulness and
-  noise.
-
-One-run CLI selectors must not silently mix configured searches. Search and URL
-identity must be deduplicated before acquisition.
+- Search words live in TOML data, not Python tuples/constants.
+- Pack/profile identifiers should remain stable once published.
+- A complete catalog may be replaced through `jobinja_search_catalog_path`.
+- Use small custom groups for personal additions that do not justify a full
+  replacement catalog.
+- Preserve original display terms.
+- Normalize only for search identity/deduplication/exclusion.
+- Keep Persian and English forms when real listings use both.
+- Interleave selected packs round-robin for bounded cross-domain coverage.
+- Raw URLs remain the escape hatch for Jobinja-owned filters.
+- Search vocabulary is not a career taxonomy and does not prove relevance.
 
 ## 6. Acquisition bounds
 
-- Search requests are sequential and use the configured delay.
+- Jobinja requests remain sequential with configured delay.
 - Discovery enforces a global request budget internally.
-- Budget exhaustion must send no additional request.
-- Budget exhaustion is `request_budget_reached`, not a failure.
+- Budget exhaustion sends no extra request and is not a failure.
 - Detail batches contain at most 50 unique jobs.
-- Acquisition sync missing plus refresh limits may not exceed 50.
+- Sync missing + refresh limits may not exceed 50.
 - Raw evidence is written before parsing.
-- One search or job failure must not discard successful work.
-- Acquisition remains independent from LM Studio.
+- One search/job failure must not discard successful work.
+- Source acquisition remains independent from LM Studio and translation.
 
-## 7. Record boundaries
+## 7. Source and derived record boundaries
 
 Never conflate:
 
@@ -127,113 +107,136 @@ JobPosting
   logical source identity
 
 SearchPageSnapshot
-  one exact search-page response
+  one exact search response
 
 JobPostingVersion
-  meaningful deterministic content history
+  meaningful employer-content history
 
 JobDetailFetchObservation
-  one successful or failed detail-page check
+  operational source checks
+
+JobTranslationArtifact
+  derived English view of one exact source version
+
+JobTranslationAttempt
+  operational translation history
 
 Raw evidence
-  exact response bytes and metadata
+  exact source bytes and metadata
 ```
 
-Repeated unchanged checks create observations and raw snapshots, not false
-semantic versions.
+A translator/model/schema change does not create a new source semantic version.
 
-## 8. Parser and audit boundaries
+## 8. Translation rules
 
-The parser extracts explicit source fields and complete source text. It must not
+- Translation is optional and disabled by default.
+- Google Cloud translation is an explicit external-data boundary.
+- Never put Google API keys in source code, committed config, artifacts, exports,
+  or logs.
+- Native-English source strings pass through without provider calls.
+- Persian-containing strings are translated through the provider; do not maintain
+  an ad hoc hard-coded translation dictionary.
+- Mixed Persian/English strings are translated as semantic units.
+- Preserve per-string-path `native` versus `translated` provenance.
+- Artifact identity includes source version, target language, provider, model,
+  and translation schema version.
+- Repeated identical work must reuse the existing artifact.
+- A translation of an older source semantic version is historical, not current.
+- Translation failure must not alter source evidence/versions.
+- English corpus export contains only artifacts for current source versions.
+- Translation quality review is separate from parser structural audit.
+
+## 9. Evidence hierarchy
+
+For employer meaning:
+
+```text
+original source text       authoritative
+translated English text    derived convenience
+LLM interpretation         model-derived
+```
+
+P1.6 may consume translated English text, but every material claim must retain a
+path to original employer text. Never strengthen/weaken employer intent merely
+because a translation does so.
+
+## 10. Parser and audit boundaries
+
+The parser extracts source-explicit fields and complete source text. It does not
 infer employer intent.
 
-The deterministic audit may detect shape, contamination, parser-version, and
-coverage problems. A clean audit does not prove semantic interpretation.
-Missing optional fields alone are not parser failures.
+A clean structural audit does not prove translation quality or semantic
+interpretation. Missing optional source fields alone are not parser failures.
 
-No active acquisition increment may infer:
-
-- role purpose;
-- responsibilities;
-- required versus preferred qualifications;
-- description-derived skills;
-- personal relevance;
-- capability gaps;
-- application readiness;
-- career recommendations;
-- aggregate market conclusions.
-
-Those belong to P1.6 and later.
-
-## 9. Development rules
+## 11. Development rules
 
 - Build complete vertical increments with explicit acceptance criteria.
-- Keep deterministic logic separate from network and model calls.
-- Keep CLI handlers focused on composition and argument validation.
-- Keep direct SQL behind focused repository boundaries.
+- Keep deterministic logic separate from network/model/provider calls.
+- Keep CLI focused on composition/validation.
+- Keep SQL behind focused repository boundaries.
 - Treat acquired content as untrusted data.
-- Keep LM Studio behind the inference-provider interface.
+- Keep LM Studio behind inference interfaces and translation behind translation
+  interfaces.
 - Use typed configuration and versioned schemas.
-- Prefer explicit failure and review states over fabricated defaults.
-- Keep runtime data, local configuration, model artifacts, and personal evidence
+- Prefer explicit failure/review states over guesses.
+- Keep runtime data, config, secrets, exports, personal evidence, and model files
   out of Git.
-- Add deterministic tests for every new normalization, selection, persistence,
-  or orchestration rule.
-- Normal tests must not require Jobinja or LM Studio.
-- Avoid speculative modules and dependencies.
+- Add deterministic tests for normalization, selection, persistence, translation,
+  export, and orchestration.
+- Normal tests must not contact Jobinja, Google Cloud, or LM Studio.
+- Avoid dependencies/abstractions without a current use.
 
-## 10. Source acquisition discipline
+## 12. Source acquisition discipline
 
-Use public Jobinja pages only. Preserve attribution and canonical URLs. Validate
-redirect hosts and paths. Enforce timeouts, delays, limits, response sizes, and
-content types.
+Use public Jobinja pages only. Preserve attribution/canonical URLs. Validate
+redirects. Enforce timeouts, delays, page/request/response/batch bounds.
 
-Do not implement:
+Do not implement login automation, CAPTCHA/access-control bypass, proxy rotation,
+authenticated scraping, unrestricted crawling, or automatic applications.
 
-- login automation;
-- CAPTCHA or access-control bypass;
-- proxy rotation or stealth crawling;
-- authenticated-platform scraping;
-- unrestricted crawling;
-- automatic applications.
+## 13. External translation discipline
 
-## 11. LLM extraction discipline
+When Google translation is enabled:
+
+- send only parsed job-advertisement text required for English projection;
+- do not send personal capability/profile data through this pipeline;
+- use bounded provider retries/batches;
+- retain provider/model/schema metadata;
+- retain failed attempts without corrupting source data;
+- recommend API-key restriction/quota controls;
+- do not silently enable translation for existing installations.
+
+## 14. LLM extraction discipline
 
 When P1.6 begins:
 
-- require versioned prompts and schemas;
-- validate output locally;
-- retain request, raw response, model identity, parameters, and timing;
-- require source evidence for material claims;
-- distinguish explicit content from inference;
+- require versioned prompts/schemas;
+- validate structured output locally;
+- retain request/raw response/model/parameters/timing;
+- require original-source evidence for material claims;
+- distinguish source-explicit, translation-derived, and model-inferred content;
 - measure quality on a reviewed real-job corpus;
-- never grant the model shell, filesystem, browser, or unrestricted network
-  tools.
+- never grant the model shell/filesystem/browser/unrestricted network tools.
 
-## 12. Change discipline
+## 15. Change discipline
 
-A material change must state:
+A material change states milestone requirement, changed files, behavior,
+deterministic tests, live acceptance required, and remaining exclusions.
 
-- the milestone requirement it implements;
-- files changed;
-- behavior added or corrected;
-- deterministic tests;
-- live acceptance required;
-- remaining scope exclusions.
+Update existing controlling docs for material product/architecture changes instead
+of creating unnecessary governance files.
 
-Update controlling documents when product or architecture decisions change. Do
-not create governance documents for trivial edits.
-
-## 13. Definition of done
+## 16. Definition of done
 
 An increment is done only when:
 
-- the intended workflow functions locally;
-- tests and Ruff pass;
+- intended workflow functions locally;
+- Ruff and tests pass;
 - acceptance criteria are met;
-- failures are understandable and inspectable;
-- configuration and operation are reproducible;
-- documentation matches actual behavior;
+- failures are inspectable;
+- configuration/operation are reproducible;
+- docs match behavior;
+- privacy/external-data boundaries are explicit;
 - no unrelated future scope is claimed.
 
-Work directly on `main` unless a later change creates a concrete isolation need.
+Work directly on `main` unless a concrete isolation need appears.
