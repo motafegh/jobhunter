@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Market · JobHunter{% endblock %}
+{% block heading %}Market intelligence{% endblock %}
+{% block eyebrow %}Aggregates from accepted current analysis artifacts{% endblock %}
+
+{% block content %}
+<section class="metric-grid three">
+  <article class="metric-card accent"><span class="metric-label">Analyzed jobs</span><strong class="metric-value">{{ market.analyzed_jobs }}</strong><span class="metric-help">Current source versions with evidence-validated semantic analysis</span></article>
+  <article class="metric-card"><span class="metric-label">Responsibilities</span><strong class="metric-value">{{ market.responsibility_claims }}</strong><span class="metric-help">Evidence-backed responsibility claims</span></article>
+  <article class="metric-card"><span class="metric-label">Requirements</span><strong class="metric-value">{{ market.requirement_claims }}</strong><span class="metric-help">Required, preferred, contextual and inferred claims remain separate</span></article>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Requirement demand</p><h2>Observed concepts</h2></div><span class="badge">N = {{ market.analyzed_jobs }} jobs</span></div>
+  {% if market.analyzed_jobs == 0 %}
+    <div class="empty-state tall">No accepted semantic analysis exists yet. Repair English v2 artifacts, analyze a small reviewed batch, then this page will aggregate only those current analysis records.</div>
+  {% elif market.requirements %}
+    <p class="muted">Counts are posting-level observations from the current analyzed sample. They are not yet a canonical taxonomy: spelling/alias consolidation belongs to Phase 2.</p>
+    <div class="table-wrap"><table><thead><tr><th>Concept</th><th>Jobs</th><th>Required</th><th>Preferred</th><th>Contextual</th><th>Inferred</th></tr></thead><tbody>{% for item in market.requirements %}<tr><td><strong>{{ item.concept }}</strong></td><td>{{ item.jobs }}</td><td>{{ item.required }}</td><td>{{ item.preferred }}</td><td>{{ item.contextual }}</td><td>{{ item.inferred }}</td></tr>{% endfor %}</tbody></table></div>
+  {% else %}<div class="empty-state">Analyzed jobs currently contain no accepted requirement claims.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Interpretation boundary</p><h2>What these numbers mean</h2></div></div>
+  <div class="guide-content"><p>Every contributing semantic claim passed an evidence check against original employer/source text. The English projection can help the model understand Persian content, but it is not accepted as the evidence authority.</p><p>This is the first market layer, not the final Phase 2 taxonomy. Similar concepts such as “PostgreSQL” and “Postgres” may still appear separately until canonicalization is built and reviewed.</p><p>Do not interpret percentages or absence from a small analyzed sample as full-market truth. Sample size is displayed deliberately.</p></div>
+</section>
+{% endblock %}
