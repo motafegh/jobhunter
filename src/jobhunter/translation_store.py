@@ -112,7 +112,10 @@ class TranslationStore:
                 """
             )
 
-    def latest_source_version(self, source_job_id: str) -> TranslationSourceVersion | None:
+    def latest_source_version(
+        self,
+        source_job_id: str,
+    ) -> TranslationSourceVersion | None:
         self.initialize()
         with self._connect() as connection:
             row = connection.execute(
@@ -141,7 +144,11 @@ class TranslationStore:
             fields=fields,
         )
 
-    def latest_source_versions(self, *, limit: int = 500) -> tuple[TranslationSourceVersion, ...]:
+    def latest_source_versions(
+        self,
+        *,
+        limit: int = 500,
+    ) -> tuple[TranslationSourceVersion, ...]:
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
         self.initialize()
@@ -222,7 +229,7 @@ class TranslationStore:
         *,
         target_language: str = "en",
     ) -> TranslationArtifact | None:
-        """Return an English artifact only when it belongs to the latest source version."""
+        """Return an artifact only when it belongs to the latest source version."""
 
         self.initialize()
         with self._connect() as connection:
@@ -253,7 +260,7 @@ class TranslationStore:
         target_language: str = "en",
         limit: int = 500,
     ) -> tuple[TranslationArtifact, ...]:
-        """Return one current English artifact per job; stale source versions are excluded."""
+        """Return current artifacts only; stale source versions are excluded."""
 
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
