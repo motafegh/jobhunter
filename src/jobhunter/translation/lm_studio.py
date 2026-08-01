@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from typing import Any
@@ -10,24 +11,26 @@ import httpx
 
 from jobhunter.translation.base import TranslationBatchResult, TranslationError
 
-_PROVIDER_NAME = "lm-studio-translation-v1"
-_MAX_TEXTS_PER_REQUEST = 32
+_PROVIDER_NAME = "lm-studio-translation-v2"
+_MAX_TEXTS_PER_REQUEST = 8
 _DEFAULT_CHARACTER_TARGET = 6_000
 _DEFAULT_MAX_TOKENS = 4_096
 _MAX_RECOVERY_TOKENS = 32_768
+_LONG_TEXT_THRESHOLD = 700
 
 _SYSTEM_PROMPT = """You are JobHunter's translation engine.
 Translate each supplied Persian or mixed Persian-English job-ad segment into precise,
 natural English.
 
 Rules:
+- Every input has an opaque content-derived id. Return the translation under the exact same id.
+- Never move a translation to another id.
 - Preserve meaning, factual strength, modality, uncertainty, negation, numbers, dates,
   names, product names, acronyms, and technical terminology.
-- Do not strengthen weak requirements. For example, familiarity must not become
-  proficiency, and preferred must not become required.
-- Preserve standard English technical tokens such as Python, Docker, Kubernetes,
-  RAG, LLM, NLP, MLOps, SIEM, SOC, GitHub, TensorFlow, and PyTorch when they already
-  appear naturally in the source.
+- Do not strengthen weak requirements. Familiarity must not become proficiency and
+  preferred must not become required.
+- Preserve standard English technical tokens such as Python, Docker, Kubernetes, RAG,
+  LLM, NLP, MLOps, SIEM, SOC, GitHub, TensorFlow, and PyTorch when appropriate.
 - Translate the complete supplied text. Do not summarize, omit, explain, classify,
   infer, or add information.
 - Return exactly one translation for every input id and no extra ids.
@@ -36,6 +39,10 @@ Rules:
 
 class _TranslationOutputTruncated(TranslationError):
     """Internal signal used to recover a bounded truncated model response."""
+
+
+def _content_id(text: str) -> str:
+    return hashlib.sha256(text.encode()).hexdigest()[:24]
 
 
 class LMStudioTranslationProvider:
@@ -61,9 +68,7 @@ class LMStudioTranslationProvider:
         if not 256 <= max_tokens <= _MAX_RECOVERY_TOKENS:
             raise ValueError("max_tokens must be between 256 and 32768")
         if not 1_000 <= request_character_target <= 100_000:
-            raise ValueError(
-                "request_character_target must be between 1000 and 100000"
-            )
+            raise ValueError("request_character_target must be between 1000 and 100000")
 
         self._base_url = f"{base_url.rstrip('/')}/"
         self._configured_model = configured_model.strip() if configured_model else None
@@ -175,6 +180,13 @@ class LMStudioTranslationProvider:
         current: list[str] = []
         current_characters = 0
         for text in texts:
+            if len(text) >= _LONG_TEXT_THRESHOLD:
+                if current:
+                    chunks.append(tuple(current))
+                    current = []
+                    current_characters = 0
+                chunks.append((text,))
+                continue
             would_exceed_count = len(current) >= _MAX_TEXTS_PER_REQUEST
             would_exceed_target = (
                 bool(current)
@@ -199,7 +211,13 @@ class LMStudioTranslationProvider:
         max_tokens: int,
     ) -> TranslationBatchResult:
         model = self._resolve_model()
-        input_items = [{"id": index, "text": text} for index, text in enumerate(texts)]
+        ids = tuple(_content_id(text) for text in texts)
+        if len(set(ids)) != len(ids):
+            raise TranslationError("Translation content identifiers unexpectedly collided")
+        input_items = [
+            {"id": content_id, "text": text}
+            for content_id, text in zip(ids, texts, strict=True)
+        ]
         schema = {
             "type": "object",
             "properties": {
@@ -210,7 +228,7 @@ class LMStudioTranslationProvider:
                     "items": {
                         "type": "object",
                         "properties": {
-                            "id": {"type": "integer"},
+                            "id": {"type": "string", "enum": list(ids)},
                             "translation": {"type": "string"},
                         },
                         "required": ["id", "translation"],
@@ -244,7 +262,7 @@ class LMStudioTranslationProvider:
             "response_format": {
                 "type": "json_schema",
                 "json_schema": {
-                    "name": "jobhunter_translation_batch",
+                    "name": "jobhunter_translation_batch_v2",
                     "strict": True,
                     "schema": schema,
                 },
@@ -285,13 +303,13 @@ class LMStudioTranslationProvider:
                 "LM Studio returned a translation count that does not match the input"
             )
 
-        by_id: dict[int, str] = {}
+        by_id: dict[str, str] = {}
         for item in raw_translations:
             if not isinstance(item, dict):
                 raise TranslationError("LM Studio returned an invalid translation item")
             item_id = item.get("id")
             translation = item.get("translation")
-            if not isinstance(item_id, int) or not isinstance(translation, str):
+            if not isinstance(item_id, str) or not isinstance(translation, str):
                 raise TranslationError("LM Studio translation item has invalid fields")
             cleaned = translation.strip()
             if not cleaned:
@@ -300,12 +318,11 @@ class LMStudioTranslationProvider:
                 raise TranslationError("LM Studio returned a duplicate translation id")
             by_id[item_id] = cleaned
 
-        expected_ids = set(range(len(texts)))
-        if set(by_id) != expected_ids:
+        if set(by_id) != set(ids):
             raise TranslationError(
-                "LM Studio returned missing or unexpected translation ids"
+                "LM Studio returned missing or unexpected content-derived translation ids"
             )
-        ordered = tuple(by_id[index] for index in range(len(texts)))
+        ordered = tuple(by_id[content_id] for content_id in ids)
         detected = tuple(source_language for _ in texts)
         return TranslationBatchResult(texts=ordered, detected_languages=detected)
 
@@ -364,7 +381,7 @@ class LMStudioTranslationProvider:
         source_language: str | None,
         target_language: str,
     ) -> TranslationBatchResult:
-        """Translate an ordered batch with bounded truncation recovery."""
+        """Translate an ordered batch using content IDs and bounded recovery."""
 
         if not texts:
             return TranslationBatchResult(texts=(), detected_languages=())
