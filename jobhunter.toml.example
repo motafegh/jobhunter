@@ -16,28 +16,43 @@ jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
 jobinja_request_timeout_seconds = 30.0
 jobinja_request_delay_seconds = 1.0
 
+# Search vocabulary is loaded from src/jobhunter/data/search_catalog.toml.
+# To replace the built-in vocabulary without editing Python code, point to a
+# complete catalog using the schema documented in docs/SEARCH_CONFIGURATION.md.
+# jobinja_search_catalog_path = "my-search-catalog.toml"
+
 # Search-planning controls. The request budget is global across the selected
 # searches, so a large vocabulary cannot trigger unbounded acquisition.
 jobinja_search_request_budget = 40
-jobinja_max_expanded_searches = 100
+jobinja_max_expanded_searches = 40
 jobinja_default_keyword_max_pages = 1
 
-# Recommended bilingual profile for the repository owner's target direction.
-# It expands AI/ML, LLM applications, Python/data, defensive security,
-# AI security, and network/platform packs. Inspect it before network use:
-#   jobhunter jobinja catalog
-#   jobhunter jobinja plan
+# Recommended bilingual profile for AI/ML, LLM apps, Python/data, defensive
+# security, AI security, and network/platform roles.
 jobinja_search_profiles = ["ai-security-python"]
 jobinja_search_packs = []
-
-# Terms are normalized for comparison but the original display form is kept.
-# Exclusions apply to built-in packs and custom groups.
 jobinja_excluded_terms = []
 
 # Acquisition-only daily sync controls.
 jobinja_sync_missing_limit = 10
 jobinja_sync_refresh_limit = 5
 jobinja_refresh_after_hours = 24.0
+
+# Separate derived English corpus. Disabled by default because the Google Cloud
+# provider intentionally sends parsed job text to Google. Native-English jobs
+# are copied into the English projection without a translation request.
+translation_enabled = false
+translation_auto_after_sync = false
+translation_provider = "google-cloud"
+translation_target_language = "en"
+translation_batch_limit = 20
+translation_timeout_seconds = 30.0
+translation_max_retries = 1
+# Standard Google NMT. A supported full Translation LLM resource name may be
+# configured instead when deliberately enabled in Google Cloud.
+google_translation_model = "nmt"
+# Keep the API key out of this file:
+# export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='...'
 
 # Add customized Persian and English searches without changing Python code.
 # [[jobhunter.jobinja_keyword_groups]]
