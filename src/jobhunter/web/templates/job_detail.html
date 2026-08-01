@@ -7,8 +7,6 @@
 {% endblock %}
 
 {% block content %}
-{% if error %}<div class="notice warn-notice">{{ error }}</div>{% endif %}
-
 <section class="job-hero panel">
   <div>
     {% if detail %}
@@ -23,12 +21,20 @@
         {% if translation %}<span class="badge good">English ready</span>{% else %}<span class="badge">English missing</span>{% endif %}
         {% if audit.needs_review %}<span class="badge bad">Audit review</span>{% else %}<span class="badge good">Audit clean</span>{% endif %}
       </div>
+    {% else %}
+      <p class="eyebrow">Discovered posting</p>
+      <h2>Details not acquired yet</h2>
+      <p class="muted">JobHunter knows this job from search discovery, but its complete Jobinja detail page has not been stored locally yet. Fetching it will preserve the raw evidence, parse the source fields, create the semantic version, and make it eligible for English translation.</p>
+      <div class="badge-row">
+        <span class="badge warn">Detail missing</span>
+        <span class="badge">Source ID {{ source_job_id }}</span>
+      </div>
     {% endif %}
   </div>
   <div class="job-actions">
     <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form>
       <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-      <button class="button ghost" type="submit">Check source now</button>
+      <button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source now' if detail else 'Fetch details' }}</button>
     </form>
     {% if translation_enabled and detail %}
     <form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form>
