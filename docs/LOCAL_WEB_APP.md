@@ -30,19 +30,25 @@ Default address:
 http://127.0.0.1:8765/
 ```
 
-The launcher opens the default browser automatically.
+The launcher opens the default browser automatically. Starting `jobhunter-app` again while
+the same loopback instance is already running reopens that instance instead of attempting
+to bind a second server to the same port.
 
 ### Linux application-menu launcher
 
-Install once:
+Install once from the project/config directory:
 
 ```bash
 jobhunter-app --install-desktop
 ```
 
 This creates a local application entry under `~/.local/share/applications` and installs
-the packaged JobHunter icon. Normal use can then start JobHunter from the desktop
-application menu without opening a terminal.
+the packaged JobHunter icon. The desktop entry stores the **exact resolved
+`jobhunter.toml` path and working directory used during installation**, so application-menu
+launches do not depend on the desktop environment's current directory.
+
+Normal use can then start JobHunter from the application menu without opening a terminal.
+Repeated clicks reuse/open an already-running local instance.
 
 ## Network boundary
 
@@ -192,7 +198,9 @@ Coverage includes:
 - browser security headers;
 - CSRF rejection;
 - asynchronous local operation execution/polling;
-- safe empty-catalog filtering.
+- safe empty-catalog filtering;
+- loopback-only launcher behavior;
+- desktop launcher binding to the exact configuration path.
 
 Live acceptance should additionally confirm the UI against the user's real SQLite corpus
 and run one bounded sync from the browser.
