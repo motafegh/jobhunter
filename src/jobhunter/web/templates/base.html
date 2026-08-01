@@ -15,46 +15,27 @@
     <aside class="sidebar">
       <a class="brand" href="/">
         <span class="brand-mark">JH</span>
-        <span>
-          <strong>JobHunter</strong>
-          <small>Career intelligence</small>
-        </span>
+        <span><strong>JobHunter</strong><small>Career intelligence</small></span>
       </a>
-
       <nav class="nav-list" aria-label="Primary">
-        <a class="nav-item {% if page == 'dashboard' %}active{% endif %}" href="/">
-          <span>Overview</span>
-        </a>
-        <a class="nav-item {% if page == 'jobs' %}active{% endif %}" href="/jobs">
-          <span>Jobs</span>
-        </a>
-        <a class="nav-item {% if page == 'searches' %}active{% endif %}" href="/searches">
-          <span>Search plan</span>
-        </a>
-        <a class="nav-item {% if page == 'operations' %}active{% endif %}" href="/operations">
-          <span>Operations</span>
-        </a>
-        <a class="nav-item {% if page == 'system' %}active{% endif %}" href="/system">
-          <span>System</span>
-        </a>
+        <a class="nav-item {% if page == 'dashboard' %}active{% endif %}" href="/">Overview</a>
+        <a class="nav-item {% if page == 'jobs' %}active{% endif %}" href="/jobs">Jobs</a>
+        <a class="nav-item {% if page == 'market' %}active{% endif %}" href="/market">Market</a>
+        <a class="nav-item {% if page == 'searches' %}active{% endif %}" href="/searches">Search plan</a>
+        <a class="nav-item {% if page == 'operations' %}active{% endif %}" href="/operations">Operations</a>
+        <a class="nav-item {% if page == 'system' %}active{% endif %}" href="/system">System</a>
       </nav>
-
       <div class="sidebar-footer">
         {% if active_operation %}
           <a class="operation-chip" href="/operations/{{ active_operation.id }}">
-            <span class="pulse"></span>
-            <span>{{ active_operation.name }}</span>
+            <span class="pulse"></span><span>{{ active_operation.name }}</span>
           </a>
         {% else %}
-          <div class="operation-chip quiet">
-            <span class="status-dot"></span>
-            <span>Ready</span>
-          </div>
+          <div class="operation-chip quiet"><span class="status-dot"></span><span>Ready</span></div>
         {% endif %}
         <small>Local application</small>
       </div>
     </aside>
-
     <main class="main-content">
       <header class="topbar">
         <div>
@@ -63,7 +44,6 @@
         </div>
         <div class="topbar-actions">{% block topbar_actions %}{% endblock %}</div>
       </header>
-
       {% block content %}{% endblock %}
     </main>
   </div>
