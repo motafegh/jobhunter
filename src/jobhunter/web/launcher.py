@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import argparse
 import ipaddress
+import shutil
+import sys
 import threading
 import webbrowser
 from pathlib import Path
@@ -29,6 +31,11 @@ def _parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Allow binding outside loopback; use only on a trusted network",
     )
+    parser.add_argument(
+        "--install-desktop",
+        action="store_true",
+        help="Install a Linux application-menu launcher and exit",
+    )
     return parser
 
 
@@ -41,8 +48,56 @@ def _is_loopback(host: str) -> bool:
         return False
 
 
+def _desktop_quote(value: str) -> str:
+    return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
+
+
+def _install_linux_desktop_launcher() -> Path:
+    home = Path.home()
+    applications_dir = home / ".local/share/applications"
+    icon_dir = home / ".local/share/icons/hicolor/scalable/apps"
+    applications_dir.mkdir(parents=True, exist_ok=True)
+    icon_dir.mkdir(parents=True, exist_ok=True)
+
+    source_icon = Path(__file__).resolve().parent / "static/icon.svg"
+    installed_icon = icon_dir / "jobhunter.svg"
+    shutil.copyfile(source_icon, installed_icon)
+
+    executable = shutil.which("jobhunter-app")
+    if executable:
+        exec_line = _desktop_quote(executable)
+    else:
+        exec_line = f"{_desktop_quote(sys.executable)} -m jobhunter.web.launcher"
+
+    desktop_path = applications_dir / "jobhunter.desktop"
+    desktop_path.write_text(
+        "\n".join(
+            [
+                "[Desktop Entry]",
+                "Type=Application",
+                "Name=JobHunter",
+                "Comment=Local-first career intelligence",
+                f"Exec={exec_line}",
+                f"Icon={installed_icon}",
+                "Terminal=false",
+                "Categories=Utility;Development;",
+                "StartupNotify=true",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    desktop_path.chmod(0o755)
+    return desktop_path
+
+
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
+    if arguments.install_desktop:
+        desktop_path = _install_linux_desktop_launcher()
+        print(f"Installed JobHunter application launcher: {desktop_path}")
+        return 0
+
     if not 1 <= arguments.port <= 65535:
         raise SystemExit("Port must be between 1 and 65535")
     if not _is_loopback(arguments.host) and not arguments.allow_network:
