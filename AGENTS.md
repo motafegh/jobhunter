@@ -51,7 +51,7 @@ Current acceptance target combines:
 data-driven bilingual search catalog
 → bounded search planning/acquisition
 → deterministic source semantic versions
-→ optional derived English projection
+→ optional local-first English projection
 → current English corpus export
 ```
 
@@ -68,6 +68,7 @@ jobhunter jobs show
 jobhunter jobs checks
 jobhunter jobs audit
 jobhunter translations status
+jobhunter translations models
 jobhunter translations run
 jobhunter translations show
 jobhunter translations export
@@ -125,28 +126,64 @@ Raw evidence
   exact source bytes and metadata
 ```
 
-A translator/model/schema change does not create a new source semantic version.
+A translator/model/schema/prompt-contract change does not create a new source
+semantic version.
 
 ## 8. Translation rules
 
 - Translation is optional and disabled by default.
-- Google Cloud translation is an explicit external-data boundary.
-- Never put Google API keys in source code, committed config, artifacts, exports,
-  or logs.
+- `lm-studio` is the normal local-first translation provider.
+- `google-cloud` is an optional external provider, not a required dependency.
 - Native-English source strings pass through without provider calls.
 - Persian-containing strings are translated through the provider; do not maintain
   an ad hoc hard-coded translation dictionary.
 - Mixed Persian/English strings are translated as semantic units.
 - Preserve per-string-path `native` versus `translated` provenance.
-- Artifact identity includes source version, target language, provider, model,
-  and translation schema version.
+- Artifact identity includes source version, target language, provider contract,
+  exact model, and translation schema version.
 - Repeated identical work must reuse the existing artifact.
 - A translation of an older source semantic version is historical, not current.
+- A newer partial/failed source parse blocks an older translation from being
+  presented as current.
 - Translation failure must not alter source evidence/versions.
-- English corpus export contains only artifacts for current source versions.
+- English corpus export contains only artifacts for current successfully parsed
+  source versions.
 - Translation quality review is separate from parser structural audit.
 
-## 9. Evidence hierarchy
+## 9. LM Studio translation discipline
+
+The LM Studio translator must:
+
+- use the configured `lm_studio_base_url` and optional local API token;
+- select model by `translation_lm_studio_model`, then `lm_studio_model`, then
+  exactly-one-visible-model auto-selection;
+- fail closed when zero or multiple models are visible and no model is configured;
+- use JSON-schema structured output;
+- validate exact translation count and IDs;
+- reject empty/malformed/missing/extra translations;
+- use temperature 0 and bounded output tokens;
+- batch by bounded item count and approximate character target;
+- never truncate employer text simply to satisfy the batching target;
+- preserve a versioned provider/prompt contract (`lm-studio-translation-v1`).
+
+A material translation-instruction change must increment the provider contract so
+new translations do not silently reuse artifacts produced by an older prompt policy.
+
+## 10. Google translation discipline
+
+When `google-cloud` is deliberately selected:
+
+- the external-data boundary must remain explicit;
+- send only parsed job-advertisement text required for English projection;
+- do not send personal capability/profile data through this pipeline;
+- never put Google API keys in source code, committed config, artifacts, exports,
+  or logs;
+- use bounded provider retries/batches;
+- retain provider/model/schema metadata;
+- retain failed attempts without corrupting source data;
+- recommend API-key restriction/quota controls.
+
+## 11. Evidence hierarchy
 
 For employer meaning:
 
@@ -160,7 +197,7 @@ P1.6 may consume translated English text, but every material claim must retain a
 path to original employer text. Never strengthen/weaken employer intent merely
 because a translation does so.
 
-## 10. Parser and audit boundaries
+## 12. Parser and audit boundaries
 
 The parser extracts source-explicit fields and complete source text. It does not
 infer employer intent.
@@ -168,16 +205,16 @@ infer employer intent.
 A clean structural audit does not prove translation quality or semantic
 interpretation. Missing optional source fields alone are not parser failures.
 
-## 11. Development rules
+## 13. Development rules
 
 - Build complete vertical increments with explicit acceptance criteria.
 - Keep deterministic logic separate from network/model/provider calls.
 - Keep CLI focused on composition/validation.
 - Keep SQL behind focused repository boundaries.
 - Treat acquired content as untrusted data.
-- Keep LM Studio behind inference interfaces and translation behind translation
-  interfaces.
-- Use typed configuration and versioned schemas.
+- Keep P1.6 analysis behind inference interfaces and translation behind translation
+  interfaces even when both use LM Studio.
+- Use typed configuration and versioned schemas/contracts.
 - Prefer explicit failure/review states over guesses.
 - Keep runtime data, config, secrets, exports, personal evidence, and model files
   out of Git.
@@ -186,7 +223,7 @@ interpretation. Missing optional source fields alone are not parser failures.
 - Normal tests must not contact Jobinja, Google Cloud, or LM Studio.
 - Avoid dependencies/abstractions without a current use.
 
-## 12. Source acquisition discipline
+## 14. Source acquisition discipline
 
 Use public Jobinja pages only. Preserve attribution/canonical URLs. Validate
 redirects. Enforce timeouts, delays, page/request/response/batch bounds.
@@ -194,19 +231,7 @@ redirects. Enforce timeouts, delays, page/request/response/batch bounds.
 Do not implement login automation, CAPTCHA/access-control bypass, proxy rotation,
 authenticated scraping, unrestricted crawling, or automatic applications.
 
-## 13. External translation discipline
-
-When Google translation is enabled:
-
-- send only parsed job-advertisement text required for English projection;
-- do not send personal capability/profile data through this pipeline;
-- use bounded provider retries/batches;
-- retain provider/model/schema metadata;
-- retain failed attempts without corrupting source data;
-- recommend API-key restriction/quota controls;
-- do not silently enable translation for existing installations.
-
-## 14. LLM extraction discipline
+## 15. LLM extraction discipline
 
 When P1.6 begins:
 
@@ -218,7 +243,10 @@ When P1.6 begins:
 - measure quality on a reviewed real-job corpus;
 - never grant the model shell/filesystem/browser/unrestricted network tools.
 
-## 15. Change discipline
+Translation and P1.6 analysis may share the LM Studio server but must not share
+prompt/version identities or persistence semantics.
+
+## 16. Change discipline
 
 A material change states milestone requirement, changed files, behavior,
 deterministic tests, live acceptance required, and remaining exclusions.
@@ -226,7 +254,7 @@ deterministic tests, live acceptance required, and remaining exclusions.
 Update existing controlling docs for material product/architecture changes instead
 of creating unnecessary governance files.
 
-## 16. Definition of done
+## 17. Definition of done
 
 An increment is done only when:
 
@@ -236,7 +264,7 @@ An increment is done only when:
 - failures are inspectable;
 - configuration/operation are reproducible;
 - docs match behavior;
-- privacy/external-data boundaries are explicit;
+- local/external data boundaries are explicit;
 - no unrelated future scope is claimed.
 
 Work directly on `main` unless a concrete isolation need appears.
