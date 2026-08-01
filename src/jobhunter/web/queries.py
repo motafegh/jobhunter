@@ -100,6 +100,17 @@ class WebRepository:
                         )
                         WHERE p.source = 'jobinja'
                           AND v.parse_status = 'parsed'
+                    ) AS translation_eligible_jobs,
+                    (
+                        SELECT COUNT(*)
+                        FROM job_postings AS p
+                        JOIN job_detail_versions AS v ON v.id = (
+                            SELECT MAX(v2.id)
+                            FROM job_detail_versions AS v2
+                            WHERE v2.job_posting_id = p.id
+                        )
+                        WHERE p.source = 'jobinja'
+                          AND v.parse_status = 'parsed'
                           AND EXISTS (
                               SELECT 1
                               FROM job_translation_artifacts AS a
@@ -114,13 +125,14 @@ class WebRepository:
             ).fetchone()
         discovered = int(row["discovered_jobs"])
         detailed = int(row["detailed_jobs"])
+        translation_eligible = int(row["translation_eligible_jobs"])
         translated = int(row["translated_jobs"])
         return DashboardStats(
             discovered_jobs=discovered,
             detailed_jobs=detailed,
             translated_jobs=translated,
             missing_details=max(discovered - detailed, 0),
-            missing_translations=max(detailed - translated, 0),
+            missing_translations=max(translation_eligible - translated, 0),
             detail_checks=int(row["detail_checks"]),
             acquisition_runs=int(row["acquisition_runs"]),
         )
