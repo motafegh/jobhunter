@@ -9,8 +9,12 @@ description = "Local-first personal career-intelligence application"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+  "fastapi>=0.116,<1",
   "httpx>=0.28,<1",
+  "jinja2>=3.1,<4",
   "pydantic>=2.10,<3",
+  "python-multipart>=0.0.20,<1",
+  "uvicorn>=0.35,<1",
 ]
 
 [project.optional-dependencies]
@@ -26,7 +30,12 @@ jobhunter = "jobhunter.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-jobhunter = ["data/*.toml"]
+jobhunter = [
+  "data/*.toml",
+  "web/templates/*.html",
+  "web/static/*.css",
+  "web/static/*.js",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
