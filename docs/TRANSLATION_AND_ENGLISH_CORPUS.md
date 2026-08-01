@@ -214,9 +214,19 @@ segments into bounded model requests using both:
 A single segment larger than the target is sent intact rather than truncated.
 JobHunter never shortens the employer text simply to satisfy a batching heuristic.
 
-Retries are bounded and limited to connection/transient server conditions. Invalid
-structured output is treated as a translation failure rather than repeatedly accepted
-or repaired heuristically.
+Transport retries remain bounded to configured connection/transient-server conditions.
+Model-output truncation is handled separately and conservatively when LM Studio returns
+`finish_reason = "length"`:
+
+1. a truncated multi-segment request is split recursively into smaller segment groups;
+2. if one individual segment still truncates, its output-token budget is doubled;
+3. the single-segment budget may increase only up to the hard local cap of 32,768
+   output tokens;
+4. if the model still truncates at that cap, the translation fails visibly.
+
+The original source segment is never shortened during this recovery. Other malformed
+structured output is rejected rather than repaired heuristically or written into the
+English corpus.
 
 ## 8. Structured-output compatibility
 
