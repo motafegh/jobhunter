@@ -698,6 +698,16 @@ def _translation_store(settings: Settings) -> TranslationStore:
 
 def _translation_service(settings: Settings) -> TranslationService:
     provider = None
+    if (
+        settings.translation_enabled
+        and settings.translation_provider == "google-cloud"
+        and not settings.google_translation_api_key
+    ):
+        raise ValueError(
+            "Google translation is enabled but "
+            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
+        )
+
     if settings.translation_enabled and settings.translation_provider == "lm-studio":
         provider = LMStudioTranslationProvider(
             base_url=settings.lm_studio_base_url,
@@ -709,13 +719,8 @@ def _translation_service(settings: Settings) -> TranslationService:
             request_character_target=settings.translation_lm_studio_character_target,
         )
     elif settings.translation_enabled and settings.translation_provider == "google-cloud":
-        if not settings.google_translation_api_key:
-            raise ValueError(
-                "Google translation is enabled but "
-                "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
-            )
         provider = GoogleCloudTranslationProvider(
-            api_key=settings.google_translation_api_key,
+            api_key=settings.google_translation_api_key or "",
             model=settings.google_translation_model,
             timeout_seconds=settings.translation_timeout_seconds,
             max_retries=settings.translation_max_retries,
