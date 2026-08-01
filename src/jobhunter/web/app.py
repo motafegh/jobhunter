@@ -24,7 +24,7 @@ from jobhunter.jobinja_discovery import (
     JobinjaDiscoveryService,
     format_discovery_summary,
 )
-from jobhunter.jobinja_sync import JobinjaSyncService, format_sync_summary
+from jobhunter.jobinja_sync import JobinjaSyncService
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
 from jobhunter.translation import GoogleCloudTranslationProvider, LMStudioTranslationProvider
@@ -32,6 +32,7 @@ from jobhunter.translation_export import export_english_corpus
 from jobhunter.translation_service import TranslationService, format_translation_batch_summary
 from jobhunter.translation_store import TranslationStore
 from jobhunter.web.operations import OperationBusyError, WebOperationManager
+from jobhunter.web.presentation import format_web_sync_summary
 from jobhunter.web.queries import WebRepository
 from jobhunter.web.quick_add import parse_quick_add_input
 
@@ -388,7 +389,7 @@ def create_app(
                 refresh_limit=refresh_limit,
                 refresh_after_hours=refresh_after_hours,
             )
-            output = format_sync_summary(summary)
+            output = format_web_sync_summary(summary)
             if settings.translation_enabled and settings.translation_auto_after_sync:
                 preferred_ids = (
                     tuple(item.source_job_id for item in summary.detail_fetch.results)
