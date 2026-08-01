@@ -116,6 +116,8 @@ class TranslationStore:
         self,
         source_job_id: str,
     ) -> TranslationSourceVersion | None:
+        """Return the current source version only when that current version parsed."""
+
         self.initialize()
         with self._connect() as connection:
             row = connection.execute(
@@ -127,8 +129,14 @@ class TranslationStore:
                     v.fields_json
                 FROM job_postings AS p
                 JOIN job_detail_versions AS v ON v.job_posting_id = p.id
-                WHERE p.source = 'jobinja' AND p.source_job_id = ?
-                ORDER BY v.id DESC
+                WHERE p.source = 'jobinja'
+                  AND p.source_job_id = ?
+                  AND v.id = (
+                      SELECT MAX(latest.id)
+                      FROM job_detail_versions AS latest
+                      WHERE latest.job_posting_id = p.id
+                  )
+                  AND v.parse_status = 'parsed'
                 LIMIT 1
                 """,
                 (source_job_id,),
@@ -149,6 +157,8 @@ class TranslationStore:
         *,
         limit: int = 500,
     ) -> tuple[TranslationSourceVersion, ...]:
+        """Return only jobs whose current semantic version parsed successfully."""
+
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
         self.initialize()
@@ -168,6 +178,7 @@ class TranslationStore:
                       FROM job_detail_versions AS latest
                       WHERE latest.job_posting_id = p.id
                   )
+                  AND v.parse_status = 'parsed'
                 ORDER BY p.id ASC
                 LIMIT ?
                 """,
@@ -229,7 +240,7 @@ class TranslationStore:
         *,
         target_language: str = "en",
     ) -> TranslationArtifact | None:
-        """Return an artifact only when it belongs to the latest source version."""
+        """Return an artifact only when the current source version also parsed."""
 
         self.initialize()
         with self._connect() as connection:
@@ -247,6 +258,7 @@ class TranslationStore:
                       FROM job_detail_versions AS latest
                       WHERE latest.job_posting_id = p.id
                   )
+                  AND v.parse_status = 'parsed'
                 ORDER BY a.id DESC
                 LIMIT 1
                 """,
@@ -260,7 +272,7 @@ class TranslationStore:
         target_language: str = "en",
         limit: int = 500,
     ) -> tuple[TranslationArtifact, ...]:
-        """Return current artifacts only; stale source versions are excluded."""
+        """Return current parsed-version artifacts; stale versions are excluded."""
 
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
@@ -279,6 +291,7 @@ class TranslationStore:
                       FROM job_detail_versions AS latest
                       WHERE latest.job_posting_id = p.id
                   )
+                  AND v.parse_status = 'parsed'
                   AND a.id = (
                       SELECT MAX(a2.id)
                       FROM job_translation_artifacts AS a2
