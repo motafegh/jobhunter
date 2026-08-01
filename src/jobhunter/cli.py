@@ -41,7 +41,11 @@ from jobhunter.jobinja_sync import JobinjaSyncService, format_sync_summary
 from jobhunter.search_registry import expand_keyword_searches, format_search_catalog
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
-from jobhunter.translation import GoogleCloudTranslationProvider
+from jobhunter.translation import (
+    GoogleCloudTranslationProvider,
+    LMStudioTranslationProvider,
+    TranslationError,
+)
 from jobhunter.translation_export import export_english_corpus
 from jobhunter.translation_service import (
     TranslationService,
@@ -80,17 +84,23 @@ jobinja_sync_missing_limit = 10
 jobinja_sync_refresh_limit = 5
 jobinja_refresh_after_hours = 24.0
 
-# Derived English corpus. Disabled by default because Google Cloud translation
-# intentionally sends parsed source text to an external service.
+# Derived English corpus. LM Studio is the local-first default translator.
 translation_enabled = false
 translation_auto_after_sync = false
-translation_provider = "google-cloud"
+translation_provider = "lm-studio"
 translation_target_language = "en"
 translation_batch_limit = 20
 translation_timeout_seconds = 30.0
 translation_max_retries = 1
+# Optional dedicated translation model. If omitted, lm_studio_model is reused;
+# if both are omitted, JobHunter auto-selects only when exactly one model is visible.
+# translation_lm_studio_model = "your-translation-model-identifier"
+translation_lm_studio_max_tokens = 4096
+translation_lm_studio_character_target = 6000
+
+# Google Cloud Translation remains an optional provider.
 google_translation_model = "nmt"
-# Set JOBHUNTER_GOOGLE_TRANSLATION_API_KEY in the environment; do not commit it.
+# Set JOBHUNTER_GOOGLE_TRANSLATION_API_KEY only when using google-cloud.
 
 # Optional custom bilingual group.
 # [[jobhunter.jobinja_keyword_groups]]
@@ -451,6 +461,10 @@ def build_parser() -> argparse.ArgumentParser:
         "status",
         help="Show translation configuration and current corpus coverage",
     )
+    translation_subparsers.add_parser(
+        "models",
+        help="List exact model identifiers visible to the local LM Studio server",
+    )
     translation_run = translation_subparsers.add_parser(
         "run",
         help="Create English projections for explicit jobs or a missing queue",
@@ -684,7 +698,17 @@ def _translation_store(settings: Settings) -> TranslationStore:
 
 def _translation_service(settings: Settings) -> TranslationService:
     provider = None
-    if settings.translation_enabled and settings.translation_provider == "google-cloud":
+    if settings.translation_enabled and settings.translation_provider == "lm-studio":
+        provider = LMStudioTranslationProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=settings.effective_translation_lm_studio_model(),
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+            max_tokens=settings.translation_lm_studio_max_tokens,
+            request_character_target=settings.translation_lm_studio_character_target,
+        )
+    elif settings.translation_enabled and settings.translation_provider == "google-cloud":
         if not settings.google_translation_api_key:
             raise ValueError(
                 "Google translation is enabled but "
@@ -923,22 +947,62 @@ def _translation_status(settings: Settings) -> int:
     print(f"Translation enabled: {'yes' if settings.translation_enabled else 'no'}")
     print(f"Automatic after sync: {'yes' if settings.translation_auto_after_sync else 'no'}")
     print(f"Provider: {settings.translation_provider}")
-    print(f"Model: {settings.google_translation_model}")
-    print(
-        "Google API key configured: "
-        f"{'yes' if settings.google_translation_api_key else 'no'}"
-    )
+    if settings.translation_provider == "lm-studio":
+        selected_model = settings.effective_translation_lm_studio_model()
+        print(f"LM Studio base URL: {settings.lm_studio_base_url}")
+        print(
+            "Model: "
+            + (
+                selected_model
+                if selected_model
+                else "(auto-select only when exactly one model is visible)"
+            )
+        )
+        print("External translation service: no")
+    else:
+        print(f"Model: {settings.google_translation_model}")
+        print(
+            "Google API key configured: "
+            f"{'yes' if settings.google_translation_api_key else 'no'}"
+        )
+        print("External translation service: yes")
     print(f"Latest parsed source versions: {len(sources)}")
     print(f"Current English artifacts: {len(artifacts)}")
     print(f"Source versions without current English artifact: {len(sources) - len(artifacts)}")
     return 0
 
 
+def _translation_models(settings: Settings) -> int:
+    provider = LMStudioTranslationProvider(
+        base_url=settings.lm_studio_base_url,
+        configured_model=settings.effective_translation_lm_studio_model(),
+        api_token=settings.lm_studio_api_token,
+        timeout_seconds=settings.translation_timeout_seconds,
+        max_retries=settings.translation_max_retries,
+        max_tokens=settings.translation_lm_studio_max_tokens,
+        request_character_target=settings.translation_lm_studio_character_target,
+    )
+    try:
+        models = provider.list_models()
+    except TranslationError as exc:
+        print(f"LM Studio model discovery failed: {exc}", file=sys.stderr)
+        return 1
+    print("LM Studio models visible to JobHunter")
+    if not models:
+        print("- (none)")
+        return 0
+    configured = settings.effective_translation_lm_studio_model()
+    for model in models:
+        marker = " [configured]" if model == configured else ""
+        print(f"- {model}{marker}")
+    return 0
+
+
 def _run_translations(settings: Settings, arguments: argparse.Namespace) -> int:
     if not settings.translation_enabled:
         print(
-            "Translation is disabled. Set translation_enabled = true after reviewing "
-            "the external-data boundary.",
+            "Translation is disabled. Set translation_enabled = true after selecting "
+            "the intended translation provider.",
             file=sys.stderr,
         )
         return 2
@@ -1042,6 +1106,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _show_job(settings, arguments.job_id)
     if arguments.command == "translations" and arguments.translations_command == "status":
         return _translation_status(settings)
+    if arguments.command == "translations" and arguments.translations_command == "models":
+        return _translation_models(settings)
     if arguments.command == "translations" and arguments.translations_command == "run":
         return _run_translations(settings, arguments)
     if arguments.command == "translations" and arguments.translations_command == "show":
