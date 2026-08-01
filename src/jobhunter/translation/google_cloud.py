@@ -12,6 +12,7 @@ from jobhunter.translation.base import TranslationBatchResult, TranslationError
 
 _GOOGLE_TRANSLATE_V2 = "https://translation.googleapis.com/language/translate/v2"
 _MAX_TEXTS_PER_REQUEST = 128
+_DEFAULT_CHARACTER_TARGET = 5_000
 
 
 class GoogleCloudTranslationProvider:
@@ -25,6 +26,7 @@ class GoogleCloudTranslationProvider:
         endpoint: str = _GOOGLE_TRANSLATE_V2,
         timeout_seconds: float = 30.0,
         max_retries: int = 1,
+        request_character_target: int = _DEFAULT_CHARACTER_TARGET,
         transport: httpx.BaseTransport | None = None,
         sleep=time.sleep,
     ) -> None:
@@ -35,11 +37,16 @@ class GoogleCloudTranslationProvider:
             raise ValueError("timeout_seconds must be greater than zero")
         if not 0 <= max_retries <= 5:
             raise ValueError("max_retries must be between 0 and 5")
+        if not 1_000 <= request_character_target <= 100_000:
+            raise ValueError(
+                "request_character_target must be between 1000 and 100000"
+            )
         self._api_key = cleaned_key
         self._model = model.strip() or "nmt"
         self._endpoint = endpoint
         self._timeout_seconds = timeout_seconds
         self._max_retries = max_retries
+        self._request_character_target = request_character_target
         self._transport = transport
         self._sleep = sleep
 
@@ -130,7 +137,6 @@ class GoogleCloudTranslationProvider:
                     detected_languages=tuple(detected),
                 )
             except httpx.HTTPStatusError as exc:
-                last_error = exc
                 body_preview = exc.response.text[:500]
                 raise TranslationError(
                     "Google Cloud Translation returned HTTP "
@@ -147,6 +153,28 @@ class GoogleCloudTranslationProvider:
             f"Could not reach Google Cloud Translation: {last_error}"
         ) from last_error
 
+    def _request_chunks(self, texts: tuple[str, ...]) -> tuple[tuple[str, ...], ...]:
+        """Pack texts by API item count and a latency/cost-aware character target."""
+
+        chunks: list[tuple[str, ...]] = []
+        current: list[str] = []
+        current_characters = 0
+        for text in texts:
+            would_exceed_count = len(current) >= _MAX_TEXTS_PER_REQUEST
+            would_exceed_target = (
+                bool(current)
+                and current_characters + len(text) > self._request_character_target
+            )
+            if would_exceed_count or would_exceed_target:
+                chunks.append(tuple(current))
+                current = []
+                current_characters = 0
+            current.append(text)
+            current_characters += len(text)
+        if current:
+            chunks.append(tuple(current))
+        return tuple(chunks)
+
     def translate_texts(
         self,
         texts: tuple[str, ...],
@@ -154,7 +182,7 @@ class GoogleCloudTranslationProvider:
         source_language: str | None,
         target_language: str,
     ) -> TranslationBatchResult:
-        """Translate an arbitrary batch using API-sized chunks of at most 128 texts."""
+        """Translate an ordered batch using bounded request chunks."""
 
         if not texts:
             return TranslationBatchResult(texts=(), detected_languages=())
@@ -163,8 +191,7 @@ class GoogleCloudTranslationProvider:
 
         translated: list[str] = []
         detected: list[str | None] = []
-        for start in range(0, len(texts), _MAX_TEXTS_PER_REQUEST):
-            chunk = texts[start : start + _MAX_TEXTS_PER_REQUEST]
+        for chunk in self._request_chunks(texts):
             result = self._translate_chunk(
                 chunk,
                 source_language=source_language,
