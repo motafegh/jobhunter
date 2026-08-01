@@ -9,7 +9,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from typing import Any
 
-TRANSLATION_SCHEMA_VERSION = "english-projection-v1"
+TRANSLATION_SCHEMA_VERSION = "english-projection-v2"
 _PERSIAN_RE = re.compile(r"[\u0600-\u06ff]")
 _SOURCE_METADATA_FIELDS = {"language", "parser_version"}
 _FIELD_LABELS = {
@@ -197,7 +197,7 @@ def build_english_projection(
         ensure_ascii=False,
         sort_keys=True,
         separators=(",", ":"),
-    ).encode("utf-8")
+    ).encode()
     return EnglishProjection(
         fields=projected,
         document=document,
