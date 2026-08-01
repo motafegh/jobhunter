@@ -32,11 +32,17 @@ def test_web_app_serves_packaged_static_assets(tmp_path: Path) -> None:
     with TestClient(app) as client:
         css = client.get("/static/app.css")
         javascript = client.get("/static/app.js")
+        icon = client.get("/static/icon.svg")
+        manifest = client.get("/static/manifest.webmanifest")
 
     assert css.status_code == 200
     assert "--accent" in css.text
     assert javascript.status_code == 200
     assert "data-operation-id" in javascript.text
+    assert icon.status_code == 200
+    assert "<svg" in icon.text
+    assert manifest.status_code == 200
+    assert '"display": "standalone"' in manifest.text
 
 
 def test_web_app_rejects_invalid_csrf_token(tmp_path: Path) -> None:
