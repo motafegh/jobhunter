@@ -11,10 +11,20 @@ lm_studio_base_url = "http://127.0.0.1:1234/v1"
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
 
+# P1.6 semantic analysis may use a different local model from translation.
+# If omitted, JobHunter falls back to lm_studio_model and then the explicit
+# translation model. Start with small reviewed batches before scaling analysis.
+# analysis_lm_studio_model = "your-analysis-model-identifier"
+analysis_max_tokens = 8192
+analysis_batch_limit = 5
+
 # Public Jobinja HTTP controls.
 jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
 jobinja_request_timeout_seconds = 30.0
 jobinja_request_delay_seconds = 1.0
+# Retries apply only to transient network/429/5xx failures. Challenge, access
+# denied, missing, and explicit-expired responses are not blindly retried.
+jobinja_max_retries = 1
 
 # Search vocabulary is loaded from src/jobhunter/data/search_catalog.toml.
 # To replace the built-in vocabulary without editing Python code, point to a
@@ -39,7 +49,9 @@ jobinja_sync_refresh_limit = 5
 jobinja_refresh_after_hours = 24.0
 
 # Separate derived English corpus. LM Studio is the local-first default.
-# Native-English jobs are copied into the English projection without a model call.
+# Native-English jobs are copied without a model call. Current translation v2
+# isolates semantic segments and applies deterministic integrity checks before
+# an English artifact can become exportable/analyzable.
 translation_enabled = false
 translation_auto_after_sync = false
 translation_provider = "lm-studio"
