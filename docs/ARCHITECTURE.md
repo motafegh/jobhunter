@@ -2,411 +2,254 @@
 
 ## 1. Architectural direction
 
-JobHunter is a **local modular monolith** written in Python 3.12 or newer.
+JobHunter is a **local Python modular monolith**.
 
-It is one local application with explicit internal boundaries for configuration,
-search planning, source acquisition, evidence preservation, persistence,
-deterministic parsing, derived translation, local inference, analysis, and
-reporting. Components are separated when they have a current operational
-responsibility; speculative microservices and empty abstraction layers are not
-introduced.
+One application owns configuration, Jobinja acquisition, evidence preservation, SQLite
+persistence, deterministic parsing, translation, future local inference/analysis, and two
+interaction surfaces:
 
-The command-line interface is the current interaction surface. A local web
-interface remains optional and must be justified by concrete review or workflow
-friction.
+```text
+Browser UI       normal repeated human use
+CLI              automation, debugging, tests, advanced operation
+        \         /
+         application services
+                ↓
+             SQLite
+        + raw evidence files
+```
 
-## 2. Permanent architectural principles
+The browser is not a separate frontend product with its own API/data model. It is a thin
+server-rendered interface over the same application services and records used by the CLI.
 
-1. Preserve raw evidence before parsing or interpretation.
+## 2. Permanent principles
+
+1. Preserve raw source evidence before parsing, translation, or interpretation.
 2. Keep successful acquisition independent from LM Studio availability.
 3. Keep source evidence independent from translation availability.
 4. Separate deterministic source parsing from model-dependent processing.
-5. Keep source-specific behavior in explicit adapters and services.
-6. Keep CLI handlers as composition and validation code, not parsing or SQL code.
+5. Keep source-specific behavior behind explicit adapters/services.
+6. Keep browser/CLI handlers as composition and validation code, not source parsing logic.
 7. Use SQLite as the local system of record.
-8. Keep source evidence inspectable outside normalized database records.
+8. Keep source evidence inspectable outside normalized records.
 9. Design repeated operations for idempotency.
-10. Keep semantic versions separate from volatile HTTP responses.
-11. Keep operational fetch history separate from semantic versions.
-12. Keep translations separate from source semantic versions.
-13. Preserve provenance for native-English and translated-English segments.
-14. Prefer missing or review-required states over fabricated values.
+10. Separate semantic versions from volatile HTTP responses.
+11. Separate operational fetch history from semantic versions.
+12. Separate translation artifacts from authoritative source versions.
+13. Preserve native-versus-translated provenance.
+14. Prefer missing/review-required states over fabricated values.
 15. Treat acquired content as untrusted data, never executable instruction.
-16. Bound pages, requests, detail batches, retries, translation batches, and model calls.
-17. Make configuration and policy visible rather than scattering constants.
-18. Keep local-first providers as the normal path when they satisfy the product need.
-19. Add complexity only when an observed product need justifies it.
+16. Bound pages, requests, detail batches, translation batches, retries, and model calls.
+17. Keep configuration/policy visible instead of scattering constants.
+18. Keep the local web application loopback-first and CSRF-protected.
+19. Add complexity only for an observed product need.
 
-## 3. Current acquisition and translation flow
+## 3. Current end-to-end flow
 
 ```text
-TOML configuration or explicit CLI selectors
-                ↓
+TOML configuration
+        ↓
 data-driven bilingual search catalog
-                ↓
-canonical raw-URL and keyword-generated search plan
-                ↓
-search limit, offset, page limit, and global request budget
-                ↓
-sequential Jobinja search-page acquisition
-                ↓
-immutable search-page HTML and metadata evidence
-                ↓
-canonical Jobinja job-code discovery
-                ↓
-repeat-safe JobPosting and discovery provenance
-                ↓
-missing-detail and refresh-due selection
-                ↓
-sequential Jobinja detail-page acquisition
-                ↓
-immutable detail HTML and metadata evidence
-                ↓
-deterministic Jobinja parser v2
-                ↓
-semantic content fingerprint and version decision
-                ↓
-fetch observation: new_version / unchanged / failed
-                ↓
-deterministic structural parser audit
-                ↓
+        ↓
+inspectable bounded search plan
+        ↓
+sequential Jobinja search acquisition
+        ↓
+immutable search evidence
+        ↓
+stable JobPosting identities + discovery provenance
+        ↓
+missing / refresh-due detail selection
+        ↓
+sequential detail acquisition
+        ↓
+immutable detail evidence
+        ↓
+Jobinja parser v2
+        ↓
+semantic source version
+        ↓
+fetch observation
+        ↓
+structural parser audit
+        ↓
 optional English-projection queue
-                ↓
-source-identity or configured TranslationProvider
+        ↓
+source identity OR TranslationProvider
         ├─ LM Studio local structured translation (default)
-        └─ Google Cloud Translation (optional external provider)
-                ↓
-versioned JobTranslationArtifact
-                ↓
-completed / failed / reused translation attempt
-                ↓
-current English corpus and JSONL export
+        └─ Google Cloud Translation (optional external)
+        ↓
+versioned English artifact + translation attempt
+        ↓
+current English JSONL corpus
 ```
 
-The source semantic version remains authoritative. Translation is a derived
-representation and cannot change employer evidence.
+P1.6 will extend the accepted source/English corpus into evidence-backed semantic analysis.
 
-## 4. Intended complete Phase 1 flow
+## 4. Interaction surfaces
+
+### 4.1 Local web application
+
+`jobhunter.web` contains the browser application.
+
+Technology:
 
 ```text
-accepted source semantic versions
-        ↓
-current English projection when available
-        ↓
-pending-analysis selection
-        ↓
-versioned local-model prompt and schema
-        ↓
-LM Studio analysis provider boundary
-        ↓
-raw request and response evidence
-        ↓
-schema and evidence validation
-        ↓
-accepted / review-required / failed analysis state
-        ↓
-individual job result
-        ↓
-combined responsibility, requirement, and role report
+FastAPI
+Uvicorn
+Jinja2
+packaged CSS
+small vanilla JavaScript
 ```
 
-P1.6 may use the English projection for model convenience, but every material
-claim must retain a path to original employer text.
+There is no Node/npm build system and no CDN dependency.
+
+Primary routes:
+
+```text
+/                     dashboard and bounded sync controls
+/jobs                 filterable local job catalog
+/jobs/{job-id}        source + English detail, evidence, checks, actions
+/searches              catalog/profile/pack/effective-plan inspection
+/operations            browser operation history
+/operations/{id}       live local operation status/output
+/system                runtime/configuration visibility
+```
+
+Mutating routes cover bounded sync, audit, missing translation, export, per-job source
+check, and per-job translation.
+
+Long operations are submitted to one in-process `ThreadPoolExecutor(max_workers=1)`.
+This prevents overlapping mutable browser workflows and keeps the initial HTTP response
+fast. Durable source/translation history remains in SQLite; the browser operation cards
+are intentionally ephemeral runtime state.
+
+### 4.2 Web security boundary
+
+The launcher defaults to `127.0.0.1` and refuses non-loopback binding unless the operator
+explicitly chooses network exposure.
+
+The web layer additionally uses:
+
+- a process-local CSRF token on every mutating form;
+- restrictive Content Security Policy;
+- `X-Frame-Options: DENY`;
+- `X-Content-Type-Options: nosniff`;
+- `Referrer-Policy: no-referrer`;
+- `Cache-Control: no-store`;
+- no Swagger/OpenAPI UI endpoints;
+- no remote static assets.
+
+Browser controls do not bypass source request limits or access policy; they invoke the same
+bounded services as the CLI.
+
+### 4.3 CLI
+
+The `jobhunter` CLI remains supported for scriptability, local debugging, explicit batch
+operation, and deterministic acceptance work.
+
+The `jobhunter-app` executable starts the local Uvicorn application and opens the default
+browser. `jobhunter-app --install-desktop` installs a Linux application-menu entry.
 
 ## 5. Runtime components
 
-### 5.1 CLI composition layer
+### Configuration
 
-Current commands include:
+`config.py` loads typed TOML plus selected `JOBHUNTER_*` environment overrides through
+Pydantic. Unknown fields fail closed.
 
-```text
-jobhunter init
-jobhunter doctor [--smoke]
+### Search registry
 
-jobhunter jobinja catalog [--show-terms]
-jobhunter jobinja plan
-jobhunter jobinja discover
-jobhunter jobinja sync
-jobhunter jobinja fetch
+`search_registry.py` loads versioned Persian/English profiles and packs from
+`data/search_catalog.toml`, normalizes identity variants, preserves display terms,
+interleaves packs for bounded coverage, and builds canonical Jobinja keyword URLs.
 
-jobhunter jobs list
-jobhunter jobs show <job-id>
-jobhunter jobs checks <job-id>
-jobhunter jobs audit
+### Jobinja source adapter
 
-jobhunter translations status
-jobhunter translations models
-jobhunter translations run
-jobhunter translations show <job-id>
-jobhunter translations export
-```
+`sources/jobinja.py` owns public Jobinja URL validation, canonical identities, HTTP bounds,
+redirect checks, response-size/content-type checks, and link extraction.
 
-The CLI parses and validates arguments, loads typed settings, assembles services,
-prints inspectable summaries, and maps controlled findings to exit statuses.
+### Evidence store
 
-### 5.2 Typed configuration
+`evidence.py` writes exact HTTP bytes plus metadata sidecars before downstream parsing.
 
-`config.py` loads TOML and selected `JOBHUNTER_*` environment overrides through
-Pydantic models.
+### Discovery
 
-Configuration covers:
+`jobinja_discovery.py` records search snapshots, stable job identities, discovery
+provenance, per-search stop reasons, cross-search overlap, and repeat-safe acquisition
+runs.
 
-- local data, evidence, and SQLite paths;
-- LM Studio server, analysis model, and optional API token;
-- Jobinja HTTP controls;
-- raw Jobinja search URLs;
-- data-driven bilingual search profiles and packs;
-- optional external search-catalog path;
-- custom keyword groups and excluded terms;
-- search/page/request budgets;
-- sync missing/refresh limits;
-- translation enablement and auto-after-sync policy;
-- translation provider, timeout, retries, and batch size;
-- optional dedicated LM Studio translation model and request bounds;
-- optional Google Cloud Translation API key/model;
-- logging level.
+### Detail acquisition
 
-Unknown fields are rejected.
+`jobinja_detail_service.py` preserves one detail response, parses it, computes semantic
+content identity, records/reuses the semantic version, and records the source check.
 
-### 5.3 Data-driven bilingual search catalog
+`jobinja_batch.py` adds bounded sequential batch acquisition with per-job failure isolation.
 
-Search vocabulary is packaged at:
+### Fetch observations
 
-```text
-src/jobhunter/data/search_catalog.toml
-```
+`job_detail_observations.py` stores successful/failed checks independently from semantic
+versions and drives refresh-due selection.
 
-`search_registry.py` loads and validates the TOML catalog.
+### Deterministic parser
 
-Responsibilities:
+`jobinja_details.py` implements `jobinja-detail-v2`. It extracts source-explicit fields and
+complete description text without LLM inference.
 
-- load catalog version, profiles, packs, descriptions, and terms;
-- normalize Persian/Arabic Unicode variants for identity;
-- preserve original display terms;
-- generate canonical Jobinja keyword URLs;
-- interleave pack terms round-robin for bounded cross-domain coverage;
-- combine configured profiles, packs, custom groups, and one-off terms;
-- apply normalized exclusions;
-- expose catalog/plan output.
+### Structural audit
 
-A complete replacement catalog can be supplied through
-`jobinja_search_catalog_path`. Search vocabulary is acquisition configuration,
-not the later canonical career taxonomy.
+`job_audit.py` checks parser structure/contamination only. A clean audit does not claim
+semantic employer interpretation or translation quality.
 
-### 5.4 Jobinja source adapter
+### Translation boundary
 
-`sources/jobinja.py` owns Jobinja URL and HTTP rules:
-
-- approved-host validation;
-- canonical search/job URLs;
-- bounded pagination;
-- public HTML fetches through HTTPX;
-- redirect validation;
-- response content-type and size bounds;
-- descriptive user agent;
-- stable source job-code and company-slug extraction;
-- per-page link deduplication.
-
-The adapter does not persist records or call models.
-
-### 5.5 Evidence store
-
-`evidence.py` writes raw HTTP bytes and metadata sidecars before downstream
-parsing.
-
-```text
-data/evidence/jobinja/search-pages/<search>/...
-data/evidence/jobinja/job-pages/<job-id>/...
-```
-
-Evidence writes use a temporary file followed by atomic replacement.
-
-### 5.6 Discovery orchestration
-
-`jobinja_discovery.py` coordinates validated searches, bounded acquisition,
-evidence, deterministic link extraction, job upsert, discovery provenance, and
-per-search/combined summaries.
-
-Stop reasons:
-
-```text
-page_limit_reached
-empty_page
-repeated_result_set
-request_budget_reached
-page_failed
-invalid_search
-```
-
-Repeated result pages are identified by sorted stable source job IDs rather than
-volatile HTML.
-
-### 5.7 Detail acquisition and batch service
-
-`jobinja_detail_service.py` acquires one known job page, saves evidence before
-parsing, computes semantic content, records a version only when meaningful
-content changes, and records every successful/failed check observation.
-
-`jobinja_batch.py` runs up to 50 unique jobs sequentially with configured delay
-and per-job failure isolation.
-
-### 5.8 Fetch observations and refresh scheduling
-
-`job_detail_observations.py` separates operational checks from source semantic
-versions. Refresh-due selection uses the latest observation timestamp and falls
-back to the semantic-version timestamp for legacy rows.
-
-One failed check never implies expiration or removal.
-
-### 5.9 Deterministic parser
-
-`jobinja_details.py` implements `jobinja-detail-v2` and extracts explicit source
-fields without LLM inference. Missing fields remain missing. Jobinja skill tags
-remain separate from later description-derived skills.
-
-### 5.10 Source semantic versions
-
-`storage.py` stores meaningful deterministic source versions. Version identity
-uses canonical parsed fields rather than volatile raw HTML.
-
-The source semantic version is the parent record for later translations and
-analysis.
-
-### 5.11 Translation provider boundary
-
-`translation/base.py` defines a minimal provider protocol:
-
-```text
-provider name
-provider model
-translate ordered text batch
-```
+`translation/base.py` defines the provider protocol.
 
 Current implementations:
 
 ```text
-translation/lm_studio.py
-  local-first structured translation through LM Studio
-
-translation/google_cloud.py
-  optional external Google Cloud Translation Basic v2 provider
+translation/lm_studio.py     local-first structured translator
+translation/google_cloud.py  optional external provider
 ```
 
-Provider concerns stay outside parsing and persistence logic.
+LM Studio translation validates JSON-schema output, exact IDs/counts, and bounded output.
+Explicit `finish_reason="length"` recovery splits multi-segment batches and can increase a
+single long segment's output budget up to a hard 32,768-token cap without shortening source
+text.
 
-The LM Studio provider uses `/v1/models` and `/v1/chat/completions` with JSON-schema
-structured output. It validates exact item count/IDs and rejects malformed output.
-Its provider contract is versioned as `lm-studio-translation-v1` so a material prompt
-policy change creates distinct derived artifacts.
+### English projection and persistence
 
-Model selection priority is:
+`translation/projection.py` constructs structured English fields, a canonical English
+document, per-string native/translated provenance, and a projection hash.
 
-```text
-translation_lm_studio_model
-→ lm_studio_model
-→ automatic only when exactly one model is visible
-```
-
-### 5.12 English projection
-
-`translation/projection.py` creates a complete English representation from one
-exact source semantic version.
-
-Rules:
-
-- parser metadata is not projected as job content;
-- strings without Persian characters pass through unchanged;
-- Persian-containing strings are translated;
-- mixed Persian/English strings are translated as one semantic unit;
-- no hard-coded translation dictionary is used;
-- every string path records `native` or `translated` provenance;
-- a complete English document is rendered alongside structured English fields;
-- the projection receives its own SHA-256.
-
-### 5.13 Translation persistence
-
-`translation_store.py` introduces two derived record types:
+`translation_store.py` persists:
 
 ```text
 job_translation_artifacts
 job_translation_attempts
 ```
 
-Artifact identity includes:
+Artifact uniqueness includes source version, target language, provider, model, and
+translation schema. Current export/use never silently falls back to an older source
+version.
 
-```text
-source detail-version ID
-+ target language
-+ provider contract
-+ provider model
-+ translation schema version
-```
+### English export
 
-Therefore a translator/model/schema/prompt-contract change creates a new derived
-artifact, not a new employer-content version.
+`translation_export.py` writes current English artifacts as UTF-8 JSON Lines for future
+LLM/ML workflows.
 
-Attempts retain `completed`, `failed`, or `reused` outcomes.
+### Web read models
 
-### 5.14 Translation orchestration
+`web/queries.py` owns focused read-only dashboard/job-list queries. It is deliberately not a
+second persistence layer.
 
-`translation_service.py`:
+### Web operation manager
 
-- creates `source-identity/native-english` artifacts for source versions that
-  require no Persian translation;
-- calls the configured provider for Persian/mixed source segments;
-- reuses identical artifacts idempotently;
-- isolates per-job translation failures;
-- selects bounded missing-artifact queues;
-- prioritizes specified current-sync jobs when requested.
-
-### 5.15 English corpus export
-
-`translation_export.py` writes UTF-8 JSON Lines containing only English artifacts
-for each job's **latest successfully parsed semantic source version**.
-
-Each record includes source-version identity, provider/model/schema metadata,
-segment provenance, structured English fields, and the complete English document.
-
-Stale translations of older source versions are deliberately excluded.
-
-### 5.16 Structural audit
-
-`job_audit.py` checks source parser structure only. Translation quality is a
-separate evaluation problem and must not be conflated with parser quality.
-
-### 5.17 Acquisition sync
-
-`jobinja_sync.py` composes discovery, missing/refresh detail acquisition, and
-source parser audit.
-
-The CLI may then run an optional bounded translation queue when:
-
-```toml
-translation_enabled = true
-translation_auto_after_sync = true
-```
-
-With the default `lm-studio` provider, that step remains local. Translation may
-fail independently without invalidating acquired source evidence.
-
-### 5.18 LM Studio analysis boundary
-
-The P1.6 analysis provider remains behind `inference/` and is logically separate
-from translation even when both use the same LM Studio server.
-
-This separation allows:
-
-- a dedicated translation model and a different analysis model;
-- independent prompt/schema versioning;
-- independent failure/retry policies;
-- translation quality evaluation without coupling to career-analysis quality.
-
-P1.6 will add versioned analysis schemas, prompt evidence, raw responses,
-validation, and review states.
+`web/operations.py` owns ephemeral browser action state. It does not replace durable
+acquisition runs, fetch observations, or translation attempts.
 
 ## 6. SQLite record model
 
-Current core and derived records include:
+Current durable records include:
 
 ```text
 source_searches
@@ -420,30 +263,16 @@ job_translation_artifacts
 job_translation_attempts
 ```
 
-Important distinctions:
+Important distinction:
 
 ```text
-job_postings
-  logical source identity
-
-job_detail_versions
-  meaningful employer-content history
-
-job_detail_fetch_observations
-  operational checks
-
-job_translation_artifacts
-  derived English views of exact source versions
-
-job_translation_attempts
-  operational translation history
-
-raw evidence files
-  exact HTTP response bytes and metadata
+job_postings                    logical source identity
+job_detail_versions             meaningful employer-content history
+job_detail_fetch_observations   operational source checks
+job_translation_artifacts       derived English views
+job_translation_attempts        operational translation history
+raw evidence files              exact HTTP response bytes + metadata
 ```
-
-SQLite remains appropriate for the current local utility. A general ORM remains
-unnecessary.
 
 ## 7. Repository structure
 
@@ -470,72 +299,47 @@ src/jobhunter/
   inference/
   sources/
   translation/
-    __init__.py
-    base.py
-    google_cloud.py
-    lm_studio.py
-    projection.py
+  web/
+    app.py
+    launcher.py
+    operations.py
+    queries.py
+    templates/
+    static/
 ```
 
-## 8. Testing strategy
+## 8. Testing
 
-Normal tests do not contact Jobinja, Google Cloud, or LM Studio.
+Normal tests never contact Jobinja, LM Studio, or Google Cloud.
 
-Deterministic tests cover:
+Deterministic coverage includes acquisition identity/versioning, parsing, observations,
+refresh selection, translation/provider behavior, English export, search planning, and the
+local web application.
 
-- URL/search normalization;
-- packaged and external search catalogs;
-- pack/profile/custom-group expansion;
-- request budgets and discovery idempotency;
-- evidence writing;
-- parser regressions;
-- semantic versions;
-- fetch observations and refresh scheduling;
-- LM Studio structured translation request/response validation;
-- LM Studio exact-one-model auto-selection and ambiguous-model refusal;
-- Google translation request shape/header authentication/chunking;
-- mixed-language English projection and segment provenance;
-- native-English zero-provider behavior;
-- translation artifact reuse;
-- new-source-version translation invalidation;
-- current-version-only English JSONL export;
-- provider-aware CLI configuration gates.
+Web tests cover primary route rendering, packaged static assets, browser security headers,
+CSRF rejection, local operation execution/polling, and safe empty-corpus filtering.
 
-Live acceptance remains explicit after deterministic tests pass.
+## 9. Accepted and incomplete boundaries
 
-## 9. Security and privacy boundaries
+Accepted through live validation before the web increment:
 
-- Use public Jobinja pages only.
-- Do not automate login, applications, or CAPTCHA bypass.
-- Do not use stealth proxy rotation.
-- Bound source requests and detail batches.
-- Treat source text as untrusted data.
-- Keep runtime data and secrets out of Git.
-- Prefer local LM Studio translation by default.
-- A loopback LM Studio server keeps translation text on the local machine boundary.
-- If LM Studio is exposed to another host/interface, that network boundary must be
-  treated as deliberate deployment configuration.
-- Google translation is optional and explicitly external; when enabled, parsed source
-  text is intentionally sent to Google Cloud.
-- Never treat a translation as stronger evidence than original employer text.
+- M0 foundation;
+- P1.1/P1.2 discovery;
+- bounded detail acquisition and refresh observations;
+- parser v2 across 15 structurally varied live advertisements;
+- semantic source versioning;
+- 15/15 current LM Studio English artifacts;
+- 15-record current English JSONL corpus;
+- bounded real truncation recovery.
 
-## 10. Current stop line
+The new local web application is implemented but must still receive local browser/live
+acceptance.
 
-The system can configure data-driven bilingual searches, discover jobs
-repeat-safely, preserve evidence, fetch and version deterministic source details,
-retain check history, audit parser structure, and optionally create/export a
-versioned English corpus through local LM Studio or Google Cloud.
+Still incomplete:
 
-It must not yet infer or claim:
-
-- role purpose;
-- responsibilities;
-- required versus preferred qualifications;
-- description-derived skills;
-- personal relevance;
-- capability gaps;
-- application readiness;
-- career recommendations;
-- aggregate market conclusions.
-
-Those require P1.6/P1.7 evidence-backed analysis.
+- challenge/login/CAPTCHA/error/expired-page classification;
+- complete lifecycle/repost/duplicate policy;
+- P1.6 responsibility/requirement interpretation;
+- aggregate role/market intelligence;
+- personal capability comparison and gap analysis;
+- final P1.7 combined analysis/report workflow.
