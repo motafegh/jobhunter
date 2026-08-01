@@ -2,50 +2,131 @@
 
 ## 1. Purpose
 
-JobHunter preserves employer text in its original language and may also create a
-separate English representation for downstream local LLM analysis, SQL/analytics,
-and later machine-learning experiments.
+JobHunter preserves employer text in its original language and may create a separate
+English representation for downstream local semantic analysis, SQL/analytics, and later
+machine-learning experiments.
 
-Translation is a **derived representation**. It never replaces source evidence and
-never creates a new employer-content semantic version by itself.
+Translation is **derived data**. It never replaces source evidence and never creates a new
+employer-content semantic version by itself.
 
-LM Studio is the default translation provider because it preserves JobHunter's
-local-first operating model. Google Cloud Translation remains an optional external
-provider.
+LM Studio is the normal local-first translation provider. Google Cloud Translation remains
+an optional external provider.
 
-## 2. Data flow
+## 2. Evidence hierarchy
+
+```text
+original employer/source text     authoritative
+English projection                derived convenience
+semantic analysis                 model-derived interpretation
+```
+
+A downstream claim may use English to help a model understand Persian, but material claims
+must remain traceable to original employer/source text.
+
+## 3. Current data flow
 
 ```text
 immutable Jobinja HTML
 → deterministic parser-v2 source fields
-→ JobPostingVersion / semantic source version
+→ current semantic source version
 → translation decision
-   ├─ no Persian text → native-English identity projection
-   └─ Persian or mixed text → configured TranslationProvider
-        ├─ LM Studio local structured translation (default)
-        └─ Google Cloud Translation (optional external provider)
-→ versioned English translation artifact
-→ current English corpus / JSONL export
-→ later LLM analysis, embeddings, NLP, or ML
+   ├─ native English → identity projection, no model call
+   └─ Persian/mixed → configured translation provider
+                      ↓
+                 translation v2
+                      ↓
+        deterministic integrity validation
+                      ↓
+          current English v2 artifact
+                      ↓
+      export / P1.6 semantic analysis
 ```
 
-The original source version remains authoritative throughout this flow.
+A translation/model failure never modifies source evidence or source semantic history.
 
-## 3. Three distinct records
+## 4. Why translation v2 exists
 
-JobHunter keeps these records separate.
+Translation v1 proved the architecture and worked on the initial live corpus, but later
+real postings exposed a serious association defect: plausible English strings could be
+returned under the wrong source fields. Examples included company-description text appearing
+as the company name and short categorical values shifting across location, salary, gender,
+and military-service fields.
+
+The original source remained correct because translation was already isolated as derived
+data. JobHunter therefore treats v1 as historical evidence rather than rewriting it.
+
+Current contracts are:
+
+```text
+provider contract:   lm-studio-translation-v2
+projection schema:   english-projection-v2
+export schema:       jobhunter-english-corpus-v2
+```
+
+V1 artifacts remain in SQLite. They are not considered current v2 data, are not exported by
+the v2 exporter, and are not accepted as the English input to P1.6 analysis.
+
+## 5. Translation v2 association guarantee
+
+Each Persian/mixed semantic string receives a content-derived identifier based on its source
+text. The LM Studio structured response must return that exact identifier.
+
+More importantly, v2 sends **one semantic source segment per LM request**.
+
+```text
+source segment A → one structured request → translation A
+source segment B → one structured request → translation B
+source segment C → one structured request → translation C
+```
+
+This deliberately trades model-call throughput for field-association safety. A model cannot
+swap salary/location/company/category translations between simultaneous items because those
+independent items are never present in the same translation request.
+
+The response still must satisfy strict JSON-schema validation, exact content-derived ID
+matching, non-empty translation, and normal provider error handling.
+
+## 6. Deterministic translation-integrity gate
+
+Before a v2 projection is persisted, JobHunter checks source and English structures.
+Current checks include:
+
+- identical projected root fields;
+- dictionary/list shape preservation;
+- list-length preservation;
+- stable fields such as dates remain unchanged;
+- non-empty translations for non-empty source text;
+- suspicious scalar-field paragraph expansion;
+- suspicious long-form omission or extreme expansion;
+- translated scalar fields do not remain Persian/Arabic-script text;
+- translated segment provenance remains explicit.
+
+These checks detect corruption classes. They do **not** claim to judge whether an English
+sentence is elegant or whether every nuanced translation is linguistically optimal.
+
+If integrity fails:
+
+```text
+model response
+→ rejected
+→ failed translation attempt retained
+→ no current English artifact
+→ no export
+→ no P1.6 analysis
+```
+
+## 7. Three translation record types
 
 ### Source semantic version
 
-Represents what the employer advertisement says. A source change creates a new
-semantic version.
+Represents meaningful employer advertisement content. Translation never changes it.
 
 ### Translation artifact
 
 Represents one English projection of one exact source semantic version under one
-translation provider/model/schema combination.
+provider/model/schema contract.
 
-Important fields:
+Important fields include:
 
 - source detail-version ID;
 - source semantic SHA-256;
@@ -54,16 +135,16 @@ Important fields:
 - provider name;
 - exact provider model;
 - translation schema version;
-- translated fields;
+- structured English fields;
 - complete English document;
 - per-segment provenance;
-- translated and native segment counts;
+- translated/native segment counts;
 - projection SHA-256;
-- creation timestamp.
+- creation time.
 
 ### Translation attempt
 
-Represents an operational attempt and has one outcome:
+Records operational outcomes:
 
 ```text
 completed
@@ -71,12 +152,11 @@ failed
 reused
 ```
 
-A provider or model failure therefore does not alter the source version or destroy a
-prior translation artifact.
+Provider/model errors and integrity rejection therefore remain inspectable.
 
-## 4. Segment provenance
+## 8. Segment provenance
 
-Every string placed into the English projection is classified as:
+Each projected source string is classified as:
 
 ```text
 native
@@ -99,204 +179,88 @@ English: Proficiency in Python and Docker
 Origin: translated
 ```
 
-A mixed Persian/English sentence is translated as one semantic unit. Native technical
-terms containing no Persian characters pass through unchanged.
+Mixed Persian/English strings are translated as one semantic unit. Native technical tokens
+without Persian text pass through unchanged.
 
-This allows later experiments to select:
+## 9. LM Studio model selection
 
-- all English content;
-- native-English segments only;
-- translated segments only;
-- mixed jobs only;
-- one provider/model/version only.
-
-## 5. LM Studio provider — default
-
-The default provider is:
-
-```toml
-translation_provider = "lm-studio"
-```
-
-It uses LM Studio's OpenAI-compatible local endpoints:
-
-```text
-GET  /v1/models
-POST /v1/chat/completions
-```
-
-Translation requests use JSON-schema structured output. The model must return one
-object containing an ordered set of translation items with integer IDs and translated
-text. JobHunter then validates:
-
-- the response is valid JSON;
-- the `translations` list exists;
-- result count equals input count;
-- every input ID appears exactly once;
-- no unexpected IDs exist;
-- every translation is non-empty;
-- final output is restored to exact input order.
-
-Malformed output is rejected and never becomes an English artifact.
-
-### Translation instruction contract
-
-The provider identifier is currently:
-
-```text
-lm-studio-translation-v1
-```
-
-The version is intentional. The prompt contract requires the local model to:
-
-- translate complete Persian or mixed Persian-English text;
-- preserve factual meaning and requirement strength;
-- preserve uncertainty, modality, negation, numbers, dates, and names;
-- preserve standard technical terms and acronyms when already natural in English;
-- avoid summarizing, explaining, classifying, inferring, or adding information;
-- return exactly one translation per source segment.
-
-A future material prompt-policy change must receive a new provider-contract version so
-old and new translation artifacts are not silently treated as equivalent.
-
-## 6. LM Studio model selection
-
-Model selection is deliberately fail-closed.
-
-Priority:
+Selection remains fail-closed:
 
 ```text
 translation_lm_studio_model
 → lm_studio_model
-→ automatic selection only when exactly one model is visible
+→ automatic selection only when exactly one LM Studio model is visible
 ```
 
-A dedicated translation model may therefore be configured without changing the model
-used later for general JobHunter inference:
+This permits a dedicated translation model without forcing later semantic analysis to use
+the same model.
 
-```toml
-lm_studio_model = "general-analysis-model"
-translation_lm_studio_model = "translation-model"
-```
-
-If neither is configured:
-
-- exactly one visible LM Studio model → automatically selected;
-- zero visible models → translation fails visibly;
-- multiple visible models → translation fails and requires an explicit model ID.
-
-This avoids accidentally creating corpus data with an arbitrary local model.
-
-Inspect exact model IDs with:
+Inspect visible model IDs with:
 
 ```bash
 jobhunter translations models
 ```
 
-## 7. LM Studio request bounds
+## 10. LM Studio request and recovery bounds
 
-Translation uses bounded local requests:
+Typical configuration:
 
 ```toml
 translation_batch_limit = 20
 translation_timeout_seconds = 30.0
 translation_max_retries = 1
 translation_lm_studio_max_tokens = 4096
-translation_lm_studio_character_target = 6000
 ```
 
-A job may contain several translatable fields. JobHunter groups unique Persian-bearing
-segments into bounded model requests using both:
+`translation_batch_limit` limits how many jobs one operation selects. V2 may issue several
+local model requests per job because every semantic segment is isolated.
 
-- a maximum item count per request;
-- an approximate input-character target.
+The original source segment is never shortened.
 
-A single segment larger than the target is sent intact rather than truncated.
-JobHunter never shortens the employer text simply to satisfy a batching heuristic.
+If LM Studio reports `finish_reason = "length"` for one segment, JobHunter doubles the
+output-token budget boundedly:
 
-Transport retries remain bounded to configured connection/transient-server conditions.
-Model-output truncation is handled separately and conservatively when LM Studio returns
-`finish_reason = "length"`:
+```text
+4096 → 8192 → 16384 → 32768
+```
 
-1. a truncated multi-segment request is split recursively into smaller segment groups;
-2. if one individual segment still truncates, its output-token budget is doubled;
-3. the single-segment budget may increase only up to the hard local cap of 32,768
-   output tokens;
-4. if the model still truncates at that cap, the translation fails visibly.
+If the single segment still truncates at the hard cap, translation fails visibly.
 
-The original source segment is never shortened during this recovery. Other malformed
-structured output is rejected rather than repaired heuristically or written into the
-English corpus.
+Transport retries remain bounded separately.
 
-## 8. Structured-output compatibility
+## 11. Local privacy boundary
 
-LM Studio supports JSON-schema structured output through its OpenAI-compatible chat
-completions endpoint, but structured-output capability is model-dependent.
-
-Operationally:
-
-- use a chat/instruction model with reliable structured-output support;
-- run `jobhunter doctor --smoke` for the general configured model when applicable;
-- perform a one-job translation acceptance test before translating the corpus;
-- inspect semantic fidelity, not only JSON validity.
-
-A model that produces valid JSON but poor Persian→English translation is not accepted
-merely because the technical call succeeds.
-
-## 9. Local privacy boundary
-
-With the default provider:
+With:
 
 ```toml
 translation_provider = "lm-studio"
 ```
 
-parsed job text remains on the machine and is sent only to the configured LM Studio
-server URL. In normal local use that URL should be a loopback address such as:
+parsed job text is sent only to the configured LM Studio URL. Normal use should keep that
+URL on loopback, for example:
 
 ```text
 http://127.0.0.1:1234/v1
 ```
 
-If the user deliberately exposes LM Studio on another host or network interface, that
-network boundary becomes part of the user's local deployment configuration.
+No Google API key or cloud billing is required for the normal path.
 
-No Google API key is required for LM Studio translation.
+## 12. Optional Google provider
 
-## 10. Optional Google Cloud Translation provider
-
-Google remains available as an explicit alternative:
+Google Cloud Translation remains an explicit alternative:
 
 ```toml
 translation_provider = "google-cloud"
 google_translation_model = "nmt"
 ```
 
-The Google provider uses the official Cloud Translation Basic v2 REST API and:
+Google is external processing. Credentials stay outside the repository. The same projection
+schema and deterministic integrity gate apply after provider output.
 
-- sends the API key in the `x-goog-api-key` header;
-- sends plain text rather than HTML;
-- targets English;
-- batches provider requests;
-- preserves returned ordering;
-- uses bounded timeout and retry settings;
-- never stores the API key in translation artifacts.
+## 13. Native-English behavior
 
-Using Google means parsed job text intentionally leaves the machine. Keep credentials
-outside the repository:
-
-```bash
-export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='...'
-```
-
-Google is optional and is no longer required for the normal JobHunter path.
-
-## 11. Native-English behavior
-
-A source version containing no Persian text does not need an LLM or cloud translation
-request.
-
-JobHunter records an identity artifact with:
+A current source version containing no Persian text creates an identity artifact without a
+translation-model call:
 
 ```text
 provider_name = source-identity
@@ -304,10 +268,10 @@ provider_model = native-english
 translated_segment_count = 0
 ```
 
-This gives native-English and translated jobs the same downstream corpus shape while
-retaining their origin.
+Native English jobs still receive the current `english-projection-v2` schema so downstream
+records have one uniform structure.
 
-## 12. Idempotency and translator upgrades
+## 14. Idempotency and upgrades
 
 Artifact identity includes:
 
@@ -316,42 +280,44 @@ source detail version
 + target language
 + provider contract
 + provider model
-+ translation schema version
++ projection schema version
 ```
 
-Running the same translation again records `reused` and references the existing
-artifact.
+Repeating identical current work records `reused` instead of multiplying artifacts.
 
-A materially changed job creates a new source version and therefore requires a new
-English artifact.
+A new source semantic version requires a new English artifact. Changing provider/model,
+provider contract, or projection schema also creates a distinct artifact rather than
+rewriting history.
 
-Changing the LM Studio model, provider contract, Google model, or projection schema
-creates a distinct artifact instead of overwriting history.
+## 15. V1 -> V2 migration behavior
 
-## 13. Current-version safety
-
-Only the current successfully parsed source semantic version may have a current
-English artifact.
-
-If a job receives a newer semantic version:
+After upgrading an existing database:
 
 ```text
-old English artifact
-→ retained historically
-→ no longer current
+historical v1 artifact
+→ remains stored
+→ UI labels current English as repair needed
+→ current missing queue selects the job for v2 work
+→ successful v2 translation creates a new artifact
+→ v1 remains historical
 ```
 
-If the newest source version is `partial` or `parse_failed`, JobHunter does not fall
-back to an older translation and present it as current data.
+This is expected. It may temporarily reduce the dashboard's current-English count until the
+parsed corpus is repaired in bounded batches.
 
-This prevents stale translated content from silently entering future LLM/ML datasets.
+Do not delete v1 rows to make the metric look complete.
 
-## 14. English projection contents
+## 16. Current-version safety
 
-Parser metadata such as `parser_version` and source `language` are stored as artifact
-metadata rather than copied into the projected job fields.
+Only the current successfully parsed source semantic version can be current English data.
+If a newer source version exists, older translations remain historical.
 
-The projected fields include available source fields such as:
+If the newest source version is `partial` or `parse_failed`, JobHunter does not silently
+fall back to an older translation for current export/analysis.
+
+## 17. English projection contents
+
+Available source fields are carried structurally, including:
 
 - title;
 - company;
@@ -360,205 +326,55 @@ The projected fields include available source fields such as:
 - employment type;
 - minimum experience;
 - salary;
-- source skill tags;
+- required skill tags;
 - gender;
-- military-service requirement;
+- military-service field;
 - education;
-- publication/expiration dates;
-- complete job description;
-- company description.
+- date posted / valid through;
+- full job description;
+- full company description.
 
-Missing values remain missing. Translation must not invent a source field.
+Parser metadata such as `parser_version` and source `language` stay artifact metadata rather
+than pretending to be employer job fields.
 
-## 15. Complete English document
+## 18. Export
 
-Alongside structured fields, every artifact includes one canonical English document.
-It is rendered from the projected fields and is convenient for:
+The current exporter writes JSON Lines to the configured data directory and includes only
+current `english-projection-v2` artifacts.
 
-- local LLM prompts;
-- embeddings;
-- text classification;
-- clustering;
-- topic modelling;
-- information retrieval;
-- reproducible NLP/ML experiments.
+A record carries source/version identity, translation provider/model/schema/projection hash,
+segment provenance, structured English fields, and the complete English document.
 
-Structured English fields remain the preferred source for deterministic queries.
+Original source fields are not duplicated as authority into this derived export; source IDs
+and hashes link back to the authoritative local database/evidence.
 
-## 16. CLI
+## 19. P1.6 boundary
 
-Inspect corpus/config state without invoking a translator:
+P1.6 refuses to analyze a current source version unless JobHunter can resolve its current
+hardened English artifact.
 
-```bash
-jobhunter translations status
-```
+The model receives both:
 
-Inspect exact LM Studio model IDs:
+- original authoritative source fields;
+- English v2 comprehension aid.
 
-```bash
-jobhunter translations models
-```
+Every accepted semantic claim must still cite an evidence excerpt present in original source
+fields. This prevents a translation error from becoming the sole evidence for a material
+career claim.
 
-Translate a bounded missing queue:
+## 20. Quality work that remains
 
-```bash
-jobhunter translations run --missing --limit 20
-```
+Translation v2 removes the known field-association corruption class and adds deterministic
+integrity checks. It does not establish a perfect linguistic benchmark.
 
-Translate explicit jobs:
+A later reviewed Persian→English golden corpus should compare candidate local models on:
 
-```bash
-jobhunter translations run tpLF tmW1 tmkE
-```
-
-Inspect one current English artifact:
-
-```bash
-jobhunter translations show tpLF
-```
-
-Export the current English corpus:
-
-```bash
-jobhunter translations export
-```
-
-Default output:
-
-```text
-data/exports/job_english_corpus.jsonl
-```
-
-Only artifacts belonging to each job's latest successfully parsed source version are
-exported.
-
-## 17. JSONL corpus schema
-
-Each line contains:
-
-```text
-schema_version
-source
-source_job_id
-source_detail_version_id
-source_semantic_sha256
-source_language
-target_language
-english_origin
-translation metadata
-segment_provenance
-english_fields
-english_document
-```
-
-`english_origin` currently distinguishes:
-
-```text
-native
-translated_or_mixed
-```
-
-The source database remains authoritative for original Persian, English, or mixed
-employer text.
-
-## 18. Automatic translation after sync
-
-After one-job quality acceptance, local automatic translation can be enabled:
-
-```toml
-translation_enabled = true
-translation_auto_after_sync = true
-translation_provider = "lm-studio"
-translation_batch_limit = 20
-```
-
-Then:
-
-```bash
-jobhunter jobinja sync
-```
-
-runs:
-
-```text
-discovery
-→ detail acquisition
-→ deterministic parser audit
-→ bounded missing English-projection queue
-```
-
-Jobs checked during that sync are prioritized in the translation queue. Translation
-failures are reported independently from successful acquisition.
-
-## 19. Evidence rule for later LLM analysis
-
-A translated English passage is a convenience representation, not employer evidence.
-
-Later analytical records may reference an English passage for readability, but every
-material claim must still retain a path to original source text/evidence.
-
-Example:
-
-```text
-Original employer text:
-آشنایی با Docker
-
-Faithful translation:
-Familiarity with Docker
-```
-
-If any translator renders that as `Proficiency with Docker`, JobHunter must not upgrade
-the employer requirement because of the derived wording.
-
-## 20. Search vocabulary is data, not Python logic
-
-The bilingual search vocabulary is packaged separately in:
-
-```text
-src/jobhunter/data/search_catalog.toml
-```
-
-Python loads and validates the catalog. Terms are not embedded as career-vocabulary
-tuples in `search_registry.py`.
-
-A complete replacement catalog can be configured:
-
-```toml
-jobinja_search_catalog_path = "my-search-catalog.toml"
-```
-
-This makes acquisition vocabulary independently editable, versionable, testable, and
-replaceable without source-code changes.
-
-## 21. Translation-quality acceptance
-
-Technical success is not enough. Before enabling bulk/automatic translation, review a
-representative Persian/mixed corpus for:
-
+- semantic fidelity;
 - requirement-strength preservation;
-- negation and uncertainty;
+- negation/modality;
 - technical terminology;
-- job-title rendering;
-- employment/experience/education wording;
-- long-description completeness;
-- company/proper-name handling;
-- mixed Persian-English fluency;
-- omissions or hallucinated additions.
+- names/transliteration;
+- long-description completeness.
 
-A later translation golden corpus should store approved source/English pairs and allow
-provider/model comparisons before a translation model change becomes the default.
-
-## 22. Current limitations
-
-- English is the only derived target language currently supported.
-- Translation quality is not yet scored against a manually reviewed Persian→English
-  golden corpus.
-- Glossary/terminology locking is not implemented yet.
-- Structured output depends on the selected LM Studio model's capabilities.
-- The English corpus is not yet consumed by P1.6 analysis because that increment has
-  not started.
-- Machine learning may consume this corpus later, but translated text must stay
-  labelled so experiments can control translation-induced bias.
-
-These boundaries keep translation useful without mixing it into authoritative source
-parsing.
+Until that benchmark exists, v2 should be described as hardened and structurally guarded,
+not as human-certified translation quality.
