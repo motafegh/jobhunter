@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Search plan · JobHunter{% endblock %}
 {% block heading %}Search plan{% endblock %}
-{% block eyebrow %}Bilingual market coverage{% endblock %}
+{% block eyebrow %}Bilingual market coverage and observed effectiveness{% endblock %}
 
 {% block content %}
 <section class="metric-grid three">
@@ -11,46 +11,20 @@
 </section>
 
 <section class="panel">
-  <div class="panel-header">
-    <div><p class="eyebrow">Effective default</p><h2>Configured search sequence</h2></div>
-    <span class="badge">Budget {{ settings.jobinja_search_request_budget }}</span>
-  </div>
-  <p class="muted">These searches are generated from your configured profile, packs, custom groups, and raw URLs. The acquisition service still enforces its request budget even when the catalog is larger.</p>
-  <div class="search-plan-list">
-  {% for search in configured_searches %}
-    <div class="search-plan-row">
-      <span class="search-index">{{ loop.index }}</span>
-      <div><strong>{{ search.name }}</strong><small>{{ search.url }}</small></div>
-      <span class="badge">{{ search.max_pages }} page{% if search.max_pages != 1 %}s{% endif %}</span>
-    </div>
-  {% else %}
-    <div class="empty-state">No enabled searches are configured.</div>
-  {% endfor %}
-  </div>
+  <div class="panel-header"><div><p class="eyebrow">Observed evidence</p><h2>Search effectiveness</h2></div><span class="badge">No automatic pruning</span></div>
+  <p class="muted">This table measures what each saved search has actually contributed to discovery. “Unique contribution” means a posting was found only by that search within its run. High overlap is not automatically bad: important cross-domain jobs may legitimately match several searches.</p>
+  {% if effectiveness %}<div class="table-wrap"><table><thead><tr><th>Search</th><th>Distinct jobs</th><th>Discovery events</th><th>Runs</th><th>Unique contributions</th></tr></thead><tbody>{% for item in effectiveness %}<tr><td><strong>{{ item.search_name }}</strong></td><td>{{ item.distinct_jobs }}</td><td>{{ item.discovery_events }}</td><td>{{ item.runs }}</td><td>{{ item.unique_contributions }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">Run discovery to build search-effectiveness evidence.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Effective default</p><h2>Configured search sequence</h2></div><span class="badge">Budget {{ settings.jobinja_search_request_budget }}</span></div>
+  <p class="muted">These searches are generated from your configured profile, packs, custom groups, and raw URLs. The acquisition service enforces its request budget even when the catalog is larger.</p>
+  <div class="search-plan-list">{% for search in configured_searches %}<div class="search-plan-row"><span class="search-index">{{ loop.index }}</span><div><strong>{{ search.name }}</strong><small>{{ search.url }}</small></div><span class="badge">{{ search.max_pages }} page{% if search.max_pages != 1 %}s{% endif %}</span></div>{% else %}<div class="empty-state">No enabled searches are configured.</div>{% endfor %}</div>
 </section>
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Vocabulary</p><h2>Profiles and packs</h2></div></div>
-  <div class="profile-grid">
-  {% for profile_name, pack_names in catalog.profiles.items() %}
-    <article class="profile-card">
-      <span class="badge">Profile</span>
-      <h3>{{ profile_name }}</h3>
-      <p>{{ pack_names|join(' · ') }}</p>
-    </article>
-  {% endfor %}
-  </div>
-
-  <div class="pack-grid">
-  {% for pack_name, pack in catalog.packs.items() %}
-    <article class="pack-card">
-      <div class="pack-heading"><h3>{{ pack_name }}</h3><span class="badge">{{ pack.terms|length }} terms</span></div>
-      <p class="muted">{{ pack.description }}</p>
-      <div class="tag-list dense">
-      {% for term in pack.terms %}<span class="tag">{{ term }}</span>{% endfor %}
-      </div>
-    </article>
-  {% endfor %}
-  </div>
+  <div class="profile-grid">{% for profile_name, pack_names in catalog.profiles.items() %}<article class="profile-card"><span class="badge">Profile</span><h3>{{ profile_name }}</h3><p>{{ pack_names|join(' · ') }}</p></article>{% endfor %}</div>
+  <div class="pack-grid">{% for pack_name, pack in catalog.packs.items() %}<article class="pack-card"><div class="pack-heading"><h3>{{ pack_name }}</h3><span class="badge">{{ pack.terms|length }} terms</span></div><p class="muted">{{ pack.description }}</p><div class="tag-list dense">{% for term in pack.terms %}<span class="tag">{{ term }}</span>{% endfor %}</div></article>{% endfor %}</div>
 </section>
 {% endblock %}
