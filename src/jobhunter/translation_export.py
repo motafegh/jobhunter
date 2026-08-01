@@ -6,9 +6,10 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_store import TranslationStore
 
-EXPORT_SCHEMA_VERSION = "jobhunter-english-corpus-v1"
+EXPORT_SCHEMA_VERSION = "jobhunter-english-corpus-v2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -23,9 +24,13 @@ def export_english_corpus(
     output_path: Path,
     limit: int = 500,
 ) -> TranslationExportResult:
-    """Write the latest English artifact per job as UTF-8 JSON Lines."""
+    """Write only current hardened English artifacts as UTF-8 JSON Lines."""
 
-    artifacts = store.list_latest_artifacts(target_language="en", limit=limit)
+    artifacts = tuple(
+        artifact
+        for artifact in store.list_latest_artifacts(target_language="en", limit=limit)
+        if artifact.translation_schema_version == TRANSLATION_SCHEMA_VERSION
+    )
     selected_path = output_path.expanduser()
     selected_path.parent.mkdir(parents=True, exist_ok=True)
     temporary = selected_path.with_name(f".{selected_path.name}.tmp")
