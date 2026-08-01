@@ -25,6 +25,7 @@ dev = [
 
 [project.scripts]
 jobhunter = "jobhunter.cli:main"
+jobhunter-app = "jobhunter.web.launcher:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
