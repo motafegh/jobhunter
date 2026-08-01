@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Search plan · JobHunter{% endblock %}
+{% block heading %}Search plan{% endblock %}
+{% block eyebrow %}Bilingual market coverage{% endblock %}
+
+{% block content %}
+<section class="metric-grid three">
+  <article class="metric-card accent"><span class="metric-label">Catalog version</span><strong class="metric-value small-value">{{ catalog.version }}</strong><span class="metric-help">Versioned vocabulary data</span></article>
+  <article class="metric-card"><span class="metric-label">Configured profiles</span><strong class="metric-value">{{ settings.jobinja_search_profiles|length }}</strong><span class="metric-help">{{ settings.jobinja_search_profiles|join(', ') or 'None' }}</span></article>
+  <article class="metric-card"><span class="metric-label">Current search window</span><strong class="metric-value">{{ configured_searches|length }}</strong><span class="metric-help">Max {{ settings.jobinja_max_expanded_searches }} searches per default run</span></article>
+</section>
+
+<section class="panel">
+  <div class="panel-header">
+    <div><p class="eyebrow">Effective default</p><h2>Configured search sequence</h2></div>
+    <span class="badge">Budget {{ settings.jobinja_search_request_budget }}</span>
+  </div>
+  <p class="muted">These searches are generated from your configured profile, packs, custom groups, and raw URLs. The acquisition service still enforces its request budget even when the catalog is larger.</p>
+  <div class="search-plan-list">
+  {% for search in configured_searches %}
+    <div class="search-plan-row">
+      <span class="search-index">{{ loop.index }}</span>
+      <div><strong>{{ search.name }}</strong><small>{{ search.url }}</small></div>
+      <span class="badge">{{ search.max_pages }} page{% if search.max_pages != 1 %}s{% endif %}</span>
+    </div>
+  {% else %}
+    <div class="empty-state">No enabled searches are configured.</div>
+  {% endfor %}
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Vocabulary</p><h2>Profiles and packs</h2></div></div>
+  <div class="profile-grid">
+  {% for profile_name, pack_names in catalog.profiles.items() %}
+    <article class="profile-card">
+      <span class="badge">Profile</span>
+      <h3>{{ profile_name }}</h3>
+      <p>{{ pack_names|join(' · ') }}</p>
+    </article>
+  {% endfor %}
+  </div>
+
+  <div class="pack-grid">
+  {% for pack_name, pack in catalog.packs.items() %}
+    <article class="pack-card">
+      <div class="pack-heading"><h3>{{ pack_name }}</h3><span class="badge">{{ pack.terms|length }} terms</span></div>
+      <p class="muted">{{ pack.description }}</p>
+      <div class="tag-list dense">
+      {% for term in pack.terms %}<span class="tag">{{ term }}</span>{% endfor %}
+      </div>
+    </article>
+  {% endfor %}
+  </div>
+</section>
+{% endblock %}
