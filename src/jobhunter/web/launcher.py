@@ -10,6 +10,7 @@ import threading
 import webbrowser
 from pathlib import Path
 
+import httpx
 import uvicorn
 from pydantic import ValidationError
 
@@ -52,10 +53,20 @@ def _desktop_quote(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-def _install_linux_desktop_launcher() -> Path:
-    home = Path.home()
-    applications_dir = home / ".local/share/applications"
-    icon_dir = home / ".local/share/icons/hicolor/scalable/apps"
+def _install_linux_desktop_launcher(
+    config_path: Path | None,
+    *,
+    home: Path | None = None,
+) -> Path:
+    selected_config = (config_path or Path("jobhunter.toml")).expanduser().resolve()
+    if not selected_config.exists():
+        raise FileNotFoundError(
+            f"Cannot install launcher because configuration does not exist: {selected_config}"
+        )
+
+    home_dir = home or Path.home()
+    applications_dir = home_dir / ".local/share/applications"
+    icon_dir = home_dir / ".local/share/icons/hicolor/scalable/apps"
     applications_dir.mkdir(parents=True, exist_ok=True)
     icon_dir.mkdir(parents=True, exist_ok=True)
 
@@ -65,9 +76,10 @@ def _install_linux_desktop_launcher() -> Path:
 
     executable = shutil.which("jobhunter-app")
     if executable:
-        exec_line = _desktop_quote(executable)
+        executable_part = _desktop_quote(executable)
     else:
-        exec_line = f"{_desktop_quote(sys.executable)} -m jobhunter.web.launcher"
+        executable_part = f"{_desktop_quote(sys.executable)} -m jobhunter.web.launcher"
+    exec_line = f"{executable_part} --config {_desktop_quote(str(selected_config))}"
 
     desktop_path = applications_dir / "jobhunter.desktop"
     desktop_path.write_text(
@@ -78,6 +90,7 @@ def _install_linux_desktop_launcher() -> Path:
                 "Name=JobHunter",
                 "Comment=Local-first career intelligence",
                 f"Exec={exec_line}",
+                f"Path={selected_config.parent}",
                 f"Icon={installed_icon}",
                 "Terminal=false",
                 "Categories=Utility;Development;",
@@ -91,10 +104,21 @@ def _install_linux_desktop_launcher() -> Path:
     return desktop_path
 
 
+def _existing_jobhunter(url: str) -> bool:
+    try:
+        response = httpx.get(url, timeout=0.35)
+    except httpx.HTTPError:
+        return False
+    return response.status_code == 200 and "JobHunter" in response.text
+
+
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     if arguments.install_desktop:
-        desktop_path = _install_linux_desktop_launcher()
+        try:
+            desktop_path = _install_linux_desktop_launcher(arguments.config)
+        except (OSError, FileNotFoundError) as exc:
+            raise SystemExit(f"Desktop launcher installation failed: {exc}") from exc
         print(f"Installed JobHunter application launcher: {desktop_path}")
         return 0
 
@@ -113,6 +137,12 @@ def main(argv: list[str] | None = None) -> int:
 
     url_host = "127.0.0.1" if arguments.host in {"0.0.0.0", "::"} else arguments.host
     url = f"http://{url_host}:{arguments.port}/"
+    if _is_loopback(arguments.host) and _existing_jobhunter(url):
+        print(f"JobHunter is already running: {url}")
+        if not arguments.no_browser:
+            webbrowser.open(url)
+        return 0
+
     if not arguments.no_browser:
         threading.Timer(0.8, webbrowser.open, args=(url,)).start()
 
