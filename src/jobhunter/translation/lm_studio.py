@@ -269,7 +269,9 @@ class LMStudioTranslationProvider:
                 "LM Studio did not return valid structured translation JSON "
                 f"(model={model!r}, finish_reason={finish_reason!r})"
             ) from exc
-        raw_translations = structured.get("translations") if isinstance(structured, dict) else None
+        raw_translations = (
+            structured.get("translations") if isinstance(structured, dict) else None
+        )
         if not isinstance(raw_translations, list) or len(raw_translations) != len(texts):
             raise TranslationError(
                 "LM Studio returned a translation count that does not match the input"
