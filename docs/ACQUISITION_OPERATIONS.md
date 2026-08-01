@@ -1,58 +1,42 @@
-# JobHunter Acquisition Operations
+# JobHunter Acquisition and Translation Operations
 
 ## 1. Purpose
 
-This runbook defines the safe operating workflow for JobHunter acquisition.
-It covers search planning, repeat-safe discovery, detail acquisition, refresh
-checks, fetch history, structural parser auditing, and recovery from expected
-failures.
+This runbook defines safe operation for JobHunter source acquisition and the
+optional derived English corpus. It covers search planning, discovery, detail
+checks, refresh scheduling, parser audit, translation, export, and expected
+failure recovery.
 
-This workflow is independent from LM Studio. Model availability must never
-block preservation of source evidence.
+Source acquisition is independent from LM Studio and from Google translation.
+External translation is opt-in.
 
 ## 2. Record boundaries
 
-JobHunter deliberately separates four records that answer different questions.
-
-### 2.1 JobPosting
-
-Represents one logical Jobinja advertisement identity.
-
-Identity is based primarily on Jobinja's stable source job code. Cross-search
-appearances do not create duplicate postings.
-
-### 2.2 SearchPageSnapshot
-
-Represents one exact search-page HTTP response and metadata sidecar.
-
-It proves what JobHunter received while discovering candidates.
-
-### 2.3 JobPostingVersion
-
-Represents one semantic version of a job advertisement.
-
-A new version is created only when deterministic extracted source fields change.
-Volatile HTML differences do not create false versions.
-
-### 2.4 JobDetailFetchObservation
-
-Represents one attempt to check a job-detail page.
-
-Possible outcomes:
+JobHunter separates records by responsibility:
 
 ```text
-new_version
-unchanged
-failed
+JobPosting
+  logical Jobinja identity
+
+SearchPageSnapshot
+  exact search-page response
+
+JobPostingVersion
+  one semantic source-content version
+
+JobDetailFetchObservation
+  one operational detail-page check
+
+JobTranslationArtifact
+  one English projection of one exact source semantic version
+
+JobTranslationAttempt
+  one completed / failed / reused translation operation
 ```
 
-A repeated unchanged check creates a new observation and raw snapshot but keeps
-the same semantic version. A failed observation preserves the error without
-deleting earlier successful data.
+Raw Jobinja evidence remains authoritative.
 
 ## 3. Preflight
-
-Activate the environment and validate the repository:
 
 ```bash
 source .venv/bin/activate
@@ -60,25 +44,21 @@ ruff check .
 pytest
 ```
 
-Inspect the local configuration:
+Inspect configuration without external network calls:
 
 ```bash
-jobhunter jobinja catalog
+jobhunter jobinja catalog --show-terms
 jobhunter jobinja plan
+jobhunter translations status
 ```
 
-The plan command performs no network requests.
-
 ## 4. Discovery-only operation
-
-Use discovery when validating search coverage or when detail acquisition should
-remain separate.
 
 ```bash
 jobhunter jobinja discover
 ```
 
-A broad explicit run:
+Broad explicit example:
 
 ```bash
 jobhunter jobinja discover \
@@ -88,55 +68,44 @@ jobhunter jobinja discover \
   --request-budget 40
 ```
 
-Discovery output reports:
-
-- searches attempted;
-- page requests attempted versus budget;
-- pages fetched;
-- combined unique jobs;
-- new and known jobs;
-- cross-search overlaps;
-- failures;
-- per-search page count, unique jobs, overlap, and stop reason.
-
-Valid stop reasons:
+Controlled stop states:
 
 ```text
 page_limit_reached
 empty_page
 repeated_result_set
 request_budget_reached
+```
+
+Failure stop states:
+
+```text
 page_failed
 invalid_search
 ```
 
-`request_budget_reached`, `empty_page`, and `repeated_result_set` are controlled
-termination states, not acquisition failures.
-
 ## 5. Acquisition sync
-
-The normal acquisition-only command is:
 
 ```bash
 jobhunter jobinja sync
 ```
 
-It composes accepted components in this order:
+Source flow:
 
 ```text
 configured search plan
 → bounded discovery
 → missing-detail selection
 → refresh-due selection
-→ bounded sequential detail checks
-→ immutable raw evidence
+→ sequential detail checks
+→ immutable evidence
 → deterministic parsing
 → semantic versioning
 → fetch observations
 → structural parser audit
 ```
 
-Configuration defaults:
+Defaults:
 
 ```toml
 jobinja_sync_missing_limit = 10
@@ -144,175 +113,240 @@ jobinja_sync_refresh_limit = 5
 jobinja_refresh_after_hours = 24.0
 ```
 
-The combined missing and refresh limits may not exceed 50 in one sync.
-
-A controlled broad-profile run:
-
-```bash
-jobhunter jobinja sync \
-  --profile ai-security-python \
-  --search-limit 40 \
-  --search-offset 0 \
-  --request-budget 40 \
-  --missing-limit 10 \
-  --refresh-limit 5 \
-  --refresh-after-hours 24
-```
-
-The command returns a non-zero status when discovery or detail failures occur,
-or when the parser audit reports structural findings. Successful earlier stages
-remain committed and inspectable.
+Combined missing + refresh detail checks may not exceed 50.
 
 ## 6. Targeted detail acquisition
 
-Fetch explicit jobs:
-
 ```bash
 jobhunter jobinja fetch tpLF tmW1 tmkE
-```
-
-Fetch jobs with no local detail version:
-
-```bash
 jobhunter jobinja fetch --missing --limit 10
+jobhunter jobinja fetch --refresh-due --older-than-hours 24 --limit 5
 ```
 
-Refresh acquired jobs whose latest check is old enough:
+Each successful check reports its semantic source version and fetch-observation
+ID.
 
-```bash
-jobhunter jobinja fetch \
-  --refresh-due \
-  --older-than-hours 24 \
-  --limit 5
-```
-
-Selection modes are mutually exclusive.
-
-Each batch:
-
-- removes duplicate IDs while preserving order;
-- performs requests sequentially;
-- applies the configured delay between requests;
-- limits the batch to 50 unique jobs;
-- isolates expected failures per job;
-- prints new-version, unchanged, and failure counts;
-- prints the semantic version and fetch-observation ID for each success.
-
-## 7. Inspection commands
-
-List discovered jobs:
+## 7. Parser inspection
 
 ```bash
 jobhunter jobs list --limit 100
-```
-
-List jobs with or without local details:
-
-```bash
-jobhunter jobs list --details available
-jobhunter jobs list --details missing
-```
-
-Show one complete local job without network access:
-
-```bash
 jobhunter jobs show tpLF
-```
-
-Show operational fetch history:
-
-```bash
 jobhunter jobs checks tpLF
-jobhunter jobs checks tpLF --limit 50
-```
-
-Audit latest parsed details:
-
-```bash
 jobhunter jobs audit
 jobhunter jobs audit --only-issues
 ```
 
-## 8. Parser-audit interpretation
+A clean structural audit does not mean semantic interpretation or translation has
+been reviewed.
 
-The deterministic audit checks structural invariants, including:
+## 8. Translation privacy preflight
 
-- title and description presence;
-- current parser version;
-- parse status;
-- description length;
-- scalar-field shape;
-- source skill-tag shape;
-- obvious navigation or interface contamination;
-- Python mapping representations accidentally stored as text;
-- implausibly long scalar fields.
+Translation is disabled by default because Google Cloud is external.
 
-Missing optional fields are coverage gaps, not automatic parser failures.
+Before enabling it:
 
-A clean audit means no known structural anomaly was detected. It does not prove
-that every employer statement has been semantically interpreted correctly. That
-belongs to the later evidence-backed LLM analysis stage.
+1. enable the Cloud Translation API in the intended Google Cloud project;
+2. create/restrict an API key for that API;
+3. configure billing/quota deliberately;
+4. keep the key outside Git;
+5. understand that parsed job-advertisement text will be sent to Google.
 
-## 9. Failure handling
-
-### 9.1 Search-page failure
-
-One search failure does not discard successful searches. Inspect the per-search
-summary and evidence from completed pages.
-
-### 9.2 Detail-page failure
-
-Expected acquisition and evidence-write failures produce a failed fetch
-observation when the job identity is known. Earlier versions and observations
-remain valid.
-
-Retry by explicit ID after resolving the underlying issue:
+Recommended environment setup:
 
 ```bash
-jobhunter jobinja fetch <job-id>
+export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='...'
 ```
 
-### 9.3 Parser finding
+Local configuration:
 
-Use:
+```toml
+translation_enabled = true
+translation_auto_after_sync = false
+translation_provider = "google-cloud"
+translation_target_language = "en"
+translation_batch_limit = 20
+translation_timeout_seconds = 30.0
+translation_max_retries = 1
+google_translation_model = "nmt"
+```
+
+Keep `translation_auto_after_sync = false` during first live validation.
+
+## 9. First live translation acceptance
+
+Choose one already-parsed Persian/mixed advertisement, for example a known clean
+fixture such as `tpLF`.
+
+Check status:
+
+```bash
+jobhunter translations status
+```
+
+Translate one job:
+
+```bash
+jobhunter translations run tpLF
+```
+
+Inspect the result:
+
+```bash
+jobhunter translations show tpLF
+```
+
+Manually compare at least:
+
+- title;
+- location;
+- employment type;
+- education/experience wording;
+- skill tags;
+- job description;
+- technical names such as Python, RAG, LLM, Docker, MLOps;
+- strength words such as familiarity, knowledge, proficiency, mastery, required,
+  and preferred when present.
+
+Transport success alone is not translation-quality acceptance.
+
+## 10. Translation idempotency acceptance
+
+Immediately run the same translation again:
+
+```bash
+jobhunter translations run tpLF
+```
+
+Expected outcome:
+
+```text
+reused
+```
+
+The same source version/provider/model/schema must reference the same artifact
+rather than calling Google again.
+
+## 11. Native-English acceptance
+
+For a parsed advertisement containing no Persian text:
+
+```bash
+jobhunter translations run <english-job-id>
+jobhunter translations show <english-job-id>
+```
+
+Expected provider identity:
+
+```text
+source-identity / native-english
+```
+
+No Google translation request is required.
+
+## 12. Bounded missing translation queue
+
+After individual validation:
+
+```bash
+jobhunter translations run --missing --limit 5
+```
+
+One job's translation failure does not discard successful artifacts from the
+same batch.
+
+## 13. English corpus export
+
+```bash
+jobhunter translations export
+```
+
+Default:
+
+```text
+data/exports/job_english_corpus.jsonl
+```
+
+Inspect a few JSONL records before using them in ML/LLM experiments.
+
+Only artifacts tied to each job's latest semantic source version are exported.
+An older translated artifact is preserved historically but not exposed as current
+corpus data after the employer posting changes.
+
+## 14. Automatic translation after sync
+
+Enable only after manual live acceptance:
+
+```toml
+translation_enabled = true
+translation_auto_after_sync = true
+translation_batch_limit = 20
+```
+
+Then:
+
+```bash
+jobhunter jobinja sync \
+  --profile ai-security-python \
+  --search-limit 12 \
+  --request-budget 12 \
+  --missing-limit 4 \
+  --refresh-limit 2
+```
+
+Source acquisition runs first. The translation queue then prioritizes source jobs
+checked during that sync and fills remaining capacity from current parsed versions
+missing an English artifact.
+
+Translation failure may make the command return attention-required status but does
+not roll back successful acquisition, evidence, parsing, or semantic versions.
+
+## 15. Failure handling
+
+### Search/detail failure
+
+Inspect source summaries and `jobs checks`. Retry explicitly only after the
+underlying condition is understood.
+
+### Parser finding
 
 ```bash
 jobhunter jobs audit --only-issues
 jobhunter jobs show <job-id>
 ```
 
-Then inspect the version-defining raw HTML path. Do not patch the parser from a
-single unexplained output without preserving a regression fixture or test.
+Preserve a regression fixture/test before generalizing a parser fix.
 
-### 9.4 LM Studio unavailable
+### Google translation failure
 
-Acquisition commands do not invoke LM Studio. No acquisition recovery is needed.
-The job remains available for later analysis.
-
-## 10. Daily and weekly operating patterns
-
-### Daily focused sync
+Source data remains valid. Fix credentials/quota/network/provider configuration,
+then rerun:
 
 ```bash
-jobhunter jobinja sync \
-  --pack ai-ml \
-  --pack ai-security \
-  --pack defensive-security \
-  --request-budget 30 \
-  --missing-limit 10 \
-  --refresh-limit 5
+jobhunter translations run <job-id>
 ```
 
-### Broad catalog rotation
+A failed translation attempt is retained; a later success creates an artifact.
 
-```text
-Day or run 1: --search-offset 0
-Day or run 2: --search-offset 40
-Day or run 3: --search-offset 80
-Day or run 4: --search-offset 120
+### Translation quality concern
+
+Do not edit original Jobinja fields to compensate for a translation problem.
+Record the example for a future reviewed translation corpus and compare provider/
+model/schema alternatives.
+
+## 16. Daily/weekly patterns
+
+### Source-only daily sync
+
+Keep translation disabled or `translation_auto_after_sync = false`, then run:
+
+```bash
+jobhunter jobinja sync
 ```
 
-Always inspect the plan when changing offsets, limits, packs, or profiles.
+### Source + translation daily sync
+
+After acceptance, enable automatic translation and keep both acquisition and
+translation batch limits conservative.
 
 ### Weekly quality check
 
@@ -320,34 +354,29 @@ Always inspect the plan when changing offsets, limits, packs, or profiles.
 ruff check .
 pytest
 jobhunter jobs audit
-jobhunter jobs list --details missing --limit 100
+jobhunter translations status
 ```
 
-## 11. Safety and source discipline
+Periodically inspect both original and English representations rather than only
+aggregate counts.
+
+## 17. Safety rules
 
 - Use public Jobinja pages only.
-- Keep requests sequential and rate-limited.
-- Preserve a descriptive user agent.
-- Keep global search and detail limits bounded.
-- Do not automate login or applications.
-- Do not bypass CAPTCHA, blocking, authentication, or access controls.
-- Do not use proxy rotation or stealth crawling.
+- Keep source acquisition bounded/rate-limited.
+- Do not bypass access controls or CAPTCHA.
 - Treat acquired text as untrusted data.
-- Keep runtime evidence and the local database outside Git.
+- Keep runtime data and secrets outside Git.
+- Do not send personal capability/profile data to Google through the translation
+  pipeline; the current translation scope is parsed job-advertisement content.
+- Treat English translations as derived data, never stronger evidence than the
+  original employer text.
 
-## 12. Current stop line
+## 18. Current stop line
 
-The acquisition system may discover, preserve, parse, version, refresh, audit,
-and report operational failures.
+The system may discover, preserve, parse, version, refresh, audit, translate, and
+export current English derived documents.
 
-It must not yet claim:
-
-- responsibility classification;
-- required-versus-preferred qualification interpretation;
-- personal relevance;
-- skill gaps;
-- readiness;
-- career recommendations;
-- combined market conclusions.
-
-Those require versioned, evidence-backed local analysis and review states.
+It must not yet claim responsibility classification, required/preferred semantic
+interpretation, personal relevance, readiness, skill gaps, recommendations, or
+combined market conclusions. Those require P1.6/P1.7 evidence-backed analysis.
