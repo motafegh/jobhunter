@@ -1,5 +1,7 @@
+import subprocess
 from pathlib import Path
 
+from jobhunter.web import launcher
 from jobhunter.web.launcher import _install_linux_desktop_launcher, _is_loopback
 
 
@@ -29,3 +31,31 @@ def test_desktop_launcher_binds_exact_configuration_path(tmp_path: Path) -> None
     assert f'--config "{config_path.resolve()}"' in content
     assert f"Path={project_dir.resolve()}" in content
     assert (home / ".local/share/icons/hicolor/scalable/apps/jobhunter.svg").exists()
+
+
+def test_web_launcher_uses_windows_browser_opener_inside_wsl(monkeypatch) -> None:
+    calls: list[list[str]] = []
+
+    monkeypatch.setattr(launcher, "_is_wsl", lambda: True)
+    monkeypatch.setattr(
+        launcher.shutil,
+        "which",
+        lambda name: "/usr/bin/cmd.exe" if name == "cmd.exe" else None,
+    )
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0)
+
+    monkeypatch.setattr(launcher.subprocess, "run", fake_run)
+
+    assert launcher._open_browser("http://127.0.0.1:8765/")
+    assert calls == [
+        [
+            "/usr/bin/cmd.exe",
+            "/c",
+            "start",
+            "",
+            "http://127.0.0.1:8765/",
+        ]
+    ]
