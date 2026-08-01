@@ -1,0 +1,191 @@
+catalog_version = "2026-08-01"
+
+[profiles]
+ai-security-python = [
+  "ai-ml",
+  "llm-applications",
+  "python-data",
+  "defensive-security",
+  "ai-security",
+  "network-platform",
+]
+ai-focused = ["ai-ml", "llm-applications", "ai-security"]
+security-focused = ["defensive-security", "ai-security", "network-platform"]
+
+[packs.ai-ml]
+description = "AI, machine learning, data science, NLP, vision, and MLOps roles"
+terms = [
+  "هوش مصنوعی",
+  "Artificial Intelligence",
+  "AI Engineer",
+  "مهندس هوش مصنوعی",
+  "AI Developer",
+  "توسعه دهنده هوش مصنوعی",
+  "AI Specialist",
+  "متخصص هوش مصنوعی",
+  "یادگیری ماشین",
+  "Machine Learning",
+  "Machine Learning Engineer",
+  "مهندس یادگیری ماشین",
+  "یادگیری عمیق",
+  "Deep Learning",
+  "علم داده",
+  "Data Science",
+  "دانشمند داده",
+  "Data Scientist",
+  "بینایی ماشین",
+  "Computer Vision",
+  "پردازش تصویر",
+  "Image Processing",
+  "پردازش زبان طبیعی",
+  "Natural Language Processing",
+  "NLP",
+  "هوش مصنوعی مولد",
+  "Generative AI",
+  "GenAI",
+  "مدل زبانی بزرگ",
+  "Large Language Model",
+  "LLM",
+  "MLOps",
+]
+
+[packs.llm-applications]
+description = "LLM, RAG, agents, prompt engineering, and applied GenAI roles"
+terms = [
+  "RAG",
+  "Retrieval Augmented Generation",
+  "بازیابی افزوده",
+  "AI Agent",
+  "عامل هوش مصنوعی",
+  "Agentic AI",
+  "هوش مصنوعی عامل محور",
+  "Prompt Engineering",
+  "مهندسی پرامپت",
+  "Prompt Engineer",
+  "مهندس پرامپت",
+  "Chatbot",
+  "چت بات",
+  "LangChain",
+  "LlamaIndex",
+  "Vector Database",
+  "پایگاه داده برداری",
+  "Embeddings",
+  "تعبیه برداری",
+]
+
+[packs.python-data]
+description = "Python application, API, data engineering, and data-platform roles"
+terms = [
+  "Python",
+  "پایتون",
+  "Python Developer",
+  "توسعه دهنده پایتون",
+  "برنامه نویس پایتون",
+  "Python Engineer",
+  "FastAPI",
+  "Django",
+  "Flask",
+  "Data Engineer",
+  "مهندس داده",
+  "Data Engineering",
+  "مهندسی داده",
+  "ETL",
+  "Apache Airflow",
+  "Apache Spark",
+  "SQL",
+  "NoSQL",
+  "API Developer",
+  "توسعه دهنده API",
+]
+
+[packs.defensive-security]
+description = "Defensive security, SOC, detection, response, AppSec, and automation"
+terms = [
+  "امنیت سایبری",
+  "Cybersecurity",
+  "امنیت اطلاعات",
+  "Information Security",
+  "مهندس امنیت",
+  "Security Engineer",
+  "کارشناس امنیت",
+  "Security Analyst",
+  "SOC Analyst",
+  "تحلیلگر مرکز عملیات امنیت",
+  "مرکز عملیات امنیت",
+  "SOC",
+  "SIEM",
+  "Detection Engineer",
+  "مهندس تشخیص",
+  "Threat Hunting",
+  "شکار تهدید",
+  "Incident Response",
+  "پاسخ به رخداد",
+  "Blue Team",
+  "تیم آبی",
+  "Network Security",
+  "امنیت شبکه",
+  "Security Automation",
+  "اتوماسیون امنیت",
+  "SOAR",
+  "DevSecOps",
+  "Application Security",
+  "امنیت نرم افزار",
+  "Cloud Security",
+  "امنیت ابری",
+  "Vulnerability Management",
+  "مدیریت آسیب پذیری",
+  "Malware Analysis",
+  "تحلیل بدافزار",
+]
+
+[packs.ai-security]
+description = "AI, ML, LLM, model, agent, and prompt-security roles"
+terms = [
+  "AI Security",
+  "امنیت هوش مصنوعی",
+  "AI Security Engineer",
+  "مهندس امنیت هوش مصنوعی",
+  "Machine Learning Security",
+  "امنیت یادگیری ماشین",
+  "ML Security",
+  "LLM Security",
+  "امنیت مدل زبانی",
+  "Model Security",
+  "امنیت مدل",
+  "AI Agent Security",
+  "امنیت عامل هوش مصنوعی",
+  "Adversarial Machine Learning",
+  "یادگیری ماشین خصمانه",
+  "AI Red Team",
+  "Prompt Injection",
+  "تزریق پرامپت",
+  "Responsible AI",
+  "هوش مصنوعی مسئولانه",
+  "Python Security Automation",
+  "اتوماسیون امنیت با پایتون",
+  "MLOps Security",
+  "امنیت MLOps",
+]
+
+[packs.network-platform]
+description = "Linux, networking, DevOps, platform, cloud, and container roles"
+terms = [
+  "Linux",
+  "لینوکس",
+  "Network Engineer",
+  "مهندس شبکه",
+  "Computer Networks",
+  "شبکه های کامپیوتری",
+  "DevOps",
+  "مهندس دواپس",
+  "Site Reliability Engineer",
+  "SRE",
+  "Platform Engineer",
+  "مهندس پلتفرم",
+  "Cloud Engineer",
+  "مهندس ابر",
+  "System Administrator",
+  "مدیر سیستم",
+  "Docker",
+  "Kubernetes",
+]
