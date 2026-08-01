@@ -55,15 +55,19 @@ class MarketInsights:
         with self._connect() as connection:
             rows = connection.execute(
                 """
-                WITH per_match AS (
+                WITH distinct_matches AS (
+                    SELECT DISTINCT run_id, job_posting_id, search_name
+                    FROM job_discoveries
+                ),
+                per_match AS (
                     SELECT
-                        d.run_id,
-                        d.job_posting_id,
-                        d.search_name,
+                        run_id,
+                        job_posting_id,
+                        search_name,
                         COUNT(*) OVER (
-                            PARTITION BY d.run_id, d.job_posting_id
+                            PARTITION BY run_id, job_posting_id
                         ) AS searches_for_job
-                    FROM job_discoveries AS d
+                    FROM distinct_matches
                 )
                 SELECT
                     search_name,
