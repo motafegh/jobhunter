@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
-from collections import Counter, defaultdict
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -111,7 +111,14 @@ class MarketInsights:
     def market_summary(self, *, top_requirements: int = 50) -> MarketSummary:
         artifacts = AnalysisStore(self._database_path).list_current(limit=5000)
         job_sets: dict[str, set[str]] = defaultdict(set)
-        classification_counts: dict[str, Counter[str]] = defaultdict(Counter)
+        classification_job_sets: dict[str, dict[str, set[str]]] = defaultdict(
+            lambda: {
+                "required": set(),
+                "preferred": set(),
+                "contextual": set(),
+                "inferred": set(),
+            }
+        )
         display_names: dict[str, str] = {}
         responsibility_claims = 0
         requirement_claims = 0
@@ -132,17 +139,17 @@ class MarketInsights:
                 key = " ".join(concept.casefold().split())
                 display_names.setdefault(key, concept)
                 job_sets[key].add(artifact.source_job_id)
-                classification_counts[key][classification] += 1
+                classification_job_sets[key][classification].add(artifact.source_job_id)
                 requirement_claims += 1
 
         requirements = [
             RequirementDemand(
                 concept=display_names[key],
                 jobs=len(job_sets[key]),
-                required=classification_counts[key]["required"],
-                preferred=classification_counts[key]["preferred"],
-                contextual=classification_counts[key]["contextual"],
-                inferred=classification_counts[key]["inferred"],
+                required=len(classification_job_sets[key]["required"]),
+                preferred=len(classification_job_sets[key]["preferred"]),
+                contextual=len(classification_job_sets[key]["contextual"]),
+                inferred=len(classification_job_sets[key]["inferred"]),
             )
             for key in job_sets
         ]
