@@ -1,15 +1,14 @@
-"""Configurable bilingual Jobinja keyword search registry.
-
-The registry keeps curated career-oriented search vocabulary separate from CLI
-and acquisition code. Built-in packs are starting points, not hidden product
-policy: users can combine packs with their own keyword groups and raw URLs.
-"""
+"""Data-driven bilingual Jobinja keyword search registry."""
 
 from __future__ import annotations
 
 import hashlib
+import tomllib
 import unicodedata
 from dataclasses import dataclass
+from importlib.resources import files
+from pathlib import Path
+from typing import Any
 from urllib.parse import urlencode, urlunsplit
 
 
@@ -23,6 +22,15 @@ class SearchPack:
 
 
 @dataclass(frozen=True, slots=True)
+class SearchCatalog:
+    """Validated search vocabulary loaded from TOML rather than Python constants."""
+
+    version: str
+    packs: dict[str, SearchPack]
+    profiles: dict[str, tuple[str, ...]]
+
+
+@dataclass(frozen=True, slots=True)
 class ExpandedKeywordSearch:
     """One concrete Jobinja search generated from a keyword term."""
 
@@ -33,214 +41,6 @@ class ExpandedKeywordSearch:
     max_pages: int
 
 
-AI_ML_TERMS = (
-    "هوش مصنوعی",
-    "Artificial Intelligence",
-    "AI Engineer",
-    "مهندس هوش مصنوعی",
-    "AI Developer",
-    "توسعه دهنده هوش مصنوعی",
-    "AI Specialist",
-    "متخصص هوش مصنوعی",
-    "یادگیری ماشین",
-    "Machine Learning",
-    "Machine Learning Engineer",
-    "مهندس یادگیری ماشین",
-    "یادگیری عمیق",
-    "Deep Learning",
-    "علم داده",
-    "Data Science",
-    "دانشمند داده",
-    "Data Scientist",
-    "بینایی ماشین",
-    "Computer Vision",
-    "پردازش تصویر",
-    "Image Processing",
-    "پردازش زبان طبیعی",
-    "Natural Language Processing",
-    "NLP",
-    "هوش مصنوعی مولد",
-    "Generative AI",
-    "GenAI",
-    "مدل زبانی بزرگ",
-    "Large Language Model",
-    "LLM",
-    "MLOps",
-)
-
-LLM_APPLICATION_TERMS = (
-    "RAG",
-    "Retrieval Augmented Generation",
-    "بازیابی افزوده",
-    "AI Agent",
-    "عامل هوش مصنوعی",
-    "Agentic AI",
-    "هوش مصنوعی عامل محور",
-    "Prompt Engineering",
-    "مهندسی پرامپت",
-    "Prompt Engineer",
-    "مهندس پرامپت",
-    "Chatbot",
-    "چت بات",
-    "LangChain",
-    "LlamaIndex",
-    "Vector Database",
-    "پایگاه داده برداری",
-    "Embeddings",
-    "تعبیه برداری",
-)
-
-PYTHON_DATA_TERMS = (
-    "Python",
-    "پایتون",
-    "Python Developer",
-    "توسعه دهنده پایتون",
-    "برنامه نویس پایتون",
-    "Python Engineer",
-    "FastAPI",
-    "Django",
-    "Flask",
-    "Data Engineer",
-    "مهندس داده",
-    "Data Engineering",
-    "مهندسی داده",
-    "ETL",
-    "Apache Airflow",
-    "Apache Spark",
-    "SQL",
-    "NoSQL",
-    "API Developer",
-    "توسعه دهنده API",
-)
-
-DEFENSIVE_SECURITY_TERMS = (
-    "امنیت سایبری",
-    "Cybersecurity",
-    "امنیت اطلاعات",
-    "Information Security",
-    "مهندس امنیت",
-    "Security Engineer",
-    "کارشناس امنیت",
-    "Security Analyst",
-    "SOC Analyst",
-    "تحلیلگر مرکز عملیات امنیت",
-    "مرکز عملیات امنیت",
-    "SOC",
-    "SIEM",
-    "Detection Engineer",
-    "مهندس تشخیص",
-    "Threat Hunting",
-    "شکار تهدید",
-    "Incident Response",
-    "پاسخ به رخداد",
-    "Blue Team",
-    "تیم آبی",
-    "Network Security",
-    "امنیت شبکه",
-    "Security Automation",
-    "اتوماسیون امنیت",
-    "SOAR",
-    "DevSecOps",
-    "Application Security",
-    "امنیت نرم افزار",
-    "Cloud Security",
-    "امنیت ابری",
-    "Vulnerability Management",
-    "مدیریت آسیب پذیری",
-    "Malware Analysis",
-    "تحلیل بدافزار",
-)
-
-AI_SECURITY_TERMS = (
-    "AI Security",
-    "امنیت هوش مصنوعی",
-    "Machine Learning Security",
-    "امنیت یادگیری ماشین",
-    "ML Security",
-    "LLM Security",
-    "امنیت مدل زبانی",
-    "Model Security",
-    "امنیت مدل",
-    "AI Agent Security",
-    "امنیت عامل هوش مصنوعی",
-    "Adversarial Machine Learning",
-    "یادگیری ماشین خصمانه",
-    "AI Red Team",
-    "Prompt Injection",
-    "تزریق پرامپت",
-    "Responsible AI",
-    "هوش مصنوعی مسئولانه",
-)
-
-NETWORK_PLATFORM_TERMS = (
-    "Linux",
-    "لینوکس",
-    "Network Engineer",
-    "مهندس شبکه",
-    "Computer Networks",
-    "شبکه های کامپیوتری",
-    "DevOps",
-    "مهندس دواپس",
-    "Site Reliability Engineer",
-    "SRE",
-    "Platform Engineer",
-    "مهندس پلتفرم",
-    "Cloud Engineer",
-    "مهندس ابر",
-    "System Administrator",
-    "مدیر سیستم",
-    "Docker",
-    "Kubernetes",
-)
-
-
-BUILTIN_SEARCH_PACKS: dict[str, SearchPack] = {
-    "ai-ml": SearchPack(
-        name="ai-ml",
-        description="AI, machine learning, data science, NLP, vision, and MLOps roles",
-        terms=AI_ML_TERMS,
-    ),
-    "llm-applications": SearchPack(
-        name="llm-applications",
-        description="LLM, RAG, agents, prompt engineering, and applied GenAI roles",
-        terms=LLM_APPLICATION_TERMS,
-    ),
-    "python-data": SearchPack(
-        name="python-data",
-        description="Python application, API, data engineering, and data-platform roles",
-        terms=PYTHON_DATA_TERMS,
-    ),
-    "defensive-security": SearchPack(
-        name="defensive-security",
-        description="Defensive security, SOC, detection, response, AppSec, and automation",
-        terms=DEFENSIVE_SECURITY_TERMS,
-    ),
-    "ai-security": SearchPack(
-        name="ai-security",
-        description="AI, ML, LLM, model, agent, and prompt-security roles",
-        terms=AI_SECURITY_TERMS,
-    ),
-    "network-platform": SearchPack(
-        name="network-platform",
-        description="Linux, networking, DevOps, platform, cloud, and container roles",
-        terms=NETWORK_PLATFORM_TERMS,
-    ),
-}
-
-BUILTIN_SEARCH_PROFILES: dict[str, tuple[str, ...]] = {
-    "ai-security-python": (
-        "ai-ml",
-        "llm-applications",
-        "python-data",
-        "defensive-security",
-        "ai-security",
-        "network-platform",
-    ),
-    "ai-focused": ("ai-ml", "llm-applications", "ai-security"),
-    "security-focused": ("defensive-security", "ai-security", "network-platform"),
-}
-
-
 def normalize_search_term(value: str) -> str:
     """Return a stable comparison form without changing the displayed term."""
 
@@ -248,6 +48,90 @@ def normalize_search_term(value: str) -> str:
     normalized = normalized.replace("ي", "ی").replace("ك", "ک")
     normalized = normalized.replace("\u200c", " ").replace("\u200f", "")
     return " ".join(normalized.casefold().split())
+
+
+def _catalog_from_mapping(mapping: dict[str, Any], *, source: str) -> SearchCatalog:
+    version = str(mapping.get("catalog_version") or "unversioned").strip()
+    raw_packs = mapping.get("packs")
+    raw_profiles = mapping.get("profiles")
+    if not isinstance(raw_packs, dict) or not raw_packs:
+        raise ValueError(f"Search catalog {source} must define a non-empty [packs] table")
+    if not isinstance(raw_profiles, dict):
+        raise ValueError(f"Search catalog {source} must define a [profiles] table")
+
+    packs: dict[str, SearchPack] = {}
+    for raw_name, raw_pack in raw_packs.items():
+        name = str(raw_name).strip()
+        if not name or not isinstance(raw_pack, dict):
+            raise ValueError(f"Invalid search pack in {source}: {raw_name!r}")
+        description = str(raw_pack.get("description") or "").strip()
+        raw_terms = raw_pack.get("terms")
+        if not isinstance(raw_terms, list):
+            raise ValueError(f"Search pack {name!r} in {source} must define terms as a list")
+
+        terms: list[str] = []
+        seen_terms: set[str] = set()
+        for raw_term in raw_terms:
+            if not isinstance(raw_term, str):
+                raise ValueError(f"Search pack {name!r} contains a non-text term")
+            term = " ".join(raw_term.split())
+            normalized = normalize_search_term(term)
+            if not normalized or normalized in seen_terms:
+                continue
+            seen_terms.add(normalized)
+            terms.append(term)
+        if not terms:
+            raise ValueError(f"Search pack {name!r} in {source} has no usable terms")
+        packs[name] = SearchPack(name=name, description=description, terms=tuple(terms))
+
+    profiles: dict[str, tuple[str, ...]] = {}
+    for raw_name, raw_pack_names in raw_profiles.items():
+        name = str(raw_name).strip()
+        if not name or not isinstance(raw_pack_names, list):
+            raise ValueError(f"Invalid search profile in {source}: {raw_name!r}")
+        pack_names = tuple(dict.fromkeys(str(item).strip() for item in raw_pack_names))
+        unknown = [pack_name for pack_name in pack_names if pack_name not in packs]
+        if unknown:
+            raise ValueError(
+                f"Search profile {name!r} in {source} references unknown packs: "
+                f"{', '.join(unknown)}"
+            )
+        profiles[name] = pack_names
+
+    return SearchCatalog(version=version, packs=packs, profiles=profiles)
+
+
+def _load_toml_bytes(content: bytes, *, source: str) -> SearchCatalog:
+    try:
+        mapping = tomllib.loads(content.decode("utf-8"))
+    except (UnicodeDecodeError, tomllib.TOMLDecodeError) as exc:
+        raise ValueError(f"Could not parse search catalog {source}: {exc}") from exc
+    return _catalog_from_mapping(mapping, source=source)
+
+
+def load_builtin_search_catalog() -> SearchCatalog:
+    """Load the packaged default vocabulary."""
+
+    resource = files("jobhunter").joinpath("data/search_catalog.toml")
+    return _load_toml_bytes(resource.read_bytes(), source="built-in search catalog")
+
+
+def load_search_catalog(path: Path | None = None) -> SearchCatalog:
+    """Load the built-in catalog or a complete user-supplied replacement catalog."""
+
+    if path is None:
+        return load_builtin_search_catalog()
+    selected = path.expanduser()
+    try:
+        content = selected.read_bytes()
+    except OSError as exc:
+        raise ValueError(f"Could not read search catalog {selected}: {exc}") from exc
+    return _load_toml_bytes(content, source=str(selected))
+
+
+BUILTIN_SEARCH_CATALOG = load_builtin_search_catalog()
+BUILTIN_SEARCH_PACKS = BUILTIN_SEARCH_CATALOG.packs
+BUILTIN_SEARCH_PROFILES = BUILTIN_SEARCH_CATALOG.profiles
 
 
 def build_jobinja_keyword_url(term: str) -> str:
@@ -267,36 +151,39 @@ def _search_name(origin: str, term: str) -> str:
     return f"{origin} :: {term} [{digest}]"
 
 
-def available_pack_names() -> tuple[str, ...]:
-    """Return stable built-in pack identifiers."""
+def available_pack_names(catalog: SearchCatalog = BUILTIN_SEARCH_CATALOG) -> tuple[str, ...]:
+    """Return stable pack identifiers from one catalog."""
 
-    return tuple(BUILTIN_SEARCH_PACKS)
+    return tuple(catalog.packs)
 
 
-def available_profile_names() -> tuple[str, ...]:
-    """Return stable built-in profile identifiers."""
+def available_profile_names(
+    catalog: SearchCatalog = BUILTIN_SEARCH_CATALOG,
+) -> tuple[str, ...]:
+    """Return stable profile identifiers from one catalog."""
 
-    return tuple(BUILTIN_SEARCH_PROFILES)
+    return tuple(catalog.profiles)
 
 
 def resolve_pack_names(
     *,
     pack_names: tuple[str, ...] = (),
     profile_names: tuple[str, ...] = (),
+    catalog: SearchCatalog = BUILTIN_SEARCH_CATALOG,
 ) -> tuple[str, ...]:
     """Expand profiles and packs into an ordered unique list of pack names."""
 
     resolved: list[str] = []
     for profile_name in profile_names:
         try:
-            profile_packs = BUILTIN_SEARCH_PROFILES[profile_name]
+            profile_packs = catalog.profiles[profile_name]
         except KeyError as exc:
             raise ValueError(f"Unknown Jobinja search profile: {profile_name!r}") from exc
         resolved.extend(profile_packs)
     resolved.extend(pack_names)
 
     unique = tuple(dict.fromkeys(resolved))
-    unknown = [name for name in unique if name not in BUILTIN_SEARCH_PACKS]
+    unknown = [name for name in unique if name not in catalog.packs]
     if unknown:
         raise ValueError(f"Unknown Jobinja search pack(s): {', '.join(unknown)}")
     return unique
@@ -306,10 +193,11 @@ def _interleaved_pack_candidates(
     pack_names: tuple[str, ...],
     *,
     max_pages: int,
+    catalog: SearchCatalog,
 ) -> list[tuple[str, str, int]]:
     """Round-robin terms so bounded windows represent every selected pack."""
 
-    packs = tuple(BUILTIN_SEARCH_PACKS[name] for name in pack_names)
+    packs = tuple(catalog.packs[name] for name in pack_names)
     if not packs:
         return []
 
@@ -333,6 +221,7 @@ def expand_keyword_searches(
     extra_terms: tuple[str, ...] = (),
     excluded_terms: tuple[str, ...] = (),
     default_max_pages: int = 1,
+    catalog: SearchCatalog = BUILTIN_SEARCH_CATALOG,
 ) -> tuple[ExpandedKeywordSearch, ...]:
     """Expand packs, profiles, custom groups, and terms into unique searches."""
 
@@ -347,10 +236,12 @@ def expand_keyword_searches(
     resolved_packs = resolve_pack_names(
         pack_names=pack_names,
         profile_names=profile_names,
+        catalog=catalog,
     )
     candidates = _interleaved_pack_candidates(
         resolved_packs,
         max_pages=default_max_pages,
+        catalog=catalog,
     )
 
     for group_name, terms, max_pages in custom_groups:
@@ -386,51 +277,25 @@ def expand_keyword_searches(
     return tuple(expanded)
 
 
-def format_search_catalog(*, show_terms: bool = False) -> str:
-    """Format built-in profiles and packs for terminal inspection."""
+def format_search_catalog(
+    catalog: SearchCatalog = BUILTIN_SEARCH_CATALOG,
+    *,
+    show_terms: bool = False,
+) -> str:
+    """Format profiles and packs for terminal inspection."""
 
-    lines = ["Built-in Jobinja search profiles:"]
-    for name, packs in BUILTIN_SEARCH_PROFILES.items():
+    lines = [
+        f"Jobinja search catalog version: {catalog.version}",
+        "Built-in/configured Jobinja search profiles:",
+    ]
+    for name, packs in catalog.profiles.items():
         lines.append(f"- {name}: {', '.join(packs)}")
     lines.append("")
-    lines.append("Built-in Jobinja search packs:")
-    for pack in BUILTIN_SEARCH_PACKS.values():
+    lines.append("Jobinja search packs:")
+    for pack in catalog.packs.values():
         lines.append(f"- {pack.name}: {len(pack.terms)} terms")
         lines.append(f"  {pack.description}")
         if show_terms:
             lines.append("  Terms:")
             lines.extend(f"  - {term}" for term in pack.terms)
-    return "\n".join(lines)
-
-
-def format_search_plan(
-    searches: tuple[ExpandedKeywordSearch, ...],
-    *,
-    request_budget: int,
-) -> str:
-    """Format the expanded search plan before any network request."""
-
-    planned_requests = sum(search.max_pages for search in searches)
-    effective_requests = min(planned_requests, request_budget)
-    lines = [
-        "Jobinja keyword search plan",
-        f"Expanded searches: {len(searches)}",
-        f"Planned page requests: {planned_requests}",
-        f"Request budget: {request_budget}",
-        f"Maximum requests this run: {effective_requests}",
-    ]
-    if planned_requests > request_budget:
-        lines.append(
-            "Plan exceeds the request budget; later searches will be "
-            "reported as budget-skipped."
-        )
-    if not searches:
-        lines.append("No keyword searches are configured.")
-        return "\n".join(lines)
-
-    lines.append("Searches:")
-    for search in searches:
-        lines.append(
-            f"- {search.term} [{search.origin}, max_pages={search.max_pages}]"
-        )
     return "\n".join(lines)
