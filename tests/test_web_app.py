@@ -22,7 +22,7 @@ def _settings(tmp_path: Path) -> Settings:
 def test_web_app_renders_primary_local_pages(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     with TestClient(app) as client:
-        for path in ("/", "/jobs", "/searches", "/operations", "/system"):
+        for path in ("/", "/jobs", "/market", "/searches", "/operations", "/system"):
             response = client.get(path)
             assert response.status_code == 200
             assert "JobHunter" in response.text
@@ -40,6 +40,7 @@ def test_web_app_serves_packaged_static_assets(tmp_path: Path) -> None:
 
     assert css.status_code == 200
     assert "--accent" in css.text
+    assert "analysis-columns" in css.text
     assert javascript.status_code == 200
     assert "data-operation-id" in javascript.text
     assert "data-sync-preset" in javascript.text
@@ -71,8 +72,7 @@ def test_web_app_runs_audit_through_operation_queue(tmp_path: Path) -> None:
             follow_redirects=False,
         )
         assert response.status_code == 303
-        location = response.headers["location"]
-        operation_id = location.rsplit("/", 1)[-1]
+        operation_id = response.headers["location"].rsplit("/", 1)[-1]
 
         payload = None
         for _ in range(100):
@@ -86,7 +86,7 @@ def test_web_app_runs_audit_through_operation_queue(tmp_path: Path) -> None:
     assert "parser audit" in payload["summary"].casefold()
 
 
-def test_web_app_empty_missing_detail_backlog_needs_no_network(tmp_path: Path) -> None:
+def test_web_app_empty_priority_detail_backlog_needs_no_network(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     token = app.state.csrf_token
     with TestClient(app) as client:
@@ -107,7 +107,7 @@ def test_web_app_empty_missing_detail_backlog_needs_no_network(tmp_path: Path) -
 
     assert payload is not None
     assert payload["status"] == "completed"
-    assert "No discovered jobs currently need a detail-page fetch" in payload["summary"]
+    assert "No eligible discovered jobs need a detail-page fetch" in payload["summary"]
 
 
 def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
@@ -119,6 +119,8 @@ def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
                 "q": "python",
                 "detail": "missing",
                 "translation": "missing",
+                "analysis": "missing",
+                "triage": "all",
                 "lifecycle": "all",
             },
         )
@@ -127,18 +129,22 @@ def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
     assert "0 matching jobs" in response.text
 
 
-def test_web_app_explains_sync_controls_and_quick_add(tmp_path: Path) -> None:
+def test_web_app_explains_sync_controls_quick_add_and_pipeline(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     with TestClient(app) as client:
         overview = client.get("/")
         jobs = client.get("/jobs")
+        market = client.get("/market")
 
     assert "Search terms to try" in overview.text
     assert "How these limits work together" in overview.text
     assert "Light scan" in overview.text
-    assert "Fetch missing details" in overview.text
+    assert "Fetch priority details" in overview.text
+    assert "Repair / translate English" in overview.text
+    assert "Analyze ready jobs" in overview.text
     assert "Quick Add" in jobs.text
     assert "Job URL, search URL, or keyword" in jobs.text
+    assert "Market intelligence" in market.text
 
 
 def test_web_app_rejects_unapproved_quick_add_url_before_network(tmp_path: Path) -> None:
@@ -160,7 +166,7 @@ def test_web_app_rejects_unapproved_quick_add_url_before_network(tmp_path: Path)
     assert "Jobinja URLs only" in response.text
 
 
-def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> None:
+def test_web_app_renders_discovered_job_and_allows_triage(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
     store = JobHunterStore(settings.database_path)
     store.initialize()
@@ -175,9 +181,16 @@ def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> Non
     )
 
     app = create_app(settings)
+    token = app.state.csrf_token
     with TestClient(app) as client:
         detail_response = client.get("/jobs/tmW5")
         list_response = client.get("/jobs")
+        triage_response = client.post(
+            "/jobs/tmW5/triage",
+            data={"csrf_token": token, "triage_state": "interested"},
+            follow_redirects=False,
+        )
+        interested = client.get("/jobs", params={"triage": "interested"})
 
     assert detail_response.status_code == 200
     assert "Details not acquired yet" in detail_response.text
@@ -187,6 +200,9 @@ def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> Non
     assert "Company: Example Company" in list_response.text
     assert "Jobinja reference: tmW5" in list_response.text
     assert "Not fetched" in list_response.text
+    assert triage_response.status_code == 303
+    assert "Example discovered job" in interested.text
+    assert "interested" in interested.text
 
 
 def test_web_app_unknown_job_is_real_404(tmp_path: Path) -> None:
