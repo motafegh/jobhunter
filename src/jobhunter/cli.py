@@ -38,12 +38,17 @@ from jobhunter.jobinja_discovery import (
     format_discovery_summary,
 )
 from jobhunter.jobinja_sync import JobinjaSyncService, format_sync_summary
-from jobhunter.search_registry import (
-    expand_keyword_searches,
-    format_search_catalog,
-)
+from jobhunter.search_registry import expand_keyword_searches, format_search_catalog
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
+from jobhunter.translation import GoogleCloudTranslationProvider
+from jobhunter.translation_export import export_english_corpus
+from jobhunter.translation_service import (
+    TranslationService,
+    format_translation_artifact,
+    format_translation_batch_summary,
+)
+from jobhunter.translation_store import TranslationStore
 
 DEFAULT_CONFIG = """# JobHunter local configuration
 [jobhunter]
@@ -53,11 +58,7 @@ database_path = "data/jobhunter.sqlite3"
 
 # LM Studio normally exposes its OpenAI-compatible API on this local URL.
 lm_studio_base_url = "http://127.0.0.1:1234/v1"
-# Set this to an exact identifier returned by the LM Studio models endpoint.
 # lm_studio_model = "your-model-identifier"
-# Keep tokens in an environment variable rather than this file when enabled.
-# lm_studio_api_token = ""
-
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
 
@@ -66,19 +67,30 @@ jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
 jobinja_request_timeout_seconds = 30.0
 jobinja_request_delay_seconds = 1.0
 jobinja_search_request_budget = 40
-jobinja_max_expanded_searches = 100
+jobinja_max_expanded_searches = 40
 jobinja_default_keyword_max_pages = 1
+# Optional complete replacement vocabulary file using the documented TOML schema.
+# jobinja_search_catalog_path = "my-search-catalog.toml"
 
-# Recommended broad bilingual profile for AI/security/Python career discovery.
-# Use `jobhunter jobinja catalog` and `jobhunter jobinja plan` before acquisition.
 jobinja_search_profiles = ["ai-security-python"]
 jobinja_search_packs = []
 jobinja_excluded_terms = []
 
-# Daily acquisition-only sync limits.
 jobinja_sync_missing_limit = 10
 jobinja_sync_refresh_limit = 5
 jobinja_refresh_after_hours = 24.0
+
+# Derived English corpus. Disabled by default because Google Cloud translation
+# intentionally sends parsed source text to an external service.
+translation_enabled = false
+translation_auto_after_sync = false
+translation_provider = "google-cloud"
+translation_target_language = "en"
+translation_batch_limit = 20
+translation_timeout_seconds = 30.0
+translation_max_retries = 1
+google_translation_model = "nmt"
+# Set JOBHUNTER_GOOGLE_TRANSLATION_API_KEY in the environment; do not commit it.
 
 # Optional custom bilingual group.
 # [[jobhunter.jobinja_keyword_groups]]
@@ -191,13 +203,13 @@ def _add_search_selection_arguments(parser: argparse.ArgumentParser) -> None:
         "--profile",
         action="append",
         default=[],
-        help="Built-in bilingual search profile; repeat to combine profiles",
+        help="Bilingual search profile; repeat to combine profiles",
     )
     parser.add_argument(
         "--pack",
         action="append",
         default=[],
-        help="Built-in bilingual search pack; repeat to combine packs",
+        help="Bilingual search pack; repeat to combine packs",
     )
     parser.add_argument(
         "--term",
@@ -278,9 +290,14 @@ def build_parser() -> argparse.ArgumentParser:
         required=True,
     )
 
-    jobinja_subparsers.add_parser(
+    catalog_parser = jobinja_subparsers.add_parser(
         "catalog",
-        help="List built-in bilingual search profiles and packs",
+        help="List data-driven bilingual search profiles and packs",
+    )
+    catalog_parser.add_argument(
+        "--show-terms",
+        action="store_true",
+        help="Show every term loaded from the effective search catalog",
     )
 
     plan_parser = jobinja_subparsers.add_parser(
@@ -307,7 +324,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     sync_parser = jobinja_subparsers.add_parser(
         "sync",
-        help="Run bounded discovery, detail acquisition, and parser audit",
+        help="Run bounded discovery, detail acquisition, audit, and optional translation",
     )
     _add_search_selection_arguments(sync_parser)
     sync_parser.add_argument(
@@ -364,10 +381,7 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    jobs_parser = subparsers.add_parser(
-        "jobs",
-        help="Inspect locally stored job records",
-    )
+    jobs_parser = subparsers.add_parser("jobs", help="Inspect locally stored job records")
     jobs_subparsers = jobs_parser.add_subparsers(dest="jobs_command", required=True)
     list_parser = jobs_subparsers.add_parser(
         "list",
@@ -425,13 +439,63 @@ def build_parser() -> argparse.ArgumentParser:
     )
     show_parser.add_argument("job_id", help="Stable Jobinja job ID, for example tpLF")
 
+    translations_parser = subparsers.add_parser(
+        "translations",
+        help="Create and inspect the separate English corpus",
+    )
+    translation_subparsers = translations_parser.add_subparsers(
+        dest="translations_command",
+        required=True,
+    )
+    translation_subparsers.add_parser(
+        "status",
+        help="Show translation configuration and current corpus coverage",
+    )
+    translation_run = translation_subparsers.add_parser(
+        "run",
+        help="Create English projections for explicit jobs or a missing queue",
+    )
+    translation_run.add_argument("job_ids", nargs="*", help="Optional Jobinja job IDs")
+    translation_run.add_argument(
+        "--missing",
+        action="store_true",
+        help="Translate latest source versions missing a current English artifact",
+    )
+    translation_run.add_argument(
+        "--limit",
+        type=_bounded_batch_count,
+        default=None,
+        help="Maximum missing translations to create (default from configuration)",
+    )
+    translation_show = translation_subparsers.add_parser(
+        "show",
+        help="Show the current English projection for one job",
+    )
+    translation_show.add_argument("job_id", help="Stable Jobinja job ID")
+    translation_export = translation_subparsers.add_parser(
+        "export",
+        help="Export the current English corpus as JSON Lines",
+    )
+    translation_export.add_argument(
+        "--path",
+        type=Path,
+        default=None,
+        help="Output path (default: data/exports/job_english_corpus.jsonl)",
+    )
+    translation_export.add_argument(
+        "--limit",
+        type=_bounded_list_count,
+        default=500,
+        help="Maximum current English artifacts to export",
+    )
+
     return parser
 
 
 def _load_settings(config_path: Path | None) -> Settings:
     try:
         return Settings.load(config_path)
-    except (ConfigLoadError, ValidationError) as exc:
+    except (ConfigLoadError, ValidationError, ValueError) as exc:
         raise SystemExit(f"Configuration error: {exc}") from exc
 
 
@@ -448,7 +512,7 @@ def _initialize(path: Path, *, force: bool) -> int:
         settings = Settings.load(path)
         settings.data_dir.mkdir(parents=True, exist_ok=True)
         settings.evidence_dir.mkdir(parents=True, exist_ok=True)
-    except (OSError, ConfigLoadError, ValidationError) as exc:
+    except (OSError, ConfigLoadError, ValidationError, ValueError) as exc:
         print(f"Initialization failed: {exc}", file=sys.stderr)
         return 1
 
@@ -516,6 +580,7 @@ def _discovery_searches(
             extra_terms=tuple(arguments.term),
             excluded_terms=tuple(settings.jobinja_excluded_terms),
             default_max_pages=page_override or settings.jobinja_default_keyword_max_pages,
+            catalog=settings.search_catalog(),
         )
     else:
         keyword_searches = settings.expanded_keyword_searches()
@@ -610,6 +675,32 @@ def _discovery_service(
         store=JobHunterStore(settings.database_path),
         request_delay_seconds=settings.jobinja_request_delay_seconds,
         request_budget=request_budget,
+    )
+
+
+def _translation_store(settings: Settings) -> TranslationStore:
+    return TranslationStore(settings.database_path)
+
+
+def _translation_service(settings: Settings) -> TranslationService:
+    provider = None
+    if settings.translation_enabled:
+        if settings.translation_provider == "google-cloud":
+            if not settings.google_translation_api_key:
+                raise ValueError(
+                    "Google translation is enabled but "
+                    "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
+                )
+            provider = GoogleCloudTranslationProvider(
+                api_key=settings.google_translation_api_key,
+                model=settings.google_translation_model,
+                timeout_seconds=settings.translation_timeout_seconds,
+                max_retries=settings.translation_max_retries,
+            )
+    return TranslationService(
+        store=_translation_store(settings),
+        provider=provider,
+        target_language=settings.translation_target_language,
     )
 
 
@@ -710,7 +801,28 @@ def _run_jobinja_sync(settings: Settings, arguments: argparse.Namespace) -> int:
         refresh_after_hours=refresh_after_hours,
     )
     print(format_sync_summary(summary))
-    return 0 if summary.succeeded else 1
+
+    translation_failed = False
+    if settings.translation_enabled and settings.translation_auto_after_sync:
+        preferred_ids = (
+            tuple(result.source_job_id for result in summary.detail_fetch.results)
+            if summary.detail_fetch is not None
+            else ()
+        )
+        try:
+            translation_summary = _translation_service(settings).run(
+                missing=True,
+                limit=settings.translation_batch_limit,
+                preferred_ids=preferred_ids,
+            )
+        except ValueError as exc:
+            print(f"Translation configuration error: {exc}", file=sys.stderr)
+            return 2
+        print("")
+        print(format_translation_batch_summary(translation_summary))
+        translation_failed = bool(translation_summary.failures)
+
+    return 0 if summary.succeeded and not translation_failed else 1
 
 
 def _run_jobinja_fetch(settings: Settings, arguments: argparse.Namespace) -> int:
@@ -804,6 +916,78 @@ def _show_job(settings: Settings, job_id: str) -> int:
     return 0
 
 
+def _translation_status(settings: Settings) -> int:
+    store = _translation_store(settings)
+    sources = store.latest_source_versions(limit=5000)
+    artifacts = store.list_latest_artifacts(target_language="en", limit=5000)
+    print("English translation corpus status")
+    print(f"Translation enabled: {'yes' if settings.translation_enabled else 'no'}")
+    print(f"Automatic after sync: {'yes' if settings.translation_auto_after_sync else 'no'}")
+    print(f"Provider: {settings.translation_provider}")
+    print(f"Model: {settings.google_translation_model}")
+    print(
+        "Google API key configured: "
+        f"{'yes' if settings.google_translation_api_key else 'no'}"
+    )
+    print(f"Latest parsed source versions: {len(sources)}")
+    print(f"Current English artifacts: {len(artifacts)}")
+    print(f"Source versions without current English artifact: {len(sources) - len(artifacts)}")
+    return 0
+
+
+def _run_translations(settings: Settings, arguments: argparse.Namespace) -> int:
+    if not settings.translation_enabled:
+        print(
+            "Translation is disabled. Set translation_enabled = true after reviewing "
+            "the external-data boundary.",
+            file=sys.stderr,
+        )
+        return 2
+    if arguments.job_ids and arguments.missing:
+        print("Choose explicit job IDs or --missing, not both.", file=sys.stderr)
+        return 2
+    try:
+        service = _translation_service(settings)
+    except ValueError as exc:
+        print(f"Translation configuration error: {exc}", file=sys.stderr)
+        return 2
+    summary = service.run(
+        source_job_ids=tuple(arguments.job_ids),
+        missing=arguments.missing or not arguments.job_ids,
+        limit=arguments.limit or settings.translation_batch_limit,
+    )
+    print(format_translation_batch_summary(summary))
+    return 1 if summary.failures else 0
+
+
+def _show_translation(settings: Settings, job_id: str) -> int:
+    artifact = _translation_store(settings).latest_artifact(job_id, target_language="en")
+    if artifact is None:
+        print(
+            f"Job {job_id!r} has no English artifact for its latest semantic version.",
+            file=sys.stderr,
+        )
+        return 1
+    print(format_translation_artifact(artifact))
+    return 0
+
+
+def _export_translations(settings: Settings, arguments: argparse.Namespace) -> int:
+    output_path = arguments.path or settings.data_dir / "exports/job_english_corpus.jsonl"
+    try:
+        result = export_english_corpus(
+            _translation_store(settings),
+            output_path=output_path,
+            limit=arguments.limit,
+        )
+    except OSError as exc:
+        print(f"English corpus export failed: {exc}", file=sys.stderr)
+        return 1
+    print(f"English corpus exported: {result.records} records")
+    print(f"Path: {result.path}")
+    return 0
+
+
 def main(argv: Sequence[str] | None = None) -> int:
     parser = build_parser()
     arguments = parser.parse_args(argv)
@@ -834,7 +1018,12 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1 if report.has_failures else 0
 
     if arguments.command == "jobinja" and arguments.jobinja_command == "catalog":
-        print(format_search_catalog())
+        print(
+            format_search_catalog(
+                settings.search_catalog(),
+                show_terms=arguments.show_terms,
+            )
+        )
         return 0
     if arguments.command == "jobinja" and arguments.jobinja_command == "plan":
         return _run_jobinja_plan(settings, arguments)
@@ -852,6 +1041,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         return _show_checks(settings, arguments)
     if arguments.command == "jobs" and arguments.jobs_command == "show":
         return _show_job(settings, arguments.job_id)
+    if arguments.command == "translations" and arguments.translations_command == "status":
+        return _translation_status(settings)
+    if arguments.command == "translations" and arguments.translations_command == "run":
+        return _run_translations(settings, arguments)
+    if arguments.command == "translations" and arguments.translations_command == "show":
+        return _show_translation(settings, arguments.job_id)
+    if arguments.command == "translations" and arguments.translations_command == "export":
+        return _export_translations(settings, arguments)
 
     parser.error(f"Unsupported command: {arguments.command}")
     return 2
