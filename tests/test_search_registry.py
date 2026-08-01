@@ -1,3 +1,4 @@
+from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 import pytest
@@ -6,6 +7,7 @@ from jobhunter.search_registry import (
     BUILTIN_SEARCH_PACKS,
     build_jobinja_keyword_url,
     expand_keyword_searches,
+    load_search_catalog,
     normalize_search_term,
     resolve_pack_names,
 )
@@ -89,3 +91,33 @@ def test_builtin_packs_have_unique_normalized_terms_within_each_pack() -> None:
     for pack in BUILTIN_SEARCH_PACKS.values():
         normalized = [normalize_search_term(term) for term in pack.terms]
         assert len(normalized) == len(set(normalized)), pack.name
+
+
+def test_loads_complete_external_catalog_without_python_word_changes(tmp_path: Path) -> None:
+    catalog_path = tmp_path / "searches.toml"
+    catalog_path.write_text(
+        """
+catalog_version = "custom-v1"
+
+[profiles]
+my-career = ["hybrid"]
+
+[packs.hybrid]
+description = "Personal hybrid vocabulary"
+terms = ["مهندس امنیت هوش مصنوعی", "AI Security Engineer", "Python Security"]
+""".strip(),
+        encoding="utf-8",
+    )
+
+    catalog = load_search_catalog(catalog_path)
+    searches = expand_keyword_searches(
+        profile_names=("my-career",),
+        catalog=catalog,
+    )
+
+    assert catalog.version == "custom-v1"
+    assert [search.term for search in searches] == [
+        "مهندس امنیت هوش مصنوعی",
+        "AI Security Engineer",
+        "Python Security",
+    ]
