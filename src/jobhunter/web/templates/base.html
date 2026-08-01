@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}JobHunter{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='/app.css') }}">
+  <script defer src="{{ url_for('static', path='/app.js') }}"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/">
+        <span class="brand-mark">JH</span>
+        <span>
+          <strong>JobHunter</strong>
+          <small>Career intelligence</small>
+        </span>
+      </a>
+
+      <nav class="nav-list" aria-label="Primary">
+        <a class="nav-item {% if page == 'dashboard' %}active{% endif %}" href="/">
+          <span>Overview</span>
+        </a>
+        <a class="nav-item {% if page == 'jobs' %}active{% endif %}" href="/jobs">
+          <span>Jobs</span>
+        </a>
+        <a class="nav-item {% if page == 'searches' %}active{% endif %}" href="/searches">
+          <span>Search plan</span>
+        </a>
+        <a class="nav-item {% if page == 'operations' %}active{% endif %}" href="/operations">
+          <span>Operations</span>
+        </a>
+        <a class="nav-item {% if page == 'system' %}active{% endif %}" href="/system">
+          <span>System</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        {% if active_operation %}
+          <a class="operation-chip" href="/operations/{{ active_operation.id }}">
+            <span class="pulse"></span>
+            <span>{{ active_operation.name }}</span>
+          </a>
+        {% else %}
+          <div class="operation-chip quiet">
+            <span class="status-dot"></span>
+            <span>Ready</span>
+          </div>
+        {% endif %}
+        <small>Local application</small>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">{% block eyebrow %}Local-first career intelligence{% endblock %}</p>
+          <h1>{% block heading %}JobHunter{% endblock %}</h1>
+        </div>
+        <div class="topbar-actions">{% block topbar_actions %}{% endblock %}</div>
+      </header>
+
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+</body>
+</html>
