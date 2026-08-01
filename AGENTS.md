@@ -26,7 +26,7 @@ Before material changes, read:
 
 ## 3. Accepted foundation
 
-Live-accepted before the browser increment:
+Live-accepted before the current guided-UI/Quick-Add increment:
 
 - M0 local foundation;
 - P1.1/P1.2 bounded repeat-safe discovery;
@@ -40,13 +40,16 @@ Live-accepted before the browser increment:
 - local LM Studio structured translation;
 - 15/15 current English artifacts;
 - current English JSONL export;
-- bounded recovery from real LM Studio output truncation.
+- bounded recovery from real LM Studio output truncation;
+- local browser application launch against the real corpus;
+- normal browser rendering for discovered postings with or without local details.
 
 Live evidence includes 79 unique discovered jobs in the initial accepted discovery corpus,
 zero new logical jobs on identical rerun, fifteen structurally clean current source jobs,
 and fifteen current English artifacts.
 
-The local web interface is implemented but remains pending deterministic/live acceptance.
+The guided sync controls, human-readable source-reference presentation, and Quick Add
+workflow are implemented and pending their own deterministic/live acceptance.
 
 ## 4. Interaction-surface rules
 
@@ -76,9 +79,30 @@ durable data store.
 - Long browser operations may use ephemeral runtime state, but durable outcomes belong in
   existing acquisition/observation/translation records.
 - Browser buttons must respect the same page/request/detail/translation bounds as CLI paths.
+- Explain non-obvious operational limits in user-facing language; do not surface config names
+  alone when the UI can explain their effect.
+- Keep stable source identifiers available for provenance, but label them as technical
+  references instead of presenting them as meaningful role/company data.
+- Discovered-but-unfetched postings are normal actionable states, not UI errors.
 - Keep advanced persistent configuration explicit in `jobhunter.toml` until a proper
   configuration-write design is justified.
 - Avoid adding a Node/npm frontend toolchain while server-rendered Python remains sufficient.
+
+### Quick Add rules
+
+Quick Add is a focused alternate input path, not a source-policy escape hatch.
+
+- Accept one public Jobinja job URL, one public Jobinja `/jobs` search URL, or one
+  Persian/English keyword phrase.
+- A direct job URL may upsert that logical JobPosting and then use the normal bounded detail
+  service so raw evidence/version/check semantics remain unchanged.
+- Search URLs and keyword phrases must use `JobinjaDiscoveryService`, preserving normal
+  search evidence/run bounds.
+- One-off phrases do not silently mutate the saved bilingual catalog.
+- Quick Add search pages are bounded to 1–3 and detail fetches to 0–20 at the UI boundary.
+- Optional translate-after-fetch may process only successfully acquired current jobs.
+- Non-Jobinja URLs must be rejected before network access until an approved adapter exists.
+- Never reinterpret Quick Add as arbitrary-web crawling or automatic application behavior.
 
 ## 6. Search-catalog rules
 
