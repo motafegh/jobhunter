@@ -222,3 +222,118 @@ def test_lm_studio_translation_chunks_large_batches_and_sends_api_token() -> Non
 
     assert request_sizes == [32, 1]
     assert len(result.texts) == 33
+
+
+def test_lm_studio_translation_splits_multi_item_batch_after_truncation() -> None:
+    request_sizes: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.read())
+        items = json.loads(payload["messages"][1]["content"])["items"]
+        request_sizes.append(len(items))
+        if len(items) == 2:
+            return httpx.Response(
+                200,
+                request=request,
+                json={
+                    "choices": [
+                        {
+                            "finish_reason": "length",
+                            "message": {"content": "{"},
+                        }
+                    ]
+                },
+            )
+        source_text = items[0]["text"]
+        translation = "First translation" if source_text == "متن اول" else "Second translation"
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "translations": [
+                                        {"id": 0, "translation": translation}
+                                    ]
+                                }
+                            )
+                        },
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="local-model",
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+    result = provider.translate_texts(
+        ("متن اول", "متن دوم"),
+        source_language="fa",
+        target_language="en",
+    )
+
+    assert request_sizes == [2, 1, 1]
+    assert result.texts == ("First translation", "Second translation")
+
+
+def test_lm_studio_translation_increases_budget_for_single_truncated_segment() -> None:
+    max_token_budgets: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        payload = json.loads(request.read())
+        max_token_budgets.append(payload["max_tokens"])
+        if payload["max_tokens"] == 4096:
+            return httpx.Response(
+                200,
+                request=request,
+                json={
+                    "choices": [
+                        {
+                            "finish_reason": "length",
+                            "message": {"content": "{"},
+                        }
+                    ]
+                },
+            )
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "translations": [
+                                        {"id": 0, "translation": "Complete translation"}
+                                    ]
+                                }
+                            )
+                        },
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="local-model",
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+    result = provider.translate_texts(
+        ("متن طولانی",),
+        source_language="fa",
+        target_language="en",
+    )
+
+    assert max_token_budgets == [4096, 8192]
+    assert result.texts == ("Complete translation",)
