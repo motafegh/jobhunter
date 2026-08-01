@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-{% block title %}{{ source_job_id }} · JobHunter{% endblock %}
-{% block heading %}{{ detail.fields.title if detail else source_job_id }}{% endblock %}
-{% block eyebrow %}Job {{ source_job_id }}{% endblock %}
+{% block title %}{{ detail.fields.title if detail else (posting.title_observed or 'Job') }} · JobHunter{% endblock %}
+{% block heading %}{{ detail.fields.title if detail else (posting.title_observed or 'Discovered Jobinja opportunity') }}{% endblock %}
+{% block eyebrow %}Jobinja reference {{ source_job_id }}{% endblock %}
 {% block topbar_actions %}
 <a class="button ghost" href="/jobs">Back to jobs</a>
 {% endblock %}
@@ -16,7 +16,7 @@
         <span>{{ detail.fields.employment_type or 'Employment type unavailable' }}</span>
       </div>
       <div class="badge-row">
-        <span class="badge {{ 'good' if detail.parse_status == 'parsed' else 'warn' }}">{{ detail.parse_status }}</span>
+        <span class="badge {{ 'good' if detail.parse_status == 'parsed' else 'warn' }}">{{ 'Source data complete' if detail.parse_status == 'parsed' else detail.parse_status }}</span>
         <span class="badge">{{ detail.fields.language or 'unknown' }}</span>
         {% if translation %}<span class="badge good">English ready</span>{% else %}<span class="badge">English missing</span>{% endif %}
         {% if audit.needs_review %}<span class="badge bad">Audit review</span>{% else %}<span class="badge good">Audit clean</span>{% endif %}
@@ -24,10 +24,11 @@
     {% else %}
       <p class="eyebrow">Discovered posting</p>
       <h2>Details not acquired yet</h2>
-      <p class="muted">JobHunter knows this job from search discovery, but its complete Jobinja detail page has not been stored locally yet. Fetching it will preserve the raw evidence, parse the source fields, create the semantic version, and make it eligible for English translation.</p>
+      <p class="muted">JobHunter knows this opportunity from Jobinja discovery, but its complete detail page has not been stored locally yet. Fetching it will preserve the source evidence, parse the job fields, create the semantic version, and make it eligible for English translation.</p>
       <div class="badge-row">
-        <span class="badge warn">Detail missing</span>
-        <span class="badge">Source ID {{ source_job_id }}</span>
+        <span class="badge warn">Source details not fetched</span>
+        <span class="badge">Company page: {{ posting.company_slug }}</span>
+        <span class="badge">Jobinja reference: {{ source_job_id }}</span>
       </div>
     {% endif %}
   </div>
@@ -151,6 +152,7 @@
   <section class="panel">
     <div class="panel-header"><div><p class="eyebrow">Provenance</p><h2>Evidence identity</h2></div></div>
     <dl class="metadata-list">
+      <div><dt>Jobinja reference</dt><dd>{{ source_job_id }}</dd></div>
       <div><dt>Semantic SHA-256</dt><dd class="mono-small">{{ detail.semantic_sha256 }}</dd></div>
       <div><dt>Raw HTML SHA-256</dt><dd class="mono-small">{{ detail.content_sha256 }}</dd></div>
       <div><dt>First recorded</dt><dd>{{ detail.fetched_at }}</dd></div>
