@@ -42,6 +42,7 @@ def test_web_app_serves_packaged_static_assets(tmp_path: Path) -> None:
     assert "--accent" in css.text
     assert javascript.status_code == 200
     assert "data-operation-id" in javascript.text
+    assert "data-sync-preset" in javascript.text
     assert icon.status_code == 200
     assert "<svg" in icon.text
     assert manifest.status_code == 200
@@ -102,6 +103,38 @@ def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
     assert "0 matching jobs" in response.text
 
 
+def test_web_app_explains_sync_controls_and_quick_add(tmp_path: Path) -> None:
+    app = create_app(_settings(tmp_path))
+    with TestClient(app) as client:
+        overview = client.get("/")
+        jobs = client.get("/jobs")
+
+    assert "Search terms to try" in overview.text
+    assert "How these limits work together" in overview.text
+    assert "Light scan" in overview.text
+    assert "Quick Add" in jobs.text
+    assert "Job URL, search URL, or keyword" in jobs.text
+
+
+def test_web_app_rejects_unapproved_quick_add_url_before_network(tmp_path: Path) -> None:
+    app = create_app(_settings(tmp_path))
+    token = app.state.csrf_token
+    with TestClient(app) as client:
+        response = client.post(
+            "/actions/quick-add",
+            data={
+                "csrf_token": token,
+                "value": "https://example.com/jobs/123",
+                "pages": "1",
+                "detail_limit": "5",
+            },
+            follow_redirects=False,
+        )
+
+    assert response.status_code == 400
+    assert "Jobinja URLs only" in response.text
+
+
 def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> None:
     settings = _settings(tmp_path)
     store = JobHunterStore(settings.database_path)
@@ -123,4 +156,13 @@ def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> Non
     assert response.status_code == 200
     assert "Details not acquired yet" in response.text
     assert "Fetch details" in response.text
+    assert "Jobinja reference tmW5" in response.text
     assert "jobhunter jobinja fetch tmW5" not in response.text
+
+
+def test_web_app_unknown_job_is_real_404(tmp_path: Path) -> None:
+    app = create_app(_settings(tmp_path))
+    with TestClient(app) as client:
+        response = client.get("/jobs/not-known")
+
+    assert response.status_code == 404
