@@ -1,9 +1,12 @@
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi.testclient import TestClient
 
 from jobhunter.config import Settings
+from jobhunter.sources import DiscoveredJobLink
+from jobhunter.storage import JobHunterStore
 from jobhunter.web.app import create_app
 
 
@@ -97,3 +100,27 @@ def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
 
     assert response.status_code == 200
     assert "0 matching jobs" in response.text
+
+
+def test_web_app_renders_discovered_job_without_cli_error(tmp_path: Path) -> None:
+    settings = _settings(tmp_path)
+    store = JobHunterStore(settings.database_path)
+    store.initialize()
+    store.upsert_job(
+        job=DiscoveredJobLink(
+            source_job_id="tmW5",
+            company_slug="example-company",
+            canonical_url="https://jobinja.ir/companies/example-company/jobs/tmW5/example",
+            observed_text="Example discovered job",
+        ),
+        observed_at=datetime.now(UTC),
+    )
+
+    app = create_app(settings)
+    with TestClient(app) as client:
+        response = client.get("/jobs/tmW5")
+
+    assert response.status_code == 200
+    assert "Details not acquired yet" in response.text
+    assert "Fetch details" in response.text
+    assert "jobhunter jobinja fetch tmW5" not in response.text
