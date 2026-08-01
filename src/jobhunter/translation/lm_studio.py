@@ -28,8 +28,6 @@ Rules:
 - Preserve standard English technical tokens such as Python, Docker, Kubernetes,
   RAG, LLM, NLP, MLOps, SIEM, SOC, GitHub, TensorFlow, and PyTorch when they already
   appear naturally in the source.
-- For proper names or brands written in Persian, transliterate conservatively. Do not
-  guess, correct, or replace them with a different entity.
 - Translate the complete supplied text. Do not summarize, omit, explain, classify,
   infer, or add information.
 - Return exactly one translation for every input id and no extra ids.
