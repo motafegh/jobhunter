@@ -1,70 +1,132 @@
 # JobHunter
 
-JobHunter is a local-first personal career-intelligence application.
+JobHunter is a **local-first personal career-intelligence application**.
 
-It collects postings from user-approved public sources, preserves original
-evidence, distinguishes logical jobs from raw HTTP snapshots and semantic
-versions, and prepares trustworthy local data for later evidence-backed career
-analysis.
+It collects approved public job-market data, preserves original evidence, structures
+Jobinja advertisements deterministically, tracks meaningful content versions and source
+checks, creates a separate English representation through local LM Studio, and prepares
+trustworthy data for later evidence-backed career analysis.
 
-JobHunter is a **utility-first personal application**. Reliability,
-inspectability, idempotency, configurability, and daily usefulness control its
-engineering decisions.
+The browser application is now the primary human interface. The CLI remains available for
+automation, debugging, tests, and advanced workflows.
 
-## Current workflow
+## Current accepted data pipeline
 
 ```text
-data-driven bilingual search catalog
-→ inspectable search plan
-→ repeat-safe Jobinja discovery
+data-driven Persian + English search catalog
+→ bounded/repeat-safe Jobinja discovery
 → immutable search-page evidence
-→ missing and refresh-due detail selection
+→ missing + refresh-due detail selection
 → immutable detail evidence
-→ deterministic Jobinja parsing
-→ semantic versioning
+→ deterministic Jobinja parser v2
+→ semantic source versions
 → fetch-observation history
 → structural parser audit
-→ optional versioned English projection
-→ current English corpus export
+→ local LM Studio English projection
+→ versioned English artifacts
+→ current English JSONL corpus
 ```
 
-Acquisition remains independent from translation and later P1.6 analysis. The
-normal translation path is local LM Studio; Google Cloud remains an optional
-external provider.
+Live acceptance currently includes:
 
-## Quick start
+- 103 deterministic tests passing before the web-app increment;
+- 79 unique discovered Jobinja identities in the initial repeat-safe live corpus;
+- zero new logical jobs on the identical discovery rerun;
+- 15 structurally varied complete Jobinja advertisements;
+- 15/15 current source versions passing structural parser audit;
+- repeated unchanged checks without false semantic versions;
+- refresh-due selection using fetch-observation history;
+- 15/15 current English artifacts using local LM Studio;
+- successful bounded recovery from one real `finish_reason="length"` translation;
+- a 15-record current English JSONL export.
 
-Requires Python 3.12 or newer.
+The local web interface is implemented but requires its own local acceptance run before it
+is marked live-accepted.
+
+## Start the application
+
+After pulling changes, install/update dependencies:
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python3 -m pip install --upgrade pip
 python3 -m pip install -e ".[dev]"
-jobhunter init
 ```
 
-The generated configuration enables the broad bilingual
-`ai-security-python` search profile with bounded request and detail budgets.
-Translation remains disabled until explicitly enabled.
-
-Inspect the system before network use:
+Launch the UI:
 
 ```bash
-jobhunter jobinja catalog --show-terms
-jobhunter jobinja plan
-jobhunter translations status
+jobhunter-app
 ```
 
-Run the normal acquisition workflow:
+It opens automatically at:
+
+```text
+http://127.0.0.1:8765/
+```
+
+### Linux desktop launcher
+
+Install once:
 
 ```bash
-jobhunter jobinja sync
+jobhunter-app --install-desktop
 ```
 
-## Data-driven bilingual search registry
+After that JobHunter can be started from the Linux application menu without opening a
+terminal.
 
-Search vocabulary is data, not Python logic.
+The browser manifest also supports standalone installation in browsers that expose local
+web-app installation.
+
+See [Local Web Application](docs/LOCAL_WEB_APP.md).
+
+## Browser experience
+
+### Overview
+
+The dashboard provides:
+
+- discovered/detail/English-corpus counts;
+- missing detail and translation counts;
+- fetch-observation count;
+- recent acquisition runs;
+- recent browser operations;
+- one bounded sync form;
+- one-click parser audit;
+- one-click missing translation;
+- one-click English-corpus export.
+
+### Jobs
+
+Browse the local corpus without network requests and filter by:
+
+- title/company/location/job ID;
+- detail availability;
+- current English availability;
+- lifecycle state.
+
+One job page shows original employer data and the derived English representation side by
+side, plus source checks, evidence identity, parser state, and per-job refresh/translation
+buttons.
+
+### Search plan
+
+Inspect the versioned bilingual vocabulary, profiles, packs, generated search sequence,
+and request bounds without remembering CLI syntax.
+
+### Operations
+
+Long sync/translation work runs through a one-worker local queue. The browser redirects to
+a live operation page that polls local status and displays the same service summaries used
+by the CLI. Overlapping mutable browser operations are rejected deliberately.
+
+### System
+
+Inspect local database/evidence/export paths, LM Studio/provider configuration, translation
+coverage, and acquisition limits.
+
+## Data-driven bilingual search catalog
+
+Search words are **data, not Python logic**.
 
 The packaged catalog lives at:
 
@@ -72,10 +134,7 @@ The packaged catalog lives at:
 src/jobhunter/data/search_catalog.toml
 ```
 
-It defines profiles, packs, descriptions, Persian terms, English terms, and a
-catalog version. Python code loads and validates the file.
-
-The default profile:
+The broad profile:
 
 ```toml
 jobinja_search_profiles = ["ai-security-python"]
@@ -92,365 +151,192 @@ ai-security
 network-platform
 ```
 
-The catalog includes AI, Machine Learning, LLM, RAG, agents, Python, data
-engineering, SOC, SIEM, detection engineering, security automation, AI
-security, Linux, networking, DevOps, and Persian counterparts.
+It includes Persian and English terminology for AI/ML, LLM/RAG/agents, Python/data,
+defensive security, AI security, Linux/networking/platform/DevOps, and related roles.
 
-Exact terms are inspectable with:
-
-```bash
-jobhunter jobinja catalog --show-terms
-```
-
-### Replace the whole search catalog without editing Python
+A complete replacement catalog can be configured with:
 
 ```toml
 jobinja_search_catalog_path = "my-search-catalog.toml"
 ```
 
-The replacement uses the same TOML schema as the packaged catalog.
-
-### Add small user-specific groups
-
-```toml
-[[jobhunter.jobinja_keyword_groups]]
-name = "My highest-priority hybrid roles"
-terms = [
-  "مهندس امنیت هوش مصنوعی",
-  "AI Security Engineer",
-  "Python Security Automation",
-  "مهندس تشخیص",
-  "Detection Engineer",
-]
-enabled = true
-max_pages = 1
-```
+Small personal additions can remain TOML keyword groups. No Python change is required.
 
 See [Search Configuration](docs/SEARCH_CONFIGURATION.md).
 
-## Search planning
+## Source evidence and semantic versions
 
-Plan configured searches without network access:
-
-```bash
-jobhunter jobinja plan
-```
-
-Plan an explicit profile:
-
-```bash
-jobhunter jobinja plan \
-  --profile ai-security-python \
-  --search-limit 40 \
-  --search-offset 0 \
-  --request-budget 40
-```
-
-Generated pack terms are interleaved round-robin so a bounded window represents
-AI/ML, LLM applications, Python/data, defensive security, AI security, and
-network/platform searches instead of exhausting one category first.
-
-## Discovery
-
-Run configured discovery:
-
-```bash
-jobhunter jobinja discover
-```
-
-Discovery is sequential and rate-limited. It reports request-budget usage,
-pages, unique/new/known jobs, cross-search overlap, failures, and one stop reason
-per search.
-
-```text
-page_limit_reached
-empty_page
-repeated_result_set
-request_budget_reached
-page_failed
-invalid_search
-```
-
-Repeated result pages are identified using stable Jobinja job IDs rather than
-volatile HTML.
-
-## Acquisition sync
-
-The normal bounded acquisition command is:
-
-```bash
-jobhunter jobinja sync
-```
-
-Override controls when needed:
-
-```bash
-jobhunter jobinja sync \
-  --profile ai-security-python \
-  --search-limit 40 \
-  --request-budget 40 \
-  --missing-limit 10 \
-  --refresh-limit 5 \
-  --refresh-after-hours 24
-```
-
-The sync performs discovery, missing/refresh-due detail acquisition, semantic
-version decisions, fetch-observation persistence, and structural parser audit.
-
-When translation is enabled with `translation_auto_after_sync = true`, it then
-processes a bounded missing-English queue using the configured translation
-provider.
-
-## Targeted detail acquisition
-
-```bash
-jobhunter jobinja fetch tpLF tmW1 tmkE
-jobhunter jobinja fetch --missing --limit 10
-jobhunter jobinja fetch --refresh-due --older-than-hours 24 --limit 5
-```
-
-Every successful fetch reports its semantic version and fetch-observation ID.
-One job failure does not discard successful jobs in the same batch.
-
-## Original source versus English corpus
-
-JobHunter keeps these layers separate:
-
-```text
-original employer text
-  Persian / English / mixed
-
-semantic source version
-  meaningful deterministic advertisement content
-
-English translation artifact
-  derived convenience representation
-```
-
-Translation never overwrites the original Persian or mixed-language fields.
-Changing a translator does not create a new employer-content semantic version.
-
-### Native English
-
-If a source field contains no Persian text, it passes into the English projection
-unchanged and is labelled `native`.
-
-### Persian or mixed text
-
-Persian-containing strings are translated and labelled `translated`. Technical
-English already embedded in a mixed sentence is handled as part of that semantic
-unit rather than through a hard-coded terminology dictionary.
-
-Per-segment provenance is retained so later ML work can distinguish native
-English from translated English.
-
-## Local LM Studio translation
-
-LM Studio is the default translation provider:
-
-```toml
-translation_enabled = true
-translation_auto_after_sync = false
-translation_provider = "lm-studio"
-translation_target_language = "en"
-translation_batch_limit = 20
-translation_lm_studio_max_tokens = 4096
-translation_lm_studio_character_target = 6000
-```
-
-The translator uses LM Studio's local OpenAI-compatible `/v1/models` and
-`/v1/chat/completions` endpoints with JSON-schema structured output.
-
-Model selection is fail-closed:
-
-```text
-translation_lm_studio_model
-→ lm_studio_model
-→ automatic only when exactly one model is visible
-```
-
-Inspect exact model identifiers with:
-
-```bash
-jobhunter translations models
-```
-
-The prompt contract is versioned as `lm-studio-translation-v1`. It requires the
-model to preserve requirement strength, modality, negation, numbers, names, and
-technical terminology; it forbids summarization, inference, or additions.
-Malformed or incomplete structured responses are rejected rather than stored.
-
-LM Studio translation keeps job text on the configured local LM Studio server
-boundary. No Google API key is required.
-
-## Optional Google Cloud Translation
-
-Google Cloud remains supported when an external translation provider is
-deliberately desired:
-
-```toml
-translation_provider = "google-cloud"
-google_translation_model = "nmt"
-```
-
-Keep the API key outside the repository:
-
-```bash
-export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='your-restricted-key'
-```
-
-Using this provider intentionally sends parsed job text to Google. It is not
-required for normal JobHunter operation.
-
-See [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md).
-
-## Translation commands
-
-Inspect configuration and corpus coverage without invoking a translator:
-
-```bash
-jobhunter translations status
-```
-
-Inspect exact LM Studio model IDs:
-
-```bash
-jobhunter translations models
-```
-
-Create missing English projections:
-
-```bash
-jobhunter translations run --missing --limit 20
-```
-
-Translate explicit latest job versions:
-
-```bash
-jobhunter translations run tpLF tmW1 tmkE
-```
-
-Inspect one current projection:
-
-```bash
-jobhunter translations show tpLF
-```
-
-Export a separate current English corpus:
-
-```bash
-jobhunter translations export
-```
-
-Default output:
-
-```text
-data/exports/job_english_corpus.jsonl
-```
-
-Only artifacts for each job's latest successfully parsed semantic version are
-exported.
-
-## English corpus for later LLM/ML work
-
-Each JSONL record includes:
-
-- source job ID;
-- source semantic version ID and SHA-256;
-- source language;
-- translation provider/model/schema metadata;
-- `native` versus `translated` segment provenance;
-- structured English fields;
-- one complete canonical English document.
-
-This can later support local LLM prompts, embeddings, clustering, text
-classification, information retrieval, and reproducible ML experiments.
-
-The English translation is not the final evidence authority. A future analytical
-claim must remain traceable to original employer text so translation errors
-cannot silently strengthen or weaken a requirement.
-
-## Local inspection
-
-```bash
-jobhunter jobs list --limit 100
-jobhunter jobs show tpLF
-jobhunter jobs checks tpLF
-jobhunter jobs audit
-jobhunter jobs audit --only-issues
-```
-
-A clean structural audit means no known parser shape/contamination problem was
-detected. It does not prove semantic interpretation.
-
-## Data integrity model
+JobHunter distinguishes:
 
 ```text
 JobPosting
   logical Jobinja identity
 
-SearchPageSnapshot
-  exact search-page response
+Raw evidence
+  one exact HTTP response
 
 JobPostingVersion
-  meaningful deterministic source-content version
+  meaningful deterministic employer-content version
 
 JobDetailFetchObservation
-  one successful or failed detail-page check
-
-JobTranslationArtifact
-  one English projection of one exact source version under one provider/model/schema
-
-JobTranslationAttempt
-  completed / failed / reused translation operation
-
-Raw evidence
-  exact HTTP bytes plus metadata sidecar
+  one successful or failed source check
 ```
 
-Volatile HTML changes do not create false semantic versions. Translator/model
-changes do not overwrite source versions or old translation artifacts.
+A volatile HTML change therefore does not manufacture a logical job change.
 
-## Evidence storage
+Every successful or failed detail check is retained operationally, so refresh scheduling
+can use the latest actual observation rather than guessing from semantic-version time.
 
-Runtime data remains outside Git:
+## Deterministic Jobinja parsing
+
+Parser v2 currently extracts explicit source fields such as:
+
+- title;
+- company;
+- category;
+- location;
+- employment type;
+- minimum experience;
+- salary;
+- Jobinja skill tags;
+- gender;
+- military-service requirement;
+- education;
+- posting/expiration dates;
+- complete job description;
+- company description;
+- source-language classification.
+
+Missing source values remain missing. The parser does not ask an LLM to infer employer
+intent.
+
+## Local English corpus
+
+JobHunter keeps source and translation separate:
 
 ```text
-data/evidence/jobinja/search-pages/
-data/evidence/jobinja/job-pages/
-data/jobhunter.sqlite3
-data/exports/
+original Persian / English / mixed employer text
+        ↓ authoritative
+
+English projection
+        ↓ derived convenience representation
 ```
 
-Raw HTML is written before parsing. Translation artifacts are derived database
-records, not replacements for evidence.
+The default translator is local LM Studio:
 
-## LM Studio foundation
+```toml
+translation_enabled = true
+translation_provider = "lm-studio"
+translation_lm_studio_model = "gemma-4-e2b-it"
+```
+
+Translation uses structured JSON-schema output and validates exact result IDs/counts before
+an artifact can be persisted. Native English strings pass through without model calls;
+Persian-containing strings are labelled `translated` in segment provenance.
+
+A real long-output failure led to bounded recovery:
+
+```text
+truncated multi-segment response
+→ recursively split requests
+
+single segment still truncated
+→ 4096 → 8192 → 16384 → 32768 output-token cap
+```
+
+The original source text is never shortened to make translation fit.
+
+Google Cloud Translation remains an optional external provider, but normal operation does
+not require a Google account, API key, or billing account.
+
+See [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md).
+
+## Current English export
 
 ```bash
-jobhunter doctor
-jobhunter doctor --smoke
-jobhunter translations models
+jobhunter translations export
 ```
 
-Acquisition does not require LM Studio. Translation may use LM Studio when
-enabled. P1.6 responsibility/requirement interpretation remains a separate
-future analysis boundary even when it later reuses the same local server.
+writes:
 
-## Development checks
+```text
+data/exports/job_english_corpus.jsonl
+```
+
+Each current record contains source identity/version metadata, source language,
+provider/model/schema identity, native-versus-translated provenance, structured English
+fields, and a canonical English document.
+
+This representation is ready for later embeddings, NLP/ML experiments, clustering,
+retrieval, or P1.6 local LLM analysis while preserving a path back to original evidence.
+
+## CLI remains supported
+
+Examples:
+
+```bash
+jobhunter jobinja plan
+jobhunter jobinja sync
+jobhunter jobinja fetch --missing --limit 10
+jobhunter jobs list
+jobhunter jobs show tpLF
+jobhunter jobs checks tpLF
+jobhunter jobs audit
+jobhunter translations status
+jobhunter translations models
+jobhunter translations run --missing --limit 20
+jobhunter translations export
+```
+
+These commands and the browser use the same underlying SQLite records/services.
+
+## Browser security boundary
+
+The app defaults to loopback and refuses non-loopback binding unless network exposure is
+explicitly requested.
+
+Mutating browser forms use a process-local CSRF token. Responses also set restrictive
+CSP, frame, referrer, content-type, and cache headers. Static CSS/JS/icons are packaged
+locally; the UI does not depend on CDN resources.
+
+## What JobHunter does **not** do yet
+
+The current system prepares trustworthy job data. It does not yet perform the core
+semantic career-intelligence stage.
+
+Incomplete areas include:
+
+- challenge/login/CAPTCHA/error/expired-page classification;
+- cautious full posting lifecycle policy;
+- repost/duplicate-content classification;
+- responsibility extraction;
+- required-versus-preferred requirement classification;
+- description-derived canonical skills;
+- aggregate role/market conclusions;
+- personal capability comparison;
+- readiness/gap analysis;
+- career recommendations;
+- final combined `jobhunter run` analysis/report workflow.
+
+Those belong to the remaining P1.5/P1.6/P1.7 and later phases. Translation output is
+useful but is still derived data; important later conclusions must remain traceable to the
+original employer text.
+
+## Development validation
 
 ```bash
 ruff check .
 pytest
 ```
 
-Normal tests do not contact Jobinja, Google Cloud, or LM Studio. Provider calls
-are represented with deterministic mock transports.
+Normal deterministic tests do not contact Jobinja, Google Cloud, or LM Studio. Network and
+model behavior are represented with controlled mock transports.
 
 ## Documentation
 
 - [Product Specification](docs/PRODUCT_SPECIFICATION.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Local Web Application](docs/LOCAL_WEB_APP.md)
 - [Search Configuration](docs/SEARCH_CONFIGURATION.md)
 - [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md)
 - [Acquisition Operations](docs/ACQUISITION_OPERATIONS.md)
@@ -459,25 +345,3 @@ are represented with deterministic mock transports.
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
 - [Phase 1 Jobinja Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md)
 - [Repository Instructions](AGENTS.md)
-
-## Current status
-
-M0, P1.1, and P1.2 are accepted. Repeat-safe discovery was validated live across
-two two-page searches with 79 unique jobs, one cross-search overlap, and zero new
-jobs on the identical rerun.
-
-Fifteen structurally varied Jobinja advertisements have complete parser-v2
-details and all fifteen pass the deterministic structural audit. Operational
-fetch observations and bounded refresh scheduling are live-validated.
-
-The implementation now also includes a data-driven bilingual search catalog,
-custom replacement catalogs, local LM Studio and optional Google translation
-providers, versioned English artifacts and attempts, native-versus-translated
-segment provenance, bounded automatic translation after sync, and current
-English-corpus JSONL export.
-
-Translation quality still requires live acceptance against real Persian/mixed
-jobs and later a manually reviewed golden corpus. Challenge/login/expired-page
-classification, complete lifecycle classification, P1.6 semantic LLM analysis,
-combined reports, personal relevance, and career recommendations remain
-incomplete.
