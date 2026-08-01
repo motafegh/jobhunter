@@ -5,6 +5,7 @@ from jobhunter.analysis_store import AnalysisStore
 from jobhunter.market_insights import MarketInsights
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
+from jobhunter.translation_store import TranslationStore
 
 
 def _add_job_with_version(
@@ -105,6 +106,7 @@ def test_market_summary_keeps_requirement_strength_separate(tmp_path: Path) -> N
     database_path = tmp_path / "jobhunter.sqlite3"
     store = JobHunterStore(database_path)
     store.initialize()
+    TranslationStore(database_path).initialize()
     v1 = _add_job_with_version(store, job_id="a", title="Role A", semantic="one")
     v2 = _add_job_with_version(store, job_id="b", title="Role B", semantic="two")
     analyses = AnalysisStore(database_path)
@@ -118,7 +120,13 @@ def test_market_summary_keeps_requirement_strength_separate(tmp_path: Path) -> N
         schema_version="schema",
         analysis={
             "role_purpose": [],
-            "responsibilities": [{"statement": "Build", "evidence": "Example", "confidence": "high"}],
+            "responsibilities": [
+                {
+                    "statement": "Build",
+                    "evidence": "Example",
+                    "confidence": "high",
+                }
+            ],
             "requirements": [
                 {
                     "concept": "Python",
