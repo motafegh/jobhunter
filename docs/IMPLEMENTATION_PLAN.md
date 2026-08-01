@@ -14,6 +14,7 @@ Detailed Phase 1 execution is controlled by
 - Keep successful acquisition independent from local-model availability.
 - Preserve raw evidence before parsing, translation, or analysis.
 - Keep translation derived from source versions rather than mixed into source evidence.
+- Prefer local-first providers when they satisfy the requirement.
 - Prefer one reliable source adapter over several incomplete integrations.
 - Make source coverage data-driven rather than scattering search constants.
 - Bound pages, requests, detail checks, translation batches, retries, and model calls.
@@ -129,7 +130,7 @@ Live evidence includes:
 ## 11. Current authorized implementation
 
 The current authorized increment combines **data-driven bilingual acquisition
-configuration** with the **derived English corpus foundation**.
+configuration** with the **local-first derived English corpus foundation**.
 
 ### Search path
 
@@ -158,9 +159,11 @@ discovery
 ### Translation path
 
 ```text
-latest semantic source version
+latest successfully parsed semantic source version
 → Persian-content detection
 → native-English identity projection OR TranslationProvider
+   ├─ local LM Studio structured translation (default)
+   └─ optional Google Cloud Translation
 → versioned English fields + complete English document
 → native/translated segment provenance
 → translation artifact + attempt history
@@ -180,6 +183,7 @@ jobhunter jobs show
 jobhunter jobs checks
 jobhunter jobs audit
 jobhunter translations status
+jobhunter translations models
 jobhunter translations run
 jobhunter translations show
 jobhunter translations export
@@ -194,14 +198,20 @@ Acceptance requires:
 - bounded search windows cover all selected packs round-robin;
 - source acquisition remains idempotent and bounded;
 - translation is disabled by default;
-- native-English source fields create identity artifacts without external calls;
+- native-English source fields create identity artifacts without provider calls;
 - Persian/mixed source fields use an isolated provider;
-- the Google provider uses official Cloud Translation Basic v2 semantics;
+- LM Studio is the default provider and requires no cloud credentials;
+- LM Studio translation uses JSON-schema structured output;
+- LM Studio exact-one-visible-model auto-selection works;
+- ambiguous multi-model selection fails closed unless an exact translation model is configured;
+- the translation instruction contract is versioned separately from the source parser;
+- Google Cloud remains a supported but optional external provider;
 - translation artifacts are keyed by source version/provider/model/schema;
 - repeated identical translation reuses the existing artifact;
 - a newer source semantic version invalidates the old artifact as current corpus data;
+- a newer incomplete parse blocks an older translation from current export/use;
 - translated versus native string provenance is retained;
-- only current-source-version artifacts are exported;
+- only current successfully parsed source-version artifacts are exported;
 - translation failure never alters source evidence or semantic history;
 - automatic translation after sync is explicit, bounded, and opt-in;
 - no translation artifact is treated as stronger employer evidence than source text.
@@ -213,16 +223,16 @@ Before moving on, validate:
 1. Ruff and the complete deterministic pytest suite.
 2. Search-catalog loading and the effective bilingual plan.
 3. Existing source acquisition still works unchanged when translation is disabled.
-4. One native-English projection produces no Google request.
-5. One Persian/mixed real Jobinja posting translates successfully through Google
-   Cloud when explicitly enabled.
-6. Repeating the same translation reports `reused`.
-7. `translations show` displays the current English projection.
-8. `translations export` produces a valid current-version JSONL corpus.
-9. Automatic translation after a deliberately bounded sync works when enabled.
+4. `jobhunter translations models` reaches LM Studio and lists exact model IDs.
+5. One native-English projection produces no model/provider request.
+6. One Persian/mixed real Jobinja posting translates successfully through local LM Studio.
+7. Repeating the same translation reports `reused`.
+8. `translations show` displays the current English projection.
+9. `translations export` produces a valid current-version JSONL corpus.
+10. Automatic translation after a deliberately bounded sync works when enabled.
 
-Translation quality acceptance must examine actual terminology and requirement
-strength; transport success alone is insufficient.
+Translation quality acceptance must examine actual terminology, completeness,
+negation, and requirement strength; structured transport success alone is insufficient.
 
 ## 13. Next implementation after acceptance
 
@@ -236,8 +246,8 @@ Then complete remaining P1.3/P1.5 source/lifecycle behavior:
 - duplicate/repost classification when corpus evidence justifies it.
 
 In parallel with P1.6 preparation, create a small manually reviewed
-Persian→English translation golden corpus to compare Google NMT and any later
-translation provider/model.
+Persian→English translation golden corpus to compare local LM Studio models and,
+when useful, the optional Google provider.
 
 P1.6 local analysis must preserve original evidence links even when it consumes
 English projected text.
@@ -247,7 +257,7 @@ English projected text.
 The current increment must not claim completion of:
 
 - translation quality evaluation across a reviewed golden corpus;
-- terminology glossary locking or custom Google glossary support;
+- terminology glossary locking;
 - challenge/login/expired-page classification;
 - complete lifecycle policy;
 - repost similarity and duplicate-content resolution;
