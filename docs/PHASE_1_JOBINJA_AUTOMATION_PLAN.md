@@ -3,375 +3,222 @@
 ## 1. Status and authority
 
 **Status:** Active implementation plan  
-**Scope:** Phase 1 only  
+**Scope:** Phase 1  
 **Primary source:** Jobinja (`https://jobinja.ir/`)  
 **Branch policy:** Work directly on `main` unless isolation is clearly required.
 
-This document controls Phase 1 implementation order, boundaries, records, and
-acceptance criteria. The product specification, architecture, domain model, and
-source policy remain controlling at their respective levels.
+This document controls Phase 1 order, records, boundaries, and acceptance.
 
-## 2. Phase objective
+## 2. Objective
 
-Phase 1 must replace and improve the user's manual Jobinja process:
+Replace and improve the former manual workflow:
 
 ```text
-manual keyword searches
+manual keyword search
 → open advertisements
-→ copy descriptions and skills into files
+→ copy text into files
 → send files to an AI assistant
-→ request individual and combined analysis
+→ request individual/combined analysis
 ```
 
-The target system configures searches once, preserves evidence, identifies new and
-changed jobs, parses explicit source fields, optionally creates a separate English
-projection, runs local evidence-backed analysis, and produces inspectable individual
-and combined results.
-
-## 3. Target daily experience
-
-The intended final Phase 1 endpoint is:
-
-```bash
-jobhunter run
-```
-
-A complete run will eventually:
-
-1. load the effective bilingual search catalog, profiles, custom groups, and raw URLs;
-2. build an inspectable bounded search plan;
-3. acquire search pages sequentially and preserve evidence;
-4. discover stable Jobinja job identities repeat-safely;
-5. select missing and refresh-due job details;
-6. preserve raw detail evidence;
-7. parse explicit Jobinja fields deterministically;
-8. classify semantic source content as new, unchanged, or changed;
-9. retain every successful or failed fetch observation;
-10. create or reuse the current English projection when configured;
-11. queue new or changed versions for local analysis;
-12. validate evidence-backed structured model output;
-13. persist individual results and review states;
-14. update a combined report;
-15. print a concise actionable summary.
-
-The system must not require manual copying of individual job URLs or text.
-
-## 4. Phase 1 data flow
+with:
 
 ```text
-Data-driven bilingual search configuration
-        ↓
-Search-plan expansion and bounds
-        ↓
-Search-page acquisition
-        ↓
-Raw search-page evidence
-        ↓
-Job identity and discovery provenance
-        ↓
-Missing / refresh-due selection
-        ↓
-Job-detail acquisition
-        ↓
-Raw job-page evidence
-        ↓
-Deterministic Jobinja parsing
-        ↓
-Semantic source-version decision
-        ↓
-Fetch observation
-        ↓
-Optional English projection
-  ├─ native-English identity projection
-  ├─ local LM Studio structured translation (default)
-  └─ optional Google Cloud Translation
-        ↓
-Versioned English artifact + translation attempt
-        ↓
-Local LLM structured analysis
-        ↓
-Validation and review state
-        ↓
-Individual and combined outputs
+configured bilingual search coverage
+→ repeat-safe acquisition
+→ immutable evidence
+→ deterministic structured source data
+→ semantic version/check history
+→ local English projection
+→ evidence-backed local semantic analysis
+→ inspectable individual/combined results
 ```
 
-Source acquisition remains useful when translation or LM Studio is unavailable.
-Translation failure must not invalidate source evidence or semantic versions.
+The browser application should be the normal human interface; CLI remains supported.
+
+## 3. Final intended Phase 1 run
+
+A complete final run will eventually:
+
+1. load the bilingual search catalog/profiles/custom groups/raw URLs;
+2. construct a bounded plan;
+3. acquire search pages and preserve evidence;
+4. discover stable Jobinja identities repeat-safely;
+5. select missing/refresh-due details;
+6. preserve detail evidence;
+7. parse source-explicit fields deterministically;
+8. classify source content as new/unchanged/changed;
+9. retain every source check;
+10. create/reuse current English projection when configured;
+11. select new/changed versions for local semantic analysis;
+12. validate structured evidence-backed model output;
+13. persist review states/results;
+14. update combined reporting;
+15. expose the result through browser UI and CLI.
+
+Manual copying of individual jobs should not be required.
+
+## 4. Current accepted flow
+
+```text
+bilingual TOML search catalog
+        ↓
+bounded search plan
+        ↓
+Jobinja search acquisition
+        ↓
+raw search evidence
+        ↓
+logical JobPosting + discovery provenance
+        ↓
+missing / refresh-due selection
+        ↓
+detail acquisition
+        ↓
+raw detail evidence
+        ↓
+Jobinja parser v2
+        ↓
+semantic source version
+        ↓
+fetch observation
+        ↓
+structural parser audit
+        ↓
+current English projection
+  ├─ source identity for native English
+  └─ local LM Studio structured translation
+        ↓
+versioned English artifact + attempt
+        ↓
+current English JSONL corpus
+```
+
+Google Cloud Translation remains an optional external alternative, not a normal dependency.
 
 ## 5. Search configuration
 
-### 5.1 Data-driven catalog
+Search vocabulary lives in versioned TOML data. It supports profiles, packs, Persian and
+English terms, custom groups, exclusions, raw Jobinja URL escape hatches, deterministic
+search windows, page limits, request delays, and global request budgets.
 
-Pack/profile vocabulary is loaded from versioned TOML data:
+Normalized identity may harmonize Persian/Arabic character variants, case, whitespace, and
+zero-width characters without changing the displayed search term.
 
-```text
-src/jobhunter/data/search_catalog.toml
-```
+Search vocabulary is acquisition configuration, not a career taxonomy.
 
-A complete replacement catalog can be configured without Python changes:
+## 6. Source safety
 
-```toml
-jobinja_search_catalog_path = "my-search-catalog.toml"
-```
+Use approved public Jobinja pages only. Preserve canonical URL attribution, validate hosts
+and redirects, bound response/request volume, and keep requests sequential/rate-limited.
 
-### 5.2 Profiles and packs
+Do not automate login/applications, scrape private profiles, bypass CAPTCHA/access controls,
+rotate identities/proxies to defeat limits, or create unrestricted crawling.
 
-```toml
-jobinja_search_profiles = ["ai-security-python"]
-jobinja_search_packs = ["ai-security"]
-```
+## 7. Source identity and records
 
-### 5.3 Custom keyword groups
+### JobPosting
 
-```toml
-[[jobhunter.jobinja_keyword_groups]]
-name = "My hybrid roles"
-terms = [
-  "مهندس امنیت هوش مصنوعی",
-  "AI Security Engineer",
-  "Python Security Automation",
-]
-enabled = true
-max_pages = 1
-```
+Stable logical source identity keyed by Jobinja source job code.
 
-### 5.4 Raw Jobinja URLs
+### SearchPageSnapshot
 
-Raw result URLs remain supported for source-owned filters.
+One exact search response with evidence hash/path and discovery count.
 
-### 5.5 Normalization, interleaving, and bounds
+### JobPostingVersion
 
-Term identity may normalize Unicode, Persian/Arabic character variants, whitespace,
-case, and zero-width joiners while preserving the displayed source term. Selected
-packs are interleaved round-robin so bounded windows represent multiple career domains.
+One meaningful deterministic employer-content version. Raw HTML volatility alone must not
+create a new semantic version.
 
-Search configuration supports maximum pages, selected searches, cyclic search offset,
-global search-page request budget, sequential request delay, and explicit one-run
-selectors. Budget exhaustion is a controlled stop, not a failure.
+### JobDetailFetchObservation
 
-## 6. Source boundaries and safety
+One successful/failed source check, independent from semantic history.
 
-Phase 1 will use public Jobinja pages only, preserve source attribution/canonical URLs,
-use bounded sequential acquisition, validate redirects/approved hosts, retain raw
-evidence locally, and report access denial/challenge/CAPTCHA/login/unsupported pages.
+### JobTranslationArtifact
 
-Phase 1 will not automate login/applications, scrape private profiles, bypass access
-controls, use stealth proxy rotation, create an unrestricted crawler, or redistribute
-collected advertisements publicly.
+One derived English projection of one exact source semantic version under one target
+language/provider/model/schema identity.
 
-Translation is not source acquisition. Local LM Studio translation processes already
-parsed source text and does not broaden source acquisition. Google Cloud is an optional
-external processing boundary when explicitly selected.
+### JobTranslationAttempt
 
-## 7. Source-specific identity
+One `completed`, `failed`, or `reused` translation operation.
 
-The Jobinja source job code remains the primary external identity. The title slug is
-descriptive and not stable identity.
+### AnalysisRun / DailyReport
 
-## 8. Language and translation handling
+Future P1.6/P1.7 records for versioned model analysis and combined reporting.
 
-Jobinja advertisements may be Persian, English, or mixed.
+## 8. Parser boundary
 
-Phase 1 preserves exact original raw evidence, deterministic original-language parsed
-fields, source-language classification, native English technical terms embedded in
-Persian text, separately versioned derived translations, and per-segment `native` or
-`translated` provenance.
+Parser v2 extracts explicit Jobinja fields and complete source text before translation or
+semantic analysis. Missing fields remain missing. Jobinja source skill tags remain distinct
+from future description-derived career concepts.
 
-Translation must never overwrite raw evidence or source semantic fields.
+A clean structural audit means no known parser-shape/contamination issue was detected. It
+does not certify semantic interpretation.
 
-### 8.1 Native English
+## 9. Translation boundary
 
-If projected source fields contain no Persian text, JobHunter creates a
-`source-identity / native-english` artifact without any translation-provider call.
+Source evidence is authoritative. English is derived convenience data.
 
-### 8.2 Persian or mixed content
+Native-English strings pass through without translation calls. Persian-containing strings
+translate as semantic units and retain `native`/`translated` provenance.
 
-Persian-containing strings are translated through the configured `TranslationProvider`.
-Mixed Persian/English strings are translated as semantic units rather than by replacing
-hard-coded words.
-
-The normal provider is:
+Normal provider:
 
 ```toml
 translation_provider = "lm-studio"
 ```
-
-Google Cloud remains available only as an explicitly selected external alternative.
-
-### 8.3 LM Studio translation contract
-
-The LM Studio translator uses structured output through the OpenAI-compatible local
-API. It validates exact item count and IDs and rejects malformed, missing, duplicate,
-extra, or empty translations.
 
 Model-selection priority:
 
 ```text
 translation_lm_studio_model
 → lm_studio_model
-→ automatic only when exactly one model is visible
+→ exactly-one-visible-model auto-selection
 ```
 
-If zero or multiple models are visible and no model is configured, translation fails
-closed rather than choosing arbitrarily.
+Ambiguous selection fails closed.
 
-The translation instruction contract is versioned independently from source parsing.
-The current identifier is:
+LM Studio translation uses JSON-schema structured output and rejects missing/extra/duplicate
+IDs, count mismatches, empty translations, or malformed responses.
+
+The prompt/provider contract is versioned independently from source parsing. Current
+contract: `lm-studio-translation-v1`.
+
+Explicit output truncation uses bounded recovery:
 
 ```text
-lm-studio-translation-v1
+multi-segment truncation → split recursively
+single-segment truncation → double output budget up to 32,768
 ```
 
-A material prompt-policy change requires a new contract identifier.
+Source text is never shortened to satisfy translation limits.
 
-### 8.4 Translation identity
+## 10. Browser UI boundary
 
-A derived artifact is identified by:
+The browser app is a second interface over the same services/database.
+
+Current screens:
 
 ```text
-source semantic-version ID
-+ target language
-+ provider contract
-+ exact provider model
-+ translation schema version
+Overview
+Jobs
+Job detail
+Search plan
+Operations
+System
 ```
 
-Changing translator/model/schema/prompt contract creates a different derived artifact,
-not a new employer-content semantic version.
+Browser mutation actions cover bounded sync, audit, missing translation, export, per-job
+source check, and per-job translation.
 
-## 9. Deterministic extraction boundary
+The UI must remain loopback-first, CSRF-protected, self-contained (no CDN assets), and
+limited to one mutable browser operation at a time unless future concurrency is proven safe.
 
-Explicit Jobinja fields are extracted deterministically before translation or LLM
-interpretation. Missing fields remain missing. Source skill tags remain separate from
-later description-derived skills.
+Browser runtime operation cards are ephemeral; durable source/translation history remains
+in SQLite.
 
-## 10. Phase 1 records
-
-### SearchDefinition
-
-- source;
-- stable name;
-- canonical URL;
-- origin profile, pack, group, term, or raw URL when available;
-- enabled state;
-- page limit;
-- created and updated timestamps.
-
-### AcquisitionRun
-
-- run identifier;
-- start/completion timestamps;
-- status;
-- search/request/page/job/overlap/failure counts;
-- failure summary.
-
-### SearchPageSnapshot
-
-- run/search/page;
-- requested/final URLs;
-- retrieval time;
-- HTTP status;
-- content hash;
-- evidence paths;
-- discovered count.
-
-### JobPosting
-
-- source/source job code;
-- canonical URL/company slug;
-- first/last seen times;
-- lifecycle state.
-
-### JobDiscovery
-
-- run;
-- search/page;
-- job posting;
-- timestamp.
-
-### JobPostingVersion
-
-- posting reference;
-- retrieval time;
-- version-defining raw evidence;
-- deterministic source fields;
-- semantic fingerprint;
-- parser/language metadata.
-
-### JobDetailFetchObservation
-
-- source posting;
-- check timestamp;
-- new-version/unchanged/failed outcome;
-- URLs/status/hashes when available;
-- version reference;
-- evidence paths;
-- error details.
-
-### JobTranslationArtifact
-
-- exact source detail-version reference;
-- source semantic SHA-256;
-- source/target languages;
-- provider contract and exact model;
-- translation schema version;
-- structured English fields;
-- complete English document;
-- per-segment provenance;
-- native/translated counts;
-- projection SHA-256;
-- creation timestamp.
-
-### JobTranslationAttempt
-
-- exact source detail-version reference;
-- attempt timestamp;
-- provider/model/schema;
-- `completed`, `failed`, or `reused` outcome;
-- artifact reference when available;
-- failure type/message when applicable.
-
-### AnalysisRun
-
-- source posting version;
-- English artifact reference when used;
-- analysis model/prompt/schema versions;
-- request/response evidence;
-- validated result;
-- success/failure/review state;
-- original source evidence references for material claims.
-
-### DailyReport
-
-- run/corpus window;
-- source/translation/analysis/review counts;
-- conclusions and uncertainty notes.
-
-## 11. Processing states
-
-Source progression:
-
-```text
-discovered
-→ acquired
-→ parsed
-→ pending_analysis
-→ analysed
-→ review_required or accepted
-```
-
-Translation is parallel derived state:
-
-```text
-translation_missing
-translation_completed
-translation_failed
-translation_reused
-```
-
-A later-stage failure must not delete earlier successful evidence.
-
-## 12. Delivery increments
+## 11. Delivery state
 
 ### P1.0 — Repository alignment
 
@@ -383,135 +230,110 @@ Accepted.
 
 ### P1.2 — Pagination and repeat-safe discovery
 
-Accepted through live repeated two-search/two-page validation.
+Accepted through live repeated multi-search validation.
 
 ### P1.3 — Detail acquisition and evidence
 
-Operational core accepted. Challenge/login/error/expired/irrelevant page
-classification and refined retry policy remain incomplete.
+Operational core accepted. Remaining:
 
-### P1.4 — Deterministic parser, language normalization, and English projection
+- challenge/login/CAPTCHA/error/expired/irrelevant classification;
+- classified retry/backoff policy.
 
-Deliverables:
+### P1.4 — Parser, multilingual handling, English projection
 
-- source-specific parser;
-- complete original description preservation;
-- Persian/Arabic normalization for matching without overwriting source text;
-- language classification;
-- structural parser audit;
-- isolated translation-provider boundary;
-- local LM Studio structured translator;
-- native-English identity projection;
-- Persian/mixed English projection;
-- provider/model/schema versioned translation artifacts;
-- translation attempt history;
-- per-segment native/translated provenance;
-- current English-corpus JSONL export;
-- representative parser and translation fixtures.
+Live-accepted foundation:
 
-Parser v2 is live-accepted against fifteen varied advertisements. The English projection
-implementation now requires deterministic validation plus bounded **local LM Studio**
-quality acceptance before the translation portion is accepted.
+- parser v2 clean across 15 varied advertisements;
+- 15/15 current English artifacts through local LM Studio;
+- translation reuse/idempotency;
+- real output-truncation recovery;
+- current 15-record JSONL export.
 
-Translation acceptance requires:
+Translation quality is useful but still requires a future reviewed Persian→English golden
+corpus before treating any model as a permanent quality standard.
 
-- source fields/evidence remain unchanged;
-- native-English source requires no provider call;
-- LM Studio model discovery/selection is deterministic and fail-closed;
-- Persian/mixed translation produces complete English fields/document;
-- structured output count/IDs are validated;
-- repeating identical translation reuses the artifact;
-- source semantic changes require a new artifact;
-- a newer incomplete parse blocks an older translation from current use/export;
-- provider contract/model/schema identity is retained;
-- failures remain independent from source acquisition;
-- export includes only each job's current successfully parsed source-version artifact;
-- a real Persian/mixed sample is manually checked for requirement strength,
-  completeness, negation, and technical-term fidelity.
+### P1.5 — Identity, versions, lifecycle
 
-Google Cloud may be compared later but is not required for P1.4 acceptance.
+Implemented:
 
-### P1.5 — Identity, versions, and lifecycle
+- stable Jobinja identity;
+- semantic versions;
+- raw evidence separation;
+- fetch observations;
+- refresh-due selection.
 
-Semantic versions and fetch observations are implemented. Repost, duplicate, and
-lifecycle classification remain incomplete.
+Remaining:
 
-### P1.6 — Evidence-backed local analysis
+- cautious active/expired/inaccessible transitions;
+- consecutive-failure/lifecycle summaries;
+- repost/duplicate classification.
 
-P1.6 may use current English projection text for model convenience, but every material
-claim must remain traceable to original employer text. Translation alone cannot
-establish requirement strength.
+### Local browser interface
 
-Translation and P1.6 analysis may share the LM Studio server but remain separate
-provider/prompt/persistence boundaries.
+Implementation complete; deterministic/live acceptance pending.
 
-Deliverables remain versioned analysis schema, evidence passages, Persian/English
-handling, validated structured output, bounded retries, review states, reanalysis, and
-a manually reviewed golden corpus.
+### P1.6 — Evidence-backed local semantic analysis
 
-### P1.7 — Individual outputs and combined report
+Not started. It will add versioned prompts/schemas, responsibilities, requirements,
+source-explicit versus inferred concepts, evidence passages, confidence, validation, and
+review states.
 
-Remains future work.
+### P1.7 — Individual/combined semantic outputs
 
-## 13. Phase completion criteria
+Not started.
 
-Phase 1 is complete only when searches are configured once; normal runs discover jobs
-automatically; acquisition is bounded/observable; new/changed jobs preserve source
-evidence; explicit fields parse deterministically; Persian/English/mixed source text
-remains intact; a derived English representation is available when configured without
-losing provenance; local analysis produces evidence-backed structured results; failures
-remain inspectable/retryable; individual/combined reports exist; reruns do not inflate
-unchanged data; and no access-control bypass/application automation is required.
+## 12. Accepted live evidence
 
-## 14. Deferred work
+Current accepted foundation includes:
 
-Outside Phase 1 unless required:
-
-- other job platforms;
-- generic crawling;
-- automated applications/messages;
-- full personal capability graph;
-- long-term trend analysis;
-- salary/hiring-probability prediction;
-- distributed services;
-- model fine-tuning;
-- vector databases without demonstrated need.
-
-## 15. Current authorized implementation
-
-Accepted source evidence:
-
-- M0, P1.1, and P1.2;
-- 79 unique jobs across two two-page searches with one overlap;
+- 79 unique initial discovered jobs;
+- one cross-search overlap;
 - zero new jobs on identical discovery rerun;
-- fifteen complete parser-v2 advertisements;
-- fifteen of fifteen latest versions structurally clean;
-- unchanged checks creating observations without false versions;
-- bounded refresh-due selection.
+- 15 current complete parser-v2 advertisements;
+- 15/15 structurally clean audits;
+- repeated unchanged source checks without false semantic versions;
+- bounded refresh-due behavior;
+- local LM Studio translation selected explicitly;
+- 15/15 current English artifacts;
+- 15-record English JSONL export;
+- bounded successful recovery from `finish_reason="length"`;
+- 103 deterministic tests passing before the browser increment.
 
-Current target: **data-driven bilingual search configuration plus local-first versioned
-English projection acceptance**.
+## 13. Browser acceptance target
 
-Active commands:
+Deterministic acceptance:
 
-```text
-jobhunter jobinja catalog [--show-terms]
-jobhunter jobinja plan
-jobhunter jobinja discover
-jobhunter jobinja sync
-jobhunter jobinja fetch
-jobhunter jobs list
-jobhunter jobs show
-jobhunter jobs checks
-jobhunter jobs audit
-jobhunter translations status
-jobhunter translations models
-jobhunter translations run
-jobhunter translations show
-jobhunter translations export
-```
+1. Ruff passes.
+2. Full pytest suite passes.
+3. Primary pages render locally.
+4. Packaged CSS/JS/icon/manifest load.
+5. Security headers are present.
+6. Invalid CSRF is rejected.
+7. Browser operations execute/poll correctly.
+8. Empty/local filtering is safe.
 
-After this increment passes deterministic and bounded live LM Studio validation, the
-next source target is challenge/login/irrelevant/expired-page classification, retry
-policy, and cautious lifecycle transitions. P1.6 semantic analysis must retain
-original-source evidence even when consuming English projection text.
+Live acceptance against the real corpus:
+
+1. dashboard shows correct real counts;
+2. jobs page shows discovered corpus;
+3. `tpLF` shows original + English current artifact;
+4. search plan shows configured bilingual coverage;
+5. parser audit completes from browser;
+6. one bounded sync completes from browser;
+7. export button produces the current corpus;
+8. desktop launcher works when installed.
+
+## 14. Next work after browser acceptance
+
+Complete remaining P1.3/P1.5 response/lifecycle classification, then begin P1.6 semantic
+analysis.
+
+P1.6 may use English projection for model convenience, but every material claim must retain
+a path to original employer evidence.
+
+## 15. Explicit non-claims
+
+Phase 1 is not complete. JobHunter must not yet claim full lifecycle classification,
+repost resolution, responsibility extraction, required/preferred qualification analysis,
+aggregate market intelligence, personal relevance/gaps, career recommendations, or the
+final combined Phase 1 report workflow.
