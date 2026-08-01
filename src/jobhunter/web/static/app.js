@@ -10,6 +10,46 @@
     });
   });
 
+  const syncForm = document.querySelector("[data-sync-form]");
+  const presets = {
+    light: {
+      search_limit: 12,
+      request_budget: 12,
+      missing_limit: 3,
+      refresh_limit: 2,
+      refresh_after_hours: 24,
+    },
+    normal: {
+      search_limit: 40,
+      request_budget: 40,
+      missing_limit: 10,
+      refresh_limit: 5,
+      refresh_after_hours: 24,
+    },
+    thorough: {
+      search_limit: 80,
+      request_budget: 80,
+      missing_limit: 20,
+      refresh_limit: 10,
+      refresh_after_hours: 72,
+    },
+  };
+
+  document.querySelectorAll("[data-sync-preset]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!syncForm) return;
+      const preset = presets[button.dataset.syncPreset];
+      if (!preset) return;
+      Object.entries(preset).forEach(([name, value]) => {
+        const field = syncForm.elements.namedItem(name);
+        if (field) field.value = value;
+      });
+      document.querySelectorAll("[data-sync-preset]").forEach((item) => {
+        item.classList.toggle("active", item === button);
+      });
+    });
+  });
+
   const container = document.querySelector("[data-operation-id]");
   if (!container) return;
 
