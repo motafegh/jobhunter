@@ -212,14 +212,45 @@ dd { margin: 4px 0 0; color: var(--text); }
 .empty-state.tall { padding: 55px 24px; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 
+/* Guided controls and direct intake */
+.guided-form { grid-template-columns: repeat(5, minmax(0, 1fr)); align-items: start; }
+.guided-form .form-action { align-self: end; }
+.field-help { color: var(--muted-2); font-size: 10px; line-height: 1.45; font-weight: 500; }
+.field-help strong { color: var(--muted); }
+.input-with-suffix { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; border: 1px solid var(--border); background: #0d121d; border-radius: 9px; overflow: hidden; }
+.input-with-suffix input { border: 0; border-radius: 0; }
+.input-with-suffix span { padding: 0 10px; color: var(--muted-2); font-size: 10px; text-transform: uppercase; letter-spacing: .08em; }
+.preset-row { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; margin-top: 16px; }
+.preset-button { border: 1px solid var(--border-soft); background: #101622; color: var(--muted); border-radius: 999px; padding: 6px 10px; cursor: pointer; font-size: 11px; font-weight: 750; }
+.preset-button:hover, .preset-button.active { border-color: rgba(124,156,255,.4); color: var(--accent-strong); background: var(--accent-soft); }
+.guide-box { margin-top: 16px; border: 1px solid var(--border-soft); border-radius: 12px; background: rgba(10,15,24,.58); overflow: hidden; }
+.guide-box summary { padding: 11px 13px; cursor: pointer; color: var(--accent-strong); font-size: 12px; font-weight: 750; }
+.guide-content { padding: 0 13px 12px; color: var(--muted); font-size: 12px; }
+.guide-content p { margin: 8px 0 0; }
+.compact-guide { margin-top: 12px; }
+
+.quick-add-panel { border-color: rgba(124,156,255,.2); }
+.quick-add-form { display: grid; grid-template-columns: minmax(320px, 2fr) 120px 150px minmax(180px, .7fr) auto; gap: 12px; align-items: end; }
+.quick-add-form label { display: grid; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.quick-add-form input[type="text"], .quick-add-form input[type="number"] { width: 100%; border: 1px solid var(--border); background: #0d121d; color: var(--text); border-radius: 9px; padding: 10px 11px; min-height: 40px; }
+.quick-add-input { min-width: 0; }
+.check-label { grid-template-columns: auto minmax(0,1fr) !important; align-items: center; column-gap: 8px !important; }
+.check-label input { width: 16px; height: 16px; accent-color: var(--accent); }
+.check-label small { grid-column: 2; }
+.technical-ref { margin-top: 2px; color: #56647a; font-size: 10px; }
+.mini-link { display: inline-block; margin-left: 6px; color: var(--accent-strong); font-size: 10px; font-weight: 800; }
+.mini-link:hover { text-decoration: underline; }
+
 @media (max-width: 1150px) {
   .metric-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .dashboard-grid, .lower-grid, .language-grid { grid-template-columns: 1fr; }
-  .form-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .form-grid, .guided-form { grid-template-columns: repeat(3, minmax(0,1fr)); }
   .filter-bar { grid-template-columns: 1fr 1fr 1fr; }
   .search-field { grid-column: span 3; }
   .pack-grid { grid-template-columns: 1fr; }
   .settings-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .quick-add-form { grid-template-columns: minmax(280px, 1fr) 120px 150px; }
+  .quick-add-form .quick-add-input { grid-column: span 3; }
 }
 
 @media (max-width: 760px) {
@@ -234,8 +265,8 @@ dd { margin: 4px 0 0; color: var(--text); }
   .topbar h1 { font-size: 29px; }
   .metric-grid, .metric-grid.three, .profile-grid, .settings-grid { grid-template-columns: 1fr; }
   .dashboard-grid, .language-grid { display: block; }
-  .form-grid, .filter-bar { grid-template-columns: 1fr; }
-  .search-field { grid-column: auto; }
+  .form-grid, .guided-form, .filter-bar, .quick-add-form { grid-template-columns: 1fr; }
+  .search-field, .quick-add-form .quick-add-input { grid-column: auto; }
   .quick-actions.horizontal { grid-template-columns: 1fr; }
   .job-hero { display: block; }
   .job-actions { justify-content: flex-start; margin-top: 16px; }
