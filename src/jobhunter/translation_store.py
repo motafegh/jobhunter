@@ -216,7 +216,14 @@ class TranslationStore:
             ).fetchone()
         return _artifact_from_row(row) if row is not None else None
 
-    def latest_artifact(self, source_job_id: str, *, target_language: str = "en") -> TranslationArtifact | None:
+    def latest_artifact(
+        self,
+        source_job_id: str,
+        *,
+        target_language: str = "en",
+    ) -> TranslationArtifact | None:
+        """Return an English artifact only when it belongs to the latest source version."""
+
         self.initialize()
         with self._connect() as connection:
             row = connection.execute(
@@ -228,7 +235,12 @@ class TranslationStore:
                 WHERE p.source = 'jobinja'
                   AND p.source_job_id = ?
                   AND a.target_language = ?
-                ORDER BY v.id DESC, a.id DESC
+                  AND v.id = (
+                      SELECT MAX(latest.id)
+                      FROM job_detail_versions AS latest
+                      WHERE latest.job_posting_id = p.id
+                  )
+                ORDER BY a.id DESC
                 LIMIT 1
                 """,
                 (source_job_id, target_language),
@@ -241,6 +253,8 @@ class TranslationStore:
         target_language: str = "en",
         limit: int = 500,
     ) -> tuple[TranslationArtifact, ...]:
+        """Return one current English artifact per job; stale source versions are excluded."""
+
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
         self.initialize()
@@ -253,11 +267,15 @@ class TranslationStore:
                 JOIN job_postings AS p ON p.id = v.job_posting_id
                 WHERE p.source = 'jobinja'
                   AND a.target_language = ?
+                  AND v.id = (
+                      SELECT MAX(latest.id)
+                      FROM job_detail_versions AS latest
+                      WHERE latest.job_posting_id = p.id
+                  )
                   AND a.id = (
                       SELECT MAX(a2.id)
                       FROM job_translation_artifacts AS a2
-                      JOIN job_detail_versions AS v2 ON v2.id = a2.job_detail_version_id
-                      WHERE v2.job_posting_id = p.id
+                      WHERE a2.job_detail_version_id = v.id
                         AND a2.target_language = ?
                   )
                 ORDER BY p.id ASC
