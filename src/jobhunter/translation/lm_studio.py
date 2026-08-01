@@ -12,11 +12,10 @@ import httpx
 from jobhunter.translation.base import TranslationBatchResult, TranslationError
 
 _PROVIDER_NAME = "lm-studio-translation-v2"
-_MAX_TEXTS_PER_REQUEST = 8
+_MAX_TEXTS_PER_REQUEST = 1
 _DEFAULT_CHARACTER_TARGET = 6_000
 _DEFAULT_MAX_TOKENS = 4_096
 _MAX_RECOVERY_TOKENS = 32_768
-_LONG_TEXT_THRESHOLD = 700
 
 _SYSTEM_PROMPT = """You are JobHunter's translation engine.
 Translate each supplied Persian or mixed Persian-English job-ad segment into precise,
@@ -176,31 +175,9 @@ class LMStudioTranslationProvider:
         )
 
     def _request_chunks(self, texts: tuple[str, ...]) -> tuple[tuple[str, ...], ...]:
-        chunks: list[tuple[str, ...]] = []
-        current: list[str] = []
-        current_characters = 0
-        for text in texts:
-            if len(text) >= _LONG_TEXT_THRESHOLD:
-                if current:
-                    chunks.append(tuple(current))
-                    current = []
-                    current_characters = 0
-                chunks.append((text,))
-                continue
-            would_exceed_count = len(current) >= _MAX_TEXTS_PER_REQUEST
-            would_exceed_target = (
-                bool(current)
-                and current_characters + len(text) > self._request_character_target
-            )
-            if would_exceed_count or would_exceed_target:
-                chunks.append(tuple(current))
-                current = []
-                current_characters = 0
-            current.append(text)
-            current_characters += len(text)
-        if current:
-            chunks.append(tuple(current))
-        return tuple(chunks)
+        """Isolate every semantic segment so field association cannot permute."""
+
+        return tuple((text,) for text in texts)
 
     def _translate_chunk(
         self,
@@ -342,25 +319,6 @@ class LMStudioTranslationProvider:
                 max_tokens=max_tokens,
             )
         except _TranslationOutputTruncated as exc:
-            if len(texts) > 1:
-                midpoint = len(texts) // 2
-                left = self._translate_chunk_with_recovery(
-                    texts[:midpoint],
-                    source_language=source_language,
-                    target_language=target_language,
-                    max_tokens=max_tokens,
-                )
-                right = self._translate_chunk_with_recovery(
-                    texts[midpoint:],
-                    source_language=source_language,
-                    target_language=target_language,
-                    max_tokens=max_tokens,
-                )
-                return TranslationBatchResult(
-                    texts=left.texts + right.texts,
-                    detected_languages=left.detected_languages + right.detected_languages,
-                )
-
             next_max_tokens = min(max_tokens * 2, _MAX_RECOVERY_TOKENS)
             if next_max_tokens > max_tokens:
                 return self._translate_chunk_with_recovery(
@@ -381,7 +339,7 @@ class LMStudioTranslationProvider:
         source_language: str | None,
         target_language: str,
     ) -> TranslationBatchResult:
-        """Translate an ordered batch using content IDs and bounded recovery."""
+        """Translate each semantic segment independently with bounded recovery."""
 
         if not texts:
             return TranslationBatchResult(texts=(), detected_languages=())
