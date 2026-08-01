@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from jobhunter.translation import TranslationError, TranslationProvider
+from jobhunter.translation.integrity import require_translation_integrity
 from jobhunter.translation.projection import (
     TRANSLATION_SCHEMA_VERSION,
     build_english_projection,
@@ -92,6 +93,15 @@ class TranslationService:
             )
         return self._provider.name, self._provider.model
 
+    def effective_identity_for_source(
+        self,
+        source: TranslationSourceVersion,
+    ) -> tuple[str, str, str]:
+        """Return provider/model/schema identity required for a current artifact."""
+
+        provider_name, provider_model = self._provider_identity(source)
+        return provider_name, provider_model, TRANSLATION_SCHEMA_VERSION
+
     def _existing_artifact(
         self,
         source: TranslationSourceVersion,
@@ -160,6 +170,7 @@ class TranslationService:
                 source.fields,
                 translations=translations,
             )
+            require_translation_integrity(source.fields, projection)
             artifact_id = self._store.record_artifact(
                 source=source,
                 target_language=self._target_language,
@@ -216,6 +227,22 @@ class TranslationService:
                 f"Job {source_job_id!r} has no local parsed detail version"
             )
         return self._translate_source(source)
+
+    def current_artifact(self, source_job_id: str) -> TranslationArtifact | None:
+        """Return only the effective current-schema/provider artifact for one job."""
+
+        source = self._store.latest_source_version(source_job_id)
+        if source is None:
+            return None
+        try:
+            provider_name, provider_model = self._provider_identity(source)
+        except TranslationProviderUnavailableError:
+            return None
+        return self._existing_artifact(
+            source,
+            provider_name=provider_name,
+            provider_model=provider_model,
+        )
 
     def missing_source_versions(
         self,
