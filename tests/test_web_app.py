@@ -86,6 +86,30 @@ def test_web_app_runs_audit_through_operation_queue(tmp_path: Path) -> None:
     assert "parser audit" in payload["summary"].casefold()
 
 
+def test_web_app_empty_missing_detail_backlog_needs_no_network(tmp_path: Path) -> None:
+    app = create_app(_settings(tmp_path))
+    token = app.state.csrf_token
+    with TestClient(app) as client:
+        response = client.post(
+            "/actions/fetch-missing",
+            data={"csrf_token": token, "limit": "10"},
+            follow_redirects=False,
+        )
+        assert response.status_code == 303
+        operation_id = response.headers["location"].rsplit("/", 1)[-1]
+
+        payload = None
+        for _ in range(100):
+            payload = client.get(f"/api/operations/{operation_id}").json()
+            if payload["status"] in {"completed", "failed"}:
+                break
+            time.sleep(0.01)
+
+    assert payload is not None
+    assert payload["status"] == "completed"
+    assert "No discovered jobs currently need a detail-page fetch" in payload["summary"]
+
+
 def test_web_app_jobs_filter_is_safe_on_empty_database(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     with TestClient(app) as client:
@@ -112,6 +136,7 @@ def test_web_app_explains_sync_controls_and_quick_add(tmp_path: Path) -> None:
     assert "Search terms to try" in overview.text
     assert "How these limits work together" in overview.text
     assert "Light scan" in overview.text
+    assert "Fetch missing details" in overview.text
     assert "Quick Add" in jobs.text
     assert "Job URL, search URL, or keyword" in jobs.text
 
