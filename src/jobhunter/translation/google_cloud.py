@@ -90,10 +90,12 @@ class GoogleCloudTranslationProvider:
                         },
                         json=body,
                     )
-                if response.status_code in {429, 500, 502, 503, 504}:
-                    if attempt < self._max_retries:
-                        self._sleep(min(0.5 * (2**attempt), 2.0))
-                        continue
+                if (
+                    response.status_code in {429, 500, 502, 503, 504}
+                    and attempt < self._max_retries
+                ):
+                    self._sleep(min(0.5 * (2**attempt), 2.0))
+                    continue
                 response.raise_for_status()
                 try:
                     payload = response.json()
