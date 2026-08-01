@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ operation.name }} · JobHunter{% endblock %}
+{% block heading %}{{ operation.name }}{% endblock %}
+{% block eyebrow %}Operation {{ operation.id }}{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/operations">All operations</a>{% endblock %}
+
+{% block content %}
+<section class="panel operation-detail" data-operation-id="{{ operation.id }}">
+  <div class="operation-status-line">
+    <span class="badge operation-status {{ 'good' if operation.status == 'completed' else ('bad' if operation.status == 'failed' else 'warn') }}">{{ operation.status }}</span>
+    <span class="muted">Started: <span data-operation-started>{{ operation.started_at or 'waiting' }}</span></span>
+    <span class="muted">Completed: <span data-operation-completed>{{ operation.completed_at or '—' }}</span></span>
+  </div>
+  <div class="operation-progress {% if operation.status in ['completed', 'failed'] %}finished{% endif %}" data-operation-progress>
+    <span></span>
+  </div>
+  <pre class="operation-output" data-operation-output>{% if operation.error %}{{ operation.error }}{% elif operation.summary %}{{ operation.summary }}{% else %}Operation is {{ operation.status }}. This page updates automatically.{% endif %}</pre>
+</section>
+{% endblock %}
