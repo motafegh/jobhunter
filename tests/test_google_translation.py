@@ -116,7 +116,7 @@ def test_google_translation_packs_requests_by_character_target() -> None:
         max_retries=0,
     )
     result = provider.translate_texts(
-        ("الف" * 200, "ب" * 200, "پ" * 200),
+        ("الف" * 200, "بج" * 300, "پت" * 300),
         source_language="fa",
         target_language="en",
     )
