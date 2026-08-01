@@ -1,10 +1,15 @@
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
+import pytest
+
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
 from jobhunter.translation.base import TranslationBatchResult
-from jobhunter.translation_service import TranslationService
+from jobhunter.translation_service import (
+    TranslationService,
+    TranslationSourceNotFoundError,
+)
 from jobhunter.translation_store import TranslationStore
 
 
@@ -38,6 +43,7 @@ def _add_version(
     fields: dict,
     semantic_sha256: str,
     fetched_at: datetime,
+    parse_status: str = "parsed",
 ) -> int:
     store = JobHunterStore(database_path)
     store.initialize()
@@ -66,7 +72,7 @@ def _add_version(
         evidence_path=Path(f"{job_id}-{semantic_sha256}.html"),
         metadata_path=Path(f"{job_id}-{semantic_sha256}.json"),
         parser_version="jobinja-detail-v2",
-        parse_status="parsed",
+        parse_status=parse_status,
         fields=fields,
     )
     return result.version_id
@@ -178,3 +184,47 @@ def test_new_semantic_version_requires_new_translation_artifact(tmp_path: Path) 
     assert second.job_detail_version_id == second_version_id
     assert second.artifact_id != first.artifact_id
     assert len(provider.calls) == 2
+
+
+def test_latest_partial_version_blocks_old_translation_from_current_use(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    base_time = datetime(2026, 8, 1, tzinfo=UTC)
+    _add_version(
+        database_path,
+        job_id="abc1",
+        fields={
+            "title": "مهندس هوش مصنوعی",
+            "description": "تسلط بر Python",
+            "language": "mixed",
+            "parser_version": "jobinja-detail-v2",
+        },
+        semantic_sha256="semantic-1",
+        fetched_at=base_time,
+    )
+    provider = _Provider()
+    service = TranslationService(
+        store=TranslationStore(database_path),
+        provider=provider,
+    )
+    service.translate_job("abc1")
+
+    _add_version(
+        database_path,
+        job_id="abc1",
+        fields={
+            "title": "مهندس ارشد هوش مصنوعی",
+            "description": None,
+            "language": "mixed",
+            "parser_version": "jobinja-detail-v2",
+        },
+        semantic_sha256="semantic-2",
+        fetched_at=base_time + timedelta(hours=1),
+        parse_status="partial",
+    )
+
+    store = TranslationStore(database_path)
+    assert store.latest_artifact("abc1") is None
+    with pytest.raises(TranslationSourceNotFoundError):
+        service.translate_job("abc1")
