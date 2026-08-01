@@ -10,11 +10,8 @@ from typing import Any
 
 from jobhunter.evidence import EvidenceStore, EvidenceWriteError
 from jobhunter.job_detail_observations import JobDetailObservationStore
-from jobhunter.jobinja_details import (
-    PARSER_VERSION,
-    ParsedJobDetail,
-    parse_jobinja_detail,
-)
+from jobhunter.jobinja_details import PARSER_VERSION, ParsedJobDetail, parse_jobinja_detail
+from jobhunter.lifecycle import LifecycleStore
 from jobhunter.sources import JobinjaAcquisitionError, JobinjaClient
 from jobhunter.storage import JobDetailView, JobHunterStore
 
@@ -45,20 +42,44 @@ class JobinjaDetailService:
         evidence_store: EvidenceStore,
         store: JobHunterStore,
         observation_store: JobDetailObservationStore,
+        lifecycle_store: LifecycleStore | None = None,
     ) -> None:
         self._client = client
         self._evidence_store = evidence_store
         self._store = store
         self._observation_store = observation_store
+        self._lifecycle_store = lifecycle_store
+
+    def _record_lifecycle(
+        self,
+        source_job_id: str,
+        *,
+        classification: str,
+        checked_at: datetime,
+        status_code: int | None = None,
+        retryable: bool = False,
+        detail: str | None = None,
+    ) -> None:
+        if self._lifecycle_store is None:
+            return
+        self._lifecycle_store.record(
+            source_job_id,
+            classification=classification,
+            status_code=status_code,
+            retryable=retryable,
+            detail=detail,
+            checked_at=checked_at,
+        )
 
     def fetch(self, source_job_id: str) -> JobDetailFetchSummary:
         self._store.initialize()
         self._observation_store.initialize()
+        if self._lifecycle_store is not None:
+            self._lifecycle_store.initialize()
         job = self._store.get_job(source_job_id)
         if job is None:
             raise JobNotFoundError(
-                f"Job {source_job_id!r} is not in the local database. "
-                "Run discovery first."
+                f"Job {source_job_id!r} is not in the local database. Run discovery first."
             )
 
         checked_at = datetime.now(UTC)
@@ -76,7 +97,45 @@ class JobinjaDetailService:
                 requested_url=job.canonical_url,
                 error=exc,
             )
+            if isinstance(exc, JobinjaAcquisitionError):
+                self._record_lifecycle(
+                    source_job_id,
+                    classification=exc.classification,
+                    checked_at=checked_at,
+                    status_code=exc.status_code,
+                    retryable=exc.retryable,
+                    detail=str(exc),
+                )
+            else:
+                self._record_lifecycle(
+                    source_job_id,
+                    classification="unknown_error",
+                    checked_at=checked_at,
+                    detail=str(exc),
+                )
             raise
+
+        if page.classification != "active":
+            error = JobinjaAcquisitionError(
+                f"Jobinja page classified as {page.classification}",
+                classification=page.classification,
+                status_code=page.status_code,
+                retryable=False,
+            )
+            self._observation_store.record_failure(
+                job_posting_id=job.id,
+                checked_at=checked_at,
+                requested_url=page.requested_url,
+                error=error,
+            )
+            self._record_lifecycle(
+                source_job_id,
+                classification=page.classification,
+                checked_at=checked_at,
+                status_code=page.status_code,
+                detail=f"Raw evidence: {snapshot.content_path}",
+            )
+            raise error
 
         parsed = parse_jobinja_detail(page.text)
         fields = parsed.to_dict()
@@ -111,6 +170,13 @@ class JobinjaDetailService:
             job_detail_version_id=result.version_id,
             is_new_version=result.is_new_version,
         )
+        self._record_lifecycle(
+            source_job_id,
+            classification="active",
+            checked_at=checked_at,
+            status_code=page.status_code,
+            detail=f"Parsed status: {parse_status}",
+        )
         return JobDetailFetchSummary(
             source_job_id=source_job_id,
             title=parsed.title or job.title_observed,
@@ -128,9 +194,7 @@ class JobinjaDetailService:
         if detail is None:
             job = self._store.get_job(source_job_id)
             if job is None:
-                raise JobNotFoundError(
-                    f"Job {source_job_id!r} is not in the local database."
-                )
+                raise JobNotFoundError(f"Job {source_job_id!r} is not in the local database.")
             raise JobNotFoundError(
                 f"Job {source_job_id!r} has no local detail page. "
                 f"Run: jobhunter jobinja fetch {source_job_id}"
@@ -139,19 +203,15 @@ class JobinjaDetailService:
 
 
 def _semantic_sha256(fields: dict[str, Any]) -> str:
-    """Hash stable extracted source fields, excluding parser-only metadata."""
-
     semantic_fields = {
-        key: value
-        for key, value in fields.items()
-        if key not in {"language", "parser_version"}
+        key: value for key, value in fields.items() if key not in {"language", "parser_version"}
     }
     canonical = json.dumps(
         semantic_fields,
         ensure_ascii=False,
         sort_keys=True,
         separators=(",", ":"),
-    ).encode("utf-8")
+    ).encode()
     return hashlib.sha256(canonical).hexdigest()
 
 
@@ -164,11 +224,7 @@ def _parse_status(detail: ParsedJobDetail) -> str:
 
 
 def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
-    version_state = (
-        "new content version"
-        if summary.is_new_version
-        else "unchanged semantic content"
-    )
+    version_state = "new content version" if summary.is_new_version else "unchanged semantic content"
     return "\n".join(
         [
             f"Jobinja job fetched: {summary.source_job_id}",
@@ -187,28 +243,16 @@ def format_job_detail(detail: JobDetailView) -> str:
     fields = detail.fields
     lines = [
         f"Job: {detail.source_job_id}",
-        (
-            "Title: "
-            f"{fields.get('title') or detail.title_observed or '(not available)'}"
-        ),
+        f"Title: {fields.get('title') or detail.title_observed or '(not available)'}",
         f"Company: {fields.get('company') or '(not available)'}",
         f"Category: {fields.get('job_category') or '(not available)'}",
         f"Location: {fields.get('location') or '(not available)'}",
-        (
-            "Employment type: "
-            f"{fields.get('employment_type') or '(not available)'}"
-        ),
-        (
-            "Minimum experience: "
-            f"{fields.get('minimum_experience') or '(not available)'}"
-        ),
+        f"Employment type: {fields.get('employment_type') or '(not available)'}",
+        f"Minimum experience: {fields.get('minimum_experience') or '(not available)'}",
         f"Education: {fields.get('education') or '(not available)'}",
         f"Salary: {fields.get('salary') or '(not available)'}",
         f"Gender: {fields.get('gender') or '(not available)'}",
-        (
-            "Military service: "
-            f"{fields.get('military_service') or '(not available)'}"
-        ),
+        f"Military service: {fields.get('military_service') or '(not available)'}",
         f"Date posted: {fields.get('date_posted') or '(not available)'}",
         f"Valid through: {fields.get('valid_through') or '(not available)'}",
         f"Language: {fields.get('language') or 'unknown'}",
@@ -221,21 +265,9 @@ def format_job_detail(detail: JobDetailView) -> str:
     if not skills:
         lines.append("(not available)")
 
-    lines.extend(
-        [
-            "",
-            "Job description:",
-            fields.get("description") or "(not available)",
-        ]
-    )
+    lines.extend(["", "Job description:", fields.get("description") or "(not available)"])
     if fields.get("company_description"):
-        lines.extend(
-            [
-                "",
-                "Company description:",
-                str(fields["company_description"]),
-            ]
-        )
+        lines.extend(["", "Company description:", str(fields["company_description"])])
     lines.extend(
         [
             "",
