@@ -146,7 +146,7 @@ def build_jobinja_keyword_url(term: str) -> str:
 
 def _search_name(origin: str, term: str) -> str:
     digest = hashlib.sha256(
-        f"{origin}\0{normalize_search_term(term)}".encode("utf-8")
+        f"{origin}\0{normalize_search_term(term)}".encode()
     ).hexdigest()[:10]
     return f"{origin} :: {term} [{digest}]"
 
