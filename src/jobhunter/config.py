@@ -108,7 +108,7 @@ class Settings(BaseModel):
     jobinja_excluded_terms: list[str] = Field(default_factory=list)
     jobinja_default_keyword_max_pages: int = Field(default=1, ge=1, le=50)
     jobinja_search_request_budget: int = Field(default=40, ge=1, le=500)
-    jobinja_max_expanded_searches: int = Field(default=100, ge=1, le=500)
+    jobinja_max_expanded_searches: int = Field(default=40, ge=1, le=500)
     jobinja_sync_missing_limit: int = Field(default=10, ge=0, le=50)
     jobinja_sync_refresh_limit: int = Field(default=5, ge=0, le=50)
     jobinja_refresh_after_hours: float = Field(default=24.0, gt=0, le=8760)
@@ -120,6 +120,11 @@ class Settings(BaseModel):
     translation_batch_limit: int = Field(default=20, ge=1, le=50)
     translation_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     translation_max_retries: int = Field(default=1, ge=0, le=5)
+    translation_request_character_target: int = Field(
+        default=5_000,
+        ge=1_000,
+        le=100_000,
+    )
     google_translation_api_key: str | None = None
     google_translation_model: str = "nmt"
 
@@ -181,10 +186,18 @@ class Settings(BaseModel):
             group_names.add(normalized_name)
 
         self.jobinja_search_profiles = list(
-            dict.fromkeys(name.strip() for name in self.jobinja_search_profiles if name.strip())
+            dict.fromkeys(
+                name.strip()
+                for name in self.jobinja_search_profiles
+                if name.strip()
+            )
         )
         self.jobinja_search_packs = list(
-            dict.fromkeys(name.strip() for name in self.jobinja_search_packs if name.strip())
+            dict.fromkeys(
+                name.strip()
+                for name in self.jobinja_search_packs
+                if name.strip()
+            )
         )
         catalog = self.search_catalog()
         try:
@@ -284,6 +297,9 @@ class Settings(BaseModel):
             "JOBHUNTER_TRANSLATION_BATCH_LIMIT": "translation_batch_limit",
             "JOBHUNTER_TRANSLATION_TIMEOUT_SECONDS": "translation_timeout_seconds",
             "JOBHUNTER_TRANSLATION_MAX_RETRIES": "translation_max_retries",
+            "JOBHUNTER_TRANSLATION_REQUEST_CHARACTER_TARGET": (
+                "translation_request_character_target"
+            ),
             "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY": "google_translation_api_key",
             "JOBHUNTER_GOOGLE_TRANSLATION_MODEL": "google_translation_model",
             "JOBHUNTER_LOG_LEVEL": "log_level",
