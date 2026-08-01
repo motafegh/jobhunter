@@ -5,25 +5,71 @@
 {% block topbar_actions %}<a class="button ghost" href="/searches">Search coverage</a>{% endblock %}
 
 {% block content %}
+<section class="panel quick-add-panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Direct intake</p>
+      <h2>Quick Add</h2>
+    </div>
+    <span class="badge">Jobinja only</span>
+  </div>
+  <p class="muted">Paste a public Jobinja job URL, a Jobinja search-results URL, or type a Persian/English search phrase. JobHunter detects the input type and uses the same bounded acquisition pipeline as the normal market sync.</p>
+  <form class="quick-add-form" method="post" action="/actions/quick-add" data-operation-form>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label class="quick-add-input">
+      <span>Job URL, search URL, or keyword</span>
+      <input name="value" type="text" required maxlength="500" placeholder="e.g. AI Security · امنیت سایبری · https://jobinja.ir/companies/.../jobs/...">
+      <small class="field-help">A direct job URL is saved and fetched immediately. A search URL or keyword discovers matching jobs first.</small>
+    </label>
+    <label>
+      <span>Search pages</span>
+      <input name="pages" type="number" min="1" max="3" value="1">
+      <small class="field-help">Used only for a keyword/search URL. Start with 1.</small>
+    </label>
+    <label>
+      <span>Full details to fetch</span>
+      <input name="detail_limit" type="number" min="0" max="20" value="5">
+      <small class="field-help">After discovery, fetch at most this many job pages. 0 = discovery only.</small>
+    </label>
+    <label class="check-label">
+      <input name="translate_after" type="checkbox" value="true" {% if not translation_enabled %}disabled{% endif %}>
+      <span>Translate fetched jobs to English</span>
+      <small class="field-help">Uses your configured local translator. Disabled when translation is off.</small>
+    </label>
+    <div class="form-action">
+      <button class="button primary" type="submit">Add / search</button>
+    </div>
+  </form>
+  <details class="guide-box compact-guide">
+    <summary>What Quick Add accepts</summary>
+    <div class="guide-content">
+      <p><strong>One Jobinja job URL:</strong> adds that exact opportunity to the local catalog, preserves its detail-page evidence, parses it, and optionally translates it.</p>
+      <p><strong>One Jobinja /jobs search URL:</strong> preserves the filters already encoded by Jobinja, discovers matches, and optionally fetches a bounded detail sample.</p>
+      <p><strong>One Persian or English phrase:</strong> builds a normal Jobinja keyword search for that phrase. This is useful for a role or technology that is not yet in your saved search catalog.</p>
+      <p>Other websites are rejected here because the current approved source adapter is Jobinja.</p>
+    </div>
+  </details>
+</section>
+
 <section class="panel compact-panel">
   <form class="filter-bar" method="get" action="/jobs">
     <label class="search-field">
       <span class="sr-only">Search jobs</span>
-      <input type="search" name="q" value="{{ q }}" placeholder="Search title, company, location, ID…">
+      <input type="search" name="q" value="{{ q }}" placeholder="Search title, company, location, or Jobinja reference…">
     </label>
     <label>
       <span class="sr-only">Detail status</span>
       <select name="detail">
-        <option value="all" {% if detail == 'all' %}selected{% endif %}>All details</option>
-        <option value="available" {% if detail == 'available' %}selected{% endif %}>Details available</option>
-        <option value="missing" {% if detail == 'missing' %}selected{% endif %}>Details missing</option>
+        <option value="all" {% if detail == 'all' %}selected{% endif %}>All source details</option>
+        <option value="available" {% if detail == 'available' %}selected{% endif %}>Source details complete</option>
+        <option value="missing" {% if detail == 'missing' %}selected{% endif %}>Source details not fetched</option>
       </select>
     </label>
     <label>
       <span class="sr-only">Translation status</span>
       <select name="translation">
-        <option value="all" {% if translation == 'all' %}selected{% endif %}>All translations</option>
-        <option value="available" {% if translation == 'available' %}selected{% endif %}>English available</option>
+        <option value="all" {% if translation == 'all' %}selected{% endif %}>All English states</option>
+        <option value="available" {% if translation == 'available' %}selected{% endif %}>English ready</option>
         <option value="missing" {% if translation == 'missing' %}selected{% endif %}>English missing</option>
       </select>
     </label>
@@ -50,22 +96,32 @@
   <div class="table-wrap job-table-wrap">
     <table class="job-table">
       <thead>
-        <tr><th>Role</th><th>Location</th><th>Details</th><th>English</th><th>Versions</th><th>Last seen</th></tr>
+        <tr><th>Role / company</th><th>Location</th><th>Source data</th><th>English copy</th><th>Content versions</th><th>Last found</th></tr>
       </thead>
       <tbody>
       {% for job in jobs %}
         <tr>
           <td>
             <a class="job-title" href="/jobs/{{ job.source_job_id }}">{{ job.title }}</a>
-            <div class="job-meta">{{ job.company }} · {{ job.source_job_id }}</div>
+            <div class="job-meta">Company: {{ job.company }}</div>
+            <div class="technical-ref" title="Stable source identifier used internally to track this Jobinja posting">Jobinja reference: {{ job.source_job_id }}</div>
           </td>
           <td>
             <div>{{ job.location }}</div>
             <div class="job-meta">{{ job.employment_type }}</div>
           </td>
-          <td><span class="badge {{ 'good' if job.detail_status == 'parsed' else ('warn' if job.detail_status == 'missing' else 'bad') }}">{{ job.detail_status }}</span></td>
           <td>
-            {% if job.translated %}<span class="badge good">ready</span>{% else %}<span class="badge">missing</span>{% endif %}
+            {% if job.detail_status == 'parsed' %}
+              <span class="badge good">Complete</span>
+            {% elif job.detail_status == 'missing' %}
+              <span class="badge warn">Not fetched</span>
+              <a class="mini-link" href="/jobs/{{ job.source_job_id }}">Fetch</a>
+            {% else %}
+              <span class="badge bad">Needs review</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if job.translated %}<span class="badge good">Ready</span>{% else %}<span class="badge">Missing</span>{% endif %}
           </td>
           <td>{{ job.semantic_versions }}</td>
           <td class="mono-small">{{ job.last_seen_at }}</td>
