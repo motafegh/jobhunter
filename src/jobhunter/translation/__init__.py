@@ -6,9 +6,11 @@ from jobhunter.translation.base import (
     TranslationProvider,
 )
 from jobhunter.translation.google_cloud import GoogleCloudTranslationProvider
+from jobhunter.translation.lm_studio import LMStudioTranslationProvider
 
 __all__ = [
     "GoogleCloudTranslationProvider",
+    "LMStudioTranslationProvider",
     "TranslationBatchResult",
     "TranslationError",
     "TranslationProvider",
