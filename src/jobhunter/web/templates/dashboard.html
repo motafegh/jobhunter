@@ -17,23 +17,25 @@
 
 <div class="dashboard-grid">
   <section class="panel action-panel">
-    <div class="panel-header"><div><p class="eyebrow">Primary workflow</p><h2>Run a bounded market sync</h2></div><span class="badge">Safe defaults</span></div>
-    <p class="muted">Search configured bilingual market terms, discover opportunities, fetch a controlled detail batch, recheck older jobs, and audit the parser.</p>
-    <div class="preset-row" aria-label="Sync presets"><span class="field-help">Preset:</span><button class="preset-button" type="button" data-sync-preset="light">Light scan</button><button class="preset-button active" type="button" data-sync-preset="normal">Normal</button><button class="preset-button" type="button" data-sync-preset="thorough">Thorough</button></div>
-    <form class="form-grid guided-form" method="post" action="/actions/sync" data-operation-form data-sync-form>
+    <div class="panel-header"><div><p class="eyebrow">Primary workflow</p><h2>Run a complete bounded market update</h2></div><span class="badge">One operation</span></div>
+    <p class="muted">Search the configured bilingual market, fetch a controlled source batch, audit parser/lifecycle state, build or repair English v2 where needed, analyze ready current jobs, and refresh the Market view from accepted analyses.</p>
+    <div class="preset-row" aria-label="Sync presets"><span class="field-help">Source preset:</span><button class="preset-button" type="button" data-sync-preset="light">Light scan</button><button class="preset-button active" type="button" data-sync-preset="normal">Normal</button><button class="preset-button" type="button" data-sync-preset="thorough">Thorough</button></div>
+    <form class="form-grid guided-form workflow-form" method="post" action="/actions/full-workflow" data-operation-form data-sync-form>
       <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
       <label><span>Search terms to try</span><input name="search_limit" type="number" min="1" max="500" value="{{ settings.jobinja_max_expanded_searches }}"><small class="field-help">12 = quick cross-domain sample; 40 = normal broad scan.</small></label>
       <label><span>Search-page request limit</span><input name="request_budget" type="number" min="1" max="500" value="{{ settings.jobinja_search_request_budget }}"><small class="field-help">Hard network ceiling; normally equal to search count when each term uses one page.</small></label>
       <label><span>New jobs to fully fetch</span><input name="missing_limit" type="number" min="0" max="50" value="{{ settings.jobinja_sync_missing_limit }}"><small class="field-help">5–10 is normal; 0 means discovery only.</small></label>
       <label><span>Old jobs to recheck</span><input name="refresh_limit" type="number" min="0" max="50" value="{{ settings.jobinja_sync_refresh_limit }}"><small class="field-help">Previously acquired jobs old enough to check again.</small></label>
       <label><span>Recheck after</span><div class="input-with-suffix"><input name="refresh_after_hours" type="number" min="0.1" step="0.1" value="{{ settings.jobinja_refresh_after_hours }}"><span>hours</span></div><small class="field-help">24 = daily eligibility; 72–168 reduces refresh traffic.</small></label>
-      <div class="form-action"><button class="button primary" type="submit">Run market sync</button></div>
+      <label><span>English v2 jobs</span><input name="translation_limit" type="number" min="1" max="50" value="{{ settings.translation_batch_limit }}"><small class="field-help">Maximum current parsed jobs repaired/translated in this run. Existing current v2 artifacts are reused.</small></label>
+      <label><span>Jobs to analyze</span><input name="analysis_limit" type="number" min="1" max="20" value="{{ settings.analysis_batch_limit }}"><small class="field-help">Maximum current v2 jobs receiving P1.6 semantic analysis. Existing current analyses are reused/skipped.</small></label>
+      <div class="form-action workflow-actions"><button class="button primary" type="submit">Run full workflow</button><button class="button ghost" type="submit" formaction="/actions/sync">Source sync only</button></div>
     </form>
-    <details class="guide-box"><summary>How these limits work together</summary><div class="guide-content"><p><strong>Search terms</strong> controls breadth. <strong>Request limit</strong> is the network brake. <strong>New jobs</strong> and <strong>old jobs</strong> control complete detail-page checks.</p><p>New + refresh detail checks may never exceed 50. Raising numbers increases coverage and runtime, not data quality by itself.</p></div></details>
+    <details class="guide-box"><summary>What the full workflow does</summary><div class="guide-content"><p><strong>1. Discover</strong> with the configured bounded bilingual plan. <strong>2. Fetch</strong> selected missing/refresh-due detail pages. <strong>3. Audit</strong> deterministic parsing/lifecycle evidence. <strong>4. English v2</strong> only where the current artifact is missing. <strong>5. Analyze</strong> only jobs with current source + current English v2 that still lack the configured analysis contract. <strong>6. Market</strong> updates automatically because it is computed from persisted accepted analyses.</p><p>New + refresh detail checks may never exceed 50. Translation and analysis keep their own independent limits. Raising limits increases work and runtime; it does not weaken evidence or integrity gates.</p></div></details>
   </section>
 
   <section class="panel">
-    <div class="panel-header"><div><p class="eyebrow">Pipeline actions</p><h2>Work the corpus</h2></div></div>
+    <div class="panel-header"><div><p class="eyebrow">Pipeline actions</p><h2>Run one stage directly</h2></div></div>
     <div class="quick-actions">
       <form method="post" action="/actions/fetch-missing" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="limit" value="{{ settings.jobinja_sync_missing_limit }}"><button class="quick-action" type="submit" {% if stats.missing_details == 0 %}disabled{% endif %}><strong>Fetch priority details</strong><span>{{ stats.missing_details }} postings still lack details. Select the next bounded batch using discovery evidence, not arbitrary ID order.</span></button></form>
       <form method="post" action="/actions/translate-missing" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="limit" value="{{ settings.translation_batch_limit }}"><button class="quick-action" type="submit" {% if not settings.translation_enabled %}disabled{% endif %}><strong>Repair / translate English</strong><span>Build current hardened v2 projections. Old v1 artifacts stay historical and are not exported/analyzed.</span></button></form>
@@ -46,9 +48,17 @@
 
 {% if priority_preview %}
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Backlog priority</p><h2>Next missing details</h2></div><span class="badge">Not a fit score</span></div>
-  <p class="muted">Priority uses only discovery evidence: how many configured searches/packs found a posting plus conservative title signals. It does not claim the job is suitable for you.</p>
-  <div class="priority-list">{% for item in priority_preview %}<div class="priority-row"><a href="/jobs/{{ item.source_job_id }}"><strong>{{ item.source_job_id }}</strong></a><span>priority {{ item.score }}</span><span>{{ item.distinct_searches }} searches</span><span>{{ item.distinct_packs }} packs</span></div>{% endfor %}</div>
+  <div class="panel-header"><div><p class="eyebrow">Backlog priority</p><h2>Next missing details</h2></div><span class="badge">Fetch here or in batch</span></div>
+  <p class="muted">Priority uses only discovery evidence: how many configured searches/packs found a posting plus conservative title signals. It does not claim the job is suitable for you. You can fetch one posting here without opening it first.</p>
+  <div class="priority-list">
+    {% for item in priority_preview %}
+    <div class="priority-row">
+      <div><a class="job-title" href="/jobs/{{ item.priority.source_job_id }}">{{ item.job.title if item.job else 'Discovered Jobinja posting' }}</a><div class="job-meta">{% if item.job %}{{ item.job.company }} · {% endif %}Jobinja reference: {{ item.priority.source_job_id }}</div></div>
+      <span>priority {{ item.priority.score }}</span><span>{{ item.priority.distinct_searches }} searches</span><span>{{ item.priority.distinct_packs }} packs</span>
+      <form method="post" action="/jobs/{{ item.priority.source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="return_to" value="/"><button class="button ghost" type="submit">Fetch</button></form>
+    </div>
+    {% endfor %}
+  </div>
 </section>
 {% endif %}
 
