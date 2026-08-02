@@ -159,8 +159,11 @@ class LMStudioProvider:
             raise InferenceResponseError("LM Studio structured response content is not text")
         finish_reason = first_choice.get("finish_reason")
         if finish_reason == "length":
+            preview = content[:240]
             raise InferenceResponseError(
-                f"LM Studio structured response was truncated at max_tokens={max_tokens}"
+                "LM Studio structured response was truncated "
+                f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
+                f"content_preview={preview!r}, max_tokens={max_tokens})"
             )
         try:
             structured = json.loads(content.strip())
