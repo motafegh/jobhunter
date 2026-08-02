@@ -6,24 +6,31 @@ import secrets
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Annotated
+from urllib.parse import urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from jobhunter.analysis_service import JobAnalysisService, format_analysis_batch_summary
+from jobhunter.analysis_service import (
+    ANALYSIS_SCHEMA_VERSION,
+    PROMPT_VERSION,
+    JobAnalysisService,
+    format_analysis_batch_summary,
+)
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.evidence import EvidenceStore
 from jobhunter.inference import LMStudioProvider
 from jobhunter.job_audit import JobDetailAuditor, format_job_audit
+from jobhunter.job_catalog import JobCatalog
 from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.job_workflow import JobWorkflowStore
 from jobhunter.jobinja_batch import JobinjaBatchFetchService, format_batch_fetch_summary
 from jobhunter.jobinja_detail_service import JobinjaDetailService
 from jobhunter.jobinja_discovery import DiscoverySearch, JobinjaDiscoveryService, format_discovery_summary
-from jobhunter.jobinja_sync import JobinjaSyncService
+from jobhunter.jobinja_sync import JobinjaSyncService, JobinjaSyncSummary
 from jobhunter.lifecycle import LifecycleStore
 from jobhunter.market_insights import MarketInsights
 from jobhunter.sources import JobinjaClient
@@ -138,6 +145,15 @@ def _analysis_service(settings: Settings) -> JobAnalysisService:
     )
 
 
+def _market_insights(settings: Settings) -> MarketInsights:
+    return MarketInsights(
+        settings.database_path,
+        analysis_model=settings.effective_analysis_lm_studio_model(),
+        analysis_prompt_version=PROMPT_VERSION,
+        analysis_schema_version=ANALYSIS_SCHEMA_VERSION,
+    )
+
+
 def _configured_searches(settings: Settings, *, limit: int) -> list[DiscoverySearch]:
     searches = [
         DiscoverySearch(name=item.name, url=item.url, max_pages=item.max_pages)
@@ -159,16 +175,58 @@ def _csrf(request: Request, submitted: str) -> None:
         raise HTTPException(status_code=403, detail="Invalid local form token")
 
 
-def _operation_redirect(operation_id: str) -> RedirectResponse:
-    return RedirectResponse(url=f"/operations/{operation_id}", status_code=303)
+def _safe_return_to(value: str) -> str:
+    value = value.strip()
+    if value.startswith("/") and not value.startswith("//"):
+        return value
+    return ""
 
 
-def _start_operation(request: Request, name: str, action) -> RedirectResponse:
+def _return_label(return_to: str) -> str:
+    if return_to == "/":
+        return "Back to overview"
+    if return_to.startswith("/jobs/"):
+        return "Back to job"
+    if return_to.startswith("/jobs"):
+        return "Back to jobs"
+    if return_to.startswith("/market"):
+        return "Back to market"
+    return "Back"
+
+
+def _operation_redirect(
+    operation_id: str,
+    *,
+    return_to: str = "",
+    auto_return: bool = False,
+) -> RedirectResponse:
+    params: dict[str, str] = {}
+    safe_return = _safe_return_to(return_to)
+    if safe_return:
+        params["return_to"] = safe_return
+    if auto_return:
+        params["auto_return"] = "1"
+    query = f"?{urlencode(params)}" if params else ""
+    return RedirectResponse(url=f"/operations/{operation_id}{query}", status_code=303)
+
+
+def _start_operation(
+    request: Request,
+    name: str,
+    action,
+    *,
+    return_to: str = "",
+    auto_return: bool = False,
+) -> RedirectResponse:
     try:
         operation = request.app.state.operations.start(name, action)
     except OperationBusyError as exc:
         return RedirectResponse(url=f"/?notice={str(exc)}", status_code=303)
-    return _operation_redirect(operation.id)
+    return _operation_redirect(
+        operation.id,
+        return_to=return_to,
+        auto_return=auto_return,
+    )
 
 
 def _template_context(request: Request, **extra):
@@ -181,11 +239,165 @@ def _template_context(request: Request, **extra):
     return context
 
 
+def _validate_sync_inputs(
+    *,
+    search_limit: int,
+    request_budget: int,
+    missing_limit: int,
+    refresh_limit: int,
+    refresh_after_hours: float,
+) -> None:
+    if not 1 <= search_limit <= 500 or not 1 <= request_budget <= 500:
+        raise HTTPException(status_code=400, detail="search limits must be 1-500")
+    if not 0 <= missing_limit <= 50 or not 0 <= refresh_limit <= 50:
+        raise HTTPException(status_code=400, detail="detail limits must be 0-50")
+    if missing_limit + refresh_limit > 50:
+        raise HTTPException(status_code=400, detail="combined detail limit may not exceed 50")
+    if refresh_after_hours <= 0:
+        raise HTTPException(status_code=400, detail="refresh age must be positive")
+
+
+def _run_sync(
+    settings: Settings,
+    *,
+    search_limit: int,
+    request_budget: int,
+    missing_limit: int,
+    refresh_limit: int,
+    refresh_after_hours: float,
+) -> JobinjaSyncSummary:
+    return JobinjaSyncService(
+        discovery_service=_discovery_service(settings, request_budget=request_budget),
+        batch_service=_batch_service(settings),
+        catalog=JobCatalog(settings.database_path),
+        observations=_observation_store(settings),
+        auditor=JobDetailAuditor(settings.database_path),
+    ).run(
+        _configured_searches(settings, limit=search_limit),
+        missing_limit=missing_limit,
+        refresh_limit=refresh_limit,
+        refresh_after_hours=refresh_after_hours,
+    )
+
+
+def _successful_detail_ids(summary: JobinjaSyncSummary) -> tuple[str, ...]:
+    if summary.detail_fetch is None:
+        return ()
+    return tuple(item.source_job_id for item in summary.detail_fetch.results)
+
+
 def _translation_output(settings: Settings, job_ids: tuple[str, ...], *, requested: bool) -> str:
     if not requested or not job_ids:
         return ""
     summary = _translation_service(settings).run(source_job_ids=job_ids)
     return "\n\n" + format_translation_batch_summary(summary)
+
+
+def _complete_processing_output(
+    settings: Settings,
+    job_ids: tuple[str, ...],
+    *,
+    requested: bool,
+) -> str:
+    if not requested or not job_ids:
+        return ""
+    if not settings.translation_enabled:
+        return "\n\nComplete processing skipped: translation is disabled."
+
+    translation = _translation_service(settings).run(source_job_ids=job_ids)
+    output = "\n\n" + format_translation_batch_summary(translation)
+    ready_ids = tuple(result.source_job_id for result in translation.results)
+    if not ready_ids:
+        return output + "\n\nSemantic analysis skipped: no fetched jobs have current English v2."
+    if not settings.effective_analysis_lm_studio_model():
+        return output + "\n\nSemantic analysis skipped: no analysis model is configured."
+
+    analysis = _analysis_service(settings).run(
+        ready_ids,
+        limit=min(len(ready_ids), settings.analysis_batch_limit, 20),
+    )
+    return output + "\n\n" + format_analysis_batch_summary(analysis)
+
+
+def _full_workflow_output(
+    settings: Settings,
+    *,
+    search_limit: int,
+    request_budget: int,
+    missing_limit: int,
+    refresh_limit: int,
+    refresh_after_hours: float,
+    translation_limit: int,
+    analysis_limit: int,
+) -> str:
+    sync = _run_sync(
+        settings,
+        search_limit=search_limit,
+        request_budget=request_budget,
+        missing_limit=missing_limit,
+        refresh_limit=refresh_limit,
+        refresh_after_hours=refresh_after_hours,
+    )
+    sections = ["Complete JobHunter market update", format_web_sync_summary(sync)]
+    preferred_ids = _successful_detail_ids(sync)
+
+    if settings.translation_enabled:
+        translated = _translation_service(settings).run(
+            missing=True,
+            limit=translation_limit,
+            preferred_ids=preferred_ids,
+        )
+        sections.append(format_translation_batch_summary(translated))
+    else:
+        sections.append(
+            "English v2 stage\nSkipped because translation is disabled in configuration."
+        )
+
+    model = settings.effective_analysis_lm_studio_model()
+    if model:
+        repository = WebRepository(settings.database_path, analysis_model=model)
+        ready_rows = repository.list_jobs(
+            detail="available",
+            translation="available",
+            analysis="missing",
+            limit=500,
+        )
+        ready_set = {
+            row.source_job_id
+            for row in ready_rows
+            if row.triage_state != "not_relevant"
+        }
+        ordered_ids = tuple(
+            job_id
+            for job_id in dict.fromkeys(
+                (*preferred_ids, *(row.source_job_id for row in ready_rows))
+            )
+            if job_id in ready_set
+        )
+        if ordered_ids:
+            analyzed = _analysis_service(settings).run(
+                ordered_ids,
+                limit=analysis_limit,
+            )
+            sections.append(format_analysis_batch_summary(analyzed))
+        else:
+            sections.append(
+                "Evidence-backed job analysis\nNo eligible current jobs need analysis."
+            )
+    else:
+        sections.append(
+            "Evidence-backed job analysis\nSkipped because no analysis model is configured."
+        )
+
+    market = _market_insights(settings).market_summary()
+    sections.append(
+        "Market view\n"
+        f"Current accepted analyses: {market.analyzed_jobs}\n"
+        f"Responsibility claims: {market.responsibility_claims}\n"
+        f"Requirement claims: {market.requirement_claims}\n"
+        "No separate rebuild is required; the Market screen reads persisted current analyses."
+    )
+    return "\n\n".join(sections)
 
 
 def create_app(settings: Settings, *, operations: WebOperationManager | None = None) -> FastAPI:
@@ -195,7 +407,10 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
     app.state.settings = settings
     app.state.operations = operations or WebOperationManager()
     app.state.csrf_token = secrets.token_urlsafe(32)
-    app.state.web_repository = WebRepository(settings.database_path)
+    app.state.web_repository = WebRepository(
+        settings.database_path,
+        analysis_model=settings.effective_analysis_lm_studio_model(),
+    )
     app.mount("/static", StaticFiles(directory=str(_WEB_DIR / "static")), name="static")
 
     @app.middleware("http")
@@ -215,6 +430,14 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
     def dashboard(request: Request, notice: str = ""):
         repository: WebRepository = request.app.state.web_repository
         priorities = JobWorkflowStore(settings.database_path).prioritized_missing_job_ids(limit=5)
+        missing_rows = {
+            row.source_job_id: row
+            for row in repository.list_jobs(detail="missing", limit=500)
+        }
+        priority_preview = tuple(
+            {"priority": item, "job": missing_rows.get(item.source_job_id)}
+            for item in priorities
+        )
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="dashboard.html",
@@ -223,7 +446,7 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 page="dashboard",
                 notice=notice,
                 stats=repository.dashboard_stats(),
-                priority_preview=priorities,
+                priority_preview=priority_preview,
                 recent_runs=repository.recent_runs(limit=6),
                 recent_operations=request.app.state.operations.recent()[:6],
                 settings=settings,
@@ -276,13 +499,16 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         detail = store.get_latest_job_detail(source_job_id)
         translation_service = _translation_service(settings)
         translation = translation_service.current_artifact(source_job_id)
-        latest_any_translation = TranslationStore(settings.database_path).latest_artifact(source_job_id)
+        latest_any_translation = TranslationStore(settings.database_path).latest_artifact(
+            source_job_id
+        )
         legacy_translation = (
             latest_any_translation
             if latest_any_translation is not None
             and latest_any_translation.translation_schema_version != TRANSLATION_SCHEMA_VERSION
             else None
         )
+        model = settings.effective_analysis_lm_studio_model()
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="job_detail.html",
@@ -294,23 +520,35 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 detail=detail,
                 translation=translation,
                 legacy_translation=legacy_translation,
-                analysis_artifact=AnalysisStore(settings.database_path).latest_current(source_job_id),
+                analysis_artifact=AnalysisStore(settings.database_path).latest_current(
+                    source_job_id,
+                    model=model,
+                    prompt_version=PROMPT_VERSION,
+                    schema_version=ANALYSIS_SCHEMA_VERSION,
+                ),
                 workflow=JobWorkflowStore(settings.database_path).get_state(source_job_id),
                 observations=_observation_store(settings).list_for_job(source_job_id, limit=20),
-                lifecycle_events=LifecycleStore(settings.database_path).list_for_job(source_job_id, limit=20),
-                search_provenance=MarketInsights(settings.database_path).job_search_provenance(source_job_id),
+                lifecycle_events=LifecycleStore(settings.database_path).list_for_job(
+                    source_job_id, limit=20
+                ),
+                search_provenance=_market_insights(settings).job_search_provenance(
+                    source_job_id
+                ),
                 audit=JobDetailAuditor(settings.database_path).audit(
                     source_job_ids=(source_job_id,), limit=1
                 ),
                 translation_enabled=settings.translation_enabled,
-                analysis_model=settings.effective_analysis_lm_studio_model(),
+                analysis_model=model,
             ),
         )
 
     @app.get("/searches", response_class=HTMLResponse)
     def searches(request: Request):
         catalog = settings.search_catalog()
-        configured = _configured_searches(settings, limit=settings.jobinja_max_expanded_searches)
+        configured = _configured_searches(
+            settings,
+            limit=settings.jobinja_max_expanded_searches,
+        )
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="searches.html",
@@ -319,7 +557,7 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 page="searches",
                 catalog=catalog,
                 configured_searches=configured,
-                effectiveness=MarketInsights(settings.database_path).search_effectiveness(limit=200),
+                effectiveness=_market_insights(settings).search_effectiveness(limit=200),
                 settings=settings,
             ),
         )
@@ -332,7 +570,7 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             context=_template_context(
                 request,
                 page="market",
-                market=MarketInsights(settings.database_path).market_summary(),
+                market=_market_insights(settings).market_summary(),
             ),
         )
 
@@ -350,14 +588,27 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         )
 
     @app.get("/operations/{operation_id}", response_class=HTMLResponse)
-    def operation_detail(request: Request, operation_id: str):
+    def operation_detail(
+        request: Request,
+        operation_id: str,
+        return_to: str = "",
+        auto_return: str = "",
+    ):
         operation = request.app.state.operations.get(operation_id)
         if operation is None:
             raise HTTPException(status_code=404, detail="Operation not found")
+        safe_return = _safe_return_to(return_to)
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="operation_detail.html",
-            context=_template_context(request, page="operations", operation=operation),
+            context=_template_context(
+                request,
+                page="operations",
+                operation=operation,
+                return_to=safe_return,
+                return_label=_return_label(safe_return),
+                auto_return=auto_return == "1" and bool(safe_return),
+            ),
         )
 
     @app.get("/api/operations/{operation_id}", response_class=JSONResponse)
@@ -375,6 +626,7 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             _translation_service(settings).current_artifact(source.source_job_id) is not None
             for source in sources
         )
+        model = settings.effective_analysis_lm_studio_model()
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="system.html",
@@ -384,7 +636,14 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 settings=settings,
                 parsed_versions=len(sources),
                 english_artifacts=current_english,
-                analysis_artifacts=len(AnalysisStore(settings.database_path).list_current(limit=5000)),
+                analysis_artifacts=len(
+                    AnalysisStore(settings.database_path).list_current(
+                        limit=5000,
+                        model=model,
+                        prompt_version=PROMPT_VERSION,
+                        schema_version=ANALYSIS_SCHEMA_VERSION,
+                    )
+                ),
                 translation_schema=TRANSLATION_SCHEMA_VERSION,
             ),
         )
@@ -400,46 +659,72 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         refresh_after_hours: Annotated[float, Form()],
     ):
         _csrf(request, csrf_token)
-        if not 1 <= search_limit <= 500 or not 1 <= request_budget <= 500:
-            raise HTTPException(status_code=400, detail="search limits must be 1-500")
-        if not 0 <= missing_limit <= 50 or not 0 <= refresh_limit <= 50:
-            raise HTTPException(status_code=400, detail="detail limits must be 0-50")
-        if missing_limit + refresh_limit > 50:
-            raise HTTPException(status_code=400, detail="combined detail limit may not exceed 50")
-        if refresh_after_hours <= 0:
-            raise HTTPException(status_code=400, detail="refresh age must be positive")
+        _validate_sync_inputs(
+            search_limit=search_limit,
+            request_budget=request_budget,
+            missing_limit=missing_limit,
+            refresh_limit=refresh_limit,
+            refresh_after_hours=refresh_after_hours,
+        )
 
         def action() -> str:
-            summary = JobinjaSyncService(
-                discovery_service=_discovery_service(settings, request_budget=request_budget),
-                batch_service=_batch_service(settings),
-                catalog=__import__("jobhunter.job_catalog", fromlist=["JobCatalog"]).JobCatalog(
-                    settings.database_path
-                ),
-                observations=_observation_store(settings),
-                auditor=JobDetailAuditor(settings.database_path),
-            ).run(
-                _configured_searches(settings, limit=search_limit),
+            summary = _run_sync(
+                settings,
+                search_limit=search_limit,
+                request_budget=request_budget,
                 missing_limit=missing_limit,
                 refresh_limit=refresh_limit,
                 refresh_after_hours=refresh_after_hours,
             )
-            output = format_web_sync_summary(summary)
-            if settings.translation_enabled and settings.translation_auto_after_sync:
-                preferred_ids = (
-                    tuple(item.source_job_id for item in summary.detail_fetch.results)
-                    if summary.detail_fetch is not None
-                    else ()
-                )
-                translated = _translation_service(settings).run(
-                    missing=True,
-                    limit=settings.translation_batch_limit,
-                    preferred_ids=preferred_ids,
-                )
-                output += "\n\n" + format_translation_batch_summary(translated)
-            return output
+            return format_web_sync_summary(summary)
 
-        return _start_operation(request, "Jobinja sync", action)
+        return _start_operation(
+            request,
+            "Jobinja source sync",
+            action,
+            return_to="/",
+        )
+
+    @app.post("/actions/full-workflow")
+    def start_full_workflow(
+        request: Request,
+        csrf_token: Annotated[str, Form()],
+        search_limit: Annotated[int, Form()],
+        request_budget: Annotated[int, Form()],
+        missing_limit: Annotated[int, Form()],
+        refresh_limit: Annotated[int, Form()],
+        refresh_after_hours: Annotated[float, Form()],
+        translation_limit: Annotated[int, Form()],
+        analysis_limit: Annotated[int, Form()],
+    ):
+        _csrf(request, csrf_token)
+        _validate_sync_inputs(
+            search_limit=search_limit,
+            request_budget=request_budget,
+            missing_limit=missing_limit,
+            refresh_limit=refresh_limit,
+            refresh_after_hours=refresh_after_hours,
+        )
+        if not 1 <= translation_limit <= 50:
+            raise HTTPException(status_code=400, detail="translation limit must be 1-50")
+        if not 1 <= analysis_limit <= 20:
+            raise HTTPException(status_code=400, detail="analysis limit must be 1-20")
+
+        return _start_operation(
+            request,
+            "Complete market update",
+            lambda: _full_workflow_output(
+                settings,
+                search_limit=search_limit,
+                request_budget=request_budget,
+                missing_limit=missing_limit,
+                refresh_limit=refresh_limit,
+                refresh_after_hours=refresh_after_hours,
+                translation_limit=translation_limit,
+                analysis_limit=analysis_limit,
+            ),
+            return_to="/",
+        )
 
     @app.post("/actions/fetch-missing")
     def start_fetch_missing(
@@ -452,10 +737,15 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             raise HTTPException(status_code=400, detail="missing-detail limit must be 1-50")
 
         def action() -> str:
-            priorities = JobWorkflowStore(settings.database_path).prioritized_missing_job_ids(limit=limit)
+            priorities = JobWorkflowStore(settings.database_path).prioritized_missing_job_ids(
+                limit=limit
+            )
             job_ids = tuple(item.source_job_id for item in priorities)
             if not job_ids:
-                return "Priority detail backlog\nNo eligible discovered jobs need a detail-page fetch."
+                return (
+                    "Priority detail backlog\n"
+                    "No eligible discovered jobs need a detail-page fetch."
+                )
             summary = _batch_service(settings).run(job_ids)
             lines = [
                 "Priority detail backlog",
@@ -472,7 +762,12 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             lines.extend(["", format_batch_fetch_summary(summary)])
             return "\n".join(lines)
 
-        return _start_operation(request, "Fetch priority details", action)
+        return _start_operation(
+            request,
+            "Fetch priority details",
+            action,
+            return_to="/",
+        )
 
     @app.post("/actions/quick-add")
     def start_quick_add(
@@ -502,7 +797,9 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 store.initialize()
                 upserted = store.upsert_job(job=target.job, observed_at=datetime.now(UTC))
                 detail_summary = _batch_service(settings).run((target.job.source_job_id,))
-                successful_ids = tuple(item.source_job_id for item in detail_summary.results)
+                successful_ids = tuple(
+                    item.source_job_id for item in detail_summary.results
+                )
                 state = "new local job" if upserted.is_new else "already known locally"
                 output = "\n".join(
                     [
@@ -513,8 +810,10 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                         format_batch_fetch_summary(detail_summary),
                     ]
                 )
-                return output + _translation_output(
-                    settings, successful_ids, requested=translate_after
+                return output + _complete_processing_output(
+                    settings,
+                    successful_ids,
+                    requested=translate_after,
                 )
 
             assert target.search_url is not None
@@ -539,12 +838,27 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             if not selected_ids:
                 return output + "\n\nNo detail pages selected."
             detail_summary = _batch_service(settings).run(selected_ids)
-            successful_ids = tuple(item.source_job_id for item in detail_summary.results)
+            successful_ids = tuple(
+                item.source_job_id for item in detail_summary.results
+            )
             output += "\n\n" + format_batch_fetch_summary(detail_summary)
-            return output + _translation_output(settings, successful_ids, requested=translate_after)
+            return output + _complete_processing_output(
+                settings,
+                successful_ids,
+                requested=translate_after,
+            )
 
-        label = target.display_value if len(target.display_value) <= 54 else target.display_value[:51] + "..."
-        return _start_operation(request, f"Quick Add: {label}", action)
+        label = (
+            target.display_value
+            if len(target.display_value) <= 54
+            else target.display_value[:51] + "..."
+        )
+        return _start_operation(
+            request,
+            f"Quick Add: {label}",
+            action,
+            return_to="/jobs",
+        )
 
     @app.post("/actions/audit")
     def start_audit(request: Request, csrf_token: Annotated[str, Form()]):
@@ -552,7 +866,10 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         return _start_operation(
             request,
             "Parser audit",
-            lambda: format_job_audit(JobDetailAuditor(settings.database_path).audit(limit=500)),
+            lambda: format_job_audit(
+                JobDetailAuditor(settings.database_path).audit(limit=500)
+            ),
+            return_to="/",
         )
 
     @app.post("/actions/translate-missing")
@@ -572,6 +889,7 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             lambda: format_translation_batch_summary(
                 _translation_service(settings).run(missing=True, limit=limit)
             ),
+            return_to="/",
         )
 
     @app.post("/actions/analyze-ready")
@@ -591,14 +909,26 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 analysis="missing",
                 limit=500,
             )
-            job_ids = tuple(row.source_job_id for row in rows if row.triage_state != "not_relevant")
+            job_ids = tuple(
+                row.source_job_id
+                for row in rows
+                if row.triage_state != "not_relevant"
+            )
             if not job_ids:
-                return "Evidence-backed job analysis\nNo eligible current jobs need analysis."
+                return (
+                    "Evidence-backed job analysis\n"
+                    "No eligible current jobs need analysis."
+                )
             return format_analysis_batch_summary(
                 _analysis_service(settings).run(job_ids, limit=limit)
             )
 
-        return _start_operation(request, "Analyze ready jobs", action)
+        return _start_operation(
+            request,
+            "Analyze ready jobs",
+            action,
+            return_to="/",
+        )
 
     @app.post("/actions/export")
     def start_export(request: Request, csrf_token: Annotated[str, Form()]):
@@ -610,9 +940,17 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 output_path=settings.data_dir / "exports/job_english_corpus.jsonl",
                 limit=5000,
             )
-            return f"English corpus exported: {result.records} records\nPath: {result.path}"
+            return (
+                f"English corpus exported: {result.records} records\n"
+                f"Path: {result.path}"
+            )
 
-        return _start_operation(request, "Export hardened English corpus", action)
+        return _start_operation(
+            request,
+            "Export hardened English corpus",
+            action,
+            return_to="/",
+        )
 
     @app.post("/actions/jobs-bulk")
     def jobs_bulk(
@@ -622,7 +960,9 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         source_job_ids: Annotated[list[str], Form()],
     ):
         _csrf(request, csrf_token)
-        job_ids = tuple(dict.fromkeys(item.strip() for item in source_job_ids if item.strip()))
+        job_ids = tuple(
+            dict.fromkeys(item.strip() for item in source_job_ids if item.strip())
+        )
         if not job_ids:
             raise HTTPException(status_code=400, detail="Select at least one job")
         if len(job_ids) > 50:
@@ -636,7 +976,8 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         }
         if bulk_action in workflow_states:
             changed = JobWorkflowStore(settings.database_path).set_state(
-                job_ids, triage_state=bulk_action
+                job_ids,
+                triage_state=bulk_action,
             )
             return RedirectResponse(
                 url=f"/jobs?notice=Updated+{changed}+jobs",
@@ -652,13 +993,21 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
                 )
             if bulk_action == "analyze":
                 return format_analysis_batch_summary(
-                    _analysis_service(settings).run(job_ids, limit=min(len(job_ids), 20))
+                    _analysis_service(settings).run(
+                        job_ids,
+                        limit=min(len(job_ids), 20),
+                    )
                 )
             raise ValueError(f"Unsupported bulk action: {bulk_action}")
 
         if bulk_action not in {"fetch", "translate", "analyze"}:
             raise HTTPException(status_code=400, detail="Unsupported bulk action")
-        return _start_operation(request, f"Bulk {bulk_action}: {len(job_ids)} jobs", action)
+        return _start_operation(
+            request,
+            f"Bulk {bulk_action}: {len(job_ids)} jobs",
+            action,
+            return_to="/jobs",
+        )
 
     @app.post("/jobs/{source_job_id}/triage")
     def set_job_triage(
@@ -669,7 +1018,8 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
     ):
         _csrf(request, csrf_token)
         JobWorkflowStore(settings.database_path).set_state(
-            (source_job_id,), triage_state=triage_state
+            (source_job_id,),
+            triage_state=triage_state,
         )
         return RedirectResponse(url=f"/jobs/{source_job_id}", status_code=303)
 
@@ -678,12 +1028,18 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
         request: Request,
         source_job_id: str,
         csrf_token: Annotated[str, Form()],
+        return_to: Annotated[str, Form()] = "",
     ):
         _csrf(request, csrf_token)
+        target = _safe_return_to(return_to) or f"/jobs/{source_job_id}"
         return _start_operation(
             request,
             f"Fetch {source_job_id}",
-            lambda: format_batch_fetch_summary(_batch_service(settings).run((source_job_id,))),
+            lambda: format_batch_fetch_summary(
+                _batch_service(settings).run((source_job_id,))
+            ),
+            return_to=target,
+            auto_return=True,
         )
 
     @app.post("/jobs/{source_job_id}/translate")
@@ -701,6 +1057,8 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             lambda: format_translation_batch_summary(
                 _translation_service(settings).run(source_job_ids=(source_job_id,))
             ),
+            return_to=f"/jobs/{source_job_id}",
+            auto_return=True,
         )
 
     @app.post("/jobs/{source_job_id}/analyze")
@@ -716,6 +1074,8 @@ def create_app(settings: Settings, *, operations: WebOperationManager | None = N
             lambda: format_analysis_batch_summary(
                 _analysis_service(settings).run((source_job_id,), limit=1)
             ),
+            return_to=f"/jobs/{source_job_id}",
+            auto_return=True,
         )
 
     return app
