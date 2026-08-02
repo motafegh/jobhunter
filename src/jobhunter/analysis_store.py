@@ -182,8 +182,15 @@ class AnalysisStore:
             )
             return int(cursor.lastrowid)
 
-    def latest_current(self, source_job_id: str) -> AnalysisArtifact | None:
-        """Return only analysis tied to the current source semantic version."""
+    def latest_current(
+        self,
+        source_job_id: str,
+        *,
+        model: str | None = None,
+        prompt_version: str | None = None,
+        schema_version: str | None = None,
+    ) -> AnalysisArtifact | None:
+        """Return current-source analysis matching the requested analysis contract."""
 
         self.initialize()
         with self._connect() as connection:
@@ -198,14 +205,34 @@ class AnalysisStore:
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
                   )
+                  AND (? IS NULL OR a.model = ?)
+                  AND (? IS NULL OR a.prompt_version = ?)
+                  AND (? IS NULL OR a.schema_version = ?)
                 ORDER BY a.id DESC
                 LIMIT 1
                 """,
-                (source_job_id,),
+                (
+                    source_job_id,
+                    model,
+                    model,
+                    prompt_version,
+                    prompt_version,
+                    schema_version,
+                    schema_version,
+                ),
             ).fetchone()
         return _artifact(row) if row is not None else None
 
-    def list_current(self, *, limit: int = 5000) -> tuple[AnalysisArtifact, ...]:
+    def list_current(
+        self,
+        *,
+        limit: int = 5000,
+        model: str | None = None,
+        prompt_version: str | None = None,
+        schema_version: str | None = None,
+    ) -> tuple[AnalysisArtifact, ...]:
+        """List current-source artifacts matching one optional analysis contract."""
+
         if not 1 <= limit <= 5000:
             raise ValueError("limit must be between 1 and 5000")
         self.initialize()
@@ -221,14 +248,34 @@ class AnalysisStore:
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
                   )
+                  AND (? IS NULL OR a.model = ?)
+                  AND (? IS NULL OR a.prompt_version = ?)
+                  AND (? IS NULL OR a.schema_version = ?)
                   AND a.id = (
                       SELECT MAX(a2.id) FROM job_analysis_artifacts AS a2
                       WHERE a2.job_detail_version_id = v.id
+                        AND (? IS NULL OR a2.model = ?)
+                        AND (? IS NULL OR a2.prompt_version = ?)
+                        AND (? IS NULL OR a2.schema_version = ?)
                   )
                 ORDER BY p.id ASC
                 LIMIT ?
                 """,
-                (limit,),
+                (
+                    model,
+                    model,
+                    prompt_version,
+                    prompt_version,
+                    schema_version,
+                    schema_version,
+                    model,
+                    model,
+                    prompt_version,
+                    prompt_version,
+                    schema_version,
+                    schema_version,
+                    limit,
+                ),
             ).fetchall()
         return tuple(_artifact(row) for row in rows)
 
