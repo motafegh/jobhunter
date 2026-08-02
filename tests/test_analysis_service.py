@@ -97,6 +97,10 @@ def _provider(payload: dict) -> LMStudioProvider:
         body = json.loads(request.read())
         assert body["model"] == "analysis-model"
         assert body["response_format"]["type"] == "json_schema"
+        user_payload = json.loads(body["messages"][1]["content"])
+        authoritative = user_payload["authoritative_source_fields"]
+        assert "language" not in authoritative
+        assert "parser_version" not in authoritative
         return httpx.Response(
             200,
             request=request,
@@ -150,6 +154,23 @@ def test_analysis_rejects_evidence_not_present_in_authoritative_source(tmp_path:
         translation_service=translation,
         analysis_store=AnalysisStore(database_path),
         provider=_provider(_analysis_payload("Kubernetes is mandatory.")),
+        model="analysis-model",
+    )
+
+    with pytest.raises(AnalysisValidationError, match="not an exact excerpt"):
+        service.analyze_job("eng1")
+    assert AnalysisStore(database_path).latest_current("eng1") is None
+
+
+def test_analysis_rejects_parser_metadata_as_employer_evidence(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    payload = _analysis_payload("jobinja-detail-v2")
+    service = JobAnalysisService(
+        source_store=TranslationStore(database_path),
+        translation_service=translation,
+        analysis_store=AnalysisStore(database_path),
+        provider=_provider(payload),
         model="analysis-model",
     )
 
