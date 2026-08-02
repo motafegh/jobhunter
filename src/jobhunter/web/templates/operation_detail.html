@@ -2,10 +2,10 @@
 {% block title %}{{ operation.name }} · JobHunter{% endblock %}
 {% block heading %}{{ operation.name }}{% endblock %}
 {% block eyebrow %}Operation {{ operation.id }}{% endblock %}
-{% block topbar_actions %}<a class="button ghost" href="/operations">All operations</a>{% endblock %}
+{% block topbar_actions %}{% if return_to %}<a class="button ghost" href="{{ return_to }}">{{ return_label }}</a>{% endif %}<a class="button ghost" href="/operations">All operations</a>{% endblock %}
 
 {% block content %}
-<section class="panel operation-detail" data-operation-id="{{ operation.id }}">
+<section class="panel operation-detail" data-operation-id="{{ operation.id }}" data-return-url="{{ return_to or '' }}" data-auto-return="{{ 'true' if auto_return else 'false' }}">
   <div class="operation-status-line">
     <span class="badge operation-status {{ 'good' if operation.status == 'completed' else ('bad' if operation.status == 'failed' else 'warn') }}">{{ operation.status }}</span>
     <span class="muted">Started: <span data-operation-started>{{ operation.started_at or 'waiting' }}</span></span>
@@ -15,5 +15,6 @@
     <span></span>
   </div>
   <pre class="operation-output" data-operation-output>{% if operation.error %}{{ operation.error }}{% elif operation.summary %}{{ operation.summary }}{% else %}Operation is {{ operation.status }}. This page updates automatically.{% endif %}</pre>
+  {% if return_to %}<p class="operation-return muted" data-operation-return>{% if operation.status == 'completed' and auto_return %}Returning to the previous screen…{% else %}When this operation finishes, use “{{ return_label }}” above to continue.{% endif %}</p>{% endif %}
 </section>
 {% endblock %}
