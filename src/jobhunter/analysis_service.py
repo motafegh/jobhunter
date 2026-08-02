@@ -14,6 +14,8 @@ from jobhunter.translation_store import TranslationSourceVersion, TranslationSto
 PROMPT_VERSION = "job-analysis-prompt-v1"
 ANALYSIS_SCHEMA_VERSION = "job-analysis-v1"
 
+_SOURCE_METADATA_FIELDS = {"language", "parser_version"}
+
 _SYSTEM_PROMPT = """You are JobHunter's evidence-constrained job-analysis engine.
 The original employer/source fields are authoritative. The English projection is only a
 comprehension aid.
@@ -135,6 +137,16 @@ class AnalysisBatchSummary:
         return sum(item.outcome == "reused" for item in self.results)
 
 
+def _authoritative_source_fields(source: TranslationSourceVersion) -> dict[str, Any]:
+    """Return employer/job fields only; parser metadata is never claim evidence."""
+
+    return {
+        key: value
+        for key, value in source.fields.items()
+        if key not in _SOURCE_METADATA_FIELDS
+    }
+
+
 def _iter_source_strings(value: Any):
     if isinstance(value, str):
         if value.strip():
@@ -156,7 +168,8 @@ def _validate_evidence(
     source: TranslationSourceVersion,
 ) -> None:
     source_strings = tuple(
-        _normalize_evidence(text) for text in _iter_source_strings(source.fields)
+        _normalize_evidence(text)
+        for text in _iter_source_strings(_authoritative_source_fields(source))
     )
 
     def require_excerpt(evidence: str, *, label: str) -> None:
@@ -269,12 +282,13 @@ class JobAnalysisService:
             )
             return _result(existing, outcome="reused")
 
+        authoritative_fields = _authoritative_source_fields(source)
         try:
             result = self._provider.complete_structured(
                 system_prompt=_SYSTEM_PROMPT,
                 user_payload={
                     "source_job_id": source.source_job_id,
-                    "authoritative_source_fields": source.fields,
+                    "authoritative_source_fields": authoritative_fields,
                     "english_comprehension_aid": english.fields,
                 },
                 schema_name="jobhunter_job_analysis_v1",
