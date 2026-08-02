@@ -22,7 +22,7 @@
     <label><span>Full details</span><input name="detail_limit" type="number" min="0" max="20" value="5"><small class="field-help">0 means discovery only.</small></label>
     <label class="check-label">
       <input name="translate_after" type="checkbox" value="true" {% if not translation_enabled %}disabled{% endif %}>
-      <span>Translate fetched jobs</span><small class="field-help">Uses the hardened current English contract.</small>
+      <span>Process fetched jobs fully</span><small class="field-help">Build/reuse English v2, then run evidence-backed analysis on the successfully fetched jobs.</small>
     </label>
     <div class="form-action"><button class="button primary" type="submit">Add / search</button></div>
   </form>
