@@ -1,8 +1,8 @@
 (() => {
   const forms = document.querySelectorAll("[data-operation-form]");
   forms.forEach((form) => {
-    form.addEventListener("submit", () => {
-      const button = form.querySelector("button[type='submit']");
+    form.addEventListener("submit", (event) => {
+      const button = event.submitter || form.querySelector("button[type='submit']");
       if (!button || button.disabled) return;
       button.dataset.originalText = button.textContent;
       button.textContent = "Starting…";
@@ -54,11 +54,14 @@
   if (!container) return;
 
   const operationId = container.dataset.operationId;
+  const returnUrl = container.dataset.returnUrl || "";
+  const autoReturn = container.dataset.autoReturn === "true";
   const status = container.querySelector(".operation-status");
   const started = container.querySelector("[data-operation-started]");
   const completed = container.querySelector("[data-operation-completed]");
   const output = container.querySelector("[data-operation-output]");
   const progress = container.querySelector("[data-operation-progress]");
+  const returnMessage = container.querySelector("[data-operation-return]");
 
   const applyStatusClass = (value) => {
     status.classList.remove("good", "bad", "warn");
@@ -85,6 +88,12 @@
 
       if (operation.status === "completed" || operation.status === "failed") {
         progress.classList.add("finished");
+        if (operation.status === "completed" && returnUrl && autoReturn) {
+          if (returnMessage) returnMessage.textContent = "Completed. Returning to the previous screen…";
+          window.setTimeout(() => window.location.assign(returnUrl), 900);
+        } else if (returnMessage && returnUrl) {
+          returnMessage.textContent = "Operation finished. Use the return button above to continue.";
+        }
         return;
       }
       window.setTimeout(poll, 1200);
