@@ -41,8 +41,18 @@ class MarketSummary:
 class MarketInsights:
     """Read-only aggregate intelligence; no source or model mutation happens here."""
 
-    def __init__(self, database_path: Path) -> None:
+    def __init__(
+        self,
+        database_path: Path,
+        *,
+        analysis_model: str | None = None,
+        analysis_prompt_version: str | None = None,
+        analysis_schema_version: str | None = None,
+    ) -> None:
         self._database_path = database_path
+        self._analysis_model = analysis_model
+        self._analysis_prompt_version = analysis_prompt_version
+        self._analysis_schema_version = analysis_schema_version
 
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self._database_path)
@@ -109,7 +119,12 @@ class MarketInsights:
         return tuple(str(row["search_name"]) for row in rows)
 
     def market_summary(self, *, top_requirements: int = 50) -> MarketSummary:
-        artifacts = AnalysisStore(self._database_path).list_current(limit=5000)
+        artifacts = AnalysisStore(self._database_path).list_current(
+            limit=5000,
+            model=self._analysis_model,
+            prompt_version=self._analysis_prompt_version,
+            schema_version=self._analysis_schema_version,
+        )
         job_sets: dict[str, set[str]] = defaultdict(set)
         classification_job_sets: dict[str, dict[str, set[str]]] = defaultdict(
             lambda: {
