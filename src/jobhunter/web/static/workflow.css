@@ -1,0 +1,69 @@
+.workflow-form {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.workflow-actions {
+  grid-column: span 2;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.workflow-actions .button {
+  flex: 1 1 0;
+  width: auto;
+}
+
+.operation-return {
+  margin: 12px 2px 0;
+  font-size: 12px;
+}
+
+.priority-row {
+  grid-template-columns: minmax(240px, 1fr) repeat(3, auto) auto;
+}
+
+.priority-row form {
+  margin: 0;
+}
+
+.priority-row .button {
+  min-height: 34px;
+  padding: 7px 11px;
+}
+
+@media (max-width: 1150px) {
+  .workflow-form {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .workflow-actions {
+    grid-column: span 2;
+  }
+
+  .priority-row {
+    grid-template-columns: minmax(200px, 1fr) auto auto auto;
+  }
+
+  .priority-row span:nth-of-type(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .workflow-form {
+    grid-template-columns: 1fr;
+  }
+
+  .workflow-actions {
+    grid-column: auto;
+    flex-direction: column;
+  }
+
+  .priority-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .priority-row > span {
+    display: none;
+  }
+}
