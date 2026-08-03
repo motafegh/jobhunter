@@ -204,7 +204,9 @@ class JobinjaDetailService:
 
 def _semantic_sha256(fields: dict[str, Any]) -> str:
     semantic_fields = {
-        key: value for key, value in fields.items() if key not in {"language", "parser_version"}
+        key: value
+        for key, value in fields.items()
+        if key not in {"language", "parser_version"}
     }
     canonical = json.dumps(
         semantic_fields,
@@ -224,7 +226,11 @@ def _parse_status(detail: ParsedJobDetail) -> str:
 
 
 def format_fetch_summary(summary: JobDetailFetchSummary) -> str:
-    version_state = "new content version" if summary.is_new_version else "unchanged semantic content"
+    version_state = (
+        "new content version"
+        if summary.is_new_version
+        else "unchanged semantic content"
+    )
     return "\n".join(
         [
             f"Jobinja job fetched: {summary.source_job_id}",
