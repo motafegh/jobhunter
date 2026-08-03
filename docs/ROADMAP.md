@@ -23,7 +23,7 @@ MARKET
 what employers actually ask for
     ↓
 ROLE INTELLIGENCE
-what work, responsibilities, requirements and depth patterns exist
+what work, responsibilities, requirements, technical scope, depth and capability patterns exist
     ↓
 PERSONAL EVIDENCE
 what the user can actually support with reviewed evidence
@@ -165,6 +165,7 @@ These rules apply across every roadmap stage.
 16. Do not automate application submission.
 17. Do not interpret roadmap/proposal breadth as permission to implement everything.
 18. Every new capability must have bounded acceptance criteria and explicit non-goals.
+19. Do not replace vague employer wording with fake technical precision. Job-specific capability depth may only be as detailed as source/work evidence supports, and unknown scope remains explicit.
 
 ---
 
@@ -254,7 +255,7 @@ R0/Phase 1 is complete only when:
 
 ## 6. Stage R1 — Canonical semantic market model (Phase 2 core)
 
-**Objective:** Convert accepted job-level semantic claims into reviewed reusable market concepts without flattening the market into keyword frequencies.
+**Objective:** Convert accepted job-level semantic claims into reviewed reusable market concepts and job-specific capability requirement profiles without flattening the market into keyword frequencies or vague depth adjectives.
 
 ### 6.1 Canonical concept registry
 
@@ -307,14 +308,139 @@ Add only relations that support real decisions:
 
 - co-occurrence;
 - capability bundles;
+- broad-to-narrow capability/sub-capability relations;
+- prerequisite knowledge relations;
 - substitution/family relations;
-- tool-versus-underlying-capability relations.
+- tool-versus-underlying-capability relations;
+- responsibility/deliverable-to-capability relations.
 
-Keep prerequisite relations distinct from market co-occurrence.
+Keep prerequisite relations distinct from market co-occurrence. A common association such as Docker + Kubernetes must never imply Kubernetes is part of every Docker requirement.
 
 Primary proposal inputs: B024-B028.
 
-### 6.5 Market aggregation v2
+### 6.5 Job capability requirement and depth intelligence
+
+Build a first-class **JobCapabilityRequirementProfile** for material capabilities in a vacancy.
+
+The goal is not merely:
+
+```text
+Docker -> required -> advanced
+```
+
+The goal is to answer:
+
+```text
+What must the employee know?
+What must the employee understand?
+What must the employee be able to do?
+Which parts/sub-capabilities of the broad technology are supported?
+In what work context?
+With what independence/ownership?
+At what operational complexity?
+What is explicit, strongly work-implied, inferred, or unknown?
+Why do we believe each part?
+```
+
+#### Inputs
+
+Use the complete accepted evidence set available for the job, including:
+
+- P1.6 responsibilities;
+- explicit requirements and strength;
+- deliverables;
+- source-explicit experience/seniority wording;
+- deterministic job context;
+- canonical concept mappings;
+- responsibility/deliverable-to-capability relations;
+- supported company/product/team context when available.
+
+Company context is supporting evidence only. Do not manufacture requirements from stereotypes such as `startup means broad ownership` or `enterprise means narrow specialization`.
+
+#### Required profile dimensions
+
+For each material capability preserve where evidence supports it:
+
+```text
+canonical capability
+exact employer wording
+employer requirement strength
+employer-stated depth wording
+expected work activities
+expected deliverables
+technical scope / sub-capabilities
+underlying knowledge / practices
+expected independence / ownership
+complexity / production context
+explicit duration/experience signals
+responsibility links
+deliverable links
+supported company/product/team context
+source-explicit evidence
+inference rationale
+confidence
+unknown / unsupported scope
+review state
+contract version
+```
+
+#### Evidence status per expectation
+
+Fine-grained expectations must distinguish at minimum:
+
+```text
+source_explicit
+strongly_implied_by_work
+model_inferred_prerequisite
+unknown_or_unsupported
+```
+
+An inferred prerequisite must carry rationale and provenance. It must never be shown as employer-explicit wording.
+
+#### Depth model
+
+Do **not** make a single beginner/intermediate/advanced/expert number the primary model.
+
+Keep these signals separate:
+
+1. employer-stated depth wording;
+2. work-implied depth/scope;
+3. technical sub-capability coverage;
+4. expected independence/ownership;
+5. complexity/operational/production context;
+6. confidence and unknown scope.
+
+Only introduce a summary job-depth category after reviewed examples show that it is stable and decision-useful. The multidimensional profile remains the authoritative derived representation.
+
+#### Example behavior
+
+If a posting only says `Docker required`, the correct profile may be:
+
+```text
+Docker is explicitly required.
+Specific technical scope: insufficient evidence.
+Unknown: Compose, networking depth, registries, security hardening, orchestration, internals.
+```
+
+If responsibilities also say `containerize services`, `maintain CI/CD pipelines` and `troubleshoot production deployments`, the profile may support narrower expectations such as Dockerfile/image work, container runtime configuration, deployment integration and troubleshooting—each with evidence status and confidence.
+
+Likewise, `expert Python` must be interpreted through the actual work. A role centered on async APIs, tests and production debugging should produce a different Python capability profile from a role centered on scientific numerical computing or ML experimentation.
+
+#### Acceptance
+
+Do not scale this layer until reviewed examples across broad and narrow capabilities demonstrate that:
+
+- sub-capabilities are supported by evidence rather than generic model knowledge;
+- vague adjectives do not create fake technical precision;
+- responsibilities/deliverables materially improve interpretation;
+- explicit vs implied vs inferred vs unknown remains correct;
+- unsupported sub-capabilities are omitted or marked unknown;
+- profile changes are versioned and reversible;
+- a reviewer can trace every material expectation back to job evidence and reasoning.
+
+Primary proposal inputs: B013-B030, especially B020-B028.
+
+### 6.6 Market aggregation v2
 
 Every market aggregate must expose:
 
@@ -324,28 +450,36 @@ Every market aggregate must expose:
 - role/archetype scope;
 - source scope;
 - sample size;
-- current analysis/taxonomy contract;
+- current analysis/taxonomy/capability-profile contract;
 - duplicate/repost adjustment state;
 - warning when claims exceed evidence quality.
 
+Where capability-depth profiles are aggregated, keep employer-explicit signals separate from work-implied/model-inferred signals and expose support counts before presenting a technical scope pattern as market-wide.
+
 Primary proposal inputs: B031, B086-B089, B188-B195.
 
-### 6.6 Review and reversibility
+### 6.7 Review and reversibility
 
-Introduce claim/taxonomy review only where real P1.6/Phase-2 errors justify it. Corrections append/supersede; they do not destroy original model history.
+Introduce claim/taxonomy/capability-profile review only where real P1.6/Phase-2 errors justify it. Corrections append/supersede; they do not destroy original model history.
+
+Review must allow individual sub-capability, evidence-status, independence/context and work-link corrections without rewriting original employer/P1.6 evidence.
 
 Primary proposal inputs: B007-B010, B184.
 
-### 6.7 Phase-2 core gate
+### 6.8 Phase-2 core gate
 
 Do not advance to personal gap intelligence until:
 
 - canonical mappings are reviewable;
 - responsibility families/archetypes have representative reviewed examples;
+- job capability requirement profiles have representative reviewed examples across multiple broad/narrow capability types;
+- fine-grained technical expectations preserve explicit/implied/inferred/unknown boundaries;
+- unsupported scope remains unknown rather than model-filled;
 - aggregate counts reproduce from accepted claims;
 - duplicate aliases do not inflate demand;
 - sample scope is visible;
-- every aggregate can drill back to job-level evidence.
+- every aggregate can drill back to job-level evidence;
+- the job-side requirement model is stable enough to compare against future personal evidence without pretending it is the personal 0–7 scale.
 
 ---
 
@@ -513,6 +647,8 @@ Use an ordinal depth scale instead of `knows/doesn't know`. A current proposed m
 
 Confidence in an assessment must not be confused with depth itself.
 
+This personal scale describes evidence about the user. It is intentionally distinct from the multidimensional job-side capability requirement profile built in Phase 2.
+
 ### 8.4 Manual evidence workflow first
 
 Before automatic importers:
@@ -529,9 +665,11 @@ Primary proposal inputs: B043, B054.
 
 ### 8.5 Market-to-person mapping
 
-Map reviewed personal capabilities to canonical market concepts with explicit relations such as exact, broader, narrower or partial.
+Map reviewed personal capabilities to canonical market concepts and job-required activities/sub-capabilities with explicit relations such as exact, broader, narrower or partial.
 
 Semantic similarity may propose a mapping but cannot silently declare equivalence.
+
+A broad personal concept match does not automatically satisfy every job-specific technical activity under that concept.
 
 Primary proposal input: B048.
 
@@ -544,7 +682,8 @@ No readiness/gap recommendation becomes authoritative until:
 - AI-assisted work can be represented honestly;
 - personal data processing/export policy is explicit;
 - backup/restore protects irreplaceable evidence;
-- market↔personal mappings are inspectable and correctable.
+- market↔personal mappings are inspectable and correctable;
+- job-required activities/sub-capabilities can be compared to personal evidence without collapsing them into concept-name equality.
 
 ---
 
@@ -576,15 +715,17 @@ Primary proposal inputs: B049-B050.
 
 ### 9.2 Requirement-by-requirement comparison
 
-Prefer inspectable comparison over one global score:
+Prefer inspectable comparison over one global score. Where Phase-2 capability profiles exist, compare at activity/sub-capability level rather than concept name alone:
 
 ```text
-Requirement | Employer strength | Personal evidence | Assessment
-Python      | required          | repeated evidence | strong
-Docker      | required          | guided practice   | partial
-Kubernetes  | preferred         | introductory      | weak
-SOC ops     | required          | no reviewed proof | unknown/major gap by policy
+Requirement | Job scope/activity              | Personal evidence      | Assessment
+Python      | async API implementation        | repeated evidence      | strong
+Docker      | production troubleshooting      | guided/basic evidence  | partial
+Kubernetes  | preferred deployment context    | introductory           | weak
+SOC ops     | incident workflow ownership     | no reviewed proof      | unknown/major gap by policy
 ```
+
+A person may have strong general evidence for Docker while lacking the exact networking/troubleshooting/CI activity required by one vacancy.
 
 Primary proposal inputs: B051-B053, B135-B136.
 
@@ -608,6 +749,7 @@ Prioritize using transparent factors:
 
 - target-role relevance;
 - requirement strength;
+- job-specific activity/sub-capability gaps;
 - market prevalence;
 - dependency/prerequisite structure;
 - personal depth gap;
@@ -626,6 +768,8 @@ assess current capability
 monitor
 ignore for now
 ```
+
+Recommendations should target the missing activity when possible rather than telling the user to relearn an entire broad technology.
 
 Primary proposal inputs: B061-B067, B134.
 
@@ -674,6 +818,7 @@ what would change the conclusion?
 For one selected opportunity produce a versioned package containing:
 
 - employer responsibilities/requirements;
+- job-specific capability scope/depth where available;
 - strongest matching personal evidence;
 - partial/critical gaps;
 - constraints/unknowns;
@@ -699,10 +844,10 @@ Primary proposal input: B072.
 
 ### 10.3 Interview preparation
 
-Build from employer evidence and personal evidence:
+Build from employer evidence, job capability profiles and personal evidence:
 
 ```text
-requirement
+requirement / required activity
 → concepts to explain
 → strongest real example
 → missing preparation
@@ -777,7 +922,7 @@ Freeze analytical manifests containing:
 - eligible job/source versions;
 - source/filter scope;
 - analysis contract;
-- taxonomy version;
+- taxonomy/capability-profile version;
 - creation time.
 
 Primary proposal input: B114.
@@ -790,6 +935,7 @@ Only after longitudinal data and duplicate/lifecycle quality are adequate:
 - emerging capability detection;
 - stability classification;
 - company/role/geographic change;
+- changes in recurring required activities/sub-capabilities where evidence coverage is sufficient;
 - career-market drift relative to personal evidence.
 
 Primary proposal inputs: B032-B040, B159-B163.
@@ -837,6 +983,7 @@ Start small with:
 
 - translation golden examples;
 - representative P1.6 gold jobs;
+- reviewed job capability requirement/depth examples once Phase 2 begins;
 - regression fixtures;
 - human annotations for high-value cases;
 - exact contract identity;
@@ -938,6 +1085,7 @@ Useful UX proposals by maturity:
 
 ### Mid term
 
+- per-job capability requirement/depth profile showing required activities, sub-capabilities, evidence status and unknown scope;
 - saved views;
 - multi-job comparison;
 - role/company comparisons;
@@ -1001,6 +1149,8 @@ B011-B012, B116, B121, B123-B129, B159-B160, B167-B169, B185-B187.
 ### Program E — Semantic role/taxonomy/requirement model
 
 B013-B030.
+
+This program includes the job capability requirement/depth intelligence layer: broad concepts, work activities, sub-capabilities, prerequisites, tool-versus-underlying-capability relations, experience/depth signals and reviewed evidence boundaries.
 
 ### Program F — Market/company/geography/measurement intelligence
 
@@ -1068,7 +1218,7 @@ B002 Multi-source acquisition
 B003 Search effectiveness
 B004 Repost/near-duplicate identity
 B006 Rich lifecycle
-B013-B030 Semantic/taxonomy backbone
+B013-B030 Semantic/taxonomy backbone, including job-specific capability scope/depth intelligence
 B031 Market Snapshot
 B086-B089 Trust/quality surfaces
 B114 Reproducible snapshots
@@ -1127,6 +1277,9 @@ Stop and repair rather than continuing when any of these occur:
 - source/provider failure is being represented as valid empty data;
 - transient failures are changing lifecycle state destructively;
 - accepted model artifacts cannot trace material claims to evidence;
+- a job capability profile expands a broad technology into unsupported sub-capabilities or presents model knowledge as vacancy evidence;
+- a vague employer adjective is being converted into fake exact depth without responsibility/deliverable/context support;
+- explicit, work-implied, inferred and unknown capability expectations are being collapsed together;
 - a new contract silently reuses incompatible historical artifacts;
 - browser and CLI mutate different durable state;
 - personal evidence is being inferred without user-reviewed provenance;
@@ -1146,13 +1299,14 @@ JobHunter is not successful because it has many sources, many models, many agent
 The mature system succeeds when it can repeatedly answer, with inspectable evidence:
 
 1. What does the selected market actually ask people to do?
-2. Which responsibilities, requirements and capability bundles are stable or changing?
-3. Which role families are real in the observed corpus despite inconsistent titles?
-4. What reviewed evidence does the user have for those capabilities, and at what depth?
-5. Which differences are knowledge gaps, practice gaps, depth gaps, evidence gaps, experience-context gaps, stale evidence, constraints or unknowns?
-6. Which next action has the strongest evidence-based rationale?
-7. Which opportunities are reasonable now, which need preparation, and why?
-8. What explicitly changed after learning, building, applying or receiving real feedback?
-9. Can every consequential conclusion be traced back through the relevant market and personal evidence?
+2. For important capabilities in a specific job, what technical activities/sub-capabilities, independence and operational depth does the evidence actually support, and what remains unknown?
+3. Which responsibilities, requirements and capability bundles are stable or changing?
+4. Which role families are real in the observed corpus despite inconsistent titles?
+5. What reviewed evidence does the user have for those capabilities and activities, and at what depth?
+6. Which differences are knowledge gaps, practice gaps, depth gaps, evidence gaps, experience-context gaps, stale evidence, constraints or unknowns?
+7. Which next action has the strongest evidence-based rationale?
+8. Which opportunities are reasonable now, which need preparation, and why?
+9. What explicitly changed after learning, building, applying or receiving real feedback?
+10. Can every consequential conclusion be traced back through the relevant market and personal evidence?
 
 That is the target against which roadmap proposals should be accepted, deferred, merged or rejected.
