@@ -97,6 +97,9 @@ def _provider(payload: dict) -> LMStudioProvider:
         body = json.loads(request.read())
         assert body["model"] == "analysis-model"
         assert body["response_format"]["type"] == "json_schema"
+        system_prompt = body["messages"][0]["content"].casefold()
+        assert "untrusted external data" in system_prompt
+        assert "ignore previous instructions" in system_prompt
         user_payload = json.loads(body["messages"][1]["content"])
         authoritative = user_payload["authoritative_source_fields"]
         assert "language" not in authoritative
@@ -122,16 +125,24 @@ def _provider(payload: dict) -> LMStudioProvider:
     )
 
 
-def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path) -> None:
-    database_path = tmp_path / "jobhunter.sqlite3"
-    translation = _prepare_native_job(database_path)
-    service = JobAnalysisService(
+def _service(
+    database_path: Path,
+    translation: TranslationService,
+    payload: dict,
+) -> JobAnalysisService:
+    return JobAnalysisService(
         source_store=TranslationStore(database_path),
         translation_service=translation,
         analysis_store=AnalysisStore(database_path),
-        provider=_provider(_analysis_payload()),
+        provider=_provider(payload),
         model="analysis-model",
     )
+
+
+def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    service = _service(database_path, translation, _analysis_payload())
 
     first = service.analyze_job("eng1")
     second = service.analyze_job("eng1")
@@ -144,17 +155,17 @@ def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
     assert artifact.request_body["model"] == "analysis-model"
+    assert artifact.prompt_version == "job-analysis-prompt-v2"
+    assert artifact.schema_version == "job-analysis-v2"
 
 
 def test_analysis_rejects_evidence_not_present_in_authoritative_source(tmp_path: Path) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
-    service = JobAnalysisService(
-        source_store=TranslationStore(database_path),
-        translation_service=translation,
-        analysis_store=AnalysisStore(database_path),
-        provider=_provider(_analysis_payload("Kubernetes is mandatory.")),
-        model="analysis-model",
+    service = _service(
+        database_path,
+        translation,
+        _analysis_payload("Kubernetes is mandatory."),
     )
 
     with pytest.raises(AnalysisValidationError, match="not an exact excerpt"):
@@ -166,14 +177,34 @@ def test_analysis_rejects_parser_metadata_as_employer_evidence(tmp_path: Path) -
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
     payload = _analysis_payload("jobinja-detail-v2")
-    service = JobAnalysisService(
-        source_store=TranslationStore(database_path),
-        translation_service=translation,
-        analysis_store=AnalysisStore(database_path),
-        provider=_provider(payload),
-        model="analysis-model",
-    )
+    service = _service(database_path, translation, payload)
 
     with pytest.raises(AnalysisValidationError, match="not an exact excerpt"):
         service.analyze_job("eng1")
+    assert AnalysisStore(database_path).latest_current("eng1") is None
+
+
+def test_analysis_rejects_duplicate_requirement_claims(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    payload = _analysis_payload()
+    payload["requirements"].append(dict(payload["requirements"][0]))
+    service = _service(database_path, translation, payload)
+
+    with pytest.raises(AnalysisValidationError, match="duplicates an earlier requirement"):
+        service.analyze_job("eng1")
+
+    assert AnalysisStore(database_path).latest_current("eng1") is None
+
+
+def test_analysis_rejects_duplicate_responsibility_claims(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    payload = _analysis_payload()
+    payload["responsibilities"].append(dict(payload["responsibilities"][0]))
+    service = _service(database_path, translation, payload)
+
+    with pytest.raises(AnalysisValidationError, match="duplicates an earlier responsibility"):
+        service.analyze_job("eng1")
+
     assert AnalysisStore(database_path).latest_current("eng1") is None
