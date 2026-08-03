@@ -29,7 +29,11 @@ from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.job_workflow import JobWorkflowStore
 from jobhunter.jobinja_batch import JobinjaBatchFetchService, format_batch_fetch_summary
 from jobhunter.jobinja_detail_service import JobinjaDetailService
-from jobhunter.jobinja_discovery import DiscoverySearch, JobinjaDiscoveryService, format_discovery_summary
+from jobhunter.jobinja_discovery import (
+    DiscoverySearch,
+    JobinjaDiscoveryService,
+    format_discovery_summary,
+)
 from jobhunter.jobinja_sync import JobinjaSyncService, JobinjaSyncSummary
 from jobhunter.lifecycle import LifecycleStore
 from jobhunter.market_insights import MarketInsights
@@ -96,7 +100,8 @@ def _translation_service(settings: Settings) -> TranslationService:
         and not settings.google_translation_api_key
     ):
         raise ValueError(
-            "Google translation is enabled but JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
+            "Google translation is enabled but "
+            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
         )
     if settings.translation_enabled and settings.translation_provider == "lm-studio":
         provider = LMStudioTranslationProvider(
@@ -286,7 +291,12 @@ def _successful_detail_ids(summary: JobinjaSyncSummary) -> tuple[str, ...]:
     return tuple(item.source_job_id for item in summary.detail_fetch.results)
 
 
-def _translation_output(settings: Settings, job_ids: tuple[str, ...], *, requested: bool) -> str:
+def _translation_output(
+    settings: Settings,
+    job_ids: tuple[str, ...],
+    *,
+    requested: bool,
+) -> str:
     if not requested or not job_ids:
         return ""
     summary = _translation_service(settings).run(source_job_ids=job_ids)
@@ -382,11 +392,13 @@ def _full_workflow_output(
             sections.append(format_analysis_batch_summary(analyzed))
         else:
             sections.append(
-                "Evidence-backed job analysis\nNo eligible current jobs need analysis."
+                "Evidence-backed job analysis\n"
+                "No eligible current jobs need analysis."
             )
     else:
         sections.append(
-            "Evidence-backed job analysis\nSkipped because no analysis model is configured."
+            "Evidence-backed job analysis\n"
+            "Skipped because no analysis model is configured."
         )
 
     market = _market_insights(settings).market_summary()
@@ -400,7 +412,11 @@ def _full_workflow_output(
     return "\n\n".join(sections)
 
 
-def create_app(settings: Settings, *, operations: WebOperationManager | None = None) -> FastAPI:
+def create_app(
+    settings: Settings,
+    *,
+    operations: WebOperationManager | None = None,
+) -> FastAPI:
     """Build the local browser application around an already validated Settings object."""
 
     app = FastAPI(title="JobHunter", docs_url=None, redoc_url=None, openapi_url=None)
