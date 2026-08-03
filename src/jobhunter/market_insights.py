@@ -10,6 +10,10 @@ from pathlib import Path
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.storage import JobHunterStore
 
+_SMALL_ANALYZED_SAMPLE = 20
+_CONCENTRATION_MIN_SAMPLE = 5
+_CONCENTRATION_SHARE = 0.50
+
 
 @dataclass(frozen=True, slots=True)
 class SearchEffectiveness:
@@ -32,9 +36,18 @@ class RequirementDemand:
 
 @dataclass(frozen=True, slots=True)
 class MarketSummary:
+    discovered_jobs: int
+    current_parsed_jobs: int
     analyzed_jobs: int
+    distinct_employers: int
+    largest_employer_jobs: int
     responsibility_claims: int
     requirement_claims: int
+    analysis_model: str | None
+    analysis_prompt_version: str | None
+    analysis_schema_version: str | None
+    sample_warning: str | None
+    concentration_warning: str | None
     requirements: tuple[RequirementDemand, ...]
 
 
@@ -118,6 +131,60 @@ class MarketInsights:
             ).fetchall()
         return tuple(str(row["search_name"]) for row in rows)
 
+    def _corpus_scope(
+        self,
+        analyzed_source_job_ids: tuple[str, ...],
+    ) -> tuple[int, int, int, int]:
+        JobHunterStore(self._database_path).initialize()
+        with self._connect() as connection:
+            discovered_jobs = int(
+                connection.execute(
+                    "SELECT COUNT(*) FROM job_postings WHERE source = 'jobinja'"
+                ).fetchone()[0]
+            )
+            current_parsed_jobs = int(
+                connection.execute(
+                    """
+                    SELECT COUNT(*)
+                    FROM job_postings AS p
+                    JOIN job_detail_versions AS v ON v.job_posting_id = p.id
+                    WHERE p.source = 'jobinja'
+                      AND v.id = (
+                          SELECT MAX(v2.id)
+                          FROM job_detail_versions AS v2
+                          WHERE v2.job_posting_id = p.id
+                      )
+                      AND v.parse_status = 'parsed'
+                    """
+                ).fetchone()[0]
+            )
+            if not analyzed_source_job_ids:
+                return discovered_jobs, current_parsed_jobs, 0, 0
+
+            placeholders = ",".join("?" for _ in analyzed_source_job_ids)
+            employer_rows = connection.execute(
+                f"""
+                SELECT company_slug, COUNT(*) AS jobs
+                FROM job_postings
+                WHERE source = 'jobinja'
+                  AND source_job_id IN ({placeholders})
+                GROUP BY company_slug
+                ORDER BY jobs DESC, company_slug ASC
+                """,
+                analyzed_source_job_ids,
+            ).fetchall()
+        distinct_employers = len(employer_rows)
+        largest_employer_jobs = max(
+            (int(row["jobs"]) for row in employer_rows),
+            default=0,
+        )
+        return (
+            discovered_jobs,
+            current_parsed_jobs,
+            distinct_employers,
+            largest_employer_jobs,
+        )
+
     def market_summary(self, *, top_requirements: int = 50) -> MarketSummary:
         artifacts = AnalysisStore(self._database_path).list_current(
             limit=5000,
@@ -125,6 +192,14 @@ class MarketInsights:
             prompt_version=self._analysis_prompt_version,
             schema_version=self._analysis_schema_version,
         )
+        analyzed_source_job_ids = tuple(artifact.source_job_id for artifact in artifacts)
+        (
+            discovered_jobs,
+            current_parsed_jobs,
+            distinct_employers,
+            largest_employer_jobs,
+        ) = self._corpus_scope(analyzed_source_job_ids)
+
         job_sets: dict[str, set[str]] = defaultdict(set)
         classification_job_sets: dict[str, dict[str, set[str]]] = defaultdict(
             lambda: {
@@ -171,9 +246,37 @@ class MarketInsights:
         requirements.sort(
             key=lambda item: (-item.jobs, -item.required, item.concept.casefold())
         )
+
+        analyzed_jobs = len(artifacts)
+        sample_warning = None
+        if 0 < analyzed_jobs < _SMALL_ANALYZED_SAMPLE:
+            sample_warning = (
+                f"Only {analyzed_jobs} current jobs are in this analyzed sample; "
+                "broad market conclusions are not yet supported."
+            )
+
+        concentration_warning = None
+        if (
+            analyzed_jobs >= _CONCENTRATION_MIN_SAMPLE
+            and largest_employer_jobs / analyzed_jobs >= _CONCENTRATION_SHARE
+        ):
+            concentration_warning = (
+                f"One employer contributes {largest_employer_jobs} of {analyzed_jobs} "
+                "analyzed jobs; employer concentration can distort apparent demand."
+            )
+
         return MarketSummary(
-            analyzed_jobs=len(artifacts),
+            discovered_jobs=discovered_jobs,
+            current_parsed_jobs=current_parsed_jobs,
+            analyzed_jobs=analyzed_jobs,
+            distinct_employers=distinct_employers,
+            largest_employer_jobs=largest_employer_jobs,
             responsibility_claims=responsibility_claims,
             requirement_claims=requirement_claims,
+            analysis_model=self._analysis_model,
+            analysis_prompt_version=self._analysis_prompt_version,
+            analysis_schema_version=self._analysis_schema_version,
+            sample_warning=sample_warning,
+            concentration_warning=concentration_warning,
             requirements=tuple(requirements[:top_requirements]),
         )
