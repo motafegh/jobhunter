@@ -36,7 +36,17 @@ Extract only career claims supported by the supplied employer text.
   sentence, even when the combined sentence is semantically correct.
 - For role_purpose, return an empty array when no single exact source excerpt supports a concise
   purpose claim.
+- Responsibilities are duties/actions the employee performs in the role. Candidate
+  qualification statements such as ability, mastery, familiarity, knowledge, or skill belong
+  under requirements unless the source explicitly frames that wording as a work duty.
+- Do not omit an explicit qualification merely because a related responsibility was extracted.
 - Keep required, preferred, contextual, and inferred distinct.
+- Requirement type describes employer obligation/optionality, not technical depth. Familiarity,
+  proficiency, mastery, expertise, and years of experience describe depth or experience; they
+  do not by themselves mean preferred or required.
+- Familiarity does not mean preferred. Mark a claim preferred only when source wording actually
+  signals preference/advantage/optionality (for example preferred, plus, advantage, nice to
+  have, or an equivalent employer phrase).
 - A source-explicit requirement must not be marked inferred.
 - Inferred concepts require a concise rationale and still require an exact source excerpt.
 - Requirement strength must be preserved. Familiarity is not proficiency; preferred is
