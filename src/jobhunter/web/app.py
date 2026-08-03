@@ -44,7 +44,11 @@ from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_export import export_english_corpus
 from jobhunter.translation_service import TranslationService, format_translation_batch_summary
 from jobhunter.translation_store import TranslationStore
-from jobhunter.web.operations import OperationBusyError, WebOperationManager
+from jobhunter.web.operations import (
+    OperationBusyError,
+    WebOperationManager,
+    WebOperationResult,
+)
 from jobhunter.web.presentation import format_web_sync_summary
 from jobhunter.web.queries import WebRepository
 from jobhunter.web.quick_add import parse_quick_add_input
@@ -234,6 +238,13 @@ def _start_operation(
     )
 
 
+def _operation_result(summary: str, *, has_failures: bool) -> WebOperationResult:
+    return WebOperationResult(
+        summary=summary,
+        status="completed_with_failures" if has_failures else "completed",
+    )
+
+
 def _template_context(request: Request, **extra):
     context = {
         "request": request,
@@ -339,7 +350,7 @@ def _full_workflow_output(
     refresh_after_hours: float,
     translation_limit: int,
     analysis_limit: int,
-) -> str:
+) -> WebOperationResult:
     sync = _run_sync(
         settings,
         search_limit=search_limit,
@@ -348,6 +359,7 @@ def _full_workflow_output(
         refresh_limit=refresh_limit,
         refresh_after_hours=refresh_after_hours,
     )
+    has_failures = not sync.succeeded
     sections = ["Complete JobHunter market update", format_web_sync_summary(sync)]
     preferred_ids = _successful_detail_ids(sync)
 
@@ -357,8 +369,10 @@ def _full_workflow_output(
             limit=translation_limit,
             preferred_ids=preferred_ids,
         )
+        has_failures = has_failures or bool(translated.failures)
         sections.append(format_translation_batch_summary(translated))
     else:
+        has_failures = True
         sections.append(
             "English v2 stage\nSkipped because translation is disabled in configuration."
         )
@@ -389,6 +403,7 @@ def _full_workflow_output(
                 ordered_ids,
                 limit=analysis_limit,
             )
+            has_failures = has_failures or bool(analyzed.failures)
             sections.append(format_analysis_batch_summary(analyzed))
         else:
             sections.append(
@@ -396,6 +411,7 @@ def _full_workflow_output(
                 "No eligible current jobs need analysis."
             )
     else:
+        has_failures = True
         sections.append(
             "Evidence-backed job analysis\n"
             "Skipped because no analysis model is configured."
@@ -404,12 +420,19 @@ def _full_workflow_output(
     market = _market_insights(settings).market_summary()
     sections.append(
         "Market view\n"
+        f"Discovered Jobinja identities: {market.discovered_jobs}\n"
+        f"Current parsed jobs: {market.current_parsed_jobs}\n"
         f"Current accepted analyses: {market.analyzed_jobs}\n"
+        f"Distinct employers in analyzed sample: {market.distinct_employers}\n"
         f"Responsibility claims: {market.responsibility_claims}\n"
         f"Requirement claims: {market.requirement_claims}\n"
         "No separate rebuild is required; the Market screen reads persisted current analyses."
     )
-    return "\n\n".join(sections)
+    if market.sample_warning:
+        sections.append(f"Market sampling warning\n{market.sample_warning}")
+    if market.concentration_warning:
+        sections.append(f"Market concentration warning\n{market.concentration_warning}")
+    return _operation_result("\n\n".join(sections), has_failures=has_failures)
 
 
 def create_app(
@@ -683,7 +706,7 @@ def create_app(
             refresh_after_hours=refresh_after_hours,
         )
 
-        def action() -> str:
+        def action() -> WebOperationResult:
             summary = _run_sync(
                 settings,
                 search_limit=search_limit,
@@ -692,7 +715,10 @@ def create_app(
                 refresh_limit=refresh_limit,
                 refresh_after_hours=refresh_after_hours,
             )
-            return format_web_sync_summary(summary)
+            return _operation_result(
+                format_web_sync_summary(summary),
+                has_failures=not summary.succeeded,
+            )
 
         return _start_operation(
             request,
@@ -752,7 +778,7 @@ def create_app(
         if not 1 <= limit <= 50:
             raise HTTPException(status_code=400, detail="missing-detail limit must be 1-50")
 
-        def action() -> str:
+        def action() -> str | WebOperationResult:
             priorities = JobWorkflowStore(settings.database_path).prioritized_missing_job_ids(
                 limit=limit
             )
@@ -776,7 +802,10 @@ def create_app(
                 for item in priorities
             )
             lines.extend(["", format_batch_fetch_summary(summary)])
-            return "\n".join(lines)
+            return _operation_result(
+                "\n".join(lines),
+                has_failures=bool(summary.failures),
+            )
 
         return _start_operation(
             request,
@@ -899,12 +928,18 @@ def create_app(
             raise HTTPException(status_code=400, detail="Translation is disabled")
         if not 1 <= limit <= 50:
             raise HTTPException(status_code=400, detail="translation limit must be 1-50")
+
+        def action() -> WebOperationResult:
+            summary = _translation_service(settings).run(missing=True, limit=limit)
+            return _operation_result(
+                format_translation_batch_summary(summary),
+                has_failures=bool(summary.failures),
+            )
+
         return _start_operation(
             request,
             "Repair / translate English corpus",
-            lambda: format_translation_batch_summary(
-                _translation_service(settings).run(missing=True, limit=limit)
-            ),
+            action,
             return_to="/",
         )
 
@@ -918,7 +953,7 @@ def create_app(
         if not 1 <= limit <= 20:
             raise HTTPException(status_code=400, detail="analysis limit must be 1-20")
 
-        def action() -> str:
+        def action() -> str | WebOperationResult:
             rows = request.app.state.web_repository.list_jobs(
                 detail="available",
                 translation="available",
@@ -935,8 +970,10 @@ def create_app(
                     "Evidence-backed job analysis\n"
                     "No eligible current jobs need analysis."
                 )
-            return format_analysis_batch_summary(
-                _analysis_service(settings).run(job_ids, limit=limit)
+            summary = _analysis_service(settings).run(job_ids, limit=limit)
+            return _operation_result(
+                format_analysis_batch_summary(summary),
+                has_failures=bool(summary.failures),
             )
 
         return _start_operation(
@@ -1000,19 +1037,27 @@ def create_app(
                 status_code=303,
             )
 
-        def action() -> str:
+        def action() -> WebOperationResult:
             if bulk_action == "fetch":
-                return format_batch_fetch_summary(_batch_service(settings).run(job_ids))
+                summary = _batch_service(settings).run(job_ids)
+                return _operation_result(
+                    format_batch_fetch_summary(summary),
+                    has_failures=bool(summary.failures),
+                )
             if bulk_action == "translate":
-                return format_translation_batch_summary(
-                    _translation_service(settings).run(source_job_ids=job_ids)
+                summary = _translation_service(settings).run(source_job_ids=job_ids)
+                return _operation_result(
+                    format_translation_batch_summary(summary),
+                    has_failures=bool(summary.failures),
                 )
             if bulk_action == "analyze":
-                return format_analysis_batch_summary(
-                    _analysis_service(settings).run(
-                        job_ids,
-                        limit=min(len(job_ids), 20),
-                    )
+                summary = _analysis_service(settings).run(
+                    job_ids,
+                    limit=min(len(job_ids), 20),
+                )
+                return _operation_result(
+                    format_analysis_batch_summary(summary),
+                    has_failures=bool(summary.failures),
                 )
             raise ValueError(f"Unsupported bulk action: {bulk_action}")
 
@@ -1048,12 +1093,18 @@ def create_app(
     ):
         _csrf(request, csrf_token)
         target = _safe_return_to(return_to) or f"/jobs/{source_job_id}"
+
+        def action() -> WebOperationResult:
+            summary = _batch_service(settings).run((source_job_id,))
+            return _operation_result(
+                format_batch_fetch_summary(summary),
+                has_failures=bool(summary.failures),
+            )
+
         return _start_operation(
             request,
             f"Fetch {source_job_id}",
-            lambda: format_batch_fetch_summary(
-                _batch_service(settings).run((source_job_id,))
-            ),
+            action,
             return_to=target,
             auto_return=True,
         )
@@ -1067,12 +1118,18 @@ def create_app(
         _csrf(request, csrf_token)
         if not settings.translation_enabled:
             raise HTTPException(status_code=400, detail="Translation is disabled")
+
+        def action() -> WebOperationResult:
+            summary = _translation_service(settings).run(source_job_ids=(source_job_id,))
+            return _operation_result(
+                format_translation_batch_summary(summary),
+                has_failures=bool(summary.failures),
+            )
+
         return _start_operation(
             request,
             f"Repair English: {source_job_id}",
-            lambda: format_translation_batch_summary(
-                _translation_service(settings).run(source_job_ids=(source_job_id,))
-            ),
+            action,
             return_to=f"/jobs/{source_job_id}",
             auto_return=True,
         )
@@ -1084,12 +1141,18 @@ def create_app(
         csrf_token: Annotated[str, Form()],
     ):
         _csrf(request, csrf_token)
+
+        def action() -> WebOperationResult:
+            summary = _analysis_service(settings).run((source_job_id,), limit=1)
+            return _operation_result(
+                format_analysis_batch_summary(summary),
+                has_failures=bool(summary.failures),
+            )
+
         return _start_operation(
             request,
             f"Analyze {source_job_id}",
-            lambda: format_analysis_batch_summary(
-                _analysis_service(settings).run((source_job_id,), limit=1)
-            ),
+            action,
             return_to=f"/jobs/{source_job_id}",
             auto_return=True,
         )
