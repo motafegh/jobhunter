@@ -29,6 +29,38 @@ def test_job_upsert_is_repeat_safe(tmp_path: Path) -> None:
     assert store.count_job_postings() == 1
 
 
+def test_non_latin_title_or_company_text_never_controls_logical_job_identity(
+    tmp_path: Path,
+) -> None:
+    store = JobHunterStore(tmp_path / "jobhunter.sqlite3")
+    store.initialize()
+    observed_at = datetime(2026, 8, 1, tzinfo=UTC)
+
+    first = store.upsert_job(
+        job=DiscoveredJobLink(
+            source_job_id="fa-1",
+            company_slug="company-one",
+            canonical_url="https://jobinja.ir/companies/company-one/jobs/fa-1/example",
+            observed_text="مهندس امنیت هوش مصنوعی",
+        ),
+        observed_at=observed_at,
+    )
+    second = store.upsert_job(
+        job=DiscoveredJobLink(
+            source_job_id="fa-2",
+            company_slug="company-two",
+            canonical_url="https://jobinja.ir/companies/company-two/jobs/fa-2/example",
+            observed_text="مهندس امنیت هوش مصنوعی",
+        ),
+        observed_at=observed_at,
+    )
+
+    assert first.job_posting_id != second.job_posting_id
+    assert store.count_job_postings() == 2
+    assert store.get_job("fa-1").source_job_id == "fa-1"
+    assert store.get_job("fa-2").source_job_id == "fa-2"
+
+
 def test_initialize_migrates_legacy_detail_versions_to_semantic_hashes(
     tmp_path: Path,
 ) -> None:
