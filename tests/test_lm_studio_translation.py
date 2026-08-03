@@ -4,6 +4,7 @@ import json
 import httpx
 import pytest
 
+import jobhunter.translation.lm_studio as lm_studio_module
 from jobhunter.translation.base import TranslationError
 from jobhunter.translation.lm_studio import LMStudioTranslationProvider
 
@@ -42,6 +43,31 @@ def _provider(handler) -> LMStudioTranslationProvider:
         max_retries=0,
         transport=httpx.MockTransport(handler),
     )
+
+
+def test_local_translation_client_does_not_trust_proxy_environment(monkeypatch) -> None:
+    real_client = httpx.Client
+    trust_env_values: list[object] = []
+
+    def client(*args, **kwargs):
+        trust_env_values.append(kwargs.get("trust_env"))
+        return real_client(*args, **kwargs)
+
+    monkeypatch.setattr(lm_studio_module.httpx, "Client", client)
+    provider = LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        max_retries=0,
+        transport=httpx.MockTransport(
+            lambda request: httpx.Response(
+                200,
+                request=request,
+                json={"data": [{"id": "only-model"}]},
+            )
+        ),
+    )
+
+    assert provider.list_models() == ("only-model",)
+    assert trust_env_values == [False]
 
 
 def test_lm_studio_translation_uses_content_ids_and_isolates_segments() -> None:
