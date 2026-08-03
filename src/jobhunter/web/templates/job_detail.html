@@ -13,12 +13,13 @@
         <span class="badge {{ 'good' if detail.parse_status == 'parsed' else 'warn' }}">{{ 'Source complete' if detail.parse_status == 'parsed' else detail.parse_status }}</span>
         <span class="badge">{{ detail.fields.language or 'unknown' }}</span>
         {% if translation %}<span class="badge good">English v2 ready</span>{% elif legacy_translation %}<span class="badge warn">English v1 needs repair</span>{% else %}<span class="badge">English missing</span>{% endif %}
-        {% if analysis_artifact %}<span class="badge good">Analysis ready</span>{% else %}<span class="badge">Analysis missing</span>{% endif %}
+        {% if english_analysis_artifact %}<span class="badge good">English analysis ready</span>{% else %}<span class="badge">English analysis missing</span>{% endif %}
+        {% if original_analysis_artifact %}<span class="badge good">Original analysis ready</span>{% else %}<span class="badge">Original analysis missing</span>{% endif %}
         <span class="badge {% if workflow.triage_state == 'interested' %}good{% elif workflow.triage_state == 'not_relevant' %}bad{% elif workflow.triage_state == 'review_later' %}warn{% endif %}">{{ workflow.triage_state.replace('_', ' ') }}</span>
       </div>
     {% else %}
       <p class="eyebrow">Discovered posting</p><h2>Details not acquired yet</h2>
-      <p class="muted">This posting is known from search discovery, but its complete Jobinja page has not been stored locally. Fetching it preserves source evidence, parses fields, creates the semantic version, and makes it eligible for English/analysis.</p>
+      <p class="muted">This posting is known from search discovery, but its complete Jobinja page has not been stored locally. Fetching it preserves source evidence, parses fields, creates the semantic version, and makes it eligible for English projection and original-language analysis.</p>
       <div class="badge-row"><span class="badge warn">Source details not fetched</span><span class="badge">Company page: {{ posting.company_slug }}</span></div>
     {% endif %}
   </div>
@@ -26,11 +27,12 @@
     <form method="post" action="/jobs/{{ source_job_id }}/triage"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><select name="triage_state" aria-label="Triage state"><option value="unreviewed" {% if workflow.triage_state == 'unreviewed' %}selected{% endif %}>Unreviewed</option><option value="interested" {% if workflow.triage_state == 'interested' %}selected{% endif %}>Interested</option><option value="review_later" {% if workflow.triage_state == 'review_later' %}selected{% endif %}>Review later</option><option value="reviewed" {% if workflow.triage_state == 'reviewed' %}selected{% endif %}>Reviewed</option><option value="not_relevant" {% if workflow.triage_state == 'not_relevant' %}selected{% endif %}>Not relevant</option></select><button class="button ghost" type="submit">Save triage</button></form>
     <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source' if detail else 'Fetch details' }}</button></form>
     {% if translation_enabled and detail %}<form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Repair English' if legacy_translation and not translation else ('Recheck English' if translation else 'Translate to English') }}</button></form>{% endif %}
-    {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck analysis' if analysis_artifact else 'Analyze job' }}</button></form>{% endif %}
+    {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-english" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck English analysis' if english_analysis_artifact else 'Analyze English' }}</button></form>{% endif %}
+    {% if detail %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-original" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button ghost" type="submit">{{ 'Recheck original analysis' if original_analysis_artifact else 'Analyze Original' }}</button></form>{% endif %}
   </div>
 </section>
 
-{% if legacy_translation and not translation %}<div class="notice warn-notice"><strong>English repair required.</strong> A historical {{ legacy_translation.translation_schema_version }} artifact exists, but JobHunter now requires the hardened current schema before export or semantic analysis. The old artifact remains preserved for provenance.</div>{% endif %}
+{% if legacy_translation and not translation %}<div class="notice warn-notice"><strong>English repair required.</strong> A historical {{ legacy_translation.translation_schema_version }} artifact exists, but JobHunter now requires the hardened current schema before English analysis or export. Original-language analysis remains independent and can use the current source directly.</div>{% endif %}
 
 {% if detail %}
 <div class="language-grid">
@@ -52,21 +54,31 @@
       <div class="document-section"><h3>Job description</h3><p class="long-copy">{{ e.description or '—' }}</p></div>
       {% if e.company_description %}<div class="document-section"><h3>Company description</h3><p class="long-copy">{{ e.company_description }}</p></div>{% endif %}
       <div class="artifact-meta"><span>{{ translation.provider_name }}</span><span>{{ translation.translation_schema_version }}</span><span>{{ translation.translated_segment_count }} translated / {{ translation.native_segment_count }} native</span></div>
-    {% else %}<div class="empty-state tall">No current hardened English projection exists. Translate/repair this job before analysis.</div>{% endif %}
+    {% else %}<div class="empty-state tall">No current hardened English projection exists. Translate/repair this job before running English analysis.</div>{% endif %}
   </section>
 </div>
 
-<section class="panel analysis-panel">
-  <div class="panel-header"><div><p class="eyebrow">Model-derived · evidence constrained</p><h2>Semantic analysis</h2></div>{% if analysis_artifact %}<span class="badge good">{{ analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
-  {% if analysis_artifact %}{% set a = analysis_artifact.analysis %}
-    {% if a.role_purpose %}<div class="analysis-section"><h3>Role purpose</h3>{% for item in a.role_purpose %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote dir="auto">{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% endfor %}</div>{% endif %}
-    <div class="analysis-columns">
-      <div class="analysis-section"><h3>Responsibilities · {{ a.responsibilities|length }}</h3>{% for item in a.responsibilities %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote dir="auto">{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% else %}<p class="muted">No supported responsibilities extracted.</p>{% endfor %}</div>
-      <div class="analysis-section"><h3>Requirements · {{ a.requirements|length }}</h3>{% for item in a.requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.concept }}</strong><span class="badge {% if item.requirement_type == 'required' %}good{% elif item.requirement_type == 'preferred' %}warn{% endif %}">{{ item.requirement_type }}</span></div><div class="job-meta">{{ item.concept_type }} · {{ item.confidence }}</div><blockquote dir="auto">{{ item.evidence }}</blockquote>{% if item.rationale %}<p class="muted">{{ item.rationale }}</p>{% endif %}</div>{% else %}<p class="muted">No supported requirements extracted.</p>{% endfor %}</div>
-    </div>
-    <div class="artifact-meta"><span>{{ analysis_artifact.prompt_version }}</span><span>{{ analysis_artifact.schema_version }}</span><span>Source version {{ analysis_artifact.job_detail_version_id }}</span></div>
-  {% else %}<div class="empty-state">Analysis is available only after the current source version has a hardened English v2 artifact. Claims will remain separate from source facts and must carry original-language evidence.</div>{% endif %}
-</section>
+<div class="language-grid">
+  <section class="panel analysis-panel">
+    <div class="panel-header"><div><p class="eyebrow">English projection · independent artifact</p><h2>English semantic analysis</h2></div>{% if english_analysis_artifact %}<span class="badge good">{{ english_analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
+    {% if english_analysis_artifact %}{% set a = english_analysis_artifact.analysis %}
+      {% if a.role_purpose %}<div class="analysis-section"><h3>Role purpose</h3>{% for item in a.role_purpose %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote>{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% endfor %}</div>{% endif %}
+      <div class="analysis-section"><h3>Responsibilities · {{ a.responsibilities|length }}</h3>{% for item in a.responsibilities %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote>{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% else %}<p class="muted">No supported responsibilities extracted.</p>{% endfor %}</div>
+      <div class="analysis-section"><h3>Requirements · {{ a.requirements|length }}</h3>{% for item in a.requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.concept }}</strong><span class="badge {% if item.requirement_type == 'required' %}good{% elif item.requirement_type == 'preferred' %}warn{% endif %}">{{ item.requirement_type }}</span></div><div class="job-meta">{{ item.concept_type }} · {{ item.confidence }}</div><blockquote>{{ item.evidence }}</blockquote>{% if item.rationale %}<p class="muted">{{ item.rationale }}</p>{% endif %}</div>{% else %}<p class="muted">No supported requirements extracted.</p>{% endfor %}</div>
+      <div class="artifact-meta"><span>{{ english_analysis_artifact.prompt_version }}</span><span>{{ english_analysis_artifact.schema_version }}</span><span>English artifact {{ english_analysis_artifact.translation_artifact_id }}</span></div>
+    {% else %}<div class="empty-state">English analysis reads only the current hardened English projection. Its evidence is English and it is the normalized contract used by Market.</div>{% endif %}
+  </section>
+
+  <section class="panel analysis-panel">
+    <div class="panel-header"><div><p class="eyebrow">Original source · independent artifact</p><h2>Original-language semantic analysis</h2></div>{% if original_analysis_artifact %}<span class="badge good">{{ original_analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
+    {% if original_analysis_artifact %}{% set a = original_analysis_artifact.analysis %}
+      {% if a.role_purpose %}<div class="analysis-section"><h3>Role purpose</h3>{% for item in a.role_purpose %}<div class="claim-card"><strong dir="auto">{{ item.statement }}</strong><blockquote dir="auto">{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% endfor %}</div>{% endif %}
+      <div class="analysis-section"><h3>Responsibilities · {{ a.responsibilities|length }}</h3>{% for item in a.responsibilities %}<div class="claim-card"><strong dir="auto">{{ item.statement }}</strong><blockquote dir="auto">{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% else %}<p class="muted">No supported responsibilities extracted.</p>{% endfor %}</div>
+      <div class="analysis-section"><h3>Requirements · {{ a.requirements|length }}</h3>{% for item in a.requirements %}<div class="claim-card"><div class="claim-head"><strong dir="auto">{{ item.concept }}</strong><span class="badge {% if item.requirement_type == 'required' %}good{% elif item.requirement_type == 'preferred' %}warn{% endif %}">{{ item.requirement_type }}</span></div><div class="job-meta">{{ item.concept_type }} · {{ item.confidence }}</div><blockquote dir="auto">{{ item.evidence }}</blockquote>{% if item.rationale %}<p class="muted" dir="auto">{{ item.rationale }}</p>{% endif %}</div>{% else %}<p class="muted">No supported requirements extracted.</p>{% endfor %}</div>
+      <div class="artifact-meta"><span>{{ original_analysis_artifact.prompt_version }}</span><span>{{ original_analysis_artifact.schema_version }}</span><span>Source version {{ original_analysis_artifact.job_detail_version_id }}</span></div>
+    {% else %}<div class="empty-state">Original analysis reads only the employer/source fields. No English translation is supplied to this analysis and its evidence remains in the original language.</div>{% endif %}
+  </section>
+</div>
 
 <div class="dashboard-grid lower-grid">
   <section class="panel"><div class="panel-header"><div><p class="eyebrow">Discovery provenance</p><h2>Why this posting entered JobHunter</h2></div><span class="badge">{{ search_provenance|length }} search matches</span></div>{% if search_provenance %}<div class="tag-list dense">{% for name in search_provenance %}<span class="tag">{{ name }}</span>{% endfor %}</div>{% else %}<div class="empty-state">No stored search provenance; this may have been directly added.</div>{% endif %}</section>
