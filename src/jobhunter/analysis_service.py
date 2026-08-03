@@ -11,7 +11,7 @@ from jobhunter.inference import InferenceProviderError, LMStudioProvider
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
 
-PROMPT_VERSION = "job-analysis-prompt-v2"
+PROMPT_VERSION = "job-analysis-prompt-v3"
 ANALYSIS_SCHEMA_VERSION = "job-analysis-v2"
 
 _SOURCE_METADATA_FIELDS = {"language", "parser_version"}
@@ -32,6 +32,10 @@ Extract only career claims supported by the supplied employer text.
 - Do not invent responsibilities, requirements, seniority, tools, or intent.
 - Omit uncertain claims rather than guessing.
 - Every claim must copy a short evidence excerpt VERBATIM from one original source field.
+- Evidence must be one contiguous excerpt. Never combine separate source phrases into a new
+  sentence, even when the combined sentence is semantically correct.
+- For role_purpose, return an empty array when no single exact source excerpt supports a concise
+  purpose claim.
 - Keep required, preferred, contextual, and inferred distinct.
 - A source-explicit requirement must not be marked inferred.
 - Inferred concepts require a concise rationale and still require an exact source excerpt.
@@ -40,6 +44,21 @@ Extract only career claims supported by the supplied employer text.
 - Do not emit duplicate claims merely because the same wording appears more than once.
 - Return concise normalized English statements/concepts, but evidence stays in the original
   employer language exactly as supplied.
+"""
+
+_REPAIR_SYSTEM_PROMPT = _SYSTEM_PROMPT + """
+
+EVIDENCE-REPAIR PASS:
+The previous analysis object was rejected by JobHunter's deterministic local validator.
+Return one complete replacement analysis object under the same schema.
+- Use the supplied validation_error only to identify what failed.
+- Keep valid prior claims when they remain supported.
+- Repair evidence only by copying one exact contiguous excerpt from one authoritative source
+  value. Do not paraphrase, translate, concatenate, or reconstruct source wording.
+- If a role-purpose claim cannot be supported by one exact excerpt, return role_purpose as [].
+- If a responsibility or requirement cannot be supported by exact evidence, omit that claim.
+- Never weaken the validator by inventing a closer-looking quote.
+- Never strengthen or change requirement meaning merely to make validation pass.
 """
 
 _CONFIDENCE = ["high", "medium", "low"]
@@ -284,6 +303,23 @@ class JobAnalysisService:
         self._max_tokens = max_tokens
         self._clock = clock
 
+    def _record_failed_attempt(
+        self,
+        *,
+        source: TranslationSourceVersion,
+        attempted_at: datetime,
+        error: Exception,
+    ) -> None:
+        self._analysis_store.record_attempt(
+            job_detail_version_id=source.job_detail_version_id,
+            attempted_at=attempted_at,
+            model=self._model,
+            prompt_version=PROMPT_VERSION,
+            schema_version=ANALYSIS_SCHEMA_VERSION,
+            outcome="failed",
+            error=error,
+        )
+
     def analyze_job(self, source_job_id: str) -> AnalysisJobResult:
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
@@ -301,11 +337,11 @@ class JobAnalysisService:
             prompt_version=PROMPT_VERSION,
             schema_version=ANALYSIS_SCHEMA_VERSION,
         )
-        attempted_at = self._clock()
+        initial_attempted_at = self._clock()
         if existing is not None:
             self._analysis_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
-                attempted_at=attempted_at,
+                attempted_at=initial_attempted_at,
                 model=self._model,
                 prompt_version=PROMPT_VERSION,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
@@ -316,33 +352,83 @@ class JobAnalysisService:
 
         authoritative_fields = _authoritative_source_fields(source)
         try:
-            result = self._provider.complete_structured(
+            initial_result = self._provider.complete_structured(
                 system_prompt=_SYSTEM_PROMPT,
                 user_payload={
                     "source_job_id": source.source_job_id,
                     "authoritative_source_fields": authoritative_fields,
                     "english_comprehension_aid": english.fields,
                 },
-                schema_name="jobhunter_job_analysis_v2",
+                schema_name="jobhunter_job_analysis_v3",
                 schema=_ANALYSIS_SCHEMA,
                 model=self._model,
                 max_tokens=self._max_tokens,
             )
-            _validate_evidence(result.structured, source)
+        except Exception as exc:
+            self._record_failed_attempt(
+                source=source,
+                attempted_at=initial_attempted_at,
+                error=exc,
+            )
+            raise
+
+        accepted_result = initial_result
+        accepted_at = initial_attempted_at
+        try:
+            _validate_evidence(initial_result.structured, source)
+        except AnalysisValidationError as initial_validation_error:
+            self._record_failed_attempt(
+                source=source,
+                attempted_at=initial_attempted_at,
+                error=initial_validation_error,
+            )
+            repair_attempted_at = self._clock()
+            try:
+                repair_result = self._provider.complete_structured(
+                    system_prompt=_REPAIR_SYSTEM_PROMPT,
+                    user_payload={
+                        "source_job_id": source.source_job_id,
+                        "validation_error": str(initial_validation_error),
+                        "rejected_analysis": initial_result.structured,
+                        "authoritative_source_fields": authoritative_fields,
+                        "english_comprehension_aid": english.fields,
+                    },
+                    schema_name="jobhunter_job_analysis_v3_repair",
+                    schema=_ANALYSIS_SCHEMA,
+                    model=self._model,
+                    max_tokens=self._max_tokens,
+                )
+                _validate_evidence(repair_result.structured, source)
+            except Exception as repair_error:
+                self._record_failed_attempt(
+                    source=source,
+                    attempted_at=repair_attempted_at,
+                    error=repair_error,
+                )
+                if isinstance(repair_error, AnalysisValidationError):
+                    raise AnalysisValidationError(
+                        "Initial analysis failed evidence validation and one bounded repair "
+                        f"attempt also failed: {repair_error}"
+                    ) from repair_error
+                raise
+            accepted_result = repair_result
+            accepted_at = repair_attempted_at
+
+        try:
             artifact_id = self._analysis_store.record_artifact(
                 job_detail_version_id=source.job_detail_version_id,
                 translation_artifact_id=english.id,
-                model=result.model,
+                model=accepted_result.model,
                 prompt_version=PROMPT_VERSION,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
-                analysis=result.structured,
-                request_body=result.request_body,
-                raw_response=result.raw_response,
-                created_at=attempted_at,
+                analysis=accepted_result.structured,
+                request_body=accepted_result.request_body,
+                raw_response=accepted_result.raw_response,
+                created_at=accepted_at,
             )
             self._analysis_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
-                attempted_at=attempted_at,
+                attempted_at=accepted_at,
                 model=self._model,
                 prompt_version=PROMPT_VERSION,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
@@ -359,13 +445,9 @@ class JobAnalysisService:
                 raise RuntimeError("Analysis artifact disappeared after persistence")
             return _result(artifact, outcome="completed")
         except Exception as exc:
-            self._analysis_store.record_attempt(
-                job_detail_version_id=source.job_detail_version_id,
-                attempted_at=attempted_at,
-                model=self._model,
-                prompt_version=PROMPT_VERSION,
-                schema_version=ANALYSIS_SCHEMA_VERSION,
-                outcome="failed",
+            self._record_failed_attempt(
+                source=source,
+                attempted_at=accepted_at,
                 error=exc,
             )
             raise
