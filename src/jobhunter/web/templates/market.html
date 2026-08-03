@@ -11,6 +11,19 @@
 </section>
 
 <section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Corpus scope</p><h2>What this Market view currently covers</h2></div><span class="badge">N = {{ market.analyzed_jobs }} analyzed jobs</span></div>
+  <div class="guide-content">
+    <p><strong>Coverage:</strong> {{ market.analyzed_jobs }} analyzed current jobs from {{ market.current_parsed_jobs }} current parsed jobs and {{ market.discovered_jobs }} discovered Jobinja identities.</p>
+    <p><strong>Employer diversity:</strong> {{ market.distinct_employers }} employers contribute to the analyzed sample{% if market.largest_employer_jobs %}; the largest single-employer contribution is {{ market.largest_employer_jobs }} jobs{% endif %}.</p>
+    {% if market.analysis_model or market.analysis_prompt_version or market.analysis_schema_version %}
+      <p><strong>Analysis contract:</strong> model {{ market.analysis_model or "unspecified" }}, prompt {{ market.analysis_prompt_version or "unspecified" }}, schema {{ market.analysis_schema_version or "unspecified" }}.</p>
+    {% endif %}
+    {% if market.sample_warning %}<p><strong>Sampling warning:</strong> {{ market.sample_warning }}</p>{% endif %}
+    {% if market.concentration_warning %}<p><strong>Concentration warning:</strong> {{ market.concentration_warning }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Requirement demand</p><h2>Observed concepts</h2></div><span class="badge">N = {{ market.analyzed_jobs }} jobs</span></div>
   {% if market.analyzed_jobs == 0 %}
     <div class="empty-state tall">No accepted semantic analysis exists yet. Repair English v2 artifacts, analyze a small reviewed batch, then this page will aggregate only those current analysis records.</div>
@@ -22,6 +35,6 @@
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Interpretation boundary</p><h2>What these numbers mean</h2></div></div>
-  <div class="guide-content"><p>Every contributing semantic claim passed an evidence check against original employer/source text. The English projection can help the model understand Persian content, but it is not accepted as the evidence authority.</p><p>This is the first market layer, not the final Phase 2 taxonomy. Similar concepts such as “PostgreSQL” and “Postgres” may still appear separately until canonicalization is built and reviewed.</p><p>Do not interpret percentages or absence from a small analyzed sample as full-market truth. Sample size is displayed deliberately.</p></div>
+  <div class="guide-content"><p>Every contributing semantic claim passed an evidence check against original employer/source text. The English projection can help the model understand Persian content, but it is not accepted as the evidence authority.</p><p>This is the first market layer, not the final Phase 2 taxonomy. Similar concepts such as “PostgreSQL” and “Postgres” may still appear separately until canonicalization is built and reviewed.</p><p>Do not interpret percentages or absence from a small analyzed sample as full-market truth. Sample size, corpus coverage and employer concentration are displayed deliberately.</p></div>
 </section>
 {% endblock %}
