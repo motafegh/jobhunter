@@ -22,7 +22,7 @@
     <label><span>Full details</span><input name="detail_limit" type="number" min="0" max="20" value="5"><small class="field-help">0 means discovery only.</small></label>
     <label class="check-label">
       <input name="translate_after" type="checkbox" value="true" {% if not translation_enabled %}disabled{% endif %}>
-      <span>Process fetched jobs fully</span><small class="field-help">Build/reuse English v2, then run evidence-backed analysis on the successfully fetched jobs.</small>
+      <span>Process fetched jobs fully</span><small class="field-help">Build/reuse English v2, then run the canonical English-projection analysis on successfully fetched jobs.</small>
     </label>
     <div class="form-action"><button class="button primary" type="submit">Add / search</button></div>
   </form>
@@ -33,7 +33,7 @@
     <label class="search-field"><span class="sr-only">Search jobs</span><input type="search" name="q" value="{{ q }}" placeholder="Search title, company, location, or Jobinja reference…"></label>
     <label><span class="sr-only">Detail status</span><select name="detail"><option value="all" {% if detail == 'all' %}selected{% endif %}>All source details</option><option value="available" {% if detail == 'available' %}selected{% endif %}>Source complete</option><option value="missing" {% if detail == 'missing' %}selected{% endif %}>Source not fetched</option></select></label>
     <label><span class="sr-only">English status</span><select name="translation"><option value="all" {% if translation == 'all' %}selected{% endif %}>All English states</option><option value="available" {% if translation == 'available' %}selected{% endif %}>English v2 ready</option><option value="missing" {% if translation == 'missing' %}selected{% endif %}>English repair needed</option></select></label>
-    <label><span class="sr-only">Analysis status</span><select name="analysis"><option value="all" {% if analysis == 'all' %}selected{% endif %}>All analysis states</option><option value="available" {% if analysis == 'available' %}selected{% endif %}>Analyzed</option><option value="missing" {% if analysis == 'missing' %}selected{% endif %}>Analysis missing</option></select></label>
+    <label><span class="sr-only">English analysis status</span><select name="analysis"><option value="all" {% if analysis == 'all' %}selected{% endif %}>All English analysis states</option><option value="available" {% if analysis == 'available' %}selected{% endif %}>English analyzed</option><option value="missing" {% if analysis == 'missing' %}selected{% endif %}>English analysis missing</option></select></label>
     <label><span class="sr-only">Triage</span><select name="triage"><option value="all" {% if triage == 'all' %}selected{% endif %}>All triage states</option><option value="unreviewed" {% if triage == 'unreviewed' %}selected{% endif %}>Unreviewed</option><option value="interested" {% if triage == 'interested' %}selected{% endif %}>Interested</option><option value="review_later" {% if triage == 'review_later' %}selected{% endif %}>Review later</option><option value="reviewed" {% if triage == 'reviewed' %}selected{% endif %}>Reviewed</option><option value="not_relevant" {% if triage == 'not_relevant' %}selected{% endif %}>Not relevant</option></select></label>
     <label><span class="sr-only">Lifecycle</span><select name="lifecycle"><option value="all" {% if lifecycle == 'all' %}selected{% endif %}>All lifecycle states</option><option value="active" {% if lifecycle == 'active' %}selected{% endif %}>Active</option><option value="possibly_unavailable" {% if lifecycle == 'possibly_unavailable' %}selected{% endif %}>Possibly unavailable</option><option value="expired" {% if lifecycle == 'expired' %}selected{% endif %}>Expired</option><option value="removed" {% if lifecycle == 'removed' %}selected{% endif %}>Removed</option></select></label>
     <button class="button primary" type="submit">Filter</button><a class="button ghost" href="/jobs">Reset</a>
@@ -56,13 +56,14 @@
         <option value="unreviewed">Reset triage</option>
         <option value="fetch">Fetch source details</option>
         <option value="translate">Repair / translate English</option>
-        <option value="analyze">Analyze evidence</option>
+        <option value="analyze_english">Analyze English projection</option>
+        <option value="analyze_original">Analyze original source</option>
       </select>
       <button class="button ghost" type="submit">Apply</button>
     </div>
     <div class="table-wrap job-table-wrap">
       <table class="job-table">
-        <thead><tr><th></th><th>Role / company</th><th>Location</th><th>Workflow</th><th>Source</th><th>English</th><th>Analysis</th><th>Search matches</th><th>Last found</th></tr></thead>
+        <thead><tr><th></th><th>Role / company</th><th>Location</th><th>Workflow</th><th>Source</th><th>English</th><th>English analysis</th><th>Search matches</th><th>Last found</th></tr></thead>
         <tbody>
         {% for job in jobs %}
           <tr>
