@@ -40,13 +40,17 @@ source semantic version
 Current versions:
 
 ```text
-prompt: job-analysis-prompt-v2
+prompt: job-analysis-prompt-v3
 schema: job-analysis-v2
 ```
 
-The v2 contract adds explicit untrusted-source handling, local JSON-Schema enforcement,
-stronger non-empty field constraints, and deterministic duplicate-claim rejection.
-Earlier v1 artifacts remain historical; they are never silently relabelled as v2.
+The v2 schema contract keeps explicit untrusted-source handling, local JSON-Schema
+enforcement, non-empty field constraints, bounded claim counts, and deterministic
+duplicate-claim rejection.
+
+Prompt v3 strengthens exact-evidence instructions and adds one bounded evidence-repair pass
+when a schema-valid model response fails deterministic evidence/domain validation. Earlier
+prompt versions remain historical; they are never silently relabelled as v3.
 
 A source semantic change invalidates the old analysis as current. A future material prompt
 or schema change creates a new analytical artifact rather than rewriting history.
@@ -61,8 +65,8 @@ For every accepted analysis JobHunter stores:
 - prompt version;
 - schema version;
 - validated analysis JSON;
-- full structured inference request body;
-- raw LM Studio response body;
+- full structured inference request body for the accepted response;
+- raw LM Studio response body for the accepted response;
 - creation timestamp.
 
 Operational analysis attempts record:
@@ -73,6 +77,11 @@ failed
 reused
 ```
 
+When evidence repair is required, the initial locally rejected model response is recorded as a
+failed operational attempt. The repair request contains the rejected structured analysis and
+the deterministic validation error, so the accepted artifact retains the repair context in its
+stored request body.
+
 ## 5. Current analysis schema
 
 ### Role purpose
@@ -81,6 +90,10 @@ Zero or one concise normalized English statement with:
 
 - original source evidence excerpt;
 - confidence.
+
+A role-purpose claim is optional. If no single contiguous authoritative source excerpt supports
+a concise purpose claim, the model must return an empty `role_purpose` array rather than
+constructing a plausible sentence from multiple source fragments.
 
 ### Responsibilities
 
@@ -161,7 +174,19 @@ LM Studio response
 → parse JSON object
 → validate locally against the exact requested JSON Schema
 → validate domain/evidence invariants against authoritative source fields
-→ persist only when both validation layers pass
+        ↓ passes
+        persist accepted artifact
+
+        ↓ evidence/domain validation fails
+record failed operational attempt
+→ one bounded evidence-repair request
+→ validate repaired object against the same schema
+→ validate repaired evidence/domain invariants again
+        ↓ passes
+        persist repaired artifact
+        ↓ fails
+        record failed repair attempt
+        persist no artifact
 ```
 
 Local schema validation rejects missing required fields, wrong types/enums, extra fields,
@@ -172,18 +197,15 @@ After schema validation, JobHunter validates every role-purpose, responsibility,
 requirement evidence excerpt against the original parsed source fields.
 
 Whitespace and Persian zero-width spacing are normalized for matching, but the model must
-still copy an actual employer/source excerpt rather than paraphrasing evidence.
+still copy an actual contiguous employer/source excerpt rather than paraphrasing evidence,
+translating it, or concatenating multiple source phrases.
 
-If a material claim cites text that does not exist in authoritative source fields:
+The repair pass does not weaken this rule. It only gives the model one bounded opportunity to
+replace unsupported evidence or omit a claim. A second grounding failure remains a failed
+analysis with no accepted artifact.
 
-```text
-model output
-→ analysis validation failure
-→ failed attempt retained
-→ no analysis artifact
-```
-
-This catches a major hallucination class before aggregation.
+This catches a major hallucination class before aggregation while avoiding needless total-loss
+when an otherwise useful structured response contains one repairable quotation defect.
 
 ## 8. Untrusted acquired-content boundary
 
@@ -210,6 +232,7 @@ This is reinforced structurally:
 - the authoritative source payload is a separate structured input object;
 - returned output must satisfy the local schema;
 - material claims must still cite exact source evidence;
+- a repair request remains under the same trust boundary;
 - invalid output is retained only as a failed operational attempt, not an accepted artifact.
 
 Future adversarial fixtures should continue expanding this boundary as new model workflows
@@ -242,8 +265,11 @@ analysis_lm_studio_model
 → translation_lm_studio_model
 ```
 
-This allows starting with the already configured local model while preserving the option to
-use a stronger dedicated analysis model later.
+`jobhunter doctor` and `jobhunter doctor --smoke` must resolve the model using this same
+runtime order so diagnostics and browser/CLI analysis describe the same effective model.
+
+This allows starting with the already configured local translation model while preserving the
+option to use a stronger dedicated analysis model later.
 
 ## 11. Browser workflow
 
@@ -292,18 +318,20 @@ P1.6 is not live-accepted merely because structured JSON succeeds.
 First live acceptance should use one reviewed real posting:
 
 1. inspect source and English v2;
-2. run one v2 analysis;
-3. read every responsibility;
-4. read every requirement type;
-5. verify every evidence excerpt against source;
-6. check that requirement strength is not inflated;
-7. check that unsupported technologies/concepts are absent;
-8. rerun and verify exact artifact reuse for the same source/model/prompt/schema identity;
-9. then analyze a small **representative** batch rather than simply the next few IDs;
-10. include variation in employer, role/title, source language, description length, and
+2. run one prompt-v3/schema-v2 analysis;
+3. if the first response fails evidence validation, verify that no first-pass artifact is
+   accepted and that at most one repair request occurs;
+4. read every accepted responsibility;
+5. read every accepted requirement type;
+6. verify every evidence excerpt against source;
+7. check that requirement strength is not inflated;
+8. check that unsupported technologies/concepts are absent;
+9. rerun and verify exact artifact reuse for the same source/model/prompt/schema identity;
+10. then analyze a small **representative** batch rather than simply the next few IDs;
+11. include variation in employer, role/title, source language, description length, and
     requirement density where the corpus allows it;
-11. convert repeatable defects into offline regression fixtures;
-12. inspect the resulting Market view together with its coverage/sampling warnings.
+12. convert repeatable defects into offline regression fixtures;
+13. inspect the resulting Market view together with its coverage/sampling warnings.
 
 No large-scale analysis should begin before this reviewed gate passes.
 
