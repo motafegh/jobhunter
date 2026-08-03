@@ -146,6 +146,59 @@ def test_structured_smoke_test_recovers_from_length_truncation() -> None:
     assert budgets == [128, 512]
 
 
+def test_complete_structured_recovers_analysis_budget_to_32768() -> None:
+    budgets: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        request_body = json.loads(request.content)
+        budgets.append(request_body["max_tokens"])
+        if request_body["max_tokens"] == 8192:
+            return httpx.Response(
+                200,
+                json={
+                    "choices": [
+                        {
+                            "finish_reason": "length",
+                            "message": {"content": '{"status":"partial"'},
+                        }
+                    ]
+                },
+            )
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {"content": '{"status":"ok"}'},
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="model-a",
+        transport=httpx.MockTransport(handler),
+    )
+    result = provider.complete_structured(
+        system_prompt="Return the requested object.",
+        user_payload={"instruction": "health"},
+        schema_name="analysis_recovery_test",
+        schema={
+            "type": "object",
+            "properties": {"status": {"type": "string", "enum": ["ok"]}},
+            "required": ["status"],
+            "additionalProperties": False,
+        },
+        max_tokens=8192,
+    )
+
+    assert result.structured == {"status": "ok"}
+    assert result.request_body["max_tokens"] == 32768
+    assert budgets == [8192, 32768]
+
+
 def test_structured_smoke_test_reports_invalid_content_preview() -> None:
     budgets: list[int] = []
 
