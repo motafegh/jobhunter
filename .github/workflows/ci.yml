@@ -35,3 +35,6 @@ jobs:
 
       - name: Run tests
         run: pytest
+
+      - name: Run tests with warnings as errors
+        run: pytest -W error
