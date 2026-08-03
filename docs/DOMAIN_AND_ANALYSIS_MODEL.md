@@ -13,6 +13,7 @@ The model separates:
 - derived English translation artifacts;
 - employer-stated responsibilities and requirements;
 - model-inferred supporting capabilities;
+- job-specific capability scope and depth expectations;
 - normalized career concepts;
 - personal capabilities and evidence;
 - derived gaps and recommendations.
@@ -93,6 +94,11 @@ Stores source-explicit contextual metadata such as company, location, arrangemen
 employment type, seniority, compensation, language, travel, on-call, and legal
 constraints. Unknown, unstated, and not applicable remain distinct.
 
+Company/product/team context may later support requirement interpretation only when
+it is supported by source or reviewed external evidence. Company size, industry or
+startup/enterprise labels must never be used as stereotypes that manufacture
+technical expectations.
+
 ## 5. Translation and language entities
 
 ### 5.1 JobTranslationArtifact
@@ -169,6 +175,11 @@ It should retain normalized action/object/context/outcome, ownership indicators,
 original wording, evidence passage, explicit/inferred state, confidence, and
 review status.
 
+Responsibilities are a major input to job-specific capability-depth reasoning.
+A tool mention alone is weak evidence; an explicit responsibility such as
+`troubleshoot container networking failures` can support a much more specific
+capability expectation than `Docker required` alone.
+
 ### 6.2 Requirement
 
 A requirement represents an employer expectation classified as required,
@@ -185,10 +196,151 @@ confidence, and review state.
 Original wording means the source-language employer wording. An English
 translation may be attached separately for convenience.
 
+A requirement strength classification is not a complete description of the
+required capability. `Docker required`, `expert Python`, or `strong machine
+learning knowledge` must remain incomplete until the system has enough evidence to
+describe what the work actually expects the employee to know, understand and do.
+
 ### 6.3 Deliverable
 
 Represents an expected artifact/outcome such as a detection rule, security
 platform, ML model, service, incident report, data pipeline, or architecture.
+
+Deliverables may provide stronger capability evidence than generic skill-list
+wording because they show what the employee must actually produce.
+
+### 6.4 JobCapabilityRequirementProfile
+
+Represents the evidence-qualified technical/work profile for one capability in one
+job. Its purpose is to answer a stronger question than `is Docker required?`:
+
+> What must this employee know, understand and be able to do with this capability,
+> in what context, at what independence/complexity, and how much of that conclusion
+> is actually supported by evidence?
+
+This profile is job-specific. The same canonical concept may have materially
+different profiles in different jobs.
+
+Important fields/concepts include:
+
+```text
+job / source semantic version
+canonical capability
+employer requirement strength
+employer-stated depth wording
+expected work activities
+expected outputs/deliverables
+technical scope / sub-capabilities
+underlying knowledge
+operational practices
+expected independence / ownership
+complexity / production context
+experience-duration signals when explicit
+responsibility links
+deliverable links
+company/product/team context when supported
+evidence-status per expectation
+source evidence
+inference rationale
+confidence
+unknown / unsupported scope
+review state
+contract version
+```
+
+The primary representation is **multidimensional**. A single label such as
+`beginner`, `intermediate`, `advanced` or `expert` is not sufficient because two
+people with the same generic label may cover very different technical scopes.
+
+For example, a Docker profile may support:
+
+```text
+explicit / strongly supported
+- containerize application services
+- build and maintain Dockerfiles
+- run/configure containers
+- diagnose ordinary container runtime failures
+
+inferred from linked responsibilities
+- inspect logs/runtime state
+- use basic container networking concepts
+- integrate image/container work with CI/CD
+
+unknown / unsupported
+- Docker Swarm
+- advanced daemon internals
+- advanced storage drivers
+- Kubernetes orchestration
+```
+
+The system must preserve the distinction between these groups rather than
+manufacturing a complete Docker curriculum from the word `Docker`.
+
+### 6.5 CapabilityExpectation evidence status
+
+Each job-side capability/sub-capability expectation should have an evidence status
+that distinguishes at minimum:
+
+```text
+source_explicit
+strongly_implied_by_work
+model_inferred_prerequisite
+unknown_or_unsupported
+```
+
+`strongly_implied_by_work` means the linked responsibility/deliverable would
+normally be difficult to perform without the capability, but the employer did not
+state the sub-capability directly.
+
+`model_inferred_prerequisite` requires an explicit rationale and provenance. It
+must never be displayed as employer wording.
+
+`unknown_or_unsupported` is a valid and important result. If a posting merely says
+`Docker required`, JobHunter must not pretend it can know whether Compose,
+advanced networking, security hardening, Swarm, or registry administration are
+required.
+
+### 6.6 Job-side depth dimensions
+
+Job requirement depth is not one number. At minimum JobHunter should keep these
+signals separate:
+
+1. **Employer-stated depth wording** — familiarity, working knowledge, proficient,
+   strong, expert, years, etc.
+2. **Work-implied scope/depth** — what responsibilities/deliverables require in
+   practice.
+3. **Technical scope** — which sub-capabilities/features are supported.
+4. **Expected independence/ownership** — assisted, routine independent execution,
+   ownership, design/leadership where supported.
+5. **Complexity/operational context** — toy/internal/production-like/production,
+   scale, reliability, security, troubleshooting or cross-system integration where
+   evidence supports it.
+6. **Confidence/uncertainty** — how strongly the available evidence supports the
+   interpretation.
+
+A future summary depth category may be derived only after a reviewed corpus shows
+that such categories are stable and useful. The detailed profile remains the
+primary evidence record.
+
+### 6.7 Job-side depth is distinct from personal capability depth
+
+The Phase-3 personal 0–7 scale describes **reviewed evidence about the user**. It
+must not be copied mechanically onto employer requirements.
+
+Later comparison should map:
+
+```text
+job capability requirement profile
+        ↕
+reviewed personal capability evidence
+```
+
+For example, the job side may require independent Python API development,
+asynchronous I/O, testing and production debugging. The personal side may then
+show which of those activities have reviewed evidence and at what personal depth.
+
+This enables a precise `coverage/depth/evidence` comparison rather than comparing
+two vague labels.
 
 ## 7. Career concept taxonomy
 
@@ -207,11 +359,33 @@ alias may assist retrieval but does not replace the original mention.
 A tool name is not the capability itself. Tool mentions must connect to applied
 responsibilities/capabilities when evidence supports that connection.
 
+A canonical tool may therefore relate to multiple job-specific activities and
+sub-capabilities rather than being treated as one binary skill token.
+
+### 7.4 Capability/sub-capability relationships
+
+The taxonomy may represent relationships needed to interpret work, including:
+
+- tool -> underlying capability;
+- broad capability -> narrower sub-capability;
+- framework/library -> language/platform;
+- prerequisite knowledge;
+- substitution/family relations;
+- work-activity -> capability relations.
+
+Prerequisite knowledge must remain distinct from simple market co-occurrence. The
+fact that Docker and Kubernetes often appear together does not prove Kubernetes is
+a prerequisite for every Docker requirement.
+
 ## 8. Role archetypes
 
 A RoleArchetype represents a recurring pattern of responsibilities and capability
 expectations independent of inconsistent titles. Archetypes emerge from evidence;
 they are not predefined buckets that every job must fit.
+
+JobCapabilityRequirementProfiles can later contribute to role archetypes by showing
+not merely which tools recur, but which activities, technical scopes, independence
+levels and contexts recur with them.
 
 ## 9. Personal capability entities
 
@@ -232,6 +406,10 @@ confidence, recency, context, independence, evidence, limitations, and review ti
 7. **Production or production-like operation**
 
 The scale is ordinal and context-dependent.
+
+This personal scale is intentionally not the canonical job-requirement depth model.
+Job requirements are represented first by the multidimensional profile in Section
+6.4–6.7.
 
 ### 9.3 CapabilityEvidence
 
@@ -258,6 +436,11 @@ Gap classes include:
 
 Every GapAssessment retains supporting market postings and personal evidence.
 
+A later gap comparison should be capable of comparing individual required
+activities/sub-capabilities, not only canonical concept names. A candidate can have
+strong general Docker evidence while still lacking the exact production
+troubleshooting or networking activity required by one role.
+
 ## 11. Recommendation model
 
 Actions include learn, practise, build, improve, document, assess, monitor, ignore
@@ -265,12 +448,25 @@ for now, investigate, and prepare application evidence.
 
 Recommendations remain advisory and explainable.
 
+Fine-grained capability requirements should allow recommendations to target the
+missing activity rather than unnecessarily relearning an entire broad technology.
+
 ## 12. Skill and responsibility matrix
 
 Aggregate matrices should support concept, original aliases, posting counts,
 required/preferred distributions, responsibility-linked counts, role/seniority/
 location/industry dimensions, co-occurrence, depth signals, time windows,
 personal evidence, gaps, and recommendation state.
+
+Where Phase-2 capability profiles exist, matrices should also support:
+
+- recurring work activities per capability;
+- recurring sub-capabilities;
+- independence/ownership patterns;
+- operational-context patterns;
+- employer-stated versus work-implied depth;
+- evidence-status distributions;
+- distinct-employer support for inferred patterns.
 
 Language/translation dimensions must also be available:
 
@@ -292,10 +488,25 @@ whether the correction should become a future deterministic mapping.
 Translation quality review is separate from source parser review and semantic LLM
 analysis review.
 
+Job-side capability-depth review must be capable of correcting individual
+sub-capabilities, evidence status, work links and independence/context conclusions
+without rewriting the original P1.6 source claims.
+
 ## 14. Analytical safeguards
 
 - Do not treat every mention as equal demand.
 - Do not equate requested years with actual depth automatically.
+- Do not convert `expert`, `strong`, `familiarity` or similar adjectives into a
+  supposedly exact technical curriculum without supporting work evidence.
+- Do not infer an entire technology's feature set from one tool/skill mention.
+- Prefer responsibility/deliverable evidence over generic skill-list wording when
+  interpreting what the employee must actually do.
+- Keep employer-stated depth, work-implied depth, technical scope, independence and
+  operational complexity separate.
+- Treat company/product/team context as supporting evidence only; do not use
+  stereotypes to invent expectations.
+- Preserve explicit/strongly-implied/inferred/unknown status for fine-grained
+  capability expectations.
 - Do not count duplicate postings as independent evidence.
 - Do not infer trends from small/changing corpora without warnings.
 - Do not rank personal priorities solely by keyword frequency.
@@ -316,6 +527,7 @@ Version because changes can alter historical results:
 - translation provider/model/schema;
 - translation prompt or glossary if introduced later;
 - analysis schema/prompt/model/parameters;
+- job capability requirement/depth schema and inference contract;
 - deduplication rules;
 - taxonomy mappings;
 - role-archetype definitions/clustering method;
@@ -323,5 +535,6 @@ Version because changes can alter historical results:
 - priority formula;
 - report calculations.
 
-Old source evidence, source versions, translation artifacts, and analysis results
-remain available when a new derived version is introduced.
+Old source evidence, source versions, translation artifacts, analysis results and
+job-capability requirement profiles remain available when a new derived version is
+introduced.
