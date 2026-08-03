@@ -107,6 +107,7 @@ class LMStudioTranslationProvider:
                     headers=headers,
                     timeout=self._timeout_seconds,
                     transport=self._transport,
+                    trust_env=False,
                 ) as client:
                     response = client.request(method, path, **kwargs)
                 if response.status_code >= 500 and attempt < self._max_retries:
