@@ -11,10 +11,10 @@
     <span class="muted">Started: <span data-operation-started>{{ operation.started_at or 'waiting' }}</span></span>
     <span class="muted">Completed: <span data-operation-completed>{{ operation.completed_at or '—' }}</span></span>
   </div>
-  <div class="operation-progress {% if operation.status in ['completed', 'failed'] %}finished{% endif %}" data-operation-progress>
+  <div class="operation-progress {% if operation.status in ['completed', 'completed_with_failures', 'failed'] %}finished{% endif %}" data-operation-progress>
     <span></span>
   </div>
   <pre class="operation-output" data-operation-output>{% if operation.error %}{{ operation.error }}{% elif operation.summary %}{{ operation.summary }}{% else %}Operation is {{ operation.status }}. This page updates automatically.{% endif %}</pre>
-  {% if return_to %}<p class="operation-return muted" data-operation-return>{% if operation.status == 'completed' and auto_return %}Returning to the previous screen…{% else %}When this operation finishes, use “{{ return_label }}” above to continue.{% endif %}</p>{% endif %}
+  {% if return_to %}<p class="operation-return muted" data-operation-return>{% if operation.status == 'completed' and auto_return %}Returning to the previous screen…{% elif operation.status in ['completed_with_failures', 'failed'] %}Operation finished with attention required. Review the result before continuing.{% else %}When this operation finishes, use “{{ return_label }}” above to continue.{% endif %}</p>{% endif %}
 </section>
 {% endblock %}
