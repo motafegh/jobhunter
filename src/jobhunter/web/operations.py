@@ -10,6 +10,22 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 
+_TERMINAL_SUCCESS_STATUSES = {"completed", "completed_with_failures"}
+
+
+@dataclass(frozen=True, slots=True)
+class WebOperationResult:
+    """Typed result for an operation that completed without raising an exception."""
+
+    summary: str
+    status: str = "completed"
+
+    def __post_init__(self) -> None:
+        if self.status not in _TERMINAL_SUCCESS_STATUSES:
+            raise ValueError(
+                "WebOperationResult status must be completed or completed_with_failures"
+            )
+
 
 @dataclass(slots=True)
 class WebOperation:
@@ -44,7 +60,11 @@ class WebOperationManager:
     def _now() -> str:
         return datetime.now(UTC).isoformat()
 
-    def start(self, name: str, action: Callable[[], str]) -> WebOperation:
+    def start(
+        self,
+        name: str,
+        action: Callable[[], str | WebOperationResult],
+    ) -> WebOperation:
         with self._lock:
             if self._active_id is not None:
                 active = self._operations[self._active_id]
@@ -64,13 +84,23 @@ class WebOperationManager:
             self._executor.submit(self._run, operation.id, action)
             return operation
 
-    def _run(self, operation_id: str, action: Callable[[], str]) -> None:
+    def _run(
+        self,
+        operation_id: str,
+        action: Callable[[], str | WebOperationResult],
+    ) -> None:
         with self._lock:
             operation = self._operations[operation_id]
             operation.status = "running"
             operation.started_at = self._now()
         try:
-            summary = action()
+            result = action()
+            if isinstance(result, WebOperationResult):
+                summary = result.summary
+                terminal_status = result.status
+            else:
+                summary = result
+                terminal_status = "completed"
         except Exception as exc:
             with self._lock:
                 operation = self._operations[operation_id]
@@ -83,7 +113,7 @@ class WebOperationManager:
 
         with self._lock:
             operation = self._operations[operation_id]
-            operation.status = "completed"
+            operation.status = terminal_status
             operation.summary = summary
             operation.completed_at = self._now()
             if self._active_id == operation_id:
