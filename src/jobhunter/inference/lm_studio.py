@@ -14,6 +14,10 @@ from jsonschema.exceptions import SchemaError, ValidationError
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
 
 
+class _StructuredOutputTruncated(InferenceResponseError):
+    """Internal signal for an otherwise valid request stopped by token length."""
+
+
 @dataclass(frozen=True, slots=True)
 class StructuredInferenceResult:
     """Validated JSON result plus raw provider evidence."""
@@ -184,7 +188,7 @@ class LMStudioProvider:
         finish_reason = first_choice.get("finish_reason")
         if finish_reason == "length":
             preview = content[:240]
-            raise InferenceResponseError(
+            raise _StructuredOutputTruncated(
                 "LM Studio structured response was truncated "
                 f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
                 f"content_preview={preview!r}, max_tokens={max_tokens})"
@@ -210,24 +214,40 @@ class LMStudioProvider:
         )
 
     def structured_smoke_test(self, model: str | None = None) -> str:
+        """Prove schema-conforming local inference with bounded truncation recovery."""
+
         selected_model = self._selected_model(model)
-        result = self.complete_structured(
-            system_prompt="Return only the requested structured health-check result.",
-            user_payload={
-                "instruction": (
-                    "Report that the JobHunter local inference check is okay."
+        token_budgets = (128, 512, 2048)
+        result: StructuredInferenceResult | None = None
+        last_truncation: _StructuredOutputTruncated | None = None
+        for max_tokens in token_budgets:
+            try:
+                result = self.complete_structured(
+                    system_prompt="Return only the requested structured health-check result.",
+                    user_payload={
+                        "instruction": (
+                            "Report that the JobHunter local inference check is okay."
+                        )
+                    },
+                    schema_name="jobhunter_health_check",
+                    schema={
+                        "type": "object",
+                        "properties": {
+                            "status": {"type": "string", "enum": ["ok"]}
+                        },
+                        "required": ["status"],
+                        "additionalProperties": False,
+                    },
+                    model=selected_model,
+                    max_tokens=max_tokens,
                 )
-            },
-            schema_name="jobhunter_health_check",
-            schema={
-                "type": "object",
-                "properties": {"status": {"type": "string", "enum": ["ok"]}},
-                "required": ["status"],
-                "additionalProperties": False,
-            },
-            model=selected_model,
-            max_tokens=128,
-        )
+                break
+            except _StructuredOutputTruncated as exc:
+                last_truncation = exc
+
+        if result is None:
+            assert last_truncation is not None
+            raise last_truncation
         if result.structured != {"status": "ok"}:
             raise InferenceResponseError(
                 "Unexpected structured smoke result "
