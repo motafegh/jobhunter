@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from jobhunter.storage import JobHunterStore
+from jobhunter.translation_store import TranslationStore
 
 
 @dataclass(frozen=True, slots=True)
@@ -42,7 +42,11 @@ class AnalysisStore:
         return connection
 
     def initialize(self) -> None:
-        JobHunterStore(self._database_path).initialize()
+        # P1.6 analysis artifacts can reference translation artifacts, so initialize the
+        # translation store first. TranslationStore in turn migrates the core source schema.
+        # This preserves the dependency order for both fresh and legacy SQLite workspaces:
+        # source -> translation -> analysis.
+        TranslationStore(self._database_path).initialize()
         with self._connect() as connection:
             connection.executescript(
                 """
