@@ -36,6 +36,25 @@ def test_doctor_initializes_storage_and_passes_with_healthy_provider(tmp_path: P
     assert all(check.status is CheckStatus.PASS for check in report.checks)
 
 
+def test_doctor_uses_translation_model_as_analysis_fallback(tmp_path: Path) -> None:
+    settings = Settings(
+        data_dir=tmp_path / "data",
+        translation_lm_studio_model="model-a",
+    )
+
+    report = run_doctor(settings, HealthyProvider(), perform_smoke_test=True)
+
+    assert report.has_failures is False
+    analysis_check = next(check for check in report.checks if check.name == "Analysis model")
+    smoke_check = next(
+        check for check in report.checks if check.name == "Structured inference"
+    )
+    assert analysis_check.status is CheckStatus.PASS
+    assert analysis_check.detail == "model-a"
+    assert smoke_check.status is CheckStatus.PASS
+    assert "model-a" in smoke_check.detail
+
+
 def test_doctor_reports_provider_connection_failure(tmp_path: Path) -> None:
     settings = Settings(data_dir=tmp_path / "data")
 
