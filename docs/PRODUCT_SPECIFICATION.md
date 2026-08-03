@@ -15,7 +15,9 @@ The complete product should eventually answer:
 - Which real role families match the intended career direction?
 - What responsibilities do those roles actually perform?
 - Which skills, knowledge areas, tools, practices, deliverables and experience patterns recur?
-- What depth appears expected?
+- For a specific job and capability, what must the employee actually know, understand and be able to do, at what scope, independence and operational complexity?
+- Which sub-capabilities/features of broad requirements such as Python, Docker, Machine Learning or NumPy are supported by the vacancy evidence, and which remain unknown?
+- What depth appears expected, and how much of that depth is employer-stated versus implied by the actual work?
 - Which requirements are required, preferred, contextual or inferred?
 - Which personal differences are knowledge, practice, depth, integration, evidence, recency, experience-context, presentation or constraint gaps?
 - What actions should be learned, practised, built, improved, documented, assessed, monitored, investigated or ignored for now?
@@ -155,6 +157,8 @@ P1.6 can produce versioned model-derived artifacts containing:
 
 A material claim whose evidence cannot be validated against authoritative employer fields must not become an accepted analysis artifact.
 
+P1.6 is intentionally not yet the fine-grained job capability/depth model. It supplies the accepted responsibilities, requirements and evidence that Phase 2 will use to build that model.
+
 ### 6.4 Market outputs — first implementation, not yet Phase-2 canonical market intelligence
 
 The current Market surface can aggregate accepted/current P1.6 artifacts for bounded sample inspection. It may show:
@@ -189,6 +193,7 @@ original employer/source text      authoritative market evidence
 deterministic parsed source fields source-derived
 English projection                 translation-derived convenience
 semantic analysis                  model-derived interpretation
+job capability requirement profile future evidence-qualified job interpretation
 canonical taxonomy                 reviewed/derived mapping
 market aggregate                   deterministic aggregate of accepted derived claims
 user triage                         local workflow state
@@ -291,13 +296,43 @@ Semantic analysis must preserve required, preferred, contextual and inferred dis
 
 Future refinements such as requirement depth/criticality must not weaken the current strength distinction.
 
+### FR-11A: Job capability requirement and depth intelligence
+
+After Phase-1 acceptance and the Phase-2 canonical concept foundation, JobHunter must be able to derive a **job-specific capability requirement profile** from the complete available vacancy evidence rather than treating technology names as binary skill tokens.
+
+For each material capability, the profile should be able to represent where evidence supports it:
+
+- canonical capability and exact employer wording;
+- required/preferred/contextual/inferred strength;
+- employer-stated depth language without treating adjectives as precise technical truth;
+- responsibilities and deliverables that require the capability;
+- specific work activities the employee is expected to perform;
+- technical sub-capabilities/features actually supported by the evidence;
+- underlying knowledge/practices needed for those activities;
+- expected independence, ownership and troubleshooting responsibility;
+- complexity and operational/production context;
+- explicit duration/experience signals where present;
+- supported company/product/team context without stereotype-based inference;
+- evidence status for each expectation: source-explicit, strongly work-implied, model-inferred prerequisite, or unknown/unsupported;
+- exact evidence, rationale, confidence and review/version state.
+
+A broad label such as `expert Python`, `Docker required`, `strong ML`, or `NumPy` must never be expanded into a supposedly complete curriculum merely because the model knows the technology. JobHunter should infer only what the vacancy evidence supports and explicitly preserve unknown scope.
+
+The detailed multidimensional capability profile is primary. Any future single depth label/score is only a secondary summary and must be justified by reviewed examples; it must not replace the underlying activities, sub-capabilities, context or uncertainty.
+
+The job-side requirement-depth model is distinct from the Phase-3 personal 0–7 capability-evidence scale. Later gap analysis compares the job requirement profile with reviewed personal evidence rather than mechanically comparing two generic numbers.
+
 ### FR-12: Canonicalization
 
 Future career-concept aliases may map to reviewed canonical concepts without losing source wording. Search normalization, translation and career-taxonomy canonicalization remain distinct operations.
 
+Canonical concepts must support broad-to-narrow capability/sub-capability relations where they are useful for job requirement profiles, while preserving the distinction between taxonomy relations, prerequisites and simple market co-occurrence.
+
 ### FR-13: Human review and reversibility
 
 Future semantic/taxonomy/personal-evidence corrections must remain reviewable and reversible where they affect durable intelligence. Original source/model history must not be silently overwritten.
+
+Fine-grained job-capability corrections must be able to supersede individual sub-capability, evidence-status, depth/context or work-link interpretations without rewriting original P1.6 claims.
 
 ### FR-14: Market truthfulness
 
@@ -312,6 +347,8 @@ Every market view must expose or retain enough context to recover:
 
 Small/concentrated samples require explicit warnings before broad market conclusions are presented.
 
+Future capability-depth aggregates must distinguish employer-explicit signals from work-implied/inferred signals and expose distinct-employer support before presenting a pattern as broadly representative.
+
 ### FR-15: Personal capability evidence
 
 Future personal capability claims require explicit reviewed evidence with depth, confidence, recency, evidence type/reference, limitations and AI-assistance/independence context where relevant.
@@ -325,6 +362,7 @@ Chat memory, repository keywords, dependency files and project completion do not
 Future gap/readiness recommendations must expose:
 
 - employer/market evidence;
+- job-specific required activities/sub-capabilities where available;
 - personal evidence;
 - gap class;
 - requirement strength/depth context;
@@ -334,6 +372,8 @@ Future gap/readiness recommendations must expose:
 - what would change the conclusion.
 
 Prefer categorical/requirement-by-requirement decisions over opaque fit percentages.
+
+A person may have general evidence for a broad technology while still lacking a specific activity required by one job. Gap analysis must preserve that distinction.
 
 ### FR-17: Application preparation
 
@@ -357,7 +397,7 @@ Structured/keyword queries remain preferred while sufficient. Embeddings/RAG, mu
 
 - **Local-first:** normal use does not require a cloud AI service.
 - **Browser-local by default:** UI binds loopback unless exposure is explicit.
-- **Inspectable:** source evidence, source versions, translations, analyses, aggregates and operation outcomes remain traceable.
+- **Inspectable:** source evidence, source versions, translations, analyses, capability profiles, aggregates and operation outcomes remain traceable.
 - **Idempotent:** reruns do not multiply unchanged logical/semantic/derived artifacts.
 - **Recoverable:** one failure does not require restarting the entire corpus workflow.
 - **Configurable:** vocabulary, models, limits, paths and policies are explicit configuration.
@@ -396,10 +436,10 @@ Current implementation includes but must not over-claim until the controlling ga
 
 After Phase 1 acceptance:
 
-1. canonical market taxonomy/responsibilities/role archetypes;
+1. canonical market taxonomy/responsibilities plus job-specific capability requirement/depth intelligence and role archetypes;
 2. one carefully selected second source and later minimal adapter abstraction;
 3. reviewed personal evidence model;
-4. gap/readiness/learning/action intelligence;
+4. gap/readiness/learning/action intelligence comparing detailed job expectations with personal evidence;
 5. application/interview/outcome workspace;
 6. sustained longitudinal operation/trends/backup;
 7. advanced evaluated retrieval/assistant/model-lab capabilities only where demonstrated useful.
@@ -414,6 +454,8 @@ Until their respective acceptance gates pass, JobHunter must not claim:
 - production-quality translation-v2 across all future source/language cases;
 - production-quality semantic extraction across all role types;
 - reviewed canonical market taxonomy;
+- reliable fine-grained job capability/sub-capability/depth profiles;
+- exact technical scope from vague employer adjectives or isolated technology mentions;
 - full-market conclusions from a bounded/source-biased corpus;
 - duplicate-adjusted mature market statistics;
 - reviewed personal capability state;
@@ -429,6 +471,8 @@ Until their respective acceptance gates pass, JobHunter must not claim:
 ## 12. Explicit exclusions
 
 The product does not include authenticated-platform scraping, CAPTCHA bypass, stealth proxy rotation, automatic applications/messages, autonomous resume claims, distributed microservices for decoration, cloud LLM analysis by default, self-training on unverified generations, salary/hiring-probability prediction, unrestricted internet crawling, opaque readiness scoring, or a vector/graph database without demonstrated need.
+
+JobHunter also does not claim that a vacancy contains enough information to reconstruct an exact hidden interview rubric or complete technical curriculum. When evidence is insufficient, the required result is explicit uncertainty/unknown scope rather than model-generated false precision.
 
 ## 13. Success standard
 
