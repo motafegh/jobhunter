@@ -20,6 +20,7 @@ Rules:
 - Prefer one coherent vertical increment over framework work with no current user path.
 - When a real defect changes a contract or exposes a new failure class, add a regression task before continuing.
 - Keep proposal IDs as traceability references, not as ticket count.
+- For job capability depth, prefer incomplete-but-defensible profiles over complete-looking technical curricula unsupported by vacancy evidence.
 
 Status vocabulary:
 
@@ -41,9 +42,10 @@ Status vocabulary:
 - [x] A0.2 Create this `docs/EXECUTION_TODO.md`.
 - [~] A0.3 Reconcile `docs/PRODUCT_SPECIFICATION.md` with the current implemented-pending-acceptance P1.6/Market/browser state.
 - [~] A0.4 Reconcile `docs/ARCHITECTURE.md` with the current analysis/lifecycle/Market implementation.
-- [ ] A0.5 Reconcile README/current-status navigation after the roadmap branch is reviewed.
-- [ ] A0.6 Add roadmap/TODO links to contributor reading/navigation only if doing so does not create an authority conflict.
+- [x] A0.5 Reconcile README/current-status navigation after roadmap/governance activation on `main`.
+- [x] A0.6 Add roadmap/TODO links to contributor reading/navigation without creating an authority conflict.
 - [x] A0.7 Keep the 200-item proposal library non-controlling; no proposal is automatically moved into implementation scope.
+- [x] A0.8 Formalize job-specific capability requirement/depth intelligence across product, domain, roadmap, implementation plan and this checklist without creating new proposal IDs or pulling Phase-2 code ahead of the Phase-1 gate.
 
 **A0 done when:** the repository presents one consistent current-state model and future planning has one strategic roadmap plus one current checklist.
 
@@ -232,12 +234,14 @@ remaining eligible
 
 ## C1 — Phase-2 design slice
 
-- [ ] C1.1 Define the minimum canonical concept schema actually needed for queries/aggregation.
+- [ ] C1.1 Define the minimum canonical concept schema actually needed for queries/aggregation and job capability profiles.
 - [ ] C1.2 Define stable IDs, type, display name, aliases, status and history.
-- [ ] C1.3 Define mapping provenance/review/supersession.
-- [ ] C1.4 Define unknown/unmapped handling.
-- [ ] C1.5 Define taxonomy version/current-resolution semantics.
-- [ ] C1.6 Define acceptance examples before bulk migration/mapping.
+- [ ] C1.3 Define broad/narrow capability and sub-capability relations separately from aliases.
+- [ ] C1.4 Define prerequisite relations separately from market co-occurrence.
+- [ ] C1.5 Define mapping provenance/review/supersession.
+- [ ] C1.6 Define unknown/unmapped handling.
+- [ ] C1.7 Define taxonomy version/current-resolution semantics.
+- [ ] C1.8 Define acceptance examples before bulk migration/mapping.
 
 ## C2 — Canonical responsibilities and deliverables
 
@@ -245,23 +249,113 @@ remaining eligible
 - [ ] C2.2 Map reviewed claims to canonical responsibilities.
 - [ ] C2.3 Add responsibility families only after examples demonstrate useful grouping.
 - [ ] C2.4 Add deliverables where employer evidence supports them.
-- [ ] C2.5 Count postings and distinct employers separately.
+- [ ] C2.5 Preserve responsibility action/object/context/outcome where useful for capability inference.
+- [ ] C2.6 Link responsibilities/deliverables to canonical capabilities only with reviewable provenance.
+- [ ] C2.7 Count postings and distinct employers separately.
 
-## C3 — Requirement semantics beyond Phase 1
+## C3 — Job capability requirement and depth intelligence
 
-- [ ] C3.1 Preserve required/preferred/contextual/inferred exactly during canonical mapping.
-- [ ] C3.2 Model depth signals only after a reviewed corpus shows categories can be distinguished reliably. `B021`.
-- [ ] C3.3 Separate explicit years from experience type/context. `B022`.
-- [ ] C3.4 Keep employer seniority labels separate from inferred work-seniority signals. `B023`.
-- [ ] C3.5 Add contradiction review only when stable normalized fields make it meaningful. `B090`, `B091`.
+This is the first-class Phase-2 capability that answers not merely `Docker/Python/ML required?`, but **what the employee must know, understand and be able to do with that capability for this job**.
+
+### C3.1 Contract and identity
+
+- [ ] C3.1.1 Define/version `JobCapabilityRequirementProfile` identity by job source semantic version + taxonomy/profile contract.
+- [ ] C3.1.2 Preserve canonical capability and exact employer wording separately.
+- [ ] C3.1.3 Preserve required/preferred/contextual/inferred strength exactly from accepted source analysis.
+- [ ] C3.1.4 Define immutable/history behavior when the profile contract changes.
+- [ ] C3.1.5 Do not reuse the Phase-3 personal 0–7 scale as the job requirement schema.
+
+### C3.2 Evidence-qualified technical scope
+
+- [ ] C3.2.1 Extract/link expected work activities from accepted responsibilities.
+- [ ] C3.2.2 Extract/link expected deliverables where supported.
+- [ ] C3.2.3 Represent technical sub-capabilities/features required to perform those activities.
+- [ ] C3.2.4 Represent underlying knowledge/practices where they are explicit or defensibly inferred prerequisites.
+- [ ] C3.2.5 Preserve broad-to-narrow capability relationships without confusing them with aliases.
+- [ ] C3.2.6 Preserve tool-versus-underlying-capability relations. `B028`.
+- [ ] C3.2.7 Keep prerequisite relations distinct from co-occurrence. `B024-B028`.
+
+### C3.3 Depth dimensions
+
+- [ ] C3.3.1 Preserve employer-stated depth wording (`familiarity`, `strong`, `expert`, etc.) without treating it as precise technical truth. `B021`.
+- [ ] C3.3.2 Derive work-implied scope/depth from responsibilities and deliverables where evidence supports it.
+- [ ] C3.3.3 Represent expected independence/ownership separately from knowledge depth.
+- [ ] C3.3.4 Represent complexity/operational/production context separately.
+- [ ] C3.3.5 Separate explicit years from experience type/context. `B022`.
+- [ ] C3.3.6 Keep employer seniority labels separate from inferred work-seniority signals. `B023`.
+- [ ] C3.3.7 Add a single summary depth category only if reviewed examples prove it stable/useful; the multidimensional profile remains primary.
+
+### C3.4 Evidence status and uncertainty
+
+For every fine-grained expectation preserve one of:
+
+```text
+source_explicit
+strongly_implied_by_work
+model_inferred_prerequisite
+unknown_or_unsupported
+```
+
+- [ ] C3.4.1 Define deterministic persistence/validation for these states.
+- [ ] C3.4.2 Require evidence + rationale for every model-inferred prerequisite.
+- [ ] C3.4.3 Never display work-implied/inferred sub-capabilities as direct employer wording.
+- [ ] C3.4.4 Preserve `unknown_or_unsupported` rather than filling gaps from generic model knowledge.
+- [ ] C3.4.5 Keep confidence field-specific rather than assigning one confidence to the whole job/profile.
+
+### C3.5 Company/product/team context
+
+- [ ] C3.5.1 Use company/product/team context only when present in source or approved reviewed evidence.
+- [ ] C3.5.2 Link context to the specific capability interpretation it supports.
+- [ ] C3.5.3 Add explicit regression cases preventing stereotypes such as `startup -> must own everything` from manufacturing requirements.
+
+### C3.6 Representative reviewed examples
+
+Build the first acceptance set intentionally rather than selecting adjacent jobs only:
+
+- [ ] C3.6.1 Broad programming language example such as Python.
+- [ ] C3.6.2 Operational tool/platform example such as Docker or Linux.
+- [ ] C3.6.3 Broad knowledge domain example such as Machine Learning.
+- [ ] C3.6.4 Library/framework example such as NumPy or FastAPI.
+- [ ] C3.6.5 Vague technology-only requirement where correct output contains substantial unknown scope.
+- [ ] C3.6.6 Responsibility-rich vacancy where work evidence adds technical scope absent from the skill list.
+- [ ] C3.6.7 Multiple employers/role patterns.
+- [ ] C3.6.8 Persian/mixed/native-English variation where available.
+
+### C3.7 Quality review and regression
+
+For each reviewed profile record:
+
+- [ ] C3.7.1 missed required activities;
+- [ ] C3.7.2 unsupported sub-capabilities;
+- [ ] C3.7.3 inflated/understated depth;
+- [ ] C3.7.4 incorrect independence/ownership;
+- [ ] C3.7.5 incorrect production/complexity context;
+- [ ] C3.7.6 company-context overreach;
+- [ ] C3.7.7 prerequisite overreach;
+- [ ] C3.7.8 evidence-status mistakes;
+- [ ] C3.7.9 unknown scope incorrectly filled;
+- [ ] C3.7.10 convert every repeatable failure into an offline regression/model-chaos fixture.
+
+### C3.8 Job-level capability profile UX
+
+- [ ] C3.8.1 Show capability + employer strength/wording.
+- [ ] C3.8.2 Show supported activities/sub-capabilities.
+- [ ] C3.8.3 Show expected independence/context where supported.
+- [ ] C3.8.4 Show explicit/work-implied/inferred badges distinctly.
+- [ ] C3.8.5 Show unknown/unsupported technical scope explicitly.
+- [ ] C3.8.6 Link every material expectation to supporting responsibility/deliverable/source evidence.
+- [ ] C3.8.7 Keep JobHunter interpretation visually separate from employer wording.
+
+**C3 acceptance:** JobHunter can describe what selected jobs actually require a person to do with important capabilities without inventing a universal technology curriculum or hiding uncertainty.
 
 ## C4 — Role archetypes
 
-- [ ] C4.1 Generate candidate archetypes from accepted responsibilities/requirements, not title alone.
+- [ ] C4.1 Generate candidate archetypes from accepted responsibilities/requirements/capability profiles, not title alone.
 - [ ] C4.2 Review archetype definitions and boundaries manually.
 - [ ] C4.3 Attach representative jobs.
 - [ ] C4.4 Preserve hybrid/unmapped jobs.
-- [ ] C4.5 Add Role DNA/title mismatch only after archetype quality is credible. `B017`, `B018`.
+- [ ] C4.5 Use recurring activity/depth patterns only after C3 profiles are credible.
+- [ ] C4.6 Add Role DNA/title mismatch only after archetype quality is credible. `B017`, `B018`.
 
 ## C5 — Market matrices and quality
 
@@ -270,20 +364,26 @@ remaining eligible
 - [ ] C5.3 Required/preferred/contextual/inferred distribution.
 - [ ] C5.4 Responsibility-family prevalence.
 - [ ] C5.5 Role/archetype segmentation.
-- [ ] C5.6 Co-occurrence with explicit sample sizes. `B024`.
-- [ ] C5.7 Capability-bundle candidate generation only with minimum support thresholds. `B025`.
-- [ ] C5.8 Duplicate-adjusted statistics only after duplicate identity is reliable. `B192`.
-- [ ] C5.9 Sampling warnings remain visible for every filtered view. `B190`.
-- [ ] C5.10 Add outlier/corpus-diversity views only if they improve quality review or acquisition decisions. `B188`, `B189`.
+- [ ] C5.6 Recurring work activities per capability.
+- [ ] C5.7 Recurring sub-capabilities only with explicit minimum support/coverage.
+- [ ] C5.8 Employer-stated vs work-implied depth patterns kept separate.
+- [ ] C5.9 Independence/ownership and operational-context distributions only where evidence coverage is adequate.
+- [ ] C5.10 Explicit/work-implied/inferred distributions for fine-grained capability expectations.
+- [ ] C5.11 Co-occurrence with explicit sample sizes. `B024`.
+- [ ] C5.12 Capability-bundle candidate generation only with minimum support thresholds. `B025`.
+- [ ] C5.13 Duplicate-adjusted statistics only after duplicate identity is reliable. `B192`.
+- [ ] C5.14 Sampling warnings remain visible for every filtered view. `B190`.
+- [ ] C5.15 Add outlier/corpus-diversity views only if they improve quality review or acquisition decisions. `B188`, `B189`.
 
 ## C6 — Review, lineage and reversibility
 
 - [ ] C6.1 Decide whether P1.6 claim correction is needed based on real correction frequency. `B009`.
 - [ ] C6.2 If yes, preserve original model output and append reviewed correction.
 - [ ] C6.3 Add taxonomy mapping review.
-- [ ] C6.4 Keep every market aggregate drillable to supporting jobs/claims.
-- [ ] C6.5 Implement lineage identifiers sufficient for later Evidence Inspector/Trace views. `B007`, `B008`, `B145`, `B149`.
-- [ ] C6.6 Avoid building a graph database for lineage.
+- [ ] C6.4 Add capability-profile review for individual activities/sub-capabilities/evidence status/depth/context without rewriting source/P1.6 history.
+- [ ] C6.5 Keep every market aggregate drillable to supporting jobs/claims/profile expectations.
+- [ ] C6.6 Implement lineage identifiers sufficient for later Evidence Inspector/Trace views. `B007`, `B008`, `B145`, `B149`.
+- [ ] C6.7 Avoid building a graph database for lineage.
 
 ## C7 — Phase-2 quality gate
 
@@ -293,6 +393,12 @@ remaining eligible
 - [ ] C7.4 Role archetypes have reviewed boundaries/examples.
 - [ ] C7.5 Every market metric exposes sample/source/filter scope.
 - [ ] C7.6 Job-level evidence drill-down remains intact.
+- [ ] C7.7 Capability requirement/depth profiles have reviewed examples across broad languages, tools/platforms, knowledge domains and libraries/frameworks.
+- [ ] C7.8 Fine-grained technical scope is evidence-supported rather than generic model knowledge.
+- [ ] C7.9 Explicit/work-implied/inferred/unknown boundaries remain inspectable.
+- [ ] C7.10 Vague employer adjectives do not become fake exact depth.
+- [ ] C7.11 Unknown technical scope remains unknown.
+- [ ] C7.12 Job-side depth model remains distinct from personal evidence depth.
 
 ---
 
@@ -383,8 +489,10 @@ Only after manual schema proves itself:
 
 - [ ] E5.1 Exact concept mapping.
 - [ ] E5.2 Broader/narrower/partial mapping types.
-- [ ] E5.3 Review corrections.
-- [ ] E5.4 Evidence reuse across jobs without universalizing job-specific sufficiency. `B054`.
+- [ ] E5.3 Map personal evidence to job-required activities/sub-capabilities where justified.
+- [ ] E5.4 Preserve the distinction between general technology evidence and evidence for one job-specific activity.
+- [ ] E5.5 Review corrections.
+- [ ] E5.6 Evidence reuse across jobs without universalizing job-specific sufficiency. `B054`.
 
 ## E6 — Phase-3 gate
 
@@ -393,7 +501,8 @@ Only after manual schema proves itself:
 - [ ] E6.3 AI-assistance context representable.
 - [ ] E6.4 Backup/restore proven.
 - [ ] E6.5 Market-person mappings reviewable.
-- [ ] E6.6 No gap/readiness output yet claims more than the evidence supports.
+- [ ] E6.6 Broad concept matches do not silently satisfy every job-specific activity/sub-capability.
+- [ ] E6.7 No gap/readiness output yet claims more than the evidence supports.
 
 ---
 
@@ -412,14 +521,16 @@ Only after manual schema proves itself:
 - [ ] F1.9 Constraint mismatch.
 - [ ] F1.10 Unknown evidence state distinct from confirmed gap.
 
-## F2 — Requirement-by-requirement comparison
+## F2 — Requirement-by-requirement and activity-by-activity comparison
 
 - [ ] F2.1 Link each employer requirement to source evidence.
-- [ ] F2.2 Link candidate personal evidence.
-- [ ] F2.3 Preserve required/preferred/criticality.
-- [ ] F2.4 Preserve required depth/context.
-- [ ] F2.5 Produce explicit match/partial/gap/unknown state.
-- [ ] F2.6 Make every conclusion inspectable.
+- [ ] F2.2 Link each supported job-required activity/sub-capability to its capability-profile evidence/status.
+- [ ] F2.3 Link candidate personal evidence.
+- [ ] F2.4 Preserve required/preferred/criticality.
+- [ ] F2.5 Preserve required work scope, independence and operational context where known.
+- [ ] F2.6 Produce explicit match/partial/gap/unknown state at capability and relevant activity/sub-capability level.
+- [ ] F2.7 Allow strong general technology evidence plus a specific missing activity to coexist without contradiction.
+- [ ] F2.8 Make every conclusion inspectable.
 
 ## F3 — Categorical readiness policy
 
@@ -433,16 +544,18 @@ Only after manual schema proves itself:
 
 - [ ] F4.1 Market relevance.
 - [ ] F4.2 Requirement strength.
-- [ ] F4.3 Personal depth/evidence gap.
-- [ ] F4.4 Prerequisite dependencies.
-- [ ] F4.5 Evidence-building opportunity.
-- [ ] F4.6 `ignore for now` with rationale.
-- [ ] F4.7 Explain why the recommendation exists.
+- [ ] F4.3 Job-specific activity/sub-capability gap.
+- [ ] F4.4 Personal depth/evidence gap.
+- [ ] F4.5 Prerequisite dependencies.
+- [ ] F4.6 Evidence-building opportunity.
+- [ ] F4.7 Prefer targeted missing activities over unnecessary relearning of an entire broad technology.
+- [ ] F4.8 `ignore for now` with rationale.
+- [ ] F4.9 Explain why the recommendation exists.
 
 ## F5 — Gap-to-project/evidence planning
 
 - [ ] F5.1 Generate small bounded project options, not giant flagships by default.
-- [ ] F5.2 State targeted capabilities.
+- [ ] F5.2 State targeted capabilities and specific missing activities/sub-capabilities.
 - [ ] F5.3 State intended evidence.
 - [ ] F5.4 State prerequisites.
 - [ ] F5.5 State stop line.
@@ -470,14 +583,15 @@ Only after manual schema proves itself:
 
 ## G1 — Application Evidence Pack
 
-- [ ] G1.1 Freeze job/source/analysis identity.
+- [ ] G1.1 Freeze job/source/analysis/capability-profile identity.
 - [ ] G1.2 Include employer requirements/responsibilities.
-- [ ] G1.3 Include strongest personal evidence.
-- [ ] G1.4 Include critical/partial/unknown gaps.
-- [ ] G1.5 Include constraints.
-- [ ] G1.6 Include relevant projects/examples.
-- [ ] G1.7 Include interview-preparation topics.
-- [ ] G1.8 Mark pack stale when source/personal evidence changes.
+- [ ] G1.3 Include job-specific required activities/sub-capabilities/depth context where accepted.
+- [ ] G1.4 Include strongest personal evidence.
+- [ ] G1.5 Include critical/partial/unknown gaps.
+- [ ] G1.6 Include constraints.
+- [ ] G1.7 Include relevant projects/examples.
+- [ ] G1.8 Include interview-preparation topics.
+- [ ] G1.9 Mark pack stale when source/profile/personal evidence changes.
 
 ## G2 — Resume targeting
 
@@ -488,11 +602,12 @@ Only after manual schema proves itself:
 
 ## G3 — Interview preparation
 
-- [ ] G3.1 Requirement-to-concept matrix.
-- [ ] G3.2 Best personal example/story components.
-- [ ] G3.3 Missing preparation.
-- [ ] G3.4 Synthetic self-test questions labelled synthetic.
-- [ ] G3.5 No invented company interview process.
+- [ ] G3.1 Requirement/activity-to-concept matrix.
+- [ ] G3.2 Use accepted job capability profiles to identify the technical scope most likely worth preparing, without inventing the employer's hidden interview rubric.
+- [ ] G3.3 Best personal example/story components.
+- [ ] G3.4 Missing preparation.
+- [ ] G3.5 Synthetic self-test questions labelled synthetic.
+- [ ] G3.6 No invented company interview process.
 
 ## G4 — Application tracker
 
@@ -531,12 +646,13 @@ Only after manual schema proves itself:
 
 ## H2 — Snapshots and trends
 
-- [ ] H2.1 Snapshot manifests.
+- [ ] H2.1 Snapshot manifests including taxonomy/capability-profile contract identity where applicable.
 - [ ] H2.2 Like-for-like period comparison.
 - [ ] H2.3 Duplicate/lifecycle-adjusted views.
 - [ ] H2.4 Emerging/stable/volatile labels only with transparent thresholds.
 - [ ] H2.5 Company/location/work-mode trends only with adequate sample coverage.
-- [ ] H2.6 Career-market drift relative to personal evidence only after both sides are mature.
+- [ ] H2.6 Recurring activity/sub-capability/depth trends only with sufficient like-for-like evidence coverage.
+- [ ] H2.7 Career-market drift relative to personal evidence only after both sides are mature.
 
 ## H3 — Scheduling
 
@@ -569,10 +685,12 @@ Only after manual schema proves itself:
 
 - [ ] I1.1 Translation gold set.
 - [ ] I1.2 Gold-job semantic-analysis set.
-- [ ] I1.3 Human annotation format.
-- [ ] I1.4 Candidate vs baseline contract runner.
-- [ ] I1.5 Metrics: unsupported claims, missed claims, strength errors, evidence-validation failures, latency/truncation/cost where relevant.
-- [ ] I1.6 Promotion/rollback decision record.
+- [ ] I1.3 After Phase-2 implementation begins, reviewed job capability requirement/depth gold examples spanning broad and narrow capabilities.
+- [ ] I1.4 Human annotation format.
+- [ ] I1.5 Candidate vs baseline contract runner.
+- [ ] I1.6 Metrics for capability profiles: unsupported sub-capabilities, missed activities, depth inflation, evidence-status error, independence/context error, unknown-scope overfill.
+- [ ] I1.7 General metrics: unsupported claims, missed claims, strength errors, evidence-validation failures, latency/truncation/cost where relevant.
+- [ ] I1.8 Promotion/rollback decision record.
 
 ## I2 — Multi-provider/task routing
 
@@ -640,6 +758,8 @@ Do not create tasks for the following unless a future decision explicitly change
 - [-] graph database because the domain can be drawn as a graph;
 - [-] vector database before evaluated retrieval need;
 - [-] opaque holistic readiness percentage;
+- [-] universal Docker/Python/ML/etc. curricula generated from a single vacancy keyword;
+- [-] fake exact job depth derived from words such as `expert`/`strong` without supporting work evidence;
 - [-] personal capability from chat memory alone;
 - [-] repository technology names treated as proficiency;
 - [-] self-training on unverified model generations;
@@ -651,7 +771,7 @@ Do not create tasks for the following unless a future decision explicitly change
 
 # K. Current exact next actions
 
-When this roadmap/TODO documentation branch is accepted, the next building session should begin here and nowhere later:
+The current building sequence remains Phase 1; the new capability-depth work is now fully planned but **does not bypass this gate**:
 
 ```text
 1. Establish deterministic baseline: Ruff + pytest + warnings-as-errors.
@@ -667,7 +787,8 @@ When this roadmap/TODO documentation branch is accepted, the next building sessi
 11. Finish remaining P1.3/P1.5 acceptance.
 12. Finish P1.7 final run/report/browser equivalent.
 13. Close Phase 1 with accepted evidence and reconciled docs.
-14. Only then start Phase-2 canonical taxonomy/responsibility design and select one second source for later adapter work.
+14. Only then start Phase 2 with canonical concepts/responsibilities/deliverables, followed by the reviewed job capability requirement/depth profile slice before using that information for personal gap intelligence.
+15. Select/implement one second source under its own roadmap gate; do not let source expansion weaken the Phase-2 semantic model.
 ```
 
 This sequence is the current working priority. Future sections in this file are not permission to skip it.
