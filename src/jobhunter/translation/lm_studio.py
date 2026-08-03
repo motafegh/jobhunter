@@ -8,6 +8,8 @@ import time
 from typing import Any
 
 import httpx
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError, ValidationError
 
 from jobhunter.translation.base import TranslationBatchResult, TranslationError
 
@@ -179,6 +181,29 @@ class LMStudioTranslationProvider:
 
         return tuple((text,) for text in texts)
 
+    @staticmethod
+    def _validate_structured_translation(
+        structured: object,
+        schema: dict[str, Any],
+    ) -> dict[str, Any]:
+        """Verify translation output locally before association-specific checks."""
+
+        try:
+            Draft202012Validator.check_schema(schema)
+            Draft202012Validator(schema).validate(structured)
+        except SchemaError as exc:
+            raise TranslationError(
+                f"JobHunter supplied an invalid translation response schema: {exc.message}"
+            ) from exc
+        except ValidationError as exc:
+            path = ".".join(str(item) for item in exc.absolute_path) or "<root>"
+            raise TranslationError(
+                "LM Studio translation violated the requested response schema "
+                f"at {path}: {exc.message}"
+            ) from exc
+        assert isinstance(structured, dict)
+        return structured
+
     def _translate_chunk(
         self,
         texts: tuple[str, ...],
@@ -206,7 +231,7 @@ class LMStudioTranslationProvider:
                         "type": "object",
                         "properties": {
                             "id": {"type": "string", "enum": list(ids)},
-                            "translation": {"type": "string"},
+                            "translation": {"type": "string", "minLength": 1},
                         },
                         "required": ["id", "translation"],
                         "additionalProperties": False,
@@ -272,22 +297,13 @@ class LMStudioTranslationProvider:
                 "LM Studio did not return valid structured translation JSON "
                 f"(model={model!r}, finish_reason={finish_reason!r})"
             ) from exc
-        raw_translations = (
-            structured.get("translations") if isinstance(structured, dict) else None
-        )
-        if not isinstance(raw_translations, list) or len(raw_translations) != len(texts):
-            raise TranslationError(
-                "LM Studio returned a translation count that does not match the input"
-            )
+        structured_object = self._validate_structured_translation(structured, schema)
+        raw_translations = structured_object["translations"]
 
         by_id: dict[str, str] = {}
         for item in raw_translations:
-            if not isinstance(item, dict):
-                raise TranslationError("LM Studio returned an invalid translation item")
-            item_id = item.get("id")
-            translation = item.get("translation")
-            if not isinstance(item_id, str) or not isinstance(translation, str):
-                raise TranslationError("LM Studio translation item has invalid fields")
+            item_id = item["id"]
+            translation = item["translation"]
             cleaned = translation.strip()
             if not cleaned:
                 raise TranslationError("LM Studio returned an empty translation")
