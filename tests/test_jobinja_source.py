@@ -267,6 +267,31 @@ def test_challenge_page_is_not_retried_or_treated_as_job_content() -> None:
     assert caught.value.retryable is False
 
 
+def test_unexpected_non_html_response_is_explicit_failure_not_empty_result() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=request,
+            headers={"content-type": "application/json"},
+            json={"jobs": []},
+        )
+
+    client = JobinjaClient(
+        user_agent="JobHunter-Test/1",
+        timeout_seconds=5,
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+
+    with pytest.raises(JobinjaAcquisitionError) as caught:
+        client.fetch_search_page("https://jobinja.ir/jobs?q=python", 1)
+
+    assert caught.value.classification == "unexpected_page"
+    assert caught.value.status_code == 200
+    assert caught.value.retryable is False
+    assert "content type" in str(caught.value).casefold()
+
+
 def test_explicit_expiry_page_remains_successful_evidence_with_expiry_classification() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(
