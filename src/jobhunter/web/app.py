@@ -15,6 +15,8 @@ from fastapi.templating import Jinja2Templates
 
 from jobhunter.analysis_service import (
     ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
+    ORIGINAL_PROMPT_VERSION,
     PROMPT_VERSION,
     JobAnalysisService,
     format_analysis_batch_summary,
@@ -329,11 +331,11 @@ def _complete_processing_output(
     output = "\n\n" + format_translation_batch_summary(translation)
     ready_ids = tuple(result.source_job_id for result in translation.results)
     if not ready_ids:
-        return output + "\n\nSemantic analysis skipped: no fetched jobs have current English v2."
+        return output + "\n\nEnglish analysis skipped: no fetched jobs have current English v2."
     if not settings.effective_analysis_lm_studio_model():
-        return output + "\n\nSemantic analysis skipped: no analysis model is configured."
+        return output + "\n\nEnglish analysis skipped: no analysis model is configured."
 
-    analysis = _analysis_service(settings).run(
+    analysis = _analysis_service(settings).run_english(
         ready_ids,
         limit=min(len(ready_ids), settings.analysis_batch_limit, 20),
     )
@@ -399,7 +401,7 @@ def _full_workflow_output(
             if job_id in ready_set
         )
         if ordered_ids:
-            analyzed = _analysis_service(settings).run(
+            analyzed = _analysis_service(settings).run_english(
                 ordered_ids,
                 limit=analysis_limit,
             )
@@ -407,13 +409,13 @@ def _full_workflow_output(
             sections.append(format_analysis_batch_summary(analyzed))
         else:
             sections.append(
-                "Evidence-backed job analysis\n"
-                "No eligible current jobs need analysis."
+                "English-projection evidence-backed job analysis\n"
+                "No eligible current jobs need English analysis."
             )
     else:
         has_failures = True
         sections.append(
-            "Evidence-backed job analysis\n"
+            "English-projection evidence-backed job analysis\n"
             "Skipped because no analysis model is configured."
         )
 
@@ -422,11 +424,12 @@ def _full_workflow_output(
         "Market view\n"
         f"Discovered Jobinja identities: {market.discovered_jobs}\n"
         f"Current parsed jobs: {market.current_parsed_jobs}\n"
-        f"Current accepted analyses: {market.analyzed_jobs}\n"
+        f"Current accepted English analyses: {market.analyzed_jobs}\n"
         f"Distinct employers in analyzed sample: {market.distinct_employers}\n"
         f"Responsibility claims: {market.responsibility_claims}\n"
         f"Requirement claims: {market.requirement_claims}\n"
-        "No separate rebuild is required; the Market screen reads persisted current analyses."
+        "Market reads only the normalized English-analysis contract; original-language analyses "
+        "remain separate review artifacts."
     )
     if market.sample_warning:
         sections.append(f"Market sampling warning\n{market.sample_warning}")
@@ -548,6 +551,19 @@ def create_app(
             else None
         )
         model = settings.effective_analysis_lm_studio_model()
+        analysis_store = AnalysisStore(settings.database_path)
+        english_analysis_artifact = analysis_store.latest_current(
+            source_job_id,
+            model=model,
+            prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ANALYSIS_SCHEMA_VERSION,
+        )
+        original_analysis_artifact = analysis_store.latest_current(
+            source_job_id,
+            model=model,
+            prompt_version=ORIGINAL_PROMPT_VERSION,
+            schema_version=ANALYSIS_SCHEMA_VERSION,
+        )
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="job_detail.html",
@@ -559,12 +575,8 @@ def create_app(
                 detail=detail,
                 translation=translation,
                 legacy_translation=legacy_translation,
-                analysis_artifact=AnalysisStore(settings.database_path).latest_current(
-                    source_job_id,
-                    model=model,
-                    prompt_version=PROMPT_VERSION,
-                    schema_version=ANALYSIS_SCHEMA_VERSION,
-                ),
+                english_analysis_artifact=english_analysis_artifact,
+                original_analysis_artifact=original_analysis_artifact,
                 workflow=JobWorkflowStore(settings.database_path).get_state(source_job_id),
                 observations=_observation_store(settings).list_for_job(source_job_id, limit=20),
                 lifecycle_events=LifecycleStore(settings.database_path).list_for_job(
@@ -679,7 +691,7 @@ def create_app(
                     AnalysisStore(settings.database_path).list_current(
                         limit=5000,
                         model=model,
-                        prompt_version=PROMPT_VERSION,
+                        prompt_version=ENGLISH_PROMPT_VERSION,
                         schema_version=ANALYSIS_SCHEMA_VERSION,
                     )
                 ),
@@ -842,9 +854,7 @@ def create_app(
                 store.initialize()
                 upserted = store.upsert_job(job=target.job, observed_at=datetime.now(UTC))
                 detail_summary = _batch_service(settings).run((target.job.source_job_id,))
-                successful_ids = tuple(
-                    item.source_job_id for item in detail_summary.results
-                )
+                successful_ids = tuple(item.source_job_id for item in detail_summary.results)
                 state = "new local job" if upserted.is_new else "already known locally"
                 output = "\n".join(
                     [
@@ -883,9 +893,7 @@ def create_app(
             if not selected_ids:
                 return output + "\n\nNo detail pages selected."
             detail_summary = _batch_service(settings).run(selected_ids)
-            successful_ids = tuple(
-                item.source_job_id for item in detail_summary.results
-            )
+            successful_ids = tuple(item.source_job_id for item in detail_summary.results)
             output += "\n\n" + format_batch_fetch_summary(detail_summary)
             return output + _complete_processing_output(
                 settings,
@@ -911,9 +919,7 @@ def create_app(
         return _start_operation(
             request,
             "Parser audit",
-            lambda: format_job_audit(
-                JobDetailAuditor(settings.database_path).audit(limit=500)
-            ),
+            lambda: format_job_audit(JobDetailAuditor(settings.database_path).audit(limit=500)),
             return_to="/",
         )
 
@@ -967,10 +973,10 @@ def create_app(
             )
             if not job_ids:
                 return (
-                    "Evidence-backed job analysis\n"
-                    "No eligible current jobs need analysis."
+                    "English-projection evidence-backed job analysis\n"
+                    "No eligible current jobs need English analysis."
                 )
-            summary = _analysis_service(settings).run(job_ids, limit=limit)
+            summary = _analysis_service(settings).run_english(job_ids, limit=limit)
             return _operation_result(
                 format_analysis_batch_summary(summary),
                 has_failures=bool(summary.failures),
@@ -978,7 +984,7 @@ def create_app(
 
         return _start_operation(
             request,
-            "Analyze ready jobs",
+            "Analyze English-ready jobs",
             action,
             return_to="/",
         )
@@ -1013,9 +1019,7 @@ def create_app(
         source_job_ids: Annotated[list[str], Form()],
     ):
         _csrf(request, csrf_token)
-        job_ids = tuple(
-            dict.fromkeys(item.strip() for item in source_job_ids if item.strip())
-        )
+        job_ids = tuple(dict.fromkeys(item.strip() for item in source_job_ids if item.strip()))
         if not job_ids:
             raise HTTPException(status_code=400, detail="Select at least one job")
         if len(job_ids) > 50:
@@ -1050,8 +1054,17 @@ def create_app(
                     format_translation_batch_summary(summary),
                     has_failures=bool(summary.failures),
                 )
-            if bulk_action == "analyze":
-                summary = _analysis_service(settings).run(
+            if bulk_action == "analyze_english":
+                summary = _analysis_service(settings).run_english(
+                    job_ids,
+                    limit=min(len(job_ids), 20),
+                )
+                return _operation_result(
+                    format_analysis_batch_summary(summary),
+                    has_failures=bool(summary.failures),
+                )
+            if bulk_action == "analyze_original":
+                summary = _analysis_service(settings).run_original(
                     job_ids,
                     limit=min(len(job_ids), 20),
                 )
@@ -1061,11 +1074,11 @@ def create_app(
                 )
             raise ValueError(f"Unsupported bulk action: {bulk_action}")
 
-        if bulk_action not in {"fetch", "translate", "analyze"}:
+        if bulk_action not in {"fetch", "translate", "analyze_english", "analyze_original"}:
             raise HTTPException(status_code=400, detail="Unsupported bulk action")
         return _start_operation(
             request,
-            f"Bulk {bulk_action}: {len(job_ids)} jobs",
+            f"Bulk {bulk_action.replace('_', ' ')}: {len(job_ids)} jobs",
             action,
             return_to="/jobs",
         )
@@ -1134,8 +1147,8 @@ def create_app(
             auto_return=True,
         )
 
-    @app.post("/jobs/{source_job_id}/analyze")
-    def start_job_analysis(
+    @app.post("/jobs/{source_job_id}/analyze-english")
+    def start_job_english_analysis(
         request: Request,
         source_job_id: str,
         csrf_token: Annotated[str, Form()],
@@ -1143,7 +1156,7 @@ def create_app(
         _csrf(request, csrf_token)
 
         def action() -> WebOperationResult:
-            summary = _analysis_service(settings).run((source_job_id,), limit=1)
+            summary = _analysis_service(settings).run_english((source_job_id,), limit=1)
             return _operation_result(
                 format_analysis_batch_summary(summary),
                 has_failures=bool(summary.failures),
@@ -1151,7 +1164,30 @@ def create_app(
 
         return _start_operation(
             request,
-            f"Analyze {source_job_id}",
+            f"Analyze English: {source_job_id}",
+            action,
+            return_to=f"/jobs/{source_job_id}",
+            auto_return=True,
+        )
+
+    @app.post("/jobs/{source_job_id}/analyze-original")
+    def start_job_original_analysis(
+        request: Request,
+        source_job_id: str,
+        csrf_token: Annotated[str, Form()],
+    ):
+        _csrf(request, csrf_token)
+
+        def action() -> WebOperationResult:
+            summary = _analysis_service(settings).run_original((source_job_id,), limit=1)
+            return _operation_result(
+                format_analysis_batch_summary(summary),
+                has_failures=bool(summary.failures),
+            )
+
+        return _start_operation(
+            request,
+            f"Analyze Original: {source_job_id}",
             action,
             return_to=f"/jobs/{source_job_id}",
             auto_return=True,
