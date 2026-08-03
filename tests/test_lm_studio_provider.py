@@ -106,30 +106,79 @@ def test_structured_smoke_test_uses_json_schema() -> None:
     assert provider.structured_smoke_test() == "model-a"
 
 
-def test_structured_smoke_test_reports_invalid_content_preview() -> None:
-    provider = LMStudioProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="model-a",
-        transport=httpx.MockTransport(
-            lambda _request: httpx.Response(
+def test_structured_smoke_test_recovers_from_length_truncation() -> None:
+    budgets: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        request_body = json.loads(request.content)
+        budgets.append(request_body["max_tokens"])
+        if request_body["max_tokens"] == 128:
+            return httpx.Response(
                 200,
                 json={
                     "choices": [
                         {
                             "finish_reason": "length",
-                            "message": {"content": "not-json\ntruncated"},
+                            "message": {"content": ""},
                         }
                     ]
                 },
             )
-        ),
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {"content": '{"status":"ok"}'},
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="model-a",
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert provider.structured_smoke_test() == "model-a"
+    assert budgets == [128, 512]
+
+
+def test_structured_smoke_test_reports_invalid_content_preview() -> None:
+    budgets: list[int] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        request_body = json.loads(request.content)
+        budgets.append(request_body["max_tokens"])
+        return httpx.Response(
+            200,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "length",
+                        "message": {"content": "not-json\ntruncated"},
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="model-a",
+        transport=httpx.MockTransport(handler),
     )
 
     with pytest.raises(
         InferenceResponseError,
-        match=r"finish_reason='length'.*content_preview='not-json\\ntruncated'",
+        match=(
+            r"finish_reason='length'.*content_preview='not-json\\ntruncated'.*"
+            r"max_tokens=2048"
+        ),
     ):
         provider.structured_smoke_test()
+    assert budgets == [128, 512, 2048]
 
 
 def test_structured_smoke_test_rejects_unexpected_content() -> None:
