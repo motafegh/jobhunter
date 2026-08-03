@@ -97,7 +97,7 @@ def _provider(payload: dict) -> LMStudioProvider:
         body = json.loads(request.read())
         assert body["model"] == "analysis-model"
         assert body["response_format"]["type"] == "json_schema"
-        system_prompt = body["messages"][0]["content"].casefold()
+        system_prompt = " ".join(body["messages"][0]["content"].casefold().split())
         assert "untrusted external data" in system_prompt
         assert "ignore previous instructions" in system_prompt
         assert "candidate qualification statements" in system_prompt
