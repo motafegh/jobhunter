@@ -52,6 +52,7 @@ If a subordinate plan/checklist becomes stale, this document controls until the 
 - Do not infer personal capability or readiness without explicit reviewed personal evidence.
 - Preserve partial success explicitly; successful durable work must not disappear merely because a later stage fails.
 - Important real failure classes become offline regression fixtures.
+- Do not turn vague employer adjectives or isolated technology mentions into fake exact technical depth; preserve unknown scope when evidence is insufficient.
 
 ## 3. Product stages
 
@@ -59,7 +60,7 @@ If a subordinate plan/checklist becomes stale, this document controls until the 
 |---|---|---|
 | M0 | Runnable local foundation, SQLite, LM Studio boundary, tests | Accepted |
 | Phase 1 | Complete Jobinja workflow through evidence-backed analysis/reporting | Active |
-| Phase 2 | Canonical market intelligence and role/capability taxonomy | Planned |
+| Phase 2 | Canonical market intelligence, job capability requirement/depth profiles and role/capability taxonomy | Planned |
 | Phase 3 | Personal capability evidence and gap intelligence | Planned |
 | Phase 4 | Explainable decision/action and application-readiness layer | Planned |
 | Phase 5 | Sustained operation, trends, recovery, quality and maintenance | Planned |
@@ -331,6 +332,8 @@ Rules:
 - critical integrity rules are enforced by application validation/tests, not by prompt wording alone;
 - acquired text is untrusted data even if it contains instruction-like strings.
 
+P1.6 intentionally stops at evidence-backed job-level claims. It is the source material for the later Phase-2 job capability requirement/depth model; it must not manufacture fine-grained Python/Docker/ML/etc. curricula before that model and its review gate exist.
+
 After first live acceptance, add a review/correction workflow only if real analysis quality shows that human correction is needed often enough to justify it.
 
 ### P1.7 Individual outputs, aggregate market view and complete Phase-1 run
@@ -426,7 +429,11 @@ practices
 domains
 experience signals
 education signals
+responsibilities
+deliverables
 ```
+
+The registry must support broad/narrow capability relationships needed for job-specific technical scope without treating every technology as an indivisible skill token.
 
 Do not silently collapse aliases by model guess.
 
@@ -442,46 +449,189 @@ LLM ↔ Large Language Model
 
 require reviewable mappings and provenance.
 
-### P2.3 Responsibility families
+Alias mapping is not sub-capability inference. `K8s -> Kubernetes` may be an alias; `Docker -> Kubernetes` is not.
+
+### P2.3 Responsibility families and deliverables
 
 Group recurring responsibilities into stable reviewed families while retaining original job-level claims/evidence.
+
+Model expected deliverables where employer evidence supports them because responsibilities/deliverables are primary evidence for what an employee must actually be capable of doing.
 
 ### P2.4 Role archetypes
 
 Build evidence-backed role archetypes from the analyzed corpus, not from generic occupational knowledge alone.
 
-### P2.5 Market matrices
+Archetypes should eventually use responsibility and capability-profile patterns rather than titles or technology keywords alone.
+
+### P2.5 Job capability requirement and depth profiles
+
+Implement the Phase-2 `JobCapabilityRequirementProfile` defined in `DOMAIN_AND_ANALYSIS_MODEL.md` and `PRODUCT_SPECIFICATION.md`.
+
+#### P2.5.1 Contract first
+
+Define/version the smallest durable schema needed to represent:
+
+- job/source semantic version;
+- canonical capability;
+- exact employer wording;
+- required/preferred/contextual/inferred strength;
+- employer-stated depth wording;
+- expected work activities;
+- deliverables;
+- technical scope/sub-capabilities;
+- underlying knowledge/practices;
+- expected independence/ownership;
+- complexity/operational/production context;
+- explicit experience-duration signals;
+- responsibility/deliverable links;
+- supported company/product/team context;
+- evidence status per expectation;
+- source evidence/inference rationale;
+- confidence;
+- unknown/unsupported scope;
+- review/version state.
+
+Do not begin by designing a universal technology curriculum table.
+
+#### P2.5.2 Separate four evidence statuses
+
+Every fine-grained expectation must resolve as one of:
+
+```text
+source_explicit
+strongly_implied_by_work
+model_inferred_prerequisite
+unknown_or_unsupported
+```
+
+The model may propose inferred prerequisites, but inference requires rationale and must remain visibly derived.
+
+#### P2.5.3 Depth is multidimensional
+
+Keep these dimensions separate:
+
+- employer-stated depth wording;
+- work-implied scope/depth;
+- technical sub-capability coverage;
+- expected independence/ownership;
+- operational/production complexity;
+- confidence/unknowns.
+
+Do not adopt one beginner/intermediate/advanced/expert number as the canonical truth. A summary category may be introduced later only if reviewed examples prove it useful.
+
+#### P2.5.4 Build from accepted job evidence
+
+For each reviewed job/capability, derive the profile from accepted P1.6 responsibilities/requirements plus deterministic source context and reviewed taxonomy relationships.
+
+Responsibilities and deliverables should carry more interpretive weight than isolated skill-list mentions when determining what the work actually requires.
+
+Company/product/team context may support interpretation only when explicitly sourced/reviewed. No stereotype-based requirement generation.
+
+#### P2.5.5 Unknown scope is required behavior
+
+Examples:
+
+```text
+"Docker required"
+→ Docker is explicit
+→ exact Docker feature/sub-capability scope may remain unknown
+
+"Expert Python"
+→ preserve employer wording
+→ determine applicable Python scope from actual responsibilities
+→ do not manufacture CPython/metaclass/async/scientific requirements without evidence
+```
+
+The system must prefer incomplete-but-defensible profiles over complete-looking hallucinated curricula.
+
+#### P2.5.6 Representative reviewed acceptance set
+
+Before corpus-wide use, review examples covering where available:
+
+- broad language/platform capability such as Python;
+- operational tool such as Docker/Linux;
+- broad knowledge domain such as Machine Learning;
+- library/framework such as NumPy/FastAPI;
+- explicit detailed requirement;
+- vague technology-only requirement;
+- responsibility-rich but skill-list-poor vacancy;
+- multiple employers/role archetypes;
+- Persian/mixed/native-English source variation.
+
+For every example inspect:
+
+- missing important activities;
+- unsupported sub-capabilities;
+- inflated depth;
+- incorrect independence/ownership;
+- company-context overreach;
+- prerequisite overreach;
+- evidence-status errors;
+- unknown scope that was incorrectly filled.
+
+Convert repeatable errors into deterministic/model regression fixtures.
+
+#### P2.5.7 Job-level UI/report
+
+Expose an inspectable profile such as:
+
+```text
+Capability: Docker
+Employer strength: required
+Work activities: containerize service, deployment troubleshooting
+Sub-capabilities: Dockerfile/images/runtime config [supported]
+Independence: routine independent execution [work-implied]
+Unknown: Swarm, advanced storage internals, Kubernetes orchestration
+Evidence: linked source excerpts/responsibilities
+```
+
+The UI must let the user distinguish employer wording from JobHunter interpretation immediately.
+
+### P2.6 Market matrices
 
 Produce:
 
 - concept demand by role/archetype;
 - required/preferred/contextual distributions;
 - responsibility-family prevalence;
+- recurring work activities per capability;
+- recurring sub-capabilities where support is adequate;
+- independence/operational-context patterns;
+- employer-stated vs work-implied depth patterns;
+- evidence-status distributions;
 - co-occurrence matrices;
 - technology/domain combinations;
-- seniority/depth signals where evidence supports them;
 - posting-frequency and distinct-employer views where useful.
 
-Every aggregate states sample size, source/filter scope and provenance. Duplicate-adjusted views remain unavailable until duplicate/repost identity is sufficiently reliable.
+Every aggregate states sample size, source/filter scope and provenance. Fine-grained capability patterns must expose distinct-employer support and must not mix employer-explicit with inferred signals silently. Duplicate-adjusted views remain unavailable until duplicate/repost identity is sufficiently reliable.
 
-### P2.6 Market segmentation
+### P2.7 Market segmentation
 
 Allow views by available source dimensions such as category/location/employment/experience, plus reviewed role archetypes.
 
-### P2.7 Phase-2 quality gate
+Capability requirement/depth profiles should be segmentable only when sample coverage is sufficient to avoid false precision.
+
+### P2.8 Phase-2 quality gate
 
 - canonical mappings reviewed;
 - aggregate counts reproducible from accepted analysis artifacts;
 - no double-counting caused by aliases;
 - sample/source/filter scope visible;
 - job-level drill-down remains possible;
-- role/archetype definitions have reviewed representative examples.
+- role/archetype definitions have reviewed representative examples;
+- job capability requirement profiles have reviewed representative examples across broad/narrow capability types;
+- sub-capabilities/activities are evidence-supported rather than generic model knowledge;
+- employer-stated/work-implied/inferred/unknown distinctions are preserved;
+- vague adjectives do not become fake exact technical depth;
+- unsupported technical scope remains unknown;
+- capability-profile contract changes are versioned/reversible;
+- the job-side model is stable enough to compare with future personal evidence without reusing the personal 0–7 scale as a shortcut.
 
 Multi-source acquisition may begin after Phase-1 acceptance under the roadmap, but a generic source-adapter abstraction must be extracted from Jobinja plus at least one real second source rather than designed from imagination.
 
 ## 9. Phase 3 — personal capability evidence and gap intelligence
 
-Start only after the market concept model is stable enough to compare against.
+Start only after the market concept and job capability-requirement model are stable enough to compare against.
 
 Before storing irreplaceable personal evidence, define explicit public/system/personal/secret data boundaries and provide tested backup/restore for the personal evidence domain.
 
@@ -505,9 +655,11 @@ Repository facts may generate evidence candidates later, but dependency names or
 
 ### P3.2 Capability depth model
 
-Represent depth explicitly. The current domain proposal uses an ordinal model from unassessed/awareness through guided/independent/integrated/repeated evidence and production/production-like operation.
+Represent personal depth explicitly. The current domain proposal uses an ordinal model from unassessed/awareness through guided/independent/integrated/repeated evidence and production/production-like operation.
 
 Exact UI labels may be refined from real use; do not mark a concept simply complete/not complete.
+
+This personal evidence scale is separate from the Phase-2 multidimensional job-requirement depth profile.
 
 ### P3.3 Capability evidence/provenance
 
@@ -523,7 +675,9 @@ Every personal capability claim records:
 
 ### P3.4 Market-to-person mapping
 
-Map personal canonical capabilities to Phase-2 market concepts through reviewed exact/broader/narrower/partial relations.
+Map personal canonical capabilities to Phase-2 market concepts and required activities/sub-capabilities through reviewed exact/broader/narrower/partial relations.
+
+A broad concept match must not automatically satisfy every job-specific activity under that concept.
 
 ### P3.5 Gap classes
 
@@ -549,6 +703,8 @@ Unknown is not automatically a negative capability claim.
 
 Show the evidence behind every claimed strength/gap and allow correction.
 
+Where Phase-2 job capability profiles exist, compare specific required activities/sub-capabilities and context—not only technology names.
+
 ### P3.7 Phase-3 quality gate
 
 - no personal claim without evidence;
@@ -556,6 +712,7 @@ Show the evidence behind every claimed strength/gap and allow correction.
 - AI-assistance/independence context representable;
 - no automatic optimism/pessimism;
 - gap conclusions trace to both market evidence and personal evidence;
+- broad technology matches do not hide missing job-specific activities;
 - backup/restore of personal evidence is proven.
 
 ## 10. Phase 4 — explainable career decisions and application readiness
@@ -568,10 +725,10 @@ Rank/filter jobs using explainable market + personal evidence, separate from acq
 
 ### P4.2 Fit/readiness explanation
 
-Avoid opaque percentage scores unless a defensible calibrated method exists. Prefer explicit requirement-by-requirement/categorical breakdowns such as:
+Avoid opaque percentage scores unless a defensible calibrated method exists. Prefer explicit requirement-by-requirement/activity-by-activity categorical breakdowns such as:
 
 - strong evidence matches;
-- partial matches;
+- partial activity/sub-capability matches;
 - missing critical requirements;
 - preferred-only gaps;
 - unknown requirements;
@@ -584,12 +741,15 @@ Prioritize gaps by:
 
 - market demand;
 - required/preferred strength;
+- job-specific activity/sub-capability requirements;
 - dependency structure;
 - current personal depth;
 - evidence-building value/cost where known;
 - explicit target-role/scenario constraints.
 
 Actions may include learn, practise, integrate, build evidence, document, assess, monitor or ignore for now.
+
+Prefer targeted missing activities over unnecessarily relearning an entire broad technology.
 
 ### P4.4 Application priorities
 
@@ -620,7 +780,7 @@ what would change the conclusion
 
 ### P5.1 Historical market trends
 
-Track changes in demand, requirements, archetypes and source lifecycle over time without mixing old/new analysis contracts silently.
+Track changes in demand, requirements, archetypes, recurring capability activities/sub-capabilities and source lifecycle over time without mixing old/new analysis or capability-profile contracts silently.
 
 Trend claims require like-for-like snapshot scope, duplicate/lifecycle quality and visible sample size.
 
@@ -651,7 +811,7 @@ Define evidence retention and optional cleanup only after real storage growth is
 
 ### P5.7 Model/prompt regression quality
 
-Maintain reviewed test corpora for translation and semantic analysis so model/prompt upgrades can be compared rather than guessed.
+Maintain reviewed test corpora for translation, semantic analysis and later capability-profile inference so model/prompt upgrades can be compared rather than guessed.
 
 ### P5.8 Performance
 
@@ -684,6 +844,7 @@ Do not add these merely because they are common application features or technica
 - autonomous agent swarm;
 - salary/hiring-probability prediction without adequate data quality/sample size;
 - opaque career-fit percentages;
+- universal technology curricula generated from isolated job keywords;
 - personal capability assumptions from chat memory alone;
 - repository dependency names treated as proficiency;
 - self-training on unverified model generations.
@@ -704,6 +865,8 @@ An increment is accepted only when:
 10. browser/CLI behavior stays consistent where both expose the feature;
 11. documentation matches actual behavior;
 12. no unrelated future capability is claimed.
+
+For job capability/depth inference specifically, acceptance also requires reviewed evidence that unsupported technical scope remains unknown and employer-explicit/work-implied/inferred states are not conflated.
 
 ## 14. Current exact execution order
 
@@ -728,7 +891,7 @@ Do not add more features until this sequence completes:
 16. Finish remaining P1.3/P1.5 acceptance
 17. Finish P1.7 final run/reporting/browser equivalent
 18. Reconcile accepted-state documentation and close Phase 1
-19. Only then begin Phase 2
+19. Only then begin Phase 2, starting with the canonical concept/responsibility foundation required by job capability requirement/depth profiles
 ```
 
 The detailed working checklist for these steps is `docs/EXECUTION_TODO.md`.
@@ -741,6 +904,8 @@ Until the current stabilization/live gates pass, JobHunter must not claim:
 - complete source lifecycle/repost resolution;
 - production-quality semantic extraction across all role types;
 - canonical market taxonomy;
+- reliable fine-grained job capability/sub-capability/depth profiles;
+- exact technical scope derived from vague employer adjectives or isolated technology mentions;
 - full-market conclusions from a small/source-biased analyzed sample;
 - reviewed personal capability gaps/readiness/career recommendations;
 - evidence-backed application/resume/interview readiness;
