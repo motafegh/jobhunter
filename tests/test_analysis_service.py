@@ -92,20 +92,41 @@ def _analysis_payload(evidence: str = "Python experience is required.") -> dict:
     }
 
 
+def _assert_no_evidence_values(value) -> None:
+    if isinstance(value, dict):
+        assert "evidence" not in value
+        for nested in value.values():
+            _assert_no_evidence_values(nested)
+    elif isinstance(value, list):
+        for nested in value:
+            _assert_no_evidence_values(nested)
+
+
 def _provider(payload: dict) -> LMStudioProvider:
     def handler(request: httpx.Request) -> httpx.Response:
         body = json.loads(request.read())
         assert body["model"] == "analysis-model"
         assert body["response_format"]["type"] == "json_schema"
         system_prompt = " ".join(body["messages"][0]["content"].casefold().split())
-        assert "untrusted external data" in system_prompt
-        assert "ignore previous instructions" in system_prompt
-        assert "candidate qualification statements" in system_prompt
-        assert "familiarity does not mean preferred" in system_prompt
         user_payload = json.loads(body["messages"][1]["content"])
         authoritative = user_payload["authoritative_source_fields"]
         assert "language" not in authoritative
         assert "parser_version" not in authoritative
+
+        schema_name = body["response_format"]["json_schema"]["name"]
+        if schema_name.endswith("_repair"):
+            assert "authoritative_source_fields is the only payload field" in system_prompt
+            assert "familiarity alone does not mean preferred" in system_prompt
+            assert "english_comprehension_aid" not in user_payload
+            rejected = user_payload["rejected_analysis_without_evidence"]
+            _assert_no_evidence_values(rejected)
+        else:
+            assert "untrusted external data" in system_prompt
+            assert "ignore previous instructions" in system_prompt
+            assert "candidate qualification statements" in system_prompt
+            assert "familiarity does not mean preferred" in system_prompt
+            assert "english_comprehension_aid" in user_payload
+
         return httpx.Response(
             200,
             request=request,
@@ -157,7 +178,7 @@ def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
     assert artifact.request_body["model"] == "analysis-model"
-    assert artifact.prompt_version == "job-analysis-prompt-v3"
+    assert artifact.prompt_version == "job-analysis-prompt-v4"
     assert artifact.schema_version == "job-analysis-v2"
 
 
@@ -211,12 +232,22 @@ def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
     assert result.outcome == "completed"
     assert len(requests) == 2
     assert "validation_error" not in requests[0]
-    assert "not an exact excerpt" in requests[1]["validation_error"]
-    assert requests[1]["rejected_analysis"] == rejected
+    assert "english_comprehension_aid" in requests[0]
+    repair_request = requests[1]
+    assert "not an exact excerpt" in repair_request["validation_error"]
+    assert "english_comprehension_aid" not in repair_request
+    assert "rejected_analysis" not in repair_request
+    rejected_without_evidence = repair_request["rejected_analysis_without_evidence"]
+    _assert_no_evidence_values(rejected_without_evidence)
+    assert rejected_without_evidence["role_purpose"][0]["statement"] == (
+        rejected["role_purpose"][0]["statement"]
+    )
+    assert rejected_without_evidence["requirements"][0]["concept"] == "Python"
+
     artifact = AnalysisStore(database_path).latest_current(
         "eng1",
         model="analysis-model",
-        prompt_version="job-analysis-prompt-v3",
+        prompt_version="job-analysis-prompt-v4",
         schema_version="job-analysis-v2",
     )
     assert artifact is not None
@@ -225,7 +256,8 @@ def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
     assert len(artifact.analysis["requirements"]) == 2
     repair_payload = json.loads(artifact.request_body["messages"][1]["content"])
     assert "not an exact excerpt" in repair_payload["validation_error"]
-    assert repair_payload["rejected_analysis"] == rejected
+    assert "english_comprehension_aid" not in repair_payload
+    _assert_no_evidence_values(repair_payload["rejected_analysis_without_evidence"])
 
 
 def test_analysis_rejects_evidence_not_present_after_one_bounded_repair(
