@@ -17,6 +17,10 @@ class InferenceResponseError(InferenceProviderError):
     """Raised when a provider returns an invalid or unsuccessful response."""
 
 
+class InferenceTruncatedError(InferenceResponseError):
+    """Raised when a structured response is cut off by the output-token limit."""
+
+
 class InferenceProvider(Protocol):
     """Minimal provider contract required by the M0 health checks."""
 
