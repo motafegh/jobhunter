@@ -125,5 +125,8 @@ def test_structured_smoke_test_rejects_unexpected_content() -> None:
         ),
     )
 
-    with pytest.raises(InferenceResponseError, match="Unexpected structured smoke result"):
+    with pytest.raises(
+        InferenceResponseError,
+        match="structured response violated the requested JSON schema",
+    ):
         provider.structured_smoke_test()
