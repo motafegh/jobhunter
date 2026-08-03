@@ -188,7 +188,11 @@ class LMStudioProvider:
         selected_model = self._selected_model(model)
         result = self.complete_structured(
             system_prompt="Return only the requested structured health-check result.",
-            user_payload={"instruction": "Report that the JobHunter local inference check is okay."},
+            user_payload={
+                "instruction": (
+                    "Report that the JobHunter local inference check is okay."
+                )
+            },
             schema_name="jobhunter_health_check",
             schema={
                 "type": "object",
