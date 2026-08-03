@@ -17,6 +17,8 @@ from jobhunter.inference.base import (
     InferenceTruncatedError,
 )
 
+_MAX_STRUCTURED_TOKENS = 32_768
+
 
 @dataclass(frozen=True, slots=True)
 class StructuredInferenceResult:
@@ -137,20 +139,17 @@ class LMStudioProvider:
             )
         return selected_model
 
-    def complete_structured(
+    def _complete_structured_once(
         self,
         *,
+        selected_model: str,
         system_prompt: str,
         user_payload: dict[str, Any],
         schema_name: str,
         schema: dict[str, Any],
-        model: str | None = None,
-        max_tokens: int = 8192,
-        seed: int = 0,
+        max_tokens: int,
+        seed: int,
     ) -> StructuredInferenceResult:
-        """Run one deterministic JSON-schema completion and retain raw request/response."""
-
-        selected_model = self._selected_model(model)
         request_body = {
             "model": selected_model,
             "messages": [
@@ -213,41 +212,70 @@ class LMStudioProvider:
             finish_reason=str(finish_reason) if finish_reason is not None else None,
         )
 
+    def complete_structured(
+        self,
+        *,
+        system_prompt: str,
+        user_payload: dict[str, Any],
+        schema_name: str,
+        schema: dict[str, Any],
+        model: str | None = None,
+        max_tokens: int = 8192,
+        max_recovery_tokens: int | None = None,
+        seed: int = 0,
+    ) -> StructuredInferenceResult:
+        """Run deterministic JSON-schema inference with bounded length recovery."""
+
+        if not 1 <= max_tokens <= _MAX_STRUCTURED_TOKENS:
+            raise ValueError("max_tokens must be between 1 and 32768")
+        recovery_ceiling = (
+            _MAX_STRUCTURED_TOKENS
+            if max_recovery_tokens is None
+            else max_recovery_tokens
+        )
+        if not max_tokens <= recovery_ceiling <= _MAX_STRUCTURED_TOKENS:
+            raise ValueError(
+                "max_recovery_tokens must be between max_tokens and 32768"
+            )
+
+        selected_model = self._selected_model(model)
+        current_max_tokens = max_tokens
+        while True:
+            try:
+                return self._complete_structured_once(
+                    selected_model=selected_model,
+                    system_prompt=system_prompt,
+                    user_payload=user_payload,
+                    schema_name=schema_name,
+                    schema=schema,
+                    max_tokens=current_max_tokens,
+                    seed=seed,
+                )
+            except InferenceTruncatedError:
+                if current_max_tokens >= recovery_ceiling:
+                    raise
+                current_max_tokens = min(current_max_tokens * 4, recovery_ceiling)
+
     def structured_smoke_test(self, model: str | None = None) -> str:
         """Prove schema-conforming local inference with bounded truncation recovery."""
 
         selected_model = self._selected_model(model)
-        token_budgets = (128, 512, 2048)
-        result: StructuredInferenceResult | None = None
-        last_truncation: InferenceTruncatedError | None = None
-        for max_tokens in token_budgets:
-            try:
-                result = self.complete_structured(
-                    system_prompt="Return only the requested structured health-check result.",
-                    user_payload={
-                        "instruction": (
-                            "Report that the JobHunter local inference check is okay."
-                        )
-                    },
-                    schema_name="jobhunter_health_check",
-                    schema={
-                        "type": "object",
-                        "properties": {
-                            "status": {"type": "string", "enum": ["ok"]}
-                        },
-                        "required": ["status"],
-                        "additionalProperties": False,
-                    },
-                    model=selected_model,
-                    max_tokens=max_tokens,
-                )
-                break
-            except InferenceTruncatedError as exc:
-                last_truncation = exc
-
-        if result is None:
-            assert last_truncation is not None
-            raise last_truncation
+        result = self.complete_structured(
+            system_prompt="Return only the requested structured health-check result.",
+            user_payload={
+                "instruction": "Report that the JobHunter local inference check is okay."
+            },
+            schema_name="jobhunter_health_check",
+            schema={
+                "type": "object",
+                "properties": {"status": {"type": "string", "enum": ["ok"]}},
+                "required": ["status"],
+                "additionalProperties": False,
+            },
+            model=selected_model,
+            max_tokens=128,
+            max_recovery_tokens=2048,
+        )
         if result.structured != {"status": "ok"}:
             raise InferenceResponseError(
                 "Unexpected structured smoke result "
