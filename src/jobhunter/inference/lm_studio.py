@@ -58,6 +58,7 @@ class LMStudioProvider:
                     headers=headers,
                     timeout=self._timeout_seconds,
                     transport=self._transport,
+                    trust_env=False,
                 ) as client:
                     response = client.request(method, path, **kwargs)
                     response.raise_for_status()
