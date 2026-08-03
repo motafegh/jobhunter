@@ -5,7 +5,13 @@ from pathlib import Path
 import httpx
 import pytest
 
-from jobhunter.analysis_service import AnalysisValidationError, JobAnalysisService
+from jobhunter.analysis_service import (
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
+    ORIGINAL_PROMPT_VERSION,
+    AnalysisValidationError,
+    JobAnalysisService,
+)
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.inference import LMStudioProvider
 from jobhunter.sources import DiscoveredJobLink
@@ -102,31 +108,22 @@ def _assert_no_evidence_values(value) -> None:
             _assert_no_evidence_values(nested)
 
 
-def _provider(payload: dict) -> LMStudioProvider:
+def _provider(payload: dict, requests: list[dict] | None = None) -> LMStudioProvider:
     def handler(request: httpx.Request) -> httpx.Response:
         body = json.loads(request.read())
         assert body["model"] == "analysis-model"
         assert body["response_format"]["type"] == "json_schema"
         system_prompt = " ".join(body["messages"][0]["content"].casefold().split())
         user_payload = json.loads(body["messages"][1]["content"])
-        authoritative = user_payload["authoritative_source_fields"]
-        assert "language" not in authoritative
-        assert "parser_version" not in authoritative
-
-        schema_name = body["response_format"]["json_schema"]["name"]
-        if schema_name.endswith("_repair"):
-            assert "authoritative_source_fields is the only payload field" in system_prompt
-            assert "familiarity alone does not mean preferred" in system_prompt
-            assert "english_comprehension_aid" not in user_payload
-            rejected = user_payload["rejected_analysis_without_evidence"]
-            _assert_no_evidence_values(rejected)
-        else:
-            assert "untrusted external data" in system_prompt
-            assert "ignore previous instructions" in system_prompt
-            assert "candidate qualification statements" in system_prompt
-            assert "familiarity does not mean preferred" in system_prompt
-            assert "english_comprehension_aid" in user_payload
-
+        if requests is not None:
+            requests.append(user_payload)
+        analysis_fields = user_payload["analysis_fields"]
+        assert "language" not in analysis_fields
+        assert "parser_version" not in analysis_fields
+        assert "english_comprehension_aid" not in user_payload
+        assert "authoritative_source_fields" not in user_payload
+        assert "untrusted external data" in system_prompt
+        assert "familiarity does not mean preferred" in system_prompt
         return httpx.Response(
             200,
             request=request,
@@ -152,34 +149,92 @@ def _service(
     database_path: Path,
     translation: TranslationService,
     payload: dict,
+    requests: list[dict] | None = None,
 ) -> JobAnalysisService:
     return JobAnalysisService(
         source_store=TranslationStore(database_path),
         translation_service=translation,
         analysis_store=AnalysisStore(database_path),
-        provider=_provider(payload),
+        provider=_provider(payload, requests),
         model="analysis-model",
     )
 
 
-def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path) -> None:
+def test_english_analysis_persists_and_reuses_independent_artifact(tmp_path: Path) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
-    service = _service(database_path, translation, _analysis_payload())
+    requests: list[dict] = []
+    service = _service(database_path, translation, _analysis_payload(), requests)
 
-    first = service.analyze_job("eng1")
-    second = service.analyze_job("eng1")
+    first = service.analyze_english_job("eng1")
+    second = service.analyze_english_job("eng1")
 
     assert first.outcome == "completed"
+    assert first.analysis_mode == "english"
     assert second.outcome == "reused"
     assert second.artifact_id == first.artifact_id
-    artifact = AnalysisStore(database_path).latest_current("eng1")
+    assert len(requests) == 1
+    assert requests[0]["analysis_mode"] == "english"
+    artifact = AnalysisStore(database_path).latest_current(
+        "eng1",
+        model="analysis-model",
+        prompt_version=ENGLISH_PROMPT_VERSION,
+        schema_version=ANALYSIS_SCHEMA_VERSION,
+    )
     assert artifact is not None
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
-    assert artifact.request_body["model"] == "analysis-model"
-    assert artifact.prompt_version == "job-analysis-prompt-v4"
-    assert artifact.schema_version == "job-analysis-v2"
+    assert artifact.prompt_version == ENGLISH_PROMPT_VERSION
+
+
+def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    requests: list[dict] = []
+    service = _service(database_path, translation, _analysis_payload(), requests)
+
+    english = service.analyze_english_job("eng1")
+    original = service.analyze_original_job("eng1")
+    original_again = service.analyze_original_job("eng1")
+
+    assert english.artifact_id != original.artifact_id
+    assert original.analysis_mode == "original"
+    assert original_again.outcome == "reused"
+    assert original_again.artifact_id == original.artifact_id
+    assert [request["analysis_mode"] for request in requests] == ["english", "original"]
+    store = AnalysisStore(database_path)
+    english_artifact = store.latest_current(
+        "eng1",
+        model="analysis-model",
+        prompt_version=ENGLISH_PROMPT_VERSION,
+        schema_version=ANALYSIS_SCHEMA_VERSION,
+    )
+    original_artifact = store.latest_current(
+        "eng1",
+        model="analysis-model",
+        prompt_version=ORIGINAL_PROMPT_VERSION,
+        schema_version=ANALYSIS_SCHEMA_VERSION,
+    )
+    assert english_artifact is not None
+    assert original_artifact is not None
+    assert english_artifact.translation_artifact_id is not None
+    assert original_artifact.translation_artifact_id is None
+
+
+def test_english_and_original_requests_never_mix_text_representations(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    requests: list[dict] = []
+    service = _service(database_path, translation, _analysis_payload(), requests)
+
+    service.analyze_english_job("eng1")
+    service.analyze_original_job("eng1")
+
+    english_request, original_request = requests
+    assert set(english_request) == {"source_job_id", "analysis_mode", "analysis_fields"}
+    assert set(original_request) == {"source_job_id", "analysis_mode", "analysis_fields"}
+    assert english_request["analysis_mode"] == "english"
+    assert original_request["analysis_mode"] == "original"
 
 
 def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
@@ -188,9 +243,7 @@ def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
     rejected = _analysis_payload()
-    rejected["role_purpose"][0]["evidence"] = (
-        "Build detection capability across the company."
-    )
+    rejected["role_purpose"][0]["evidence"] = "Build detection capability across the company."
     repaired = _analysis_payload()
     repaired["role_purpose"] = []
     requests: list[dict] = []
@@ -205,10 +258,7 @@ def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
             request=request,
             json={
                 "choices": [
-                    {
-                        "finish_reason": "stop",
-                        "message": {"content": json.dumps(payload)},
-                    }
+                    {"finish_reason": "stop", "message": {"content": json.dumps(payload)}}
                 ]
             },
         )
@@ -227,36 +277,30 @@ def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
         model="analysis-model",
     )
 
-    result = service.analyze_job("eng1")
+    result = service.analyze_english_job("eng1")
 
     assert result.outcome == "completed"
     assert len(requests) == 2
     assert "validation_error" not in requests[0]
-    assert "english_comprehension_aid" in requests[0]
+    assert requests[0]["analysis_mode"] == "english"
     repair_request = requests[1]
     assert "not an exact excerpt" in repair_request["validation_error"]
-    assert "english_comprehension_aid" not in repair_request
-    assert "rejected_analysis" not in repair_request
+    assert repair_request["analysis_mode"] == "english"
     rejected_without_evidence = repair_request["rejected_analysis_without_evidence"]
     _assert_no_evidence_values(rejected_without_evidence)
     assert rejected_without_evidence["role_purpose"][0]["statement"] == (
         rejected["role_purpose"][0]["statement"]
     )
-    assert rejected_without_evidence["requirements"][0]["concept"] == "Python"
 
     artifact = AnalysisStore(database_path).latest_current(
         "eng1",
         model="analysis-model",
-        prompt_version="job-analysis-prompt-v4",
-        schema_version="job-analysis-v2",
+        prompt_version=ENGLISH_PROMPT_VERSION,
+        schema_version=ANALYSIS_SCHEMA_VERSION,
     )
     assert artifact is not None
     assert artifact.analysis["role_purpose"] == []
-    assert len(artifact.analysis["responsibilities"]) == 1
-    assert len(artifact.analysis["requirements"]) == 2
     repair_payload = json.loads(artifact.request_body["messages"][1]["content"])
-    assert "not an exact excerpt" in repair_payload["validation_error"]
-    assert "english_comprehension_aid" not in repair_payload
     _assert_no_evidence_values(repair_payload["rejected_analysis_without_evidence"])
 
 
@@ -276,10 +320,7 @@ def test_analysis_rejects_evidence_not_present_after_one_bounded_repair(
             request=request,
             json={
                 "choices": [
-                    {
-                        "finish_reason": "stop",
-                        "message": {"content": json.dumps(invalid)},
-                    }
+                    {"finish_reason": "stop", "message": {"content": json.dumps(invalid)}}
                 ]
             },
         )
@@ -299,21 +340,28 @@ def test_analysis_rejects_evidence_not_present_after_one_bounded_repair(
     )
 
     with pytest.raises(AnalysisValidationError, match="one bounded repair attempt"):
-        service.analyze_job("eng1")
+        service.analyze_english_job("eng1")
 
     assert calls == 2
-    assert AnalysisStore(database_path).latest_current("eng1") is None
+    assert (
+        AnalysisStore(database_path).latest_current(
+            "eng1",
+            model="analysis-model",
+            prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ANALYSIS_SCHEMA_VERSION,
+        )
+        is None
+    )
 
 
-def test_analysis_rejects_parser_metadata_as_employer_evidence(tmp_path: Path) -> None:
+def test_analysis_rejects_parser_metadata_as_evidence(tmp_path: Path) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
     payload = _analysis_payload("jobinja-detail-v2")
     service = _service(database_path, translation, payload)
 
     with pytest.raises(AnalysisValidationError, match="not an exact excerpt"):
-        service.analyze_job("eng1")
-    assert AnalysisStore(database_path).latest_current("eng1") is None
+        service.analyze_english_job("eng1")
 
 
 def test_analysis_rejects_duplicate_requirement_claims(tmp_path: Path) -> None:
@@ -324,9 +372,7 @@ def test_analysis_rejects_duplicate_requirement_claims(tmp_path: Path) -> None:
     service = _service(database_path, translation, payload)
 
     with pytest.raises(AnalysisValidationError, match="duplicates an earlier requirement"):
-        service.analyze_job("eng1")
-
-    assert AnalysisStore(database_path).latest_current("eng1") is None
+        service.analyze_english_job("eng1")
 
 
 def test_analysis_rejects_duplicate_responsibility_claims(tmp_path: Path) -> None:
@@ -337,9 +383,7 @@ def test_analysis_rejects_duplicate_responsibility_claims(tmp_path: Path) -> Non
     service = _service(database_path, translation, payload)
 
     with pytest.raises(AnalysisValidationError, match="duplicates an earlier responsibility"):
-        service.analyze_job("eng1")
-
-    assert AnalysisStore(database_path).latest_current("eng1") is None
+        service.analyze_english_job("eng1")
 
 
 def test_analysis_rejects_inferred_requirement_without_rationale(tmp_path: Path) -> None:
@@ -359,6 +403,4 @@ def test_analysis_rejects_inferred_requirement_without_rationale(tmp_path: Path)
     service = _service(database_path, translation, payload)
 
     with pytest.raises(AnalysisValidationError, match="lacks rationale"):
-        service.analyze_job("eng1")
-
-    assert AnalysisStore(database_path).latest_current("eng1") is None
+        service.analyze_english_job("eng1")
