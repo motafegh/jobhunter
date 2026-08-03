@@ -55,6 +55,15 @@ def test_web_app_serves_packaged_static_assets(tmp_path: Path) -> None:
     assert '"display": "standalone"' in manifest.text
 
 
+def test_web_app_exposes_distinct_english_and_original_analysis_routes(tmp_path: Path) -> None:
+    app = create_app(_settings(tmp_path))
+    paths = {route.path for route in app.routes}
+
+    assert "/jobs/{source_job_id}/analyze-english" in paths
+    assert "/jobs/{source_job_id}/analyze-original" in paths
+    assert "/jobs/{source_job_id}/analyze" not in paths
+
+
 def test_web_app_rejects_invalid_csrf_token(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     with TestClient(app) as client:
@@ -171,10 +180,10 @@ def test_web_app_explains_sync_controls_quick_add_and_pipeline(tmp_path: Path) -
     assert "Run full workflow" in overview.text
     assert "Source sync only" in overview.text
     assert "English v2 jobs" in overview.text
-    assert "Jobs to analyze" in overview.text
+    assert "English jobs to analyze" in overview.text
     assert "Fetch priority details" in overview.text
     assert "Repair / translate English" in overview.text
-    assert "Analyze ready jobs" in overview.text
+    assert "Analyze English-ready jobs" in overview.text
     assert "Quick Add" in jobs.text
     assert "Job URL, search URL, or keyword" in jobs.text
     assert "Process fetched jobs fully" in jobs.text
