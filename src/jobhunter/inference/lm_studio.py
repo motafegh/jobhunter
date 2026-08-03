@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from typing import Any
 
 import httpx
+from jsonschema import Draft202012Validator
+from jsonschema.exceptions import SchemaError, ValidationError
 
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
 
@@ -88,6 +90,27 @@ class LMStudioProvider:
         if not isinstance(payload, dict):
             raise InferenceResponseError("LM Studio response must be a JSON object")
         return payload
+
+    @staticmethod
+    def _validate_structured_result(
+        structured: dict[str, Any],
+        schema: dict[str, Any],
+    ) -> None:
+        """Verify provider output locally instead of trusting response-format claims."""
+
+        try:
+            Draft202012Validator.check_schema(schema)
+            Draft202012Validator(schema).validate(structured)
+        except SchemaError as exc:
+            raise InferenceResponseError(
+                f"JobHunter supplied an invalid structured-output schema: {exc.message}"
+            ) from exc
+        except ValidationError as exc:
+            path = ".".join(str(item) for item in exc.absolute_path) or "<root>"
+            raise InferenceResponseError(
+                "LM Studio structured response violated the requested JSON schema "
+                f"at {path}: {exc.message}"
+            ) from exc
 
     def list_models(self) -> list[str]:
         payload = self._json_object(self._request("GET", "models"))
@@ -176,6 +199,7 @@ class LMStudioProvider:
             ) from exc
         if not isinstance(structured, dict):
             raise InferenceResponseError("Structured LM Studio content must be a JSON object")
+        self._validate_structured_result(structured, schema)
         return StructuredInferenceResult(
             model=selected_model,
             structured=structured,
