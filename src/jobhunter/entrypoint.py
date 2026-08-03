@@ -1,4 +1,4 @@
-"""Console entrypoint that adds the final Phase-1 run without destabilizing legacy CLI."""
+"""Console entrypoint for complete Phase-1 and source-health commands."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ from jobhunter.phase1_run import (
     configured_searches,
     format_phase1_run_summary,
 )
+from jobhunter.source_health import SourceHealthReader, format_source_health
 
 
 def _bounded_int(name: str, *, minimum: int, maximum: int):
@@ -105,6 +106,24 @@ def _run_parser(*, default_config: Path | None = None) -> argparse.ArgumentParse
     return parser
 
 
+def _health_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs health",
+        description=(
+            "Summarize one Jobinja posting's source/lifecycle health without "
+            "re-reading the full check timeline."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
 def _extract_run_invocation(
     arguments: list[str],
 ) -> tuple[bool, Path | None, list[str]]:
@@ -118,6 +137,26 @@ def _extract_run_invocation(
         and arguments[1] == "run"
     ):
         return True, Path(arguments[0].split("=", 1)[1]), arguments[2:]
+    return False, None, arguments
+
+
+def _extract_health_invocation(
+    arguments: list[str],
+) -> tuple[bool, Path | None, list[str]]:
+    if len(arguments) >= 2 and arguments[:2] == ["jobs", "health"]:
+        return True, None, arguments[2:]
+    if (
+        len(arguments) >= 4
+        and arguments[0] == "--config"
+        and arguments[2:4] == ["jobs", "health"]
+    ):
+        return True, Path(arguments[1]), arguments[4:]
+    if (
+        len(arguments) >= 3
+        and arguments[0].startswith("--config=")
+        and arguments[1:3] == ["jobs", "health"]
+    ):
+        return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
     return False, None, arguments
 
 
@@ -185,23 +224,44 @@ def _run_phase1(arguments: list[str], *, default_config: Path | None) -> int:
             analysis_limit=analysis_limit,
         )
     except (OSError, RuntimeError, ValueError) as exc:
-        print(f"Phase-1 run failed before a complete summary was available: {exc}", file=sys.stderr)
+        print(
+            f"Phase-1 run failed before a complete summary was available: {exc}",
+            file=sys.stderr,
+        )
         return 1
 
     print(format_phase1_run_summary(summary))
     return 1 if summary.has_failures else 0
 
 
+def _show_source_health(arguments: list[str], *, default_config: Path | None) -> int:
+    parser = _health_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        summary = SourceHealthReader(settings.database_path).get(parsed.job_id)
+    except ValueError as exc:
+        print(str(exc), file=sys.stderr)
+        return 2
+    except LookupError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    print(format_source_health(summary))
+    return 0
+
+
 def _print_combined_help() -> None:
     build_legacy_parser().print_help()
     print("")
-    print("Additional complete workflow command:")
+    print("Additional Phase-1 commands:")
     print("  run                  Run bounded source -> English -> analysis -> Market pipeline")
     print("  run --help           Show Phase-1 run limits and options")
+    print("  jobs health <id>     Summarize last success/failures and lifecycle state")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Dispatch the new complete run while preserving every existing CLI command."""
+    """Dispatch new Phase-1 commands while preserving every existing CLI command."""
 
     arguments = list(argv if argv is not None else sys.argv[1:])
     if arguments in (["-h"], ["--help"]):
@@ -211,4 +271,12 @@ def main(argv: Sequence[str] | None = None) -> int:
     is_run, default_config, run_arguments = _extract_run_invocation(arguments)
     if is_run:
         return _run_phase1(run_arguments, default_config=default_config)
+
+    is_health, default_config, health_arguments = _extract_health_invocation(arguments)
+    if is_health:
+        return _show_source_health(
+            health_arguments,
+            default_config=default_config,
+        )
+
     return legacy_main(arguments)
