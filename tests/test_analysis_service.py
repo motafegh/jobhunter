@@ -208,3 +208,25 @@ def test_analysis_rejects_duplicate_responsibility_claims(tmp_path: Path) -> Non
         service.analyze_job("eng1")
 
     assert AnalysisStore(database_path).latest_current("eng1") is None
+
+
+def test_analysis_rejects_inferred_requirement_without_rationale(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    payload = _analysis_payload()
+    payload["requirements"] = [
+        {
+            "concept": "Detection engineering",
+            "requirement_type": "inferred",
+            "concept_type": "practice",
+            "evidence": "Build and maintain detection rules.",
+            "confidence": "medium",
+            "rationale": "",
+        }
+    ]
+    service = _service(database_path, translation, payload)
+
+    with pytest.raises(AnalysisValidationError, match="lacks rationale"):
+        service.analyze_job("eng1")
+
+    assert AnalysisStore(database_path).latest_current("eng1") is None
