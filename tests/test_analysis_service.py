@@ -100,6 +100,8 @@ def _provider(payload: dict) -> LMStudioProvider:
         system_prompt = body["messages"][0]["content"].casefold()
         assert "untrusted external data" in system_prompt
         assert "ignore previous instructions" in system_prompt
+        assert "candidate qualification statements" in system_prompt
+        assert "familiarity does not mean preferred" in system_prompt
         user_payload = json.loads(body["messages"][1]["content"])
         authoritative = user_payload["authoritative_source_fields"]
         assert "language" not in authoritative
