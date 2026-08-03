@@ -35,6 +35,15 @@ def _response(request: httpx.Request, source: str, translation: str) -> httpx.Re
     )
 
 
+def _provider(handler) -> LMStudioTranslationProvider:
+    return LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="local-model",
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+
+
 def test_lm_studio_translation_uses_content_ids_and_isolates_segments() -> None:
     calls: list[str] = []
     mapping = {"متن اول": "First text", "متن دوم": "Second text"}
@@ -52,12 +61,7 @@ def test_lm_studio_translation_uses_content_ids_and_isolates_segments() -> None:
         calls.append(source)
         return _response(request, source, mapping[source])
 
-    provider = LMStudioTranslationProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="local-model",
-        max_retries=0,
-        transport=httpx.MockTransport(handler),
-    )
+    provider = _provider(handler)
     result = provider.translate_texts(
         ("متن اول", "متن دوم"), source_language="fa", target_language="en"
     )
@@ -106,7 +110,7 @@ def test_lm_studio_translation_refuses_ambiguous_model_selection() -> None:
         provider.translate_texts(("متن",), source_language="fa", target_language="en")
 
 
-def test_lm_studio_translation_rejects_wrong_content_id() -> None:
+def test_lm_studio_translation_rejects_wrong_content_id_via_local_schema() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(
             200,
@@ -129,14 +133,63 @@ def test_lm_studio_translation_rejects_wrong_content_id() -> None:
             },
         )
 
-    provider = LMStudioTranslationProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="local-model",
-        max_retries=0,
-        transport=httpx.MockTransport(handler),
-    )
-    with pytest.raises(TranslationError, match="missing or unexpected"):
-        provider.translate_texts(("متن",), source_language="fa", target_language="en")
+    with pytest.raises(TranslationError, match="violated the requested response schema"):
+        _provider(handler).translate_texts(
+            ("متن",),
+            source_language="fa",
+            target_language="en",
+        )
+
+
+def test_lm_studio_translation_rejects_extra_structured_fields_locally() -> None:
+    source = "متن"
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {
+                            "content": json.dumps(
+                                {
+                                    "translations": [
+                                        {
+                                            "id": _id(source),
+                                            "translation": "Text",
+                                            "explanation": "I also summarized it",
+                                        }
+                                    ]
+                                }
+                            )
+                        },
+                    }
+                ]
+            },
+        )
+
+    with pytest.raises(TranslationError, match="violated the requested response schema"):
+        _provider(handler).translate_texts(
+            (source,),
+            source_language="fa",
+            target_language="en",
+        )
+
+
+def test_lm_studio_translation_rejects_empty_translation_via_local_schema() -> None:
+    source = "متن"
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return _response(request, source, "")
+
+    with pytest.raises(TranslationError, match="violated the requested response schema"):
+        _provider(handler).translate_texts(
+            (source,),
+            source_language="fa",
+            target_language="en",
+        )
 
 
 def test_lm_studio_translation_never_batches_independent_segments() -> None:
@@ -148,12 +201,7 @@ def test_lm_studio_translation_never_batches_independent_segments() -> None:
         request_sizes.append(len(items))
         return _response(request, items[0]["text"], "Translated")
 
-    provider = LMStudioTranslationProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="local-model",
-        max_retries=0,
-        transport=httpx.MockTransport(handler),
-    )
+    provider = _provider(handler)
     result = provider.translate_texts(
         tuple(f"متن {index}" for index in range(5)),
         source_language="fa",
@@ -179,12 +227,7 @@ def test_lm_studio_translation_increases_budget_for_single_truncated_segment() -
             )
         return _response(request, source, "Complete translation")
 
-    provider = LMStudioTranslationProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="local-model",
-        max_retries=0,
-        transport=httpx.MockTransport(handler),
-    )
+    provider = _provider(handler)
     result = provider.translate_texts((source,), source_language="fa", target_language="en")
 
     assert max_token_budgets == [4096, 8192]
