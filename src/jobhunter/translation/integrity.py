@@ -54,7 +54,13 @@ def _shape(value: Any) -> str:
     return "scalar"
 
 
-def _walk_shapes(source: Any, english: Any, *, path: str, findings: list[TranslationIntegrityFinding]) -> None:
+def _walk_shapes(
+    source: Any,
+    english: Any,
+    *,
+    path: str,
+    findings: list[TranslationIntegrityFinding],
+) -> None:
     if _shape(source) != _shape(english):
         findings.append(
             TranslationIntegrityFinding(
