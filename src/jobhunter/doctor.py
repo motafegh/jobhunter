@@ -95,35 +95,37 @@ def run_doctor(
             )
         )
 
-    if settings.lm_studio_model:
-        if settings.lm_studio_model in models:
+    analysis_model = settings.effective_analysis_lm_studio_model()
+    if analysis_model:
+        if analysis_model in models:
             checks.append(
                 CheckResult(
-                    "Configured model",
+                    "Analysis model",
                     CheckStatus.PASS,
-                    settings.lm_studio_model,
+                    analysis_model,
                 )
             )
         else:
             checks.append(
                 CheckResult(
-                    "Configured model",
+                    "Analysis model",
                     CheckStatus.WARNING,
-                    f"{settings.lm_studio_model!r} is not in the visible model list",
+                    f"{analysis_model!r} is not in the visible model list",
                 )
             )
     else:
         checks.append(
             CheckResult(
-                "Configured model",
+                "Analysis model",
                 CheckStatus.WARNING,
-                "No model is configured; set lm_studio_model before structured inference",
+                "No analysis model resolves from analysis_lm_studio_model, "
+                "lm_studio_model, or translation_lm_studio_model",
             )
         )
 
     if perform_smoke_test:
         try:
-            model_used = provider.structured_smoke_test(settings.lm_studio_model)
+            model_used = provider.structured_smoke_test(analysis_model)
         except InferenceProviderError as exc:
             checks.append(
                 CheckResult("Structured inference", CheckStatus.FAILURE, str(exc))
