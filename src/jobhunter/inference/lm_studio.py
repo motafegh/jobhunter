@@ -11,11 +11,11 @@ import httpx
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import SchemaError, ValidationError
 
-from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
-
-
-class _StructuredOutputTruncated(InferenceResponseError):
-    """Internal signal for an otherwise valid request stopped by token length."""
+from jobhunter.inference.base import (
+    InferenceConnectionError,
+    InferenceResponseError,
+    InferenceTruncatedError,
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -188,7 +188,7 @@ class LMStudioProvider:
         finish_reason = first_choice.get("finish_reason")
         if finish_reason == "length":
             preview = content[:240]
-            raise _StructuredOutputTruncated(
+            raise InferenceTruncatedError(
                 "LM Studio structured response was truncated "
                 f"(model={selected_model!r}, finish_reason={finish_reason!r}, "
                 f"content_preview={preview!r}, max_tokens={max_tokens})"
@@ -219,7 +219,7 @@ class LMStudioProvider:
         selected_model = self._selected_model(model)
         token_budgets = (128, 512, 2048)
         result: StructuredInferenceResult | None = None
-        last_truncation: _StructuredOutputTruncated | None = None
+        last_truncation: InferenceTruncatedError | None = None
         for max_tokens in token_budgets:
             try:
                 result = self.complete_structured(
@@ -242,7 +242,7 @@ class LMStudioProvider:
                     max_tokens=max_tokens,
                 )
                 break
-            except _StructuredOutputTruncated as exc:
+            except InferenceTruncatedError as exc:
                 last_truncation = exc
 
         if result is None:
