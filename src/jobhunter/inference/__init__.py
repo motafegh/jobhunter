@@ -5,6 +5,7 @@ from jobhunter.inference.base import (
     InferenceProvider,
     InferenceProviderError,
     InferenceResponseError,
+    InferenceTruncatedError,
 )
 from jobhunter.inference.lm_studio import LMStudioProvider
 
@@ -13,5 +14,6 @@ __all__ = [
     "InferenceProvider",
     "InferenceProviderError",
     "InferenceResponseError",
+    "InferenceTruncatedError",
     "LMStudioProvider",
 ]
