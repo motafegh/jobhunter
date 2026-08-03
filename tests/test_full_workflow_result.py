@@ -1,8 +1,8 @@
 from pathlib import Path
 from types import SimpleNamespace
 
+import jobhunter.web.app as web_app
 from jobhunter.config import Settings
-from jobhunter.web import app as web_app
 
 
 class _TranslationService:
