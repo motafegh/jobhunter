@@ -139,7 +139,7 @@ def test_stops_when_a_later_page_repeats_the_same_job_set(tmp_path: Path) -> Non
     assert "stop=repeated_result_set" in format_discovery_summary(summary)
 
 
-def test_stops_on_an_empty_page(tmp_path: Path) -> None:
+def test_successful_zero_result_page_is_empty_not_failed(tmp_path: Path) -> None:
     requested_pages: list[int] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -171,7 +171,11 @@ def test_stops_on_an_empty_page(tmp_path: Path) -> None:
 
     assert requested_pages == [1, 2]
     assert summary.pages_fetched == 2
+    assert summary.succeeded is True
+    assert summary.failures == ()
     assert summary.search_summaries[0].stop_reason == "empty_page"
+    assert summary.search_summaries[0].pages_fetched == 2
+    assert summary.search_summaries[0].unique_jobs == 1
 
 
 def test_reports_cross_search_overlap_without_inflating_unique_jobs(
@@ -216,7 +220,7 @@ def test_reports_cross_search_overlap_without_inflating_unique_jobs(
     assert store.count_job_postings() == 2
 
 
-def test_one_search_failure_does_not_discard_other_searches(tmp_path: Path) -> None:
+def test_failed_source_request_is_page_failed_not_empty_page(tmp_path: Path) -> None:
     delays: list[float] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
@@ -253,11 +257,17 @@ def test_one_search_failure_does_not_discard_other_searches(tmp_path: Path) -> N
         ]
     )
 
+    broken = summary.search_summaries[0]
+    working = summary.search_summaries[1]
     assert summary.succeeded is False
     assert len(summary.failures) == 1
+    assert summary.failures[0].search_name == "Broken search"
     assert summary.unique_jobs == 1
-    assert summary.search_summaries[0].stop_reason == "page_failed"
-    assert summary.search_summaries[1].stop_reason == "page_limit_reached"
+    assert broken.stop_reason == "page_failed"
+    assert broken.stop_reason != "empty_page"
+    assert broken.pages_fetched == 0
+    assert broken.unique_jobs == 0
+    assert working.stop_reason == "page_limit_reached"
     assert delays == [0.25]
     assert store.count_job_postings() == 1
 
