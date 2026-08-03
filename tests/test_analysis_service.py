@@ -155,21 +155,119 @@ def test_analysis_persists_evidence_validated_artifact_and_reuses(tmp_path: Path
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
     assert artifact.request_body["model"] == "analysis-model"
-    assert artifact.prompt_version == "job-analysis-prompt-v2"
+    assert artifact.prompt_version == "job-analysis-prompt-v3"
     assert artifact.schema_version == "job-analysis-v2"
 
 
-def test_analysis_rejects_evidence_not_present_in_authoritative_source(tmp_path: Path) -> None:
+def test_analysis_repairs_one_synthesized_evidence_claim_then_persists(
+    tmp_path: Path,
+) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
     translation = _prepare_native_job(database_path)
-    service = _service(
-        database_path,
-        translation,
-        _analysis_payload("Kubernetes is mandatory."),
+    rejected = _analysis_payload()
+    rejected["role_purpose"][0]["evidence"] = (
+        "Build detection capability across the company."
+    )
+    repaired = _analysis_payload()
+    repaired["role_purpose"] = []
+    requests: list[dict] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.read())
+        user_payload = json.loads(body["messages"][1]["content"])
+        requests.append(user_payload)
+        payload = rejected if len(requests) == 1 else repaired
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {"content": json.dumps(payload)},
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="analysis-model",
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+    service = JobAnalysisService(
+        source_store=TranslationStore(database_path),
+        translation_service=translation,
+        analysis_store=AnalysisStore(database_path),
+        provider=provider,
+        model="analysis-model",
     )
 
-    with pytest.raises(AnalysisValidationError, match="not an exact excerpt"):
+    result = service.analyze_job("eng1")
+
+    assert result.outcome == "completed"
+    assert len(requests) == 2
+    assert "validation_error" not in requests[0]
+    assert "not an exact excerpt" in requests[1]["validation_error"]
+    assert requests[1]["rejected_analysis"] == rejected
+    artifact = AnalysisStore(database_path).latest_current(
+        "eng1",
+        model="analysis-model",
+        prompt_version="job-analysis-prompt-v3",
+        schema_version="job-analysis-v2",
+    )
+    assert artifact is not None
+    assert artifact.analysis["role_purpose"] == []
+    assert len(artifact.analysis["responsibilities"]) == 1
+    assert len(artifact.analysis["requirements"]) == 2
+    repair_payload = json.loads(artifact.request_body["messages"][1]["content"])
+    assert "not an exact excerpt" in repair_payload["validation_error"]
+    assert repair_payload["rejected_analysis"] == rejected
+
+
+def test_analysis_rejects_evidence_not_present_after_one_bounded_repair(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    translation = _prepare_native_job(database_path)
+    calls = 0
+    invalid = _analysis_payload("Kubernetes is mandatory.")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        nonlocal calls
+        calls += 1
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "choices": [
+                    {
+                        "finish_reason": "stop",
+                        "message": {"content": json.dumps(invalid)},
+                    }
+                ]
+            },
+        )
+
+    provider = LMStudioProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="analysis-model",
+        max_retries=0,
+        transport=httpx.MockTransport(handler),
+    )
+    service = JobAnalysisService(
+        source_store=TranslationStore(database_path),
+        translation_service=translation,
+        analysis_store=AnalysisStore(database_path),
+        provider=provider,
+        model="analysis-model",
+    )
+
+    with pytest.raises(AnalysisValidationError, match="one bounded repair attempt"):
         service.analyze_job("eng1")
+
+    assert calls == 2
     assert AnalysisStore(database_path).latest_current("eng1") is None
 
 
