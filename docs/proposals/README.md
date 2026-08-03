@@ -16,10 +16,15 @@ This library provides a middle layer:
 brainstorm / idea
         ↓
 proposal library        ← this directory
-        ↓ deliberate selection
-approved product/architecture decision
+        ↓ deliberate selection / disposition
+ROADMAP.md
+strategic sequencing / proposal disposition
         ↓
-master implementation plan / phase plan
+IMPLEMENTATION_PLAN.md / phase plan
+controlling implementation scope and acceptance
+        ↓
+EXECUTION_TODO.md
+working checklist
         ↓
 bounded implementation increment
         ↓
@@ -28,7 +33,7 @@ acceptance evidence
 
 A proposal can therefore be preserved and developed without becoming a commitment.
 
-**Nothing in `docs/proposals/` authorizes implementation.** The repository's controlling product/specification/architecture/master-plan hierarchy remains unchanged.
+**Nothing in `docs/proposals/` authorizes implementation.** The current authority/order is defined by the product/domain/source/architecture documents, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, the active phase plan, and implementation/test/live-acceptance evidence.
 
 ---
 
@@ -47,17 +52,19 @@ That proposal remains intact and is treated as a member of the wider proposal li
 Recommended proposal states:
 
 ```text
-candidate            preserved idea; not selected
-under_discussion     being actively analyzed/refined
-selected_for_planning product direction accepted in principle; implementation not yet authorized
-planned              incorporated into a controlling implementation/phase plan
-implemented          code exists; acceptance status still stated separately
-accepted             required acceptance evidence passed
-rejected             deliberately not pursued under current assumptions
-superseded           replaced by a newer proposal/decision
+candidate              preserved idea; not selected
+under_discussion       being actively analyzed/refined
+selected_for_planning  product direction accepted in principle; implementation not yet authorized
+planned                incorporated into a controlling implementation/phase plan
+implemented            code exists; acceptance status still stated separately
+accepted               required acceptance evidence passed
+rejected               deliberately not pursued under current assumptions
+superseded             replaced by a newer proposal/decision
 ```
 
-The category files currently remain **candidate proposals** unless another controlling artifact explicitly says otherwise.
+The category files remain **candidate proposals** unless a controlling artifact explicitly promotes a proposal/capability.
+
+The roadmap may group multiple B-items into one capability program. This does not erase the original IDs or silently promote every item in that program.
 
 ### Promotion rule
 
@@ -83,6 +90,7 @@ A proposal should be rejected or deferred if the value is hypothetical while the
 - Numbering preserves traceability to the original brainstorming session; it is **not priority order**.
 - File numbering is organizational; it is **not roadmap order**.
 - Similar ideas are intentionally not merged away if they express meaningfully different product behavior.
+- Roadmap capability programs may combine several B-items for implementation planning while preserving their original traceability.
 - Later proposals may split or combine B-items, but the catalog should preserve a supersession/mapping trail so the original idea is never silently lost.
 
 ---
@@ -323,18 +331,22 @@ When a new product discussion touches one of these ideas:
 
 1. open its category file;
 2. inspect related current implementation/specification constraints;
-3. update/refine the proposal if the idea has materially evolved;
-4. decide whether it remains a candidate, should be rejected, or is ready for planning;
-5. only if selected, create/update the appropriate controlling product/implementation artifact;
-6. define the bounded implementation increment and acceptance separately.
+3. inspect `docs/ROADMAP.md` for the current strategic disposition/trigger;
+4. update/refine the proposal if the idea has materially evolved;
+5. decide whether it remains a candidate, should be rejected/deferred, or is ready for planning;
+6. only if selected, create/update the appropriate controlling implementation/phase artifact;
+7. define the bounded implementation increment and acceptance separately;
+8. add the current operational steps to `docs/EXECUTION_TODO.md` only after the work is authorized.
 
-Do not copy the entire proposal family into the master implementation plan. The plan should contain only selected work and link back to the proposal for broader context.
+Do not copy the entire proposal family into the master implementation plan. The plan should contain only selected work and link back to the proposal/roadmap for broader context.
 
 ---
 
 ## 8. Current strategic reading
 
-The library intentionally contains far more ideas than JobHunter should build in the near term. The strongest long-term differentiator is not feature count; it is the combination of:
+The library intentionally contains far more ideas than JobHunter should build in the near term. The current roadmap groups the proposals into larger capability programs and deliberately promotes only a small set of reliability/acceptance ideas into the active Phase-1 hardening work.
+
+The strongest long-term differentiator is not feature count; it is the combination of:
 
 ```text
 high-quality market evidence
@@ -342,7 +354,10 @@ high-quality market evidence
 + explicit personal capability evidence
 + explainable gaps and decisions
 + learning/project evidence creation
++ evidence-constrained opportunity preparation
 + longitudinal outcomes
 ```
 
 The proposal library exists so JobHunter can preserve ambitious possibilities while continuing to implement conservatively, testably, and in coherent vertical increments.
+
+For current prioritization, use `docs/ROADMAP.md`. For exact current build order, use `docs/IMPLEMENTATION_PLAN.md` and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`. For the working checklist, use `docs/EXECUTION_TODO.md`.
