@@ -68,22 +68,67 @@ The active Jobinja adapter uses:
 - per-search page limits;
 - global run-level request budget;
 - response-size/content-type limits;
-- immutable evidence before parsing;
+- immutable evidence before parsing of successful source content;
 - bounded detail batches;
+- classified source failures and retryability;
 - visible run-level and per-job failures.
+
+Current response/failure classes include:
+
+```text
+active
+rate_limited
+access_denied
+challenge
+auth_required
+not_found
+gone
+server_error
+network_error
+unexpected_page
+expired_explicit
+```
 
 A large bilingual search catalog does not authorize broader crawling. Each expanded
 term remains one bounded request plan against the approved Jobinja search endpoint.
 
-## 7. Retry maturity
+## 7. Bounded retry policy
 
-The accepted Jobinja path currently performs one controlled attempt per selected search
-page or detail check.
+The current Jobinja adapter implements bounded automatic retry only for failure classes
+that can reasonably be transient:
 
-Automatic Jobinja retry/backoff must not be enabled until `429`, `403`, login,
-challenge, CAPTCHA, timeout, and transient-server responses are classified.
+```text
+network_error
+rate_limited (HTTP 429)
+server_error (selected HTTP 5xx responses)
+```
 
-A blocked/challenge response must never trigger aggressive retry.
+Retry count remains explicitly configured and small. Retry does not expand the search
+plan, bypass the global/page/detail bounds, change identity, or authorize a different
+acquisition method.
+
+The following conditions are **not** ordinary automatic-retry candidates:
+
+```text
+access_denied / HTTP 403
+challenge / CAPTCHA-like content
+auth_required / login redirect
+not_found / HTTP 404
+gone / HTTP 410
+expired_explicit
+unexpected_page
+```
+
+These conditions stop that request path and remain visible for review. In particular:
+
+- a challenge or authentication response never triggers stealthier acquisition;
+- a transient/server/network failure never proves that a vacancy expired or was removed;
+- a failed source request is not equivalent to a successful empty search result;
+- a successful 200 response classified as explicit expiry may be preserved as diagnostic
+  source evidence but does not become a normal parsed semantic job version.
+
+Deterministic regression tests cover the retry/classification boundaries. Live acceptance
+against normal Jobinja behavior remains a separate acceptance gate.
 
 ## 8. Robots, terms, and access controls
 
@@ -153,7 +198,7 @@ The local provider must:
 
 - send only parsed job text needed for English projection;
 - use bounded model requests and retries;
-- use structured output and validate returned items;
+- use structured output and validate returned items locally before persistence;
 - record exact model/provider-contract identity with derived artifacts;
 - avoid granting the model tools, shell, filesystem, browser, or unrestricted network
   access;
@@ -217,13 +262,14 @@ remain traceable to original source text.
 
 ## 18. Provider failure
 
-A local-model failure, Google outage, credential problem, quota error, or malformed
-translation response:
+A local-model failure, Google outage, credential problem, quota error, malformed
+structured response, or local schema-validation failure:
 
 - must not modify source evidence;
 - must not create a false semantic job version;
-- must be recorded as a failed translation attempt when applicable;
-- may be retried later explicitly or through a bounded missing-translation queue.
+- must not create a current derived artifact from malformed output;
+- must be recorded as a failed translation/analysis attempt when applicable;
+- may be retried later explicitly or through a bounded missing-derived-artifact queue.
 
 ## 19. Source-adapter acceptance checklist
 
@@ -239,5 +285,6 @@ When a source returns blocking/challenge/authentication responses:
 1. stop automatic retry;
 2. classify/report the condition;
 3. preserve only minimal diagnostic evidence needed;
-4. keep recurring acquisition disabled until reviewed;
+4. keep recurring acquisition disabled/reviewable when the condition indicates a source-policy
+   or persistent-access problem;
 5. never escalate automatically to stealthier scraping techniques.
