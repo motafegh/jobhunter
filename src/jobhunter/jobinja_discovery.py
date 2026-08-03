@@ -29,6 +29,23 @@ class DiscoverySearch:
 
 
 @dataclass(frozen=True, slots=True)
+class DiscoveryFailure:
+    """Structured failure for one search or one search-page request."""
+
+    search_name: str
+    page_number: int | None
+    error: str
+
+    def __str__(self) -> str:
+        location = (
+            f"{self.search_name} page {self.page_number}"
+            if self.page_number is not None
+            else self.search_name
+        )
+        return f"{location}: {self.error}"
+
+
+@dataclass(frozen=True, slots=True)
 class SearchDiscoverySummary:
     """Observable result and stop condition for one configured search."""
 
@@ -55,7 +72,7 @@ class DiscoverySummary:
     requests_attempted: int
     discovered_job_ids: tuple[str, ...]
     search_summaries: tuple[SearchDiscoverySummary, ...]
-    failures: tuple[str, ...]
+    failures: tuple[DiscoveryFailure, ...]
     newly_discovered: tuple[DiscoveredJobLink, ...]
 
     @property
@@ -105,7 +122,7 @@ class JobinjaDiscoveryService:
 
         pages_fetched = 0
         requests_attempted = 0
-        failures: list[str] = []
+        failures: list[DiscoveryFailure] = []
         run_jobs: dict[str, bool] = {}
         prior_search_jobs: set[str] = set()
         newly_discovered: list[DiscoveredJobLink] = []
@@ -134,7 +151,13 @@ class JobinjaDiscoveryService:
                 canonical_search_url = canonicalize_search_url(search.url)
             except JobinjaUrlError as exc:
                 search_failure = str(exc)
-                failures.append(f"{search.name}: {search_failure}")
+                failures.append(
+                    DiscoveryFailure(
+                        search_name=search.name,
+                        page_number=None,
+                        error=search_failure,
+                    )
+                )
                 search_summaries.append(
                     SearchDiscoverySummary(
                         name=search.name,
@@ -196,7 +219,11 @@ class JobinjaDiscoveryService:
                 except (JobinjaAcquisitionError, JobinjaUrlError, EvidenceWriteError) as exc:
                     search_failure = str(exc)
                     failures.append(
-                        f"{search.name} page {page_number}: {search_failure}"
+                        DiscoveryFailure(
+                            search_name=search.name,
+                            page_number=page_number,
+                            error=search_failure,
+                        )
                     )
                     stop_reason = "page_failed"
                     break
@@ -249,6 +276,7 @@ class JobinjaDiscoveryService:
         )
         completed_at = self._clock()
         status = "completed" if not failures else "completed_with_errors"
+        rendered_failures = tuple(str(failure) for failure in failures)
         self._store.complete_run(
             run_id=run_id,
             completed_at=completed_at,
@@ -259,7 +287,7 @@ class JobinjaDiscoveryService:
             new_jobs=new_jobs,
             known_jobs=known_jobs,
             failures=len(failures),
-            error_summary="\n".join(failures) if failures else None,
+            error_summary="\n".join(rendered_failures) if failures else None,
         )
 
         return DiscoverySummary(
