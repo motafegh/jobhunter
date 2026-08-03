@@ -89,8 +89,62 @@ def test_run_command_accepts_global_config_before_run(monkeypatch) -> None:
     assert captured["path"] == Path("custom.toml")
 
 
-def test_global_help_surfaces_complete_run_command(capsys) -> None:
+def test_jobs_health_command_uses_same_config_and_reader(monkeypatch, capsys) -> None:
+    captured = {}
+    settings = Settings(database_path=Path("custom.sqlite3"))
+
+    class Reader:
+        def __init__(self, database_path: Path) -> None:
+            captured["database_path"] = database_path
+
+        def get(self, source_job_id: str):
+            captured["source_job_id"] = source_job_id
+            return SimpleNamespace(source_job_id=source_job_id)
+
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda path: settings)
+    monkeypatch.setattr(entrypoint, "SourceHealthReader", Reader)
+    monkeypatch.setattr(
+        entrypoint,
+        "format_source_health",
+        lambda summary: f"health:{summary.source_job_id}",
+    )
+
+    exit_code = entrypoint.main(["jobs", "health", "abc1"])
+
+    assert exit_code == 0
+    assert captured == {
+        "database_path": Path("custom.sqlite3"),
+        "source_job_id": "abc1",
+    }
+    assert "health:abc1" in capsys.readouterr().out
+
+
+def test_global_config_can_precede_jobs_health(monkeypatch) -> None:
+    captured = {}
+    settings = Settings(database_path=Path("custom.sqlite3"))
+
+    def load(path):
+        captured["config"] = path
+        return settings
+
+    class Reader:
+        def __init__(self, _database_path: Path) -> None:
+            pass
+
+        def get(self, source_job_id: str):
+            return SimpleNamespace(source_job_id=source_job_id)
+
+    monkeypatch.setattr(entrypoint, "_load_settings", load)
+    monkeypatch.setattr(entrypoint, "SourceHealthReader", Reader)
+    monkeypatch.setattr(entrypoint, "format_source_health", lambda _summary: "health")
+
+    assert entrypoint.main(["--config", "custom.toml", "jobs", "health", "abc1"]) == 0
+    assert captured["config"] == Path("custom.toml")
+
+
+def test_global_help_surfaces_phase1_commands(capsys) -> None:
     assert entrypoint.main(["--help"]) == 0
     output = capsys.readouterr().out
-    assert "Additional complete workflow command" in output
+    assert "Additional Phase-1 commands" in output
     assert "run --help" in output
+    assert "jobs health <id>" in output
