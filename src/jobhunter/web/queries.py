@@ -21,10 +21,12 @@ from jobhunter.translation_store import TranslationStore
 class DashboardStats:
     discovered_jobs: int
     detailed_jobs: int
+    parsed_jobs: int
     translated_jobs: int
     analyzed_jobs: int
     missing_details: int
     missing_translations: int
+    missing_analyses: int
     detail_checks: int
     acquisition_runs: int
 
@@ -121,7 +123,7 @@ class WebRepository:
                             WHERE v2.job_posting_id = p.id
                         )
                         WHERE p.source = 'jobinja' AND v.parse_status = 'parsed'
-                    ) AS translation_eligible_jobs,
+                    ) AS parsed_jobs,
                     (
                         SELECT COUNT(*) FROM job_postings AS p
                         JOIN job_detail_versions AS v ON v.id = (
@@ -164,15 +166,18 @@ class WebRepository:
             ).fetchone()
         discovered = int(row["discovered_jobs"])
         detailed = int(row["detailed_jobs"])
-        translation_eligible = int(row["translation_eligible_jobs"])
+        parsed = int(row["parsed_jobs"])
         translated = int(row["translated_jobs"])
+        analyzed = int(row["analyzed_jobs"])
         return DashboardStats(
             discovered_jobs=discovered,
             detailed_jobs=detailed,
+            parsed_jobs=parsed,
             translated_jobs=translated,
-            analyzed_jobs=int(row["analyzed_jobs"]),
+            analyzed_jobs=analyzed,
             missing_details=max(discovered - detailed, 0),
-            missing_translations=max(translation_eligible - translated, 0),
+            missing_translations=max(parsed - translated, 0),
+            missing_analyses=max(translated - analyzed, 0),
             detail_checks=int(row["detail_checks"]),
             acquisition_runs=int(row["acquisition_runs"]),
         )
