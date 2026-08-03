@@ -124,7 +124,11 @@ class Settings(BaseModel):
     translation_max_retries: int = Field(default=1, ge=0, le=5)
     translation_lm_studio_model: str | None = None
     translation_lm_studio_max_tokens: int = Field(default=4096, ge=256, le=32768)
-    translation_lm_studio_character_target: int = Field(default=6000, ge=1000, le=100000)
+    translation_lm_studio_character_target: int = Field(
+        default=6000,
+        ge=1000,
+        le=100000,
+    )
     google_translation_api_key: str | None = None
     google_translation_model: str = "nmt"
 
@@ -133,8 +137,12 @@ class Settings(BaseModel):
     @model_validator(mode="after")
     def normalize(self) -> Settings:
         self.data_dir = self.data_dir.expanduser()
-        self.evidence_dir = (self.evidence_dir or self.data_dir / "evidence").expanduser()
-        self.database_path = (self.database_path or self.data_dir / "jobhunter.sqlite3").expanduser()
+        self.evidence_dir = (
+            self.evidence_dir or self.data_dir / "evidence"
+        ).expanduser()
+        self.database_path = (
+            self.database_path or self.data_dir / "jobhunter.sqlite3"
+        ).expanduser()
         if self.jobinja_search_catalog_path is not None:
             self.jobinja_search_catalog_path = self.jobinja_search_catalog_path.expanduser()
 
@@ -222,7 +230,11 @@ class Settings(BaseModel):
     def effective_analysis_lm_studio_model(self) -> str | None:
         """Return the analysis model, then general model, then explicit translation model."""
 
-        return self.analysis_lm_studio_model or self.lm_studio_model or self.translation_lm_studio_model
+        return (
+            self.analysis_lm_studio_model
+            or self.lm_studio_model
+            or self.translation_lm_studio_model
+        )
 
     def search_catalog(self) -> SearchCatalog:
         return load_search_catalog(self.jobinja_search_catalog_path)
@@ -245,7 +257,9 @@ class Settings(BaseModel):
     @classmethod
     def load(cls, config_path: str | Path | None = None) -> Settings:
         explicit_path = config_path is not None
-        selected_path = Path(config_path or os.environ.get("JOBHUNTER_CONFIG", "jobhunter.toml")).expanduser()
+        selected_path = Path(
+            config_path or os.environ.get("JOBHUNTER_CONFIG", "jobhunter.toml")
+        ).expanduser()
 
         values: dict[str, Any] = {}
         if selected_path.exists():
@@ -253,10 +267,14 @@ class Settings(BaseModel):
                 with selected_path.open("rb") as file_handle:
                     parsed = tomllib.load(file_handle)
             except (OSError, tomllib.TOMLDecodeError) as exc:
-                raise ConfigLoadError(f"Could not load configuration from {selected_path}: {exc}") from exc
+                raise ConfigLoadError(
+                    f"Could not load configuration from {selected_path}: {exc}"
+                ) from exc
             section = parsed.get("jobhunter", parsed)
             if not isinstance(section, dict):
-                raise ConfigLoadError(f"Configuration section in {selected_path} must be a table")
+                raise ConfigLoadError(
+                    f"Configuration section in {selected_path} must be a table"
+                )
             values.update(section)
         elif explicit_path:
             raise ConfigLoadError(f"Configuration file does not exist: {selected_path}")
@@ -290,8 +308,12 @@ class Settings(BaseModel):
             "JOBHUNTER_TRANSLATION_TIMEOUT_SECONDS": "translation_timeout_seconds",
             "JOBHUNTER_TRANSLATION_MAX_RETRIES": "translation_max_retries",
             "JOBHUNTER_TRANSLATION_LM_STUDIO_MODEL": "translation_lm_studio_model",
-            "JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS": "translation_lm_studio_max_tokens",
-            "JOBHUNTER_TRANSLATION_LM_STUDIO_CHARACTER_TARGET": "translation_lm_studio_character_target",
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_MAX_TOKENS": (
+                "translation_lm_studio_max_tokens"
+            ),
+            "JOBHUNTER_TRANSLATION_LM_STUDIO_CHARACTER_TARGET": (
+                "translation_lm_studio_character_target"
+            ),
             "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY": "google_translation_api_key",
             "JOBHUNTER_GOOGLE_TRANSLATION_MODEL": "google_translation_model",
             "JOBHUNTER_LOG_LEVEL": "log_level",
