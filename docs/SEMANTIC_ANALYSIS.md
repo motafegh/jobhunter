@@ -40,7 +40,7 @@ source semantic version
 Current versions:
 
 ```text
-prompt: job-analysis-prompt-v3
+prompt: job-analysis-prompt-v4
 schema: job-analysis-v2
 ```
 
@@ -48,9 +48,10 @@ The v2 schema contract keeps explicit untrusted-source handling, local JSON-Sche
 enforcement, non-empty field constraints, bounded claim counts, and deterministic
 duplicate-claim rejection.
 
-Prompt v3 strengthens exact-evidence instructions and adds one bounded evidence-repair pass
-when a schema-valid model response fails deterministic evidence/domain validation. Earlier
-prompt versions remain historical; they are never silently relabelled as v3.
+Prompt v4 retains the strict initial evidence contract and changes the bounded repair pass into
+an authoritative-source-only re-grounding operation. The repair pass receives no English
+comprehension aid and no rejected evidence strings. Earlier prompt versions remain historical;
+they are never silently relabelled as v4.
 
 A source semantic change invalidates the old analysis as current. A future material prompt
 or schema change creates a new analytical artifact rather than rewriting history.
@@ -78,9 +79,11 @@ reused
 ```
 
 When evidence repair is required, the initial locally rejected model response is recorded as a
-failed operational attempt. The repair request contains the rejected structured analysis and
-the deterministic validation error, so the accepted artifact retains the repair context in its
-stored request body.
+failed operational attempt. The repair request contains the deterministic validation error,
+the authoritative source fields, and a copy of the rejected semantic object with every
+`evidence` value removed. It intentionally does not contain the English projection. Therefore
+the accepted artifact retains the repair context without reintroducing a competing quotation
+source.
 
 ## 5. Current analysis schema
 
@@ -160,6 +163,10 @@ Examples:
 → must not automatically become a candidate requirement
 ```
 
+Requirement type describes employer obligation/optionality. Words such as familiarity,
+proficiency, mastery, or expertise describe technical depth and do not by themselves imply
+that a qualification is optional or preferred.
+
 If JobHunter cannot support the strength classification from evidence, the claim should be
 omitted rather than guessed.
 
@@ -179,6 +186,8 @@ LM Studio response
 
         ↓ evidence/domain validation fails
 record failed operational attempt
+→ strip all rejected evidence values
+→ build authoritative-source-only repair request
 → one bounded evidence-repair request
 → validate repaired object against the same schema
 → validate repaired evidence/domain invariants again
@@ -200,12 +209,16 @@ Whitespace and Persian zero-width spacing are normalized for matching, but the m
 still copy an actual contiguous employer/source excerpt rather than paraphrasing evidence,
 translating it, or concatenating multiple source phrases.
 
-The repair pass does not weaken this rule. It only gives the model one bounded opportunity to
-replace unsupported evidence or omit a claim. A second grounding failure remains a failed
-analysis with no accepted artifact.
+The repair pass does not weaken this rule. Its payload deliberately excludes the English
+projection and removes all evidence strings from the rejected object so the authoritative
+source is the only available quotation source. The rejected object can still provide semantic
+guidance such as statements, concepts, classifications, and confidence. The model must
+re-ground every retained claim, not merely the first claim mentioned by the validation error.
+
+A second grounding failure remains a failed analysis with no accepted artifact.
 
 This catches a major hallucination class before aggregation while avoiding needless total-loss
-when an otherwise useful structured response contains one repairable quotation defect.
+when an otherwise useful structured response contains repairable quotation defects.
 
 ## 8. Untrusted acquired-content boundary
 
@@ -242,10 +255,11 @@ are introduced.
 
 P1.6 currently requires a current hardened `english-projection-v2` artifact before analysis.
 
-This ensures the local model receives an English comprehension aid that has passed current
-translation-integrity rules.
+The initial model pass receives this English projection as a comprehension aid that has passed
+current translation-integrity rules. It does not replace the original evidence requirement.
 
-The English artifact does not replace the original evidence requirement.
+If deterministic evidence validation fails, the repair pass deliberately does **not** receive
+the English projection. Repair is an authoritative-source-only grounding operation.
 
 ## 10. Local model selection
 
@@ -270,6 +284,12 @@ runtime order so diagnostics and browser/CLI analysis describe the same effectiv
 
 This allows starting with the already configured local translation model while preserving the
 option to use a stronger dedicated analysis model later.
+
+`analysis_max_tokens` is an output request ceiling, not the LM Studio model's loaded context
+window. The loaded context must also be large enough for prompt + reasoning + output. Live
+acceptance demonstrated that a 4K loaded context was insufficient for the current Gemma repair
+workflow; environment configuration must therefore be checked independently of JobHunter's
+`analysis_max_tokens` value.
 
 ## 11. Browser workflow
 
@@ -318,20 +338,22 @@ P1.6 is not live-accepted merely because structured JSON succeeds.
 First live acceptance should use one reviewed real posting:
 
 1. inspect source and English v2;
-2. run one prompt-v3/schema-v2 analysis;
+2. run one prompt-v4/schema-v2 analysis;
 3. if the first response fails evidence validation, verify that no first-pass artifact is
    accepted and that at most one repair request occurs;
-4. read every accepted responsibility;
-5. read every accepted requirement type;
-6. verify every evidence excerpt against source;
-7. check that requirement strength is not inflated;
-8. check that unsupported technologies/concepts are absent;
-9. rerun and verify exact artifact reuse for the same source/model/prompt/schema identity;
-10. then analyze a small **representative** batch rather than simply the next few IDs;
-11. include variation in employer, role/title, source language, description length, and
+4. when repair occurs, verify the repair payload contains authoritative source fields but no
+   English comprehension aid or rejected evidence strings;
+5. read every accepted responsibility;
+6. read every accepted requirement type;
+7. verify every evidence excerpt against source;
+8. check that requirement strength is not inflated;
+9. check that unsupported technologies/concepts are absent;
+10. rerun and verify exact artifact reuse for the same source/model/prompt/schema identity;
+11. then analyze a small **representative** batch rather than simply the next few IDs;
+12. include variation in employer, role/title, source language, description length, and
     requirement density where the corpus allows it;
-12. convert repeatable defects into offline regression fixtures;
-13. inspect the resulting Market view together with its coverage/sampling warnings.
+13. convert repeatable defects into offline regression fixtures;
+14. inspect the resulting Market view together with its coverage/sampling warnings.
 
 No large-scale analysis should begin before this reviewed gate passes.
 
