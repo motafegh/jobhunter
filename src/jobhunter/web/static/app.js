@@ -63,6 +63,9 @@
   const progress = container.querySelector("[data-operation-progress]");
   const returnMessage = container.querySelector("[data-operation-return]");
 
+  const isTerminal = (value) =>
+    value === "completed" || value === "completed_with_failures" || value === "failed";
+
   const applyStatusClass = (value) => {
     status.classList.remove("good", "bad", "warn");
     if (value === "completed") status.classList.add("good");
@@ -86,7 +89,7 @@
       else if (operation.summary) output.textContent = operation.summary;
       else output.textContent = `Operation is ${operation.status}. This page updates automatically.`;
 
-      if (operation.status === "completed" || operation.status === "failed") {
+      if (isTerminal(operation.status)) {
         progress.classList.add("finished");
         if (operation.status === "completed" && returnUrl && autoReturn) {
           if (returnMessage) returnMessage.textContent = "Completed. Returning to the previous screen…";
