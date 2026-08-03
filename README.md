@@ -62,11 +62,17 @@ classified source failures + cautious lifecycle rules
 → per-job analysis surfaces
 → first Market aggregation
 → expanded bounded browser workflow actions
+→ shared bounded Phase-1 run orchestration
+→ concise per-job source-health summaries
 ```
 
 P1.6 currently supports role purpose, responsibilities, requirements, required/preferred/contextual/inferred strength, concept type, confidence, exact original-source evidence and rationale for inferred concepts.
 
-The exact acceptance state and execution order are controlled by [Implementation Plan](docs/IMPLEMENTATION_PLAN.md) and [Phase 1 Jobinja Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
+The shared Phase-1 runner composes acquisition, detail refresh/audit, current English-v2 repair/build, a bounded analysis-ready queue, semantic analysis and the current Market summary while preserving successful durable work when a later stage has failures. Its CLI surface is `jobhunter run`.
+
+Source-health summaries expose current lifecycle state, last check, last successful check, consecutive operational failures, latest failure and recent lifecycle-signal state through `jobhunter jobs health <job-id>`.
+
+These newer capabilities are **implemented but not yet acceptance evidence**. The exact acceptance state and execution order are controlled by [Implementation Plan](docs/IMPLEMENTATION_PLAN.md) and [Phase 1 Jobinja Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md).
 
 ## Start the application
 
@@ -121,7 +127,7 @@ run bounded sync
 → inspect current Market aggregate
 ```
 
-Browser and CLI paths use the same application services/database. Browser convenience state is not a second analytical truth store.
+Browser and CLI paths operate on the same durable application data/services. The browser already has a complete-market-update path; the new shared Phase-1 runner is the core extraction point for final orchestration convergence. Browser convenience state is not a second analytical truth store.
 
 ## Quick Add
 
@@ -176,6 +182,8 @@ network / 5xx / rate-limit / challenge failure
 !=
 expired or removed vacancy
 ```
+
+For concise operational inspection, `jobhunter jobs health <job-id>` summarizes the latest source/lifecycle state. `jobhunter jobs checks <job-id>` remains the more detailed historical timeline.
 
 ## Deterministic Jobinja parsing
 
@@ -248,7 +256,28 @@ Small/concentrated samples must be presented with explicit scope/warnings rather
 
 ## CLI remains supported
 
-Examples include:
+The final bounded Phase-1 orchestration is now available as an **implementation-pending-acceptance** command:
+
+```bash
+jobhunter run
+jobhunter run --help
+```
+
+It performs, within configured/explicit limits:
+
+```text
+Jobinja discovery
+→ missing/refresh-due detail acquisition
+→ parser audit
+→ current English-v2 repair/build
+→ bounded analysis-ready selection
+→ P1.6 semantic analysis
+→ current Market summary
+```
+
+A partial later-stage failure does not roll back valid earlier durable work; the command exits non-zero and reports the attention-required stage rather than presenting a false simple success.
+
+Other CLI examples include:
 
 ```bash
 jobhunter jobinja plan
@@ -256,6 +285,7 @@ jobhunter jobinja sync
 jobhunter jobinja fetch --missing --limit 10
 jobhunter jobs list
 jobhunter jobs show <job-id>
+jobhunter jobs health <job-id>
 jobhunter jobs checks <job-id>
 jobhunter jobs audit
 jobhunter translations status
@@ -264,7 +294,7 @@ jobhunter translations run --missing --limit 20
 jobhunter translations export
 ```
 
-Additional analysis/current-workflow commands may evolve with the active Phase-1 implementation. The browser and CLI must continue to share the same underlying services and records.
+Existing commands remain supported through the same console entrypoint. Some older individual CLI source factories still require final convergence with the newer shared dependency graph; the complete `jobhunter run` path already uses configured Jobinja retry bounds plus lifecycle persistence.
 
 ## Browser security boundary
 
@@ -281,6 +311,7 @@ Until their respective gates pass, JobHunter does not claim:
 - complete lifecycle/repost/duplicate resolution;
 - production-quality translation-v2 across every future language/source case;
 - production-quality semantic extraction across all role types;
+- accepted final Phase-1 end-to-end operation merely because `jobhunter run` is implemented;
 - reviewed canonical market taxonomy;
 - complete-market conclusions from the bounded/source-biased corpus;
 - reviewed personal capability state;
@@ -295,20 +326,20 @@ Until their respective gates pass, JobHunter does not claim:
 
 ## Near-term execution
 
-The next building work is intentionally narrow:
+The next acceptance work remains deliberately ordered:
 
-1. deterministic Ruff/tests/warnings baseline;
+1. observe/complete deterministic Ruff/tests/warnings baseline;
 2. migration and real-workspace safety;
 3. translation-v2 repair/inspection;
 4. one reviewed real P1.6 analysis;
 5. representative small P1.6 review sample;
 6. regression/chaos cases for source/model failure boundaries;
 7. Market sampling/corpus-health truthfulness;
-8. explicit partial-success operation results;
-9. remaining P1.3/P1.5 acceptance;
-10. final P1.7 run/report/browser equivalent;
+8. validate partial-success operation results and the new shared `jobhunter run` path;
+9. finish remaining P1.3/P1.5 live/source-history acceptance;
+10. converge browser/final-run orchestration where useful and complete P1.7 acceptance;
 11. Phase-1 closure;
-12. only then Phase-2 canonical market intelligence and a carefully selected second source.
+12. only then Phase-2 canonical market intelligence, including job-specific capability requirement/depth intelligence, and a carefully selected second source.
 
 See [Execution TODO](docs/EXECUTION_TODO.md) for the complete checklist.
 
