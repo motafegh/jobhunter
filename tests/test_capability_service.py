@@ -245,7 +245,7 @@ def test_capability_service_revalidates_provider_output_before_persistence(tmp_p
     provider = _Provider(valid=False)
     service = _service(database_path, provider)
 
-    with pytest.raises(ValueError, match="must add at least one analytical dimension"):
+    with pytest.raises(ValueError, match="must add derived reasoning"):
         service.analyze_job("vpn1")
 
     assert len(provider.calls) == 1
