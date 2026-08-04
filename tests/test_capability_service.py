@@ -74,7 +74,7 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
         ),
         observed_at=now,
     )
-    detail_id = source_store.record_job_detail(
+    detail = source_store.record_job_detail(
         job_posting_id=posting.job_posting_id,
         fetched_at=now,
         requested_url="https://jobinja.ir/companies/acme/jobs/vpn1/example",
@@ -97,6 +97,7 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
             "parser_version": "jobinja-detail-v2",
         },
     )
+    detail_id = detail.version_id
 
     translation_store = TranslationStore(database_path)
     source = translation_store.latest_source_version("vpn1")
@@ -117,8 +118,15 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
             "language": "en",
             "parser_version": "jobinja-detail-v2",
         },
-        english_document="Infrastructure Security Specialist\nAcme\nMastery of VPN and network infrastructure.",
-        segment_provenance={"title": "native", "company": "native", "description": "native"},
+        english_document=(
+            "Infrastructure Security Specialist\nAcme\n"
+            "Mastery of VPN and network infrastructure."
+        ),
+        segment_provenance={
+            "title": "native",
+            "company": "native",
+            "description": "native",
+        },
         translated_segment_count=0,
         native_segment_count=3,
         translation_sha256="translation-vpn1",
