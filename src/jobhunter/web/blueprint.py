@@ -116,7 +116,9 @@ def register_blueprint_routes(app: FastAPI, settings: Settings) -> None:
                 schema_version=BLUEPRINT_SCHEMA_VERSION,
             )
             if artifact is None:
-                raise RuntimeError("Role Capability Blueprint is unavailable after successful build")
+                raise RuntimeError(
+                    "Role Capability Blueprint is unavailable after successful build"
+                )
             summary = (
                 f"Role Capability Blueprint: {source_job_id}\n"
                 f"Outcome: {result.outcome}\n"
