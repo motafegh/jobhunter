@@ -28,6 +28,18 @@ class CapabilityIntelligenceArtifact:
     created_at: str
 
 
+@dataclass(frozen=True, slots=True)
+class CapabilityTranslationDependency:
+    """Exact English projection referenced by the accepted P1.6 artifact."""
+
+    id: int
+    source_job_id: str
+    job_detail_version_id: int
+    target_language: str
+    translation_schema_version: str
+    fields: dict[str, Any]
+
+
 class CapabilityIntelligenceStore:
     """Keep richer capability reasoning separate from strict P1.6 analysis."""
 
@@ -103,6 +115,38 @@ class CapabilityIntelligenceStore:
                 );
                 """
             )
+
+    def translation_dependency(
+        self,
+        artifact_id: int,
+    ) -> CapabilityTranslationDependency | None:
+        """Resolve the exact English artifact referenced by an accepted P1.6 analysis."""
+
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT a.id, a.job_detail_version_id, a.target_language,
+                       a.translation_schema_version, a.translated_fields_json,
+                       p.source_job_id
+                FROM job_translation_artifacts AS a
+                JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
+                JOIN job_postings AS p ON p.id = v.job_posting_id
+                WHERE a.id = ?
+                LIMIT 1
+                """,
+                (artifact_id,),
+            ).fetchone()
+        if row is None:
+            return None
+        return CapabilityTranslationDependency(
+            id=int(row["id"]),
+            source_job_id=str(row["source_job_id"]),
+            job_detail_version_id=int(row["job_detail_version_id"]),
+            target_language=str(row["target_language"]),
+            translation_schema_version=str(row["translation_schema_version"]),
+            fields=json.loads(str(row["translated_fields_json"])),
+        )
 
     def find_artifact(
         self,
