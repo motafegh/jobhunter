@@ -57,7 +57,7 @@ class _Provider:
                             "connectivity diagnosis, while vendor-specific scope remains unknown."
                         ),
                         "requirement_strength": "required",
-                        "employer_stated_depth": [],
+                        "depth_signals": [],
                         "work_activities": [],
                         "sub_capabilities": [],
                         "underlying_knowledge": [],
@@ -215,6 +215,10 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
     payload = provider.calls[0]["user_payload"]
     assert payload["accepted_extraction"]["requirements"][0]["concept"] == (
         "VPN and network infrastructure"
+    )
+    assert "p1:requirements:0" in payload["evidence_reference_ids"]
+    assert provider.calls[0]["evidence_catalog"]["p1:requirements:0"] == (
+        "Mastery of VPN and network infrastructure"
     )
     artifact = CapabilityIntelligenceStore(database_path).latest_current(
         "vpn1",
