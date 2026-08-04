@@ -41,7 +41,10 @@ def _payload() -> dict:
                     },
                 ],
                 "likely_work_products": [
-                    "A service or script that sends documents to an AI API and validates the structured result",
+                    (
+                        "A service or script that sends documents to an AI API and validates "
+                        "the structured result"
+                    ),
                     "Integration code that updates an internal system after business-rule checks",
                 ],
                 "likely_failure_modes_or_operational_concerns": [
@@ -84,8 +87,8 @@ def _payload() -> dict:
         ],
         "important_unknowns": ["The employer does not identify its CRM or email platform."],
         "bottom_line": (
-            "A strong candidate likely needs to turn messy business processes into reliable AI-assisted "
-            "workflows, not merely know how to chat with an LLM."
+            "A strong candidate likely needs to turn messy business processes into reliable "
+            "AI-assisted workflows, not merely know how to chat with an LLM."
         ),
     }
 
