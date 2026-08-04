@@ -32,19 +32,26 @@ class CapabilityInferenceProvider:
         base_url: str,
         configured_model: str,
         api_token: str | None = None,
-        timeout_seconds: float = 30.0,
+        timeout_seconds: float = 120.0,
         network_retries: int = 1,
         validation_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
     ) -> None:
         if not configured_model.strip():
             raise ValueError("A concrete capability-intelligence model is required")
+        if timeout_seconds <= 0:
+            raise ValueError("timeout_seconds must be greater than zero")
+        if not 0 <= network_retries <= 5:
+            raise ValueError("network_retries must be between 0 and 5")
         if not 0 <= validation_retries <= 3:
             raise ValueError("validation_retries must be between 0 and 3")
         self._base_url = base_url.rstrip("/")
         self._model = configured_model.strip()
         self._api_token = api_token
-        self._timeout_seconds = timeout_seconds
+        # Capability reasoning can legitimately produce several thousand tokens. A shared
+        # 30-second inference timeout is too short for that workload on a local model, so keep
+        # a long-form floor while still allowing callers to configure a larger value.
+        self._timeout_seconds = max(float(timeout_seconds), 120.0)
         self._network_retries = network_retries
         self._validation_retries = validation_retries
         self._transport = transport
@@ -65,16 +72,24 @@ class CapabilityInferenceProvider:
                 "Capability intelligence requires dictionary analysis_fields"
             )
 
+        # Like Role Blueprint generation, this is a long-running local generation. Keep
+        # connection establishment bounded but do not automatically replay a full generation
+        # after a read timeout. Instructor retries remain reserved for completed responses that
+        # fail the typed/semantic validation contract.
+        timeout = httpx.Timeout(
+            self._timeout_seconds,
+            connect=min(10.0, self._timeout_seconds),
+        )
         http_client = httpx.Client(
-            timeout=self._timeout_seconds,
+            timeout=timeout,
             transport=self._transport,
             trust_env=False,
         )
         openai_client = OpenAI(
             base_url=self._base_url,
             api_key=self._api_token or "lm-studio-local",
-            timeout=self._timeout_seconds,
-            max_retries=self._network_retries,
+            timeout=timeout,
+            max_retries=0,
             http_client=http_client,
         )
         client = instructor.from_openai(
@@ -102,7 +117,8 @@ class CapabilityInferenceProvider:
             )
         except (APIConnectionError, APITimeoutError) as exc:
             raise InferenceConnectionError(
-                f"Could not reach LM Studio for capability intelligence: {exc}"
+                "Could not complete local capability intelligence within "
+                f"{self._timeout_seconds:g}s: {exc}"
             ) from exc
         except Exception as exc:
             raise InferenceResponseError(
@@ -120,6 +136,11 @@ class CapabilityInferenceProvider:
             "seed": seed,
             "max_tokens": max_tokens,
             "stream": False,
+            "runtime": {
+                "timeout_seconds": self._timeout_seconds,
+                "transport_retries": 0,
+                "configured_network_retries": self._network_retries,
+            },
             "instructor": {
                 "mode": "JSON_SCHEMA",
                 "response_model": "JobCapabilityIntelligence",
