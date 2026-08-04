@@ -159,9 +159,9 @@ class AnalysisRequirement(_StrictModel):
 
 
 class JobAnalysisResponse(_StrictModel):
-    role_purpose: list[AnalysisClaim] = Field(default_factory=list, max_length=1)
-    responsibilities: list[AnalysisClaim] = Field(default_factory=list, max_length=16)
-    requirements: list[AnalysisRequirement] = Field(default_factory=list, max_length=32)
+    role_purpose: list[AnalysisClaim] = Field(max_length=1)
+    responsibilities: list[AnalysisClaim] = Field(max_length=16)
+    requirements: list[AnalysisRequirement] = Field(max_length=32)
 
     @model_validator(mode="after")
     def remove_exact_duplicate_claims(self) -> JobAnalysisResponse:
