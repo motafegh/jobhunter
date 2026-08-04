@@ -25,6 +25,14 @@ from jobhunter.phase1_run import (
     configured_searches,
     format_phase1_run_summary,
 )
+from jobhunter.role_blueprint_service import (
+    BLUEPRINT_PROMPT_VERSION,
+    BLUEPRINT_SCHEMA_VERSION,
+    RoleBlueprintError,
+    build_role_blueprint_service,
+    format_role_blueprint,
+)
+from jobhunter.role_blueprint_store import RoleBlueprintStore
 from jobhunter.source_health import SourceHealthReader, format_source_health
 
 
@@ -150,6 +158,24 @@ def _capability_parser(*, default_config: Path | None = None) -> argparse.Argume
     return parser
 
 
+def _blueprint_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs blueprint",
+        description=(
+            "Build or reuse the human-facing Role Capability Blueprint above current "
+            "Capability Intelligence."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
 def _extract_run_invocation(
     arguments: list[str],
 ) -> tuple[bool, Path | None, list[str]]:
@@ -201,6 +227,26 @@ def _extract_capability_invocation(
         len(arguments) >= 3
         and arguments[0].startswith("--config=")
         and arguments[1:3] == ["jobs", "capability"]
+    ):
+        return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
+    return False, None, arguments
+
+
+def _extract_blueprint_invocation(
+    arguments: list[str],
+) -> tuple[bool, Path | None, list[str]]:
+    if len(arguments) >= 2 and arguments[:2] == ["jobs", "blueprint"]:
+        return True, None, arguments[2:]
+    if (
+        len(arguments) >= 4
+        and arguments[0] == "--config"
+        and arguments[2:4] == ["jobs", "blueprint"]
+    ):
+        return True, Path(arguments[1]), arguments[4:]
+    if (
+        len(arguments) >= 3
+        and arguments[0].startswith("--config=")
+        and arguments[1:3] == ["jobs", "blueprint"]
     ):
         return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
     return False, None, arguments
@@ -328,6 +374,37 @@ def _run_capability_intelligence(
     return 0
 
 
+def _run_role_blueprint(
+    arguments: list[str],
+    *,
+    default_config: Path | None,
+) -> int:
+    parser = _blueprint_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        service = build_role_blueprint_service(settings)
+        result = service.build(parsed.job_id)
+        artifact = RoleBlueprintStore(settings.database_path).latest_current(
+            parsed.job_id,
+            model=result.model,
+            prompt_version=BLUEPRINT_PROMPT_VERSION,
+            schema_version=BLUEPRINT_SCHEMA_VERSION,
+        )
+        if artifact is None:
+            raise RuntimeError("Role Capability Blueprint is unavailable after successful build")
+    except RoleBlueprintError as exc:
+        print(f"Role Capability Blueprint is not ready: {exc}", file=sys.stderr)
+        return 2
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"Role Capability Blueprint failed: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"Outcome: {result.outcome}")
+    print(format_role_blueprint(artifact))
+    return 0
+
+
 def _print_combined_help() -> None:
     build_legacy_parser().print_help()
     print("")
@@ -338,6 +415,7 @@ def _print_combined_help() -> None:
     print("")
     print("Capability intelligence commands:")
     print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
+    print("  jobs blueprint <id>      Build/reuse human-facing expert role interpretation")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -365,6 +443,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     if is_capability:
         return _run_capability_intelligence(
             capability_arguments,
+            default_config=default_config,
+        )
+
+    is_blueprint, default_config, blueprint_arguments = _extract_blueprint_invocation(
+        arguments
+    )
+    if is_blueprint:
+        return _run_role_blueprint(
+            blueprint_arguments,
             default_config=default_config,
         )
 
