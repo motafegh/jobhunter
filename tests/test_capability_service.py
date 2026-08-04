@@ -21,24 +21,41 @@ from jobhunter.translation_store import TranslationStore
 
 
 class _Provider:
-    def __init__(self) -> None:
+    def __init__(self, *, valid: bool = True) -> None:
         self.calls: list[dict] = []
+        self.valid = valid
 
     def complete(self, **kwargs) -> CapabilityInferenceResult:
         self.calls.append(kwargs)
+        unknown_scope = (
+            [
+                {
+                    "statement": (
+                        "The exact VPN vendor, topology, and high-availability design are not "
+                        "supported by the posting."
+                    ),
+                    "evidence_status": "unknown_or_unsupported",
+                    "evidence": [],
+                    "rationale": "No vendor, topology, or HA details are stated.",
+                    "confidence": "high",
+                }
+            ]
+            if self.valid
+            else []
+        )
         return CapabilityInferenceResult(
             model="capability-model",
             intelligence={
                 "role_interpretation": (
                     "The role applies secure-network knowledge to operational troubleshooting "
-                    "and remote-access maintenance."
+                    "rather than merely recognizing VPN terminology."
                 ),
                 "capabilities": [
                     {
                         "capability_label": "Secure network connectivity and VPN operations",
                         "summary": (
                             "VPN/network knowledge is expected to be applied in live "
-                            "connectivity diagnosis and secure remote access."
+                            "connectivity diagnosis, while vendor-specific scope remains unknown."
                         ),
                         "requirement_strength": "required",
                         "employer_stated_depth": [],
@@ -48,7 +65,7 @@ class _Provider:
                         "operational_practices": [],
                         "independence_expectation": None,
                         "operational_context": [],
-                        "unknown_scope": [],
+                        "unknown_scope": unknown_scope,
                         "overall_confidence": "high",
                     }
                 ],
@@ -105,8 +122,8 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
     translation_id = translation_store.record_artifact(
         source=source,
         target_language="en",
-        provider_name="native",
-        provider_model="identity",
+        provider_name="source-identity",
+        provider_model="native-english",
         translation_schema_version=TRANSLATION_SCHEMA_VERSION,
         fields={
             "title": "Infrastructure Security Specialist",
@@ -210,6 +227,7 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
     )
     assert artifact is not None
     assert artifact.analysis_artifact_id == analysis_id
+    assert artifact.intelligence["capabilities"][0]["unknown_scope"]
 
 
 def test_capability_service_requires_current_accepted_english_analysis(tmp_path: Path) -> None:
@@ -222,3 +240,24 @@ def test_capability_service_requires_current_accepted_english_analysis(tmp_path:
         service.analyze_job("vpn1")
 
     assert provider.calls == []
+
+
+def test_capability_service_revalidates_provider_output_before_persistence(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    _prepare(database_path)
+    provider = _Provider(valid=False)
+    service = _service(database_path, provider)
+
+    with pytest.raises(ValueError, match="must add at least one analytical dimension"):
+        service.analyze_job("vpn1")
+
+    assert len(provider.calls) == 1
+    assert (
+        CapabilityIntelligenceStore(database_path).latest_current(
+            "vpn1",
+            model="capability-model",
+            prompt_version=CAPABILITY_PROMPT_VERSION,
+            schema_version=CAPABILITY_SCHEMA_VERSION,
+        )
+        is None
+    )
