@@ -31,6 +31,14 @@ def _requirement(concept: str, evidence: str) -> dict:
     }
 
 
+def test_analysis_validation_requires_all_root_arrays() -> None:
+    with pytest.raises(ValidationError, match="responsibilities"):
+        JobAnalysisResponse.model_validate(
+            {"role_purpose": [], "requirements": []},
+            context={"analysis_fields": _fields()},
+        )
+
+
 def test_analysis_validation_canonicalizes_safe_field_prefixes_and_exact_duplicates() -> None:
     power_shell = _requirement(
         "Mastery of PowerShell for information gathering, auditing, and security reporting",
