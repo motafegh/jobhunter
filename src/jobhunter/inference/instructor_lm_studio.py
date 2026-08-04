@@ -8,6 +8,7 @@ structured inference paths keep their established behavior.
 from __future__ import annotations
 
 import json
+import re
 from typing import Any, Literal
 
 import httpx
@@ -36,6 +37,7 @@ ConceptType = Literal[
     "other",
 ]
 Confidence = Literal["high", "medium", "low"]
+_TOKEN_RE = re.compile(r"[^\s\u200c]+")
 
 
 def _iter_strings(value: Any):
@@ -52,6 +54,28 @@ def _iter_strings(value: Any):
 
 def _normalize(value: str) -> str:
     return " ".join(value.replace("\u200c", " ").split()).casefold()
+
+
+def _equivalent_source_excerpt(evidence: str, source_text: str) -> str | None:
+    """Return the exact source span when tokens differ only by spacing/ZWNJ/case."""
+
+    exact_start = source_text.find(evidence)
+    if exact_start >= 0:
+        return source_text[exact_start : exact_start + len(evidence)]
+
+    evidence_tokens = [match.group(0).casefold() for match in _TOKEN_RE.finditer(evidence)]
+    if not evidence_tokens:
+        return None
+    source_matches = list(_TOKEN_RE.finditer(source_text))
+    source_tokens = [match.group(0).casefold() for match in source_matches]
+    width = len(evidence_tokens)
+    for start in range(0, len(source_tokens) - width + 1):
+        if source_tokens[start : start + width] != evidence_tokens:
+            continue
+        first = source_matches[start]
+        last = source_matches[start + width - 1]
+        return source_text[first.start() : last.end()]
+    return None
 
 
 def _field_value_for_prefixed_evidence(
@@ -84,8 +108,9 @@ def _canonical_evidence(evidence: str, info: ValidationInfo) -> str:
         raise ValueError("analysis validation context is missing analysis_fields")
 
     for source_text in _iter_strings(fields):
-        if value in source_text:
-            return value
+        canonical = _equivalent_source_excerpt(value, source_text)
+        if canonical is not None:
+            return canonical
 
     canonical = _field_value_for_prefixed_evidence(value, fields)
     if canonical is not None:
