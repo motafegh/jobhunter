@@ -19,6 +19,18 @@ def _fields() -> dict:
     }
 
 
+def _catalog() -> dict[str, str]:
+    return {
+        "p1:requirements:0": "Mastery of VPN and network infrastructure",
+        "p1:responsibilities:0": "Troubleshoot connectivity and security incidents",
+        "field:company_description": "We provide enterprise infrastructure security services.",
+    }
+
+
+def _context() -> dict:
+    return {"analysis_fields": _fields(), "evidence_catalog": _catalog()}
+
+
 def _expectation(
     statement: str,
     status: str,
@@ -48,21 +60,21 @@ def _payload() -> dict:
                     "with VPN knowledge applied in operational troubleshooting."
                 ),
                 "requirement_strength": "required",
-                "employer_stated_depth": [
+                "depth_signals": [
                     _expectation(
                         (
                             "The employer explicitly asks for mastery of VPN and network "
                             "infrastructure."
                         ),
                         "source_explicit",
-                        ["Mastery of VPN and network infrastructure"],
+                        ["p1:requirements:0"],
                     )
                 ],
                 "work_activities": [
                     _expectation(
                         "Diagnose connectivity and security incidents.",
                         "source_explicit",
-                        ["Troubleshoot connectivity and security incidents"],
+                        ["p1:responsibilities:0"],
                     )
                 ],
                 "sub_capabilities": [
@@ -72,10 +84,7 @@ def _payload() -> dict:
                             "static settings."
                         ),
                         "strongly_implied_by_work",
-                        [
-                            "Mastery of VPN and network infrastructure",
-                            "Troubleshoot connectivity and security incidents",
-                        ],
+                        ["p1:requirements:0", "p1:responsibilities:0"],
                         (
                             "VPN mastery combined with incident troubleshooting implies "
                             "operational fault diagnosis."
@@ -89,10 +98,7 @@ def _payload() -> dict:
                             "traffic flow."
                         ),
                         "model_inferred_prerequisite",
-                        [
-                            "Mastery of VPN and network infrastructure",
-                            "Troubleshoot connectivity and security incidents",
-                        ],
+                        ["p1:requirements:0", "p1:responsibilities:0"],
                         (
                             "Operational VPN troubleshooting normally requires understanding "
                             "how traffic is routed before, through, and after a tunnel."
@@ -105,7 +111,7 @@ def _payload() -> dict:
                     _expectation(
                         "Work in an enterprise infrastructure-security context.",
                         "source_explicit",
-                        ["enterprise infrastructure security services"],
+                        ["field:company_description"],
                     )
                 ],
                 "unknown_scope": [
@@ -127,28 +133,27 @@ def _payload() -> dict:
     }
 
 
-def test_capability_model_allows_synthesized_analysis_with_exact_evidence() -> None:
-    result = JobCapabilityIntelligence.model_validate(
-        _payload(),
-        context={"analysis_fields": _fields()},
-    )
+def test_capability_model_resolves_evidence_references_to_exact_source_text() -> None:
+    result = JobCapabilityIntelligence.model_validate(_payload(), context=_context())
 
     profile = result.capabilities[0]
+    assert profile.depth_signals[0].evidence == ["Mastery of VPN and network infrastructure"]
+    assert profile.underlying_knowledge[0].evidence == [
+        "Mastery of VPN and network infrastructure",
+        "Troubleshoot connectivity and security incidents",
+    ]
     assert "TCP/IP" in profile.underlying_knowledge[0].statement
-    assert profile.underlying_knowledge[0].statement not in _fields()["description"]
-    assert profile.underlying_knowledge[0].evidence_status == "model_inferred_prerequisite"
 
 
 def test_capability_provider_schema_omits_large_string_length_constraints() -> None:
     schema = JobCapabilityIntelligence.model_json_schema()
     serialized = json.dumps(schema, sort_keys=True)
 
-    # LM Studio turns JSON Schema string length bounds into llama.cpp grammar repetitions.
-    # Large values such as {3,1200}/{20,2400} exceeded the engine's sane repetition limit.
     assert '"minLength"' not in serialized
     assert '"maxLength"' not in serialized
-    # Structural collection bounds remain provider-visible; only prose bounds moved to runtime.
     assert '"maxItems"' in serialized
+    assert "depth_signals" in serialized
+    assert "employer_stated_depth" not in serialized
 
 
 def test_capability_text_bounds_remain_runtime_enforced() -> None:
@@ -156,26 +161,65 @@ def test_capability_text_bounds_remain_runtime_enforced() -> None:
     payload["role_interpretation"] = "too short"
 
     with pytest.raises(ValidationError, match="at least 20 characters"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
 
 
-def test_capability_model_rejects_paraphrased_evidence_but_not_synthesized_statement() -> None:
+def test_unknown_scope_status_is_normalized_by_section() -> None:
     payload = _payload()
-    payload["capabilities"][0]["sub_capabilities"][0]["evidence"] = [
-        "The person must troubleshoot VPN problems"
+    payload["capabilities"][0]["unknown_scope"][0]["evidence_status"] = (
+        "model_inferred_prerequisite"
+    )
+
+    result = JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+    assert result.capabilities[0].unknown_scope[0].evidence_status == "unknown_or_unsupported"
+
+
+def test_unknown_item_in_other_section_is_rehomed_to_unknown_scope() -> None:
+    payload = _payload()
+    item = _expectation(
+        "Exact vendor-specific VPN implementation is unknown.",
+        "unknown_or_unsupported",
+        [],
+    )
+    payload["capabilities"][0]["sub_capabilities"].append(item)
+
+    result = JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+    assert all(
+        item.evidence_status != "unknown_or_unsupported"
+        for item in result.capabilities[0].sub_capabilities
+    )
+    assert any(
+        item.statement == "Exact vendor-specific VPN implementation is unknown."
+        for item in result.capabilities[0].unknown_scope
+    )
+
+
+def test_exact_text_fallback_still_supports_historical_callers() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
+        "Mastery of VPN and network infrastructure",
+        "Troubleshoot connectivity and security incidents",
     ]
 
-    with pytest.raises(ValidationError, match="Evidence must be an exact excerpt"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
+    result = JobCapabilityIntelligence.model_validate(
+        payload,
+        context={"analysis_fields": _fields()},
+    )
+
+    assert len(result.capabilities[0].underlying_knowledge[0].evidence) == 2
 
 
-def test_composite_evidence_is_split_into_exact_source_excerpts() -> None:
+def test_capability_model_rejects_unknown_evidence_reference() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["sub_capabilities"][0]["evidence"] = ["missing:reference"]
+
+    with pytest.raises(ValidationError, match="known JobHunter evidence reference"):
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+
+def test_composite_exact_evidence_is_split_for_historical_callers() -> None:
     payload = _payload()
     payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
         (
@@ -195,56 +239,12 @@ def test_composite_evidence_is_split_into_exact_source_excerpts() -> None:
     ]
 
 
-def test_composite_evidence_rejects_any_unproven_fragment() -> None:
-    payload = _payload()
-    payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
-        (
-            "Mastery of VPN and network infrastructure, invented unsupported phrase, "
-            "Troubleshoot connectivity and security incidents"
-        )
-    ]
-
-    with pytest.raises(ValidationError, match="Evidence must be an exact excerpt"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
-
-
 def test_supported_expectation_requires_evidence() -> None:
     payload = _payload()
     payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = []
 
     with pytest.raises(ValidationError, match="require at least one evidence excerpt"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
-
-
-def test_unknown_scope_must_be_labeled_unknown() -> None:
-    payload = _payload()
-    unknown = payload["capabilities"][0]["unknown_scope"][0]
-    unknown["evidence_status"] = "model_inferred_prerequisite"
-    unknown["evidence"] = ["Mastery of VPN and network infrastructure"]
-
-    with pytest.raises(ValidationError, match="unknown_scope items"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
-
-
-def test_employer_stated_depth_must_be_source_explicit() -> None:
-    payload = _payload()
-    depth = payload["capabilities"][0]["employer_stated_depth"][0]
-    depth["evidence_status"] = "strongly_implied_by_work"
-
-    with pytest.raises(ValidationError, match="employer_stated_depth items"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
 
 
 def test_duplicate_capability_labels_are_rejected() -> None:
@@ -252,15 +252,19 @@ def test_duplicate_capability_labels_are_rejected() -> None:
     payload["capabilities"].append(dict(payload["capabilities"][0]))
 
     with pytest.raises(ValidationError, match="duplicate capability_label"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
 
 
 def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> None:
     payload = _payload()
     profile = payload["capabilities"][0]
+    profile["depth_signals"] = [
+        _expectation(
+            "The employer asks for mastery of VPN and network infrastructure.",
+            "source_explicit",
+            ["p1:requirements:0"],
+        )
+    ]
     profile["sub_capabilities"] = []
     profile["underlying_knowledge"] = []
     profile["operational_practices"] = []
@@ -269,7 +273,4 @@ def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> No
     profile["unknown_scope"] = []
 
     with pytest.raises(ValidationError, match="must add derived reasoning"):
-        JobCapabilityIntelligence.model_validate(
-            payload,
-            context={"analysis_fields": _fields()},
-        )
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
