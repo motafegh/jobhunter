@@ -15,9 +15,8 @@ from jobhunter.capability_store import (
     CapabilityIntelligenceStore,
 )
 from jobhunter.config import Settings
-from jobhunter.translation import GoogleCloudTranslationProvider, LMStudioTranslationProvider
-from jobhunter.translation_service import TranslationService
-from jobhunter.translation_store import TranslationStore
+from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
+from jobhunter.translation_store import TranslationArtifact, TranslationStore
 
 CAPABILITY_PROMPT_VERSION = "job-capability-intelligence-v1"
 CAPABILITY_SCHEMA_VERSION = "job-capability-intelligence-v1"
@@ -36,7 +35,8 @@ THIS IS ANALYSIS, NOT TEXT EXTRACTION
 - A good answer adds useful interpretation beyond the source while preserving uncertainty.
 
 INPUT AUTHORITY
-- analysis_fields contains the current hardened English projection and is the only evidence text.
+- analysis_fields contains the exact hardened English projection used by the accepted P1.6
+  artifact and is the only evidence text.
 - accepted_extraction contains JobHunter's already accepted strict role-purpose,
   responsibility, and requirement facts. Use it as structured guidance, not as a second source
   of evidence text.
@@ -132,7 +132,6 @@ class CapabilityIntelligenceService:
         self,
         *,
         source_store: TranslationStore,
-        translation_service: TranslationService,
         analysis_store: AnalysisStore,
         capability_store: CapabilityIntelligenceStore,
         provider: CapabilityInferenceProvider,
@@ -148,7 +147,6 @@ class CapabilityIntelligenceService:
         if not 1 <= max_tokens <= 32768:
             raise ValueError("max_tokens must be between 1 and 32768")
         self._source_store = source_store
-        self._translation_service = translation_service
         self._analysis_store = analysis_store
         self._capability_store = capability_store
         self._provider = provider
@@ -160,16 +158,11 @@ class CapabilityIntelligenceService:
     def _current_dependencies(
         self,
         source_job_id: str,
-    ) -> tuple[Any, Any, AnalysisArtifact]:
+    ) -> tuple[Any, TranslationArtifact, AnalysisArtifact]:
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
             raise CapabilityIntelligenceError(
                 "Job has no current successfully parsed source version"
-            )
-        translation = self._translation_service.current_artifact(source_job_id)
-        if translation is None:
-            raise CapabilityIntelligenceError(
-                "Job has no current hardened English projection; translate/repair it first"
             )
         analysis = self._analysis_store.latest_current(
             source_job_id,
@@ -185,9 +178,27 @@ class CapabilityIntelligenceService:
             raise CapabilityIntelligenceError(
                 "English analysis does not belong to the current source semantic version"
             )
-        if analysis.translation_artifact_id != translation.id:
+        if analysis.translation_artifact_id is None:
             raise CapabilityIntelligenceError(
-                "English analysis does not reference the current hardened English projection"
+                "English analysis has no referenced hardened English projection"
+            )
+
+        translation = self._source_store.latest_artifact(
+            source_job_id,
+            target_language="en",
+        )
+        if translation is None:
+            raise CapabilityIntelligenceError(
+                "Job has no persisted English projection for the current source version"
+            )
+        if translation.translation_schema_version != TRANSLATION_SCHEMA_VERSION:
+            raise CapabilityIntelligenceError(
+                "Job's latest English projection is historical and requires v2 repair"
+            )
+        if translation.id != analysis.translation_artifact_id:
+            raise CapabilityIntelligenceError(
+                "Accepted English analysis does not reference the latest English projection; "
+                "run Analyze English again before capability intelligence"
             )
         return source, translation, analysis
 
@@ -299,38 +310,6 @@ class CapabilityIntelligenceService:
         return _result(artifact, outcome="completed")
 
 
-def _translation_service(settings: Settings) -> TranslationService:
-    provider = None
-    if settings.translation_provider == "lm-studio":
-        provider = LMStudioTranslationProvider(
-            base_url=settings.lm_studio_base_url,
-            configured_model=settings.effective_translation_lm_studio_model(),
-            api_token=settings.lm_studio_api_token,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-            max_tokens=settings.translation_lm_studio_max_tokens,
-            request_character_target=settings.translation_lm_studio_character_target,
-        )
-    elif settings.translation_provider == "google-cloud":
-        if not settings.google_translation_api_key:
-            raise ValueError(
-                "Google translation is configured but JOBHUNTER_GOOGLE_TRANSLATION_API_KEY "
-                "is unavailable; capability intelligence cannot resolve the effective English "
-                "artifact identity."
-            )
-        provider = GoogleCloudTranslationProvider(
-            api_key=settings.google_translation_api_key,
-            model=settings.google_translation_model,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-        )
-    return TranslationService(
-        store=TranslationStore(settings.database_path),
-        provider=provider,
-        target_language=settings.translation_target_language,
-    )
-
-
 def build_capability_intelligence_service(settings: Settings) -> CapabilityIntelligenceService:
     """Build the bounded local capability-intelligence dependency graph."""
 
@@ -340,11 +319,12 @@ def build_capability_intelligence_service(settings: Settings) -> CapabilityIntel
             "No analysis model is configured. Set analysis_lm_studio_model, lm_studio_model, "
             "or the explicit translation-model fallback before capability analysis."
         )
+    # First slice deliberately reuses the configured analysis model. A dedicated capability model
+    # is introduced only after reviewed same-job comparisons justify one.
     capability_model = analysis_model
     translation_store = TranslationStore(settings.database_path)
     return CapabilityIntelligenceService(
         source_store=translation_store,
-        translation_service=_translation_service(settings),
         analysis_store=AnalysisStore(settings.database_path),
         capability_store=CapabilityIntelligenceStore(settings.database_path),
         provider=CapabilityInferenceProvider(
