@@ -13,6 +13,8 @@ from openai import APIConnectionError, APITimeoutError, OpenAI
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
 from jobhunter.role_blueprint_models import RoleCapabilityBlueprint
 
+_BLUEPRINT_MIN_TIMEOUT_SECONDS = 120.0
+
 
 @dataclass(frozen=True, slots=True)
 class RoleBlueprintInferenceResult:
@@ -32,7 +34,7 @@ class RoleBlueprintInferenceProvider:
         base_url: str,
         configured_model: str,
         api_token: str | None = None,
-        timeout_seconds: float = 120.0,
+        timeout_seconds: float = _BLUEPRINT_MIN_TIMEOUT_SECONDS,
         network_retries: int = 1,
         validation_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
@@ -48,7 +50,9 @@ class RoleBlueprintInferenceProvider:
         self._base_url = base_url.rstrip("/")
         self._model = configured_model.strip()
         self._api_token = api_token
-        self._timeout_seconds = timeout_seconds
+        # The shared inference timeout is intentionally short for normal calls. A Blueprint is a
+        # much larger human-facing artifact, so never let a shared 30s setting cut it off mid-run.
+        self._timeout_seconds = max(timeout_seconds, _BLUEPRINT_MIN_TIMEOUT_SECONDS)
         self._network_retries = network_retries
         self._validation_retries = validation_retries
         self._transport = transport
