@@ -30,7 +30,7 @@ RequirementStrength = Literal[
     "unspecified",
 ]
 _TOKEN_RE = re.compile(r"[^\s\u200c]+")
-_COMPOSITE_SEPARATOR_RE = re.compile(r",\s+|;\s+|\n+|\s+\|\s+")
+_COMPOSITE_SEPARATOR_RE = re.compile(r",\s+|;\s+|\n+|\s+\|\s+|\.{3,}\s*|…\s*")
 _DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
 
 
@@ -131,10 +131,9 @@ def canonicalize_evidence(value: str, fields: dict[str, Any]) -> str:
         return canonical
 
     raise ValueError(
-        "Evidence must be an exact excerpt from an analysis_fields value. "
-        "Analytical statements may be synthesized, but supporting evidence may not be "
-        "paraphrased, translated, or invented. Non-contiguous support must be represented "
-        "as separate exact evidence excerpts."
+        "Evidence must resolve to a known JobHunter evidence reference or an exact excerpt "
+        "from analysis_fields. Analytical statements may be synthesized, but supporting "
+        "evidence may not be invented."
     )
 
 
@@ -144,20 +143,13 @@ def _partition_composite_evidence(
     *,
     max_parts: int,
 ) -> list[str] | None:
-    """Recover a model-concatenated quote only when every fragment is exact source evidence.
-
-    The model occasionally joins two real but non-contiguous source clauses into one evidence
-    string. This helper is deliberately mechanical: it may split only at punctuation/newline
-    separators, every resulting fragment must independently canonicalize to an exact source span,
-    and the smallest successful number of fragments wins. It never repairs paraphrased content.
-    """
+    """Recover concatenated exact source clauses when every fragment is independently provable."""
 
     candidate = value.strip()
     if max_parts < 2 or len(candidate) < 4:
         return None
 
-    split_matches = list(_COMPOSITE_SEPARATOR_RE.finditer(candidate))
-    if not split_matches:
+    if not list(_COMPOSITE_SEPARATOR_RE.finditer(candidate)):
         return None
 
     def search(text: str, parts: int) -> list[str] | None:
@@ -166,8 +158,8 @@ def _partition_composite_evidence(
             return [canonical] if canonical is not None else None
 
         for match in _COMPOSITE_SEPARATOR_RE.finditer(text):
-            left = text[: match.start()].strip(" \t\r\n,;|")
-            right = text[match.end() :].strip(" \t\r\n,;|")
+            left = text[: match.start()].strip(" \t\r\n,;|….")
+            right = text[match.end() :].strip(" \t\r\n,;|….")
             if len(left) < 2 or len(right) < 2:
                 continue
             canonical_left = _try_canonicalize_evidence(left, fields)
@@ -190,24 +182,30 @@ def canonicalize_evidence_list(
     fields: dict[str, Any],
     *,
     max_items: int,
+    evidence_catalog: dict[str, str] | None = None,
 ) -> list[str]:
-    """Canonicalize evidence and safely expand fully provable composite quotes."""
+    """Resolve evidence references, with exact-text fallback for historical/test callers."""
 
     canonical_values: list[str] = []
+    catalog = evidence_catalog or {}
     for value in values:
-        canonical = _try_canonicalize_evidence(value, fields)
-        if canonical is not None:
-            fragments = [canonical]
+        reference = value.strip()
+        if reference in catalog:
+            fragments = [catalog[reference]]
         else:
-            remaining_capacity = max_items - len(canonical_values)
-            fragments = _partition_composite_evidence(
-                value,
-                fields,
-                max_parts=min(3, remaining_capacity),
-            )
-            if fragments is None:
-                canonicalize_evidence(value, fields)
-                raise AssertionError("canonicalize_evidence must raise for unsupported evidence")
+            canonical = _try_canonicalize_evidence(value, fields)
+            if canonical is not None:
+                fragments = [canonical]
+            else:
+                remaining_capacity = max_items - len(canonical_values)
+                fragments = _partition_composite_evidence(
+                    value,
+                    fields,
+                    max_parts=min(3, remaining_capacity),
+                )
+                if fragments is None:
+                    canonicalize_evidence(value, fields)
+                    raise AssertionError("canonicalize_evidence must raise for unsupported evidence")
 
         for fragment in fragments:
             if fragment not in canonical_values:
@@ -217,6 +215,65 @@ def canonicalize_evidence_list(
     return canonical_values
 
 
+def _validation_sources(info: ValidationInfo) -> tuple[dict[str, Any], dict[str, str]]:
+    context = info.context or {}
+    fields = context.get("analysis_fields")
+    if not isinstance(fields, dict):
+        raise ValueError("capability validation context is missing analysis_fields")
+    catalog = context.get("evidence_catalog")
+    if catalog is None:
+        return fields, {}
+    if not isinstance(catalog, dict) or not all(
+        isinstance(key, str) and isinstance(value, str) for key, value in catalog.items()
+    ):
+        raise ValueError("capability validation context contains an invalid evidence_catalog")
+    return fields, catalog
+
+
+def _normalize_unknown_sections(data: Any) -> Any:
+    """Repair section/status bookkeeping without changing analytical statements.
+
+    The section itself already communicates unknown scope. Treat a non-unknown status inside
+    unknown_scope as bookkeeping noise, and move explicit unknown items from other analytical
+    sections into unknown_scope. This prevents full model retries for mechanically recoverable
+    placement mistakes while preserving the model's actual conclusion/rationale/evidence.
+    """
+
+    if not isinstance(data, dict):
+        return data
+    normalized = dict(data)
+    unknown_scope = [dict(item) for item in normalized.get("unknown_scope", []) if isinstance(item, dict)]
+    for item in unknown_scope:
+        item["evidence_status"] = "unknown_or_unsupported"
+
+    for field_name in (
+        "depth_signals",
+        "work_activities",
+        "sub_capabilities",
+        "underlying_knowledge",
+        "operational_practices",
+        "operational_context",
+    ):
+        kept: list[Any] = []
+        for item in normalized.get(field_name, []) or []:
+            if isinstance(item, dict) and item.get("evidence_status") == "unknown_or_unsupported":
+                unknown_scope.append(dict(item))
+            else:
+                kept.append(item)
+        normalized[field_name] = kept
+
+    independence = normalized.get("independence_expectation")
+    if (
+        isinstance(independence, dict)
+        and independence.get("evidence_status") == "unknown_or_unsupported"
+    ):
+        unknown_scope.append(dict(independence))
+        normalized["independence_expectation"] = None
+
+    normalized["unknown_scope"] = unknown_scope
+    return normalized
+
+
 class _StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -224,10 +281,6 @@ class _StrictModel(BaseModel):
 class CapabilityExpectation(_StrictModel):
     """One evidence-qualified analytical conclusion about a job capability."""
 
-    # Prose length bounds intentionally live in runtime validators rather than Field metadata.
-    # LM Studio converts JSON Schema string bounds into llama.cpp grammar repetitions; large
-    # maxLength values (for example 1200) can exceed the grammar parser's sane repetition limit
-    # before the model receives the request.
     statement: str
     evidence_status: EvidenceStatus
     evidence: list[str] = Field(max_length=6)
@@ -237,22 +290,12 @@ class CapabilityExpectation(_StrictModel):
     @field_validator("statement")
     @classmethod
     def statement_bounds(cls, value: str) -> str:
-        return _bounded_text(
-            value,
-            field_name="statement",
-            minimum=3,
-            maximum=600,
-        )
+        return _bounded_text(value, field_name="statement", minimum=3, maximum=600)
 
     @field_validator("rationale")
     @classmethod
     def rationale_bounds(cls, value: str) -> str:
-        return _bounded_text(
-            value,
-            field_name="rationale",
-            minimum=3,
-            maximum=1200,
-        )
+        return _bounded_text(value, field_name="rationale", minimum=3, maximum=1200)
 
     @field_validator("evidence")
     @classmethod
@@ -261,11 +304,13 @@ class CapabilityExpectation(_StrictModel):
         values: list[str],
         info: ValidationInfo,
     ) -> list[str]:
-        context = info.context or {}
-        fields = context.get("analysis_fields")
-        if not isinstance(fields, dict):
-            raise ValueError("capability validation context is missing analysis_fields")
-        return canonicalize_evidence_list(values, fields, max_items=6)
+        fields, catalog = _validation_sources(info)
+        return canonicalize_evidence_list(
+            values,
+            fields,
+            max_items=6,
+            evidence_catalog=catalog,
+        )
 
     @model_validator(mode="after")
     def status_contract(self) -> CapabilityExpectation:
@@ -284,7 +329,7 @@ class CapabilityProfile(_StrictModel):
     capability_label: str
     summary: str
     requirement_strength: RequirementStrength
-    employer_stated_depth: list[CapabilityExpectation] = Field(max_length=6)
+    depth_signals: list[CapabilityExpectation] = Field(default_factory=list, max_length=10)
     work_activities: list[CapabilityExpectation] = Field(max_length=12)
     sub_capabilities: list[CapabilityExpectation] = Field(max_length=16)
     underlying_knowledge: list[CapabilityExpectation] = Field(max_length=12)
@@ -294,30 +339,25 @@ class CapabilityProfile(_StrictModel):
     unknown_scope: list[CapabilityExpectation] = Field(max_length=12)
     overall_confidence: Confidence
 
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_section_bookkeeping(cls, data: Any) -> Any:
+        return _normalize_unknown_sections(data)
+
     @field_validator("capability_label")
     @classmethod
     def capability_label_bounds(cls, value: str) -> str:
-        return _bounded_text(
-            value,
-            field_name="capability_label",
-            minimum=2,
-            maximum=160,
-        )
+        return _bounded_text(value, field_name="capability_label", minimum=2, maximum=160)
 
     @field_validator("summary")
     @classmethod
     def summary_bounds(cls, value: str) -> str:
-        return _bounded_text(
-            value,
-            field_name="summary",
-            minimum=12,
-            maximum=1600,
-        )
+        return _bounded_text(value, field_name="summary", minimum=12, maximum=1600)
 
     @model_validator(mode="after")
     def normalize_sections(self) -> CapabilityProfile:
         for field_name in (
-            "employer_stated_depth",
+            "depth_signals",
             "work_activities",
             "sub_capabilities",
             "underlying_knowledge",
@@ -337,40 +377,14 @@ class CapabilityProfile(_StrictModel):
             setattr(self, field_name, unique)
 
         if any(
-            item.evidence_status != "source_explicit"
-            for item in self.employer_stated_depth
-        ):
-            raise ValueError("employer_stated_depth items must be source_explicit")
-        if any(
-            item.evidence_status == "unknown_or_unsupported"
-            for item in self.work_activities
-        ):
-            raise ValueError("unknown work scope belongs under unknown_scope")
-        if any(
-            item.evidence_status != "unknown_or_unsupported"
-            for item in self.unknown_scope
+            item.evidence_status != "unknown_or_unsupported" for item in self.unknown_scope
         ):
             raise ValueError(
                 "unknown_scope items must use evidence_status='unknown_or_unsupported'"
             )
-        for field_name in (
-            "sub_capabilities",
-            "underlying_knowledge",
-            "operational_practices",
-            "operational_context",
-        ):
-            if any(
-                item.evidence_status == "unknown_or_unsupported"
-                for item in getattr(self, field_name)
-            ):
-                raise ValueError(f"unknown {field_name} scope belongs under unknown_scope")
-        if (
-            self.independence_expectation is not None
-            and self.independence_expectation.evidence_status == "unknown_or_unsupported"
-        ):
-            raise ValueError("unknown independence scope belongs under unknown_scope")
 
         analytical_items = [
+            *self.depth_signals,
             *self.sub_capabilities,
             *self.underlying_knowledge,
             *self.operational_practices,
@@ -424,11 +438,13 @@ class CrossCapabilityObservation(_StrictModel):
         values: list[str],
         info: ValidationInfo,
     ) -> list[str]:
-        context = info.context or {}
-        fields = context.get("analysis_fields")
-        if not isinstance(fields, dict):
-            raise ValueError("capability validation context is missing analysis_fields")
-        return canonicalize_evidence_list(values, fields, max_items=8)
+        fields, catalog = _validation_sources(info)
+        return canonicalize_evidence_list(
+            values,
+            fields,
+            max_items=8,
+            evidence_catalog=catalog,
+        )
 
     @model_validator(mode="after")
     def status_contract(self) -> CrossCapabilityObservation:
