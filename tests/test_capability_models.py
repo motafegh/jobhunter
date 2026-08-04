@@ -48,7 +48,10 @@ def _payload() -> dict:
                 "requirement_strength": "required",
                 "employer_stated_depth": [
                     _expectation(
-                        "The employer explicitly asks for mastery of VPN and network infrastructure.",
+                        (
+                            "The employer explicitly asks for mastery of VPN and network "
+                            "infrastructure."
+                        ),
                         "source_explicit",
                         ["Mastery of VPN and network infrastructure"],
                     )
@@ -62,24 +65,36 @@ def _payload() -> dict:
                 ],
                 "sub_capabilities": [
                     _expectation(
-                        "Troubleshoot VPN/connectivity failures rather than only configure static settings.",
+                        (
+                            "Troubleshoot VPN/connectivity failures rather than only configure "
+                            "static settings."
+                        ),
                         "strongly_implied_by_work",
                         [
                             "Mastery of VPN and network infrastructure",
                             "Troubleshoot connectivity and security incidents",
                         ],
-                        "VPN mastery combined with incident troubleshooting implies operational fault diagnosis.",
+                        (
+                            "VPN mastery combined with incident troubleshooting implies "
+                            "operational fault diagnosis."
+                        ),
                     )
                 ],
                 "underlying_knowledge": [
                     _expectation(
-                        "Use TCP/IP and routing fundamentals when reasoning about tunnel traffic flow.",
+                        (
+                            "Use TCP/IP and routing fundamentals when reasoning about tunnel "
+                            "traffic flow."
+                        ),
                         "model_inferred_prerequisite",
                         [
                             "Mastery of VPN and network infrastructure",
                             "Troubleshoot connectivity and security incidents",
                         ],
-                        "Operational VPN troubleshooting normally requires understanding how traffic is routed before, through, and after a tunnel.",
+                        (
+                            "Operational VPN troubleshooting normally requires understanding "
+                            "how traffic is routed before, through, and after a tunnel."
+                        ),
                     )
                 ],
                 "operational_practices": [],
@@ -93,7 +108,10 @@ def _payload() -> dict:
                 ],
                 "unknown_scope": [
                     _expectation(
-                        "The exact VPN vendor and advanced HA architecture are not supported by the posting.",
+                        (
+                            "The exact VPN vendor and advanced HA architecture are not "
+                            "supported by the posting."
+                        ),
                         "unknown_or_unsupported",
                         [],
                         "No vendor, topology, or high-availability details are provided.",
@@ -161,6 +179,23 @@ def test_duplicate_capability_labels_are_rejected() -> None:
     payload["capabilities"].append(dict(payload["capabilities"][0]))
 
     with pytest.raises(ValidationError, match="duplicate capability_label"):
+        JobCapabilityIntelligence.model_validate(
+            payload,
+            context={"analysis_fields": _fields()},
+        )
+
+
+def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> None:
+    payload = _payload()
+    profile = payload["capabilities"][0]
+    profile["sub_capabilities"] = []
+    profile["underlying_knowledge"] = []
+    profile["operational_practices"] = []
+    profile["independence_expectation"] = None
+    profile["operational_context"] = []
+    profile["unknown_scope"] = []
+
+    with pytest.raises(ValidationError, match="must add at least one analytical dimension"):
         JobCapabilityIntelligence.model_validate(
             payload,
             context={"analysis_fields": _fields()},
