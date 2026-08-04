@@ -108,33 +108,24 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             try:
                 service = build_capability_intelligence_service(settings)
                 result = service.analyze_job(source_job_id)
-                artifact = CapabilityIntelligenceStore(settings.database_path).latest_current(
-                    source_job_id,
-                    model=result.model,
-                    prompt_version=CAPABILITY_PROMPT_VERSION,
-                    schema_version=CAPABILITY_SCHEMA_VERSION,
-                )
-                if artifact is None:
-                    raise RuntimeError(
-                        "Capability artifact is unavailable after successful analysis"
-                    )
-                summary = (
-                    f"Capability intelligence: {source_job_id}\n"
-                    f"Outcome: {result.outcome}\n"
-                    f"Capabilities: {result.capabilities}\n\n"
-                    f"{format_capability_intelligence(artifact)}"
-                )
-                return WebOperationResult(summary=summary, status="completed")
             except CapabilityIntelligenceError as exc:
-                return WebOperationResult(
-                    summary=f"Capability intelligence is not ready: {exc}",
-                    status="failed",
-                )
-            except Exception as exc:
-                return WebOperationResult(
-                    summary=f"Capability intelligence failed: {exc}",
-                    status="failed",
-                )
+                raise RuntimeError(f"Capability intelligence is not ready: {exc}") from exc
+
+            artifact = CapabilityIntelligenceStore(settings.database_path).latest_current(
+                source_job_id,
+                model=result.model,
+                prompt_version=CAPABILITY_PROMPT_VERSION,
+                schema_version=CAPABILITY_SCHEMA_VERSION,
+            )
+            if artifact is None:
+                raise RuntimeError("Capability artifact is unavailable after successful analysis")
+            summary = (
+                f"Capability intelligence: {source_job_id}\n"
+                f"Outcome: {result.outcome}\n"
+                f"Capabilities: {result.capabilities}\n\n"
+                f"{format_capability_intelligence(artifact)}"
+            )
+            return WebOperationResult(summary=summary, status="completed")
 
         try:
             operation = request.app.state.operations.start(
