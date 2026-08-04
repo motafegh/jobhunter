@@ -19,6 +19,7 @@
       <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
       <button class="button primary" type="submit">{{ 'Rebuild Capability Intelligence' if capability_artifact else 'Build Capability Intelligence' }}</button>
     </form>
+    {% if capability_artifact %}<p><a class="button ghost" href="/jobs/{{ source_job_id }}/role-blueprint">Open Role Capability Blueprint</a></p>{% endif %}
   {% else %}
     <div class="notice warn-notice"><strong>English analysis required.</strong> Run Analyze English on the job first; capability reasoning is deliberately built above the accepted factual extraction.</div>
   {% endif %}
