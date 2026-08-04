@@ -32,7 +32,7 @@ class CapabilityInferenceProvider:
         base_url: str,
         configured_model: str,
         api_token: str | None = None,
-        timeout_seconds: float = 120.0,
+        timeout_seconds: float = 30.0,
         network_retries: int = 1,
         validation_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
@@ -48,10 +48,7 @@ class CapabilityInferenceProvider:
         self._base_url = base_url.rstrip("/")
         self._model = configured_model.strip()
         self._api_token = api_token
-        # Capability reasoning can legitimately produce several thousand tokens. A shared
-        # 30-second inference timeout is too short for that workload on a local model, so keep
-        # a long-form floor while still allowing callers to configure a larger value.
-        self._timeout_seconds = max(float(timeout_seconds), 120.0)
+        self._connect_timeout_seconds = min(float(timeout_seconds), 10.0)
         self._network_retries = network_retries
         self._validation_retries = validation_retries
         self._transport = transport
@@ -61,6 +58,7 @@ class CapabilityInferenceProvider:
         *,
         system_prompt: str,
         user_payload: dict[str, Any],
+        evidence_catalog: dict[str, str] | None = None,
         max_tokens: int = 8192,
         seed: int = 0,
     ) -> CapabilityInferenceResult:
@@ -71,14 +69,17 @@ class CapabilityInferenceProvider:
             raise InferenceResponseError(
                 "Capability intelligence requires dictionary analysis_fields"
             )
+        catalog = evidence_catalog or {}
+        if not all(isinstance(key, str) and isinstance(value, str) for key, value in catalog.items()):
+            raise ValueError("evidence_catalog must map string references to exact source text")
 
-        # Like Role Blueprint generation, this is a long-running local generation. Keep
-        # connection establishment bounded but do not automatically replay a full generation
-        # after a read timeout. Instructor retries remain reserved for completed responses that
-        # fail the typed/semantic validation contract.
+        # Local long-form reasoning has no read ceiling. Connection establishment remains bounded,
+        # and transport replay is disabled so a disconnected long generation is never duplicated.
         timeout = httpx.Timeout(
-            self._timeout_seconds,
-            connect=min(10.0, self._timeout_seconds),
+            connect=self._connect_timeout_seconds,
+            read=None,
+            write=30.0,
+            pool=30.0,
         )
         http_client = httpx.Client(
             timeout=timeout,
@@ -109,7 +110,10 @@ class CapabilityInferenceProvider:
                 model=self._model,
                 response_model=JobCapabilityIntelligence,
                 messages=messages,
-                context={"analysis_fields": analysis_fields},
+                context={
+                    "analysis_fields": analysis_fields,
+                    "evidence_catalog": catalog,
+                },
                 max_retries=self._validation_retries,
                 temperature=0,
                 seed=seed,
@@ -117,8 +121,7 @@ class CapabilityInferenceProvider:
             )
         except (APIConnectionError, APITimeoutError) as exc:
             raise InferenceConnectionError(
-                "Could not complete local capability intelligence within "
-                f"{self._timeout_seconds:g}s: {exc}"
+                f"Could not complete local capability intelligence: {exc}"
             ) from exc
         except Exception as exc:
             raise InferenceResponseError(
@@ -137,7 +140,8 @@ class CapabilityInferenceProvider:
             "max_tokens": max_tokens,
             "stream": False,
             "runtime": {
-                "timeout_seconds": self._timeout_seconds,
+                "read_timeout_seconds": None,
+                "connect_timeout_seconds": self._connect_timeout_seconds,
                 "transport_retries": 0,
                 "configured_network_retries": self._network_retries,
             },
