@@ -30,6 +30,7 @@ RequirementStrength = Literal[
     "unspecified",
 ]
 _TOKEN_RE = re.compile(r"[^\s\u200c]+")
+_DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
 
 
 def _iter_strings(value: Any):
@@ -190,26 +191,55 @@ class CapabilityProfile(_StrictModel):
             setattr(self, field_name, unique)
 
         if any(
+            item.evidence_status != "source_explicit"
+            for item in self.employer_stated_depth
+        ):
+            raise ValueError("employer_stated_depth items must be source_explicit")
+        if any(
+            item.evidence_status == "unknown_or_unsupported"
+            for item in self.work_activities
+        ):
+            raise ValueError("unknown work scope belongs under unknown_scope")
+        if any(
             item.evidence_status != "unknown_or_unsupported"
             for item in self.unknown_scope
         ):
             raise ValueError(
                 "unknown_scope items must use evidence_status='unknown_or_unsupported'"
             )
+        for field_name in (
+            "sub_capabilities",
+            "underlying_knowledge",
+            "operational_practices",
+            "operational_context",
+        ):
+            if any(
+                item.evidence_status == "unknown_or_unsupported"
+                for item in getattr(self, field_name)
+            ):
+                raise ValueError(f"unknown {field_name} scope belongs under unknown_scope")
+        if (
+            self.independence_expectation is not None
+            and self.independence_expectation.evidence_status == "unknown_or_unsupported"
+        ):
+            raise ValueError("unknown independence scope belongs under unknown_scope")
 
-        analytical_dimensions = (
-            bool(self.sub_capabilities),
-            bool(self.underlying_knowledge),
-            bool(self.operational_practices),
-            self.independence_expectation is not None,
-            bool(self.operational_context),
-            bool(self.unknown_scope),
+        analytical_items = [
+            *self.sub_capabilities,
+            *self.underlying_knowledge,
+            *self.operational_practices,
+            *self.operational_context,
+        ]
+        if self.independence_expectation is not None:
+            analytical_items.append(self.independence_expectation)
+        has_derived_reasoning = any(
+            item.evidence_status in _DERIVED_STATUSES for item in analytical_items
         )
-        if not any(analytical_dimensions):
+        has_unknown_boundary = bool(self.unknown_scope)
+        if not has_derived_reasoning and not has_unknown_boundary:
             raise ValueError(
-                "Capability profile must add at least one analytical dimension beyond "
-                "restated employer facts (sub-capability, underlying knowledge, operational "
-                "practice/context, independence, or explicit unknown scope)."
+                "Capability profile must add derived reasoning or an explicit unknown-scope "
+                "boundary beyond restated employer facts."
             )
         return self
 
