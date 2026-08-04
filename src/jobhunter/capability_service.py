@@ -13,10 +13,11 @@ from jobhunter.capability_models import JobCapabilityIntelligence
 from jobhunter.capability_store import (
     CapabilityIntelligenceArtifact,
     CapabilityIntelligenceStore,
+    CapabilityTranslationDependency,
 )
 from jobhunter.config import Settings
 from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
-from jobhunter.translation_store import TranslationArtifact, TranslationStore
+from jobhunter.translation_store import TranslationStore
 
 CAPABILITY_PROMPT_VERSION = "job-capability-intelligence-v1"
 CAPABILITY_SCHEMA_VERSION = "job-capability-intelligence-v1"
@@ -158,7 +159,7 @@ class CapabilityIntelligenceService:
     def _current_dependencies(
         self,
         source_job_id: str,
-    ) -> tuple[Any, TranslationArtifact, AnalysisArtifact]:
+    ) -> tuple[Any, CapabilityTranslationDependency, AnalysisArtifact]:
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
             raise CapabilityIntelligenceError(
@@ -183,22 +184,28 @@ class CapabilityIntelligenceService:
                 "English analysis has no referenced hardened English projection"
             )
 
-        translation = self._source_store.latest_artifact(
-            source_job_id,
-            target_language="en",
+        translation = self._capability_store.translation_dependency(
+            analysis.translation_artifact_id
         )
         if translation is None:
             raise CapabilityIntelligenceError(
-                "Job has no persisted English projection for the current source version"
+                "English analysis references a missing English projection artifact"
+            )
+        if translation.source_job_id != source_job_id:
+            raise CapabilityIntelligenceError(
+                "English analysis references a translation artifact from another job"
+            )
+        if translation.job_detail_version_id != source.job_detail_version_id:
+            raise CapabilityIntelligenceError(
+                "English analysis references an English projection from an older source version"
+            )
+        if translation.target_language != "en":
+            raise CapabilityIntelligenceError(
+                "English analysis references a non-English translation artifact"
             )
         if translation.translation_schema_version != TRANSLATION_SCHEMA_VERSION:
             raise CapabilityIntelligenceError(
-                "Job's latest English projection is historical and requires v2 repair"
-            )
-        if translation.id != analysis.translation_artifact_id:
-            raise CapabilityIntelligenceError(
-                "Accepted English analysis does not reference the latest English projection; "
-                "run Analyze English again before capability intelligence"
+                "English analysis references a historical English projection and requires v2 repair"
             )
         return source, translation, analysis
 
