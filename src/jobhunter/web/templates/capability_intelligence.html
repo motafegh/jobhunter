@@ -12,7 +12,7 @@
   </div>
   <div class="guide-content">
     <p><strong>This is intentionally different from English semantic analysis.</strong> The strict analysis records what the employer explicitly said. Capability Intelligence connects responsibilities, requirements, experience, skill tags and supported company context to infer practical capability scope, prerequisites, operational depth and unknown boundaries.</p>
-    <p>Analytical statements may be synthesized. Evidence excerpts remain grounded in the hardened English projection. Inferences are labeled instead of being presented as employer facts.</p>
+    <p>Analytical statements may be synthesized. The model cites JobHunter evidence references; JobHunter resolves those references back to exact English source text before persistence. Inferences are labeled instead of being presented as employer facts.</p>
   </div>
   {% if english_analysis %}
     <form method="post" action="/jobs/{{ source_job_id }}/capability-intelligence" data-operation-form>
@@ -41,7 +41,7 @@
   <p class="long-copy"><strong>{{ capability.summary }}</strong></p>
 
   {% set sections = [
-    ('employer_stated_depth', 'Employer-stated depth'),
+    ('depth_signals', 'Depth signals — explicit or inferred'),
     ('work_activities', 'Expected work activities'),
     ('sub_capabilities', 'Technical sub-capabilities'),
     ('underlying_knowledge', 'Underlying knowledge / prerequisites'),
@@ -59,7 +59,7 @@
         <div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge {% if item.evidence_status == 'source_explicit' %}good{% elif item.evidence_status == 'unknown_or_unsupported' %}warn{% endif %}">{{ item.evidence_status.replace('_', ' ') }}</span></div>
         <div class="job-meta">confidence: {{ item.confidence }}</div>
         {% if item.rationale %}<p class="muted"><strong>Why:</strong> {{ item.rationale }}</p>{% endif %}
-        {% if item.evidence %}<div><strong>Evidence anchors</strong>{% for quote in item.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}</div>{% endif %}
+        {% if item.evidence %}<div><strong>Resolved evidence</strong>{% for quote in item.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}</div>{% endif %}
       </div>
       {% endfor %}
     </div>
