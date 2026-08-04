@@ -224,7 +224,7 @@ class LMStudioProvider:
         max_recovery_tokens: int | None = None,
         seed: int = 0,
     ) -> StructuredInferenceResult:
-        """Run structured inference; analysis adds Instructor/Pydantic validation."""
+        """Run structured inference; live analysis adds Instructor/Pydantic validation."""
 
         if not 1 <= max_tokens <= _MAX_STRUCTURED_TOKENS:
             raise ValueError("max_tokens must be between 1 and 32768")
@@ -240,7 +240,14 @@ class LMStudioProvider:
 
         selected_model = self._selected_model(model)
 
-        if schema_name.startswith("jobhunter_job_analysis_"):
+        # A custom transport is the explicit low-level test/injection seam for the raw
+        # OpenAI-compatible protocol. Real analysis calls have no injected transport and
+        # therefore use Instructor. This preserves deterministic transport fixtures while
+        # keeping production analysis on the typed validation path.
+        if (
+            schema_name.startswith("jobhunter_job_analysis_")
+            and self._transport is None
+        ):
             from jobhunter.inference.instructor_lm_studio import (
                 complete_analysis_with_instructor,
             )
@@ -250,7 +257,7 @@ class LMStudioProvider:
                 api_token=self._api_token,
                 timeout_seconds=self._timeout_seconds,
                 network_retries=self._max_retries,
-                transport=self._transport,
+                transport=None,
                 selected_model=selected_model,
                 system_prompt=system_prompt,
                 user_payload=user_payload,
