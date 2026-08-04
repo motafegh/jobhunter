@@ -80,6 +80,29 @@ def test_analysis_validation_canonicalizes_safe_field_prefixes_and_exact_duplica
     assert len(result.requirements) == 3
 
 
+def test_analysis_validation_returns_exact_source_span_for_zwnj_spacing_difference() -> None:
+    source = "تهیه چک‌لیست‌ها، مستندات فنی و گزارش‌های امنیتی"
+    generated = "تهیه چک لیست ها، مستندات فنی و گزارش های امنیتی"
+    payload = {
+        "role_purpose": [],
+        "responsibilities": [
+            {
+                "statement": "تهیه مستندات امنیتی",
+                "evidence": generated,
+                "confidence": "high",
+            }
+        ],
+        "requirements": [],
+    }
+
+    result = JobAnalysisResponse.model_validate(
+        payload,
+        context={"analysis_fields": {"description": source}},
+    )
+
+    assert result.responsibilities[0].evidence == source
+
+
 def test_analysis_validation_rejects_unprovable_field_prefix_or_paraphrase() -> None:
     payload = {
         "role_purpose": [],
