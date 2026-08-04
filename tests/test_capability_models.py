@@ -163,11 +163,23 @@ def test_supported_expectation_requires_evidence() -> None:
 
 def test_unknown_scope_must_be_labeled_unknown() -> None:
     payload = _payload()
-    payload["capabilities"][0]["unknown_scope"][0]["evidence_status"] = (
-        "model_inferred_prerequisite"
-    )
+    unknown = payload["capabilities"][0]["unknown_scope"][0]
+    unknown["evidence_status"] = "model_inferred_prerequisite"
+    unknown["evidence"] = ["Mastery of VPN and network infrastructure"]
 
     with pytest.raises(ValidationError, match="unknown_scope items"):
+        JobCapabilityIntelligence.model_validate(
+            payload,
+            context={"analysis_fields": _fields()},
+        )
+
+
+def test_employer_stated_depth_must_be_source_explicit() -> None:
+    payload = _payload()
+    depth = payload["capabilities"][0]["employer_stated_depth"][0]
+    depth["evidence_status"] = "strongly_implied_by_work"
+
+    with pytest.raises(ValidationError, match="employer_stated_depth items"):
         JobCapabilityIntelligence.model_validate(
             payload,
             context={"analysis_fields": _fields()},
@@ -195,7 +207,7 @@ def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> No
     profile["operational_context"] = []
     profile["unknown_scope"] = []
 
-    with pytest.raises(ValidationError, match="must add at least one analytical dimension"):
+    with pytest.raises(ValidationError, match="must add derived reasoning"):
         JobCapabilityIntelligence.model_validate(
             payload,
             context={"analysis_fields": _fields()},
