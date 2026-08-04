@@ -53,7 +53,6 @@ def _normalized_span(source: str, generated: str) -> str | None:
     target = _normalize(generated)
     if not target:
         return None
-    # Try increasingly broad contiguous spans around whitespace/punctuation boundaries.
     tokens = [match.span() for match in re.finditer(r"\S+", source)]
     for start_index in range(len(tokens)):
         for end_index in range(start_index, len(tokens)):
@@ -145,8 +144,6 @@ class CapabilityExpectation(_StrictModel):
     @model_validator(mode="after")
     def status_contract(self) -> CapabilityExpectation:
         if self.evidence_status == "unknown_or_unsupported":
-            # Unknowns may cite the broad source phrase that creates the boundary, but
-            # they do not need fabricated positive evidence for the missing scope.
             return self
         if not self.evidence:
             raise ValueError(
@@ -193,14 +190,27 @@ class CapabilityProfile(_StrictModel):
                 unique.append(item)
             setattr(self, field_name, unique)
 
-        # Unknown-scope conclusions are always explicitly uncertain, even if the model
-        # accidentally chose a stronger status in a syntactically valid response.
         if any(
             item.evidence_status != "unknown_or_unsupported"
             for item in self.unknown_scope
         ):
             raise ValueError(
                 "unknown_scope items must use evidence_status='unknown_or_unsupported'"
+            )
+
+        analytical_dimensions = (
+            bool(self.sub_capabilities),
+            bool(self.underlying_knowledge),
+            bool(self.operational_practices),
+            self.independence_expectation is not None,
+            bool(self.operational_context),
+            bool(self.unknown_scope),
+        )
+        if not any(analytical_dimensions):
+            raise ValueError(
+                "Capability profile must add at least one analytical dimension beyond "
+                "restated employer facts (sub-capability, underlying knowledge, operational "
+                "practice/context, independence, or explicit unknown scope)."
             )
         return self
 
