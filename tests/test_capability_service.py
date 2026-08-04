@@ -239,6 +239,57 @@ def test_capability_service_requires_current_accepted_english_analysis(tmp_path:
     assert provider.calls == []
 
 
+def test_capability_service_requires_p1_6_to_reference_latest_english_projection(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    _prepare(database_path)
+    store = TranslationStore(database_path)
+    source = store.latest_source_version("vpn1")
+    assert source is not None
+    newer_translation_id = store.record_artifact(
+        source=source,
+        target_language="en",
+        provider_name="source-identity",
+        provider_model="native-english-revised",
+        translation_schema_version=TRANSLATION_SCHEMA_VERSION,
+        fields={
+            "title": "Infrastructure Security Specialist",
+            "company": "Acme",
+            "description": (
+                "Mastery of VPN and network infrastructure. "
+                "Troubleshoot connectivity and security incidents."
+            ),
+            "language": "en",
+            "parser_version": "jobinja-detail-v2",
+        },
+        english_document=(
+            "Infrastructure Security Specialist\nAcme\n"
+            "Mastery of VPN and network infrastructure."
+        ),
+        segment_provenance={
+            "title": "native",
+            "company": "native",
+            "description": "native",
+        },
+        translated_segment_count=0,
+        native_segment_count=3,
+        translation_sha256="translation-vpn1-revised",
+        created_at=datetime(2026, 8, 4, 1, tzinfo=UTC),
+    )
+    assert newer_translation_id is not None
+    provider = _Provider()
+    service = _service(database_path, provider)
+
+    with pytest.raises(
+        CapabilityIntelligenceError,
+        match="does not reference the latest English projection",
+    ):
+        service.analyze_job("vpn1")
+
+    assert provider.calls == []
+
+
 def test_capability_service_revalidates_provider_output_before_persistence(tmp_path: Path) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
     _prepare(database_path)
