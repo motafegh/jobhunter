@@ -29,6 +29,7 @@ RequirementStrength = Literal[
     "mixed",
     "unspecified",
 ]
+_TOKEN_RE = re.compile(r"[^\s\u200c]+")
 
 
 def _iter_strings(value: Any):
@@ -47,23 +48,25 @@ def _normalize(value: str) -> str:
     return " ".join(value.replace("\u200c", " ").split()).casefold()
 
 
-def _normalized_span(source: str, generated: str) -> str | None:
-    """Return the exact source span when only whitespace/ZWNJ/case differs."""
+def _equivalent_source_excerpt(evidence: str, source_text: str) -> str | None:
+    """Return exact source span when only whitespace/ZWNJ/case tokenization differs."""
 
-    target = _normalize(generated)
-    if not target:
+    exact_start = source_text.find(evidence)
+    if exact_start >= 0:
+        return source_text[exact_start : exact_start + len(evidence)]
+
+    evidence_tokens = [match.group(0).casefold() for match in _TOKEN_RE.finditer(evidence)]
+    if not evidence_tokens:
         return None
-    tokens = [match.span() for match in re.finditer(r"\S+", source)]
-    for start_index in range(len(tokens)):
-        for end_index in range(start_index, len(tokens)):
-            start = tokens[start_index][0]
-            end = tokens[end_index][1]
-            candidate = source[start:end]
-            normalized = _normalize(candidate)
-            if normalized == target:
-                return candidate
-            if len(normalized) > len(target) + 32:
-                break
+    source_matches = list(_TOKEN_RE.finditer(source_text))
+    source_tokens = [match.group(0).casefold() for match in source_matches]
+    width = len(evidence_tokens)
+    for start in range(0, len(source_tokens) - width + 1):
+        if source_tokens[start : start + width] != evidence_tokens:
+            continue
+        first = source_matches[start]
+        last = source_matches[start + width - 1]
+        return source_text[first.start() : last.end()]
     return None
 
 
@@ -96,17 +99,13 @@ def canonicalize_evidence(value: str, fields: dict[str, Any]) -> str:
         raise ValueError("evidence must contain at least two characters")
 
     for source_text in _iter_strings(fields):
-        if evidence in source_text:
-            return evidence
+        canonical = _equivalent_source_excerpt(evidence, source_text)
+        if canonical is not None:
+            return canonical
 
     prefixed = _field_value_for_prefixed_evidence(evidence, fields)
     if prefixed is not None:
         return prefixed
-
-    for source_text in _iter_strings(fields):
-        span = _normalized_span(source_text, evidence)
-        if span is not None:
-            return span
 
     raise ValueError(
         "Evidence must be an exact excerpt from an analysis_fields value. "
@@ -257,7 +256,8 @@ class JobCapabilityIntelligence(_StrictModel):
             key = _normalize(profile.capability_label)
             if key in seen:
                 raise ValueError(
-                    f"duplicate capability_label after normalization: {profile.capability_label!r}"
+                    "duplicate capability_label after normalization: "
+                    f"{profile.capability_label!r}"
                 )
             seen.add(key)
         return self
