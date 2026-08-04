@@ -49,6 +49,23 @@ def _normalize(value: str) -> str:
     return " ".join(value.replace("\u200c", " ").split()).casefold()
 
 
+def _bounded_text(
+    value: str,
+    *,
+    field_name: str,
+    minimum: int,
+    maximum: int,
+) -> str:
+    """Validate prose bounds at runtime without emitting grammar-heavy JSON Schema limits."""
+
+    length = len(value)
+    if length < minimum:
+        raise ValueError(f"{field_name} must contain at least {minimum} characters")
+    if length > maximum:
+        raise ValueError(f"{field_name} may contain at most {maximum} characters")
+    return value
+
+
 def _equivalent_source_excerpt(evidence: str, source_text: str) -> str | None:
     """Return exact source span when only whitespace/ZWNJ/case tokenization differs."""
 
@@ -122,11 +139,35 @@ class _StrictModel(BaseModel):
 class CapabilityExpectation(_StrictModel):
     """One evidence-qualified analytical conclusion about a job capability."""
 
-    statement: str = Field(min_length=3, max_length=600)
+    # Prose length bounds intentionally live in runtime validators rather than Field metadata.
+    # LM Studio converts JSON Schema string bounds into llama.cpp grammar repetitions; large
+    # maxLength values (for example 1200) can exceed the grammar parser's sane repetition limit
+    # before the model receives the request.
+    statement: str
     evidence_status: EvidenceStatus
     evidence: list[str] = Field(max_length=6)
-    rationale: str = Field(min_length=3, max_length=1200)
+    rationale: str
     confidence: Confidence
+
+    @field_validator("statement")
+    @classmethod
+    def statement_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="statement",
+            minimum=3,
+            maximum=600,
+        )
+
+    @field_validator("rationale")
+    @classmethod
+    def rationale_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="rationale",
+            minimum=3,
+            maximum=1200,
+        )
 
     @field_validator("evidence")
     @classmethod
@@ -155,8 +196,8 @@ class CapabilityExpectation(_StrictModel):
 class CapabilityProfile(_StrictModel):
     """Multidimensional job-local capability profile; not yet a canonical taxonomy entry."""
 
-    capability_label: str = Field(min_length=2, max_length=160)
-    summary: str = Field(min_length=12, max_length=1600)
+    capability_label: str
+    summary: str
     requirement_strength: RequirementStrength
     employer_stated_depth: list[CapabilityExpectation] = Field(max_length=6)
     work_activities: list[CapabilityExpectation] = Field(max_length=12)
@@ -167,6 +208,26 @@ class CapabilityProfile(_StrictModel):
     operational_context: list[CapabilityExpectation] = Field(max_length=10)
     unknown_scope: list[CapabilityExpectation] = Field(max_length=12)
     overall_confidence: Confidence
+
+    @field_validator("capability_label")
+    @classmethod
+    def capability_label_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="capability_label",
+            minimum=2,
+            maximum=160,
+        )
+
+    @field_validator("summary")
+    @classmethod
+    def summary_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="summary",
+            minimum=12,
+            maximum=1600,
+        )
 
     @model_validator(mode="after")
     def normalize_sections(self) -> CapabilityProfile:
@@ -245,11 +306,31 @@ class CapabilityProfile(_StrictModel):
 
 
 class CrossCapabilityObservation(_StrictModel):
-    statement: str = Field(min_length=8, max_length=1000)
+    statement: str
     evidence_status: EvidenceStatus
     evidence: list[str] = Field(max_length=8)
-    rationale: str = Field(min_length=3, max_length=1200)
+    rationale: str
     confidence: Confidence
+
+    @field_validator("statement")
+    @classmethod
+    def statement_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="cross-capability statement",
+            minimum=8,
+            maximum=1000,
+        )
+
+    @field_validator("rationale")
+    @classmethod
+    def rationale_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="cross-capability rationale",
+            minimum=3,
+            maximum=1200,
+        )
 
     @field_validator("evidence")
     @classmethod
@@ -274,10 +355,20 @@ class CrossCapabilityObservation(_StrictModel):
 class JobCapabilityIntelligence(_StrictModel):
     """Whole-job reasoning artifact built above strict P1.6 extraction."""
 
-    role_interpretation: str = Field(min_length=20, max_length=2400)
+    role_interpretation: str
     capabilities: list[CapabilityProfile] = Field(min_length=1, max_length=12)
     cross_capability_observations: list[CrossCapabilityObservation] = Field(max_length=8)
     uncertainties: list[str] = Field(max_length=16)
+
+    @field_validator("role_interpretation")
+    @classmethod
+    def role_interpretation_bounds(cls, value: str) -> str:
+        return _bounded_text(
+            value,
+            field_name="role_interpretation",
+            minimum=20,
+            maximum=2400,
+        )
 
     @model_validator(mode="after")
     def capability_labels_must_be_unique(self) -> JobCapabilityIntelligence:
