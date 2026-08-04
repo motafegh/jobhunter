@@ -17,6 +17,7 @@ from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.web.app import create_app
+from jobhunter.web.capability import register_capability_routes
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -168,6 +169,14 @@ def _existing_jobhunter(url: str) -> bool:
     return response.status_code == 200 and "JobHunter" in response.text
 
 
+def build_runtime_app(settings: Settings):
+    """Build the normal web app plus bounded capability-intelligence review routes."""
+
+    app = create_app(settings)
+    register_capability_routes(app, settings)
+    return app
+
+
 def main(argv: list[str] | None = None) -> int:
     arguments = _parser().parse_args(argv)
     if arguments.install_desktop:
@@ -205,7 +214,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"JobHunter app: {url}")
     print("Press Ctrl+C to stop the local app server.")
     uvicorn.run(
-        create_app(settings),
+        build_runtime_app(settings),
         host=arguments.host,
         port=arguments.port,
         log_level=settings.log_level.casefold(),
