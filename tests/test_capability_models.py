@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from pydantic import ValidationError
 
@@ -135,6 +137,29 @@ def test_capability_model_allows_synthesized_analysis_with_exact_evidence() -> N
     assert "TCP/IP" in profile.underlying_knowledge[0].statement
     assert profile.underlying_knowledge[0].statement not in _fields()["description"]
     assert profile.underlying_knowledge[0].evidence_status == "model_inferred_prerequisite"
+
+
+def test_capability_provider_schema_omits_large_string_length_constraints() -> None:
+    schema = JobCapabilityIntelligence.model_json_schema()
+    serialized = json.dumps(schema, sort_keys=True)
+
+    # LM Studio turns JSON Schema string length bounds into llama.cpp grammar repetitions.
+    # Large values such as {3,1200}/{20,2400} exceeded the engine's sane repetition limit.
+    assert '"minLength"' not in serialized
+    assert '"maxLength"' not in serialized
+    # Structural collection bounds remain provider-visible; only prose bounds moved to runtime.
+    assert '"maxItems"' in serialized
+
+
+def test_capability_text_bounds_remain_runtime_enforced() -> None:
+    payload = _payload()
+    payload["role_interpretation"] = "too short"
+
+    with pytest.raises(ValidationError, match="at least 20 characters"):
+        JobCapabilityIntelligence.model_validate(
+            payload,
+            context={"analysis_fields": _fields()},
+        )
 
 
 def test_capability_model_rejects_paraphrased_evidence_but_not_synthesized_statement() -> None:
