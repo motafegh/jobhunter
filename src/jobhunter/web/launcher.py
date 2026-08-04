@@ -17,6 +17,7 @@ from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.web.app import create_app
+from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
 
 
@@ -170,10 +171,11 @@ def _existing_jobhunter(url: str) -> bool:
 
 
 def build_runtime_app(settings: Settings):
-    """Build the normal web app plus bounded capability-intelligence review routes."""
+    """Build the normal web app plus reviewed expert-analysis routes."""
 
     app = create_app(settings)
     register_capability_routes(app, settings)
+    register_blueprint_routes(app, settings)
     return app
 
 
