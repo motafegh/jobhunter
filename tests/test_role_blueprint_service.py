@@ -103,7 +103,9 @@ class _Provider:
                 "hidden_requirements": [
                     {
                         "title": "Human review boundaries",
-                        "explanation": "Consequential document fields likely need validation/review.",
+                        "explanation": (
+                            "Consequential document fields likely need validation/review."
+                        ),
                         "interpretation_strength": "highly_likely",
                     }
                 ],
@@ -111,7 +113,12 @@ class _Provider:
                     {
                         "name": "Document automation",
                         "why_likely": "The posting directly combines document AI and integrations.",
-                        "flow_steps": ["Ingest document", "Extract fields", "Validate", "Update CRM"],
+                        "flow_steps": [
+                            "Ingest document",
+                            "Extract fields",
+                            "Validate",
+                            "Update CRM",
+                        ],
                         "engineering_concerns": ["idempotency", "auditability"],
                         "interpretation_strength": "highly_likely",
                     }
