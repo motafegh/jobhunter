@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import secrets
 from pathlib import Path
+from typing import Annotated
 from urllib.parse import urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from typing_extensions import Annotated
 
 from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
@@ -23,21 +23,10 @@ from jobhunter.capability_service import (
 from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.config import Settings
 from jobhunter.storage import JobHunterStore
-from jobhunter.translation_service import TranslationService
-from jobhunter.translation_store import TranslationStore
 from jobhunter.web.operations import OperationBusyError, WebOperationResult
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
-
-
-def _translation_service(settings: Settings) -> TranslationService:
-    """Read current effective translation through the main capability service when needed."""
-
-    # Capability service owns provider-aware dependency validation. The page itself only needs
-    # latest persisted English fields for display, so this helper is intentionally not used for
-    # readiness decisions.
-    return TranslationService(store=TranslationStore(settings.database_path), provider=None)
 
 
 def _csrf(request: Request, submitted: str) -> None:
@@ -81,16 +70,13 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             prompt_version=CAPABILITY_PROMPT_VERSION,
             schema_version=CAPABILITY_SCHEMA_VERSION,
         )
-        latest_translation = TranslationStore(settings.database_path).latest_artifact(
-            source_job_id,
-            target_language="en",
-        )
         current_dependency = (
             capability_artifact is not None
             and english_analysis is not None
             and capability_artifact.analysis_artifact_id == english_analysis.id
-            and latest_translation is not None
-            and capability_artifact.translation_artifact_id == latest_translation.id
+            and english_analysis.translation_artifact_id is not None
+            and capability_artifact.translation_artifact_id
+            == english_analysis.translation_artifact_id
         )
         return _TEMPLATES.TemplateResponse(
             request=request,
