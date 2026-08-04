@@ -1,6 +1,6 @@
+import jobhunter.inference.instructor_lm_studio as instructor_analysis
 from jobhunter.inference import LMStudioProvider
 from jobhunter.inference.lm_studio import StructuredInferenceResult
-import jobhunter.inference.instructor_lm_studio as instructor_analysis
 
 
 def _schema() -> dict:
