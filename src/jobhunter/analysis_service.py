@@ -11,8 +11,10 @@ from jobhunter.inference import InferenceProviderError, LMStudioProvider
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
 
-ENGLISH_PROMPT_VERSION = "job-analysis-english-v1"
-ORIGINAL_PROMPT_VERSION = "job-analysis-original-v1"
+# v2 identifies the Instructor/Pydantic extraction runtime. Old v1 artifacts remain historical
+# and are not silently reused under the stronger typed validation contract.
+ENGLISH_PROMPT_VERSION = "job-analysis-english-v2"
+ORIGINAL_PROMPT_VERSION = "job-analysis-original-v2"
 # The normalized English contract remains the canonical corpus/Market analysis identity.
 PROMPT_VERSION = ENGLISH_PROMPT_VERSION
 ANALYSIS_SCHEMA_VERSION = "job-analysis-v2"
@@ -33,8 +35,11 @@ SEMANTIC RULES:
 - Extract only career claims supported by the supplied analysis fields.
 - Do not invent responsibilities, requirements, seniority, tools, or intent.
 - Omit uncertain claims rather than guessing.
-- Every claim must copy a short evidence excerpt VERBATIM from one analysis field.
+- Every claim must copy a short evidence excerpt VERBATIM from one analysis-field VALUE.
 - Evidence must be one contiguous excerpt. Never combine separate phrases into new evidence.
+- Never prepend JSON field names or paths to evidence. For example, if the field is
+  minimum_experience="three to six years", evidence is "three to six years", not
+  "minimum_experience: three to six years".
 - For role_purpose, return an empty array when no single exact excerpt supports a concise
   purpose claim.
 - Responsibilities are duties/actions the employee performs in the role. Candidate
@@ -79,37 +84,6 @@ provided. This original-language analysis is intentionally independent from Engl
 Return concise statements/concepts in the language used by the relevant original source text.
 Every evidence value must remain an exact contiguous excerpt from analysis_fields in the
 original language.
-"""
-    + _COMMON_RULES
-)
-
-_ENGLISH_REPAIR_PROMPT = (
-    """You are JobHunter's English evidence-repair pass.
-The previous English structured analysis failed local evidence/domain validation.
-
-analysis_fields is the ONLY authoritative text for this repair and contains only the hardened
-English projection. rejected_analysis_without_evidence is non-authoritative semantic guidance;
-it contains no evidence strings and must never be treated as source text.
-
-Return one complete replacement object under the requested schema. Re-ground every retained
-claim against analysis_fields. Evidence must be an exact contiguous English excerpt. Omit any
-claim that cannot be supported exactly.
-"""
-    + _COMMON_RULES
-)
-
-_ORIGINAL_REPAIR_PROMPT = (
-    """You are JobHunter's original-language evidence-repair pass.
-The previous original-language structured analysis failed local evidence/domain validation.
-
-analysis_fields is the ONLY authoritative text for this repair and contains only original
-employer/source fields. No translation is available in this request.
-rejected_analysis_without_evidence is non-authoritative semantic guidance; it contains no
-evidence strings and must never be treated as source text.
-
-Return one complete replacement object under the requested schema. Re-ground every retained
-claim against analysis_fields. Evidence must be an exact contiguous original-language excerpt.
-Omit any claim that cannot be supported exactly.
 """
     + _COMMON_RULES
 )
@@ -260,27 +234,12 @@ def _normalize_claim_text(value: str) -> str:
     return " ".join(value.split()).casefold()
 
 
-def _analysis_without_evidence(analysis: dict[str, Any]) -> dict[str, Any]:
-    """Preserve semantic guidance for repair while removing every quote source."""
-
-    cleaned: dict[str, Any] = {}
-    for section in ("role_purpose", "responsibilities", "requirements"):
-        items = analysis.get(section)
-        if not isinstance(items, list):
-            cleaned[section] = []
-            continue
-        cleaned[section] = [
-            {key: value for key, value in item.items() if key != "evidence"}
-            for item in items
-            if isinstance(item, dict)
-        ]
-    return cleaned
-
-
 def _validate_evidence(
     analysis: dict[str, Any],
     analysis_fields: dict[str, Any],
 ) -> None:
+    """Independent final guard after Instructor/Pydantic validation."""
+
     source_strings = tuple(
         _normalize_evidence(text)
         for text in _iter_strings(analysis_fields)
@@ -383,20 +342,18 @@ class JobAnalysisService:
         self._clock = clock
 
     @staticmethod
-    def _contract(mode: AnalysisMode) -> tuple[str, str, str, str]:
+    def _contract(mode: AnalysisMode) -> tuple[str, str, str]:
         if mode == "english":
             return (
                 ENGLISH_PROMPT_VERSION,
                 _ENGLISH_SYSTEM_PROMPT,
-                _ENGLISH_REPAIR_PROMPT,
-                "jobhunter_job_analysis_english_v1",
+                "jobhunter_job_analysis_english_v2",
             )
         if mode == "original":
             return (
                 ORIGINAL_PROMPT_VERSION,
                 _ORIGINAL_SYSTEM_PROMPT,
-                _ORIGINAL_REPAIR_PROMPT,
-                "jobhunter_job_analysis_original_v1",
+                "jobhunter_job_analysis_original_v2",
             )
         raise ValueError(f"Unsupported analysis mode: {mode}")
 
@@ -425,7 +382,7 @@ class JobAnalysisService:
                 "Job has no current successfully parsed source version"
             )
 
-        prompt_version, system_prompt, repair_prompt, schema_name = self._contract(mode)
+        prompt_version, system_prompt, schema_name = self._contract(mode)
         translation = None
         if mode == "english":
             translation = self._translation_service.current_artifact(source_job_id)
@@ -459,7 +416,7 @@ class JobAnalysisService:
             return _result(existing, outcome="reused", analysis_mode=mode)
 
         try:
-            initial_result = self._provider.complete_structured(
+            result = self._provider.complete_structured(
                 system_prompt=system_prompt,
                 user_payload={
                     "source_job_id": source.source_job_id,
@@ -471,6 +428,7 @@ class JobAnalysisService:
                 model=self._model,
                 max_tokens=self._max_tokens,
             )
+            _validate_evidence(result.structured, analysis_fields)
         except Exception as exc:
             self._record_failed_attempt(
                 source=source,
@@ -480,67 +438,21 @@ class JobAnalysisService:
             )
             raise
 
-        accepted_result = initial_result
-        accepted_at = attempted_at
-        try:
-            _validate_evidence(initial_result.structured, analysis_fields)
-        except AnalysisValidationError as initial_validation_error:
-            self._record_failed_attempt(
-                source=source,
-                attempted_at=attempted_at,
-                prompt_version=prompt_version,
-                error=initial_validation_error,
-            )
-            repair_attempted_at = self._clock()
-            try:
-                repair_result = self._provider.complete_structured(
-                    system_prompt=repair_prompt,
-                    user_payload={
-                        "source_job_id": source.source_job_id,
-                        "analysis_mode": mode,
-                        "validation_error": str(initial_validation_error),
-                        "rejected_analysis_without_evidence": _analysis_without_evidence(
-                            initial_result.structured
-                        ),
-                        "analysis_fields": analysis_fields,
-                    },
-                    schema_name=f"{schema_name}_repair",
-                    schema=_ANALYSIS_SCHEMA,
-                    model=self._model,
-                    max_tokens=self._max_tokens,
-                )
-                _validate_evidence(repair_result.structured, analysis_fields)
-            except Exception as repair_error:
-                self._record_failed_attempt(
-                    source=source,
-                    attempted_at=repair_attempted_at,
-                    prompt_version=prompt_version,
-                    error=repair_error,
-                )
-                if isinstance(repair_error, AnalysisValidationError):
-                    raise AnalysisValidationError(
-                        f"Initial {mode} analysis failed evidence validation and one bounded "
-                        f"repair attempt also failed: {repair_error}"
-                    ) from repair_error
-                raise
-            accepted_result = repair_result
-            accepted_at = repair_attempted_at
-
         try:
             artifact_id = self._analysis_store.record_artifact(
                 job_detail_version_id=source.job_detail_version_id,
                 translation_artifact_id=translation_artifact_id,
-                model=accepted_result.model,
+                model=result.model,
                 prompt_version=prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
-                analysis=accepted_result.structured,
-                request_body=accepted_result.request_body,
-                raw_response=accepted_result.raw_response,
-                created_at=accepted_at,
+                analysis=result.structured,
+                request_body=result.request_body,
+                raw_response=result.raw_response,
+                created_at=attempted_at,
             )
             self._analysis_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
-                attempted_at=accepted_at,
+                attempted_at=attempted_at,
                 model=self._model,
                 prompt_version=prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
@@ -559,7 +471,7 @@ class JobAnalysisService:
         except Exception as exc:
             self._record_failed_attempt(
                 source=source,
-                attempted_at=accepted_at,
+                attempted_at=attempted_at,
                 prompt_version=prompt_version,
                 error=exc,
             )
