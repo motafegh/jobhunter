@@ -175,6 +175,42 @@ def test_capability_model_rejects_paraphrased_evidence_but_not_synthesized_state
         )
 
 
+def test_composite_evidence_is_split_into_exact_source_excerpts() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
+        (
+            "Mastery of VPN and network infrastructure, "
+            "Troubleshoot connectivity and security incidents"
+        )
+    ]
+
+    result = JobCapabilityIntelligence.model_validate(
+        payload,
+        context={"analysis_fields": _fields()},
+    )
+
+    assert result.capabilities[0].underlying_knowledge[0].evidence == [
+        "Mastery of VPN and network infrastructure",
+        "Troubleshoot connectivity and security incidents",
+    ]
+
+
+def test_composite_evidence_rejects_any_unproven_fragment() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
+        (
+            "Mastery of VPN and network infrastructure, invented unsupported phrase, "
+            "Troubleshoot connectivity and security incidents"
+        )
+    ]
+
+    with pytest.raises(ValidationError, match="Evidence must be an exact excerpt"):
+        JobCapabilityIntelligence.model_validate(
+            payload,
+            context={"analysis_fields": _fields()},
+        )
+
+
 def test_supported_expectation_requires_evidence() -> None:
     payload = _payload()
     payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = []
