@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Capability Intelligence · {{ detail.fields.title if detail else source_job_id }} · JobHunter{% endblock %}
+{% block heading %}Capability Intelligence{% endblock %}
+{% block eyebrow %}{{ detail.fields.title if detail else source_job_id }} · job-local reasoning{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/jobs/{{ source_job_id }}">Back to job</a>{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-header">
+    <div><p class="eyebrow">Reasoning layer above strict extraction</p><h2>What this role likely requires in practice</h2></div>
+    {% if capability_artifact and capability_current %}<span class="badge good">Current</span>{% elif capability_artifact %}<span class="badge warn">Stale dependency</span>{% else %}<span class="badge">Not built</span>{% endif %}
+  </div>
+  <div class="guide-content">
+    <p><strong>This is intentionally different from English semantic analysis.</strong> The strict analysis records what the employer explicitly said. Capability Intelligence connects responsibilities, requirements, experience, skill tags and supported company context to infer practical capability scope, prerequisites, operational depth and unknown boundaries.</p>
+    <p>Analytical statements may be synthesized. Evidence excerpts remain grounded in the hardened English projection. Inferences are labeled instead of being presented as employer facts.</p>
+  </div>
+  {% if english_analysis %}
+    <form method="post" action="/jobs/{{ source_job_id }}/capability-intelligence" data-operation-form>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <button class="button primary" type="submit">{{ 'Rebuild Capability Intelligence' if capability_artifact else 'Build Capability Intelligence' }}</button>
+    </form>
+  {% else %}
+    <div class="notice warn-notice"><strong>English analysis required.</strong> Run Analyze English on the job first; capability reasoning is deliberately built above the accepted factual extraction.</div>
+  {% endif %}
+</section>
+
+{% if capability_artifact %}
+{% set ci = capability_artifact.intelligence %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Whole-role synthesis</p><h2>Role interpretation</h2></div><span class="badge">{{ capability_artifact.model }}</span></div>
+  <p class="long-copy">{{ ci.role_interpretation }}</p>
+</section>
+
+{% for capability in ci.capabilities %}
+<section class="panel analysis-panel">
+  <div class="panel-header">
+    <div><p class="eyebrow">Capability {{ loop.index }}</p><h2>{{ capability.capability_label }}</h2></div>
+    <div class="badge-row"><span class="badge {% if capability.requirement_strength == 'required' %}good{% elif capability.requirement_strength == 'preferred' %}warn{% endif %}">{{ capability.requirement_strength }}</span><span class="badge">{{ capability.overall_confidence }}</span></div>
+  </div>
+  <p class="long-copy"><strong>{{ capability.summary }}</strong></p>
+
+  {% set sections = [
+    ('employer_stated_depth', 'Employer-stated depth'),
+    ('work_activities', 'Expected work activities'),
+    ('sub_capabilities', 'Technical sub-capabilities'),
+    ('underlying_knowledge', 'Underlying knowledge / prerequisites'),
+    ('operational_practices', 'Operational practices'),
+    ('operational_context', 'Operational / production context'),
+    ('unknown_scope', 'Unknown / unsupported scope')
+  ] %}
+  {% for key, label in sections %}
+    {% set items = capability[key] %}
+    {% if items %}
+    <div class="analysis-section">
+      <h3>{{ label }}</h3>
+      {% for item in items %}
+      <div class="claim-card">
+        <div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge {% if item.evidence_status == 'source_explicit' %}good{% elif item.evidence_status == 'unknown_or_unsupported' %}warn{% endif %}">{{ item.evidence_status.replace('_', ' ') }}</span></div>
+        <div class="job-meta">confidence: {{ item.confidence }}</div>
+        {% if item.rationale %}<p class="muted"><strong>Why:</strong> {{ item.rationale }}</p>{% endif %}
+        {% if item.evidence %}<div><strong>Evidence anchors</strong>{% for quote in item.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}</div>{% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  {% endfor %}
+
+  {% if capability.independence_expectation %}{% set item = capability.independence_expectation %}
+  <div class="analysis-section"><h3>Independence / ownership</h3><div class="claim-card"><div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge">{{ item.evidence_status.replace('_', ' ') }}</span></div><div class="job-meta">confidence: {{ item.confidence }}</div><p class="muted"><strong>Why:</strong> {{ item.rationale }}</p>{% for quote in item.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}</div></div>
+  {% endif %}
+</section>
+{% endfor %}
+
+{% if ci.cross_capability_observations %}
+<section class="panel"><div class="panel-header"><div><p class="eyebrow">Combined evidence</p><h2>Cross-capability observations</h2></div></div>{% for item in ci.cross_capability_observations %}<div class="claim-card"><div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge">{{ item.evidence_status.replace('_', ' ') }}</span></div><p class="muted"><strong>Why:</strong> {{ item.rationale }}</p>{% for quote in item.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}</div>{% endfor %}</section>
+{% endif %}
+
+{% if ci.uncertainties %}
+<section class="panel"><div class="panel-header"><div><p class="eyebrow">Do not over-claim</p><h2>Whole-role uncertainties</h2></div></div><ul>{% for item in ci.uncertainties %}<li>{{ item }}</li>{% endfor %}</ul></section>
+{% endif %}
+
+<div class="artifact-meta"><span>{{ capability_artifact.prompt_version }}</span><span>{{ capability_artifact.schema_version }}</span><span>English analysis {{ capability_artifact.analysis_artifact_id }}</span><span>English projection {{ capability_artifact.translation_artifact_id }}</span></div>
+{% else %}
+<section class="panel"><div class="empty-state tall">No capability-intelligence artifact exists yet. This layer is opt-in while we review real examples and tune the reasoning contract.</div></section>
+{% endif %}
+{% endblock %}
