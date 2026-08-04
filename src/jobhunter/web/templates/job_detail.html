@@ -28,6 +28,7 @@
     <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source' if detail else 'Fetch details' }}</button></form>
     {% if translation_enabled and detail %}<form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Repair English' if legacy_translation and not translation else ('Recheck English' if translation else 'Translate to English') }}</button></form>{% endif %}
     {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-english" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck English analysis' if english_analysis_artifact else 'Analyze English' }}</button></form>{% endif %}
+    {% if english_analysis_artifact %}<a class="button primary" href="/jobs/{{ source_job_id }}/capability-intelligence">Capability Intelligence</a>{% endif %}
     {% if detail %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-original" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button ghost" type="submit">{{ 'Recheck original analysis' if original_analysis_artifact else 'Analyze Original' }}</button></form>{% endif %}
   </div>
 </section>
