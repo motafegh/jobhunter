@@ -6,17 +6,14 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from typing import Any
 
-from jobhunter.analysis_service import (
-    ANALYSIS_SCHEMA_VERSION,
-    ENGLISH_PROMPT_VERSION,
-)
+from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
 from jobhunter.capability_inference import CapabilityInferenceProvider
 from jobhunter.capability_store import (
     CapabilityIntelligenceArtifact,
     CapabilityIntelligenceStore,
 )
-from jobhunter.inference import InferenceProviderError
+from jobhunter.config import Settings
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
@@ -293,6 +290,43 @@ class CapabilityIntelligenceService:
         if artifact is None:
             raise RuntimeError("Capability-intelligence artifact disappeared after persistence")
         return _result(artifact, outcome="completed")
+
+
+def build_capability_intelligence_service(settings: Settings) -> CapabilityIntelligenceService:
+    """Build the bounded local capability-intelligence dependency graph."""
+
+    analysis_model = settings.effective_analysis_lm_studio_model()
+    if not analysis_model:
+        raise ValueError(
+            "No analysis model is configured. Set analysis_lm_studio_model, lm_studio_model, "
+            "or the explicit translation-model fallback before capability analysis."
+        )
+    # The first bounded slice deliberately reuses the configured analysis model. A dedicated
+    # capability model may be introduced only after reviewed same-job comparisons justify it.
+    capability_model = analysis_model
+    translation_store = TranslationStore(settings.database_path)
+    translation_service = TranslationService(
+        store=translation_store,
+        provider=None,
+        target_language=settings.translation_target_language,
+    )
+    return CapabilityIntelligenceService(
+        source_store=translation_store,
+        translation_service=translation_service,
+        analysis_store=AnalysisStore(settings.database_path),
+        capability_store=CapabilityIntelligenceStore(settings.database_path),
+        provider=CapabilityInferenceProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=capability_model,
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.inference_timeout_seconds,
+            network_retries=settings.inference_max_retries,
+            validation_retries=1,
+        ),
+        analysis_model=analysis_model,
+        capability_model=capability_model,
+        max_tokens=settings.analysis_max_tokens,
+    )
 
 
 def _result(
