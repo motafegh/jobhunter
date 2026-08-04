@@ -32,13 +32,17 @@ class RoleBlueprintInferenceProvider:
         base_url: str,
         configured_model: str,
         api_token: str | None = None,
-        timeout_seconds: float = 30.0,
+        timeout_seconds: float = 120.0,
         network_retries: int = 1,
         validation_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
     ) -> None:
         if not configured_model.strip():
             raise ValueError("A concrete role-blueprint model is required")
+        if timeout_seconds <= 0:
+            raise ValueError("timeout_seconds must be greater than zero")
+        if not 0 <= network_retries <= 5:
+            raise ValueError("network_retries must be between 0 and 5")
         if not 0 <= validation_retries <= 2:
             raise ValueError("validation_retries must be between 0 and 2")
         self._base_url = base_url.rstrip("/")
@@ -60,16 +64,24 @@ class RoleBlueprintInferenceProvider:
         if not 1 <= max_tokens <= 32768:
             raise ValueError("max_tokens must be between 1 and 32768")
 
+        # Blueprints are intentionally long-form. Keep connection establishment bounded, but
+        # allow the local model enough read time to finish the response. Do not let the OpenAI
+        # client automatically replay an already-running long generation after a read timeout;
+        # Instructor retries are reserved for completed responses that fail structural validation.
+        timeout = httpx.Timeout(
+            self._timeout_seconds,
+            connect=min(10.0, self._timeout_seconds),
+        )
         http_client = httpx.Client(
-            timeout=self._timeout_seconds,
+            timeout=timeout,
             transport=self._transport,
             trust_env=False,
         )
         openai_client = OpenAI(
             base_url=self._base_url,
             api_key=self._api_token or "lm-studio-local",
-            timeout=self._timeout_seconds,
-            max_retries=self._network_retries,
+            timeout=timeout,
+            max_retries=0,
             http_client=http_client,
         )
         client = instructor.from_openai(openai_client, mode=instructor.Mode.JSON_SCHEMA)
@@ -93,7 +105,8 @@ class RoleBlueprintInferenceProvider:
             )
         except (APIConnectionError, APITimeoutError) as exc:
             raise InferenceConnectionError(
-                f"Could not reach LM Studio for Role Capability Blueprint: {exc}"
+                "Could not complete the local Role Capability Blueprint request "
+                f"within {self._timeout_seconds:g}s: {exc}"
             ) from exc
         except Exception as exc:
             raise InferenceResponseError(
@@ -111,6 +124,11 @@ class RoleBlueprintInferenceProvider:
             "seed": seed,
             "max_tokens": max_tokens,
             "stream": False,
+            "runtime": {
+                "timeout_seconds": self._timeout_seconds,
+                "transport_retries": 0,
+                "configured_network_retries": self._network_retries,
+            },
             "instructor": {
                 "mode": "JSON_SCHEMA",
                 "response_model": "RoleCapabilityBlueprint",
