@@ -13,8 +13,6 @@ from openai import APIConnectionError, APITimeoutError, OpenAI
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
 from jobhunter.role_blueprint_models import RoleCapabilityBlueprint
 
-_BLUEPRINT_MIN_TIMEOUT_SECONDS = 120.0
-
 
 @dataclass(frozen=True, slots=True)
 class RoleBlueprintInferenceResult:
@@ -34,7 +32,7 @@ class RoleBlueprintInferenceProvider:
         base_url: str,
         configured_model: str,
         api_token: str | None = None,
-        timeout_seconds: float = _BLUEPRINT_MIN_TIMEOUT_SECONDS,
+        timeout_seconds: float = 30.0,
         network_retries: int = 1,
         validation_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
@@ -50,9 +48,7 @@ class RoleBlueprintInferenceProvider:
         self._base_url = base_url.rstrip("/")
         self._model = configured_model.strip()
         self._api_token = api_token
-        # The shared inference timeout is intentionally short for normal calls. A Blueprint is a
-        # much larger human-facing artifact, so never let a shared 30s setting cut it off mid-run.
-        self._timeout_seconds = max(timeout_seconds, _BLUEPRINT_MIN_TIMEOUT_SECONDS)
+        self._connect_timeout_seconds = min(float(timeout_seconds), 10.0)
         self._network_retries = network_retries
         self._validation_retries = validation_retries
         self._transport = transport
@@ -68,13 +64,13 @@ class RoleBlueprintInferenceProvider:
         if not 1 <= max_tokens <= 32768:
             raise ValueError("max_tokens must be between 1 and 32768")
 
-        # Blueprints are intentionally long-form. Keep connection establishment bounded, but
-        # allow the local model enough read time to finish the response. Do not let the OpenAI
-        # client automatically replay an already-running long generation after a read timeout;
-        # Instructor retries are reserved for completed responses that fail structural validation.
+        # A local expert synthesis may legitimately take several minutes. Bound connection setup,
+        # but do not impose an arbitrary read deadline once LM Studio is actively generating.
         timeout = httpx.Timeout(
-            self._timeout_seconds,
-            connect=min(10.0, self._timeout_seconds),
+            connect=self._connect_timeout_seconds,
+            read=None,
+            write=30.0,
+            pool=30.0,
         )
         http_client = httpx.Client(
             timeout=timeout,
@@ -109,8 +105,7 @@ class RoleBlueprintInferenceProvider:
             )
         except (APIConnectionError, APITimeoutError) as exc:
             raise InferenceConnectionError(
-                "Could not complete the local Role Capability Blueprint request "
-                f"within {self._timeout_seconds:g}s: {exc}"
+                f"Could not complete the local Role Capability Blueprint request: {exc}"
             ) from exc
         except Exception as exc:
             raise InferenceResponseError(
@@ -129,7 +124,8 @@ class RoleBlueprintInferenceProvider:
             "max_tokens": max_tokens,
             "stream": False,
             "runtime": {
-                "timeout_seconds": self._timeout_seconds,
+                "read_timeout_seconds": None,
+                "connect_timeout_seconds": self._connect_timeout_seconds,
                 "transport_retries": 0,
                 "configured_network_retries": self._network_retries,
             },
