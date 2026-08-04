@@ -331,10 +331,12 @@ def _run_capability_intelligence(
 def _print_combined_help() -> None:
     build_legacy_parser().print_help()
     print("")
-    print("Additional JobHunter commands:")
+    print("Additional Phase-1 commands:")
     print("  run                      Run bounded source -> English -> analysis -> Market pipeline")
     print("  run --help               Show Phase-1 run limits and options")
     print("  jobs health <id>         Summarize last success/failures and lifecycle state")
+    print("")
+    print("Capability intelligence commands:")
     print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
 
 
