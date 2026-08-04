@@ -1,4 +1,4 @@
-"""Console entrypoint for complete Phase-1 and source-health commands."""
+"""Console entrypoint for complete Phase-1, source-health, and review commands."""
 
 from __future__ import annotations
 
@@ -9,6 +9,14 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
+from jobhunter.capability_service import (
+    CAPABILITY_PROMPT_VERSION,
+    CAPABILITY_SCHEMA_VERSION,
+    CapabilityIntelligenceError,
+    build_capability_intelligence_service,
+    format_capability_intelligence,
+)
+from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.cli import build_parser as build_legacy_parser
 from jobhunter.cli import main as legacy_main
 from jobhunter.config import ConfigLoadError, Settings
@@ -124,6 +132,24 @@ def _health_parser(*, default_config: Path | None = None) -> argparse.ArgumentPa
     return parser
 
 
+def _capability_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs capability",
+        description=(
+            "Build or reuse richer job capability/depth intelligence above the current "
+            "accepted English semantic extraction."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
 def _extract_run_invocation(
     arguments: list[str],
 ) -> tuple[bool, Path | None, list[str]]:
@@ -155,6 +181,26 @@ def _extract_health_invocation(
         len(arguments) >= 3
         and arguments[0].startswith("--config=")
         and arguments[1:3] == ["jobs", "health"]
+    ):
+        return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
+    return False, None, arguments
+
+
+def _extract_capability_invocation(
+    arguments: list[str],
+) -> tuple[bool, Path | None, list[str]]:
+    if len(arguments) >= 2 and arguments[:2] == ["jobs", "capability"]:
+        return True, None, arguments[2:]
+    if (
+        len(arguments) >= 4
+        and arguments[0] == "--config"
+        and arguments[2:4] == ["jobs", "capability"]
+    ):
+        return True, Path(arguments[1]), arguments[4:]
+    if (
+        len(arguments) >= 3
+        and arguments[0].startswith("--config=")
+        and arguments[1:3] == ["jobs", "capability"]
     ):
         return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
     return False, None, arguments
@@ -251,17 +297,49 @@ def _show_source_health(arguments: list[str], *, default_config: Path | None) ->
     return 0
 
 
+def _run_capability_intelligence(
+    arguments: list[str],
+    *,
+    default_config: Path | None,
+) -> int:
+    parser = _capability_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        service = build_capability_intelligence_service(settings)
+        result = service.analyze_job(parsed.job_id)
+        artifact = CapabilityIntelligenceStore(settings.database_path).latest_current(
+            parsed.job_id,
+            model=result.model,
+            prompt_version=CAPABILITY_PROMPT_VERSION,
+            schema_version=CAPABILITY_SCHEMA_VERSION,
+        )
+        if artifact is None:
+            raise RuntimeError("Capability artifact is unavailable after successful analysis")
+    except CapabilityIntelligenceError as exc:
+        print(f"Capability intelligence is not ready: {exc}", file=sys.stderr)
+        return 2
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"Capability intelligence failed: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"Outcome: {result.outcome}")
+    print(format_capability_intelligence(artifact))
+    return 0
+
+
 def _print_combined_help() -> None:
     build_legacy_parser().print_help()
     print("")
-    print("Additional Phase-1 commands:")
-    print("  run                  Run bounded source -> English -> analysis -> Market pipeline")
-    print("  run --help           Show Phase-1 run limits and options")
-    print("  jobs health <id>     Summarize last success/failures and lifecycle state")
+    print("Additional JobHunter commands:")
+    print("  run                      Run bounded source -> English -> analysis -> Market pipeline")
+    print("  run --help               Show Phase-1 run limits and options")
+    print("  jobs health <id>         Summarize last success/failures and lifecycle state")
+    print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Dispatch new Phase-1 commands while preserving every existing CLI command."""
+    """Dispatch newer commands while preserving every existing CLI command."""
 
     arguments = list(argv if argv is not None else sys.argv[1:])
     if arguments in (["-h"], ["--help"]):
@@ -276,6 +354,15 @@ def main(argv: Sequence[str] | None = None) -> int:
     if is_health:
         return _show_source_health(
             health_arguments,
+            default_config=default_config,
+        )
+
+    is_capability, default_config, capability_arguments = _extract_capability_invocation(
+        arguments
+    )
+    if is_capability:
+        return _run_capability_intelligence(
+            capability_arguments,
             default_config=default_config,
         )
 
