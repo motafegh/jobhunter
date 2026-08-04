@@ -83,6 +83,7 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             name="capability_intelligence.html",
             context={
                 "request": request,
+                "page": "jobs",
                 "csrf_token": request.app.state.csrf_token,
                 "active_operation": request.app.state.operations.active(),
                 "source_job_id": source_job_id,
