@@ -175,7 +175,9 @@ class RoleBlueprintService:
             schema_version=ANALYSIS_SCHEMA_VERSION,
         )
         if analysis is None:
-            raise RoleBlueprintError("Run Analyze English before building a Role Capability Blueprint")
+            raise RoleBlueprintError(
+                "Run Analyze English before building a Role Capability Blueprint"
+            )
 
         capability = self._capability_store.latest_current(
             source_job_id,
@@ -188,19 +190,31 @@ class RoleBlueprintService:
                 "Build current Capability Intelligence before building a Role Capability Blueprint"
             )
         if capability.job_detail_version_id != source.job_detail_version_id:
-            raise RoleBlueprintError("Capability Intelligence is stale for the current source version")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current source version"
+            )
         if capability.analysis_artifact_id != analysis.id:
-            raise RoleBlueprintError("Capability Intelligence is stale for the current English analysis")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current English analysis"
+            )
         if analysis.translation_artifact_id is None:
             raise RoleBlueprintError("English analysis does not reference an English projection")
         if capability.translation_artifact_id != analysis.translation_artifact_id:
-            raise RoleBlueprintError("Capability Intelligence and English analysis disagree on projection provenance")
+            raise RoleBlueprintError(
+                "Capability Intelligence and English analysis disagree on projection provenance"
+            )
 
-        translation = self._capability_store.translation_dependency(capability.translation_artifact_id)
+        translation = self._capability_store.translation_dependency(
+            capability.translation_artifact_id
+        )
         if translation is None:
-            raise RoleBlueprintError("Capability Intelligence references a missing English projection")
+            raise RoleBlueprintError(
+                "Capability Intelligence references a missing English projection"
+            )
         if translation.job_detail_version_id != source.job_detail_version_id:
-            raise RoleBlueprintError("Referenced English projection is stale for the current source version")
+            raise RoleBlueprintError(
+                "Referenced English projection is stale for the current source version"
+            )
         return source, translation, analysis, capability
 
     @staticmethod
@@ -412,7 +426,11 @@ def format_role_blueprint(artifact: RoleBlueprintArtifact) -> str:
                 f"- [{scenario.get('interpretation_strength', '?')}] "
                 f"{scenario.get('name', '')}: {scenario.get('why_likely', '')}"
             )
-            lines.extend(f"    {index}. {step}" for index, step in enumerate(scenario.get("flow_steps") or [], start=1))
+            flow_steps = scenario.get("flow_steps") or []
+            lines.extend(
+                f"    {step_index}. {step}"
+                for step_index, step in enumerate(flow_steps, start=1)
+            )
     if data.get("what_probably_does_not_matter"):
         lines.extend(["", "What probably does not matter"])
         lines.extend(f"- {item}" for item in data["what_probably_does_not_matter"])
