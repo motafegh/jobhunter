@@ -16,7 +16,6 @@ from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
 from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
-from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
 
@@ -187,10 +186,8 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
 
 
 def _service(database_path: Path, provider: _Provider) -> CapabilityIntelligenceService:
-    translation_store = TranslationStore(database_path)
     return CapabilityIntelligenceService(
-        source_store=translation_store,
-        translation_service=TranslationService(store=translation_store, provider=None),
+        source_store=TranslationStore(database_path),
         analysis_store=AnalysisStore(database_path),
         capability_store=CapabilityIntelligenceStore(database_path),
         provider=provider,
