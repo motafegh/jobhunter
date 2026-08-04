@@ -9,11 +9,13 @@ from typing import Any
 from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
 from jobhunter.capability_inference import CapabilityInferenceProvider
+from jobhunter.capability_models import JobCapabilityIntelligence
 from jobhunter.capability_store import (
     CapabilityIntelligenceArtifact,
     CapabilityIntelligenceStore,
 )
 from jobhunter.config import Settings
+from jobhunter.translation import GoogleCloudTranslationProvider, LMStudioTranslationProvider
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
@@ -242,6 +244,11 @@ class CapabilityIntelligenceService:
                 user_payload=user_payload,
                 max_tokens=self._max_tokens,
             )
+            validated = JobCapabilityIntelligence.model_validate(
+                inference.intelligence,
+                context={"analysis_fields": analysis_fields},
+            )
+            intelligence = validated.model_dump(mode="json")
             artifact_id = self._capability_store.record_artifact(
                 job_detail_version_id=source.job_detail_version_id,
                 translation_artifact_id=translation.id,
@@ -249,7 +256,7 @@ class CapabilityIntelligenceService:
                 model=inference.model,
                 prompt_version=CAPABILITY_PROMPT_VERSION,
                 schema_version=CAPABILITY_SCHEMA_VERSION,
-                intelligence=inference.intelligence,
+                intelligence=intelligence,
                 request_body=inference.request_body,
                 raw_response=inference.raw_response,
                 created_at=attempted_at,
@@ -292,6 +299,38 @@ class CapabilityIntelligenceService:
         return _result(artifact, outcome="completed")
 
 
+def _translation_service(settings: Settings) -> TranslationService:
+    provider = None
+    if settings.translation_provider == "lm-studio":
+        provider = LMStudioTranslationProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=settings.effective_translation_lm_studio_model(),
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+            max_tokens=settings.translation_lm_studio_max_tokens,
+            request_character_target=settings.translation_lm_studio_character_target,
+        )
+    elif settings.translation_provider == "google-cloud":
+        if not settings.google_translation_api_key:
+            raise ValueError(
+                "Google translation is configured but JOBHUNTER_GOOGLE_TRANSLATION_API_KEY "
+                "is unavailable; capability intelligence cannot resolve the effective English "
+                "artifact identity."
+            )
+        provider = GoogleCloudTranslationProvider(
+            api_key=settings.google_translation_api_key,
+            model=settings.google_translation_model,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+        )
+    return TranslationService(
+        store=TranslationStore(settings.database_path),
+        provider=provider,
+        target_language=settings.translation_target_language,
+    )
+
+
 def build_capability_intelligence_service(settings: Settings) -> CapabilityIntelligenceService:
     """Build the bounded local capability-intelligence dependency graph."""
 
@@ -301,18 +340,11 @@ def build_capability_intelligence_service(settings: Settings) -> CapabilityIntel
             "No analysis model is configured. Set analysis_lm_studio_model, lm_studio_model, "
             "or the explicit translation-model fallback before capability analysis."
         )
-    # The first bounded slice deliberately reuses the configured analysis model. A dedicated
-    # capability model may be introduced only after reviewed same-job comparisons justify it.
     capability_model = analysis_model
     translation_store = TranslationStore(settings.database_path)
-    translation_service = TranslationService(
-        store=translation_store,
-        provider=None,
-        target_language=settings.translation_target_language,
-    )
     return CapabilityIntelligenceService(
         source_store=translation_store,
-        translation_service=translation_service,
+        translation_service=_translation_service(settings),
         analysis_store=AnalysisStore(settings.database_path),
         capability_store=CapabilityIntelligenceStore(settings.database_path),
         provider=CapabilityInferenceProvider(
