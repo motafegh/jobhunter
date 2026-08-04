@@ -51,17 +51,7 @@ class _InstructorClient:
         return RoleCapabilityBlueprint.model_validate(_blueprint_payload()), _Completion()
 
 
-def test_blueprint_timeout_has_120_second_floor() -> None:
-    provider = RoleBlueprintInferenceProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="model",
-        timeout_seconds=30,
-    )
-
-    assert provider._timeout_seconds == 120.0
-
-
-def test_blueprint_disables_transport_replay_for_long_generation(monkeypatch) -> None:
+def test_blueprint_disables_read_timeout_and_transport_replay(monkeypatch) -> None:
     captured: dict = {}
 
     def fake_openai(**kwargs):
@@ -88,9 +78,11 @@ def test_blueprint_disables_transport_replay_for_long_generation(monkeypatch) ->
     )
 
     assert captured["max_retries"] == 0
-    assert captured["timeout"].read == 120.0
+    assert captured["timeout"].read is None
+    assert captured["timeout"].connect == 10.0
     assert result.request_body["runtime"] == {
-        "timeout_seconds": 120.0,
+        "read_timeout_seconds": None,
+        "connect_timeout_seconds": 10.0,
         "transport_retries": 0,
         "configured_network_retries": 4,
     }
