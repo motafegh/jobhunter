@@ -1,9 +1,60 @@
 # JobHunter Capability Intelligence Implementation Plan
 
-**Status:** Active bounded design/vertical-slice plan  
+**Status:** CI-1/CI-2 implemented; deterministic and live quality acceptance pending  
 **Date:** 2026-08-04  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/ROADMAP.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, and `docs/PRODUCT_SPECIFICATION.md`  
 **Scope:** Per-job capability/depth intelligence above accepted P1.6 English extraction. This plan does **not** authorize corpus-wide canonical taxonomy/Market-v2 rollout before Phase-1 closure.
+
+---
+
+## 0. Current implementation status
+
+Implemented on `main`:
+
+```text
+accepted English P1.6 extraction
+        ↓ exact referenced English projection
+JobCapabilityIntelligence typed contract
+        ↓
+Instructor + Pydantic bounded reasoning
+        ↓
+independent final validation
+        ↓
+versioned capability artifact + attempt history
+        ↓
+CLI / browser per-job review
+```
+
+Current surfaces:
+
+```bash
+jobhunter jobs capability <job-id>
+```
+
+and the **Capability Intelligence** link on a job page after a current English P1.6 artifact exists.
+
+Implemented contracts include:
+
+- exact dependency identity on source version + referenced English artifact + accepted English P1.6 artifact + model + capability prompt/schema;
+- analytical statements may be synthesized;
+- evidence anchors remain exact English-projection excerpts;
+- `source_explicit`, `strongly_implied_by_work`, `model_inferred_prerequisite`, and `unknown_or_unsupported` remain distinct;
+- employer-stated depth is kept separate from inferred scope;
+- exact duplicate expectations are normalized deterministically;
+- each capability must add genuinely derived reasoning or an explicit unknown-scope boundary rather than passing as pure source restatement;
+- failed validation persists no accepted capability artifact;
+- the new layer remains opt-in and is not part of Market/full-workflow aggregation.
+
+Not yet accepted:
+
+- deterministic gate results for this implementation tranche;
+- representative live quality across materially different jobs;
+- current small-model adequacy;
+- canonical concept mapping;
+- corpus-wide aggregation;
+- personal comparison/readiness/learning recommendations.
+
+**Separate P1.6 debt discovered during this work:** the current `job_analysis_artifacts` table identity does not include `translation_artifact_id` in its uniqueness key. Capability Intelligence therefore follows the exact translation artifact already referenced by the accepted P1.6 artifact and does not guess from the latest translation row. Any future P1.6 identity migration must be designed/tested explicitly rather than hidden inside this capability slice.
 
 ---
 
@@ -150,7 +201,7 @@ Unknown:
 - scale/HA requirements
 ```
 
-The derived statements do **not** need to repeat employer sentences. Evidence excerpts remain exact anchors, but the analytical statements may be synthesized.
+The derived statements do **not** need to have literally appeared in the advertisement. Evidence excerpts remain exact anchors, but the analytical statements may be synthesized.
 
 ---
 
@@ -204,20 +255,20 @@ Requirements:
 
 ## 6. First artifact contract
 
-The first durable per-job artifact is `JobCapabilityIntelligenceArtifact`.
+The first durable per-job artifact is `JobCapabilityIntelligence` persisted by `CapabilityIntelligenceStore`.
 
 Identity:
 
 ```text
 current job detail semantic version
-+ current English projection artifact
++ exact English projection artifact referenced by accepted P1.6
 + current accepted P1.6 English analysis artifact
 + exact model
 + capability prompt version
 + capability schema version
 ```
 
-This ensures that changing source text, translation, P1.6 extraction, model, or capability contract creates a new derived identity rather than silently reusing stale reasoning.
+This ensures source/P1.6/model/contract changes cannot silently reuse stale reasoning. Multiple unrelated translation artifacts may coexist; capability reasoning follows the exact P1.6 provenance rather than choosing a translation by recency alone.
 
 ### 6.1 Whole-job fields
 
@@ -261,7 +312,7 @@ rationale
 confidence
 ```
 
-The `statement` is deliberately analytical and may be synthesized. `evidence[]` must contain exact source/English-projection excerpts used to support the reasoning.
+The `statement` is deliberately analytical and may be synthesized. `evidence[]` must contain exact English-projection excerpts used to support the reasoning.
 
 ---
 
@@ -286,7 +337,7 @@ Required behavior:
 
 ## 8. Anti-extractor rule
 
-A successful capability-intelligence artifact should add information beyond source restatement.
+A successful capability-intelligence artifact must add information beyond source restatement.
 
 The model must not merely produce:
 
@@ -296,14 +347,7 @@ statement = evidence sentence with minor rewording
 
 for every field.
 
-Instead, material capabilities should contain at least one of:
-
-- connected work interpretation;
-- technical decomposition;
-- underlying prerequisite reasoning;
-- independence/ownership interpretation;
-- operational-context interpretation;
-- explicit unknown-scope boundary.
+The current typed contract requires each capability profile to include at least one genuinely derived `strongly_implied_by_work` / `model_inferred_prerequisite` conclusion or an explicit `unknown_or_unsupported` boundary. Source-explicit context alone is not enough to pass as capability analysis.
 
 This is a quality/acceptance rule, not a reason to fabricate unsupported detail.
 
@@ -318,11 +362,14 @@ Validation responsibilities:
 ### Deterministic
 
 - response shape/types/enums/bounds;
-- exact evidence excerpts exist in the selected English projection;
-- inferred/implied expectations require rationale;
+- exact evidence excerpts exist in the P1.6-referenced English projection;
+- inferred/implied expectations require rationale/evidence;
 - unsupported/unknown items cannot pretend to be source-explicit;
+- `employer_stated_depth` is source-explicit only;
+- unknown narrower scope belongs in `unknown_scope`;
 - duplicate identical expectations are collapsed/rejected deterministically;
-- current source/translation/P1.6 dependency identity is exact;
+- source/P1.6/translation dependency identity is exact;
+- capability service independently revalidates provider output before persistence;
 - failed validation persists no accepted artifact.
 
 ### Probabilistic/reviewed
@@ -339,12 +386,12 @@ Instructor retries validation/shape failures. It must not be used to disguise po
 
 ## 10. Persistence
 
-Create separate tables for capability-intelligence artifacts and attempts.
+Separate tables exist for capability-intelligence artifacts and attempts.
 
 Artifacts retain:
 
 - source detail version;
-- translation artifact ID;
+- exact referenced English translation artifact ID;
 - accepted P1.6 analysis artifact ID;
 - model;
 - prompt/schema versions;
@@ -365,29 +412,44 @@ No capability artifact mutates P1.6 artifacts.
 
 ---
 
-## 11. First implementation tranches
+## 11. Implementation tranches
 
-### CI-1 — Contract + persistence + inference core
+### CI-1 — Contract + persistence + inference core — IMPLEMENTED / ACCEPTANCE PENDING
 
-- define Pydantic capability models;
-- define prompt/schema versions;
-- add Instructor-backed local inference;
-- add artifact/attempt store;
-- add dependency-aware service;
-- exact evidence validation;
+Implemented:
+
+- typed capability models;
+- prompt/schema versions;
+- Instructor-backed local inference;
+- artifact/attempt store;
+- dependency-aware service;
+- exact evidence validation/canonicalization;
+- independent final service validation;
 - reuse semantics;
-- deterministic tests.
+- deterministic tests written.
 
-### CI-2 — Per-job product surface
+Still required:
 
-- add `Build Capability Intelligence` action after English P1.6 exists;
-- display role interpretation;
-- display capability cards with evidence-status badges;
-- separate explicit/implied/inferred/unknown sections visually;
-- show model/prompt/schema/dependency provenance;
-- rerun should reuse unchanged artifact.
+- local Ruff/pytest/warnings-as-errors observation on this tranche;
+- live per-job inference acceptance.
 
-### CI-3 — Representative quality acceptance
+### CI-2 — Per-job product surface — IMPLEMENTED / ACCEPTANCE PENDING
+
+Implemented:
+
+- `jobhunter jobs capability <job-id>`;
+- browser **Capability Intelligence** link after English analysis;
+- dedicated capability review page;
+- separate role interpretation/capability/evidence-status/unknown-scope rendering;
+- operation-manager integration;
+- artifact provenance display.
+
+Still required:
+
+- local template/route tests observed green;
+- bounded live browser acceptance and reuse check.
+
+### CI-3 — Representative quality acceptance — OPEN
 
 Review at least 5 materially different jobs where possible:
 
@@ -410,12 +472,12 @@ For each review:
 
 Every repeatable failure becomes a test or a documented model-quality limitation.
 
-### CI-4 — Promotion decision
+### CI-4 — Promotion decision — OPEN
 
 Only after reviewed examples:
 
 - decide whether current model is adequate;
-- decide whether a stronger dedicated analysis model is warranted;
+- decide whether a stronger dedicated capability model is warranted;
 - freeze capability contract v1 or revise it;
 - then continue into canonical concept mapping and Market-v2 under the Phase-2 gate.
 
@@ -444,7 +506,7 @@ The first per-job capability-intelligence slice is acceptable when:
 
 1. P1.6 stays unchanged as the strict extraction source.
 2. Capability artifacts are independently versioned and persisted.
-3. A changed P1.6 artifact invalidates capability-artifact reuse.
+3. Capability reasoning follows the exact English projection referenced by accepted P1.6.
 4. Statements can synthesize/infer rather than copy source sentences.
 5. Every supported inference is anchored to job evidence.
 6. Explicit/implied/inferred/unknown statuses remain distinct.
@@ -454,3 +516,4 @@ The first per-job capability-intelligence slice is acceptable when:
 10. At least one real reviewed job produces materially more useful intelligence than the P1.6 extraction alone.
 11. Re-running the unchanged job reuses the exact artifact.
 12. Important live failures and abandoned approaches are documented in `docs/SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md`.
+13. Full deterministic test/lint gates are observed green on the user's environment.
