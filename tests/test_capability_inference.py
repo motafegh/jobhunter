@@ -24,22 +24,17 @@ class _Completion:
 
 
 class _InstructorClient:
-    def create_with_completion(self, **_kwargs):
+    def __init__(self) -> None:
+        self.kwargs: dict = {}
+
+    def create_with_completion(self, **kwargs):
+        self.kwargs = kwargs
         return _Result(), _Completion()
 
 
-def test_capability_timeout_has_120_second_floor() -> None:
-    provider = CapabilityInferenceProvider(
-        base_url="http://127.0.0.1:1234/v1",
-        configured_model="model",
-        timeout_seconds=30,
-    )
-
-    assert provider._timeout_seconds == 120.0
-
-
-def test_capability_disables_transport_replay_for_long_generation(monkeypatch) -> None:
+def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> None:
     captured: dict = {}
+    instructor_client = _InstructorClient()
 
     def fake_openai(**kwargs):
         captured.update(kwargs)
@@ -49,7 +44,7 @@ def test_capability_disables_transport_replay_for_long_generation(monkeypatch) -
     monkeypatch.setattr(
         capability_inference.instructor,
         "from_openai",
-        lambda *_args, **_kwargs: _InstructorClient(),
+        lambda *_args, **_kwargs: instructor_client,
     )
 
     provider = CapabilityInferenceProvider(
@@ -60,14 +55,23 @@ def test_capability_disables_transport_replay_for_long_generation(monkeypatch) -
     )
     result = provider.complete(
         system_prompt="Analyze the job capabilities.",
-        user_payload={"analysis_fields": {"description": "Job text."}},
+        user_payload={
+            "analysis_fields": {"description": "Job text."},
+            "evidence_reference_ids": ["field:description"],
+        },
+        evidence_catalog={"field:description": "Job text."},
         max_tokens=4096,
     )
 
     assert captured["max_retries"] == 0
-    assert captured["timeout"].read == 120.0
+    assert captured["timeout"].read is None
+    assert captured["timeout"].connect == 10.0
+    assert instructor_client.kwargs["context"]["evidence_catalog"] == {
+        "field:description": "Job text."
+    }
     assert result.request_body["runtime"] == {
-        "timeout_seconds": 120.0,
+        "read_timeout_seconds": None,
+        "connect_timeout_seconds": 10.0,
         "transport_retries": 0,
         "configured_network_retries": 4,
     }
