@@ -49,7 +49,11 @@ class _Store:
         return self.artifact
 
 
-def test_jobs_blueprint_routes_to_role_blueprint_service(monkeypatch, capsys, tmp_path: Path) -> None:
+def test_jobs_blueprint_routes_to_role_blueprint_service(
+    monkeypatch,
+    capsys,
+    tmp_path: Path,
+) -> None:
     settings = SimpleNamespace(database_path=tmp_path / "jobhunter.sqlite3")
     service = _Service()
     monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
