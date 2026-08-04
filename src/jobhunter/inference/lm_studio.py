@@ -224,7 +224,7 @@ class LMStudioProvider:
         max_recovery_tokens: int | None = None,
         seed: int = 0,
     ) -> StructuredInferenceResult:
-        """Run deterministic JSON-schema inference with bounded length recovery."""
+        """Run structured inference; analysis adds Instructor/Pydantic validation."""
 
         if not 1 <= max_tokens <= _MAX_STRUCTURED_TOKENS:
             raise ValueError("max_tokens must be between 1 and 32768")
@@ -239,6 +239,29 @@ class LMStudioProvider:
             )
 
         selected_model = self._selected_model(model)
+
+        if schema_name.startswith("jobhunter_job_analysis_"):
+            from jobhunter.inference.instructor_lm_studio import (
+                complete_analysis_with_instructor,
+            )
+
+            result = complete_analysis_with_instructor(
+                base_url=self._base_url,
+                api_token=self._api_token,
+                timeout_seconds=self._timeout_seconds,
+                network_retries=self._max_retries,
+                transport=self._transport,
+                selected_model=selected_model,
+                system_prompt=system_prompt,
+                user_payload=user_payload,
+                schema=schema,
+                max_tokens=max_tokens,
+                seed=seed,
+                validation_retries=1,
+            )
+            self._validate_structured_result(result.structured, schema)
+            return result
+
         current_max_tokens = max_tokens
         while True:
             try:
