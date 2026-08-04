@@ -30,6 +30,7 @@ RequirementStrength = Literal[
     "unspecified",
 ]
 _TOKEN_RE = re.compile(r"[^\s\u200c]+")
+_COMPOSITE_SEPARATOR_RE = re.compile(r",\s+|;\s+|\n+|\s+\|\s+")
 _DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
 
 
@@ -109,27 +110,111 @@ def _field_value_for_prefixed_evidence(
     return None
 
 
-def canonicalize_evidence(value: str, fields: dict[str, Any]) -> str:
-    """Map mechanically equivalent evidence back to exact English projection text."""
-
+def _try_canonicalize_evidence(value: str, fields: dict[str, Any]) -> str | None:
     evidence = value.strip()
     if len(evidence) < 2:
-        raise ValueError("evidence must contain at least two characters")
+        return None
 
     for source_text in _iter_strings(fields):
         canonical = _equivalent_source_excerpt(evidence, source_text)
         if canonical is not None:
             return canonical
 
-    prefixed = _field_value_for_prefixed_evidence(evidence, fields)
-    if prefixed is not None:
-        return prefixed
+    return _field_value_for_prefixed_evidence(evidence, fields)
+
+
+def canonicalize_evidence(value: str, fields: dict[str, Any]) -> str:
+    """Map one mechanically equivalent evidence item back to exact English projection text."""
+
+    canonical = _try_canonicalize_evidence(value, fields)
+    if canonical is not None:
+        return canonical
 
     raise ValueError(
         "Evidence must be an exact excerpt from an analysis_fields value. "
         "Analytical statements may be synthesized, but supporting evidence may not be "
-        "paraphrased, translated, concatenated, or invented."
+        "paraphrased, translated, or invented. Non-contiguous support must be represented "
+        "as separate exact evidence excerpts."
     )
+
+
+def _partition_composite_evidence(
+    value: str,
+    fields: dict[str, Any],
+    *,
+    max_parts: int,
+) -> list[str] | None:
+    """Recover a model-concatenated quote only when every fragment is exact source evidence.
+
+    The model occasionally joins two real but non-contiguous source clauses into one evidence
+    string. This helper is deliberately mechanical: it may split only at punctuation/newline
+    separators, every resulting fragment must independently canonicalize to an exact source span,
+    and the smallest successful number of fragments wins. It never repairs paraphrased content.
+    """
+
+    candidate = value.strip()
+    if max_parts < 2 or len(candidate) < 4:
+        return None
+
+    split_matches = list(_COMPOSITE_SEPARATOR_RE.finditer(candidate))
+    if not split_matches:
+        return None
+
+    def search(text: str, parts: int) -> list[str] | None:
+        if parts == 1:
+            canonical = _try_canonicalize_evidence(text, fields)
+            return [canonical] if canonical is not None else None
+
+        for match in _COMPOSITE_SEPARATOR_RE.finditer(text):
+            left = text[: match.start()].strip(" \t\r\n,;|")
+            right = text[match.end() :].strip(" \t\r\n,;|")
+            if len(left) < 2 or len(right) < 2:
+                continue
+            canonical_left = _try_canonicalize_evidence(left, fields)
+            if canonical_left is None:
+                continue
+            remainder = search(right, parts - 1)
+            if remainder is not None:
+                return [canonical_left, *remainder]
+        return None
+
+    for part_count in range(2, max_parts + 1):
+        result = search(candidate, part_count)
+        if result is not None:
+            return result
+    return None
+
+
+def canonicalize_evidence_list(
+    values: list[str],
+    fields: dict[str, Any],
+    *,
+    max_items: int,
+) -> list[str]:
+    """Canonicalize evidence and safely expand fully provable composite quotes."""
+
+    canonical_values: list[str] = []
+    for value in values:
+        canonical = _try_canonicalize_evidence(value, fields)
+        if canonical is not None:
+            fragments = [canonical]
+        else:
+            remaining_capacity = max_items - len(canonical_values)
+            fragments = _partition_composite_evidence(
+                value,
+                fields,
+                max_parts=min(3, remaining_capacity),
+            )
+            if fragments is None:
+                canonicalize_evidence(value, fields)
+                raise AssertionError("canonicalize_evidence must raise for unsupported evidence")
+
+        for fragment in fragments:
+            if fragment not in canonical_values:
+                canonical_values.append(fragment)
+        if len(canonical_values) > max_items:
+            raise ValueError(f"evidence may contain at most {max_items} exact excerpts")
+    return canonical_values
 
 
 class _StrictModel(BaseModel):
@@ -180,7 +265,7 @@ class CapabilityExpectation(_StrictModel):
         fields = context.get("analysis_fields")
         if not isinstance(fields, dict):
             raise ValueError("capability validation context is missing analysis_fields")
-        return [canonicalize_evidence(value, fields) for value in values]
+        return canonicalize_evidence_list(values, fields, max_items=6)
 
     @model_validator(mode="after")
     def status_contract(self) -> CapabilityExpectation:
@@ -343,7 +428,7 @@ class CrossCapabilityObservation(_StrictModel):
         fields = context.get("analysis_fields")
         if not isinstance(fields, dict):
             raise ValueError("capability validation context is missing analysis_fields")
-        return [canonicalize_evidence(value, fields) for value in values]
+        return canonicalize_evidence_list(values, fields, max_items=8)
 
     @model_validator(mode="after")
     def status_contract(self) -> CrossCapabilityObservation:
