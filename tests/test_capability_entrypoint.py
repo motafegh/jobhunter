@@ -25,8 +25,8 @@ class _Store:
     artifact = SimpleNamespace(
         source_job_id="abc1",
         model="analysis-model",
-        prompt_version="job-capability-intelligence-v1",
-        schema_version="job-capability-intelligence-v1",
+        prompt_version="job-capability-intelligence-v2",
+        schema_version="job-capability-intelligence-v2",
         analysis_artifact_id=5,
         intelligence={
             "role_interpretation": "A sufficiently long interpreted role description.",
