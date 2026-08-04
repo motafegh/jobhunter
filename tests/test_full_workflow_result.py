@@ -86,7 +86,7 @@ def test_full_workflow_returns_completed_when_all_executed_stages_are_clean(
     )
 
     assert result.status == "completed"
-    assert "Current accepted analyses: 4" in result.summary
+    assert "Current accepted English analyses: 4" in result.summary
     assert "Market sampling warning" in result.summary
 
 
