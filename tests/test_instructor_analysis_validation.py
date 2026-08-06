@@ -151,3 +151,54 @@ def test_analysis_validation_requires_rationale_for_inferred_requirement() -> No
             payload,
             context={"analysis_fields": _fields()},
         )
+
+
+def test_english_requirement_rejects_mixed_core_and_optional_evidence() -> None:
+    evidence = "Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful"
+    payload = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [_requirement("Programming proficiency", evidence)],
+    }
+
+    with pytest.raises(ValidationError, match="mixed-strength evidence"):
+        JobAnalysisResponse.model_validate(
+            payload,
+            context={
+                "analysis_fields": {"description": evidence},
+                "analysis_mode": "english",
+            },
+        )
+
+
+def test_english_preferred_requires_explicit_optionality_evidence() -> None:
+    evidence = "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data"
+    requirement = _requirement("Fab data systems", evidence)
+    requirement["requirement_type"] = "preferred"
+    payload = {"role_purpose": [], "responsibilities": [], "requirements": [requirement]}
+
+    with pytest.raises(ValidationError, match="preferred requirements require explicit"):
+        JobAnalysisResponse.model_validate(
+            payload,
+            context={
+                "analysis_fields": {"description": evidence},
+                "analysis_mode": "english",
+            },
+        )
+
+
+def test_english_preferred_accepts_explicit_plus_wording() -> None:
+    evidence = "MATLAB a plus"
+    requirement = _requirement("MATLAB", evidence)
+    requirement["requirement_type"] = "preferred"
+    payload = {"role_purpose": [], "responsibilities": [], "requirements": [requirement]}
+
+    result = JobAnalysisResponse.model_validate(
+        payload,
+        context={
+            "analysis_fields": {"description": evidence},
+            "analysis_mode": "english",
+        },
+    )
+
+    assert result.requirements[0].requirement_type == "preferred"
