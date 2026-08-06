@@ -1,5 +1,8 @@
 import json
 
+import pytest
+from pydantic import ValidationError
+
 from jobhunter.role_blueprint_models import RoleCapabilityBlueprint
 
 
@@ -100,6 +103,26 @@ def test_blueprint_accepts_professional_inference_without_evidence_contract() ->
     assert "Pydantic" in [tool.name for tool in area.likely_tools_or_examples]
     assert area.interpretation_strength == "highly_likely"
     assert result.hidden_requirements[0].title == "Human review boundaries"
+
+
+def test_inferred_tool_example_cannot_claim_it_is_required() -> None:
+    payload = _payload()
+    payload["capability_areas"][0]["likely_tools_or_examples"][1]["why_relevant"] = (
+        "Pydantic is necessary for this role."
+    )
+
+    with pytest.raises(ValidationError, match="Suggested tool examples"):
+        RoleCapabilityBlueprint.model_validate(payload)
+
+
+def test_plausible_capability_depth_cannot_use_mandatory_language() -> None:
+    payload = _payload()
+    area = payload["capability_areas"][0]
+    area["interpretation_strength"] = "plausible"
+    area["likely_depth"] = "Operational mastery is mandatory for production work."
+
+    with pytest.raises(ValidationError, match="Plausible/speculative"):
+        RoleCapabilityBlueprint.model_validate(payload)
 
 
 def test_blueprint_provider_schema_stays_lightweight() -> None:
