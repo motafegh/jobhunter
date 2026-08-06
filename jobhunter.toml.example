@@ -15,6 +15,13 @@ inference_max_retries = 1
 # If omitted, JobHunter falls back to lm_studio_model and then the explicit
 # translation model. Start with small reviewed batches before scaling analysis.
 # analysis_lm_studio_model = "your-analysis-model-identifier"
+
+# Richer reasoning layers can use stronger/different local models independently.
+# If omitted, Capability falls back to the analysis model and Blueprint falls
+# back through Capability -> analysis -> general model. This makes controlled
+# same-job model comparisons possible without changing translation/extraction.
+# capability_lm_studio_model = "your-capability-model-identifier"
+# blueprint_lm_studio_model = "your-blueprint-model-identifier"
 analysis_max_tokens = 8192
 analysis_batch_limit = 5
 
