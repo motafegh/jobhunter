@@ -120,7 +120,7 @@ def test_analysis_validation_rejects_unprovable_field_prefix_or_paraphrase() -> 
         ],
     }
 
-    with pytest.raises(ValidationError, match="Evidence must be copied verbatim"):
+    with pytest.raises(ValidationError, match="known JobHunter evidence reference"):
         JobAnalysisResponse.model_validate(
             payload,
             context={"analysis_fields": _fields()},
