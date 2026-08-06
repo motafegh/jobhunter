@@ -235,6 +235,28 @@ def _validation_sources(info: ValidationInfo) -> tuple[dict[str, Any], dict[str,
     return fields, catalog
 
 
+def _canonicalize_expectation_evidence(
+    values: list[str],
+    info: ValidationInfo,
+    *,
+    max_items: int,
+) -> list[str]:
+    """Ground evidence, allowing unsupported conclusions to remain explicitly ungrounded."""
+
+    fields, catalog = _validation_sources(info)
+    try:
+        return canonicalize_evidence_list(
+            values,
+            fields,
+            max_items=max_items,
+            evidence_catalog=catalog,
+        )
+    except ValueError:
+        if info.data.get("evidence_status") == "unknown_or_unsupported":
+            return []
+        raise
+
+
 def _normalize_unknown_sections(data: Any) -> Any:
     """Repair section/status bookkeeping without changing analytical statements.
 
@@ -316,13 +338,7 @@ class CapabilityExpectation(_StrictModel):
         values: list[str],
         info: ValidationInfo,
     ) -> list[str]:
-        fields, catalog = _validation_sources(info)
-        return canonicalize_evidence_list(
-            values,
-            fields,
-            max_items=6,
-            evidence_catalog=catalog,
-        )
+        return _canonicalize_expectation_evidence(values, info, max_items=6)
 
     @model_validator(mode="after")
     def status_contract(self) -> CapabilityExpectation:
@@ -450,13 +466,7 @@ class CrossCapabilityObservation(_StrictModel):
         values: list[str],
         info: ValidationInfo,
     ) -> list[str]:
-        fields, catalog = _validation_sources(info)
-        return canonicalize_evidence_list(
-            values,
-            fields,
-            max_items=8,
-            evidence_catalog=catalog,
-        )
+        return _canonicalize_expectation_evidence(values, info, max_items=8)
 
     @model_validator(mode="after")
     def status_contract(self) -> CrossCapabilityObservation:
