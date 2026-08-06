@@ -95,6 +95,8 @@ class Settings(BaseModel):
     inference_timeout_seconds: float = Field(default=30.0, gt=0)
     inference_max_retries: int = Field(default=1, ge=0, le=5)
     analysis_lm_studio_model: str | None = None
+    capability_lm_studio_model: str | None = None
+    blueprint_lm_studio_model: str | None = None
     analysis_max_tokens: int = Field(default=8192, ge=512, le=32768)
     analysis_batch_limit: int = Field(default=5, ge=1, le=20)
 
@@ -160,6 +162,8 @@ class Settings(BaseModel):
             "lm_studio_model",
             "lm_studio_api_token",
             "analysis_lm_studio_model",
+            "capability_lm_studio_model",
+            "blueprint_lm_studio_model",
             "translation_lm_studio_model",
             "google_translation_api_key",
         ):
@@ -236,6 +240,16 @@ class Settings(BaseModel):
             or self.translation_lm_studio_model
         )
 
+    def effective_capability_lm_studio_model(self) -> str | None:
+        """Return the dedicated capability model or fall back through analysis/general models."""
+
+        return self.capability_lm_studio_model or self.effective_analysis_lm_studio_model()
+
+    def effective_blueprint_lm_studio_model(self) -> str | None:
+        """Return the dedicated Blueprint model or fall back through capability/analysis models."""
+
+        return self.blueprint_lm_studio_model or self.effective_capability_lm_studio_model()
+
     def search_catalog(self) -> SearchCatalog:
         return load_search_catalog(self.jobinja_search_catalog_path)
 
@@ -289,6 +303,8 @@ class Settings(BaseModel):
             "JOBHUNTER_INFERENCE_TIMEOUT_SECONDS": "inference_timeout_seconds",
             "JOBHUNTER_INFERENCE_MAX_RETRIES": "inference_max_retries",
             "JOBHUNTER_ANALYSIS_LM_STUDIO_MODEL": "analysis_lm_studio_model",
+            "JOBHUNTER_CAPABILITY_LM_STUDIO_MODEL": "capability_lm_studio_model",
+            "JOBHUNTER_BLUEPRINT_LM_STUDIO_MODEL": "blueprint_lm_studio_model",
             "JOBHUNTER_ANALYSIS_MAX_TOKENS": "analysis_max_tokens",
             "JOBHUNTER_ANALYSIS_BATCH_LIMIT": "analysis_batch_limit",
             "JOBHUNTER_JOBINJA_USER_AGENT": "jobinja_user_agent",
