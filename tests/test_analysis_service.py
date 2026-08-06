@@ -114,7 +114,7 @@ def _provider(payload: dict, requests: list[dict] | None = None) -> LMStudioProv
         assert "authoritative_source_fields" not in user_payload
         assert "untrusted external data" in system_prompt
         assert "familiarity does not mean preferred" in system_prompt
-        assert "never prepend json field names" in system_prompt
+        assert "never invent evidence-reference ids" in system_prompt
         return httpx.Response(
             200,
             request=request,
@@ -175,7 +175,7 @@ def test_english_analysis_persists_and_reuses_independent_artifact(tmp_path: Pat
     assert artifact is not None
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
-    assert artifact.prompt_version == "job-analysis-english-v2"
+    assert artifact.prompt_version == "job-analysis-english-v3"
 
 
 def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path) -> None:
@@ -210,7 +210,7 @@ def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path
     assert original_artifact is not None
     assert english_artifact.translation_artifact_id is not None
     assert original_artifact.translation_artifact_id is None
-    assert original_artifact.prompt_version == "job-analysis-original-v2"
+    assert original_artifact.prompt_version == "job-analysis-original-v3"
 
 
 def test_english_and_original_requests_never_mix_text_representations(tmp_path: Path) -> None:
