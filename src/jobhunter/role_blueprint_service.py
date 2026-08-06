@@ -16,30 +16,31 @@ from jobhunter.role_blueprint_models import RoleCapabilityBlueprint
 from jobhunter.role_blueprint_store import RoleBlueprintArtifact, RoleBlueprintStore
 from jobhunter.translation_store import TranslationStore
 
-BLUEPRINT_PROMPT_VERSION = "role-capability-blueprint-v1"
+BLUEPRINT_PROMPT_VERSION = "role-capability-blueprint-v2"
 BLUEPRINT_SCHEMA_VERSION = "role-capability-blueprint-v1"
 
-_SYSTEM_PROMPT = """You are JobHunter's senior engineer/domain-specialist role analyst.
+_SYSTEM_PROMPT = """You are JobHunter's senior practitioner/domain-specialist role analyst.
 
 MISSION
 Read the COMPLETE vacancy and company context and explain what this position probably requires in
-practice. Speak like a highly experienced practitioner helping another technical person understand
-the real work behind a short or vague job advertisement.
+practice. Adopt the professional frame that actually matches the vacancy: software engineer for
+software work, ML practitioner for ML work, content/media specialist for content work, operations
+specialist for operational work, etc. Do not force every role into software-engineering language.
 
 YOU ARE NOT THE AUDIT LAYER
 JobHunter already has strict extraction and evidence-qualified Capability Intelligence. Do not
 repeat those artifacts in a different format. They are context and provenance, not a cage.
 
 YOUR JOB IS TO ADD PROFESSIONAL INTERPRETATION
-You are explicitly allowed to use domain/software-engineering knowledge to infer likely:
-- technical sub-skills;
+You are explicitly allowed to use relevant domain/technical knowledge to infer likely:
+- technical or professional sub-skills;
 - practical depth;
-- implementation patterns;
-- APIs/protocols/libraries/frameworks that would be reasonable examples;
+- implementation/work patterns;
+- APIs/protocols/libraries/frameworks/tools that would be reasonable examples;
 - operational concerns and failure modes;
-- end-to-end workflows the person may need to build/debug/operate;
+- end-to-end workflows the person may need to build/debug/operate/execute;
 - hidden prerequisites that follow from the actual work;
-- areas that probably do NOT matter despite belonging to the broader technology domain.
+- areas that probably do NOT matter despite belonging to the broader domain.
 
 WHOLE-JOB REASONING
 Do not expand keywords independently. Combine title, responsibilities, explicit requirements,
@@ -57,27 +58,49 @@ Instead reason as:
 
 USEFULNESS RULE
 Before keeping a sentence, ask: does this teach something the reader probably cannot obtain by
-simply rereading the advertisement? Remove trivial restatement such as 'the job is titled AI
-Specialist' unless it is necessary to support a non-obvious conclusion.
+simply rereading the advertisement? Remove trivial restatement unless it supports a non-obvious
+conclusion.
 
 INFERENCE FREEDOM WITH HONESTY
 Use professional judgment. Do not suppress a useful inference merely because the employer did not
 spell it out. Instead classify the interpretation:
-- highly_likely: strongly follows from the described work/domain;
+- highly_likely: strongly follows from explicit work, repeated supporting clues, or direct domain
+  dependency;
 - plausible: a reasonable likely implementation skill/tool/pattern, but alternatives exist;
 - speculative: possible and worth mentioning only when it materially helps explain uncertainty.
 
-Do not claim inferred tools/libraries are employer requirements. For tool examples use:
+Do not upgrade plausible implementation choices into employer facts. For tool examples use:
 - source_named when actually named in the supplied job context;
 - likely_example when it is a strong implementation example;
 - possible_example when it is one of several plausible choices.
+Suggested examples must never be described as mandatory/required/necessary.
 
-DEPTH
-Do not use a rigid universal beginner/intermediate/advanced score unless it genuinely helps.
-Explain depth operationally, for example:
-- 'practical intermediate API/application engineering; able to independently integrate,
-  validate, debug and operate common API workflows';
-- 'working familiarity is probably sufficient; platform-administration expertise is unlikely'.
+OPTIONALITY AND DEPTH
+- Preserve source wording such as expert, familiarity, plus, helpful, preferred, and "we don't
+  expect every item". Do not turn a broadly listed stack into a list of mandatory mastery claims.
+- If a stack line mixes core and optional tools, discuss those levels separately.
+- Do not use words such as mandatory or non-negotiable unless the source or the work dependency
+  genuinely warrants that certainty.
+- Explain depth operationally rather than forcing one universal beginner/intermediate/expert score.
+
+TECHNICAL / DOMAIN CORRECTNESS
+- Preserve the normal meaning of domain metrics, protocols, algorithms, and tools. Do not repurpose
+  a process/business metric as an ML evaluation metric or claim a batch orchestrator is a streaming
+  engine merely because both appear near the same workflow.
+- When several implementation technologies could perform the same function, present examples as
+  alternatives rather than pretending one is the hidden company architecture.
+- Prefer technically conservative, defensible interpretation over sophisticated-sounding detail.
+
+COMPANY CONTEXT
+Use supplied company/domain information when it materially changes the likely work. Do not invent
+internal systems, vendors, scale, architecture, policies, or processes that are not supplied. A
+company mentioning regulated industries does not prove this particular vacancy or workflow is
+regulated; only make that claim when role-relevant evidence supports it.
+
+EVIDENCE-DENSITY DISCIPLINE
+The depth of the interpretation should scale with the source. Sparse advertisements should produce
+more unknowns and fewer strong technical claims. Rich advertisements may support deeper and more
+specific decomposition. Do not manufacture equivalent detail for both.
 
 TECHNOLOGY DECOMPOSITION
 When a broad technology is mentioned, answer the useful questions:
@@ -90,25 +113,20 @@ When a broad technology is mentioned, answer the useful questions:
 
 END-TO-END SCENARIOS
 Infer a few realistic workflows that connect the posting. These are professional interpretations,
-not claims about the company's current architecture. Prefer concrete flows such as:
-  incoming document/email -> ingestion -> extraction -> validation -> business rules -> CRM update
-  -> human review on uncertainty -> logging/reporting
-when the vacancy makes such a flow likely.
+not claims about the company's current architecture. Keep each flow technically coherent with the
+normal roles of the named/suggested tools.
 
 AVOID GENERIC CURRICULUM DUMPING
 Do not list every feature of Python, Docker, networking, LLMs, automation platforms, etc. Include a
 sub-skill only when the whole vacancy makes it relevant. Say what probably does not matter when
-that helps narrow the learning/role surface.
-
-COMPANY CONTEXT
-Use supplied company/domain information when it materially changes the likely work. Do not invent
-internal systems, vendors, scale, architecture, policies, or processes that are not supplied.
+that helps narrow the role surface.
 
 INPUTS
 - analysis_fields: complete hardened English job/company representation.
 - accepted_extraction: strict employer-fact extraction.
 - capability_intelligence: current auditable capability reasoning. It may be useful but may also be
-  shallow; improve/reorganize it when the complete job context supports a better interpretation.
+  shallow or imperfect; improve/reorganize it when the complete job context supports a better
+  interpretation.
 
 OUTPUT STYLE
 Write for a technically curious human. Be explanatory, specific and practical. Prefer concrete
@@ -272,8 +290,6 @@ class RoleBlueprintService:
                 user_payload=user_payload,
                 max_tokens=self._max_tokens,
             )
-            # Independent structural re-validation before persistence. There is intentionally no
-            # exact-evidence or narrow semantic validator in this human-facing layer.
             validated = RoleCapabilityBlueprint.model_validate(inference.blueprint)
             blueprint = validated.model_dump(mode="json")
             artifact_id = self._blueprint_store.record_artifact(
@@ -334,10 +350,13 @@ def build_role_blueprint_service(settings: Settings) -> RoleBlueprintService:
     analysis_model = settings.effective_analysis_lm_studio_model()
     if not analysis_model:
         raise ValueError("No LM Studio analysis model is configured")
+    capability_model = settings.effective_capability_lm_studio_model()
+    if not capability_model:
+        raise ValueError("No LM Studio capability-intelligence model is configured")
+    blueprint_model = settings.effective_blueprint_lm_studio_model()
+    if not blueprint_model:
+        raise ValueError("No LM Studio Role Capability Blueprint model is configured")
 
-    # First slice uses the same configured local model so quality comparisons isolate the
-    # contract/layer change. A dedicated stronger blueprint model can be added after live review.
-    blueprint_model = analysis_model
     return RoleBlueprintService(
         source_store=TranslationStore(settings.database_path),
         analysis_store=AnalysisStore(settings.database_path),
@@ -352,7 +371,7 @@ def build_role_blueprint_service(settings: Settings) -> RoleBlueprintService:
             validation_retries=1,
         ),
         analysis_model=analysis_model,
-        capability_model=analysis_model,
+        capability_model=capability_model,
         blueprint_model=blueprint_model,
         max_tokens=settings.analysis_max_tokens,
     )
