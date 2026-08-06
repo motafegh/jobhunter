@@ -53,18 +53,19 @@ def register_blueprint_routes(app: FastAPI, settings: Settings) -> None:
         if posting is None:
             raise HTTPException(status_code=404, detail="Job not found in the local catalog")
         detail = source_store.get_latest_job_detail(source_job_id)
-        model = settings.effective_analysis_lm_studio_model()
+        capability_model = settings.effective_capability_lm_studio_model()
+        blueprint_model = settings.effective_blueprint_lm_studio_model()
         capability_artifact = CapabilityIntelligenceStore(
             settings.database_path
         ).latest_current(
             source_job_id,
-            model=model,
+            model=capability_model,
             prompt_version=CAPABILITY_PROMPT_VERSION,
             schema_version=CAPABILITY_SCHEMA_VERSION,
         )
         blueprint_artifact = RoleBlueprintStore(settings.database_path).latest_current(
             source_job_id,
-            model=model,
+            model=blueprint_model,
             prompt_version=BLUEPRINT_PROMPT_VERSION,
             schema_version=BLUEPRINT_SCHEMA_VERSION,
         )
@@ -90,7 +91,8 @@ def register_blueprint_routes(app: FastAPI, settings: Settings) -> None:
                 "capability_artifact": capability_artifact,
                 "blueprint_artifact": blueprint_artifact,
                 "blueprint_current": blueprint_current,
-                "analysis_model": model,
+                "capability_model": capability_model,
+                "blueprint_model": blueprint_model,
             },
         )
 
