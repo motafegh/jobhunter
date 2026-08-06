@@ -133,6 +133,33 @@ def _payload() -> dict:
     }
 
 
+def _historical_exact_text_payload() -> dict:
+    """Materialize v2 evidence references so legacy no-catalog validation is tested honestly."""
+
+    payload = _payload()
+    catalog = _catalog()
+    for profile in payload["capabilities"]:
+        for section_name in (
+            "depth_signals",
+            "work_activities",
+            "sub_capabilities",
+            "underlying_knowledge",
+            "operational_practices",
+            "operational_context",
+            "unknown_scope",
+        ):
+            for item in profile[section_name]:
+                item["evidence"] = [catalog.get(value, value) for value in item["evidence"]]
+        independence = profile["independence_expectation"]
+        if independence is not None:
+            independence["evidence"] = [
+                catalog.get(value, value) for value in independence["evidence"]
+            ]
+    for item in payload["cross_capability_observations"]:
+        item["evidence"] = [catalog.get(value, value) for value in item["evidence"]]
+    return payload
+
+
 def test_capability_model_resolves_evidence_references_to_exact_source_text() -> None:
     result = JobCapabilityIntelligence.model_validate(_payload(), context=_context())
 
@@ -197,7 +224,7 @@ def test_unknown_item_in_other_section_is_rehomed_to_unknown_scope() -> None:
 
 
 def test_exact_text_fallback_still_supports_historical_callers() -> None:
-    payload = _payload()
+    payload = _historical_exact_text_payload()
     payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
         "Mastery of VPN and network infrastructure",
         "Troubleshoot connectivity and security incidents",
@@ -220,7 +247,7 @@ def test_capability_model_rejects_unknown_evidence_reference() -> None:
 
 
 def test_composite_exact_evidence_is_split_for_historical_callers() -> None:
-    payload = _payload()
+    payload = _historical_exact_text_payload()
     payload["capabilities"][0]["underlying_knowledge"][0]["evidence"] = [
         (
             "Mastery of VPN and network infrastructure, "
