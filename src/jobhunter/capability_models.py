@@ -184,9 +184,10 @@ def canonicalize_evidence_list(
     max_items: int,
     evidence_catalog: dict[str, str] | None = None,
 ) -> list[str]:
-    """Resolve evidence references, with exact-text fallback for historical/test callers."""
+    """Resolve evidence while ignoring unsupported extras only when grounding remains proven."""
 
     canonical_values: list[str] = []
+    unsupported_values: list[str] = []
     catalog = evidence_catalog or {}
     for value in values:
         reference = value.strip()
@@ -204,14 +205,18 @@ def canonicalize_evidence_list(
                     max_parts=min(3, remaining_capacity),
                 )
                 if fragments is None:
-                    canonicalize_evidence(value, fields)
-                    raise AssertionError("canonicalize_evidence must raise for unsupported evidence")
+                    unsupported_values.append(value)
+                    continue
 
         for fragment in fragments:
             if fragment not in canonical_values:
                 canonical_values.append(fragment)
         if len(canonical_values) > max_items:
             raise ValueError(f"evidence may contain at most {max_items} exact excerpts")
+
+    if not canonical_values and unsupported_values:
+        canonicalize_evidence(unsupported_values[0], fields)
+        raise AssertionError("canonicalize_evidence must raise for unsupported evidence")
     return canonical_values
 
 
@@ -242,7 +247,11 @@ def _normalize_unknown_sections(data: Any) -> Any:
     if not isinstance(data, dict):
         return data
     normalized = dict(data)
-    unknown_scope = [dict(item) for item in normalized.get("unknown_scope", []) if isinstance(item, dict)]
+    unknown_scope = [
+        dict(item)
+        for item in normalized.get("unknown_scope", [])
+        if isinstance(item, dict)
+    ]
     for item in unknown_scope:
         item["evidence_status"] = "unknown_or_unsupported"
 
@@ -256,7 +265,10 @@ def _normalize_unknown_sections(data: Any) -> Any:
     ):
         kept: list[Any] = []
         for item in normalized.get(field_name, []) or []:
-            if isinstance(item, dict) and item.get("evidence_status") == "unknown_or_unsupported":
+            if (
+                isinstance(item, dict)
+                and item.get("evidence_status") == "unknown_or_unsupported"
+            ):
                 unknown_scope.append(dict(item))
             else:
                 kept.append(item)
