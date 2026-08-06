@@ -19,9 +19,15 @@ from jobhunter.analysis_service import (
 )
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
 from jobhunter.capability_service import CAPABILITY_PROMPT_VERSION, CAPABILITY_SCHEMA_VERSION
-from jobhunter.capability_store import CapabilityIntelligenceArtifact, CapabilityIntelligenceStore
+from jobhunter.capability_store import (
+    CapabilityIntelligenceArtifact,
+    CapabilityIntelligenceStore,
+)
 from jobhunter.config import ConfigLoadError, Settings
-from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION
+from jobhunter.role_blueprint_service import (
+    BLUEPRINT_PROMPT_VERSION,
+    BLUEPRINT_SCHEMA_VERSION,
+)
 from jobhunter.role_blueprint_store import RoleBlueprintArtifact, RoleBlueprintStore
 from jobhunter.translation_store import TranslationArtifact, TranslationStore
 
@@ -57,7 +63,9 @@ def _source_record(database_path: Path, source_job_id: str) -> dict[str, Any]:
             (source_job_id,),
         ).fetchone()
     if row is None:
-        raise ReviewSnapshotError(f"No current Jobinja source record exists for {source_job_id!r}")
+        raise ReviewSnapshotError(
+            f"No current Jobinja source record exists for {source_job_id!r}"
+        )
     return {
         "source_job_id": str(row["source_job_id"]),
         "job_detail_version_id": int(row["job_detail_version_id"]),
