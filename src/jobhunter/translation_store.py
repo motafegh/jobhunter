@@ -234,6 +234,26 @@ class TranslationStore:
             ).fetchone()
         return _artifact_from_row(row) if row is not None else None
 
+    def artifact_by_id(self, artifact_id: int) -> TranslationArtifact | None:
+        """Return one exact persisted translation artifact by immutable artifact ID."""
+
+        if artifact_id <= 0:
+            raise ValueError("artifact_id must be greater than zero")
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT a.*, p.source_job_id
+                FROM job_translation_artifacts AS a
+                JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
+                JOIN job_postings AS p ON p.id = v.job_posting_id
+                WHERE a.id = ?
+                LIMIT 1
+                """,
+                (artifact_id,),
+            ).fetchone()
+        return _artifact_from_row(row) if row is not None else None
+
     def latest_artifact(
         self,
         source_job_id: str,
