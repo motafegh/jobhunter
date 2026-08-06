@@ -55,10 +55,11 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
         if posting is None:
             raise HTTPException(status_code=404, detail="Job not found in the local catalog")
         detail = source_store.get_latest_job_detail(source_job_id)
-        model = settings.effective_analysis_lm_studio_model()
+        analysis_model = settings.effective_analysis_lm_studio_model()
+        capability_model = settings.effective_capability_lm_studio_model()
         english_analysis = AnalysisStore(settings.database_path).latest_current(
             source_job_id,
-            model=model,
+            model=analysis_model,
             prompt_version=ENGLISH_PROMPT_VERSION,
             schema_version=ANALYSIS_SCHEMA_VERSION,
         )
@@ -66,7 +67,7 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             settings.database_path
         ).latest_current(
             source_job_id,
-            model=model,
+            model=capability_model,
             prompt_version=CAPABILITY_PROMPT_VERSION,
             schema_version=CAPABILITY_SCHEMA_VERSION,
         )
@@ -92,7 +93,8 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
                 "english_analysis": english_analysis,
                 "capability_artifact": capability_artifact,
                 "capability_current": current_dependency,
-                "analysis_model": model,
+                "analysis_model": analysis_model,
+                "capability_model": capability_model,
             },
         )
 
