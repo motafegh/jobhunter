@@ -6,7 +6,11 @@ from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_V
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.capability_service import CAPABILITY_PROMPT_VERSION, CAPABILITY_SCHEMA_VERSION
 from jobhunter.capability_store import CapabilityIntelligenceStore
-from jobhunter.review_snapshot import SNAPSHOT_SCHEMA_VERSION, build_review_snapshot, write_review_snapshot
+from jobhunter.review_snapshot import (
+    SNAPSHOT_SCHEMA_VERSION,
+    build_review_snapshot,
+    write_review_snapshot,
+)
 from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION
 from jobhunter.role_blueprint_store import RoleBlueprintStore
 from jobhunter.sources import DiscoveredJobLink
