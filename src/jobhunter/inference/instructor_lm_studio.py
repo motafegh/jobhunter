@@ -23,6 +23,7 @@ from pydantic import (
     model_validator,
 )
 
+from jobhunter.evidence_refs import build_field_evidence_catalog, evidence_reference_payload
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
 
 RequirementType = Literal["required", "preferred", "contextual", "inferred"]
@@ -103,9 +104,17 @@ def _field_value_for_prefixed_evidence(
 
 def _canonical_evidence(evidence: str, info: ValidationInfo) -> str:
     value = evidence.strip()
-    fields = (info.context or {}).get("analysis_fields")
+    context = info.context or {}
+    fields = context.get("analysis_fields")
     if not isinstance(fields, dict):
         raise ValueError("analysis validation context is missing analysis_fields")
+    catalog = context.get("evidence_catalog") or {}
+    if not isinstance(catalog, dict):
+        raise ValueError("analysis validation context contains invalid evidence_catalog")
+
+    referenced = catalog.get(value)
+    if isinstance(referenced, str) and referenced.strip():
+        return referenced
 
     for source_text in _iter_strings(fields):
         canonical = _equivalent_source_excerpt(value, source_text)
@@ -117,10 +126,34 @@ def _canonical_evidence(evidence: str, info: ValidationInfo) -> str:
         return canonical
 
     raise ValueError(
-        "Evidence must be copied verbatim from an analysis_fields VALUE. "
-        "Do not prepend field names such as 'education:' or 'minimum_experience:', "
-        "and do not paraphrase, translate, concatenate, or reconstruct evidence."
+        "Evidence must be one known JobHunter evidence reference or a verbatim excerpt from an "
+        "analysis_fields value. Do not invent reference IDs, prepend field names, paraphrase, "
+        "translate, concatenate, or reconstruct evidence."
     )
+
+
+def _source_is_information_rich(fields: dict[str, Any]) -> bool:
+    """Conservatively detect sources where completely empty extraction is implausible."""
+
+    skills = fields.get("skills")
+    if isinstance(skills, list) and any(
+        isinstance(item, str) and item.strip() for item in skills
+    ):
+        return True
+    description = fields.get("description")
+    if isinstance(description, str) and len(description.strip()) >= 160:
+        return True
+    minimum_experience = fields.get("minimum_experience")
+    if isinstance(minimum_experience, str):
+        normalized = _normalize(minimum_experience)
+        if normalized and normalized not in {
+            "it doesn't matter",
+            "doesn't matter",
+            "not important",
+            "unspecified",
+        }:
+            return True
+    return False
 
 
 class _StrictModel(BaseModel):
@@ -164,8 +197,8 @@ class JobAnalysisResponse(_StrictModel):
     requirements: list[AnalysisRequirement] = Field(max_length=32)
 
     @model_validator(mode="after")
-    def remove_exact_duplicate_claims(self) -> JobAnalysisResponse:
-        """Collapse exact duplicates deterministically instead of spending another LM call."""
+    def normalize_and_validate_quality(self, info: ValidationInfo) -> JobAnalysisResponse:
+        """Collapse exact duplicates and reject implausibly empty rich-source extraction."""
 
         seen_responsibilities: set[tuple[str, str]] = set()
         responsibilities: list[AnalysisClaim] = []
@@ -190,6 +223,19 @@ class JobAnalysisResponse(_StrictModel):
             seen_requirements.add(key)
             requirements.append(item)
         self.requirements = requirements
+
+        fields = (info.context or {}).get("analysis_fields")
+        if (
+            isinstance(fields, dict)
+            and _source_is_information_rich(fields)
+            and not self.responsibilities
+            and not self.requirements
+        ):
+            raise ValueError(
+                "Information-rich job fields cannot be accepted with both responsibilities "
+                "and requirements empty; extract supported career claims or explicitly narrow "
+                "the source interpretation on retry."
+            )
         return self
 
 
@@ -218,16 +264,31 @@ def complete_analysis_with_instructor(
             "Instructor analysis requires dictionary analysis_fields"
         )
 
+    evidence_catalog = build_field_evidence_catalog(analysis_fields)
+    enriched_payload = dict(user_payload)
+    enriched_payload["evidence_reference_ids"] = sorted(evidence_catalog)
+    enriched_payload["evidence_references"] = evidence_reference_payload(evidence_catalog)
+
+    # Detailed factual extraction may legitimately emit many claims. Keep connection setup
+    # bounded but do not terminate a healthy local generation merely because it exceeds a shared
+    # short read timeout. Transport replay is disabled; Instructor owns the one validation retry.
+    connect_timeout = min(float(timeout_seconds), 10.0)
+    timeout = httpx.Timeout(
+        connect=connect_timeout,
+        read=None,
+        write=30.0,
+        pool=30.0,
+    )
     http_client = httpx.Client(
-        timeout=timeout_seconds,
+        timeout=timeout,
         transport=transport,
         trust_env=False,
     )
     openai_client = OpenAI(
         base_url=base_url,
         api_key=api_token or "lm-studio-local",
-        timeout=timeout_seconds,
-        max_retries=network_retries,
+        timeout=timeout,
+        max_retries=0,
         http_client=http_client,
     )
     client = instructor.from_openai(openai_client, mode=instructor.Mode.JSON_SCHEMA)
@@ -235,7 +296,7 @@ def complete_analysis_with_instructor(
         {"role": "system", "content": system_prompt},
         {
             "role": "user",
-            "content": json.dumps(user_payload, ensure_ascii=False, sort_keys=True),
+            "content": json.dumps(enriched_payload, ensure_ascii=False, sort_keys=True),
         },
     ]
 
@@ -244,7 +305,10 @@ def complete_analysis_with_instructor(
             model=selected_model,
             response_model=JobAnalysisResponse,
             messages=messages,
-            context={"analysis_fields": analysis_fields},
+            context={
+                "analysis_fields": analysis_fields,
+                "evidence_catalog": evidence_catalog,
+            },
             max_retries=validation_retries,
             temperature=0,
             seed=seed,
@@ -272,6 +336,12 @@ def complete_analysis_with_instructor(
         "seed": seed,
         "max_tokens": max_tokens,
         "stream": False,
+        "runtime": {
+            "read_timeout_seconds": None,
+            "connect_timeout_seconds": connect_timeout,
+            "transport_retries": 0,
+            "configured_network_retries": network_retries,
+        },
         "instructor": {
             "mode": "JSON_SCHEMA",
             "response_model": "JobAnalysisResponse",
