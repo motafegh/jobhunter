@@ -39,6 +39,10 @@ ConceptType = Literal[
 ]
 Confidence = Literal["high", "medium", "low"]
 _TOKEN_RE = re.compile(r"[^\s\u200c]+")
+_OPTIONALITY_RE = re.compile(
+    r"\b(?:preferred|preference|plus|helpful|advantage|nice[ -]to[ -]have|optional)\b",
+    re.I,
+)
 
 
 def _iter_strings(value: Any):
@@ -156,6 +160,16 @@ def _source_is_information_rich(fields: dict[str, Any]) -> bool:
     return False
 
 
+def _evidence_mixes_optionality(evidence: str) -> bool:
+    """Detect one evidence span combining optional and non-optional semicolon clauses."""
+
+    clauses = [clause.strip() for clause in evidence.split(";") if clause.strip()]
+    if len(clauses) < 2:
+        return False
+    optional_flags = [bool(_OPTIONALITY_RE.search(clause)) for clause in clauses]
+    return any(optional_flags) and not all(optional_flags)
+
+
 class _StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -185,9 +199,22 @@ class AnalysisRequirement(_StrictModel):
         return _canonical_evidence(value, info)
 
     @model_validator(mode="after")
-    def inferred_requires_rationale(self) -> AnalysisRequirement:
+    def validate_requirement_semantics(self, info: ValidationInfo) -> AnalysisRequirement:
         if self.requirement_type == "inferred" and not self.rationale.strip():
             raise ValueError("Inferred requirements require a concise non-empty rationale")
+
+        if (info.context or {}).get("analysis_mode") == "english":
+            if _evidence_mixes_optionality(self.evidence):
+                raise ValueError(
+                    "A requirement cannot use mixed-strength evidence; split core and optional "
+                    "clauses into atomic requirements using specific evidence references."
+                )
+            if self.requirement_type == "preferred" and not _OPTIONALITY_RE.search(self.evidence):
+                raise ValueError(
+                    "English preferred requirements require explicit preference/plus/helpful/"
+                    "advantage wording in their cited evidence; otherwise use contextual or "
+                    "preserve the source's actual strength."
+                )
         return self
 
 
@@ -308,6 +335,7 @@ def complete_analysis_with_instructor(
             context={
                 "analysis_fields": analysis_fields,
                 "evidence_catalog": evidence_catalog,
+                "analysis_mode": user_payload.get("analysis_mode"),
             },
             max_retries=validation_retries,
             temperature=0,
