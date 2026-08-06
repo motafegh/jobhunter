@@ -25,6 +25,7 @@ from jobhunter.phase1_run import (
     configured_searches,
     format_phase1_run_summary,
 )
+from jobhunter.review_snapshot import ReviewSnapshotError, write_review_snapshot
 from jobhunter.role_blueprint_service import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
@@ -176,6 +177,29 @@ def _blueprint_parser(*, default_config: Path | None = None) -> argparse.Argumen
     return parser
 
 
+def _snapshot_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs snapshot",
+        description=(
+            "Export the current public job/intelligence chain as repository-reviewable JSON."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=Path("review-snapshots/jobs"),
+        help="Snapshot directory (default: review-snapshots/jobs)",
+    )
+    return parser
+
+
 def _extract_run_invocation(
     arguments: list[str],
 ) -> tuple[bool, Path | None, list[str]]:
@@ -192,61 +216,23 @@ def _extract_run_invocation(
     return False, None, arguments
 
 
-def _extract_health_invocation(
+def _extract_jobs_invocation(
     arguments: list[str],
+    command: str,
 ) -> tuple[bool, Path | None, list[str]]:
-    if len(arguments) >= 2 and arguments[:2] == ["jobs", "health"]:
+    target = ["jobs", command]
+    if len(arguments) >= 2 and arguments[:2] == target:
         return True, None, arguments[2:]
     if (
         len(arguments) >= 4
         and arguments[0] == "--config"
-        and arguments[2:4] == ["jobs", "health"]
+        and arguments[2:4] == target
     ):
         return True, Path(arguments[1]), arguments[4:]
     if (
         len(arguments) >= 3
         and arguments[0].startswith("--config=")
-        and arguments[1:3] == ["jobs", "health"]
-    ):
-        return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
-    return False, None, arguments
-
-
-def _extract_capability_invocation(
-    arguments: list[str],
-) -> tuple[bool, Path | None, list[str]]:
-    if len(arguments) >= 2 and arguments[:2] == ["jobs", "capability"]:
-        return True, None, arguments[2:]
-    if (
-        len(arguments) >= 4
-        and arguments[0] == "--config"
-        and arguments[2:4] == ["jobs", "capability"]
-    ):
-        return True, Path(arguments[1]), arguments[4:]
-    if (
-        len(arguments) >= 3
-        and arguments[0].startswith("--config=")
-        and arguments[1:3] == ["jobs", "capability"]
-    ):
-        return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
-    return False, None, arguments
-
-
-def _extract_blueprint_invocation(
-    arguments: list[str],
-) -> tuple[bool, Path | None, list[str]]:
-    if len(arguments) >= 2 and arguments[:2] == ["jobs", "blueprint"]:
-        return True, None, arguments[2:]
-    if (
-        len(arguments) >= 4
-        and arguments[0] == "--config"
-        and arguments[2:4] == ["jobs", "blueprint"]
-    ):
-        return True, Path(arguments[1]), arguments[4:]
-    if (
-        len(arguments) >= 3
-        and arguments[0].startswith("--config=")
-        and arguments[1:3] == ["jobs", "blueprint"]
+        and arguments[1:3] == target
     ):
         return True, Path(arguments[0].split("=", 1)[1]), arguments[3:]
     return False, None, arguments
@@ -405,6 +391,28 @@ def _run_role_blueprint(
     return 0
 
 
+def _export_review_snapshot(
+    arguments: list[str],
+    *,
+    default_config: Path | None,
+) -> int:
+    parser = _snapshot_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        destination = write_review_snapshot(
+            settings.database_path,
+            parsed.job_id,
+            output_dir=parsed.output_dir,
+        )
+    except (ReviewSnapshotError, OSError, ValueError) as exc:
+        print(f"Review snapshot failed: {exc}", file=sys.stderr)
+        return 1
+
+    print(destination.as_posix())
+    return 0
+
+
 def _print_combined_help() -> None:
     build_legacy_parser().print_help()
     print("")
@@ -416,6 +424,7 @@ def _print_combined_help() -> None:
     print("Capability intelligence commands:")
     print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
     print("  jobs blueprint <id>      Build/reuse human-facing expert role interpretation")
+    print("  jobs snapshot <id>       Export current reviewable job/intelligence JSON")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -430,15 +439,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     if is_run:
         return _run_phase1(run_arguments, default_config=default_config)
 
-    is_health, default_config, health_arguments = _extract_health_invocation(arguments)
+    is_health, default_config, health_arguments = _extract_jobs_invocation(arguments, "health")
     if is_health:
-        return _show_source_health(
-            health_arguments,
-            default_config=default_config,
-        )
+        return _show_source_health(health_arguments, default_config=default_config)
 
-    is_capability, default_config, capability_arguments = _extract_capability_invocation(
-        arguments
+    is_capability, default_config, capability_arguments = _extract_jobs_invocation(
+        arguments,
+        "capability",
     )
     if is_capability:
         return _run_capability_intelligence(
@@ -446,12 +453,23 @@ def main(argv: Sequence[str] | None = None) -> int:
             default_config=default_config,
         )
 
-    is_blueprint, default_config, blueprint_arguments = _extract_blueprint_invocation(
-        arguments
+    is_blueprint, default_config, blueprint_arguments = _extract_jobs_invocation(
+        arguments,
+        "blueprint",
     )
     if is_blueprint:
         return _run_role_blueprint(
             blueprint_arguments,
+            default_config=default_config,
+        )
+
+    is_snapshot, default_config, snapshot_arguments = _extract_jobs_invocation(
+        arguments,
+        "snapshot",
+    )
+    if is_snapshot:
+        return _export_review_snapshot(
+            snapshot_arguments,
             default_config=default_config,
         )
 
