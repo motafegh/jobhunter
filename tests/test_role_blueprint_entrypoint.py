@@ -24,7 +24,7 @@ class _Store:
     artifact = SimpleNamespace(
         source_job_id="abc1",
         model="analysis-model",
-        prompt_version="role-capability-blueprint-v1",
+        prompt_version="role-capability-blueprint-v2",
         schema_version="role-capability-blueprint-v1",
         capability_artifact_id=7,
         analysis_artifact_id=5,
