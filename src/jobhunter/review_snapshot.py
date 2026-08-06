@@ -53,10 +53,11 @@ def _source_record(database_path: Path, source_job_id: str) -> dict[str, Any]:
             FROM job_postings AS p
             JOIN job_detail_versions AS v ON v.job_posting_id = p.id
             WHERE p.source = 'jobinja' AND p.source_job_id = ?
+              AND v.parse_status = 'parsed'
               AND v.id = (
                   SELECT MAX(v2.id)
                   FROM job_detail_versions AS v2
-                  WHERE v2.job_posting_id = p.id
+                  WHERE v2.job_posting_id = p.id AND v2.parse_status = 'parsed'
               )
             LIMIT 1
             """,
@@ -64,7 +65,7 @@ def _source_record(database_path: Path, source_job_id: str) -> dict[str, Any]:
         ).fetchone()
     if row is None:
         raise ReviewSnapshotError(
-            f"No current Jobinja source record exists for {source_job_id!r}"
+            f"No current parsed Jobinja source record exists for {source_job_id!r}"
         )
     return {
         "source_job_id": str(row["source_job_id"]),
@@ -157,8 +158,15 @@ def _blueprint_payload(artifact: RoleBlueprintArtifact | None) -> dict[str, Any]
     }
 
 
-def build_review_snapshot(database_path: Path, source_job_id: str) -> dict[str, Any]:
-    """Build a current-chain snapshot without raw model protocol or private local state."""
+def build_review_snapshot(
+    database_path: Path,
+    source_job_id: str,
+    *,
+    analysis_model: str | None = None,
+    capability_model: str | None = None,
+    blueprint_model: str | None = None,
+) -> dict[str, Any]:
+    """Build the configured current chain without raw model protocol or private local state."""
 
     source_job_id = source_job_id.strip()
     if not _SAFE_JOB_ID_RE.fullmatch(source_job_id):
@@ -172,24 +180,34 @@ def build_review_snapshot(database_path: Path, source_job_id: str) -> dict[str, 
     capability_store = CapabilityIntelligenceStore(database_path)
     blueprint_store = RoleBlueprintStore(database_path)
 
-    translation = translation_store.latest_artifact(source_job_id, target_language="en")
     english_analysis = analysis_store.latest_current(
         source_job_id,
+        model=analysis_model,
         prompt_version=ENGLISH_PROMPT_VERSION,
         schema_version=ANALYSIS_SCHEMA_VERSION,
     )
     original_analysis = analysis_store.latest_current(
         source_job_id,
+        model=analysis_model,
         prompt_version=ORIGINAL_PROMPT_VERSION,
         schema_version=ANALYSIS_SCHEMA_VERSION,
     )
+
+    translation = None
+    if english_analysis is not None and english_analysis.translation_artifact_id is not None:
+        translation = translation_store.artifact_by_id(english_analysis.translation_artifact_id)
+    if translation is None:
+        translation = translation_store.latest_artifact(source_job_id, target_language="en")
+
     capability = capability_store.latest_current(
         source_job_id,
+        model=capability_model,
         prompt_version=CAPABILITY_PROMPT_VERSION,
         schema_version=CAPABILITY_SCHEMA_VERSION,
     )
     blueprint = blueprint_store.latest_current(
         source_job_id,
+        model=blueprint_model,
         prompt_version=BLUEPRINT_PROMPT_VERSION,
         schema_version=BLUEPRINT_SCHEMA_VERSION,
     )
@@ -217,6 +235,11 @@ def build_review_snapshot(database_path: Path, source_job_id: str) -> dict[str, 
     return {
         "snapshot_schema_version": SNAPSHOT_SCHEMA_VERSION,
         "source_job_id": source_job_id,
+        "configured_models": {
+            "analysis": analysis_model,
+            "capability": capability_model,
+            "blueprint": blueprint_model,
+        },
         "status": {
             "english_projection_present": translation is not None,
             "english_analysis_present": english_analysis is not None,
@@ -245,10 +268,19 @@ def write_review_snapshot(
     source_job_id: str,
     *,
     output_dir: Path = _DEFAULT_OUTPUT_DIR,
+    analysis_model: str | None = None,
+    capability_model: str | None = None,
+    blueprint_model: str | None = None,
 ) -> Path:
     """Write one stable UTF-8 JSON file suitable for Git diff/review."""
 
-    snapshot = build_review_snapshot(database_path, source_job_id)
+    snapshot = build_review_snapshot(
+        database_path,
+        source_job_id,
+        analysis_model=analysis_model,
+        capability_model=capability_model,
+        blueprint_model=blueprint_model,
+    )
     output_dir.mkdir(parents=True, exist_ok=True)
     destination = output_dir / f"{source_job_id}.json"
     destination.write_text(
@@ -279,6 +311,9 @@ def main(argv: list[str] | None = None) -> int:
             settings.database_path,
             parsed.job_id,
             output_dir=parsed.output_dir,
+            analysis_model=settings.effective_analysis_lm_studio_model(),
+            capability_model=settings.effective_capability_lm_studio_model(),
+            blueprint_model=settings.effective_blueprint_lm_studio_model(),
         )
     except (ConfigLoadError, ValidationError, ReviewSnapshotError, OSError) as exc:
         print(f"Review snapshot failed: {exc}", file=sys.stderr)
