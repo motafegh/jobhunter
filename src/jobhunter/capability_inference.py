@@ -70,8 +70,13 @@ class CapabilityInferenceProvider:
                 "Capability intelligence requires dictionary analysis_fields"
             )
         catalog = evidence_catalog or {}
-        if not all(isinstance(key, str) and isinstance(value, str) for key, value in catalog.items()):
-            raise ValueError("evidence_catalog must map string references to exact source text")
+        if not all(
+            isinstance(key, str) and isinstance(value, str)
+            for key, value in catalog.items()
+        ):
+            raise ValueError(
+                "evidence_catalog must map string references to exact source text"
+            )
 
         # Local long-form reasoning has no read ceiling. Connection establishment remains bounded,
         # and transport replay is disabled so a disconnected long generation is never duplicated.
