@@ -11,10 +11,10 @@ from jobhunter.inference import InferenceProviderError, LMStudioProvider
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
 
-# v3 keeps the persisted factual shape but makes production evidence selection reference-based
-# and rejects implausibly empty extraction from clearly information-rich job fields.
-ENGLISH_PROMPT_VERSION = "job-analysis-english-v3"
-ORIGINAL_PROMPT_VERSION = "job-analysis-original-v3"
+# v4 keeps the persisted factual shape while adding heading/clause evidence references and
+# stronger atomic optionality instructions for dense mixed-strength job descriptions.
+ENGLISH_PROMPT_VERSION = "job-analysis-english-v4"
+ORIGINAL_PROMPT_VERSION = "job-analysis-original-v4"
 PROMPT_VERSION = ENGLISH_PROMPT_VERSION
 ANALYSIS_SCHEMA_VERSION = "job-analysis-v2"
 
@@ -36,7 +36,7 @@ SEMANTIC RULES:
 - Omit uncertain claims rather than guessing.
 - When evidence_references is supplied, put only one listed evidence reference ID in each
   evidence field. JobHunter resolves that ID back to exact source text before persistence.
-- Prefer the most specific description-segment reference that supports the claim.
+- Prefer the most specific description segment or clause reference that supports the claim.
 - Never invent evidence-reference IDs or infer array indexes from words inside a long paragraph.
 - On low-level/historical calls without evidence_references, evidence must be one exact contiguous
   excerpt copied from an analysis-field VALUE.
@@ -50,8 +50,16 @@ SEMANTIC RULES:
   proficiency, mastery, expertise, and years of experience describe depth or experience; they
   do not by themselves mean preferred/required.
 - Familiarity does not mean preferred. Mark a claim preferred only when wording actually signals
-  preference/advantage/optionality (for example preferred, plus, advantage, nice to have, or an
-  equivalent employer phrase).
+  preference/advantage/optionality (for example preferred, plus, advantage, nice to have, helpful,
+  or an equivalent employer phrase).
+- One requirement item must represent one coherent strength/optionality claim. If one source bullet
+  mixes core and optional clauses, emit separate requirements and cite the most specific clause
+  reference for each. Do not label an entire mixed line required or preferred.
+- A global statement such as "we don't expect every single item" means individual stack items are
+  not automatically mandatory, but it does not make every item preferred. Use contextual when an
+  item is named but its individual obligation strength is not established.
+- Preserve explicit depth independently from optionality: expert/proficient/familiar describe
+  depth, while required/preferred/contextual describe obligation.
 - A text-explicit requirement must not be marked inferred.
 - Inferred concepts require a concise rationale and supporting evidence.
 - Requirement strength must be preserved. Familiarity is not proficiency; preferred is not
@@ -350,13 +358,13 @@ class JobAnalysisService:
             return (
                 ENGLISH_PROMPT_VERSION,
                 _ENGLISH_SYSTEM_PROMPT,
-                "jobhunter_job_analysis_english_v3",
+                "jobhunter_job_analysis_english_v4",
             )
         if mode == "original":
             return (
                 ORIGINAL_PROMPT_VERSION,
                 _ORIGINAL_SYSTEM_PROMPT,
-                "jobhunter_job_analysis_original_v3",
+                "jobhunter_job_analysis_original_v4",
             )
         raise ValueError(f"Unsupported analysis mode: {mode}")
 
