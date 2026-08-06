@@ -30,6 +30,7 @@ dev = [
 [project.scripts]
 jobhunter = "jobhunter.entrypoint:main"
 jobhunter-app = "jobhunter.web.launcher:main"
+jobhunter-review-snapshot = "jobhunter.review_snapshot:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
