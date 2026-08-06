@@ -24,7 +24,7 @@ def test_analysis_evidence_reference_resolves_to_exact_source_text() -> None:
         "responsibilities": [
             {
                 "statement": "Build and validate industrial ML models",
-                "evidence": "field:description:segment:1",
+                "evidence": "field:description:segment:0",
                 "confidence": "high",
             }
         ],
