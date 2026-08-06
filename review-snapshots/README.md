@@ -14,8 +14,10 @@ assistant can inspect quality directly from the repository.
 
 ```bash
 source .venv/bin/activate
-jobhunter-review-snapshot tG9K
+jobhunter jobs snapshot tG9K
 ```
+
+The standalone `jobhunter-review-snapshot tG9K` entry point is also available.
 
 Default output:
 
