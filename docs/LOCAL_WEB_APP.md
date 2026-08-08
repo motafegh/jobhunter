@@ -1,264 +1,422 @@
 # JobHunter Local Web Application
 
-## Purpose
+**Status:** Current browser architecture/surface guide  
+**Date:** 2026-08-08
 
-The web application is the normal human-facing interface for repeated local use.
-The command-line interface remains available for automation, debugging, tests, and
-advanced workflows, but daily operation should not require memorizing CLI commands.
+## 1. Purpose
 
-The browser interface is a **second interface over the same application services and
-SQLite database**. It does not maintain a separate job store, parser, translation
-pipeline, or hidden workflow state.
+The local web application is the normal human-facing interface for repeated JobHunter use.
 
-## Launch
+CLI remains available for automation, debugging, tests, acceptance work, and advanced operation.
 
-Install/update the editable package first:
+The browser is a **second interface over the same application services and SQLite/evidence state**. It does not maintain separate parsers, translations, analyses, Capability/Blueprint truth, or user data.
+
+---
+
+## 2. Launch
+
+Install/update the editable package:
 
 ```bash
 python3 -m pip install -e ".[dev]"
 ```
 
-Start the local application:
+Launch:
 
 ```bash
 jobhunter-app
 ```
 
-Default address:
+Default:
 
 ```text
 http://127.0.0.1:8765/
 ```
 
-The launcher opens the default browser automatically. Starting `jobhunter-app` again while
-the same loopback instance is already running reopens that instance instead of attempting
-to bind a second server to the same port.
+Repeated launch while the same local instance is already bound should reopen/use that instance rather than creating a second server.
 
-### Linux application-menu launcher
-
-Install once from the project/config directory:
+Linux desktop launcher:
 
 ```bash
 jobhunter-app --install-desktop
 ```
 
-This creates a local application entry under `~/.local/share/applications` and installs
-the packaged JobHunter icon. The desktop entry stores the **exact resolved
-`jobhunter.toml` path and working directory used during installation**, so application-menu
-launches do not depend on the desktop environment's current directory.
+The desktop entry stores the resolved config path and working directory used at installation.
 
-Normal use can then start JobHunter from the application menu without opening a terminal.
-Repeated clicks reuse/open an already-running local instance.
+---
 
-## Network boundary
+## 3. Network/security boundary
 
-The launcher binds to loopback by default. It refuses a non-loopback host unless the
-operator explicitly supplies `--allow-network`.
+The app binds loopback by default.
 
-This is intentional. The UI can trigger source acquisition and local-model work, so it
-must not silently become a LAN service.
+Non-loopback binding requires explicit intent.
 
-## Main screens
+Browser safeguards include:
 
-### Overview
-
-The dashboard shows:
-
-- unique discovered jobs;
-- jobs with complete local details;
-- current English-corpus coverage;
-- missing details/translations;
-- number of detail-fetch observations;
-- recent acquisition runs;
-- recent browser operations.
-
-It also provides the primary bounded sync form and one-click parser audit, translation,
-and English-corpus export actions.
-
-#### Understanding the sync controls
-
-The browser labels are intentionally phrased in operational language rather than internal
-configuration names.
-
-- **Search terms to try** — how many configured searches from the effective bilingual
-  plan participate in this run. `12` is a quick cross-domain sample; `40` is the normal
-  working default. Raising this increases coverage, not quality by itself.
-- **Search-page request limit** — the hard ceiling on actual Jobinja search-page HTTP
-  requests. With one page per term, it is normally equal to the search count. If lower,
-  JobHunter stops safely when the budget is exhausted.
-- **New jobs to fully fetch** — how many discovered jobs that do not yet have local detail
-  evidence may be fetched. `5–10` is a normal bounded batch; `0` performs discovery only.
-- **Old jobs to recheck** — how many previously acquired jobs may be revisited when old
-  enough. `5` is conservative; `0` disables refresh work for that run.
-- **Recheck after** — the minimum age of the last detail check before a job becomes
-  refresh-eligible. `24` hours gives daily freshness; `72–168` reduces network work.
-
-Missing-detail plus refresh checks may never exceed 50 in one sync.
-
-The UI also provides three deterministic presets:
-
-- **Light scan:** 12 searches / 12 search requests / 3 missing details / 2 refreshes;
-- **Normal:** 40 / 40 / 10 / 5;
-- **Thorough:** 80 / 80 / 20 / 10 with a 72-hour refresh threshold.
-
-Presets only fill the form. The values remain visible and editable before submission.
-
-### Jobs
-
-The jobs table supports local filtering by:
-
-- free-text title/company/location/Jobinja-reference search;
-- detail availability;
-- English projection availability;
-- lifecycle state.
-
-No network request is made when browsing/filtering the local catalog.
-
-Opaque source job codes such as `tmW5` remain in persistence because they are the stable
-Jobinja identity, but the UI labels them explicitly as **Jobinja reference** and keeps
-them visually secondary to role/company information.
-
-#### Quick Add
-
-The Jobs screen provides a bounded **Quick Add** input for one focused intake task.
-It accepts:
-
-1. **a public Jobinja job URL** — save/update that logical posting and immediately fetch
-   its complete detail page;
-2. **a public Jobinja `/jobs` search URL** — preserve its Jobinja-owned filters, discover
-   matching postings, and optionally fetch a bounded detail sample;
-3. **a Persian or English keyword/role phrase** — build a normal Jobinja keyword search,
-   discover matches, and optionally fetch a bounded detail sample.
-
-Quick Add exposes separate bounds for search pages (`1–3`) and full detail fetches
-(`0–20`). `0` detail pages means discovery-only. When translation is enabled, a checkbox
-can translate only the successfully fetched jobs after acquisition.
-
-Quick Add does not expand the source policy. Arbitrary external job websites are rejected
-until a dedicated approved adapter exists for those sources.
-
-### Job detail
-
-One job view combines:
-
-- original authoritative Jobinja fields;
-- current English derived fields;
-- source skill tags;
-- complete source and English descriptions;
-- parser/audit status;
-- semantic/raw evidence hashes;
-- source URL and evidence path;
-- fetch-observation history;
-- per-job source refresh and translation actions.
-
-A posting that has only been discovered is shown as a normal **details not acquired yet**
-state with a Fetch details button; it is not presented as an application error.
-
-The source and translated columns are deliberately visually separated because the
-English projection is derived data, not employer evidence.
-
-### Search plan
-
-The search screen displays:
-
-- catalog version;
-- configured profiles;
-- the effective bounded search sequence;
-- request budget;
-- every search pack, description, and Persian/English term.
-
-This keeps acquisition coverage inspectable without requiring terminal commands.
-
-### Operations
-
-Mutable browser operations run through one local single-worker queue. Long-running
-sync/translation work therefore does not block the initial HTTP response, and accidental
-double-clicks cannot start overlapping mutable acquisition runs.
-
-Operation pages poll local status and display the same concise service summaries used by
-the CLI.
-
-The queue is intentionally in-memory. Durable acquisition history, fetch observations,
-translation attempts, and artifacts continue to live in SQLite; browser operation cards
-are only UI runtime state.
-
-### System
-
-The system page exposes the important current runtime boundary:
-
-- SQLite/evidence/export paths;
-- configured LM Studio URL and model identities;
-- translation provider and automatic-translation state;
-- acquisition/search/detail limits;
-- current parsed/translated coverage.
-
-Advanced persistent configuration remains in `jobhunter.toml`. Daily per-run limits are
-available directly on the dashboard.
-
-## Browser security
-
-The local app includes several safeguards even though it defaults to loopback:
-
-- a process-local CSRF token is required for every mutating HTML form;
-- `X-Frame-Options: DENY`;
+- CSRF validation for mutating forms;
 - restrictive Content Security Policy;
+- `X-Frame-Options: DENY`;
 - `X-Content-Type-Options: nosniff`;
 - `Referrer-Policy: no-referrer`;
 - `Cache-Control: no-store`;
-- no CDN JavaScript, fonts, images, or CSS;
-- no exposed OpenAPI/Swagger endpoints in the browser app.
+- packaged local static assets;
+- no runtime CDN requirement;
+- acquired job content treated as untrusted data;
+- source/model operations still governed by service/config bounds.
 
-The web application must not weaken JobHunter's source-access policy. Browser buttons
-still call the same bounded/rate-limited source services.
+The browser must never become a source-policy bypass.
 
-## Dependency strategy
+---
 
-The UI intentionally avoids a Node/npm toolchain.
+## 4. Current main screens
 
-Current web dependencies are:
+```text
+Overview
+Jobs
+Job detail
+Capability Intelligence
+Role Capability Blueprint
+Search plan / search effectiveness
+Market
+Operations
+System
+```
+
+Browser and CLI must render/use the same underlying current artifacts and model-role identities.
+
+---
+
+## 5. Overview
+
+Overview provides current corpus/pipeline visibility and bounded operational actions.
+
+Typical information includes:
+
+- discovered jobs;
+- detail/parsed coverage;
+- current English coverage;
+- current analysis coverage;
+- recent acquisition/workflow operations;
+- missing/eligible work;
+- important runtime/model/config state where useful.
+
+Typical guided actions include bounded sync/detail/translation/analysis work.
+
+### Sync controls
+
+The browser exposes visible bounds instead of hiding them in implementation defaults:
+
+- search terms/searches selected;
+- search request budget;
+- missing-detail fetch limit;
+- refresh-due detail limit;
+- refresh age threshold.
+
+Presets fill the form; they do not create hidden behavior.
+
+Combined detail work remains bounded.
+
+---
+
+## 6. Jobs
+
+The jobs catalog is a local read over persisted state.
+
+Filters/search may use human-readable title/company/location/reference plus source/English/analysis/lifecycle/user-workflow state.
+
+Browsing/filtering local jobs does not itself contact Jobinja.
+
+Opaque Jobinja IDs remain stable provenance but visually secondary to role/company information.
+
+### Quick Add
+
+Quick Add accepts only:
+
+1. public Jobinja job URL;
+2. public Jobinja `/jobs` search URL;
+3. Persian/English keyword/role phrase interpreted as a bounded Jobinja search.
+
+It exposes explicit search/detail bounds.
+
+Quick Add is not arbitrary-web ingestion.
+
+---
+
+## 7. Job detail
+
+Job detail keeps authority layers visually separate.
+
+Current sections can include:
+
+```text
+original authoritative source data
+English projection v2
+English P1.6 factual analysis
+Original-language P1.6 analysis
+source/discovery/lifecycle provenance
+semantic/raw evidence identity
+user triage state
+actions for refresh/translation/analysis/reasoning
+```
+
+A discovered-but-unfetched job is a normal actionable state, not an application error.
+
+Source and English/model-derived content must not be visually conflated.
+
+### Current semantic actions
+
+```text
+Analyze English
+Analyze Original
+Capability Intelligence
+Role Capability Blueprint
+```
+
+Current contracts:
+
+```text
+English P1.6:   job-analysis-english-v4
+Original P1.6:  job-analysis-original-v4
+Capability:     job-capability-intelligence-v4
+Blueprint:      role-capability-blueprint-v2
+```
+
+English and Original P1.6 remain independent.
+
+Capability depends on current accepted English P1.6.
+
+Blueprint depends on current Capability Intelligence.
+
+A stale dependency must not render a downstream artifact as current.
+
+---
+
+## 8. Capability Intelligence page
+
+This page is the auditable reasoning layer above P1.6.
+
+It should expose:
+
+- role interpretation;
+- capability areas;
+- work activities;
+- depth signals;
+- sub-capabilities;
+- underlying knowledge;
+- operational practices/context;
+- independence/ownership;
+- unknown scope;
+- evidence status/confidence;
+- exact resolved supporting evidence;
+- model/prompt/schema/dependency provenance.
+
+It is still a manually reviewed per-job surface and is not automatically aggregated into Market.
+
+---
+
+## 9. Role Capability Blueprint page
+
+Blueprint is the human-facing professional interpretation layer.
+
+It prioritizes readable explanation over evidence cards while retaining artifact/model/dependency provenance.
+
+Typical sections include:
+
+- senior-practitioner role read;
+- likely role shape;
+- capability areas/depth;
+- likely subskills;
+- named/likely/possible tools/examples;
+- likely work products;
+- operational concerns/failure modes;
+- hidden likely requirements;
+- end-to-end scenarios;
+- probable non-requirements;
+- important unknowns;
+- bottom line.
+
+The UI should make it clear that this layer is freer professional interpretation, not employer fact.
+
+---
+
+## 10. Search plan / effectiveness
+
+Search views expose configured bilingual acquisition coverage and observed search contribution/overlap.
+
+Search vocabulary is acquisition recall, not canonical career taxonomy or personal relevance.
+
+Do not auto-prune vocabulary solely because two searches overlap.
+
+---
+
+## 11. Market
+
+Current Market aggregates accepted/current **English P1.6** only.
+
+It does not yet aggregate Capability/Blueprint.
+
+Market must retain/expose enough context to understand:
+
+- analyzed-current sample size;
+- source/filter scope;
+- current analysis contract;
+- requirement-strength semantics;
+- concentration/small-sample warnings.
+
+Coverage is not semantic-quality certification.
+
+---
+
+## 12. Operations
+
+Long browser work uses bounded in-process execution rather than a distributed queue system.
+
+Current design avoids overlapping mutable browser workflows until concurrency is proven safe.
+
+Durable domain results live in SQLite/evidence/artifact stores. Operation cards are runtime convenience only.
+
+### Result semantics
+
+Multi-stage operation summaries should preserve where applicable:
+
+```text
+requested
+attempted
+completed
+reused
+skipped intentionally
+failed
+remaining eligible
+```
+
+Do not display generic success when meaningful requested sub-work failed.
+
+Earlier valid durable work remains preserved when later stages fail.
+
+---
+
+## 13. System
+
+System exposes important current runtime/config boundaries, for example:
+
+- SQLite/evidence/export paths;
+- LM Studio URL;
+- translation model/provider;
+- effective analysis model;
+- effective Capability model;
+- effective Blueprint model;
+- acquisition limits;
+- translation/analysis limits;
+- corpus coverage/state.
+
+Advanced persistent configuration remains in `jobhunter.toml` until a safe configuration-write design is justified.
+
+---
+
+## 14. Independent model roles
+
+Current configuration can independently select:
+
+```toml
+analysis_lm_studio_model = "..."
+capability_lm_studio_model = "..."
+blueprint_lm_studio_model = "..."
+```
+
+Browser artifact readers must use the appropriate effective model role and must not assume all reasoning uses the analysis model.
+
+This was corrected for Capability/Blueprint review pages during the v4/v2 reasoning tranche.
+
+---
+
+## 15. Review Snapshot workflow
+
+Review Snapshots are produced through CLI rather than a browser-only hidden export path:
+
+```bash
+jobhunter jobs snapshot <job-id>
+```
+
+The resulting selected JSON is intended for Git/reviewer/AI quality inspection, not as runtime state.
+
+Current selected live example:
+
+```text
+review-snapshots/jobs/tG9K.json
+```
+
+Known current defect: the integrated snapshot CLI does not yet pass effective model roles into the exporter. This must be corrected before model-comparison acceptance.
+
+See `review-snapshots/README.md`.
+
+---
+
+## 16. Dependency strategy
+
+Current browser dependencies remain deliberately small:
 
 - FastAPI;
 - Uvicorn;
 - Jinja2;
 - python-multipart;
-- packaged CSS and small vanilla JavaScript.
+- packaged CSS;
+- small vanilla JavaScript.
 
-This keeps the product a local Python modular monolith and avoids maintaining a second
-frontend build ecosystem before the product requires one.
+Do not add Node/npm/React merely for fashion. Introduce a frontend build system only when server-rendered Python demonstrably stops meeting product needs.
 
-## Failure model
+---
 
-A browser operation can finish as:
+## 17. Failure model
+
+A browser operation failure does not roll back previously preserved source evidence, semantic versions, successful translations, accepted P1.6 artifacts, Capability artifacts, or Blueprint artifacts.
+
+Each derived stage has its own attempt/history semantics.
+
+Keep distinct:
 
 ```text
-completed
-failed
+source failure
+translation failure
+P1.6 failure
+Capability failure
+Blueprint failure
 ```
 
-A failed UI operation does not roll back previously preserved source evidence, semantic
-versions, fetch observations, successful translations, or exports.
+A later failure does not retroactively invalidate a correct upstream artifact.
 
-The operation page surfaces the exception type/message or service summary for inspection.
+---
 
-## Testing
+## 18. Testing
 
-Normal deterministic tests use FastAPI's local test client and do not contact Jobinja or
-LM Studio.
+Normal deterministic web tests do not contact Jobinja or LM Studio.
 
-Coverage includes:
+Coverage should protect:
 
-- rendering all primary pages against an empty local database;
-- packaged static assets;
-- browser security headers;
+- primary page rendering;
+- local static assets/security headers;
 - CSRF rejection;
-- asynchronous local operation execution/polling;
-- safe empty-catalog filtering;
-- discovered-but-unfetched job rendering;
-- Quick Add input classification and external-source rejection;
-- sync guidance/preset presence;
-- loopback-only launcher behavior;
-- desktop launcher binding to the exact configuration path.
+- local operation execution/polling;
+- empty/discovered/unfetched states;
+- Quick Add classification/source rejection;
+- loopback launcher behavior;
+- semantic action routing;
+- Capability/Blueprint artifact/model selection;
+- operation partial-success semantics;
+- stale/current derived-state display.
 
-Live acceptance should additionally confirm Quick Add against a real Jobinja keyword or
-job URL and verify that the resulting posting/detail state appears immediately in the same
-local catalog.
+Live acceptance separately verifies real Jobinja/model behavior.
+
+---
+
+## 19. Current acceptance status
+
+Browser architecture is established and actively used.
+
+Remaining acceptance belongs mainly to the underlying Phase-1 semantic/source/lifecycle/Market/final-run gates rather than a separate browser rewrite.
+
+The current focused sequence is documented in:
+
+```text
+docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
+docs/EXECUTION_TODO.md
+```
