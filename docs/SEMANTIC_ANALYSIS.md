@@ -1,137 +1,111 @@
 # Evidence-Backed Semantic Analysis
 
+**Status:** Implemented; semantic-quality acceptance active  
+**Date:** 2026-08-08
+
+P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
+
+The active quality sequence is controlled by `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
+
+---
+
 ## 1. Purpose
 
-P1.6 converts current parsed Jobinja postings into structured model-derived career concepts
-without allowing model interpretation to become source truth.
+P1.6 converts a current parsed Jobinja posting into structured model-derived facts without allowing model interpretation to become source truth.
 
-JobHunter keeps **two independent semantic-analysis products** for a job:
+JobHunter keeps two independent products:
 
-1. **English analysis** — analyzes only the current hardened English projection.
-2. **Original-language analysis** — analyzes only the original employer/source fields.
+1. **English analysis** — reads only the current hardened English projection.
+2. **Original-language analysis** — reads only original employer/source fields.
 
-They are separate artifacts. Neither mode may use the other mode's text as analysis input or
-evidence.
+They are independent artifacts. Neither analysis uses the other language representation as hidden evidence or repair context.
 
-## 2. Two independent analysis contracts
+---
 
-### English analysis
+## 2. Current contracts
 
-```text
-original source
-→ hardened English projection v2
-→ English-only semantic analysis
-→ English evidence
-→ English analysis artifact
-```
-
-The model receives only the hardened English projection as `analysis_fields`.
-
-The English artifact:
-
-- uses normalized English statements/concepts;
-- cites exact contiguous English excerpts from the English projection;
-- stores the supporting translation artifact ID;
-- is the canonical normalized analysis used by Market, dashboard analysis counts, automated
-  analysis-ready queues, Quick Add complete processing, and the full market workflow.
-
-Current identity:
+### English
 
 ```text
-prompt/runtime: job-analysis-english-v2
-schema:         job-analysis-v2
+source
+→ english-projection-v2
+→ job-analysis-english-v4
+→ job-analysis-v2 persisted schema
 ```
 
-### Original-language analysis
+### Original
 
 ```text
-original source
-→ original-language semantic analysis
-→ original-language evidence
-→ original-language analysis artifact
+original source fields
+→ job-analysis-original-v4
+→ job-analysis-v2 persisted schema
 ```
 
-The model receives only original employer/source fields as `analysis_fields`.
+Current constants are defined in `src/jobhunter/analysis_service.py`.
 
-The original artifact:
+Historical prompt/runtime identities remain historical. Prompt/runtime changes intentionally make prior artifacts non-current even when the persisted schema shape remains `job-analysis-v2`.
 
-- does not receive the English projection or any English comprehension aid;
-- keeps statements/concepts in the language used by the relevant source text;
-- cites exact contiguous excerpts from original employer/source fields;
-- has no translation-artifact dependency;
-- is a per-job review/diagnostic artifact and is not merged into normalized Market aggregates.
+---
 
-Current identity:
+## 3. Current v4 change set
 
-```text
-prompt/runtime: job-analysis-original-v2
-schema:         job-analysis-v2
-```
+V4 keeps the factual persisted shape while making dense/long postings more robust.
 
-The v2 prompt/runtime identities intentionally distinguish the Instructor/Pydantic extraction
-runtime from historical v1 artifacts. Historical artifacts remain preserved but are not reused
-as current v2 analyses.
+Implemented v4 behavior includes:
 
-## 3. Why the split exists
+- deterministic evidence-reference catalogs supplied to the model;
+- heading-aware long-description segmentation;
+- clause-level references for semicolon-delimited mixed-strength lines;
+- the model selects evidence IDs instead of copying quotations in production;
+- JobHunter resolves selected references back to exact source text before persistence;
+- rich-source `0 responsibilities / 0 requirements` responses are rejected when the source plainly contains substantial duties/qualifications;
+- mixed core/optional clauses must be emitted atomically rather than as one strength claim;
+- `preferred` requires actual preference/advantage/plus/helpful-style source wording;
+- global wording such as `we don't expect every single item` prevents automatic mandatory treatment but does not automatically make every stack item preferred;
+- explicit depth words such as expert/proficient/familiar remain distinct from obligation strength;
+- long local Instructor reads do not use an arbitrary read-time deadline after successful connection;
+- transport replay remains disabled and Instructor validation retry remains bounded.
 
-The English projection is generally the easier and more consistent representation for semantic
-interpretation across a bilingual corpus. The original source remains independently valuable for
-reviewing how the model behaves directly on employer-language text.
-
-```text
-English interpretation quality   → English analysis
-Original-language interpretation → Original analysis
-```
-
-A successful English artifact does not imply that original-language analysis succeeded, and a
-successful Original artifact does not satisfy the English Market contract.
+---
 
 ## 4. Evidence hierarchy
 
 ```text
-original Jobinja employer fields   source truth
-English projection v2             hardened derived representation
-English analysis artifact         interpretation of English projection
-Original analysis artifact        interpretation of original source
-Market aggregate                  accepted English analyses only
+original Jobinja employer/source fields    authoritative source truth
+English projection v2                      hardened derived representation
+English P1.6 artifact                      interpretation of English projection
+Original P1.6 artifact                     interpretation of original source
+Capability Intelligence                    derived reasoning above accepted English P1.6
+Role Capability Blueprint                  human-facing interpretation above those layers
+Market aggregate                           deterministic aggregate of accepted English P1.6
 ```
 
-Within each analysis mode, the selected representation is the only permitted evidence surface:
+Within one P1.6 mode, the selected representation is the only evidence surface:
 
 ```text
 English analysis  → English projection evidence only
 Original analysis → original source evidence only
 ```
 
-There is no cross-language repair or evidence path.
+No cross-language repair is allowed.
+
+---
 
 ## 5. Artifact identity and persistence
 
-One analysis artifact is identified by:
-
-```text
-source semantic version
-+ exact LM Studio model
-+ prompt/runtime version
-+ analysis schema version
-```
-
-Because English and Original use different prompt/runtime identities, both artifacts can coexist
-for the same current source version and model without overwriting or reusing each other.
-
-For every accepted artifact JobHunter stores:
+An accepted analysis artifact records:
 
 - source detail-version identity;
-- translation artifact ID for English analysis, or `NULL` for Original analysis;
+- translation artifact ID for English analysis, `NULL` for Original;
 - exact model ID;
 - prompt/runtime version;
 - schema version;
-- validated analysis JSON;
+- validated structured analysis;
 - accepted inference request metadata;
-- raw final LM Studio response;
+- raw final local-model response;
 - creation timestamp.
 
-Operational analysis attempts record:
+Attempts record:
 
 ```text
 completed
@@ -139,46 +113,54 @@ failed
 reused
 ```
 
-Reuse is mode-specific because prompt/runtime identity is mode-specific.
+Current analysis-store identity is keyed by source version + model + prompt + schema. The English artifact also stores its exact translation dependency. A future persistence migration may include translation artifact ID directly in uniqueness semantics, but that is explicit technical debt and must not be hidden inside semantic-quality tuning.
 
-## 6. Shared analysis schema
+---
+
+## 6. Shared persisted schema
 
 Both modes use `job-analysis-v2`.
 
 ### Role purpose
 
-Zero or one concise statement with:
+Zero or one concise supported purpose statement:
 
-- exact evidence from the selected analysis representation;
-- confidence.
+```text
+statement
+evidence
+confidence
+```
 
-If no single contiguous excerpt supports a concise purpose claim, the model must return an empty
-`role_purpose` array.
+If no concise supported purpose exists, `role_purpose` may be empty.
 
 ### Responsibilities
 
-Up to 16 explicit responsibility claims, each with:
+Up to the configured schema bound, each with:
 
-- statement;
-- exact evidence from the selected representation;
-- confidence.
+```text
+statement
+evidence
+confidence
+```
 
-Responsibilities are work duties/actions. Candidate qualification wording such as ability,
-mastery, familiarity, knowledge, or skill belongs under requirements unless explicitly framed
-as a duty.
+Responsibilities are employee work duties/actions.
+
+Candidate qualification wording such as skill, ability, mastery, familiarity, knowledge, education, or experience belongs under requirements unless explicitly framed as work.
 
 ### Requirements
 
-Up to 32 requirement/concept claims, each with:
+Each contains:
 
-- concept;
-- requirement type;
-- concept type;
-- exact evidence from the selected representation;
-- confidence;
-- rationale when inferred.
+```text
+concept
+requirement_type
+concept_type
+evidence
+confidence
+rationale
+```
 
-Requirement types:
+Current requirement types:
 
 ```text
 required
@@ -187,7 +169,7 @@ contextual
 inferred
 ```
 
-Concept types:
+Current concept types:
 
 ```text
 tool
@@ -200,222 +182,206 @@ education
 other
 ```
 
-## 7. Required versus preferred discipline
+The current four-way requirement-strength enum is under quality review because dense postings can contain globally mixed/unspecified stack optionality that may not be truthfully representable as either `required` or `preferred`. Do not change the enum until reviewed examples establish that a contract extension is necessary.
 
-Requirement type is about employer obligation/optionality, not technical depth.
+---
+
+## 7. Obligation strength is not technical depth
+
+These are different dimensions.
 
 Examples:
 
 ```text
-"familiarity with Docker"
-→ familiarity is a depth signal
-→ it does NOT by itself mean preferred
+Python (expert)
+→ explicit depth: expert
+→ obligation determined separately
 
-"Docker is preferred"
-→ preferred
+MATLAB a plus
+→ preference/optionality signal
+→ not automatically a depth claim
 
-"the team deploys on Kubernetes"
-→ may be contextual
-→ must not automatically become a candidate requirement
+some C/C++ helpful
+→ optional/helpful
+
+familiarity with Docker
+→ familiarity is depth
+→ does not by itself mean preferred
+
+we don't expect every item
+→ individual listed stack obligation may be contextual/uncertain
+→ does not mean every item preferred
 ```
 
-Familiarity, proficiency, mastery, expertise, and years of experience describe depth/experience;
-they do not independently determine required versus preferred.
+A depth adjective attached to one technology must not spread to neighboring technologies.
 
-## 8. Instructor + Pydantic structured extraction
+`tG9K` demonstrated why this matters: `Python (expert)` does not prove expert-level scikit-learn, PyTorch, TensorFlow, XGBoost, or LightGBM.
 
-Analysis no longer uses a hand-built outer repair request.
+---
 
-The live path is:
+## 8. Evidence references
+
+Production P1.6 receives a deterministic reference catalog.
+
+Examples:
+
+```text
+field:title
+field:skills:0
+field:description:segment:3
+field:description:segment:12:clause:1
+```
+
+The model emits one known reference ID in each evidence field. JobHunter resolves that ID to exact selected-representation text before the artifact is persisted.
+
+Reference IDs are generation-time bookkeeping. Persisted evidence remains source text.
+
+Historical low-level tests/callers may still use exact text directly.
+
+---
+
+## 9. Long-description segmentation
+
+Dense descriptions often contain inline headings and bullet lists.
+
+Current evidence-reference construction recognizes heading boundaries and creates narrower bullet/segment references. Semicolon-delimited mixed clauses may also receive clause references.
+
+Goal:
+
+```text
+large description
+→ specific supported span
+→ atomic factual claim
+```
+
+not:
+
+```text
+large description
+→ whole paragraph as evidence
+→ accidental heading leakage / mixed optionality
+```
+
+Segmentation is deterministic evidence addressing. It does not itself decide semantic meaning.
+
+---
+
+## 10. Rich-source empty-analysis guard
+
+A structurally valid response such as:
+
+```json
+{
+  "role_purpose": [],
+  "responsibilities": [],
+  "requirements": []
+}
+```
+
+is not automatically acceptable.
+
+If deterministic source signals show that the posting contains substantial job-description/skills content, a completely empty extraction is invalid and Instructor receives its one bounded correction attempt.
+
+A genuinely sparse posting may still legitimately return little or nothing.
+
+This protects against the historical `tG9K` failure where a very rich semiconductor posting was persisted as `0/0`.
+
+---
+
+## 11. Atomic optionality guard
+
+A mixed-strength source line such as:
+
+```text
+Programming: Python (expert) and SQL; MATLAB a plus; some C/C++ helpful
+```
+
+must not become one monolithic required claim.
+
+V4 supplies clause references and validation/prompt rules that require separate coherent strength claims.
+
+Likewise, an English `preferred` claim must cite evidence that itself contains preference/advantage/plus/helpful-style wording or equivalent employer language.
+
+These are general semantic contracts, not technology-specific rules.
+
+---
+
+## 12. Instructor + Pydantic flow
+
+Current live path:
 
 ```text
 selected analysis_fields
++ deterministic evidence references
         ↓
-LM Studio OpenAI-compatible chat API
+LM Studio OpenAI-compatible API
         ↓
 Instructor JSON_SCHEMA mode
         ↓
 Pydantic JobAnalysisResponse
-        ├─ structural/type validation
-        ├─ exact evidence validation using runtime context
+        ├─ shape/type validation
+        ├─ evidence-reference resolution
+        ├─ exact source-span validation
         ├─ inferred-rationale validation
-        ├─ safe scalar evidence canonicalization
-        └─ exact duplicate collapse
+        ├─ optionality/atomicity rules
+        ├─ rich-source non-empty guard
+        └─ exact duplicate normalization
         ↓
 invalid?
-        ├─ yes → Instructor supplies validation feedback and performs one bounded re-ask
-        └─ no
+  ├─ yes → one bounded Instructor correction attempt
+  └─ no
         ↓
-existing JobHunter JSON-Schema guard
-        ↓
-existing JobHunter independent evidence/domain guard
+independent JobHunter JSON/domain guards
         ↓
 persist or fail closed
 ```
 
-Instructor is generic retry/structured-output plumbing. JobHunter retains ownership of all domain
-rules and final acceptance decisions.
+Instructor is structured-output/retry plumbing. JobHunter owns domain truth/validation rules.
 
-Current runtime dependencies:
+---
 
-```text
-Instructor 1.x
-OpenAI Python 2.x
-Pydantic 2.x
-LM Studio OpenAI-compatible local endpoint
-```
+## 13. Safe deterministic normalization
 
-The selected Instructor mode is `JSON_SCHEMA`, matching LM Studio's native structured-output
-surface. Tool calling is not required for this workflow.
+Permitted mechanical repair includes:
 
-## 9. Runtime validation context
+- exact duplicate collapse;
+- exact field-value/source-span recovery;
+- mechanically equivalent whitespace/ZWNJ/case normalization where the exact source span is provable;
+- known evidence-reference resolution.
 
-Instructor passes the selected `analysis_fields` into Pydantic validation context. Evidence
-validators compare every generated evidence value against those exact runtime fields.
+Do not repair through:
 
-This is mode-specific:
+- paraphrase;
+- translation;
+- semantic reconstruction;
+- invented field prefixes;
+- invented list indexes;
+- concatenation that cannot be independently proved.
 
-```text
-English  context → hardened English projection fields
-Original context → original employer/source fields
-```
+---
 
-A validation error is returned to the same model by Instructor during the bounded re-ask. The
-other language representation is never introduced during that retry.
+## 14. Network/runtime policy
 
-## 10. Safe deterministic normalization
+The analysis client remains local-first and uses `trust_env=False` so host proxy variables do not intercept localhost LM Studio traffic.
 
-Two failure classes are handled deterministically because no model reasoning is needed.
-
-### Exact duplicate claims
-
-If a model emits the same responsibility or requirement twice with the same normalized identity
-and evidence, JobHunter keeps the first and drops the exact duplicate.
-
-This avoids spending a model call to fix a mechanically provable duplicate.
-
-### Invented JSON field prefixes
-
-A model may emit:
+Current long-generation policy:
 
 ```text
-minimum_experience: three to six years
+connect timeout: bounded
+read timeout: none after connection
+write/pool timeout: bounded
+transport retries: 0
+Instructor validation retry: bounded separately
+max output tokens: bounded
 ```
 
-when the actual English field is:
+This prevents legitimate local reasoning from being terminated by an arbitrary read deadline while preserving other operational bounds.
 
-```text
-minimum_experience = "three to six years"
-```
+---
 
-JobHunter may canonicalize that evidence to:
+## 15. Model selection
 
-```text
-three to six years
-```
-
-**only** when all of the following are true:
-
-1. the prefix names a real `analysis_fields` key;
-2. the suffix exactly matches that field's scalar value, or exactly matches one string item in
-   that field's list;
-3. no semantic rewriting is required.
-
-Arbitrary prefixes, paraphrases, reconstructed text, translations, or concatenations still fail
-validation.
-
-## 11. Independent final guards
-
-Instructor/Pydantic acceptance is necessary but not sufficient.
-
-JobHunter still runs its established local JSON-Schema validation and an independent final
-analysis-domain guard before persistence.
-
-The final guard checks:
-
-- evidence occurrence in the selected representation;
-- role-purpose/responsibility/requirement bounds;
-- requirement type validity;
-- inferred rationale presence;
-- duplicate claims;
-- parser metadata exclusion.
-
-No invalid analysis artifact is persisted.
-
-## 12. Network and local-runtime behavior
-
-LM Studio remains local-first.
-
-The OpenAI client used by Instructor is configured with the existing LM Studio base URL and uses
-an HTTPX client with `trust_env=False`, so host proxy environment variables do not intercept
-localhost LM Studio requests.
-
-The generic LM Studio provider remains in place for:
-
-- model listing;
-- doctor/smoke tests;
-- generic structured inference;
-- bounded truncation recovery outside the Instructor analysis path.
-
-Injected custom transports remain on the raw provider path so low-level protocol tests stay
-deterministic and do not accidentally test Instructor internals.
-
-## 13. Browser workflow
-
-On a job page the controls remain deliberately separate:
-
-```text
-Analyze English
-Analyze Original
-```
-
-### Analyze English
-
-Requires:
-
-```text
-current parsed source
-+ current hardened English projection v2
-```
-
-It creates/reuses only `job-analysis-english-v2`.
-
-### Analyze Original
-
-Requires:
-
-```text
-current parsed source
-```
-
-It creates/reuses only `job-analysis-original-v2` and does not require translation.
-
-The job page displays the two artifacts separately so English evidence and original-source
-evidence are never visually conflated.
-
-Bulk Jobs actions also expose separate English and Original analysis commands.
-
-## 14. Market and automation policy
-
-The normalized corpus pipeline uses **English analysis only**.
-
-That includes:
-
-- `WebRepository` analyzed/missing state;
-- dashboard analyzed counts;
-- `Analyze English-ready jobs`;
-- full workflow analysis stage;
-- Quick Add complete processing;
-- Market aggregation and warnings;
-- source/model/prompt/schema coverage counts.
-
-Original-language analysis remains supplementary review evidence. It must not make an English
-analysis appear complete and must not contribute Persian/mixed-language concepts to normalized
-Market aggregation without a future explicit design.
-
-## 15. Local model selection and context
-
-Both modes currently use the same configured analysis-model resolution order:
+Effective analysis model:
 
 ```text
 analysis_lm_studio_model
@@ -423,55 +389,86 @@ analysis_lm_studio_model
 → translation_lm_studio_model
 ```
 
-They may later use separate dedicated models if evidence demonstrates a need.
+Capability and Blueprint have independent model roles and may use stronger models without changing P1.6.
 
-The LM Studio loaded context window must cover prompt + reasoning + structured output. A
-JobHunter `max_tokens` request cannot override a smaller loaded context. The current acceptance
-environment uses a 16,384-token loaded context for `gemma-4-e2b-it`.
+Do not assume the best expert-reasoning model must also be the best factual extractor.
 
-## 16. Acceptance strategy
+---
 
-P1.6 is not accepted merely because a typed object was returned.
+## 16. Browser and CLI behavior
 
-### English acceptance
+Browser actions remain separate:
 
-For a reviewed real posting:
+```text
+Analyze English
+Analyze Original
+```
 
-1. inspect hardened English v2;
-2. run `Analyze English`;
-3. verify every accepted statement/concept against the English projection;
-4. verify every evidence excerpt is English and present in the English projection;
-5. verify responsibility versus qualification classification;
-6. verify required/preferred/contextual/inferred semantics;
-7. check for omitted or invented technologies/concepts;
-8. rerun and verify exact English v2 analysis reuse;
-9. only then expand to a representative English-analysis batch and Market review.
+English requires current parsed source + current English projection.
 
-### Original-language acceptance
+Original requires only current parsed source.
 
-Separately:
+English and Original artifacts do not satisfy or reuse each other.
 
-1. inspect original source fields;
-2. run `Analyze Original`;
-3. verify no English projection was supplied to the model request;
-4. verify statements/evidence remain grounded in original source text;
-5. verify semantic classification independently;
-6. rerun and verify exact Original v2 artifact reuse.
+The normalized Market path continues to use English P1.6 only.
 
-Failure in one mode does not invalidate a correctly accepted artifact in the other mode.
+---
 
-## 17. Known limits
+## 17. Live acceptance state
 
-Current P1.6 still does not provide:
+P1.6 mechanics/grounding are substantially stronger than the earlier v2/v3 path, but semantic acceptance is still open.
+
+### `t4jp`
+
+Sparse AI/content posting. Useful for testing conservative extraction/inference when the employer provides little technical detail.
+
+### `tG9K`
+
+Rich semiconductor/industrial-ML posting. V4 fixed the historical empty extraction and now captures responsibilities well, but the first reviewed snapshot still exposed requirement-coverage and obligation/depth issues.
+
+Observed remaining issues include:
+
+- some explicit requirement families omitted on a dense posting;
+- broad stack items overclassified as required despite global optionality wording;
+- explicit `Python (expert)` depth overgeneralized downstream to broader ML-framework expertise;
+- some structured experience/education signals not represented in the reviewed factual output.
+
+These are the next P1.6 quality targets.
+
+---
+
+## 18. Acceptance strategy
+
+Do not scale P1.6 merely because an artifact validates structurally.
+
+For each reviewed job:
+
+1. inspect source and English projection;
+2. inspect role purpose;
+3. inspect every responsibility;
+4. inspect every requirement;
+5. verify evidence is exact selected-representation text;
+6. verify responsibility versus qualification classification;
+7. verify obligation strength;
+8. verify explicit depth is preserved without spreading;
+9. look for omitted explicit source requirements;
+10. rerun unchanged identity and verify reuse;
+11. record repeatable failure classes as regression fixtures.
+
+Representative acceptance must vary role family, company, language mix, description length, requirement density, and optionality wording.
+
+---
+
+## 19. Known limits
+
+P1.6 still does not provide:
 
 - reviewed canonical aliases/taxonomy;
-- manual editing of individual semantic claims;
-- calibrated model-quality scoring against a reviewed gold corpus;
-- deterministic bilingual sentence/span alignment between English and original artifacts;
-- repost/duplicate merging before aggregation;
 - personal capability comparison;
-- readiness scores or career recommendations.
+- readiness/career recommendations;
+- calibrated model-quality scoring against a broad gold corpus;
+- complete bilingual span alignment;
+- repost/duplicate normalization before aggregation;
+- guaranteed complete requirement recall across every dense posting.
 
-Instructor improves structured-output reliability; it does not make a small model semantically
-correct. Semantic quality still requires representative live acceptance and, if needed, a
-controlled comparison against a stronger dedicated analysis model.
+The current acceptance work specifically targets factual coverage and obligation/depth preservation before broader Phase-2 promotion.
