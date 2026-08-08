@@ -2,270 +2,123 @@
 
 JobHunter is a **local-first personal career-intelligence application**.
 
-It collects approved public job-market evidence, preserves the original source, structures Jobinja postings deterministically, tracks meaningful content versions and source checks, creates a separate hardened English projection, performs bounded evidence-backed semantic extraction, and now includes a bounded per-job **Capability Intelligence** layer for richer role reasoning before later canonical market and personal-career layers.
+It collects approved public job-market evidence, preserves authoritative source data, structures Jobinja postings deterministically, tracks meaningful source versions/checks, creates a separate hardened English projection, performs strict evidence-backed factual extraction, and provides bounded per-job reasoning layers for capability interpretation and professional role understanding.
 
-The browser application is the primary human interface. The CLI remains available for automation, debugging, tests and advanced workflows.
+The browser application is the primary human interface. The CLI remains supported for automation, debugging, tests, and advanced workflows.
+
+---
 
 ## Product direction
 
-JobHunter is not intended to stop at scraping, text extraction or generic resume/job matching. The mature product loop is:
+JobHunter is not intended to stop at scraping, keyword matching, or resume generation.
+
+The mature loop is:
 
 ```text
-market evidence
-→ role / requirement intelligence
-→ reviewed personal evidence
-→ gaps / constraints
-→ learn / practise / build / verify
-→ application decision
-→ outcome
-→ updated evidence and decisions
+MARKET
+→ ROLE / CAPABILITY INTELLIGENCE
+→ REVIEWED PERSONAL EVIDENCE
+→ GAPS / CONSTRAINTS
+→ LEARN / PRACTISE / BUILD / VERIFY
+→ APPLICATION DECISION
+→ OUTCOME
+→ UPDATED EVIDENCE AND DECISIONS
+↺
 ```
 
-Every consequential conclusion should remain traceable to market and/or personal evidence.
+Every consequential conclusion should remain traceable to source and/or reviewed personal evidence.
 
-See [Roadmap](docs/ROADMAP.md) and [Execution TODO](docs/EXECUTION_TODO.md).
+Strategic sequencing: [Roadmap](docs/ROADMAP.md)  
+Current working checklist: [Execution TODO](docs/EXECUTION_TODO.md)  
+Current semantic-quality plan: [Semantic Quality Acceptance Plan](docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md)  
+Rolling handoff: `docs/WORKING_MEMORY.md` once present/current.
+
+---
 
 ## Current implementation state
 
-The repository contains an accepted acquisition/parser foundation plus newer Phase-1 and bounded capability-intelligence capabilities that are still moving through deterministic/live acceptance.
+JobHunter has a mature Phase-1 foundation plus a bounded semantic-reasoning slice that is currently under representative quality acceptance.
 
-### Accepted foundation
+### Accepted/strong foundation
 
 ```text
-data-driven Persian + English search catalog
-→ bounded/repeat-safe Jobinja discovery
-→ immutable search-page evidence
-→ missing + refresh-due detail selection
-→ immutable detail evidence
-→ deterministic Jobinja parser v2
+data-driven Persian + English Jobinja search catalog
+→ bounded repeat-safe discovery
+→ immutable search/detail evidence
+→ stable logical job identities
 → semantic source versions
-→ fetch-observation history
-→ structural parser audit
-→ local-first English projection architecture
+→ fetch/check observations
+→ deterministic jobinja-detail-v2 parsing
+→ local browser application + CLI
+→ hardened english-projection-v2 architecture
 ```
 
-Previously established live evidence includes repeat-safe discovery, a later 40/40-search browser run with 273 unique postings and zero search failures, successful bounded detail acquisition, structurally clean parsed samples, source-version/check separation, and functioning local browser workflows.
+Historical translation-v1 artifacts remain preserved but are not treated as the current trusted English contract after a real field-association defect was found.
 
-Historical translation-v1 artifacts remain preserved but are not treated as the trusted current English contract after a real field-association defect was discovered.
-
-### Implemented / acceptance pending
-
-The current codebase additionally contains:
+### Current semantic stack
 
 ```text
-classified source failures + cautious lifecycle rules
-→ user triage / deterministic acquisition priority
-→ hardened english-projection-v2
-→ translation-integrity validation
-→ separate English / Original P1.6 semantic extraction
-→ Instructor + Pydantic structured validation
-→ exact selected-representation evidence validation
-→ per-job analysis surfaces
-→ bounded per-job Capability Intelligence reasoning
-→ first Market aggregation from English P1.6 only
-→ expanded bounded browser workflow actions
-→ shared bounded Phase-1 run orchestration
-→ concise per-job source-health summaries
+Jobinja source
+        ↓
+english-projection-v2
+        ↓
+P1.6 strict factual extraction
+  English:  job-analysis-english-v4
+  Original: job-analysis-original-v4
+  schema:   job-analysis-v2
+        ↓
+Capability Intelligence
+  prompt:   job-capability-intelligence-v4
+  schema:   job-capability-intelligence-v2
+        ↓
+Role Capability Blueprint
+  prompt:   role-capability-blueprint-v2
+  schema:   role-capability-blueprint-v1
+        ↓
+Review Snapshot
+  schema:   job-review-snapshot-v1
 ```
 
-P1.6 is intentionally a **strict factual extraction layer**. It records role purpose, responsibilities and requirements with required/preferred/contextual/inferred strength, concept type, confidence and exact evidence from the selected representation.
+These newer layers are implemented but **semantic-quality acceptance is still active**. Code existing does not automatically mean the layer is accepted across all role types.
 
-Capability Intelligence is intentionally separate. It reasons above the accepted English extraction to connect responsibilities, explicit requirements, experience signals, skill tags and supported company/product context into job-local capability profiles with explicit/implied/inferred/unknown distinctions. It is currently a manually reviewed per-job slice, not yet the corpus-wide Phase-2 canonical Market layer.
+---
 
-The shared Phase-1 runner composes acquisition, detail refresh/audit, current English-v2 repair/build, a bounded analysis-ready queue, English semantic extraction and the current Market summary while preserving successful durable work when a later stage has failures. Its CLI surface is `jobhunter run`.
+## What each semantic layer does
 
-Source-health summaries expose current lifecycle state, last check, last successful check, consecutive operational failures, latest failure and recent lifecycle-signal state through `jobhunter jobs health <job-id>`.
+### P1.6 — strict factual extraction
 
-These newer capabilities are **implemented but not automatically accepted merely because code exists**. The exact acceptance state and execution order are controlled by [Implementation Plan](docs/IMPLEMENTATION_PLAN.md), [Phase 1 Jobinja Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md), and the bounded [Capability Intelligence Implementation Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md).
+P1.6 establishes a conservative factual substrate:
 
-## Start the application
+- role purpose;
+- responsibilities;
+- requirements;
+- requirement obligation/strength;
+- concept type;
+- confidence;
+- exact evidence from the selected representation;
+- rationale where inference is allowed by contract.
 
-Requires Python 3.12 or newer.
+Production v4 uses deterministic evidence references, heading-aware long-description segments, clause references for mixed-strength lines, rich-source non-empty guards, and exact source-text resolution before persistence.
 
-```bash
-python3 -m pip install -e ".[dev]"
-```
-
-Launch the browser UI:
-
-```bash
-jobhunter-app
-```
-
-It opens locally at:
-
-```text
-http://127.0.0.1:8765/
-```
-
-### Linux desktop launcher
-
-```bash
-jobhunter-app --install-desktop
-```
-
-The application remains a local Python/FastAPI/Jinja system; there is no Node/npm runtime requirement or CDN dependency.
-
-## Browser experience
-
-Current/implemented browser domains include:
-
-```text
-Overview
-Jobs
-Job detail
-Per-job Capability Intelligence review
-Search plan / search effectiveness
-Market
-Operations
-System
-```
-
-The normal bounded Phase-1 workflow can include:
-
-```text
-run bounded sync
-→ fetch priority missing details
-→ repair/build current English v2
-→ analyze a bounded English-ready set
-→ inspect per-job strict analyses
-→ inspect current Market aggregate
-```
-
-For a reviewed job with a current accepted English analysis, the job page also exposes **Capability Intelligence**. That action is deliberately per-job and opt-in while the reasoning quality is reviewed. It is not part of the automatic full-market workflow yet.
-
-Browser and CLI paths operate on the same durable application data/services. Browser convenience state is not a second analytical truth store.
-
-## Quick Add
-
-Quick Add currently accepts only approved Jobinja inputs:
-
-- one public Jobinja job URL;
-- one public Jobinja `/jobs` search URL;
-- one Persian/English keyword phrase interpreted as a bounded Jobinja search.
-
-It is not an arbitrary-web ingestion escape hatch. Additional websites require explicit source adapters and source-policy review.
-
-## Data-driven bilingual search catalog
-
-Search vocabulary is **data, not Python logic**.
-
-The packaged catalog lives at:
-
-```text
-src/jobhunter/data/search_catalog.toml
-```
-
-Profiles/packs can combine Persian and English terminology for AI/ML, LLM/RAG/agents, Python/data, defensive security, AI security, Linux/networking/platform/DevOps and related roles.
-
-Search vocabulary is acquisition recall. It is not career taxonomy or proof of personal relevance.
-
-See [Search Configuration](docs/SEARCH_CONFIGURATION.md).
-
-## Source evidence and semantic versions
-
-JobHunter distinguishes:
-
-```text
-JobPosting
-  stable logical source identity
-
-Raw evidence
-  one exact acquired source response
-
-JobPostingVersion
-  meaningful deterministic employer-content version
-
-JobDetailFetchObservation
-  one operational source check
-```
-
-A volatile HTML change therefore does not manufacture a logical semantic job change.
-
-Source failure/lifecycle logic must remain conservative. In particular:
-
-```text
-network / 5xx / rate-limit / challenge failure
-!=
-expired or removed vacancy
-```
-
-For concise operational inspection, `jobhunter jobs health <job-id>` summarizes the latest source/lifecycle state. `jobhunter jobs checks <job-id>` remains the more detailed historical timeline.
-
-## Deterministic Jobinja parsing
-
-Parser v2 extracts explicit source fields such as title, company, category, location, employment type, experience, salary, Jobinja tags, gender, military-service requirement, education, posting/expiration dates, complete job description, company description and source-language classification.
-
-Missing source values remain missing. The parser does not ask an LLM to infer employer intent.
-
-A structural parser audit checks parser structure/contamination only; it does not certify translation or semantic interpretation quality.
-
-## English projection v2
-
-JobHunter keeps source and English representation separate:
-
-```text
-original Persian / English / mixed employer text
-        ↓ authoritative
-English projection
-        ↓ derived convenience
-```
-
-The current hardened design uses `english-projection-v2` with local LM Studio as the normal translator.
-
-Native-English strings pass through without model translation. Persian-containing semantic units are translated through bounded structured requests, then deterministic source/English integrity checks run before a current artifact can be persisted.
-
-Historical v1 artifacts remain historical; they are not silently relabeled or overwritten.
-
-Google Cloud Translation remains an optional external provider, not a normal requirement.
-
-See [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md).
-
-## Strict evidence-backed semantic extraction
-
-P1.6 is a separate derived layer from source parsing and translation, and it now has **two independent analysis products**:
-
-```text
-English projection v2
-→ Analyze English
-→ English statements + English evidence
-→ job-analysis-english-v2
-
-original employer/source fields
-→ Analyze Original
-→ original-language statements + original-language evidence
-→ job-analysis-original-v2
-```
-
-The two modes do not mix source representations or satisfy/reuse each other.
-
-One durable analysis identity includes:
-
-```text
-source semantic version
-+ exact model
-+ prompt version
-+ analysis schema version
-```
-
-Structured extraction uses local LM Studio through Instructor/Pydantic. Runtime validation keeps evidence grounded in the selected representation, rejects unsupported evidence, preserves required/preferred/contextual/inferred semantics and performs only mechanically safe canonicalization such as exact duplicate collapse or exact field-value/source-span recovery.
-
-This layer is intentionally conservative. Its job is to establish trustworthy structured facts, not to generate a complete technical curriculum or personal career recommendation.
+P1.6 is intentionally **not** the human-facing expert explanation layer.
 
 See [Semantic Analysis](docs/SEMANTIC_ANALYSIS.md).
 
-## Per-job Capability Intelligence
+### Capability Intelligence — auditable machine reasoning
 
-The bounded capability layer exists because **strict extraction and useful career intelligence are different uncertainty contracts**.
+Capability Intelligence reasons above accepted English P1.6:
 
-```text
-current source
-→ exact English projection used by P1.6
-→ accepted English P1.6 factual extraction
-→ Capability Intelligence
-```
+- role interpretation;
+- work activities;
+- depth signals;
+- sub-capabilities;
+- underlying knowledge/prerequisites;
+- operational practices;
+- independence/ownership;
+- operational context;
+- explicit unknown/unsupported scope.
 
-The capability artifact can synthesize new analytical statements while keeping evidence anchors exact. Fine-grained expectations use:
+Expectation provenance is kept distinct:
 
 ```text
 source_explicit
@@ -274,149 +127,333 @@ model_inferred_prerequisite
 unknown_or_unsupported
 ```
 
-A capability profile can reason about:
+Model-generated evidence references are resolved back to exact source text before persistence.
+
+See [Capability Intelligence Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md).
+
+### Role Capability Blueprint — human-facing professional interpretation
+
+Blueprint is intentionally freer than the audit/reasoning layers. It explains what the position probably requires in practice from the perspective of an experienced practitioner in the relevant domain.
+
+It may provide:
+
+- likely practical depth;
+- likely subskills;
+- source-named / likely / possible tool examples;
+- work products;
+- operational concerns/failure modes;
+- plausible end-to-end scenarios;
+- hidden prerequisites;
+- probable non-requirements;
+- important unknowns.
+
+It must preserve uncertainty and must not present one plausible technology architecture as employer fact.
+
+See [Role Capability Blueprint Plan](docs/ROLE_CAPABILITY_BLUEPRINT_PLAN.md).
+
+---
+
+## Current quality-acceptance evidence
+
+Two live examples currently anchor semantic acceptance:
 
 ```text
-role interpretation
-work activities
-employer-stated depth
-technical sub-capabilities
-underlying knowledge / prerequisites
-operational practices
-independence / ownership
-operational context
-unknown / unsupported scope
+t4jp  sparse/ambiguous AI-content posting
+tG9K  rich semiconductor/industrial-ML posting
 ```
 
-The model is explicitly told not to dump a generic technology curriculum from a keyword. Responsibilities and deliverables carry more interpretive weight than isolated skill tags. Company context may support reasoning only when actual source text makes it relevant.
+`t4jp` tests whether intelligence stays conservative when source evidence is weak.
 
-The current artifact identity includes:
+`tG9K` tests long/dense technical extraction and deeper reasoning. Its current complete review chain is committed at:
 
 ```text
-current source version
-+ exact English projection artifact
-+ exact accepted English P1.6 artifact
-+ capability model
-+ capability prompt/schema versions
+review-snapshots/jobs/tG9K.json
 ```
 
-A changed factual dependency therefore prevents silent reuse of stale reasoning.
+The `tG9K` chain now runs end to end, but its first reviewed snapshot still identified remaining quality work around factual requirement recall, stack optionality/depth, Capability calibration, Blueprint architecture over-inference, and expert-model adequacy.
 
-Current review surfaces:
+The exact next sequence is [Semantic Quality Acceptance Plan](docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md).
+
+---
+
+## Review Snapshots — no more manual giant copy/paste
+
+The live SQLite database remains local and ignored.
+
+For selected review jobs:
 
 ```bash
-jobhunter jobs capability <job-id>
+jobhunter jobs snapshot tG9K
 ```
 
-and, after English analysis exists, the **Capability Intelligence** link on the browser job page.
+Default output:
 
-This slice does **not** yet populate the canonical Market taxonomy, score the user, generate readiness/gaps, or run automatically across the corpus. Those remain gated until reviewed real-job quality supports promotion.
+```text
+review-snapshots/jobs/tG9K.json
+```
 
-See [Capability Intelligence Implementation Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md).
+Then intentionally review and publish:
+
+```bash
+git diff -- review-snapshots/jobs/tG9K.json
+git add review-snapshots/jobs/tG9K.json
+git commit -m "review: update tG9K intelligence snapshot"
+git push origin main
+```
+
+A reviewer/AI can then inspect the complete selected source→English→P1.6→Capability→Blueprint chain directly from GitHub.
+
+Snapshots exclude raw model responses/prompts, SQLite/WAL/SHM, raw HTML contents, secrets, logs, and future private user state.
+
+See [Review Snapshot README](review-snapshots/README.md).
+
+### Known snapshot issue before model comparison
+
+The standalone snapshot exporter uses the configured effective model roles correctly. The normal integrated `jobhunter jobs snapshot` command currently does not pass those role-model arguments into the exporter, so the first `tG9K` snapshot reports null `configured_models` even though each artifact records its actual model.
+
+This is the **first code task** in the current TODO because it must be fixed before controlled multi-model comparisons.
+
+---
+
+## Independent local model roles
+
+JobHunter can configure strict extraction, Capability, and Blueprint models independently:
+
+```toml
+analysis_lm_studio_model = "..."
+capability_lm_studio_model = "..."
+blueprint_lm_studio_model = "..."
+```
+
+The best factual extractor is not assumed to be the best professional reasoning model.
+
+Current plan: fix snapshot model routing, harden deterministic factual/certainty contracts, then compare a stronger dedicated local reasoning model only if current Gemma reasoning remains inadequate.
+
+---
+
+## Start the application
+
+Requires Python 3.12+.
+
+```bash
+python3 -m pip install -e ".[dev]"
+```
+
+Launch:
+
+```bash
+jobhunter-app
+```
+
+Default local URL:
+
+```text
+http://127.0.0.1:8765/
+```
+
+Linux desktop launcher:
+
+```bash
+jobhunter-app --install-desktop
+```
+
+The browser remains a FastAPI/Uvicorn/Jinja/local-static application. No Node/npm runtime or CDN is required.
+
+---
+
+## Browser experience
+
+Current browser domains include:
+
+```text
+Overview
+Jobs
+Job detail
+Capability Intelligence
+Role Capability Blueprint
+Search plan / effectiveness
+Market
+Operations
+System
+```
+
+Typical bounded flow:
+
+```text
+sync / acquire
+→ fetch/refresh details
+→ build/repair English v2
+→ Analyze English
+→ inspect P1.6
+→ optionally build Capability
+→ optionally build Blueprint
+→ optionally export a review snapshot
+```
+
+Capability/Blueprint are still reviewed per job; they are not automatically generated across the corpus.
+
+---
+
+## Quick Add
+
+Quick Add accepts only approved Jobinja inputs:
+
+- one public Jobinja job URL;
+- one public Jobinja `/jobs` search URL;
+- one Persian/English keyword phrase interpreted as a bounded Jobinja search.
+
+It is not an arbitrary-web ingestion escape hatch.
+
+---
+
+## Search/acquisition principles
+
+Search vocabulary is data, not Python career logic.
+
+Packaged catalog:
+
+```text
+src/jobhunter/data/search_catalog.toml
+```
+
+Search terms support acquisition recall. They are not canonical career taxonomy or personal relevance proof.
+
+Critical source invariant:
+
+```text
+network / 429 / 5xx / challenge / auth failure
+!=
+expired or removed vacancy
+```
+
+Provider/source failure is not a valid empty result.
+
+---
+
+## Source evidence and versions
+
+JobHunter distinguishes:
+
+```text
+JobPosting                 stable source identity
+Raw evidence               exact acquired response
+JobPostingVersion          meaningful employer-content version
+Fetch observation          operational source check
+Lifecycle state            cautious interpretation of checks
+```
+
+Volatile HTML changes do not automatically manufacture a semantic job change.
+
+---
+
+## English projection v2
+
+Source and English remain separate:
+
+```text
+original source text    authoritative
+        ↓
+English projection      derived convenience
+```
+
+Native-English strings are identity-projected. Persian-containing semantic units are translated through bounded structured LM Studio requests and deterministic integrity checks.
+
+Google Cloud Translation remains optional external processing, not a normal dependency.
+
+---
 
 ## First Market layer
 
-The current Market screen aggregates only current **English P1.6** analysis artifacts matching the selected/current analysis contract.
+Current Market aggregates accepted/current **English P1.6** artifacts only.
 
-It can show bounded corpus facts such as analyzed sample size, responsibility counts and concept demand with required/preferred/contextual/inferred distributions.
+It does not yet aggregate Capability or Blueprint.
 
-Capability Intelligence is not yet mixed into these aggregates.
+It is not yet a canonical Phase-2 taxonomy. Small/concentrated analyzed samples must remain explicitly scoped/warned.
 
-This is not yet a reviewed Phase-2 canonical market taxonomy. Alias consolidation, role archetypes, duplicate/repost adjustment, mature sampling controls and trend claims belong to later accepted layers.
+---
 
-Small/concentrated samples must be presented with explicit scope/warnings rather than as complete-market truth.
+## CLI
 
-## CLI remains supported
-
-The bounded Phase-1 orchestration is available as an **implementation-pending-acceptance** command:
+Important current commands:
 
 ```bash
 jobhunter run
-jobhunter run --help
-```
-
-It performs, within configured/explicit limits:
-
-```text
-Jobinja discovery
-→ missing/refresh-due detail acquisition
-→ parser audit
-→ current English-v2 repair/build
-→ bounded analysis-ready selection
-→ strict English P1.6 analysis
-→ current Market summary
-```
-
-A partial later-stage failure does not roll back valid earlier durable work; the command exits non-zero and reports the attention-required stage rather than presenting a false simple success.
-
-Other CLI examples include:
-
-```bash
 jobhunter jobinja plan
 jobhunter jobinja sync
-jobhunter jobinja fetch --missing --limit 10
 jobhunter jobs list
 jobhunter jobs show <job-id>
 jobhunter jobs health <job-id>
 jobhunter jobs checks <job-id>
 jobhunter jobs audit
 jobhunter jobs capability <job-id>
+jobhunter jobs blueprint <job-id>
+jobhunter jobs snapshot <job-id>
 jobhunter translations status
 jobhunter translations models
 jobhunter translations run --missing --limit 20
 jobhunter translations export
 ```
 
-Existing commands remain supported through the same console entrypoint. Some older individual CLI source factories still require final convergence with the newer shared dependency graph; the complete `jobhunter run` path already uses configured Jobinja retry bounds plus lifecycle persistence.
+Browser and CLI share underlying services/state.
 
-## Browser security boundary
+---
 
-The app defaults to loopback and refuses broader network binding unless exposure is explicitly requested.
+## Local/security boundary
 
-Mutating browser forms use CSRF protection. Responses use restrictive content-security/frame/referrer/content-type/cache policies. Static assets are packaged locally.
+- loopback-first browser binding;
+- CSRF validation on mutating forms;
+- restrictive browser security headers;
+- packaged local static assets;
+- acquired job text is untrusted data;
+- no application/login automation;
+- no CAPTCHA/access-control bypass;
+- no autonomous recruiter/application messaging.
 
-Acquired job text is untrusted data. It never receives system/tool instruction authority.
+---
 
-## What JobHunter does **not** claim yet
+## Current near-term execution
 
-Until their respective gates pass, JobHunter does not claim:
+Continue from the current repository state; do not restart the old August-3 checklist.
 
-- complete lifecycle/repost/duplicate resolution;
-- production-quality translation-v2 across every future language/source case;
-- production-quality semantic extraction across all role types;
-- production-quality capability/depth reasoning across all role types;
-- accepted final Phase-1 end-to-end operation merely because `jobhunter run` is implemented;
-- reviewed canonical market taxonomy;
-- corpus-wide aggregation of inferred capability profiles;
-- complete-market conclusions from the bounded/source-biased corpus;
+```text
+1. fix integrated Review Snapshot effective-model routing
+2. deterministic Ruff / pytest / warnings gate
+3. harden P1.6 factual coverage / optionality / explicit depth on tG9K
+4. rebuild/review tG9K P1.6
+5. calibrate Capability
+6. calibrate Blueprint
+7. compare stronger dedicated reasoning model if needed
+8. complete CI-3 with materially different real jobs using snapshots
+9. stop expanding the semantic slice once accepted
+10. finish Market/source/lifecycle/partial-success/P1.7 acceptance
+11. close Phase 1
+12. only then begin corpus-wide Phase 2
+```
+
+See [Execution TODO](docs/EXECUTION_TODO.md).
+
+---
+
+## What JobHunter does not claim yet
+
+JobHunter does **not** yet claim:
+
+- Phase 1 fully closed/accepted;
+- perfect translation/semantic reasoning across every role/language;
+- production-quality Capability/Blueprint across all roles;
+- complete lifecycle/repost resolution;
+- canonical Phase-2 market taxonomy;
+- corpus-wide inferred-capability aggregation;
+- complete-market conclusions from bounded Jobinja evidence;
 - reviewed personal capability state;
-- personal readiness/gap/career recommendations;
-- evidence-backed learning/project prioritization;
-- evidence-backed resume/interview assistance;
-- autonomous job applications;
-- mature longitudinal market trends;
+- readiness/gap/career recommendations;
+- evidence-backed resume/interview/application claims;
+- autonomous applications;
 - arbitrary-web ingestion;
-- generic source-plugin support;
-- evaluated RAG/career assistant authority.
+- generic source-plugin platform;
+- evaluated RAG/agent authority.
 
-## Near-term execution
-
-The near-term acceptance work remains deliberately bounded:
-
-1. keep deterministic Ruff/tests/warnings gates green after each tranche;
-2. finish remaining Phase-1 migration/source/lifecycle/live orchestration acceptance;
-3. review representative strict English P1.6 outputs as factual extraction artifacts;
-4. review the bounded per-job Capability Intelligence slice on materially different real jobs;
-5. turn repeatable extraction/reasoning failures into fixtures or documented model limitations;
-6. compare a stronger dedicated capability model only if the current model's reasoning remains inadequate under the correct contract;
-7. keep Capability Intelligence out of automatic Market aggregation until reviewed quality is sufficient;
-8. close Phase 1;
-9. then promote the reviewed capability contract into Phase-2 canonical mapping/Market-v2 work and add a carefully selected second source;
-10. only later connect canonical job requirements to reviewed personal evidence for readiness/gap/learning decisions.
-
-The bounded capability slice is being reviewed now because it is necessary to determine whether our current factual extraction provides a useful substrate. This does **not** waive the gate on corpus-wide Phase-2 promotion.
-
-See [Execution TODO](docs/EXECUTION_TODO.md) for the complete checklist.
+---
 
 ## Development validation
 
@@ -426,24 +463,26 @@ pytest
 pytest -W error
 ```
 
-Normal deterministic tests do not contact Jobinja, Google Cloud or LM Studio. Network/model behavior should be represented with controlled transports/fixtures in normal tests; live validation is a separate bounded acceptance step.
+Normal deterministic tests do not contact Jobinja, Google Cloud, or LM Studio. Live model/source validation is separate and bounded.
+
+---
 
 ## Documentation
 
+Required/current entry points:
+
 - [Product Specification](docs/PRODUCT_SPECIFICATION.md)
-- [Roadmap](docs/ROADMAP.md)
-- [Execution TODO](docs/EXECUTION_TODO.md)
 - [Architecture](docs/ARCHITECTURE.md)
-- [Local Web Application](docs/LOCAL_WEB_APP.md)
-- [Search Configuration](docs/SEARCH_CONFIGURATION.md)
-- [Translation and English Corpus](docs/TRANSLATION_AND_ENGLISH_CORPUS.md)
-- [Semantic Analysis](docs/SEMANTIC_ANALYSIS.md)
-- [Capability Intelligence Implementation Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md)
-- [Semantic Analysis Engineering Lessons](docs/SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md)
-- [Acquisition Operations](docs/ACQUISITION_OPERATIONS.md)
 - [Domain and Analysis Model](docs/DOMAIN_AND_ANALYSIS_MODEL.md)
-- [Source Acquisition Policy](docs/SOURCE_POLICY.md)
+- [Source Policy](docs/SOURCE_POLICY.md)
+- [Roadmap](docs/ROADMAP.md)
 - [Implementation Plan](docs/IMPLEMENTATION_PLAN.md)
 - [Phase 1 Jobinja Automation Plan](docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md)
-- [Proposal Library](docs/proposals/README.md)
+- [Execution TODO](docs/EXECUTION_TODO.md)
+- [Semantic Analysis](docs/SEMANTIC_ANALYSIS.md)
+- [Semantic Quality Acceptance Plan](docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md)
+- [Capability Intelligence Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md)
+- [Role Capability Blueprint Plan](docs/ROLE_CAPABILITY_BLUEPRINT_PLAN.md)
+- [Review Snapshots](review-snapshots/README.md)
+- `docs/WORKING_MEMORY.md` — rolling current handoff when present
 - [Repository Instructions](AGENTS.md)
