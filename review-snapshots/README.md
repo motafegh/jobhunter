@@ -1,23 +1,37 @@
 # JobHunter Review Snapshots
 
-`review-snapshots/` contains deliberately exported, reviewable JSON snapshots of selected Jobinja
-jobs. These files are **not** the JobHunter SQLite database and are not runtime inputs.
+`review-snapshots/` contains deliberately exported, reviewable JSON snapshots of selected public Jobinja jobs.
+
+These files are **not** the JobHunter SQLite database and are not runtime inputs.
 
 ## Why this exists
 
-The live database stays local and ignored by Git because it is binary, changes frequently, may
-later contain private/personal state, and is awkward to diff or review. A review snapshot instead
-captures the current logical intelligence chain in stable UTF-8 JSON so another reviewer or AI
-assistant can inspect quality directly from the repository.
+The live database stays local and ignored because it is binary, changes frequently, is poor Git-review material, and may later contain private/personal state.
 
-## Create or refresh one snapshot
+A Review Snapshot captures the selected current logical intelligence chain in stable UTF-8 JSON so another reviewer or AI conversation can inspect quality directly from the repository.
+
+Normal reviewed chain:
+
+```text
+public Jobinja source
+→ English projection
+→ English P1.6 factual analysis
+→ Capability Intelligence
+→ Role Capability Blueprint
+```
+
+## Create or refresh a snapshot
 
 ```bash
 source .venv/bin/activate
 jobhunter jobs snapshot tG9K
 ```
 
-The standalone `jobhunter-review-snapshot tG9K` entry point is also available.
+Standalone compatibility entry point:
+
+```bash
+jobhunter-review-snapshot tG9K
+```
 
 Default output:
 
@@ -25,49 +39,110 @@ Default output:
 review-snapshots/jobs/tG9K.json
 ```
 
-Then review the diff and intentionally publish it:
+Inspect before publishing:
 
 ```bash
 git diff -- review-snapshots/jobs/tG9K.json
+```
+
+Then intentionally commit/push:
+
+```bash
 git add review-snapshots/jobs/tG9K.json
 git commit -m "review: update tG9K intelligence snapshot"
 git push origin main
 ```
 
-After that, a repository reviewer can inspect the complete selected chain without asking for a
-manual copy/paste of the browser pages.
+A reviewer can then inspect the full selected chain without manual copy/paste of browser pages.
 
 ## Included
 
-A snapshot may contain the current:
+A snapshot may contain current:
 
 - public Jobinja source fields and source-version provenance;
 - English projection and translation identity/provenance;
 - English P1.6 semantic analysis;
-- original-language semantic analysis when it exists;
+- Original-language analysis when it exists;
 - Capability Intelligence when it matches the current English-analysis dependency;
-- Role Capability Blueprint when it matches the current Capability Intelligence dependency;
-- model, prompt/schema version, artifact ID, timestamp, and dependency IDs needed for audit.
+- Role Capability Blueprint when it matches the current Capability dependency;
+- artifact/model/prompt/schema IDs and timestamps;
+- dependency IDs;
+- current-chain status flags;
+- configured/effective model roles once the exporting CLI supplies them correctly.
+
+Current snapshot schema:
+
+```text
+job-review-snapshot-v1
+```
 
 ## Deliberately excluded
 
 Snapshots do not export:
 
-- SQLite/WAL/SHM files;
+- SQLite/WAL/SHM;
 - raw HTML contents;
-- LM Studio raw responses;
+- raw LM Studio responses;
 - model request bodies/system prompts;
-- API tokens or local configuration;
-- operation histories/debug logs;
+- API tokens/secrets/local configuration;
+- operation/debug histories;
 - candidate/private personal data or future user notes.
 
-The JobHunter repository is public. Only commit snapshots whose source material is appropriate to
-publish. The current exporter is intentionally scoped to public Jobinja job records and derived
-analysis of those records.
+The repository is public. Commit only selected snapshots whose source material is appropriate to publish.
 
 ## Dependency status
 
-The `status` object is important. A stale Capability or Blueprint artifact is not exported as if it
-were current. For example, after a new English-analysis contract is introduced, regenerate the
-English analysis and Capability/Blueprint before expecting all `*_is_current_chain` fields to be
-true.
+The `status` object is authoritative for whether a derived stage belongs to the selected current chain.
+
+Important flags include:
+
+```text
+translation_matches_english_analysis
+capability_is_current_chain
+blueprint_is_current_chain
+```
+
+A stale downstream artifact is not exported as if it were current.
+
+If a P1.6/Capability/Blueprint contract changes, rebuild the affected downstream layers before expecting all current-chain flags to become true.
+
+## Model-role selection
+
+JobHunter supports independent models for:
+
+```text
+analysis
+Capability Intelligence
+Role Capability Blueprint
+```
+
+A snapshot should follow the **effective configured model roles**, not merely whichever valid artifact was written most recently.
+
+### Known current defect
+
+The standalone `jobhunter-review-snapshot` entry point already passes effective model roles to the exporter.
+
+The integrated command:
+
+```bash
+jobhunter jobs snapshot <id>
+```
+
+currently does not pass those role arguments. The first pushed `tG9K` snapshot therefore contains null `configured_models` even though the persisted artifacts correctly identify `gemma-4-e2b-it`.
+
+This must be fixed before multi-model comparison. See:
+
+```text
+docs/EXECUTION_TODO.md
+docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
+```
+
+## Current reviewed example
+
+```text
+review-snapshots/jobs/tG9K.json
+```
+
+This is the first complete repository-native acceptance example and proved that the snapshot workflow is sufficient for remote/repository semantic-quality review.
+
+Do not automatically snapshot/commit the whole corpus. Keep these files selected review/acceptance artifacts.
