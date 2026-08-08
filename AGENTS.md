@@ -4,9 +4,13 @@ These instructions apply to AI assistants and human contributors.
 
 ## 1. Product priority
 
-JobHunter is a real repeated-use local utility. Prefer dependable, inspectable behavior over impressive complexity. Speed means coherent useful increments, not bypassing evidence, bounds, tests, provenance, acceptance or state.
+JobHunter is a real repeated-use local utility.
 
-The mature product is an evidence-grounded personal career-intelligence system, not merely a scraper, generic job matcher or autonomous application bot.
+Prefer dependable, inspectable, evidence-grounded behavior over impressive complexity. Speed means coherent useful increments, not bypassing tests, bounds, provenance, source policy, acceptance, or state.
+
+The mature product is an evidence-backed personal career-intelligence system, not merely a scraper, generic job matcher, resume generator, or autonomous application bot.
+
+---
 
 ## 2. Required reading order
 
@@ -19,16 +23,25 @@ Before material changes, read in this order:
 5. `docs/SOURCE_POLICY.md`
 6. `docs/ROADMAP.md`
 7. `docs/IMPLEMENTATION_PLAN.md`
-8. the active phase plan, currently `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
+8. `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
 9. `docs/EXECUTION_TODO.md`
-10. feature-specific docs relevant to the change, including as needed:
-   - `docs/LOCAL_WEB_APP.md`
-   - `docs/SEARCH_CONFIGURATION.md`
-   - `docs/TRANSLATION_AND_ENGLISH_CORPUS.md`
-   - `docs/SEMANTIC_ANALYSIS.md`
-   - `docs/ACQUISITION_OPERATIONS.md`
+10. `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` while the current semantic gate is active
+11. `docs/WORKING_MEMORY.md` when present/current
+12. feature-specific docs relevant to the task, including as needed:
+    - `docs/SEMANTIC_ANALYSIS.md`
+    - `docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md`
+    - `docs/ROLE_CAPABILITY_BLUEPRINT_PLAN.md`
+    - `docs/LOCAL_WEB_APP.md`
+    - `docs/SEARCH_CONFIGURATION.md`
+    - `docs/TRANSLATION_AND_ENGLISH_CORPUS.md`
+    - `docs/ACQUISITION_OPERATIONS.md`
+    - `review-snapshots/README.md`
 
-Proposal files under `docs/proposals/` are candidate design inputs only. They are not authorization to implement a capability.
+Proposal files under `docs/proposals/` are candidate inputs only. They do not authorize implementation.
+
+`docs/WORKING_MEMORY.md` is a handoff/current-state aid, not a higher authority than the plans/specifications.
+
+---
 
 ## 3. Authority chain
 
@@ -36,274 +49,369 @@ Proposal files under `docs/proposals/` are candidate design inputs only. They ar
 product/domain/source/architecture constraints
         ↓
 ROADMAP.md
-strategic sequencing / proposal disposition
+strategic sequencing
         ↓
 IMPLEMENTATION_PLAN.md
-exact delivery order / acceptance gates
+product-level exact order / gates
         ↓
-active phase plan
+PHASE_1_JOBINJA_AUTOMATION_PLAN.md
+active Phase-1 detail
+        ↓
+focused active sub-plans
+for example SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
         ↓
 EXECUTION_TODO.md
-working checklist
+current operational checklist
         ↓
 implementation / tests / live acceptance
 ```
 
-If a lower-level artifact conflicts with a higher-level one, stop and reconcile the conflict instead of choosing the more convenient instruction.
+If a lower artifact conflicts with a higher one, reconcile the conflict instead of choosing the convenient instruction.
 
-## 4. Current accepted foundation and acceptance target
+---
 
-Live-accepted foundations include:
+## 4. Current exact implementation state
 
-- M0 local foundation;
+Active source/derived contracts:
+
+```text
+parser:                       jobinja-detail-v2
+translation provider:         lm-studio-translation-v2
+English projection:           english-projection-v2
+
+English P1.6:                 job-analysis-english-v4
+Original P1.6:                job-analysis-original-v4
+P1.6 schema:                  job-analysis-v2
+
+Capability:                   job-capability-intelligence-v4
+Capability schema:            job-capability-intelligence-v2
+
+Role Blueprint:               role-capability-blueprint-v2
+Blueprint schema:             role-capability-blueprint-v1
+
+Review Snapshot:              job-review-snapshot-v1
+```
+
+Do not write current-state documentation that calls v2/v3 P1.6 or earlier Capability/Blueprint prompt versions current. Historical incident records may retain old identities when explicitly historical.
+
+---
+
+## 5. Current accepted/strong foundations
+
+Current strong foundations include:
+
+- local Python modular monolith;
+- SQLite structured state + immutable raw evidence;
+- browser + CLI on shared services/data;
 - bounded repeat-safe bilingual Jobinja discovery;
-- immutable raw search/detail evidence;
-- Jobinja parser v2 and semantic source versions;
-- fetch observations and refresh-due selection;
-- local browser application, guided sync, Quick Add and backlog acquisition;
-- a real browser sync with 40/40 search requests, 273 unique postings, 241 new postings, zero search failures, 10/10 selected detail fetches, and 26/26 structurally clean current parsed jobs at that point.
+- stable job identity/discovery provenance;
+- deterministic `jobinja-detail-v2` parsing;
+- semantic source versions distinct from checks;
+- classified source outcomes/cautious lifecycle logic;
+- hardened `english-projection-v2` architecture;
+- P1.6 Instructor/Pydantic structured factual extraction;
+- per-job Capability Intelligence persistence/review surface;
+- per-job Role Capability Blueprint persistence/review surface;
+- independent analysis/capability/blueprint model configuration;
+- Review Snapshot export for selected quality review jobs.
 
-Translation v1 proved the derived-corpus architecture but later real data exposed a field-association defect. V1 artifacts are historical, not the trusted current analysis input.
+Historical translation-v1 remains preserved but non-current.
 
-The current increment implements, but does not yet claim full live acceptance of:
+Phase 1 is **not closed** merely because these implementations exist.
 
-- `lm-studio-translation-v2` / `english-projection-v2`;
-- deterministic translation-integrity rejection;
-- user triage and deterministic missing-detail priority;
-- classified source errors and cautious lifecycle transitions;
-- search-effectiveness/provenance views;
-- P1.6 evidence-backed semantic analysis;
-- first aggregate Market view;
-- expanded bounded browser workflow actions.
+---
 
-Follow the acceptance order in `docs/IMPLEMENTATION_PLAN.md` and the active Phase-1 plan before scaling model work or beginning Phase 2.
+## 6. Current exact next-work rule
 
-## 5. Current exact next-work rule
+Do not restart the old August-3 checklist from the beginning.
 
-Do not add unrelated features until the active Phase-1 sequence completes.
-
-Current priorities are:
+Follow the current TODO and semantic-quality plan:
 
 ```text
-deterministic Ruff/tests/warnings baseline
-→ migration safety / real workspace migration
-→ translation-v2 repair/inspection
-→ one reviewed real P1.6 analysis
-→ representative small P1.6 review sample
-→ regression/model-chaos/source-failure fixtures
-→ Market sampling/corpus-health truthfulness
-→ source failure/lifecycle acceptance
-→ explicit partial-success operation results
-→ remaining P1.3/P1.5 acceptance
-→ final P1.7 run/report/browser equivalent
-→ Phase-1 closure
+1. fix integrated Review Snapshot effective-model routing
+2. run Ruff / pytest / warnings gate
+3. harden P1.6 factual coverage / optionality / explicit depth on tG9K
+4. review accepted P1.6 before downstream rebuild
+5. calibrate Capability Intelligence
+6. calibrate Role Capability Blueprint
+7. compare a stronger dedicated reasoning model only if evidence warrants it
+8. complete CI-3 with heterogeneous real jobs using Review Snapshots
+9. stop expanding semantic reasoning once accepted
+10. finish Market/source/lifecycle/partial-success/P1.7 acceptance
+11. close Phase 1
+12. only then begin corpus-wide Phase 2
 ```
 
-The detailed checklist is `docs/EXECUTION_TODO.md`.
+The first code task is the known integrated snapshot model-routing defect documented in `docs/EXECUTION_TODO.md`.
 
-## 6. Interaction-surface rules
+---
 
-JobHunter has two interfaces:
+## 7. Current semantic-quality philosophy
+
+### P1.6
+
+Strict factual substrate.
+
+- preserve explicit source facts;
+- exact selected-representation evidence;
+- do not invent missing requirements;
+- do not omit meaningful explicit requirements on dense postings if the contract can represent them;
+- keep obligation strength and technical depth separate;
+- do not spread one depth adjective across neighboring tools;
+- uncertain/source-ambiguous claims should remain contextual/unknown rather than forced.
+
+### Capability Intelligence
+
+Auditable machine reasoning.
+
+- connect work and requirements;
+- decompose only as evidence supports;
+- distinguish `source_explicit`, `strongly_implied_by_work`, `model_inferred_prerequisite`, `unknown_or_unsupported`;
+- keep unknown scope explicit;
+- do not upgrade optional source wording into mandatory capability depth;
+- deterministic bookkeeping issues are repaired in code, not by repeated full LLM calls.
+
+### Role Capability Blueprint
+
+Human-facing professional interpretation.
+
+- use the professional frame that fits the vacancy;
+- add useful interpretation beyond rereading the ad;
+- preserve upstream optionality/unknowns;
+- a technology list is not an architecture specification;
+- possible/likely examples remain examples;
+- `highly_likely` must not contradict an unresolved unknown;
+- technical correctness matters more than sophisticated prose;
+- avoid domain-specific prompt-patch collections.
+
+---
+
+## 8. Current live acceptance anchors
 
 ```text
-local browser UI   normal repeated human use
-CLI                automation/debugging/advanced operation
+t4jp  sparse/ambiguous AI-content source
+tG9K  rich semiconductor/industrial-ML source
 ```
 
-Both operate on the same durable SQLite/evidence records and underlying services. Do not create a second source parser, translation store, lifecycle model, analysis model or analytical database for the browser.
+`t4jp` tests conservative behavior when the source is weak.
 
-## 7. Record and authority boundaries
+`tG9K` tests long/dense factual coverage and deeper reasoning. Current selected review artifact:
+
+```text
+review-snapshots/jobs/tG9K.json
+```
+
+Use Review Snapshots as the normal handoff/review evidence instead of manually pasting long browser pages.
+
+---
+
+## 9. Review Snapshot rules
+
+Normal command:
+
+```bash
+jobhunter jobs snapshot <job-id>
+```
+
+Default output:
+
+```text
+review-snapshots/jobs/<job-id>.json
+```
+
+The live SQLite database remains local and ignored.
+
+Snapshots are generated review artifacts, not runtime inputs.
+
+Do not automatically commit every job. Commit selected acceptance/review examples intentionally after inspecting the diff.
+
+Snapshots deliberately exclude raw model responses, prompts/request bodies, SQLite/WAL/SHM, raw HTML contents, secrets, logs, and private user state.
+
+Known current defect: integrated `jobhunter jobs snapshot` does not yet pass effective analysis/capability/blueprint model-role args to the exporter. Fix before multi-model comparison.
+
+---
+
+## 10. Record and authority boundaries
 
 Never conflate:
 
 ```text
 JobPosting                    logical source identity
-SearchPageSnapshot            exact search response
-JobPostingVersion             meaningful employer-content history
+SearchPageSnapshot            exact search evidence
+JobPostingVersion             meaningful employer-content version
 JobDetailFetchObservation     operational source check
-JobLifecycleEvent/state       classified source-availability evidence
-JobTranslationArtifact        derived English view of one source version
-JobTranslationAttempt         operational translation history
-JobAnalysisArtifact           model-derived interpretation of one source version
-JobAnalysisAttempt            operational analysis history
-JobUserWorkflow               local human triage state
-Browser WebOperation          ephemeral UI runtime state only
-Raw evidence                  exact preserved source bytes + metadata
-Market aggregate              deterministic aggregation of accepted current analysis
+JobLifecycle state/event      cautious source-availability interpretation
+JobTranslationArtifact        derived English view
+JobAnalysisArtifact           P1.6 strict factual interpretation
+Capability artifact           auditable reasoning above P1.6
+Role Blueprint artifact       human-facing interpretation
+JobUserWorkflow               local triage state
+Market aggregate              deterministic accepted-P1.6 aggregate
+Review Snapshot               generated review export
+Raw evidence                  authoritative acquired bytes/metadata
 ```
 
-Authority hierarchy:
+Authority:
 
 ```text
-original employer/source text    authoritative
-parsed source fields             source-derived
-English projection v2            derived convenience
-semantic analysis                model-derived interpretation
-market aggregate                  deterministic aggregate of accepted analysis
-user triage                       local user workflow preference
-future personal evidence          separate reviewed user-evidence layer
-future recommendation             explainable system-derived decision
+source/original employer text
+→ parsed fields
+→ English projection
+→ P1.6 factual extraction
+→ Capability reasoning
+→ Blueprint interpretation
 ```
 
-## 8. Web application rules
+No downstream layer replaces upstream authority.
 
-- Keep the app loopback-first; non-loopback binding requires explicit intent.
-- Every mutating HTML form requires CSRF validation.
-- Ship CSS/JavaScript/icons locally; no CDN runtime dependency.
-- Keep Content Security Policy restrictive.
-- Run at most one mutable browser operation at a time unless concurrency is proven safe.
-- Browser actions must respect the same source/model bounds as service/CLI paths.
-- Explain non-obvious operational limits in user-facing language.
-- Keep stable source identifiers available for provenance but visually secondary.
-- Discovered-but-unfetched postings are normal actionable states, not UI errors.
-- Keep source, English, model-derived analysis and user workflow state visually/semantically distinct.
-- Keep advanced persistent configuration in `jobhunter.toml` until a safe configuration-write design is justified.
-- Avoid a Node/npm frontend while server-rendered Python remains sufficient.
-- Multi-stage operation summaries must not hide partial failures behind generic success.
+---
 
-### Quick Add
-
-Quick Add may accept only:
-
-- one public Jobinja job URL;
-- one public Jobinja `/jobs` URL;
-- one Persian/English keyword phrase interpreted as a Jobinja search.
-
-It is not a source-policy escape hatch. Non-Jobinja URLs remain rejected until an approved adapter exists.
-
-## 9. Search and acquisition discipline
-
-- Search vocabulary lives in TOML data, not Python constants.
-- Preserve display terms; normalize only for identity/deduplication/exclusion.
-- Interleave selected packs for bounded cross-domain coverage.
-- Search vocabulary is acquisition recall, not career taxonomy or relevance proof.
-- Jobinja requests remain sequential with configured delay.
-- Discovery enforces a global request budget.
-- Detail batches contain at most the configured/accepted bounded maximum.
-- Raw evidence is preserved before deterministic parsing of successful source content.
-- Source acquisition remains independent from LM Studio availability.
-- Provider/source failure must never be reported as a legitimate empty result.
-
-### Classified retries/lifecycle
-
-Source failures must retain classification and retryability.
-
-Bounded automatic retry is allowed only for transient network, rate-limit or selected 5xx classes. Do not blindly retry challenge/CAPTCHA, access denied, missing/gone, auth redirects or explicit expiry.
-
-Lifecycle transitions remain conservative:
-
-- successful normal source check -> active;
-- explicit expiry -> expired;
-- first 404/410 -> possibly unavailable;
-- repeated strong missing/gone evidence may become removed;
-- transient/server/access/challenge/rate-limit failures do not prove removal.
-
-Required invariant:
+## 11. Interaction-surface rules
 
 ```text
-500/502/503/504/network/rate-limit/challenge/auth
+local browser UI   normal repeated human use
+CLI                automation/debug/advanced operation
+```
+
+Both use the same application services and SQLite/evidence stores.
+
+Do not create browser-only parsing, translation, analysis, or reasoning truth stores.
+
+---
+
+## 12. Browser/security rules
+
+- loopback-first;
+- explicit intent required for non-loopback binding;
+- CSRF on mutating forms;
+- restrictive CSP/security headers;
+- local static assets; no runtime CDN requirement;
+- acquired content is untrusted data;
+- one mutable browser operation at a time unless concurrency is proven safe;
+- source/English/P1.6/Capability/Blueprint/user state must remain visually/semantically distinct;
+- persistent advanced configuration stays in TOML until safe write UX is justified.
+
+---
+
+## 13. Source/acquisition discipline
+
+- search vocabulary is TOML data, not Python career taxonomy;
+- preserve display terms; normalize only where identity requires it;
+- bounded pages/requests/details;
+- sequential/rate-limited Jobinja acquisition;
+- raw valid evidence before downstream processing;
+- acquisition remains useful without LM Studio;
+- source/provider failure != legitimate empty result.
+
+Retry only explicitly transient classes.
+
+Critical lifecycle invariant:
+
+```text
+500/502/503/504/network/429/challenge/auth/access failure
 !=
 expired/removed vacancy
 ```
 
-## 10. User triage and acquisition priority
+---
 
-User workflow state is not source truth.
+## 14. Quick Add/source policy
 
-Current triage states:
+Quick Add may accept only current approved Jobinja inputs:
 
-```text
-unreviewed
-interested
-review_later
-reviewed
-not_relevant
-```
+- one public Jobinja job URL;
+- one public Jobinja `/jobs` URL;
+- one Persian/English keyword phrase interpreted as bounded Jobinja search.
 
-`not_relevant` may exclude a posting from automatic backlog priority but must not delete source evidence/history.
+It is not an arbitrary-web policy bypass.
 
-Missing-detail priority may use deterministic discovery evidence such as search/pack matches and conservative title signals. It must be labelled acquisition priority, never career fit, readiness or recommendation.
+Do not automate login/applications, private profiles, CAPTCHA bypass, paywall/access bypass, proxy rotation, or autonomous messages.
 
-## 11. Translation-v2 rules
+---
+
+## 15. Translation rules
 
 Current trusted contracts:
 
 ```text
-provider:   lm-studio-translation-v2
-projection: english-projection-v2
+lm-studio-translation-v2
+english-projection-v2
 ```
 
-V1 artifacts remain historical and must not be silently relabelled or overwritten.
+- preserve v1 historically;
+- one semantic segment per current hardened translation request;
+- content-derived response identity;
+- strict structured output;
+- deterministic source/English integrity validation;
+- source text is never shortened to fit translation batching;
+- native English is identity-projected;
+- translation failure never mutates source evidence/history.
 
-For Persian/mixed v2 translation:
+---
 
-- translate one semantic source segment per LM Studio request;
-- use content-derived response identity;
-- require strict structured output;
-- validate exact content identity and non-empty translation;
-- never shorten employer text;
-- recover output truncation only through bounded contract-defined behavior;
-- run deterministic source/English integrity checks before persistence;
-- reject corrupt output rather than creating a current artifact.
+## 16. P1.6 rules
 
-Native-English source strings remain identity projections without model translation.
+Production v4 uses evidence-reference IDs internally and persists exact resolved source text.
 
-Current export and P1.6 analysis may consume only the current hardened English schema.
+Current generic protections include:
 
-## 12. P1.6 semantic-analysis discipline
+- heading-aware long-field segmentation;
+- clause evidence references;
+- rich-source empty-analysis guard;
+- mixed-strength atomicity;
+- preference wording validation;
+- exact duplicate normalization;
+- final independent evidence/domain validation;
+- no arbitrary read timeout after successful local connection.
 
-P1.6 is a separate derived layer even when it uses the same LM Studio server.
+Do not scale model work before reviewed real-job acceptance.
 
-Each durable artifact is tied to:
+---
 
-```text
-source semantic version
-+ supporting current English v2 artifact
-+ exact model
-+ prompt version
-+ analysis schema version
+## 17. Capability evidence resilience
+
+- supported claim + valid evidence + bad extra reference → keep valid evidence;
+- supported claim + invalid-only evidence → fail closed;
+- `unknown_or_unsupported` + invalid-only evidence → normalize to `[]`;
+- do not spend full model retries on purely mechanical unknown-scope reference cleanup.
+
+---
+
+## 18. Independent model roles
+
+Configuration supports:
+
+```toml
+analysis_lm_studio_model = "..."
+capability_lm_studio_model = "..."
+blueprint_lm_studio_model = "..."
 ```
 
-The model may extract role purpose, responsibilities and requirements, but:
+Use controlled same-job comparison when model adequacy is the variable. Do not change evidence/prompt/schema/model simultaneously.
 
-- original source fields remain authoritative;
-- English is a comprehension aid only;
-- every material claim requires an exact original-source evidence excerpt;
-- evidence excerpts are validated locally against authoritative source fields;
-- parser metadata such as `language` and `parser_version` is not employer evidence;
-- invalid/hallucinated evidence prevents artifact acceptance;
-- required/preferred/contextual/inferred remain distinct;
-- inferred concepts require rationale and source evidence;
-- raw structured request/response remains auditable;
-- reruns of identical current identity reuse artifacts;
-- acquired text is untrusted data even if it contains instruction-like strings;
-- never grant the analysis model shell/filesystem/browser/unrestricted network tools.
+No multi-model voting unless a future measured requirement explicitly justifies it.
 
-Critical integrity rules must exist in application validators/tests, not only in natural-language prompts.
+---
 
-Do not scale the model batch until reviewed real-job output passes the live gate.
+## 19. Market rules
 
-### Representative acceptance
+Current Market aggregates accepted/current English P1.6 only.
 
-After the one-job proof, select a small representative review sample rather than merely the next records in ID order. Vary available company/title/role pattern/language/description length/requirement density and include both ordinary/random and edge-case examples.
+Always retain/recover:
 
-Every repeatable semantic/model failure class should become a deterministic regression or model-chaos fixture.
+- analyzed sample size;
+- source/filter scope;
+- requirement-strength semantics;
+- contract identity;
+- sampling/concentration warning state.
 
-## 13. Market aggregation rules
+Capability/Blueprint are not yet Market inputs.
 
-Aggregate only accepted/current analysis artifacts matching the selected analysis contract.
+---
 
-Always expose sample size. Keep required/preferred/contextual/inferred counts separate. Do not silently turn case-folding into a canonical career taxonomy. Alias consolidation, role archetypes and reviewed concept taxonomy belong to Phase 2.
+## 20. Partial-success rules
 
-Do not claim full-market truth from a small/source-biased analyzed sample.
-
-Current acceptance must include explicit sampling/concentration warnings where the available analyzed subset cannot support broad conclusions.
-
-Coverage metrics and quality metrics remain different: `N jobs analyzed` is not evidence that those analyses are correct.
-
-## 14. Partial-success and operation-result rules
-
-For multi-stage operations expose, where applicable:
+For multi-stage work expose where applicable:
 
 ```text
 requested
@@ -315,77 +423,55 @@ failed
 remaining eligible
 ```
 
-- Do not roll back valid immutable/durable earlier-stage work merely because a later stage failed.
-- Do not call an operation simply successful when meaningful requested sub-work failed.
-- Distinguish `no eligible work` from `attempt failed`.
-- Browser and CLI/service summaries must agree on the underlying result semantics.
+Successful durable earlier work remains even when a later stage fails.
 
-## 15. Regression, fault and security discipline
+Do not call mixed success a simple success.
 
-Normal tests never contact Jobinja, Google Cloud or LM Studio.
+---
 
-Important real incidents become regression fixtures.
+## 21. Personal-evidence boundary
 
-Near-term required failure classes include:
+Do not implement personal readiness/gaps/recommendations until a reviewed personal-evidence schema exists with depth, confidence, recency, evidence references, limitations, and AI-assistance/independence context.
 
-- network/429/5xx/challenge/auth source handling;
-- source failure vs valid empty result;
-- Unicode/non-Latin normalization edge cases;
-- translation association/integrity failures;
-- invalid/truncated structured model output;
-- valid JSON with fabricated source evidence;
-- parser metadata used as employer evidence;
-- prompt-injection-like strings inside job content;
-- mixed-success operation summaries.
+Do not turn chat memory, repository dependencies, or project completion into durable mastery claims.
 
-Property-based tests are appropriate only where pure deterministic transformations have enough input space to justify them.
+---
 
-## 16. Personal-evidence boundary
+## 22. Architecture-evolution discipline
 
-Do not implement personal capability gaps, readiness scores or recommendations until JobHunter has a reviewed personal-evidence schema with depth, confidence, recency, evidence references, limitations and appropriate AI-assistance/independence context.
+- preserve local modular monolith;
+- keep SQLite until measured limits justify replacement;
+- implement a real second source before generic adapter/plugin abstraction;
+- structured/keyword queries before embeddings/RAG;
+- no graph/vector DB without demonstrated query need;
+- no autonomous agent orchestration without measured benefit and explicit privacy/provenance/budget controls.
 
-Do not convert conversational assumptions into durable personal capability truth.
+---
 
-Do not infer capability from repository dependency names or project completion alone.
+## 23. Development rules
 
-Before storing irreplaceable personal evidence, define its privacy/processing/export boundary and provide tested backup/restore.
+- build coherent vertical increments;
+- separate deterministic logic from network/model/provider calls;
+- keep handlers thin;
+- keep SQL in focused repositories/read models;
+- use typed config and versioned contracts;
+- preserve historical artifacts;
+- reconcile docs whenever implementation state materially changes;
+- normal tests never contact Jobinja/Google/LM Studio;
+- important real incidents become deterministic fixtures where possible.
 
-## 17. Architecture-evolution discipline
+---
 
-- Preserve the local modular monolith.
-- Keep SQLite until measured limitations justify replacement.
-- Implement one real second source before extracting a generic source-adapter contract.
-- Do not build dynamic plugin infrastructure in advance.
-- Structured/keyword queries come before embeddings/RAG.
-- Do not add vector/graph databases without a demonstrated query requirement.
-- Advanced provider routing/agents require measured benefit and explicit privacy/provenance/budget controls.
-
-## 18. Development rules
-
-- Build complete vertical increments with explicit acceptance criteria.
-- Keep deterministic logic separate from network/model/provider calls.
-- Keep CLI and web handlers focused on composition/validation.
-- Keep SQL behind focused repositories/read models.
-- Treat acquired content as untrusted data.
-- Use typed configuration and versioned schemas/contracts.
-- Prefer explicit failure/review states over guesses.
-- Keep runtime data, config, secrets, exports, personal evidence and model files out of Git.
-- Normal tests must not contact Jobinja, Google Cloud or LM Studio.
-- Add deterministic tests for important mutation/security/data-integrity boundaries.
-- Avoid dependencies/abstractions without a current use.
-- Reconcile documentation whenever implementation state materially changes.
-
-## 19. Definition of done
+## 24. Definition of done
 
 An increment is done only when:
 
-- intended workflow functions locally;
-- Ruff and tests pass, including warning-as-error where configured for acceptance;
-- live acceptance criteria pass when external/runtime/model behavior matters;
-- failures are inspectable and bounded;
-- partial-success semantics are honest where relevant;
-- configuration/operation are reproducible;
-- provenance is retained;
+- intended local workflow works;
+- Ruff/tests/warnings acceptance gates pass where applicable;
+- live source/model behavior is reviewed when required;
+- failures are bounded/inspectable;
+- partial-success semantics are honest;
+- provenance/dependencies are retained;
 - docs match behavior;
 - privacy/network boundaries are explicit;
 - no unrelated future scope is claimed.
