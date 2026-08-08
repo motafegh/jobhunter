@@ -28,11 +28,12 @@ Status vocabulary:
 - [x] A1.3 Reconcile Role Capability Blueprint documentation with prompt v2 / schema v1.
 - [x] A1.4 Add `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` as the focused current quality plan subordinate to the Phase-1/master gates.
 - [x] A1.5 Reconcile the Review Snapshot / independent-model decision with the integrated CLI and first real `tG9K` snapshot findings.
-- [~] A1.6 Reconcile README, AGENTS, Architecture, and Phase-1 current-state text with the current implementation.
-- [ ] A1.7 Add/update `docs/WORKING_MEMORY.md` as the rolling handoff after reconciliation completes.
-- [ ] A1.8 Final stale-reference sweep across current/entry-point docs; historical incident/decision records may retain historical version numbers when clearly historical.
+- [x] A1.6 Reconcile README, AGENTS, Architecture, master/Phase-1 plan, Local Web App, and Review Snapshot entry-point/current-state text with the current implementation.
+- [x] A1.7 Add `docs/WORKING_MEMORY.md` as the rolling non-authoritative handoff for the next conversation.
+- [x] A1.8 Final stale-reference sweep completed across current/entry-point docs; historical incident/lesson records may retain historical version numbers when clearly historical.
+- [x] A1.9 Audit `PRODUCT_SPECIFICATION.md`, `DOMAIN_AND_ANALYSIS_MODEL.md`, `SOURCE_POLICY.md`, and `ROADMAP.md`; leave them unchanged because their strategic/product/source invariants remain compatible with the reconciled execution state.
 
-**A1 done when:** a fresh conversation can follow repository docs without being told to implement v2/v3 contracts that are no longer current.
+**A1 accepted:** a fresh conversation can follow repository docs without being told to implement v2/v3 contracts that are no longer current.
 
 ---
 
@@ -84,7 +85,7 @@ P1.6 is the factual substrate. Fix this before downstream quality tuning.
 
 ### B2.1 Coverage accounting
 
-- [ ] Identify deterministic/structured way to ensure meaningful requirement-bearing long-description segments are either extracted or explainably excluded.
+- [ ] Identify a deterministic/structured way to ensure meaningful requirement-bearing long-description segments are either extracted or explainably excluded.
 - [ ] Do **not** introduce a forced minimum claim count.
 - [ ] Use `tG9K` as the first regression/acceptance example for explicit omitted families.
 
