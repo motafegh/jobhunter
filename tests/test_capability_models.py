@@ -3,7 +3,10 @@ import json
 import pytest
 from pydantic import ValidationError
 
-from jobhunter.capability_models import JobCapabilityIntelligence
+from jobhunter.capability_models import (
+    JobCapabilityIntelligence,
+    reconcile_capability_intelligence,
+)
 
 
 def _fields() -> dict:
@@ -27,8 +30,36 @@ def _catalog() -> dict[str, str]:
     }
 
 
+def _accepted_extraction() -> dict:
+    return {
+        "role_purpose": [],
+        "responsibilities": [
+            {
+                "statement": "Troubleshoot connectivity and security incidents",
+                "evidence": "Troubleshoot connectivity and security incidents",
+                "confidence": "high",
+            }
+        ],
+        "requirements": [
+            {
+                "concept": "VPN and network infrastructure",
+                "depth_signal": "Mastery of VPN and network infrastructure",
+                "requirement_type": "required",
+                "concept_type": "knowledge",
+                "evidence": "Mastery of VPN and network infrastructure",
+                "confidence": "high",
+                "rationale": "",
+            }
+        ],
+    }
+
+
 def _context() -> dict:
-    return {"analysis_fields": _fields(), "evidence_catalog": _catalog()}
+    return {
+        "analysis_fields": _fields(),
+        "evidence_catalog": _catalog(),
+        "accepted_extraction": _accepted_extraction(),
+    }
 
 
 def _expectation(
@@ -59,17 +90,10 @@ def _payload() -> dict:
                     "The employee is expected to maintain and diagnose secure connectivity, "
                     "with VPN knowledge applied in operational troubleshooting."
                 ),
-                "requirement_strength": "required",
-                "depth_signals": [
-                    _expectation(
-                        (
-                            "The employer explicitly asks for mastery of VPN and network "
-                            "infrastructure."
-                        ),
-                        "source_explicit",
-                        ["p1:requirements:0"],
-                    )
-                ],
+                "source_requirement_indices": [0],
+                "source_responsibility_indices": [0],
+                "requirement_strength": "unspecified",
+                "depth_signals": [],
                 "work_activities": [
                     _expectation(
                         "Diagnose connectivity and security incidents.",
@@ -134,7 +158,7 @@ def _payload() -> dict:
 
 
 def _historical_exact_text_payload() -> dict:
-    """Materialize v2 evidence references so legacy no-catalog validation is tested honestly."""
+    """Materialize evidence references so legacy no-catalog validation is tested honestly."""
 
     payload = _payload()
     catalog = _catalog()
@@ -164,7 +188,8 @@ def test_capability_model_resolves_evidence_references_to_exact_source_text() ->
     result = JobCapabilityIntelligence.model_validate(_payload(), context=_context())
 
     profile = result.capabilities[0]
-    assert profile.depth_signals[0].evidence == ["Mastery of VPN and network infrastructure"]
+    assert profile.source_requirement_indices == [0]
+    assert profile.source_responsibility_indices == [0]
     assert profile.underlying_knowledge[0].evidence == [
         "Mastery of VPN and network infrastructure",
         "Troubleshoot connectivity and security incidents",
@@ -179,6 +204,8 @@ def test_capability_provider_schema_omits_large_string_length_constraints() -> N
     assert '"minLength"' not in serialized
     assert '"maxLength"' not in serialized
     assert '"maxItems"' in serialized
+    assert "source_requirement_indices" in serialized
+    assert "source_responsibility_indices" in serialized
     assert "depth_signals" in serialized
     assert "employer_stated_depth" not in serialized
 
@@ -232,7 +259,7 @@ def test_exact_text_fallback_still_supports_historical_callers() -> None:
 
     result = JobCapabilityIntelligence.model_validate(
         payload,
-        context={"analysis_fields": _fields()},
+        context={"analysis_fields": _fields(), "accepted_extraction": _accepted_extraction()},
     )
 
     assert len(result.capabilities[0].underlying_knowledge[0].evidence) == 2
@@ -257,7 +284,7 @@ def test_composite_exact_evidence_is_split_for_historical_callers() -> None:
 
     result = JobCapabilityIntelligence.model_validate(
         payload,
-        context={"analysis_fields": _fields()},
+        context={"analysis_fields": _fields(), "accepted_extraction": _accepted_extraction()},
     )
 
     assert result.capabilities[0].underlying_knowledge[0].evidence == [
@@ -285,13 +312,6 @@ def test_duplicate_capability_labels_are_rejected() -> None:
 def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> None:
     payload = _payload()
     profile = payload["capabilities"][0]
-    profile["depth_signals"] = [
-        _expectation(
-            "The employer asks for mastery of VPN and network infrastructure.",
-            "source_explicit",
-            ["p1:requirements:0"],
-        )
-    ]
     profile["sub_capabilities"] = []
     profile["underlying_knowledge"] = []
     profile["operational_practices"] = []
@@ -301,3 +321,78 @@ def test_capability_profile_cannot_be_only_restatement_of_employer_facts() -> No
 
     with pytest.raises(ValidationError, match="must add derived reasoning"):
         JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+
+def test_capability_profile_requires_accepted_p1_link() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["source_requirement_indices"] = []
+    payload["capabilities"][0]["source_responsibility_indices"] = []
+
+    with pytest.raises(ValidationError, match="must link at least one accepted P1.6"):
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+
+def test_capability_profile_rejects_out_of_range_p1_link() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["source_requirement_indices"] = [99]
+
+    with pytest.raises(ValidationError, match="missing accepted P1.6 items"):
+        JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+
+def test_reconciliation_derives_strength_and_source_explicit_depth_from_p1() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["requirement_strength"] = "required"
+    payload["capabilities"][0]["depth_signals"] = [
+        _expectation(
+            "The role probably needs deeper troubleshooting judgment.",
+            "strongly_implied_by_work",
+            ["p1:responsibilities:0"],
+        ),
+        _expectation(
+            "Model-repeated source depth that should be replaced.",
+            "source_explicit",
+            ["p1:requirements:0"],
+        ),
+    ]
+    validated = JobCapabilityIntelligence.model_validate(payload, context=_context())
+
+    reconciled = reconcile_capability_intelligence(
+        validated,
+        accepted_extraction=_accepted_extraction(),
+        analysis_fields=_fields(),
+        evidence_catalog=_catalog(),
+    )
+
+    profile = reconciled.capabilities[0]
+    assert profile.requirement_strength == "required"
+    assert len(profile.depth_signals) == 2
+    assert profile.depth_signals[0].evidence_status == "source_explicit"
+    assert profile.depth_signals[0].statement == (
+        "VPN and network infrastructure — employer-stated depth: "
+        "Mastery of VPN and network infrastructure"
+    )
+    assert profile.depth_signals[0].evidence == ["Mastery of VPN and network infrastructure"]
+    assert profile.depth_signals[1].evidence_status == "strongly_implied_by_work"
+
+
+def test_reconciliation_overrides_model_strength_with_linked_p1_strength() -> None:
+    payload = _payload()
+    payload["capabilities"][0]["requirement_strength"] = "required"
+    extraction = _accepted_extraction()
+    extraction["requirements"][0]["requirement_type"] = "contextual"
+    context = {
+        "analysis_fields": _fields(),
+        "evidence_catalog": _catalog(),
+        "accepted_extraction": extraction,
+    }
+    validated = JobCapabilityIntelligence.model_validate(payload, context=context)
+
+    reconciled = reconcile_capability_intelligence(
+        validated,
+        accepted_extraction=extraction,
+        analysis_fields=_fields(),
+        evidence_catalog=_catalog(),
+    )
+
+    assert reconciled.capabilities[0].requirement_strength == "contextual"
