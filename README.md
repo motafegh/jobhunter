@@ -68,8 +68,8 @@ P1.6 strict factual extraction
   schema:   job-analysis-v4
         ↓
 Capability Intelligence
-  prompt:   job-capability-intelligence-v4
-  schema:   job-capability-intelligence-v2
+  prompt:   job-capability-intelligence-v6
+  schema:   job-capability-intelligence-v3
         ↓
 Role Capability Blueprint
   prompt:   role-capability-blueprint-v2
@@ -78,6 +78,8 @@ Role Capability Blueprint
 Review Snapshot
   schema:   job-review-snapshot-v1
 ```
+
+Capability v6/v3 is the active B3 candidate runtime on `main`. It is implemented and deterministic CI is green, but **B3 is not semantically accepted** until the live `tG9K` artifact passes the current acceptance review.
 
 These newer layers are implemented but **semantic-quality acceptance is still active**. Code existing does not automatically mean the layer is accepted across all role types.
 
@@ -127,6 +129,8 @@ model_inferred_prerequisite
 unknown_or_unsupported
 ```
 
+The current v6/v3 candidate also makes each capability profile link the accepted P1.6 requirements/responsibilities that support it. JobHunter deterministically derives persisted requirement strength and propagates source-explicit P1.6 depth from those links instead of asking the model to reproduce that bookkeeping.
+
 Model-generated evidence references are resolved back to exact source text before persistence.
 
 See [Capability Intelligence Plan](docs/PHASE_2_CAPABILITY_INTELLIGENCE_PLAN.md).
@@ -164,13 +168,13 @@ tG9K  rich semiconductor/industrial-ML posting
 
 `t4jp` tests whether intelligence stays conservative when source evidence is weak.
 
-`tG9K` tests long/dense technical extraction and deeper reasoning. Its current complete review chain is committed at:
+`tG9K` tests long/dense technical extraction and deeper reasoning. Its current review chain is committed at:
 
 ```text
 review-snapshots/jobs/tG9K.json
 ```
 
-The `tG9K` chain now runs end to end, but its first reviewed snapshot still identified remaining quality work around factual requirement recall, stack optionality/depth, Capability calibration, Blueprint architecture over-inference, and expert-model adequacy.
+Accepted English P1.6 artifact 29 is the fixed upstream anchor for the current B3 run. The committed snapshot still contains the reviewed negative Capability v4/v2 artifact until a live v6/v3 run is generated locally, audited, and intentionally committed.
 
 The exact next sequence is [Semantic Quality Acceptance Plan](docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md).
 
@@ -192,6 +196,12 @@ Default output:
 review-snapshots/jobs/tG9K.json
 ```
 
+For the current Capability v6 B3 acceptance case, run the repository-native mechanical audit after regenerating the snapshot:
+
+```bash
+python scripts/audit_capability_v6_snapshot.py
+```
+
 Then intentionally review and publish:
 
 ```bash
@@ -209,9 +219,9 @@ See [Review Snapshot README](review-snapshots/README.md).
 
 ### Snapshot model routing accepted
 
-The standalone and normal integrated snapshot commands both pass the configured effective analysis/capability/blueprint model roles into the exporter. The selected `tG9K` snapshot records E4B for analysis and E2B for the two downstream roles. It includes dependency-current Capability artifact 7 for negative B3 review and intentionally excludes the Blueprint because no Blueprint has been rebuilt from that Capability artifact.
+The standalone and normal integrated snapshot commands both pass the configured effective analysis/capability/blueprint model roles into the exporter. The selected committed `tG9K` snapshot records E4B for analysis and E2B for the two downstream roles. Before the live v6 run it still includes Capability artifact 7 because that v4/v2 artifact depends on accepted analysis artifact 29; the artifact is present as historical negative B3 review evidence, not as the current runtime contract or an accepted B3 result. Blueprint remains absent because the existing Blueprint was built from an older chain.
 
-This closes the Review Snapshot correctness tranche. Controlled model comparison remains downstream of the current P1.6 and reasoning-calibration work.
+This closes the Review Snapshot correctness tranche. Controlled model comparison remains downstream of the current reasoning-calibration work.
 
 ---
 
@@ -227,7 +237,7 @@ blueprint_lm_studio_model = "..."
 
 The best factual extractor is not assumed to be the best professional reasoning model.
 
-Current plan: harden deterministic factual/certainty contracts, then compare a stronger dedicated local reasoning model only if current Gemma reasoning remains inadequate.
+Current plan: finish the live Capability v6 B3 acceptance review first, then compare a stronger dedicated local reasoning model only if the accepted evidence warrants it.
 
 ---
 
@@ -416,8 +426,8 @@ Browser and CLI share underlying services/state.
 Continue from the current repository state; do not restart the old August-3 checklist.
 
 ```text
-1. calibrate Capability against accepted tG9K P1.6 artifact 29
-2. calibrate Blueprint
+1. run and semantically review Capability v6/v3 against accepted tG9K P1.6 artifact 29
+2. calibrate Blueprint only after B3 passes
 3. compare stronger dedicated reasoning model if needed
 4. complete CI-3 with materially different real jobs using snapshots
 5. stop expanding the semantic slice once accepted
