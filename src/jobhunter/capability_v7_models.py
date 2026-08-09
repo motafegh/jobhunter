@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, model_validator
+from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
 
 from jobhunter.capability_models import (
     CapabilityExpectation,

@@ -167,7 +167,8 @@ def audit_snapshot(path: Path, *, job_id: str, analysis_artifact_id: int) -> Non
         )
 
         expected_depth = {
-            f"{requirements[i]['concept']} — employer-stated depth: {requirements[i]['depth_signal']}"
+            f"{requirements[i]['concept']} — employer-stated depth: "
+            f"{requirements[i]['depth_signal']}"
             for i in req_links
             if requirements[i].get("depth_signal")
         }
