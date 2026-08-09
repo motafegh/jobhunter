@@ -175,8 +175,8 @@ Role Capability Blueprint
 Current contracts:
 
 ```text
-English P1.6:   job-analysis-english-v4
-Original P1.6:  job-analysis-original-v4
+English P1.6:   job-analysis-english-v9
+Original P1.6:  job-analysis-original-v9
 Capability:     job-capability-intelligence-v4
 Blueprint:      role-capability-blueprint-v2
 ```
@@ -345,7 +345,7 @@ Current selected live example:
 review-snapshots/jobs/tG9K.json
 ```
 
-Known current defect: the integrated snapshot CLI does not yet pass effective model roles into the exporter. This must be corrected before model-comparison acceptance.
+The integrated snapshot CLI passes all effective model roles into the exporter, and the selected `tG9K` snapshot records the configured dependency-correct chain.
 
 See `review-snapshots/README.md`.
 

@@ -1,6 +1,10 @@
 import pytest
 from pydantic import ValidationError
 
+from jobhunter.evidence_refs import (
+    build_requirement_coverage_plan,
+    build_responsibility_coverage_plan,
+)
 from jobhunter.inference.instructor_lm_studio import JobAnalysisResponse
 
 
@@ -23,6 +27,7 @@ def _fields() -> dict:
 def _requirement(concept: str, evidence: str) -> dict:
     return {
         "concept": concept,
+        "depth_signal": None,
         "requirement_type": "required",
         "concept_type": "skill",
         "evidence": evidence,
@@ -57,17 +62,19 @@ def test_analysis_validation_canonicalizes_safe_field_prefixes_and_exact_duplica
             }
         ],
         "requirements": [
-            {
-                "concept": "Minimum Experience",
-                "requirement_type": "required",
+                {
+                    "concept": "Minimum Experience",
+                    "depth_signal": "three to six years",
+                    "requirement_type": "required",
                 "concept_type": "experience",
                 "evidence": "minimum_experience: three to six years",
                 "confidence": "high",
                 "rationale": "Explicit field.",
             },
-            {
-                "concept": "Education",
-                "requirement_type": "required",
+                {
+                    "concept": "Education",
+                    "depth_signal": None,
+                    "requirement_type": "required",
                 "concept_type": "education",
                 "evidence": "education: Bachelor's degree",
                 "confidence": "high",
@@ -132,9 +139,10 @@ def test_analysis_validation_requires_rationale_for_inferred_requirement() -> No
         "role_purpose": [],
         "responsibilities": [],
         "requirements": [
-            {
-                "concept": "Security investigation",
-                "requirement_type": "inferred",
+                {
+                    "concept": "Security investigation",
+                    "depth_signal": None,
+                    "requirement_type": "inferred",
                 "concept_type": "practice",
                 "evidence": (
                     "Investigating vulnerabilities and configuration weaknesses and providing "
@@ -202,3 +210,171 @@ def test_english_preferred_accepts_explicit_plus_wording() -> None:
     )
 
     assert result.requirements[0].requirement_type == "preferred"
+
+
+def test_analysis_rejects_depth_wording_absent_from_cited_evidence() -> None:
+    evidence = "ML & deep learning: scikit-learn, PyTorch, TensorFlow"
+    requirement = _requirement("Expert proficiency in ML frameworks", evidence)
+    payload = {"role_purpose": [], "responsibilities": [], "requirements": [requirement]}
+
+    with pytest.raises(ValidationError, match="concept contains expert depth wording"):
+        JobAnalysisResponse.model_validate(
+            payload,
+            context={
+                "analysis_fields": {"description": evidence},
+                "analysis_mode": "english",
+            },
+        )
+
+
+def test_english_requirement_preserves_scoped_depth_separately_from_concept() -> None:
+    evidence = "Programming: Python (expert) and SQL"
+    requirement = _requirement("Programming with Python and SQL", evidence)
+    requirement["depth_signal"] = "Python (expert)"
+
+    result = JobAnalysisResponse.model_validate(
+        {"role_purpose": [], "responsibilities": [], "requirements": [requirement]},
+        context={
+            "analysis_fields": {"description": evidence},
+            "analysis_mode": "english",
+        },
+    )
+
+    assert result.requirements[0].concept == "Programming with Python and SQL"
+    assert result.requirements[0].depth_signal == "expert"
+
+
+def test_english_requirement_recovers_explicit_depth_from_atomic_evidence() -> None:
+    evidence = "Strong experience applying AI/ML to manufacturing data"
+    requirement = _requirement(
+        "Experience applying AI/ML to manufacturing data", evidence
+    )
+
+    result = JobAnalysisResponse.model_validate(
+        {"role_purpose": [], "responsibilities": [], "requirements": [requirement]},
+        context={
+            "analysis_fields": {"description": evidence},
+            "analysis_mode": "english",
+        },
+    )
+
+    assert result.requirements[0].depth_signal == "Strong"
+
+
+def test_english_requirement_rejects_depth_signal_outside_cited_evidence() -> None:
+    evidence = "ML & deep learning: scikit-learn, PyTorch, TensorFlow"
+    requirement = _requirement("ML and deep-learning frameworks", evidence)
+    requirement["depth_signal"] = "expert"
+
+    with pytest.raises(ValidationError, match="exact contiguous excerpt"):
+        JobAnalysisResponse.model_validate(
+            {"role_purpose": [], "responsibilities": [], "requirements": [requirement]},
+            context={
+                "analysis_fields": {"description": evidence},
+                "analysis_mode": "english",
+            },
+        )
+
+
+def test_requirement_coverage_rejects_a_missing_structured_field_decision() -> None:
+    fields = _fields()
+    plan = build_requirement_coverage_plan(fields)
+    payload = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [
+            {
+                **_requirement("Relevant experience", "three to six years"),
+                "depth_signal": "three to six years",
+                "concept_type": "experience",
+            },
+        ],
+        "coverage_exclusions": [],
+    }
+
+    with pytest.raises(ValidationError, match="must be cited by a requirement"):
+        JobAnalysisResponse.model_validate(
+            payload,
+            context={
+                "analysis_fields": fields,
+                "analysis_mode": "english",
+                "requirement_coverage_plan": plan,
+            },
+        )
+
+
+def test_requirement_coverage_enforces_contextual_and_preferred_obligation() -> None:
+    fields = {
+        "description": (
+            "Technical skill stack We don't expect every single item. "
+            "● Programming: Python (expert) and SQL; MATLAB a plus"
+        )
+    }
+    plan = build_requirement_coverage_plan(fields)
+    payload = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [
+            {
+                **_requirement("Python", "Python (expert)"),
+                "depth_signal": "Python (expert)",
+                "requirement_type": "contextual",
+            },
+            {
+                **_requirement("SQL", "SQL"),
+                "requirement_type": "contextual",
+            },
+            {
+                **_requirement("MATLAB", "MATLAB a plus"),
+                "requirement_type": "preferred",
+                "concept_type": "tool",
+            },
+        ],
+        "coverage_exclusions": [],
+    }
+
+    result = JobAnalysisResponse.model_validate(
+        payload,
+        context={
+            "analysis_fields": fields,
+            "analysis_mode": "english",
+            "requirement_coverage_plan": plan,
+        },
+    )
+
+    assert [item.requirement_type for item in result.requirements] == [
+        "contextual",
+        "contextual",
+        "preferred",
+    ]
+
+
+def test_responsibility_coverage_rejects_an_omitted_explicit_duty() -> None:
+    fields = {
+        "description": (
+            "What you'll do ● Build models. ● Monitor models. "
+            "What we're looking for ● Python"
+        )
+    }
+    plan = build_responsibility_coverage_plan(fields)
+    payload = {
+        "role_purpose": [
+            {
+                "statement": "Build models",
+                "evidence": "Build models.",
+                "confidence": "high",
+            }
+        ],
+        "responsibilities": [],
+        "requirements": [],
+    }
+
+    with pytest.raises(ValidationError, match="Responsibility coverage"):
+        JobAnalysisResponse.model_validate(
+            payload,
+            context={
+                "analysis_fields": fields,
+                "analysis_mode": "english",
+                "responsibility_coverage_plan": plan,
+            },
+        )

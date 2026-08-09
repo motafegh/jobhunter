@@ -14,8 +14,8 @@ The detailed current quality sequence is defined in `docs/SEMANTIC_QUALITY_ACCEP
 Active identities:
 
 ```text
-P1.6 English prompt/runtime:  job-analysis-english-v4
-P1.6 schema:                  job-analysis-v2
+P1.6 English prompt/runtime:  job-analysis-english-v9
+P1.6 schema:                  job-analysis-v4
 
 Capability prompt/runtime:    job-capability-intelligence-v4
 Capability schema:            job-capability-intelligence-v2

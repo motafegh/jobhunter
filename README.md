@@ -63,9 +63,9 @@ Jobinja source
 english-projection-v2
         ↓
 P1.6 strict factual extraction
-  English:  job-analysis-english-v4
-  Original: job-analysis-original-v4
-  schema:   job-analysis-v2
+  English:  job-analysis-english-v9
+  Original: job-analysis-original-v9
+  schema:   job-analysis-v4
         ↓
 Capability Intelligence
   prompt:   job-capability-intelligence-v4
@@ -207,11 +207,11 @@ Snapshots exclude raw model responses/prompts, SQLite/WAL/SHM, raw HTML contents
 
 See [Review Snapshot README](review-snapshots/README.md).
 
-### Known snapshot issue before model comparison
+### Snapshot model routing accepted
 
-The standalone snapshot exporter uses the configured effective model roles correctly. The normal integrated `jobhunter jobs snapshot` command currently does not pass those role-model arguments into the exporter, so the first `tG9K` snapshot reports null `configured_models` even though each artifact records its actual model.
+The standalone and normal integrated snapshot commands both pass the configured effective analysis/capability/blueprint model roles into the exporter. The selected `tG9K` snapshot records E4B for analysis and E2B for the two downstream roles. It includes dependency-current Capability artifact 7 for negative B3 review and intentionally excludes the Blueprint because no Blueprint has been rebuilt from that Capability artifact.
 
-This is the **first code task** in the current TODO because it must be fixed before controlled multi-model comparisons.
+This closes the Review Snapshot correctness tranche. Controlled model comparison remains downstream of the current P1.6 and reasoning-calibration work.
 
 ---
 
@@ -227,7 +227,7 @@ blueprint_lm_studio_model = "..."
 
 The best factual extractor is not assumed to be the best professional reasoning model.
 
-Current plan: fix snapshot model routing, harden deterministic factual/certainty contracts, then compare a stronger dedicated local reasoning model only if current Gemma reasoning remains inadequate.
+Current plan: harden deterministic factual/certainty contracts, then compare a stronger dedicated local reasoning model only if current Gemma reasoning remains inadequate.
 
 ---
 
@@ -416,18 +416,14 @@ Browser and CLI share underlying services/state.
 Continue from the current repository state; do not restart the old August-3 checklist.
 
 ```text
-1. fix integrated Review Snapshot effective-model routing
-2. deterministic Ruff / pytest / warnings gate
-3. harden P1.6 factual coverage / optionality / explicit depth on tG9K
-4. rebuild/review tG9K P1.6
-5. calibrate Capability
-6. calibrate Blueprint
-7. compare stronger dedicated reasoning model if needed
-8. complete CI-3 with materially different real jobs using snapshots
-9. stop expanding the semantic slice once accepted
-10. finish Market/source/lifecycle/partial-success/P1.7 acceptance
-11. close Phase 1
-12. only then begin corpus-wide Phase 2
+1. calibrate Capability against accepted tG9K P1.6 artifact 29
+2. calibrate Blueprint
+3. compare stronger dedicated reasoning model if needed
+4. complete CI-3 with materially different real jobs using snapshots
+5. stop expanding the semantic slice once accepted
+6. finish Market/source/lifecycle/partial-success/P1.7 acceptance
+7. close Phase 1
+8. only then begin corpus-wide Phase 2
 ```
 
 See [Execution TODO](docs/EXECUTION_TODO.md).

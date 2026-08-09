@@ -118,9 +118,9 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-P1.6 English prompt/runtime:  job-analysis-english-v4
-P1.6 Original prompt/runtime: job-analysis-original-v4
-P1.6 schema:                  job-analysis-v2
+P1.6 English prompt/runtime:  job-analysis-english-v9
+P1.6 Original prompt/runtime: job-analysis-original-v9
+P1.6 schema:                  job-analysis-v4
 
 Capability prompt/runtime:    job-capability-intelligence-v4
 Capability schema:            job-capability-intelligence-v2
@@ -259,23 +259,23 @@ Rules:
 
 ## 10. P1.6 factual semantic boundary
 
-Current P1.6 is v4.
+Current P1.6 is prompt/runtime v9 with persisted schema v4.
 
 ```text
 English projection
-→ job-analysis-english-v4
-→ job-analysis-v2 persisted facts
+→ job-analysis-english-v9
+→ job-analysis-v4 persisted facts
 ```
 
 Original-language analysis remains independent:
 
 ```text
 original source
-→ job-analysis-original-v4
-→ job-analysis-v2
+→ job-analysis-original-v9
+→ job-analysis-v4
 ```
 
-Current v4 protections include:
+Current v9/v4 protections include:
 
 - evidence-reference IDs in production;
 - heading-aware long-description segmentation;
@@ -285,22 +285,16 @@ Current v4 protections include:
 - mixed-strength atomicity rules;
 - source preference wording required for `preferred` claims;
 - obligation strength separated from technical depth;
+- deterministic requirement and duty coverage ledgers;
+- exact concept-scoped `depth_signal` persistence;
 - no arbitrary read deadline for long local generation after connection;
 - bounded Instructor retry and fail-closed final validation.
 
 P1.6 remains factual. It must not manufacture a technical curriculum merely because a technology is named.
 
-### Current acceptance issue
+### Current acceptance state
 
-`tG9K` proved that long-posting mechanics now work, but factual quality still needs focused work on:
-
-- complete explicit requirement coverage;
-- global stack optionality;
-- explicit depth preservation;
-- structured experience/education participation;
-- avoiding depth propagation from one technology to neighboring stack items.
-
-This is the immediate semantic-quality target before further downstream calibration.
+`tG9K` artifact 29 is the accepted P1.6 substrate: 7 responsibilities, 27 requirements, all 28 requirement inputs accounted for, and all 8 duty inputs accounted for. The next gate is downstream Capability calibration against this artifact.
 
 See `docs/SEMANTIC_ANALYSIS.md` and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
 
@@ -353,11 +347,11 @@ The live SQLite database remains local/ignored.
 
 Snapshots intentionally include public source + current review-relevant derived artifact chain and exclude raw model protocol, HTML contents, secrets, SQLite internals, and future private user state.
 
-### Known defect before model comparison
+### Integrated model routing accepted
 
-The integrated `jobhunter jobs snapshot` CLI currently does not pass effective model-role arguments into the exporter. The standalone exporter does.
+The integrated `jobhunter jobs snapshot` CLI and standalone exporter both pass effective model-role arguments into the exporter.
 
-Fix the integrated routing before comparing multiple Capability/Blueprint models, then regenerate `tG9K` so `configured_models` is explicit.
+The regenerated `tG9K` snapshot records explicit configured models, accepted E4B P1.6 artifact 29, and dependency-current Capability artifact 7. Artifact 7 is retained for negative B3 review but is not semantically accepted. Blueprint is omitted because the existing artifact belongs to the older chain.
 
 ---
 
@@ -430,10 +424,10 @@ Browser and CLI must agree on the underlying semantics.
 | P1.4 translation v2 | Implemented and actively used; broader corpus/model quality still bounded by acceptance scope |
 | P1.5 semantic versions/observations | Accepted foundation |
 | P1.5 lifecycle/triage/priority | Implemented; remaining acceptance pending |
-| P1.6 factual analysis v4 | Implemented; semantic-quality acceptance active |
+| P1.6 factual analysis prompt v9 / schema v4 | Implemented; tG9K SQ-1 accepted |
 | Capability Intelligence v4 | Implemented bounded per-job slice; CI-3 open |
 | Role Blueprint v2 | Implemented bounded per-job slice; semantic-quality acceptance open |
-| Review Snapshot v1 | Implemented; first live pushed example works; integrated model-routing defect open |
+| Review Snapshot v1 | Implemented; integrated model routing and selected `tG9K` live export accepted |
 | P1.7 Market/run/reporting | Partial implementation / closure acceptance pending |
 
 ---
@@ -443,18 +437,16 @@ Browser and CLI must agree on the underlying semantics.
 Do not restart the old August-3 checklist from the beginning. Continue from the current repository state:
 
 ```text
-1. fix integrated Review Snapshot effective-model routing
-2. run deterministic gate
-3. harden P1.6 coverage / obligation / depth on tG9K
-4. rebuild/review tG9K P1.6
-5. calibrate/rebuild Capability
-6. calibrate/rebuild Blueprint
-7. compare a stronger dedicated reasoning model if Gemma remains inadequate
-8. complete CI-3 representative review using snapshots
-9. stop expanding the semantic slice once accepted
-10. return to Market/source/lifecycle/partial-success/P1.7 closure
-11. close Phase 1
-12. only then begin corpus-wide Phase 2
+1. harden P1.6 coverage / obligation / depth on tG9K
+2. rebuild/review tG9K P1.6
+3. calibrate/rebuild Capability
+4. calibrate/rebuild Blueprint
+5. compare a stronger dedicated reasoning model if Gemma remains inadequate
+6. complete CI-3 representative review using snapshots
+7. stop expanding the semantic slice once accepted
+8. return to Market/source/lifecycle/partial-success/P1.7 closure
+9. close Phase 1
+10. only then begin corpus-wide Phase 2
 ```
 
 The operational details live in `docs/EXECUTION_TODO.md`.

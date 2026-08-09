@@ -3,7 +3,7 @@
 **Status:** Rolling non-authoritative handoff  
 **Date:** 2026-08-08  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Reconciled repository state through:** `d6506204aed7f8c0da9a3e51caedbd4ee8dac224` plus this handoff commit  
+**Reconciled repository state through:** current 2026-08-08 B1/SQ-0 working-tree tranche
 **Purpose:** Let a new conversation resume from the real current state without reconstructing the recent semantic-quality journey from chat history.
 
 This file is **not** a controlling specification. If it conflicts with a higher-authority document, the higher-authority document wins.
@@ -87,9 +87,9 @@ source parser:                 jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:            english-projection-v2
 
-English P1.6 prompt/runtime:   job-analysis-english-v4
-Original P1.6 prompt/runtime:  job-analysis-original-v4
-P1.6 persisted schema:         job-analysis-v2
+English P1.6 prompt/runtime:   job-analysis-english-v9
+Original P1.6 prompt/runtime:  job-analysis-original-v9
+P1.6 persisted schema:         job-analysis-v4
 
 Capability prompt/runtime:     job-capability-intelligence-v4
 Capability persisted schema:   job-capability-intelligence-v2
@@ -143,7 +143,7 @@ Approximate current state:
 | Blueprint expert-judgment calibration | acceptance open |
 | Independent reasoning model roles | implemented |
 | Review Snapshot concept | implemented and proven useful |
-| Integrated snapshot model routing | known blocking defect before model comparison |
+| Integrated snapshot model routing | accepted; deterministic and live snapshot evidence green |
 | Market truthfulness acceptance | still pending Phase-1 closure |
 | Source/lifecycle acceptance | still pending Phase-1 closure |
 | Final P1.7 run/report/browser acceptance | still pending |
@@ -328,19 +328,9 @@ If both remain shallow, the system is under-reasoning or losing source informati
 
 ---
 
-## 9. First next code task — do this before anything else
+## 9. Completed current tranche — integrated Review Snapshot routing
 
-**Fix integrated Review Snapshot effective-model routing.**
-
-Problem:
-
-The standalone:
-
-```bash
-jobhunter-review-snapshot <id>
-```
-
-passes effective model roles to `write_review_snapshot()`.
+**Integrated Review Snapshot effective-model routing is accepted.**
 
 The normal command:
 
@@ -348,7 +338,7 @@ The normal command:
 jobhunter jobs snapshot <id>
 ```
 
-currently calls the exporter without:
+now passes:
 
 ```text
 effective_analysis_lm_studio_model()
@@ -356,7 +346,7 @@ effective_capability_lm_studio_model()
 effective_blueprint_lm_studio_model()
 ```
 
-Therefore the first `tG9K` snapshot contains:
+The first historical `tG9K` snapshot contained:
 
 ```json
 "configured_models": {
@@ -366,47 +356,27 @@ Therefore the first `tG9K` snapshot contains:
 }
 ```
 
-although the artifacts correctly record `gemma-4-e2b-it`.
+although the artifacts correctly recorded `gemma-4-e2b-it`. B1 first regenerated a complete E2B chain. After B2 acceptance, the selected snapshot records `gemma-4-e4b-it-ud` for analysis and E2B for downstream roles.
 
-Why this matters:
+Accepted evidence:
 
-With one current model it happens to select the right chain. With multiple current artifacts from different dedicated models, `model=None` can choose the latest artifact rather than the configured role. That would invalidate controlled model comparisons.
+- integrated routing tests assert all three model arguments;
+- focused routing/snapshot tests passed 7 tests;
+- Ruff passed;
+- normal full pytest passed 269 tests;
+- warnings-as-errors passed 269 tests;
+- regenerated `tG9K` selects accepted P1.6 artifact 29, includes dependency-current Capability artifact 7 for negative review, and omits the older Blueprint chain;
+- snapshot exclusions remain intact.
 
-Likely files:
-
-```text
-src/jobhunter/entrypoint.py
-  _export_review_snapshot(...)
-
-tests/test_review_snapshot_entrypoint.py
-```
-
-Required behavior:
-
-```python
-write_review_snapshot(
-    settings.database_path,
-    parsed.job_id,
-    output_dir=parsed.output_dir,
-    analysis_model=settings.effective_analysis_lm_studio_model(),
-    capability_model=settings.effective_capability_lm_studio_model(),
-    blueprint_model=settings.effective_blueprint_lm_studio_model(),
-)
-```
-
-Update CLI-routing tests to assert all three model arguments.
-
-Then run focused tests + full deterministic gate.
-
-Do **not** change semantic prompts in the same commit/tranche.
+No semantic prompt/schema/model generation changed in this tranche.
 
 ---
 
 ## 10. Exact next implementation sequence
 
-After the snapshot-routing fix:
+With snapshot routing accepted:
 
-### Step 1 — deterministic gate
+### Completed — deterministic gate
 
 ```bash
 ruff check .
@@ -414,11 +384,11 @@ python -m pytest
 python -m pytest -W error
 ```
 
-Do not claim green until observed in the user's environment.
+Observed on the user's environment: Ruff green; both full pytest runs passed 269 tests.
 
-### Step 2 — P1.6 factual quality first
+### Completed — P1.6 factual quality
 
-Use `tG9K` to improve:
+Accepted artifact 29 now provides:
 
 - explicit requirement coverage;
 - optionality/obligation preservation;
@@ -426,13 +396,11 @@ Use `tG9K` to improve:
 - structured experience/education participation;
 - no depth spreading across technologies.
 
-Do not force an arbitrary minimum number of claims.
+No arbitrary minimum claim count was introduced. The selected Review Snapshot exposes accepted P1.6 artifact 29, reviewed-but-unaccepted Capability artifact 7, and no stale Blueprint.
 
-Review P1.6 **before** rebuilding Capability.
+### Current next — Capability calibration
 
-### Step 3 — Capability calibration
-
-After P1.6 is accepted for the case:
+Against accepted P1.6 artifact 29:
 
 - use `depth_signals` when evidence supports them;
 - preserve upstream requirement strength;
@@ -440,7 +408,19 @@ After P1.6 is accepted for the case:
 - improve capability grouping coherence;
 - retain current deterministic evidence-resilience rules.
 
-### Step 4 — Blueprint calibration
+The first artifact-29 rebuild completed as Capability artifact 7 under v4 but failed semantic review: explicit depth was omitted and contextual stack/ownership claims were overstated. A generic v5 depth-coverage experiment passed 21 focused tests but failed live after its bounded retry exhausted `max_tokens`; no v5 artifact persisted and the experiment was reverted. Full evidence and the later remediation route are in `docs/incidents/2026-08-09_MODEL_EVALUATION_AND_CAPABILITY_CALIBRATION_FAILURES.md`.
+
+Current role configuration:
+
+```text
+analysis:   gemma-4-e4b-it-ud
+capability: gemma-4-e2b-it
+blueprint:  gemma-4-e2b-it
+```
+
+The analysis choice is evidence-based: E4B completed the accepted v9/v4 contract in 76 seconds. Gemma 12B was operationally too slow on the 8 GB GPU. OpenCode free candidates either failed semantic validation, exhausted the completion budget, or hit the free-tier limit. NVIDIA Inkling Low nearly matched E4B latency but still failed depth validation after its bounded retry; NVIDIA DeepSeek Flash Non-think was slower and also failed depth validation, while Think-High was operationally too slow. NVIDIA Gemma 31B and Nemotron Super were operationally rejected. No hosted candidate produced an accepted artifact.
+
+### Step 3 — Blueprint calibration
 
 General principles only:
 
@@ -451,7 +431,7 @@ General principles only:
 - tool/metric/protocol semantics remain technically correct;
 - scenario detail scales with evidence.
 
-### Step 5 — controlled stronger-model comparison if needed
+### Step 4 — controlled stronger-model comparison if needed
 
 Keep fixed:
 
@@ -469,7 +449,7 @@ Compare technical correctness/calibration, not eloquence.
 
 Do not build multi-model voting.
 
-### Step 6 — complete CI-3 heterogeneous review
+### Step 5 — complete CI-3 heterogeneous review
 
 Current anchors:
 
@@ -486,7 +466,7 @@ Add:
 
 Use Review Snapshots for selected acceptance examples.
 
-### Step 7 — stop semantic expansion when accepted
+### Step 6 — stop semantic expansion when accepted
 
 Then return to Phase-1 closure:
 
@@ -498,7 +478,7 @@ Market truthfulness/sampling
 → Phase-1 closure
 ```
 
-### Step 8 — only after Phase-1 closure
+### Step 7 — only after Phase-1 closure
 
 Start corpus-wide Phase 2:
 
@@ -614,7 +594,7 @@ Observed earlier during the semantic tranche:
 - Capability unknown-evidence behavior exposed the `p1:requirements:19` failure and was fixed/tested;
 - after those fixes, the user successfully generated both Capability and Blueprint for `tG9K` and created/pushed the snapshot.
 
-The next **code** tranche must run:
+The B1/SQ-0 code tranche ran:
 
 ```bash
 ruff check .
@@ -622,7 +602,7 @@ python -m pytest
 python -m pytest -W error
 ```
 
-and report actual observed results.
+Observed result: Ruff green; focused snapshot/model-routing tests 7 passed; full pytest 269 passed; full warnings-as-errors 269 passed.
 
 ---
 

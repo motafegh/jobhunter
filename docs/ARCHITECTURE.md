@@ -124,9 +124,9 @@ source parser:                 jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:            english-projection-v2
 
-English P1.6 prompt/runtime:   job-analysis-english-v4
-Original P1.6 prompt/runtime:  job-analysis-original-v4
-P1.6 persisted schema:         job-analysis-v2
+English P1.6 prompt/runtime:   job-analysis-english-v9
+Original P1.6 prompt/runtime:  job-analysis-original-v9
+P1.6 persisted schema:         job-analysis-v4
 
 Capability prompt/runtime:     job-capability-intelligence-v4
 Capability persisted schema:   job-capability-intelligence-v2
@@ -474,9 +474,9 @@ Excluded:
 
 Snapshots are review artifacts, not runtime inputs.
 
-### Current known defect
+### Integrated model-role routing
 
-The integrated `jobhunter jobs snapshot` command does not yet pass the effective analysis/capability/blueprint model roles into `write_review_snapshot()`. Fix this before multi-model comparison so the snapshot selects and records the configured chain deterministically.
+The integrated `jobhunter jobs snapshot` command passes the effective analysis/capability/blueprint model roles into `write_review_snapshot()`. Snapshot chain selection therefore follows the configured roles deterministically and records those roles for review.
 
 ---
 

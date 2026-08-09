@@ -105,9 +105,9 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6 prompt/runtime:  job-analysis-english-v4
-Original P1.6 prompt/runtime: job-analysis-original-v4
-P1.6 schema:                  job-analysis-v2
+English P1.6 prompt/runtime:  job-analysis-english-v9
+Original P1.6 prompt/runtime: job-analysis-original-v9
+P1.6 schema:                  job-analysis-v4
 
 Capability prompt/runtime:    job-capability-intelligence-v4
 Capability schema:            job-capability-intelligence-v2
@@ -140,17 +140,17 @@ Operational checklist:
 docs/EXECUTION_TODO.md
 ```
 
-### P1-A0 — Review Snapshot correctness
+### P1-A0 — Review Snapshot correctness (accepted)
 
-First code task:
+Accepted behavior:
 
-- integrated `jobhunter jobs snapshot` must pass effective analysis/capability/blueprint model roles into the exporter;
-- snapshot chain selection must remain dependency-correct under multiple current model artifacts;
-- regenerate `tG9K` and confirm explicit configured model identities.
+- integrated `jobhunter jobs snapshot` passes effective analysis/capability/blueprint model roles into the exporter;
+- deterministic routing tests cover all three roles;
+- regenerated `tG9K` records explicit configured model identities while the selected chain remains dependency-correct.
 
-Do this before controlled model comparison.
+P1-A1 is accepted on `tG9K`. The current code task is P1-A2 Capability calibration; further controlled model comparison remains evidence-gated.
 
-### P1-A1 — P1.6 factual coverage / optionality / depth
+### P1-A1 — P1.6 factual coverage / optionality / depth — accepted on tG9K
 
 P1.6 is the factual substrate and must be corrected before downstream tuning.
 

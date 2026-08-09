@@ -1,7 +1,7 @@
 # Evidence-Backed Semantic Analysis
 
 **Status:** Implemented; semantic-quality acceptance active  
-**Date:** 2026-08-08
+**Date:** 2026-08-09
 
 P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
 
@@ -29,33 +29,36 @@ They are independent artifacts. Neither analysis uses the other language represe
 ```text
 source
 → english-projection-v2
-→ job-analysis-english-v4
-→ job-analysis-v2 persisted schema
+→ job-analysis-english-v9
+→ job-analysis-v4 persisted schema
 ```
 
 ### Original
 
 ```text
 original source fields
-→ job-analysis-original-v4
-→ job-analysis-v2 persisted schema
+→ job-analysis-original-v9
+→ job-analysis-v4 persisted schema
 ```
 
 Current constants are defined in `src/jobhunter/analysis_service.py`.
 
-Historical prompt/runtime identities remain historical. Prompt/runtime changes intentionally make prior artifacts non-current even when the persisted schema shape remains `job-analysis-v2`.
+Historical prompt/runtime identities remain historical. Prompt/runtime or schema changes intentionally make prior artifacts non-current.
 
 ---
 
-## 3. Current v4 change set
+## 3. Current v9 / schema-v4 change set
 
-V4 keeps the factual persisted shape while making dense/long postings more robust.
+V9 makes dense/long factual coverage auditable and keeps obligation separate from explicit technical depth.
 
-Implemented v4 behavior includes:
+Current behavior includes:
 
 - deterministic evidence-reference catalogs supplied to the model;
 - heading-aware long-description segmentation;
-- clause-level references for semicolon-delimited mixed-strength lines;
+- clause-level references for semicolon-delimited lines and subject-specific parenthetical depth;
+- deterministic requirement and responsibility coverage plans;
+- persisted coverage dispositions for extracted requirements, context-only modifiers, and justified exclusions;
+- persisted responsibility coverage dispositions for role purpose and duties;
 - the model selects evidence IDs instead of copying quotations in production;
 - JobHunter resolves selected references back to exact source text before persistence;
 - rich-source `0 responsibilities / 0 requirements` responses are rejected when the source plainly contains substantial duties/qualifications;
@@ -63,6 +66,7 @@ Implemented v4 behavior includes:
 - `preferred` requires actual preference/advantage/plus/helpful-style source wording;
 - global wording such as `we don't expect every single item` prevents automatic mandatory treatment but does not automatically make every stack item preferred;
 - explicit depth words such as expert/proficient/familiar remain distinct from obligation strength;
+- exact source depth is persisted in `depth_signal` while concepts remain standalone depth-neutral noun phrases;
 - long local Instructor reads do not use an arbitrary read-time deadline after successful connection;
 - transport replay remains disabled and Instructor validation retry remains bounded.
 
@@ -119,7 +123,7 @@ Current analysis-store identity is keyed by source version + model + prompt + sc
 
 ## 6. Shared persisted schema
 
-Both modes use `job-analysis-v2`.
+Both modes use `job-analysis-v4`.
 
 ### Role purpose
 
@@ -148,6 +152,24 @@ Responsibilities are employee work duties/actions.
 Candidate qualification wording such as skill, ability, mastery, familiarity, knowledge, education, or experience belongs under requirements unless explicitly framed as work.
 
 ### Requirements
+
+Each requirement persists:
+
+```text
+concept
+depth_signal
+requirement_type
+concept_type
+evidence
+confidence
+rationale
+```
+
+`depth_signal` is nullable and, when present, is exact source wording scoped to that concept.
+
+### Coverage ledgers
+
+The persisted artifact also records `coverage` and `responsibility_coverage`. These arrays make the accepted treatment of every deterministic checklist input reviewable without retaining generation-only reference IDs.
 
 Each contains:
 
@@ -298,7 +320,7 @@ Programming: Python (expert) and SQL; MATLAB a plus; some C/C++ helpful
 
 must not become one monolithic required claim.
 
-V4 supplies clause references and validation/prompt rules that require separate coherent strength claims.
+V9 supplies clause references and validation/prompt rules that require separate coherent strength claims.
 
 Likewise, an English `preferred` claim must cite evidence that itself contains preference/advantage/plus/helpful-style wording or equivalent employer language.
 
@@ -323,7 +345,8 @@ Pydantic JobAnalysisResponse
         ├─ evidence-reference resolution
         ├─ exact source-span validation
         ├─ inferred-rationale validation
-        ├─ optionality/atomicity rules
+        ├─ optionality/depth/atomicity rules
+        ├─ requirement and responsibility coverage
         ├─ rich-source non-empty guard
         └─ exact duplicate normalization
         ↓

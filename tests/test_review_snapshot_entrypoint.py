@@ -5,13 +5,35 @@ import jobhunter.entrypoint as entrypoint
 
 
 def test_jobs_snapshot_routes_to_review_export(monkeypatch, capsys, tmp_path: Path) -> None:
-    settings = SimpleNamespace(database_path=tmp_path / "jobhunter.sqlite3")
-    calls: list[tuple[Path, str, Path]] = []
+    settings = SimpleNamespace(
+        database_path=tmp_path / "jobhunter.sqlite3",
+        effective_analysis_lm_studio_model=lambda: "analysis-model",
+        effective_capability_lm_studio_model=lambda: "capability-model",
+        effective_blueprint_lm_studio_model=lambda: "blueprint-model",
+    )
+    calls: list[tuple[Path, str, Path, str, str, str]] = []
 
     monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
 
-    def write(database_path: Path, job_id: str, *, output_dir: Path) -> Path:
-        calls.append((database_path, job_id, output_dir))
+    def write(
+        database_path: Path,
+        job_id: str,
+        *,
+        output_dir: Path,
+        analysis_model: str,
+        capability_model: str,
+        blueprint_model: str,
+    ) -> Path:
+        calls.append(
+            (
+                database_path,
+                job_id,
+                output_dir,
+                analysis_model,
+                capability_model,
+                blueprint_model,
+            )
+        )
         return output_dir / f"{job_id}.json"
 
     monkeypatch.setattr(entrypoint, "write_review_snapshot", write)
@@ -24,13 +46,21 @@ def test_jobs_snapshot_routes_to_review_export(monkeypatch, capsys, tmp_path: Pa
             settings.database_path,
             "tG9K",
             Path("review-snapshots/jobs"),
+            "analysis-model",
+            "capability-model",
+            "blueprint-model",
         )
     ]
     assert "review-snapshots/jobs/tG9K.json" in capsys.readouterr().out
 
 
 def test_global_config_can_precede_snapshot_command(monkeypatch, tmp_path: Path) -> None:
-    settings = SimpleNamespace(database_path=tmp_path / "jobhunter.sqlite3")
+    settings = SimpleNamespace(
+        database_path=tmp_path / "jobhunter.sqlite3",
+        effective_analysis_lm_studio_model=lambda: "analysis-model",
+        effective_capability_lm_studio_model=lambda: "capability-model",
+        effective_blueprint_lm_studio_model=lambda: "blueprint-model",
+    )
     seen_paths: list[Path | None] = []
 
     def load(path):
@@ -41,7 +71,13 @@ def test_global_config_can_precede_snapshot_command(monkeypatch, tmp_path: Path)
     monkeypatch.setattr(
         entrypoint,
         "write_review_snapshot",
-        lambda _database, job_id, *, output_dir: output_dir / f"{job_id}.json",
+        lambda _database,
+        job_id,
+        *,
+        output_dir,
+        analysis_model,
+        capability_model,
+        blueprint_model: output_dir / f"{job_id}.json",
     )
 
     exit_code = entrypoint.main(

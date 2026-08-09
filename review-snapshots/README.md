@@ -68,7 +68,7 @@ A snapshot may contain current:
 - artifact/model/prompt/schema IDs and timestamps;
 - dependency IDs;
 - current-chain status flags;
-- configured/effective model roles once the exporting CLI supplies them correctly.
+- configured/effective model roles used for chain selection.
 
 Current snapshot schema:
 
@@ -118,19 +118,19 @@ Role Capability Blueprint
 
 A snapshot should follow the **effective configured model roles**, not merely whichever valid artifact was written most recently.
 
-### Known current defect
+### Integrated routing status
 
-The standalone `jobhunter-review-snapshot` entry point already passes effective model roles to the exporter.
+The standalone `jobhunter-review-snapshot` entry point and integrated command both pass effective model roles to the exporter.
 
-The integrated command:
+The normal command:
 
 ```bash
 jobhunter jobs snapshot <id>
 ```
 
-currently does not pass those role arguments. The first pushed `tG9K` snapshot therefore contains null `configured_models` even though the persisted artifacts correctly identify `gemma-4-e2b-it`.
+selects the configured analysis/Capability/Blueprint chain and records those role models. The selected `tG9K` snapshot identifies `gemma-4-e4b-it-ud` for analysis and `gemma-4-e2b-it` for both downstream roles. It includes Capability artifact 7 because that artifact depends on accepted analysis artifact 29; the artifact is present for negative semantic review, not B3 acceptance. Blueprint remains absent because the existing Blueprint was built from an older chain.
 
-This must be fixed before multi-model comparison. See:
+The routing is covered by deterministic CLI tests. See:
 
 ```text
 docs/EXECUTION_TODO.md

@@ -404,6 +404,9 @@ def _export_review_snapshot(
             settings.database_path,
             parsed.job_id,
             output_dir=parsed.output_dir,
+            analysis_model=settings.effective_analysis_lm_studio_model(),
+            capability_model=settings.effective_capability_lm_studio_model(),
+            blueprint_model=settings.effective_blueprint_lm_studio_model(),
         )
     except (ReviewSnapshotError, OSError, ValueError) as exc:
         print(f"Review snapshot failed: {exc}", file=sys.stderr)

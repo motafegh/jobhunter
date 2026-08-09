@@ -31,6 +31,7 @@ def test_analysis_evidence_reference_resolves_to_exact_source_text() -> None:
         "requirements": [
             {
                 "concept": "Python",
+                "depth_signal": None,
                 "requirement_type": "required",
                 "concept_type": "skill",
                 "evidence": "field:skills:1",
@@ -38,6 +39,7 @@ def test_analysis_evidence_reference_resolves_to_exact_source_text() -> None:
                 "rationale": "",
             }
         ],
+        "coverage_exclusions": [],
     }
 
     result = JobAnalysisResponse.model_validate(
@@ -57,7 +59,12 @@ def test_information_rich_source_cannot_validate_as_empty_analysis() -> None:
 
     with pytest.raises(ValidationError, match="Information-rich job fields"):
         JobAnalysisResponse.model_validate(
-            {"role_purpose": [], "responsibilities": [], "requirements": []},
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [],
+                "coverage_exclusions": [],
+            },
             context={"analysis_fields": fields, "evidence_catalog": catalog},
         )
 
@@ -65,7 +72,12 @@ def test_information_rich_source_cannot_validate_as_empty_analysis() -> None:
 def test_sparse_source_may_still_validate_empty_analysis() -> None:
     fields = {"title": "General Assistant", "description": "Short unclear posting."}
     result = JobAnalysisResponse.model_validate(
-        {"role_purpose": [], "responsibilities": [], "requirements": []},
+        {
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [],
+            "coverage_exclusions": [],
+        },
         context={"analysis_fields": fields, "evidence_catalog": {}},
     )
 

@@ -58,11 +58,11 @@ review-snapshots/jobs/tG9K.json
 
 This proved that repository-native quality review can replace manual copy/paste of large browser pages.
 
-### Known integrated-CLI defect discovered by the first snapshot
+### Integrated-CLI defect discovered and resolved
 
 The standalone `jobhunter-review-snapshot` path passes the effective analysis/capability/blueprint model roles to `write_review_snapshot()`.
 
-The integrated `jobhunter jobs snapshot` path currently loads settings but does not pass those effective model arguments. The first `tG9K` snapshot therefore recorded:
+The integrated `jobhunter jobs snapshot` path originally loaded settings but did not pass those effective model arguments. The first `tG9K` snapshot therefore recorded:
 
 ```json
 "configured_models": {
@@ -74,9 +74,9 @@ The integrated `jobhunter jobs snapshot` path currently loads settings but does 
 
 while the persisted artifacts themselves correctly recorded the actual `gemma-4-e2b-it` model.
 
-This is harmless only while one relevant artifact/model exists. It becomes unsafe for controlled model comparison because `latest_current(..., model=None)` may select a different current model artifact than the configured role.
+This was harmless only while one relevant artifact/model existed. It was unsafe for controlled model comparison because `latest_current(..., model=None)` could select a different current model artifact than the configured role.
 
-**Required correction before model comparison:** make the integrated CLI pass:
+The integrated CLI now passes:
 
 ```text
 effective_analysis_lm_studio_model()
@@ -84,7 +84,7 @@ effective_capability_lm_studio_model()
 effective_blueprint_lm_studio_model()
 ```
 
-and cover the routing with deterministic tests.
+and deterministic tests cover the routing. The regenerated selected `tG9K` snapshot records `gemma-4-e2b-it` for all three configured roles while retaining a dependency-correct current chain.
 
 ## Decision 2 — Reasoning model roles are independently configurable
 

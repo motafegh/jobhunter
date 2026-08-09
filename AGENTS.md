@@ -79,9 +79,9 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6:                 job-analysis-english-v4
-Original P1.6:                job-analysis-original-v4
-P1.6 schema:                  job-analysis-v2
+English P1.6:                 job-analysis-english-v9
+Original P1.6:                job-analysis-original-v9
+P1.6 schema:                  job-analysis-v4
 
 Capability:                   job-capability-intelligence-v4
 Capability schema:            job-capability-intelligence-v2
@@ -128,21 +128,17 @@ Do not restart the old August-3 checklist from the beginning.
 Follow the current TODO and semantic-quality plan:
 
 ```text
-1. fix integrated Review Snapshot effective-model routing
-2. run Ruff / pytest / warnings gate
-3. harden P1.6 factual coverage / optionality / explicit depth on tG9K
-4. review accepted P1.6 before downstream rebuild
-5. calibrate Capability Intelligence
-6. calibrate Role Capability Blueprint
-7. compare a stronger dedicated reasoning model only if evidence warrants it
-8. complete CI-3 with heterogeneous real jobs using Review Snapshots
-9. stop expanding semantic reasoning once accepted
-10. finish Market/source/lifecycle/partial-success/P1.7 acceptance
-11. close Phase 1
-12. only then begin corpus-wide Phase 2
+1. calibrate Capability Intelligence against accepted tG9K P1.6 artifact 29
+2. calibrate Role Capability Blueprint
+3. compare a stronger dedicated reasoning model only if evidence warrants it
+4. complete CI-3 with heterogeneous real jobs using Review Snapshots
+5. stop expanding semantic reasoning once accepted
+6. finish Market/source/lifecycle/partial-success/P1.7 acceptance
+7. close Phase 1
+8. only then begin corpus-wide Phase 2
 ```
 
-The first code task is the known integrated snapshot model-routing defect documented in `docs/EXECUTION_TODO.md`.
+Integrated snapshot model routing and B2 P1.6 factual coverage/optionality/depth are accepted. The first current code task is Capability Intelligence calibration in B3/SQ-2.
 
 ---
 
@@ -227,7 +223,7 @@ Do not automatically commit every job. Commit selected acceptance/review example
 
 Snapshots deliberately exclude raw model responses, prompts/request bodies, SQLite/WAL/SHM, raw HTML contents, secrets, logs, and private user state.
 
-Known current defect: integrated `jobhunter jobs snapshot` does not yet pass effective analysis/capability/blueprint model-role args to the exporter. Fix before multi-model comparison.
+The integrated `jobhunter jobs snapshot` command passes effective analysis/capability/blueprint model-role arguments to the exporter. The selected `tG9K` snapshot records those configured roles explicitly.
 
 ---
 

@@ -80,6 +80,7 @@ def _analysis_payload(evidence: str = "Python experience is required.") -> dict:
         "requirements": [
             {
                 "concept": "Python",
+                "depth_signal": None,
                 "requirement_type": "required",
                 "concept_type": "skill",
                 "evidence": evidence,
@@ -88,6 +89,7 @@ def _analysis_payload(evidence: str = "Python experience is required.") -> dict:
             },
             {
                 "concept": "Docker",
+                "depth_signal": "familiarity",
                 "requirement_type": "preferred",
                 "concept_type": "tool",
                 "evidence": "Docker familiarity is preferred.",
@@ -95,6 +97,7 @@ def _analysis_payload(evidence: str = "Python experience is required.") -> dict:
                 "rationale": "",
             },
         ],
+        "coverage_exclusions": [],
     }
 
 
@@ -175,7 +178,7 @@ def test_english_analysis_persists_and_reuses_independent_artifact(tmp_path: Pat
     assert artifact is not None
     assert artifact.analysis["requirements"][0]["concept"] == "Python"
     assert artifact.translation_artifact_id is not None
-    assert artifact.prompt_version == "job-analysis-english-v4"
+    assert artifact.prompt_version == "job-analysis-english-v9"
 
 
 def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path) -> None:
@@ -210,7 +213,7 @@ def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path
     assert original_artifact is not None
     assert english_artifact.translation_artifact_id is not None
     assert original_artifact.translation_artifact_id is None
-    assert original_artifact.prompt_version == "job-analysis-original-v4"
+    assert original_artifact.prompt_version == "job-analysis-original-v9"
 
 
 def test_english_and_original_requests_never_mix_text_representations(tmp_path: Path) -> None:
@@ -318,9 +321,10 @@ def test_analysis_rejects_inferred_requirement_without_rationale(tmp_path: Path)
     translation = _prepare_native_job(database_path)
     payload = _analysis_payload()
     payload["requirements"] = [
-        {
-            "concept": "Detection engineering",
-            "requirement_type": "inferred",
+            {
+                "concept": "Detection engineering",
+                "depth_signal": None,
+                "requirement_type": "inferred",
             "concept_type": "practice",
             "evidence": "Build and maintain detection rules.",
             "confidence": "medium",

@@ -70,9 +70,9 @@ source parser:                 jobinja-detail-v2
 English projection:            english-projection-v2
 translation provider contract: lm-studio-translation-v2
 
-English P1.6 prompt/runtime:   job-analysis-english-v4
-Original P1.6 prompt/runtime:  job-analysis-original-v4
-P1.6 persisted schema:         job-analysis-v2
+English P1.6 prompt/runtime:   job-analysis-english-v9
+Original P1.6 prompt/runtime:  job-analysis-original-v9
+P1.6 persisted schema:         job-analysis-v4
 
 Capability prompt/runtime:     job-capability-intelligence-v4
 Capability persisted schema:   job-capability-intelligence-v2
@@ -156,9 +156,11 @@ review-snapshots/jobs/<job-id>.json
 
 The live SQLite database remains local and ignored.
 
-### Known blocking defect
+### Accepted routing behavior
 
-The standalone snapshot entry point passes effective analysis/capability/blueprint model roles into the exporter. The integrated `jobhunter jobs snapshot` path currently does not. That caused the first pushed `tG9K` snapshot to contain:
+The standalone snapshot entry point and integrated `jobhunter jobs snapshot` path both pass effective analysis/capability/blueprint model roles into the exporter.
+
+The first pushed `tG9K` snapshot historically contained:
 
 ```json
 "configured_models": {
@@ -168,21 +170,20 @@ The standalone snapshot entry point passes effective analysis/capability/bluepri
 }
 ```
 
-while the persisted artifacts themselves correctly recorded `gemma-4-e2b-it`.
+while the persisted artifacts themselves correctly recorded `gemma-4-e2b-it`. B1 first regenerated that complete E2B chain. The current selected snapshot now records E4B for accepted P1.6 and E2B for downstream roles, with old downstream artifacts omitted until rebuilt.
 
-This happened to select the correct chain because only one relevant model was present. It is **not safe for controlled multi-model comparison**.
+The integrated CLI routing is covered by deterministic tests. The regenerated snapshot retains true translation/P1.6, Capability, and Blueprint current-chain flags.
 
-### SQ-0 required work
+### SQ-0 acceptance evidence
 
-- pass `effective_analysis_lm_studio_model()` into `write_review_snapshot()`;
-- pass `effective_capability_lm_studio_model()`;
-- pass `effective_blueprint_lm_studio_model()`;
-- update CLI routing tests;
-- regenerate `tG9K` and confirm `configured_models` records the effective roles;
-- confirm current-chain flags remain correct;
-- keep raw responses/prompts/SQLite/private user data excluded.
+- all three effective model roles are passed into `write_review_snapshot()`;
+- CLI routing tests cover all three values;
+- `tG9K` records the effective roles;
+- current-chain flags remain correct;
+- raw responses/prompts/SQLite/private user data remain excluded;
+- Ruff, full pytest, and warnings-as-errors are green.
 
-**Gate:** Do not begin model comparison until SQ-0 is green.
+**Gate:** SQ-0 is green. Continue with SQ-1; model comparison remains later in the defined sequence.
 
 ---
 
@@ -200,9 +201,9 @@ P1.6 is the highest semantic priority because downstream layers depend on it.
 - `preferred` claims require source preference/advantage wording;
 - long local analysis generation has no arbitrary read-time ceiling.
 
-### Remaining observed defects
+### Historical defects closed by the accepted v9/v4 artifact
 
-The accepted `tG9K` v4 artifact captured responsibilities well but omitted explicit source families including examples such as:
+The historical `tG9K` v4 artifact captured responsibilities well but omitted explicit source families including examples such as:
 
 - Data & statistics: pandas / NumPy / SciPy / statsmodels / PCA / PLS;
 - Industrial statistics: SPC / DOE / capability analysis / Bayesian methods;
@@ -212,7 +213,7 @@ The accepted `tG9K` v4 artifact captured responsibilities well but omitted expli
 - `some C/C++ helpful`;
 - structured education/experience signals where they should participate in job requirements.
 
-It also over-strengthened some stack entries even though the employer states that not every technical-stack item is expected.
+It also over-strengthened some stack entries even though the employer states that not every technical-stack item is expected. Artifact 29 closes these gaps with complete deterministic coverage accounting, concept-scoped explicit depth, and contextual treatment of individually unspecified stack obligation.
 
 ### SQ-1 design rules
 
@@ -232,7 +233,7 @@ It also over-strengthened some stack entries even though the employer states tha
 4. **Structured source fields remain available where semantically relevant.**
    - explicit minimum experience and education must not disappear merely because the long free-text description is dense.
 
-### Contract decision to evaluate
+### Accepted contract decision
 
 The current P1.6 requirement enum is:
 
@@ -243,9 +244,23 @@ contextual
 inferred
 ```
 
-`tG9K` shows that some employer wording may genuinely require a distinct representation such as `mixed` and/or `unspecified`. Do not add the enum merely because it sounds useful; implement it only if reviewed examples demonstrate that the current four-way contract cannot truthfully encode the source without distortion.
+The reviewed `tG9K` case does not justify adding `mixed` or `unspecified`. `contextual` truthfully preserves individually unstated obligation under the global stack modifier, while explicit `plus`/`helpful` clauses remain `preferred`.
 
-**Gate:** Before downstream retuning, P1.6 must preserve factual coverage, obligation, and explicit depth on `tG9K` without inventing certainty.
+**Gate result:** accepted. Artifact 29 preserves the reviewed factual coverage, obligation, and explicit depth without inventing certainty. Capability retuning may proceed.
+
+### Controlled P1.6 model evidence
+
+The fixed-contract `tG9K` comparison produced one accepted local baseline:
+
+- `gemma-4-e4b-it-ud`, 20,480-token load context: artifact 29 completed in 76 seconds with `finish_reason=stop`, 7 responsibilities, 27 requirements, complete 28-item requirement coverage, and complete 8-item duty coverage;
+- Gemma 4 12B QAT was operationally rejected on this 8 GB GPU because tested context/KV-cache variants remained slower and did not achieve a useful full-GPU run;
+- OpenCode `nemotron-3-ultra-free` was slower than local E4B and its raw result failed semantic validation by inventing depth and misclassifying a context modifier;
+- OpenCode `deepseek-v4-flash-free` generated quickly when admitted, but two 4,096-token attempts ended at `finish_reason=length` before valid JSON, while the 8,192-token request was rejected by the free-tier limit.
+- NVIDIA Inkling Non-think completed in 41 seconds but repeated three invalid depth signals after correction. Inkling Low used bounded reasoning and improved from three to two depth errors after correction, but still produced no valid artifact in 72 seconds.
+- NVIDIA `deepseek-ai/deepseek-v4-flash-0731` Think-High did not return a complete hosted response within the operational window. Non-think streaming completed in 82 seconds, but invented depth signals; its correction took total latency to 134 seconds and increased the semantic errors.
+- NVIDIA `google/gemma-4-31b-it` disconnected twice before inference, and `nvidia/nemotron-3-super-120b-a12b` exceeded two minutes before it was operationally rejected.
+
+Therefore E4B is the current analysis role. Hosted candidates are evaluation-only; no remote provider or secret was added to the production path.
 
 ---
 
@@ -257,6 +272,8 @@ Current contract:
 job-capability-intelligence-v4
 schema: job-capability-intelligence-v2
 ```
+
+**Current gate result:** not accepted. The artifact-29 v4 rebuild persisted as Capability artifact 7 but failed review for omitted explicit depth and over-strengthened tool, cloud, and ownership claims. The attempted generic v5 correction failed live by exhausting `max_tokens` during its bounded retry and was reverted. See `docs/incidents/2026-08-09_MODEL_EVALUATION_AND_CAPABILITY_CALIBRATION_FAILURES.md` before resuming this tranche.
 
 ### Already working
 

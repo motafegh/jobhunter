@@ -63,19 +63,21 @@ Notes:
 
 ## B1 — Fix Review Snapshot effective-model routing
 
-**Priority: first code task in the next implementation session.**
+**Accepted on the current 2026-08-08 code head.**
 
-- [!] B1.1 `jobhunter jobs snapshot <id>` currently calls `write_review_snapshot()` without the effective model-role arguments.
-- [ ] B1.2 Pass `settings.effective_analysis_lm_studio_model()`.
-- [ ] B1.3 Pass `settings.effective_capability_lm_studio_model()`.
-- [ ] B1.4 Pass `settings.effective_blueprint_lm_studio_model()`.
-- [ ] B1.5 Update `tests/test_review_snapshot_entrypoint.py` so integrated CLI routing verifies all three model roles.
-- [ ] B1.6 Run focused snapshot/model-routing tests.
-- [ ] B1.7 Run `ruff check .`, full `pytest`, and `pytest -W error`.
-- [ ] B1.8 Regenerate `tG9K` snapshot and confirm `configured_models` contains the effective role models rather than null values.
-- [ ] B1.9 Confirm `translation_matches_english_analysis`, `capability_is_current_chain`, and `blueprint_is_current_chain` remain true.
+- [x] B1.1 Integrated `jobhunter jobs snapshot <id>` passes all effective model-role arguments.
+- [x] B1.2 Pass `settings.effective_analysis_lm_studio_model()`.
+- [x] B1.3 Pass `settings.effective_capability_lm_studio_model()`.
+- [x] B1.4 Pass `settings.effective_blueprint_lm_studio_model()`.
+- [x] B1.5 Integrated CLI routing tests verify all three model roles.
+- [x] B1.6 Focused snapshot/model-routing tests: 7 passed.
+- [x] B1.7 `ruff check .`, full `pytest`, and `pytest -W error`: green; both full test runs passed 269 tests.
+- [x] B1.8 Regenerated `tG9K`; `configured_models` records `gemma-4-e2b-it` for all three roles.
+- [x] B1.9 `translation_matches_english_analysis`, `capability_is_current_chain`, and `blueprint_is_current_chain` remain true.
 
 **Acceptance:** the normal integrated snapshot command is safe for future multi-model comparisons.
+
+**Current next task:** B3 / SQ-2 Capability Intelligence calibration.
 
 ---
 
@@ -83,46 +85,52 @@ Notes:
 
 P1.6 is the factual substrate. Fix this before downstream quality tuning.
 
+**Accepted on the current 2026-08-09 code head with `tG9K` artifact 29.**
+
 ### B2.1 Coverage accounting
 
-- [ ] Identify a deterministic/structured way to ensure meaningful requirement-bearing long-description segments are either extracted or explainably excluded.
-- [ ] Do **not** introduce a forced minimum claim count.
-- [ ] Use `tG9K` as the first regression/acceptance example for explicit omitted families.
+- [x] Deterministically account for meaningful requirement-bearing long-description segments as extracted, context-only, or explainably excluded.
+- [x] Do **not** introduce a forced minimum claim count.
+- [x] Use `tG9K` as the first regression/acceptance example for explicit omitted families.
 
 Known `tG9K` omissions to verify after the fix:
 
-- [ ] Data & statistics: pandas / NumPy / SciPy / statsmodels / PCA / PLS.
-- [ ] Industrial statistics: SPC / DOE / capability analysis / Bayesian methods.
-- [ ] Fab data systems: MES / SECS-GEM / equipment/metrology/trace.
-- [ ] Cloud providers / edge wording.
-- [ ] `MATLAB a plus`.
-- [ ] `some C / C++ helpful`.
-- [ ] structured 3–6 years experience and Master's degree when semantically appropriate.
+- [x] Data & statistics: pandas / NumPy / SciPy / statsmodels / PCA / PLS.
+- [x] Industrial statistics: SPC / DOE / capability analysis / Bayesian methods.
+- [x] Fab data systems: MES / SECS-GEM / equipment/metrology/trace.
+- [x] Cloud providers / edge wording.
+- [x] `MATLAB a plus`.
+- [x] `some C / C++ helpful`.
+- [x] structured 3–6 years experience and Master's degree.
 
 ### B2.2 Obligation and depth
 
-- [ ] Preserve `Python (expert)` as Python-specific depth.
-- [ ] Do not propagate `expert` to all ML frameworks.
-- [ ] Preserve `MATLAB a plus` as optional/preference evidence.
-- [ ] Preserve `C/C++ helpful` as optional/helpful evidence.
-- [ ] Preserve global `we don't expect every single item` without turning every stack item required or preferred.
-- [ ] Evaluate whether the current P1.6 `required/preferred/contextual/inferred` enum can truthfully encode reviewed mixed/unspecified cases.
-- [ ] Add `mixed`/`unspecified` only if reviewed examples prove the current contract is insufficient; version the prompt/schema as required by the resulting contract change.
+- [x] Preserve `Python (expert)` as Python-specific depth.
+- [x] Do not propagate `expert` to all ML frameworks.
+- [x] Preserve `MATLAB a plus` as optional/preference evidence.
+- [x] Preserve `C/C++ helpful` as optional/helpful evidence.
+- [x] Preserve global `we don't expect every single item` without turning every stack item required or preferred.
+- [x] Evaluate the P1.6 `required/preferred/contextual/inferred` enum against the reviewed case; `contextual` truthfully represents individually unspecified stack obligation.
+- [x] Do not add unsupported `mixed`/`unspecified` values; version the depth/coverage contract as `job-analysis-*-v9` / `job-analysis-v4`.
 
 ### B2.3 Validation
 
-- [ ] Add deterministic regression fixtures for the actual generic failure classes.
-- [ ] Re-run `tG9K` English analysis only after the contract changes.
-- [ ] Review the full P1.6 output before rebuilding Capability.
-- [ ] Preserve exact evidence and artifact versioning/reuse behavior.
+- [x] Add deterministic regression fixtures for the actual generic failure classes.
+- [x] Re-run `tG9K` English analysis only after the contract changes.
+- [x] Review the full P1.6 output before rebuilding Capability.
+- [x] Preserve exact evidence and artifact versioning/reuse behavior.
 
 **Acceptance:** `tG9K` factual extraction is materially complete for its explicit requirements and does not inflate optionality/depth.
+
+Accepted evidence: artifact 29 completed in 76 seconds on local `gemma-4-e4b-it-ud`; 7 responsibilities, 27 requirements, all 28 requirement-coverage inputs accounted for, and all 8 responsibility-coverage inputs accounted for. The selected snapshot now includes reviewed-but-unaccepted Capability artifact 7 and no Blueprint.
 
 ---
 
 ## B3 — Capability Intelligence calibration (SQ-2)
 
 Start only after B2's P1.6 substrate is accepted for `tG9K`.
+
+**Negative evaluation recorded on 2026-08-09; B3 remains open and is deferred for later remediation.** See `docs/incidents/2026-08-09_MODEL_EVALUATION_AND_CAPABILITY_CALIBRATION_FAILURES.md`.
 
 - [ ] B3.1 Ensure material explicit depth/seniority/experience evidence can populate `depth_signals`.
 - [ ] B3.2 Prevent `requirement_strength` from systematically becoming stronger than accepted P1.6/source evidence.
@@ -132,8 +140,10 @@ Start only after B2's P1.6 substrate is accepted for `tG9K`.
 - [ ] B3.6 Keep supported invalid-only evidence fail-closed.
 - [ ] B3.7 Keep unknown-scope evidence-empty normalization valid.
 - [ ] B3.8 Do not add semiconductor-specific validators.
-- [ ] B3.9 Rebuild `tG9K` Capability after the accepted P1.6 change.
-- [ ] B3.10 Review usefulness, evidence statuses, depth, requirement strength, unknown scope, and decomposition.
+- [x] B3.9 Rebuild `tG9K` Capability after the accepted P1.6 change (artifact 7 / v4).
+- [x] B3.10 Review usefulness, evidence statuses, depth, requirement strength, unknown scope, and decomposition; result was negative and B3 was not accepted.
+
+Observed blocker: v4 artifact 7 omits accepted explicit depth and overstates framework mastery, cloud necessity, and end-to-end ownership. A generic v5 experiment passed 21 focused tests but its live bounded retry exhausted `max_tokens`; it was reverted and produced no artifact. Do not repeat it unchanged.
 
 **Acceptance:** Capability is materially more useful than P1.6 without systematic over-strengthening or generic curriculum expansion.
 

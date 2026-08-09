@@ -18,6 +18,7 @@ def _schema() -> dict:
         "type": "object",
         "properties": {
             "concept": {"type": "string"},
+            "depth_signal": {"type": ["string", "null"]},
             "requirement_type": {"type": "string"},
             "concept_type": {"type": "string"},
             "evidence": {"type": "string"},
@@ -26,6 +27,7 @@ def _schema() -> dict:
         },
         "required": [
             "concept",
+            "depth_signal",
             "requirement_type",
             "concept_type",
             "evidence",
@@ -40,8 +42,14 @@ def _schema() -> dict:
             "role_purpose": {"type": "array", "items": claim},
             "responsibilities": {"type": "array", "items": claim},
             "requirements": {"type": "array", "items": requirement},
+            "coverage_exclusions": {"type": "array", "items": {"type": "object"}},
         },
-        "required": ["role_purpose", "responsibilities", "requirements"],
+        "required": [
+            "role_purpose",
+            "responsibilities",
+            "requirements",
+            "coverage_exclusions",
+        ],
         "additionalProperties": False,
     }
 
@@ -50,7 +58,12 @@ def test_live_analysis_schema_routes_to_instructor_helper(monkeypatch) -> None:
     calls: list[dict] = []
     expected = StructuredInferenceResult(
         model="analysis-model",
-        structured={"role_purpose": [], "responsibilities": [], "requirements": []},
+        structured={
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [],
+            "coverage_exclusions": [],
+        },
         request_body={"instructor": {"mode": "JSON_SCHEMA"}},
         raw_response={"id": "fake"},
         finish_reason="stop",
