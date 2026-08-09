@@ -69,6 +69,11 @@ class CapabilityInferenceProvider:
             raise InferenceResponseError(
                 "Capability intelligence requires dictionary analysis_fields"
             )
+        accepted_extraction = user_payload.get("accepted_extraction")
+        if not isinstance(accepted_extraction, dict):
+            raise InferenceResponseError(
+                "Capability intelligence requires dictionary accepted_extraction"
+            )
         catalog = evidence_catalog or {}
         if not all(
             isinstance(key, str) and isinstance(value, str)
@@ -118,6 +123,7 @@ class CapabilityInferenceProvider:
                 context={
                     "analysis_fields": analysis_fields,
                     "evidence_catalog": catalog,
+                    "accepted_extraction": accepted_extraction,
                 },
                 max_retries=self._validation_retries,
                 temperature=0,
