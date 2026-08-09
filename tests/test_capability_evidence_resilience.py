@@ -15,6 +15,8 @@ def _base_payload() -> dict:
                 "summary": (
                     "The employee must apply ML and statistical methods to industrial data."
                 ),
+                "source_requirement_indices": [0],
+                "source_responsibility_indices": [],
                 "requirement_strength": "required",
                 "depth_signals": [],
                 "work_activities": [],

@@ -56,7 +56,9 @@ class _Provider:
                             "VPN/network knowledge is expected to be applied in live "
                             "connectivity diagnosis, while vendor-specific scope remains unknown."
                         ),
-                        "requirement_strength": "required",
+                        "source_requirement_indices": [0],
+                        "source_responsibility_indices": [0],
+                        "requirement_strength": "unspecified",
                         "depth_signals": [],
                         "work_activities": [],
                         "sub_capabilities": [],
@@ -170,6 +172,7 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
                 "requirements": [
                     {
                         "concept": "VPN and network infrastructure",
+                        "depth_signal": "Mastery of VPN and network infrastructure",
                         "requirement_type": "required",
                         "concept_type": "knowledge",
                         "evidence": "Mastery of VPN and network infrastructure",
@@ -216,6 +219,10 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
     assert payload["accepted_extraction"]["requirements"][0]["concept"] == (
         "VPN and network infrastructure"
     )
+    assert payload["contract"]["deterministic_reconciliation"] == {
+        "requirement_strength": "from linked accepted P1.6 requirement types",
+        "source_explicit_depth": "from linked accepted P1.6 depth_signal values",
+    }
     assert "p1:requirements:0" in payload["evidence_reference_ids"]
     assert provider.calls[0]["evidence_catalog"]["p1:requirements:0"] == (
         "Mastery of VPN and network infrastructure"
@@ -228,7 +235,26 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
     )
     assert artifact is not None
     assert artifact.analysis_artifact_id == analysis_id
-    assert artifact.intelligence["capabilities"][0]["unknown_scope"]
+    profile = artifact.intelligence["capabilities"][0]
+    assert profile["source_requirement_indices"] == [0]
+    assert profile["source_responsibility_indices"] == [0]
+    assert profile["requirement_strength"] == "required"
+    assert profile["depth_signals"] == [
+        {
+            "statement": (
+                "VPN and network infrastructure — employer-stated depth: "
+                "Mastery of VPN and network infrastructure"
+            ),
+            "evidence_status": "source_explicit",
+            "evidence": ["Mastery of VPN and network infrastructure"],
+            "rationale": (
+                "Deterministically propagated from accepted P1.6 requirement 0; "
+                "not model-inferred."
+            ),
+            "confidence": "high",
+        }
+    ]
+    assert profile["unknown_scope"]
 
 
 def test_capability_service_requires_current_accepted_english_analysis(tmp_path: Path) -> None:

@@ -53,10 +53,16 @@ def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> Non
         timeout_seconds=30,
         network_retries=4,
     )
+    accepted_extraction = {
+        "requirements": [],
+        "responsibilities": [],
+        "role_purpose": [],
+    }
     result = provider.complete(
         system_prompt="Analyze the job capabilities.",
         user_payload={
             "analysis_fields": {"description": "Job text."},
+            "accepted_extraction": accepted_extraction,
             "evidence_reference_ids": ["field:description"],
         },
         evidence_catalog={"field:description": "Job text."},
@@ -69,6 +75,7 @@ def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> Non
     assert instructor_client.kwargs["context"]["evidence_catalog"] == {
         "field:description": "Job text."
     }
+    assert instructor_client.kwargs["context"]["accepted_extraction"] == accepted_extraction
     assert result.request_body["runtime"] == {
         "read_timeout_seconds": None,
         "connect_timeout_seconds": 10.0,
