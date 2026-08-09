@@ -1,9 +1,7 @@
 # Capability v6 Deterministic Reconciliation Experiment
 
-**Status:** Experimental B3 candidate; not accepted
+**Status:** Experimental B3 candidate; implemented on `main`, not semantically accepted
 **Date:** 2026-08-09
-**Branch:** `agent/b3-capability-deterministic-reconciliation`
-**Draft PR:** #4
 **Accepted upstream anchor:** `tG9K` English P1.6 artifact 29
 
 ## 1. Purpose
@@ -18,7 +16,7 @@ Capability v4 is structurally valid but failed B3 semantic review on the accepte
 
 A historical prompt-heavy Capability v5 experiment passed focused deterministic tests but exhausted `max_tokens` during the live bounded retry and was reverted. **v5 remains historical and must not be reused.**
 
-This branch therefore reserves:
+The current B3 candidate reserves:
 
 ```text
 Capability prompt/runtime: job-capability-intelligence-v6
@@ -121,7 +119,7 @@ python -m pytest
 python -m pytest -W error
 ```
 
-The branch/PR must remain draft if any deterministic check fails.
+`main` CI must remain green. A deterministic failure blocks B3 acceptance.
 
 ## 7. Live `tG9K` acceptance procedure
 
@@ -132,9 +130,12 @@ Confirm LM Studio has the configured Capability model available, then run:
 ```bash
 jobhunter jobs capability tG9K
 jobhunter jobs snapshot tG9K
+python scripts/audit_capability_v6_snapshot.py
 ```
 
-Review:
+The audit script performs the mechanical checks that previously required a large pasted terminal script. It exits non-zero on a deterministic failure and prints any accepted explicit-depth P1.6 requirements that the model failed to link to a capability.
+
+Review the repository-safe live result with:
 
 ```bash
 git diff -- review-snapshots/jobs/tG9K.json
@@ -152,14 +153,17 @@ Do not rebuild Blueprint until B3 passes.
 
 ## 8. Mechanical live checks
 
-For the new Capability artifact:
+`scripts/audit_capability_v6_snapshot.py` checks that:
 
+- the snapshot remains anchored to accepted English P1.6 artifact 29;
+- the selected Capability uses v6/v3 and belongs to the current dependency chain;
 - every profile has at least one valid P1.6 requirement/responsibility link;
 - persisted `requirement_strength` agrees with linked P1.6 requirement types;
-- accepted explicit P1.6 depth signals appear in linked profiles when those requirements are linked;
-- deterministic depth entries remain `source_explicit` with exact evidence;
-- no stale v4 Capability is selected as the current v6 chain;
-- Blueprint remains absent until rebuilt from an accepted v6 Capability.
+- source-explicit depth entries exactly match deterministic propagation from linked P1.6 depth signals;
+- no extra model-produced `source_explicit` depth survives reconciliation;
+- no stale Blueprint is selected as the current chain.
+
+The script also reports explicit-depth P1.6 requirements that are not linked to any capability. That condition remains a semantic-quality warning rather than mechanically forcing unrelated capability grouping.
 
 ## 9. Semantic live review
 
@@ -177,8 +181,8 @@ The last point matters: deterministic reconciliation can only propagate a P1.6 f
 
 ## 10. Acceptance decision
 
-Do not merge this branch merely because deterministic tests pass or because a v6 artifact persists.
+Do not mark B3 accepted merely because deterministic tests pass or because a v6 artifact persists.
 
-B3 passes only when the complete `tG9K` Capability v6 artifact is materially more useful than P1.6 while remaining correctly calibrated, then the representative CI-3 sequence can continue.
+B3 passes only when the complete `tG9K` Capability v6 artifact is materially more useful than P1.6 while remaining correctly calibrated. Only then should the representative CI-3 sequence and Blueprint calibration continue.
 
 If the v6 live generation again fails by output length, inspect the raw attempt finish reason/token usage before changing token limits. The next design option would be output reduction or bounded partitioning, not blindly increasing `max_tokens` or adding another prompt patch collection.
