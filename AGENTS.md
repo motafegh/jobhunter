@@ -83,14 +83,16 @@ English P1.6:                 job-analysis-english-v9
 Original P1.6:                job-analysis-original-v9
 P1.6 schema:                  job-analysis-v4
 
-Capability:                   job-capability-intelligence-v4
-Capability schema:            job-capability-intelligence-v2
+Capability:                   job-capability-intelligence-v6
+Capability schema:            job-capability-intelligence-v3
 
 Role Blueprint:               role-capability-blueprint-v2
 Blueprint schema:             role-capability-blueprint-v1
 
 Review Snapshot:              job-review-snapshot-v1
 ```
+
+Capability v6/v3 is the active B3 candidate runtime on `main`; it is not semantically accepted until the live `tG9K` B3 review passes. Historical v4/v2 remains preserved as the last reviewed negative Capability artifact, not the current runtime contract.
 
 Do not write current-state documentation that calls v2/v3 P1.6 or earlier Capability/Blueprint prompt versions current. Historical incident records may retain old identities when explicitly historical.
 
@@ -138,7 +140,7 @@ Follow the current TODO and semantic-quality plan:
 8. only then begin corpus-wide Phase 2
 ```
 
-Integrated snapshot model routing and B2 P1.6 factual coverage/optionality/depth are accepted. The first current code task is Capability Intelligence calibration in B3/SQ-2.
+Integrated snapshot model routing and B2 P1.6 factual coverage/optionality/depth are accepted. Capability v6/v3 candidate implementation is now on `main`; the current task is the live `tG9K` B3/SQ-2 acceptance run and complete semantic review.
 
 ---
 
