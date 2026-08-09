@@ -1,517 +1,272 @@
 # JobHunter Semantic Quality Acceptance Plan
 
 **Status:** Active bounded acceptance plan  
-**Date:** 2026-08-08  
-**Scope:** P1.6 strict extraction, Capability Intelligence, Role Capability Blueprint, model-role comparison, and repository review snapshots  
-**Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and the product/domain/source/architecture constraints.
+**Date:** 2026-08-09  
+**Scope:** P1.6 factual extraction, Capability Intelligence, Role Capability Blueprint, model-role comparison, and selected Review Snapshots  
+**Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and product/domain/source/architecture constraints.
 
-This plan does **not** authorize corpus-wide Phase-2 taxonomy/Market-v2 work. It exists to finish the semantic-quality evidence needed by the current Phase-1/P1.6 acceptance gate and the bounded per-job capability slice.
+This plan does not authorize corpus-wide Phase-2 taxonomy/Market-v2 work.
 
----
+## 1. Permanent acceptance principle
 
-## 1. Why this plan exists
-
-Recent live work proved that the architecture can complete the full reviewed chain:
-
-```text
-Jobinja source
-→ English projection v2
-→ strict P1.6 factual extraction
-→ Capability Intelligence
-→ Role Capability Blueprint
-→ repository Review Snapshot
-```
-
-The remaining problems are no longer primarily transport, persistence, timeout, quotation-copy, or artifact-reuse failures. They are mostly **semantic coverage, optionality/depth preservation, capability calibration, expert-judgment precision, and model adequacy**.
-
-Two live cases established the acceptance shape:
-
-### Sparse case — `t4jp`
-
-The source itself contains little technical detail. Correct behavior is conservative:
+Intelligence depth follows evidence density:
 
 ```text
 sparse evidence
-→ modest analysis
+→ modest strong conclusions
 → explicit unknowns
-→ limited tool/architecture speculation
+→ limited architecture/tool speculation
+
+rich evidence
+→ deeper work-linked decomposition
+→ richer supported interpretation
 ```
 
-A shallow result is not automatically a defect when the employer supplied little evidence.
-
-### Rich case — `tG9K`
-
-The source contains dense semiconductor/industrial-ML responsibilities and technical-stack details. The current chain now runs end to end and is reviewable at:
+Current opposite-end anchors:
 
 ```text
-review-snapshots/jobs/tG9K.json
+t4jp  sparse/ambiguous source
+tG9K  rich semiconductor/industrial-ML source
 ```
 
-The snapshot proved that rich evidence produces richer intelligence, but also exposed remaining semantic defects:
-
-- P1.6 still misses some explicit requirement families on long postings;
-- global stack optionality can still collapse into overly strong `required` conclusions;
-- explicit depth such as `Python (expert)` is not always kept separate from broader stack depth;
-- Capability Intelligence underuses `depth_signals` and can overstate edge/deployment context;
-- Blueprint can assemble a list of named technologies into an architecture the employer never specified;
-- `highly_likely` scenarios can conflict with explicit unknowns;
-- technically plausible prose can still misuse tools/metrics or assign them overly specific roles.
-
-These are quality-calibration problems, not reasons to collapse the current layer separation.
-
----
-
-## 2. Current active contracts
-
-As of this plan:
+## 2. Current contracts
 
 ```text
 source parser:                 jobinja-detail-v2
-English projection:            english-projection-v2
-translation provider contract: lm-studio-translation-v2
+translation provider:         lm-studio-translation-v2
+English projection:           english-projection-v2
 
-English P1.6 prompt/runtime:   job-analysis-english-v9
-Original P1.6 prompt/runtime:  job-analysis-original-v9
-P1.6 persisted schema:         job-analysis-v4
+English P1.6:                 job-analysis-english-v9
+Original P1.6:                job-analysis-original-v9
+P1.6 schema:                  job-analysis-v4
 
-Capability prompt/runtime:     job-capability-intelligence-v4
-Capability persisted schema:   job-capability-intelligence-v2
+Capability candidate:         job-capability-intelligence-v7
+Capability schema:            job-capability-intelligence-v4
 
-Blueprint prompt/runtime:      role-capability-blueprint-v2
-Blueprint persisted schema:    role-capability-blueprint-v1
+Blueprint:                    role-capability-blueprint-v2
+Blueprint schema:             role-capability-blueprint-v1
 
-Review Snapshot schema:        job-review-snapshot-v1
+Review Snapshot:              job-review-snapshot-v1
 ```
 
-Historical prompt/runtime versions remain historical and must not be silently reused as current artifacts.
-
----
+Capability v7/v4 is implemented but **not accepted** until the live B3 artifact passes.
 
 ## 3. Permanent layer contract
-
-Do not collapse these responsibilities:
 
 ```text
 P1.6
 → factual substrate
-→ what the employer/source explicitly supports
-→ strict evidence and conservative classification
+→ exact employer/source-supported facts
+→ conservative strength/depth/evidence
 
 Capability Intelligence
-→ auditable machine reasoning
-→ work-linked decomposition, prerequisites, depth/context, unknown scope
+→ auditable reasoning above P1.6
+→ grouping, prerequisites/context, unknown scope
+→ no loss or strengthening of accepted source truth
 
 Role Capability Blueprint
-→ human-facing professional interpretation
-→ useful likely scope, work products, failure modes, examples, scenarios
+→ later human-facing professional interpretation
+→ useful likely scope/examples/scenarios with calibrated uncertainty
 ```
 
-The quality of a downstream layer never upgrades an incorrect upstream factual claim into truth.
+A downstream layer never upgrades an incorrect or uncertain upstream claim into truth.
 
----
+## 4. SQ-0 — Review Snapshot correctness
 
-## 4. Acceptance principle: intelligence depth follows evidence density
+**Accepted.**
 
-Required behavior:
-
-```text
-poor advertisement
-→ limited strong conclusions
-→ more unknowns
-
-rich advertisement
-→ deeper work-linked decomposition
-→ more precise capability/depth/context conclusions
-```
-
-Failure modes:
-
-```text
-similar elaborate output for sparse and rich jobs
-→ likely over-inference
-
-similar shallow output for sparse and rich jobs
-→ likely under-reasoning / extraction loss
-```
-
-`t4jp` and `tG9K` are retained as opposite ends of this acceptance spectrum.
-
----
-
-## 5. Tranche SQ-0 — Review Snapshot correctness
-
-The Review Snapshot workflow is now the normal repository-native live-quality review mechanism.
-
-Normal command:
+The normal repository-native review workflow is:
 
 ```bash
 jobhunter jobs snapshot <job-id>
 ```
 
-Default output:
+The exporter records effective analysis/capability/blueprint models, dependency identities, and current-chain flags while excluding raw responses/prompts, SQLite, secrets, and private state.
+
+## 5. SQ-1 — P1.6 factual coverage / obligation / depth
+
+**Accepted on `tG9K` artifact 29.**
+
+Acceptance evidence:
+
+- 27 requirements;
+- 7 responsibilities;
+- complete deterministic coverage accounting;
+- Python `expert` preserved only for Python;
+- `MATLAB a plus` and `C/C++ helpful` preserved as preference/optional evidence;
+- individually unspecified technical-stack obligation represented as contextual;
+- `Solid`, `Strong`, `Hands-on`, `Comfort`, and experience-duration depth preserved;
+- education and experience included;
+- exact evidence retained.
+
+Current analysis role:
 
 ```text
-review-snapshots/jobs/<job-id>.json
+gemma-4-e4b-it-ud
 ```
 
-The live SQLite database remains local and ignored.
+Keep artifact 29 fixed during current B3 calibration.
 
-### Accepted routing behavior
+## 6. SQ-2 — Capability Intelligence calibration
 
-The standalone snapshot entry point and integrated `jobhunter jobs snapshot` path both pass effective analysis/capability/blueprint model roles into the exporter.
+**Current gate: active / not accepted.**
 
-The first pushed `tG9K` snapshot historically contained:
+### Historical negative evidence
 
-```json
-"configured_models": {
-  "analysis": null,
-  "capability": null,
-  "blueprint": null
-}
-```
+v4/v2 artifact 7:
+- omitted explicit depth;
+- over-strengthened stack/cloud/ownership;
+- evidence-area leakage.
 
-while the persisted artifacts themselves correctly recorded `gemma-4-e2b-it`. B1 first regenerated that complete E2B chain. The current selected snapshot now records E4B for accepted P1.6 and E2B for downstream roles, with old downstream artifacts omitted until rebuilt.
+v5:
+- prompt-heavy experimental correction;
+- bounded retry exhausted output budget;
+- reverted; no accepted artifact.
 
-The integrated CLI routing is covered by deterministic tests. The regenerated snapshot retains true translation/P1.6, Capability, and Blueprint current-chain flags.
+v6/v3 artifact 8:
+- deterministic strength/depth worked for linked facts;
+- model linked only 3/27 requirements and 2/7 responsibilities;
+- missing links silently removed accepted source information from the profile view;
+- unsupported autonomy and end-to-end ownership reappeared;
+- contextual tools/cloud remained over-strengthened;
+- dense role collapsed into one profile;
+- evidence relevance remained imperfect.
 
-### SQ-0 acceptance evidence
+v6 is therefore rejected B3 evidence.
 
-- all three effective model roles are passed into `write_review_snapshot()`;
-- CLI routing tests cover all three values;
-- `tG9K` records the effective roles;
-- current-chain flags remain correct;
-- raw responses/prompts/SQLite/private user data remain excluded;
-- Ruff, full pytest, and warnings-as-errors are green.
-
-**Gate:** SQ-0 is green. Continue with SQ-1; model comparison remains later in the defined sequence.
-
----
-
-## 6. Tranche SQ-1 — P1.6 factual coverage and obligation/depth preservation
-
-P1.6 is the highest semantic priority because downstream layers depend on it.
-
-### Already improved in v4
-
-- heading-aware long-description evidence references;
-- clause-level references for semicolon-delimited mixed-strength lines;
-- rich-source 0/0 extraction guard;
-- evidence-reference generation instead of quotation transcription;
-- deterministic atomic optionality guard;
-- `preferred` claims require source preference/advantage wording;
-- long local analysis generation has no arbitrary read-time ceiling.
-
-### Historical defects closed by the accepted v9/v4 artifact
-
-The historical `tG9K` v4 artifact captured responsibilities well but omitted explicit source families including examples such as:
-
-- Data & statistics: pandas / NumPy / SciPy / statsmodels / PCA / PLS;
-- Industrial statistics: SPC / DOE / capability analysis / Bayesian methods;
-- Fab data systems: MES / SECS-GEM / equipment/metrology/trace;
-- Cloud providers / edge wording;
-- `MATLAB a plus`;
-- `some C/C++ helpful`;
-- structured education/experience signals where they should participate in job requirements.
-
-It also over-strengthened some stack entries even though the employer states that not every technical-stack item is expected. Artifact 29 closes these gaps with complete deterministic coverage accounting, concept-scoped explicit depth, and contextual treatment of individually unspecified stack obligation.
-
-### SQ-1 design rules
-
-1. **Coverage accounting, not forced claim count.**
-   - meaningful requirement-bearing source segments should be extracted, explicitly classified as non-requirement/context, or otherwise explainably excluded;
-   - do not solve recall by inventing a minimum number of claims.
-
-2. **Obligation strength and technical depth stay separate.**
-   - `Python (expert)` → employer-stated depth = expert;
-   - `MATLAB a plus` → optional/preference signal;
-   - `C/C++ helpful` → optional/helpful signal;
-   - `we don't expect every single item` → individual stack obligation may be mixed/unspecified/contextual rather than automatically required or preferred.
-
-3. **Do not spread one depth adjective across neighboring tools.**
-   - `Python (expert)` does not prove expert PyTorch/TensorFlow/XGBoost/LightGBM.
-
-4. **Structured source fields remain available where semantically relevant.**
-   - explicit minimum experience and education must not disappear merely because the long free-text description is dense.
-
-### Accepted contract decision
-
-The current P1.6 requirement enum is:
+### Current v7 boundary
 
 ```text
-required
-preferred
-contextual
-inferred
+accepted P1.6
+→ deterministic source partition
+→ model semantic grouping + derived reasoning draft
+→ complete-coverage validation
+→ deterministic source_truth / strength / explicit depth / explicit work
+→ persisted v7 artifact
 ```
 
-The reviewed `tG9K` case does not justify adding `mixed` or `unspecified`. `contextual` truthfully preserves individually unstated obligation under the global stack modifier, while explicit `plus`/`helpful` clauses remain `preferred`.
+v7 guarantees:
 
-**Gate result:** accepted. Artifact 29 preserves the reviewed factual coverage, obligation, and explicit depth without inventing certainty. Capability retuning may proceed.
+- complete accepted P1.6 source truth persists independently of the model;
+- every capability-relevant accepted requirement is linked;
+- every responsibility is linked;
+- education and standalone experience-duration constraints remain role-level truth;
+- dense sources require actual multi-profile decomposition;
+- profile `requirement_strength` is deterministic;
+- source-explicit depth is deterministic;
+- source-explicit work activity is deterministic;
+- positive autonomy/ownership synthesis is deferred;
+- cross-capability synthesis is deferred.
 
-### Controlled P1.6 model evidence
+### Current v7 mechanical gate for `tG9K`
 
-The fixed-contract `tG9K` comparison produced one accepted local baseline:
+Run:
 
-- `gemma-4-e4b-it-ud`, 20,480-token load context: artifact 29 completed in 76 seconds with `finish_reason=stop`, 7 responsibilities, 27 requirements, complete 28-item requirement coverage, and complete 8-item duty coverage;
-- Gemma 4 12B QAT was operationally rejected on this 8 GB GPU because tested context/KV-cache variants remained slower and did not achieve a useful full-GPU run;
-- OpenCode `nemotron-3-ultra-free` was slower than local E4B and its raw result failed semantic validation by inventing depth and misclassifying a context modifier;
-- OpenCode `deepseek-v4-flash-free` generated quickly when admitted, but two 4,096-token attempts ended at `finish_reason=length` before valid JSON, while the 8,192-token request was rejected by the free-tier limit.
-- NVIDIA Inkling Non-think completed in 41 seconds but repeated three invalid depth signals after correction. Inkling Low used bounded reasoning and improved from three to two depth errors after correction, but still produced no valid artifact in 72 seconds.
-- NVIDIA `deepseek-ai/deepseek-v4-flash-0731` Think-High did not return a complete hosted response within the operational window. Non-think streaming completed in 82 seconds, but invented depth signals; its correction took total latency to 134 seconds and increased the semantic errors.
-- NVIDIA `google/gemma-4-31b-it` disconnected twice before inference, and `nvidia/nemotron-3-super-120b-a12b` exceeded two minutes before it was operationally rejected.
+```bash
+jobhunter jobs capability tG9K
+jobhunter jobs snapshot tG9K
+python scripts/audit_capability_v7_snapshot.py
+```
 
-Therefore E4B is the current analysis role. Hosted candidates are evaluation-only; no remote provider or secret was added to the production path.
-
----
-
-## 7. Tranche SQ-2 — Capability Intelligence calibration
-
-Current contract:
+Expected:
 
 ```text
-job-capability-intelligence-v4
-schema: job-capability-intelligence-v2
+P1.6 artifact 29 fixed
+Capability v7/v4 current-chain
+>=2 profiles
+25/25 capability requirements linked
+7/7 responsibilities linked
+all 27 requirements retained in source_truth
+all 7 responsibilities retained in source_truth
+all explicit depth retained in source_truth
+role-level requirement indices [25, 26]
+no positive independence expectation
+cross_capability_observations []
+no current Blueprint
 ```
 
-**Current gate result:** not accepted. The artifact-29 v4 rebuild persisted as Capability artifact 7 but failed review for omitted explicit depth and over-strengthened tool, cloud, and ownership claims. The attempted generic v5 correction failed live by exhausting `max_tokens` during its bounded retry and was reverted. See `docs/incidents/2026-08-09_MODEL_EVALUATION_AND_CAPABILITY_CALIBRATION_FAILURES.md` before resuming this tranche.
+### SQ-2 semantic gate
 
-### Already working
+Mechanical validity is necessary but insufficient. Reject B3 if the artifact:
 
-- stable evidence-reference catalog;
-- exact source resolution before persistence;
-- invalid additional references are discarded only when valid grounding remains;
-- invalid-only evidence still fails supported claims;
-- invalid-only evidence for `unknown_or_unsupported` normalizes to `[]` rather than consuming another full model retry;
-- long local generation has no arbitrary read-time ceiling;
-- dedicated capability model role is configurable;
-- current source/translation/P1.6 dependency identity is preserved.
+- groups unrelated facts solely to satisfy coverage;
+- promotes contextual/preferred tools to mandatory/mastery/essential without support;
+- treats cloud/edge lists as required architecture;
+- attaches exact but semantically irrelevant evidence;
+- invents generic curricula/prerequisites;
+- produces technically weak derived conclusions;
+- hides important unknowns;
+- recreates ownership/autonomy claims elsewhere;
+- is not materially more useful than P1.6.
 
-### Remaining acceptance problems
+If v7 is mechanically correct but E2B reasoning remains inadequate, compare one stronger Capability model with source, English projection, P1.6, prompt/schema, and rubric held fixed. Do not add another prompt-patch collection first.
 
-- `depth_signals` can remain empty even when the posting has strong explicit depth/seniority evidence;
-- source stack optionality can be converted into overly strong capability `required` conclusions;
-- one capability area can absorb unrelated uncertainty/context that belongs to another area;
-- optional edge/cloud wording can become a high-confidence operational-context conclusion;
-- downstream reasoning can amplify an upstream P1.6 depth mistake.
+## 7. SQ-3 — Blueprint calibration
 
-### SQ-2 rules
+Blocked until SQ-2/B3 passes.
 
-- explicit depth/seniority/experience evidence should populate `depth_signals` when material;
-- `requirement_strength` must not silently become stronger than the factual substrate;
-- unknown scope stays explicit;
-- capability grouping should be coherent enough that unrelated MLOps/deployment uncertainty is not attached to a time-series feature-engineering capability without a real reason;
-- deterministic bookkeeping repairs remain deterministic;
-- do not add domain-specific semiconductor validators.
+Permanent rules:
 
-**Gate:** Capability Intelligence should be materially more useful than P1.6 while remaining auditable and correctly calibrated.
+1. technology list != architecture;
+2. source optionality survives downstream;
+3. possible/likely examples remain examples;
+4. `highly_likely` cannot contradict unresolved unknowns;
+5. technical correctness outranks sophisticated prose;
+6. scenario detail scales with evidence;
+7. avoid domain-specific prompt patches.
 
----
+## 8. SQ-4 — Controlled model-role comparison
 
-## 8. Tranche SQ-3 — Blueprint calibration and expert-judgment quality
+Use only when current-model quality evidence warrants it.
 
-Current contract:
+Hold fixed:
 
 ```text
-role-capability-blueprint-v2
-schema: role-capability-blueprint-v1
+source semantic version
+English projection
+accepted P1.6
+Capability/Blueprint contract
+review rubric
 ```
 
-### Product shape is accepted as useful
+Change only the model. Compare technical correctness, calibration, useful decomposition, unsupported inference, uncertainty, and usefulness per token/time.
 
-The human-facing structure is valuable:
+No multi-model voting/ensemble.
 
-- role read / likely role shape;
-- capability areas;
-- likely depth;
-- likely subskills;
-- source-named / likely / possible tools/examples;
-- work products;
-- operational concerns/failure modes;
-- hidden requirements;
-- end-to-end scenarios;
-- probable non-requirements;
-- important unknowns;
-- bottom line.
+## 9. SQ-5 / CI-3 — heterogeneous live acceptance
 
-### Remaining observed failure classes
+After B3/B4, review materially different jobs:
 
-The first `tG9K` snapshot showed examples of overconfident synthesis:
+1. `t4jp` sparse/ambiguous;
+2. `tG9K` rich AI/ML;
+3. Python/software;
+4. network/security;
+5. operations/platform/DevOps.
 
-- many independently listed technologies were assembled into one `highly_likely` architecture;
-- a real-time scenario was labeled highly likely while latency remained an explicit unknown;
-- optional edge deployment wording was treated too strongly;
-- individual tools were assigned overly specific runtime roles;
-- technically plausible statements could become more specific than the vacancy evidence justified.
-
-### SQ-3 general rules
-
-Do **not** accumulate one-off rules such as `never use Airflow for X` or semiconductor-specific prompt patches.
-
-Instead enforce/review these general principles:
-
-1. A technology list is **not** an architecture specification.
-2. A plausible example remains an example; it must not be described as employer-required.
-3. `highly_likely` requires strong supporting evidence and must not contradict an explicit unknown.
-4. Source optionality must survive into scenarios and hidden requirements.
-5. Tool/framework/protocol/metric names retain their normal technical meaning.
-6. Company-domain context may support reasoning but must not manufacture regulation, scale, architecture, or proprietary systems.
-7. Scenario detail should scale with evidence density.
-8. Prefer useful narrowing (`probably not required`) over generic curriculum dumping.
-
-**Gate:** Blueprint must be professionally useful without presenting one reasonable architecture as the employer's likely architecture when the evidence only supports a family of possibilities.
-
----
-
-## 9. Tranche SQ-4 — Controlled model-role comparison
-
-JobHunter now supports independent local models:
-
-```toml
-analysis_lm_studio_model = "..."
-capability_lm_studio_model = "..."
-blueprint_lm_studio_model = "..."
-```
-
-Fallback:
-
-```text
-Capability → dedicated capability model → effective analysis model
-Blueprint  → dedicated blueprint model  → effective capability model
-```
-
-### Comparison protocol
-
-Do not change source, translation, P1.6 evidence, prompt contract, and model at the same time.
-
-For one reviewed job such as `tG9K`:
-
-```text
-same source semantic version
-same English projection
-same accepted P1.6 artifact
-same Capability/Blueprint prompt+schema
-        ↓
-model A
-vs
-model B
-```
-
-Compare:
-
-- factual/technical correctness;
-- evidence-status calibration;
-- obligation/depth preservation;
-- useful decomposition;
-- unsupported inference rate;
-- domain/tool correctness;
-- scenario realism;
-- uncertainty calibration;
-- generic-curriculum tendency;
-- output usefulness per token/time.
-
-Do not introduce multi-model voting or ensemble consensus. The purpose is to select an adequate role-specific model, not build another architecture layer.
-
----
-
-## 10. Tranche SQ-5 — CI-3 representative live acceptance
-
-Capability CI-3 is not passed by one strong technical example.
-
-Review at least five materially different jobs where the corpus allows:
-
-1. sparse/ambiguous posting — `t4jp` is the existing first case;
-2. rich AI/ML/industrial role — `tG9K` is the existing first case;
-3. Python/software role;
-4. network/security role;
-5. operations/platform/DevOps role.
-
-Prefer multiple companies and varied description length, language mix, requirement density, and optionality wording.
-
-For each job, regenerate a repository Review Snapshot and review the complete chain:
+For each selected case inspect:
 
 ```text
 source
-→ English projection
+→ English
 → P1.6
-→ Capability Intelligence
-→ Role Capability Blueprint
+→ Capability
+→ Blueprint
 ```
 
-Record at least:
+Record factual false positives/negatives, strength/depth mistakes, evidence mismatch, capability decomposition/status mistakes, unsupported prerequisites, missing unknowns, Blueprint technical/certainty mistakes, and model limitations separately from deterministic defects.
 
-- P1.6 false positives/false negatives;
-- requirement obligation/depth mistakes;
-- evidence mismatch;
-- Capability status/decomposition mistakes;
-- unsupported prerequisites;
-- missing unknown boundaries;
-- Blueprint technical mistakes;
-- over/under-inference;
-- model-specific limitations.
+## 10. Stop rule
 
-Repeatable deterministic failures become regression fixtures. Non-deterministic/model-capability limitations are documented and used in model selection rather than patched endlessly.
+Do not polish semantic reasoning indefinitely.
 
----
-
-## 11. Promotion / stop decision
-
-After SQ-0 through SQ-5:
-
-### Accept the bounded semantic slice when
-
-- deterministic Ruff/pytest/warnings gates are green on the user's environment;
-- current artifacts are dependency-correct and reviewable through snapshots;
-- P1.6 factual coverage/strength/depth is acceptable across the representative sample;
-- Capability adds useful auditable reasoning without systematic over-strengthening;
-- Blueprint adds useful professional interpretation without systematic architecture invention;
-- a dedicated stronger model is selected if Gemma remains inadequate;
-- important repeatable failures have regression coverage;
-- known model limitations are explicit.
-
-### Then stop expanding this slice
-
-Do not spend indefinite time polishing Blueprint. Return to remaining Phase-1 closure work:
+Once the bounded semantic slice is accepted across heterogeneous evidence, stop expanding it and return to Phase-1 closure:
 
 ```text
-Market truthfulness / sampling
-→ source failure + lifecycle acceptance
-→ partial-success operation semantics
-→ remaining P1.3/P1.5 acceptance
-→ final P1.7 run/report/browser-equivalent acceptance
+Market truthfulness/sampling
+→ source/lifecycle acceptance
+→ partial-success semantics
+→ P1.7 report/run/browser acceptance
 → Phase-1 closure
 ```
 
-Only after Phase-1 closure should corpus-wide Phase-2 canonical mapping, Market-v2 capability aggregation, role archetypes, and personal gap/readiness work become controlling implementation scope.
-
----
-
-## 12. Non-goals
-
-This plan does not authorize:
-
-- universal technology curricula;
-- automatic taxonomy growth;
-- corpus-wide Capability/Blueprint generation;
-- multi-model voting;
-- vector/RAG infrastructure;
-- personal readiness scoring;
-- learning-plan generation;
-- application ranking;
-- autonomous application submission;
-- domain-specific prompt rule accumulation.
-
----
-
-## 13. Review Snapshot workflow
-
-After a reviewed local run:
-
-```bash
-jobhunter jobs snapshot <job-id>
-git diff -- review-snapshots/jobs/<job-id>.json
-git add review-snapshots/jobs/<job-id>.json
-git commit -m "review: update <job-id> intelligence snapshot"
-git push origin main
-```
-
-The reviewer/AI can then inspect the repository snapshot directly. Manual browser copy/paste is no longer the normal review path.
+Only after Phase-1 closure begin corpus-wide Phase 2.

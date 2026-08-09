@@ -1,188 +1,96 @@
 # Capability v6 Deterministic Reconciliation Experiment
 
-**Status:** Experimental B3 candidate; implemented on `main`, not semantically accepted
-**Date:** 2026-08-09
-**Accepted upstream anchor:** `tG9K` English P1.6 artifact 29
+**Status:** Rejected after live B3 semantic review; superseded by Capability v7/v4  
+**Date:** 2026-08-09  
+**Accepted upstream anchor:** `tG9K` English P1.6 artifact 29  
+**Live artifact:** Capability artifact 8
 
-## 1. Purpose
+## Purpose
 
-Capability v4 is structurally valid but failed B3 semantic review on the accepted `tG9K` P1.6 substrate. The main observed failures were:
+Capability v6 tested a stronger deterministic/model boundary after Capability v4 omitted explicit
+depth and over-strengthened contextual stack/ownership claims.
 
-- accepted explicit P1.6 depth signals were omitted from Capability `depth_signals`;
-- contextual/optional stack items were strengthened into required capability claims;
-- cloud/deployment wording was overstated;
-- pipeline/MLOps evidence was converted into unsupported end-to-end ownership;
-- unrelated evidence could leak across capability areas.
-
-A historical prompt-heavy Capability v5 experiment passed focused deterministic tests but exhausted `max_tokens` during the live bounded retry and was reverted. **v5 remains historical and must not be reused.**
-
-The current B3 candidate reserves:
+Reserved identity:
 
 ```text
 Capability prompt/runtime: job-capability-intelligence-v6
 Capability schema:         job-capability-intelligence-v3
 ```
 
-## 2. Design decision
+A historical prompt-heavy v5 experiment had already failed by exhausting the bounded output budget,
+so v6 deliberately did not reuse v5.
 
-The model should reason. JobHunter should perform mechanically provable bookkeeping.
+## What v6 changed
 
-The v6 candidate changes the boundary to:
-
-```text
-accepted P1.6 artifact
-        ↓
-model chooses coherent capability areas
-and links accepted P1.6 facts by index
-        ↓
-JobHunter validates those links
-        ↓
-JobHunter deterministically derives requirement strength
-and source-explicit depth from the linked P1.6 facts
-        ↓
-revalidated Capability v6 artifact
-```
-
-Each capability profile now carries:
+Each capability profile supplied:
 
 ```text
 source_requirement_indices
 source_responsibility_indices
 ```
 
-Every profile must link at least one accepted P1.6 requirement or responsibility. Out-of-range indices fail validation.
+After model generation JobHunter deterministically:
 
-## 3. Deterministic reconciliation
+- derived `requirement_strength` from linked accepted P1.6 requirement types;
+- copied linked accepted P1.6 `depth_signal` values into source-explicit Capability depth entries;
+- validated source indices and exact evidence grounding.
 
-### Requirement strength
+This mechanism worked correctly for facts the model actually linked.
 
-The model emits `requirement_strength = unspecified` during generation.
+## Live `tG9K` result
 
-After generation JobHunter derives the persisted value from linked accepted P1.6 requirement types:
+The v6 live generation completed and persisted Capability artifact 8 against accepted English P1.6
+artifact 29.
 
-```text
-no linked requirement types       -> unspecified
-one unique linked type            -> that exact type
-multiple linked types             -> mixed
-```
+Mechanical wins:
 
-This prevents Capability from silently upgrading contextual/preferred P1.6 facts into required claims through bookkeeping drift.
+- dependency chain was correct;
+- v6/v3 identity was correct;
+- deterministic requirement-strength reconciliation worked;
+- linked `Strong` and `Hands-on` depth signals were propagated exactly;
+- stale Blueprint remained excluded from the current chain.
 
-### Source-explicit depth
+Semantic failures:
 
-The model is instructed not to reproduce source-explicit depth. After generation JobHunter copies accepted non-null P1.6 `depth_signal` values from linked requirements into Capability `depth_signals` with:
+- only 3 of 27 accepted requirements were linked;
+- only 2 of 7 accepted responsibilities were linked;
+- Python `expert`, statistics `Solid`, time-series `Comfort`, and role-level duration evidence were
+  therefore absent from the profile-level capability view;
+- the model again inferred unsupported autonomy from partnership language;
+- the model again inferred end-to-end ML lifecycle ownership from pipelines/MLOps/deployment;
+- the dense role collapsed into one catch-all capability;
+- exact evidence could still be semantically irrelevant to a derived claim;
+- contextual tools/cloud wording was still strengthened in prose.
 
-```text
-evidence_status = source_explicit
-exact accepted P1.6 evidence
-explicit deterministic rationale
-```
+B3 therefore did **not** pass.
 
-Model-generated `source_explicit` depth entries are discarded during reconciliation. The model may still add genuinely `strongly_implied_by_work` or `model_inferred_prerequisite` depth judgments when useful.
+## Lesson
 
-## 4. Prompt changes
-
-The v6 prompt adds generic rules rather than domain-specific patches:
-
-- explicit accepted-P1.6 source linkage per capability;
-- fewer coherent capability profiles instead of catch-all tool-list profiles;
-- requirement-strength bookkeeping delegated to JobHunter;
-- source-explicit depth delegated to JobHunter;
-- ownership/autonomy restraint unless authority evidence exists;
-- direct evidence relevance per analytical statement;
-- contextual/preferred tools must not be described as mandatory without independent support;
-- unknown scope remains explicit.
-
-No semiconductor-specific validator or word list is added.
-
-## 5. What this candidate intentionally does not solve deterministically
-
-The following remain semantic-review questions rather than brittle code heuristics:
-
-- whether one capability grouping is professionally coherent;
-- whether a derived prerequisite is technically justified;
-- whether a scenario is realistic;
-- whether prose overstates a contextual tool even when the stored strength is correct;
-- whether evidence is semantically relevant beyond exact-source grounding;
-- whether independence/ownership interpretation is professionally calibrated.
-
-These are evaluated on the complete live artifact. They should become deterministic validators only when a relationship is mechanically provable and general.
-
-## 6. Deterministic acceptance gate
-
-Before any live model run:
-
-```bash
-python -m pip install -e ".[dev]"
-ruff check .
-python -m pytest
-python -m pytest -W error
-```
-
-`main` CI must remain green. A deterministic failure blocks B3 acceptance.
-
-## 7. Live `tG9K` acceptance procedure
-
-Keep the accepted upstream chain fixed. Do **not** rerun P1.6 merely to test Capability v6.
-
-Confirm LM Studio has the configured Capability model available, then run:
-
-```bash
-jobhunter jobs capability tG9K
-jobhunter jobs snapshot tG9K
-python scripts/audit_capability_v6_snapshot.py
-```
-
-The audit script performs the mechanical checks that previously required a large pasted terminal script. It exits non-zero on a deterministic failure and prints any accepted explicit-depth P1.6 requirements that the model failed to link to a capability.
-
-Review the repository-safe live result with:
-
-```bash
-git diff -- review-snapshots/jobs/tG9K.json
-```
-
-The snapshot should select:
+The v6 boundary was still too model-dependent:
 
 ```text
-accepted English P1.6 artifact 29
-new dependency-current Capability v6/v3 artifact
-no Blueprint from an older Capability chain
+v6
+model decides which accepted P1.6 facts survive into profile links
+        ↓
+JobHunter reconciles only surviving linked facts
 ```
 
-Do not rebuild Blueprint until B3 passes.
+That means a structurally valid artifact can still lose accepted source truth through incomplete
+model linkage.
 
-## 8. Mechanical live checks
+The next boundary must instead be:
 
-`scripts/audit_capability_v6_snapshot.py` checks that:
+```text
+JobHunter preserves complete accepted P1.6 truth
+        ↓
+model groups and reasons above it
+```
 
-- the snapshot remains anchored to accepted English P1.6 artifact 29;
-- the selected Capability uses v6/v3 and belongs to the current dependency chain;
-- every profile has at least one valid P1.6 requirement/responsibility link;
-- persisted `requirement_strength` agrees with linked P1.6 requirement types;
-- source-explicit depth entries exactly match deterministic propagation from linked P1.6 depth signals;
-- no extra model-produced `source_explicit` depth survives reconciliation;
-- no stale Blueprint is selected as the current chain.
+That design is Capability v7/v4 and is documented in:
 
-The script also reports explicit-depth P1.6 requirements that are not linked to any capability. That condition remains a semantic-quality warning rather than mechanically forcing unrelated capability grouping.
+```text
+docs/experiments/2026-08-09_CAPABILITY_V7_SOURCE_TRUTH_BOUNDARY.md
+```
 
-## 9. Semantic live review
-
-B3 still fails if the complete artifact materially repeats the v4 failure classes, including:
-
-- contextual framework lists described as mastery/mandatory;
-- optional cloud/edge wording described as necessary deployment scope;
-- unsupported end-to-end lifecycle ownership;
-- unrelated evidence attached to the wrong capability area;
-- broad generic curriculum expansion;
-- weak or incoherent capability grouping;
-- useful accepted evidence disappearing because the model did not link it to any relevant capability.
-
-The last point matters: deterministic reconciliation can only propagate a P1.6 fact into profiles the model actually links. Missing important links remain a semantic-quality failure.
-
-## 10. Acceptance decision
-
-Do not mark B3 accepted merely because deterministic tests pass or because a v6 artifact persists.
-
-B3 passes only when the complete `tG9K` Capability v6 artifact is materially more useful than P1.6 while remaining correctly calibrated. Only then should the representative CI-3 sequence and Blueprint calibration continue.
-
-If the v6 live generation again fails by output length, inspect the raw attempt finish reason/token usage before changing token limits. The next design option would be output reduction or bounded partitioning, not blindly increasing `max_tokens` or adding another prompt patch collection.
+Do not reuse v6 as the current Capability contract. Keep this file as historical experiment
+evidence.
