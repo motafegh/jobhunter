@@ -1,300 +1,150 @@
 {
   "capability_intelligence": {
     "analysis_artifact_id": 29,
-    "artifact_id": 7,
-    "created_at": "2026-08-08T22:28:35.130408+00:00",
+    "artifact_id": 8,
+    "created_at": "2026-08-09T16:50:48.320185+00:00",
     "intelligence": {
       "capabilities": [
         {
-          "capability_label": "Domain-Specific ML Application in Manufacturing",
-          "depth_signals": [],
+          "capability_label": "Semiconductor Data Science & Modeling",
+          "depth_signals": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 22; not model-inferred.",
+              "statement": "Experience applying AI/ML to semiconductor or comparable industrial / manufacturing data — employer-stated depth: Strong"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 23; not model-inferred.",
+              "statement": "Experience with process control, manufacturing analytics, yield optimization, or fault / anomaly detection — employer-stated depth: Hands-on"
+            }
+          ],
           "independence_expectation": {
             "confidence": "medium",
             "evidence": [
               "Partner with the semiconductor technical lead and engineering to move models toward production."
             ],
-            "evidence_status": "strongly_implied_by_work",
-            "rationale": "Partnership implies shared ownership of the deployment outcome.",
-            "statement": "The role requires partnering with technical leads to move models toward production, suggesting a collaborative execution model rather than purely independent research."
+            "evidence_status": "model_inferred_prerequisite",
+            "rationale": "The responsibility to 'Partner with the semiconductor technical lead and engineering to move models toward production' implies a high degree of technical autonomy in translating research into deployable solutions.",
+            "statement": "The specialist is expected to operate autonomously in the modeling and pipeline design phases, partnering with engineering leads rather than executing all low-level implementation details."
           },
           "operational_context": [
             {
               "confidence": "high",
               "evidence": [
-                "Ensure traceability, reproducibility, and governance of models and data."
+                "What you’ll do ● Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data. ● Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection. ● Handle high-volume, high-dimensional sensor / trace and metrology data; build robust pipelines. ● Turn manufacturing problems into well-scoped modeling problems with the technical team. ● Design rigorous validation and monitoring for models running in an industrial setting. ● Partner with the semiconductor technical lead and engineering to move models toward production. ● Ensure traceability, reproducibility, and governance of models and data. What we’re looking for ● Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data. ● Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection. ● Comfort with high-dimensional time-series / sensor / metrology data and its noise. ● Solid statistics and signal-processing fundamentals. ● Discipline around validation, reproducibility, and documentation. Technical skill stack The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most. ● Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful ● ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM ● Data & statistics: pandas, NumPy, SciPy, statsmodels; multivariate analysis (PCA / PLS) ● Time-series & signal: signal processing, FFT / wavelets, anomaly detection; tsfresh, sktime ● Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods ● Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis ● Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data ● Data platforms: Spark, Kafka; time-series stores (InfluxDB / TimescaleDB); PostgreSQL ● MLOps: MLflow, Docker; pipelines with Airflow or Prefect; model deployment ● Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus",
+                "Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus"
               ],
-              "evidence_status": "source_explicit",
-              "rationale": "Governance requirements are critical for industrial deployment.",
-              "statement": "The work is situated within an industrial setting, demanding rigor in traceability and reproducibility."
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "The work is explicitly situated in an industrial setting, requiring deployment considerations across cloud/edge environments (AWS, GCP, Azure) and specific industrial deployment knowledge.",
+              "statement": "Industrial Deployment Focus:"
             }
           ],
           "operational_practices": [
             {
               "confidence": "high",
               "evidence": [
-                "Design rigorous validation and monitoring for models running in an industrial setting."
+                "Discipline around validation, reproducibility, and documentation."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "Focus on production readiness.",
-              "statement": "Design and implement rigorous validation and monitoring protocols for models operating in an industrial environment."
+              "rationale": "The candidate must establish rigorous processes for validation, reproducibility, and documentation of their models and data governance.",
+              "statement": "Validation and Governance:"
             }
           ],
           "overall_confidence": "high",
-          "requirement_strength": "required",
+          "requirement_strength": "mixed",
+          "source_requirement_indices": [
+            22,
+            23,
+            3
+          ],
+          "source_responsibility_indices": [
+            0,
+            3
+          ],
           "sub_capabilities": [
             {
               "confidence": "high",
               "evidence": [
-                "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods"
+                "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
               ],
               "evidence_status": "strongly_implied_by_work",
-              "rationale": "Required knowledge for industrial statistics application.",
-              "statement": "Apply statistical process control (SPC), Design of Experiments (DOE), and Bayesian methods to analyze manufacturing data."
+              "rationale": "The role explicitly requires work on yield optimization, process control (APC/SPC), fault detection and classification (FDC), and anomaly detection.",
+              "statement": "Process and Anomaly Detection:"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most.",
+                "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis",
+                "pipelines with Airflow or Prefect"
+              ],
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "The candidate must understand the specific terminology and context of semiconductor metrics, including FDC/APC/SPC, virtual metrology, and run-to-run control.",
+              "statement": "Domain-Specific Knowledge Application:"
             }
           ],
-          "summary": "The candidate must be able to apply advanced AI/ML techniques specifically to semiconductor or comparable industrial/manufacturing data to solve tangible production challenges. This involves translating complex manufacturing problems (like yield loss, process drift) into well-scoped, quantifiable modeling tasks.",
+          "summary": "The specialist must be able to apply AI/ML methodologies directly to semiconductor process, equipment, and manufacturing data to achieve specific industrial goals. This involves framing complex manufacturing challenges (like yield optimization or fault detection) into well-scoped, solvable modeling problems.",
           "underlying_knowledge": [
             {
               "confidence": "high",
               "evidence": [
-                "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis"
+                "Solid statistics and signal-processing fundamentals.",
+                "Time-series & signal: signal processing, FFT / wavelets, anomaly detection"
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "A solid foundation in statistics, signal processing (FFT/wavelets), and multivariate analysis (PCA/PLS) is explicitly required to handle noisy sensor data effectively.",
+              "statement": "Industrial Statistics & Signal Processing:"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "tsfresh, sktime",
+                "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods",
+                "Comfort with high-dimensional time-series / sensor / metrology data and its noise."
               ],
               "evidence_status": "strongly_implied_by_work",
-              "rationale": "Essential domain context.",
-              "statement": "Deep understanding of semiconductor-specific metrics such as FDC/APC/SPC, virtual metrology, run-to-run control, and yield analysis."
+              "rationale": "The ability to handle high-dimensional time-series data, including noise, using specialized libraries like tsfresh and sktime, is essential for analyzing sensor/metrology streams.",
+              "statement": "Time-Series Analysis:"
             }
           ],
           "unknown_scope": [
             {
               "confidence": "high",
-              "evidence": [],
+              "evidence": [
+                "Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful"
+              ],
               "evidence_status": "unknown_or_unsupported",
-              "rationale": "The balance between R&D and production partnership is not quantified.",
-              "statement": "The exact level of autonomy in defining the modeling scope versus adhering to existing engineering roadmaps is unspecified."
+              "rationale": "While Python (expert) and specific ML/Data libraries are listed, the exact required depth for secondary tools like MATLAB, C/C++, or specific data platforms (Spark vs. Kafka usage) is not quantified beyond 'helpful' or contextual.",
+              "statement": "Specific Tool Depth:"
             }
           ],
           "work_activities": [
             {
               "confidence": "high",
               "evidence": [
-                "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data.",
-                "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection.",
-                "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection.",
-                "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most."
+                "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "This is the core objective of the role.",
+              "rationale": "This is the core purpose of the role.",
               "statement": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
             },
             {
               "confidence": "high",
               "evidence": [
-                "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection.",
-                "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection."
+                "Turn manufacturing problems into well-scoped modeling problems with the technical team."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "These are the specific operational goals of the modeling work.",
-              "statement": "Work on yield optimization, process control (APC/SPC), fault detection and classification (FDC), and anomaly detection."
-            }
-          ]
-        },
-        {
-          "capability_label": "Data Engineering & Pipeline Construction (MLOps)",
-          "depth_signals": [],
-          "independence_expectation": {
-            "confidence": "high",
-            "evidence": [
-              "build robust pipelines.",
-              "MLOps: MLflow, Docker"
-            ],
-            "evidence_status": "strongly_implied_by_work",
-            "rationale": "The combination of building pipelines and MLOps implies ownership over the operational flow.",
-            "statement": "The candidate is expected to own the end-to-end pipeline development, from data ingestion through model deployment."
-          },
-          "operational_context": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Cloud & edge: AWS, GCP, or Azure",
-                "industrial / edge deployment a plus"
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "Cloud knowledge is explicitly required for the deployment phase.",
-              "statement": "Familiarity with cloud environments (AWS, GCP, or Azure) is necessary for deployment, with a preference for industrial/edge deployment experience."
-            }
-          ],
-          "operational_practices": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "time-series stores (InfluxDB / TimescaleDB)",
-                "Cloud & edge: AWS, GCP, or Azure"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "Requires knowledge of the specific data infrastructure mentioned.",
-              "statement": "Ability to manage data persistence using specialized time-series databases (InfluxDB/TimescaleDB) and relational stores (PostgreSQL)."
-            }
-          ],
-          "overall_confidence": "high",
-          "requirement_strength": "required",
-          "sub_capabilities": [
-            {
-              "confidence": "medium",
-              "evidence": [
-                "build robust pipelines."
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "Building robust pipelines implies orchestration.",
-              "statement": "Design and implement data pipelines using orchestration tools (Airflow or Prefect) to manage complex, multi-step ML workflows."
-            }
-          ],
-          "summary": "The specialist must be capable of managing the entire data lifecycle, from raw sensor ingestion to production-ready model deployment, utilizing modern MLOps practices.",
-          "underlying_knowledge": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Time-series & signal: signal processing, FFT / wavelets, anomaly detection",
-                "tsfresh, sktime"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "This links the time-series knowledge directly to the required analytical methods.",
-              "statement": "Proficiency in handling time-series data, including feature engineering using libraries like `tsfresh` and `sktime`, alongside signal processing techniques (FFT/wavelets) for anomaly detection."
-            }
-          ],
-          "unknown_scope": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data"
-              ],
-              "evidence_status": "unknown_or_unsupported",
-              "rationale": "The integration complexity between fab systems and ML pipelines is an unknown variable.",
-              "statement": "The specific complexity of integrating MES/SECS/GEM data streams into the ML pipeline is not detailed."
-            }
-          ],
-          "work_activities": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Handle high-volume, high-dimensional sensor / trace and metrology data",
-                "build robust pipelines."
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "Directly links data handling to pipeline construction.",
-              "statement": "Handle high-volume, high-dimensional sensor/trace and metrology data by building robust data pipelines."
-            },
-            {
-              "confidence": "high",
-              "evidence": [
-                "MLOps: MLflow, Docker"
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "Explicit requirement for MLOps tooling knowledge.",
-              "statement": "Implement MLOps practices for model lifecycle management."
-            }
-          ]
-        },
-        {
-          "capability_label": "Technical Tool Proficiency",
-          "depth_signals": [],
-          "independence_expectation": {
-            "confidence": "medium",
-            "evidence": [
-              "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most."
-            ],
-            "evidence_status": "strongly_implied_by_work",
-            "rationale": "The emphasis on 'depth in the core stack' suggests high autonomy in tool selection based on necessity.",
-            "statement": "The expectation is for expert-level execution within the core stack, allowing flexibility in secondary tools."
-          },
-          "operational_context": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "This reflects the need to operate across R&D (modeling) and operational technology (deployment).",
-              "statement": "The candidate must be comfortable operating within a hybrid environment, balancing deep analytical work with industrial system integration and cloud deployment."
-            }
-          ],
-          "operational_practices": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most."
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "This sets a constraint on how skills should be prioritized.",
-              "statement": "The candidate must prioritize depth in the core ML/Data stack over breadth of peripheral tools, as indicated by the context modifier."
-            }
-          ],
-          "overall_confidence": "high",
-          "requirement_strength": "contextual",
-          "sub_capabilities": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data",
-                "Data platforms: Spark, Kafka"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "This bridges the gap between ML and the physical manufacturing environment.",
-              "statement": "Competency in industrial data systems (MES, SECS/GEM) and data platforms (Spark, Kafka) is necessary to effectively access and process raw fab data."
-            }
-          ],
-          "summary": "Proficiency in a specific, deep technical stack is required, with expert-level command over core programming and ML libraries, and functional familiarity with specialized industrial and data infrastructure tools.",
-          "underlying_knowledge": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Time-series & signal: signal processing, FFT / wavelets, anomaly detection"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "Signal processing is the mathematical basis for analyzing time-series data.",
-              "statement": "A foundational understanding of signal processing (FFT/wavelets) is necessary to interpret raw sensor signals, which underpins anomaly detection."
-            }
-          ],
-          "unknown_scope": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "MATLAB a plus",
-                "some C / C++ helpful"
-              ],
-              "evidence_status": "unknown_or_unsupported",
-              "rationale": "The 'a plus' and 'helpful' tags indicate flexibility in these secondary skills.",
-              "statement": "The specific required depth for C/C++ or MATLAB is flexible, suggesting that Python/ML expertise is the primary gatekeeper."
-            }
-          ],
-          "work_activities": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Python (expert)"
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "Explicitly stated as 'expert'.",
-              "statement": "Expert proficiency in Python for all analytical and pipeline development."
-            },
-            {
-              "confidence": "high",
-              "evidence": [
-                "ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM",
-                "Data & statistics: pandas, NumPy, SciPy, statsmodels; multivariate analysis (PCA / PLS)"
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "These are the required tools for model building and statistical analysis.",
-              "statement": "Mastery of core ML/DL frameworks (PyTorch, TensorFlow, scikit-learn) and data manipulation libraries (pandas, NumPy, SciPy)."
-            },
-            {
-              "confidence": "high",
-              "evidence": [
-                "multivariate analysis (PCA / PLS)",
-                "tsfresh, sktime"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "These are the specific analytical techniques required for handling sensor data.",
-              "statement": "Ability to perform multivariate analysis (PCA/PLS) and time-series feature extraction using specialized libraries (`tsfresh`, `sktime`)."
+              "rationale": "This defines the necessary analytical translation skill.",
+              "statement": "Turn manufacturing problems into well-scoped modeling problems with the technical team."
             }
           ]
         }
@@ -303,25 +153,35 @@
         {
           "confidence": "high",
           "evidence": [
-            "Data & statistics: pandas, NumPy, SciPy, statsmodels",
-            "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data",
-            "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+            "build robust pipelines.",
+            "MLOps: MLflow, Docker",
+            "pipelines with Airflow or Prefect",
+            "model deployment"
           ],
           "evidence_status": "model_inferred_prerequisite",
-          "rationale": "The job explicitly requires both the mathematical foundation (statistics/signal processing) and the domain context (semiconductor systems) to perform the required tasks effectively.",
-          "statement": "The role demands a rare combination of deep statistical/signal processing fundamentals and hands-on experience with industrial data systems (MES/SECS/GEM) to bridge the gap between theoretical ML modeling and physical semiconductor reality."
+          "rationale": "The combination of building pipelines (Airflow/Prefect), MLOps tools (MLflow/Docker), and model deployment suggests the role requires end-to-end ownership over the ML lifecycle in an industrial context, not just model training.",
+          "statement": "End-to-End ML Engineering Focus:"
+        },
+        {
+          "confidence": "high",
+          "evidence": [
+            "Data platforms: Spark, Kafka; time-series stores (InfluxDB / TimescaleDB); PostgreSQL"
+          ],
+          "evidence_status": "strongly_implied_by_work",
+          "rationale": "The requirement to handle high-volume data and the listing of specific time-series stores (InfluxDB/TimescaleDB) and big data tools (Spark, Kafka) implies the specialist must understand how to structure and manage industrial trace data within modern data platforms.",
+          "statement": "Data Infrastructure Awareness:"
         }
       ],
-      "role_interpretation": "The role requires a highly specialized Machine Learning/Data Science practitioner embedded within the semiconductor manufacturing domain, focusing on leveraging high-dimensional sensor data to drive process optimization and fault detection.",
+      "role_interpretation": "The role requires an experienced Machine Learning/AI specialist capable of bridging advanced statistical modeling and deep learning techniques with complex, high-dimensional time-series data generated from semiconductor manufacturing processes to drive tangible improvements in yield, quality control, and fault detection.",
       "uncertainties": [
-        "The exact expected depth for secondary skills like C/C++ and MATLAB is flexible ('helpful'/'a plus'), meaning the core ML/Python/Statistics stack is the primary determinant of capability.",
-        "The specific complexity of integrating data from Fab data systems (MES, SECS/GEM) into the MLOps pipeline remains an unknown variable regarding implementation effort."
+        "The exact required proficiency level for C/C++ and MATLAB is only listed as 'helpful' or 'a plus', suggesting these are secondary skills supporting the core ML/Data science mandate.",
+        "The depth of experience in MLOps tools (MLflow, Docker, Airflow/Prefect) is implied by the responsibility to deploy models but not explicitly quantified as a mandatory expertise level."
       ]
     },
     "job_detail_version_id": 40,
     "model": "gemma-4-e2b-it",
-    "prompt_version": "job-capability-intelligence-v4",
-    "schema_version": "job-capability-intelligence-v2",
+    "prompt_version": "job-capability-intelligence-v6",
+    "schema_version": "job-capability-intelligence-v3",
     "translation_artifact_id": 33
   },
   "configured_models": {
