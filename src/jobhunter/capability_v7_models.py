@@ -11,8 +11,10 @@ from jobhunter.capability_models import (
     CapabilityExpectation,
     CapabilityProfile,
     CrossCapabilityObservation,
-    JobCapabilityIntelligence as V6JobCapabilityIntelligence,
     RequirementStrength,
+)
+from jobhunter.capability_models import (
+    JobCapabilityIntelligence as V6JobCapabilityIntelligence,
 )
 
 SourceRequirementStrength = Literal["required", "preferred", "contextual", "inferred"]
@@ -153,7 +155,7 @@ class CapabilityReasoningDraft(V6JobCapabilityIntelligence):
     def complete_source_coverage(
         self,
         info: ValidationInfo,
-    ) -> "CapabilityReasoningDraft":
+    ) -> CapabilityReasoningDraft:
         extraction = _accepted_extraction(info)
         if extraction is None:
             return self

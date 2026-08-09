@@ -9,9 +9,11 @@ from jobhunter.capability_inference import CapabilityInferenceProvider
 from jobhunter.capability_service_v6 import (
     CapabilityIntelligenceError,
     CapabilityIntelligenceResult,
-    CapabilityIntelligenceService as _V6CapabilityIntelligenceService,
     _evidence_catalog,
     _result,
+)
+from jobhunter.capability_service_v6 import (
+    CapabilityIntelligenceService as _V6CapabilityIntelligenceService,
 )
 from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.capability_v7_models import (
