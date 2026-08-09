@@ -32,6 +32,7 @@ RequirementStrength = Literal[
 _TOKEN_RE = re.compile(r"[^\s\u200c]+")
 _COMPOSITE_SEPARATOR_RE = re.compile(r",\s+|;\s+|\n+|\s+\|\s+|\.{3,}\s*|…\s*")
 _DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
+_P1_REQUIREMENT_STRENGTHS = {"required", "preferred", "contextual", "inferred"}
 
 
 def _iter_strings(value: Any):
@@ -235,6 +236,15 @@ def _validation_sources(info: ValidationInfo) -> tuple[dict[str, Any], dict[str,
     return fields, catalog
 
 
+def _accepted_extraction(info: ValidationInfo) -> dict[str, Any] | None:
+    extraction = (info.context or {}).get("accepted_extraction")
+    if extraction is None:
+        return None
+    if not isinstance(extraction, dict):
+        raise ValueError("capability validation context contains invalid accepted_extraction")
+    return extraction
+
+
 def _canonicalize_expectation_evidence(
     values: list[str],
     info: ValidationInfo,
@@ -308,6 +318,28 @@ def _normalize_unknown_sections(data: Any) -> Any:
     return normalized
 
 
+def _validate_source_indices(
+    values: list[int],
+    *,
+    section: str,
+    extraction: dict[str, Any] | None,
+) -> list[int]:
+    unique = list(dict.fromkeys(values))
+    if any(value < 0 for value in unique):
+        raise ValueError(f"{section} indices must be zero or positive")
+    if extraction is None:
+        return unique
+    items = extraction.get(section) or []
+    if not isinstance(items, list):
+        raise ValueError(f"accepted_extraction.{section} must be a list")
+    invalid = [value for value in unique if value >= len(items)]
+    if invalid:
+        raise ValueError(
+            f"{section} indices reference missing accepted P1.6 items: {invalid}"
+        )
+    return unique
+
+
 class _StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -356,6 +388,8 @@ class CapabilityProfile(_StrictModel):
 
     capability_label: str
     summary: str
+    source_requirement_indices: list[int] = Field(max_length=32)
+    source_responsibility_indices: list[int] = Field(max_length=16)
     requirement_strength: RequirementStrength
     depth_signals: list[CapabilityExpectation] = Field(default_factory=list, max_length=10)
     work_activities: list[CapabilityExpectation] = Field(max_length=12)
@@ -382,8 +416,40 @@ class CapabilityProfile(_StrictModel):
     def summary_bounds(cls, value: str) -> str:
         return _bounded_text(value, field_name="summary", minimum=12, maximum=1600)
 
+    @field_validator("source_requirement_indices")
+    @classmethod
+    def source_requirement_indices_are_valid(
+        cls,
+        values: list[int],
+        info: ValidationInfo,
+    ) -> list[int]:
+        return _validate_source_indices(
+            values,
+            section="requirements",
+            extraction=_accepted_extraction(info),
+        )
+
+    @field_validator("source_responsibility_indices")
+    @classmethod
+    def source_responsibility_indices_are_valid(
+        cls,
+        values: list[int],
+        info: ValidationInfo,
+    ) -> list[int]:
+        return _validate_source_indices(
+            values,
+            section="responsibilities",
+            extraction=_accepted_extraction(info),
+        )
+
     @model_validator(mode="after")
     def normalize_sections(self) -> CapabilityProfile:
+        if not self.source_requirement_indices and not self.source_responsibility_indices:
+            raise ValueError(
+                "Capability profile must link at least one accepted P1.6 requirement or "
+                "responsibility"
+            )
+
         for field_name in (
             "depth_signals",
             "work_activities",
@@ -505,3 +571,121 @@ class JobCapabilityIntelligence(_StrictModel):
                 )
             seen.add(key)
         return self
+
+
+def _deterministic_requirement_strength(
+    requirement_indices: list[int],
+    requirements: list[Any],
+) -> RequirementStrength:
+    strengths: list[str] = []
+    for index in requirement_indices:
+        if not 0 <= index < len(requirements):
+            continue
+        item = requirements[index]
+        if not isinstance(item, dict):
+            continue
+        strength = item.get("requirement_type")
+        if isinstance(strength, str) and strength in _P1_REQUIREMENT_STRENGTHS:
+            strengths.append(strength)
+    unique = set(strengths)
+    if not unique:
+        return "unspecified"
+    if len(unique) == 1:
+        return next(iter(unique))  # type: ignore[return-value]
+    return "mixed"
+
+
+def _deterministic_depth_expectations(
+    requirement_indices: list[int],
+    requirements: list[Any],
+) -> list[dict[str, Any]]:
+    items: list[dict[str, Any]] = []
+    seen: set[tuple[str, str, tuple[str, ...]]] = set()
+    for index in requirement_indices:
+        if not 0 <= index < len(requirements):
+            continue
+        requirement = requirements[index]
+        if not isinstance(requirement, dict):
+            continue
+        depth_signal = requirement.get("depth_signal")
+        if not isinstance(depth_signal, str) or not depth_signal.strip():
+            continue
+        concept = requirement.get("concept")
+        if not isinstance(concept, str) or not concept.strip():
+            concept = "Linked requirement"
+        raw_evidence = requirement.get("evidence")
+        evidence_values = raw_evidence if isinstance(raw_evidence, list) else [raw_evidence]
+        evidence = [
+            value.strip()
+            for value in evidence_values
+            if isinstance(value, str) and value.strip()
+        ]
+        if not evidence:
+            continue
+        confidence = requirement.get("confidence")
+        if confidence not in {"high", "medium", "low"}:
+            confidence = "high"
+        key = (_normalize(concept), _normalize(depth_signal), tuple(evidence))
+        if key in seen:
+            continue
+        seen.add(key)
+        items.append(
+            {
+                "statement": f"{concept} — employer-stated depth: {depth_signal}",
+                "evidence_status": "source_explicit",
+                "evidence": evidence,
+                "rationale": (
+                    "Deterministically propagated from accepted P1.6 requirement "
+                    f"{index}; not model-inferred."
+                ),
+                "confidence": confidence,
+            }
+        )
+    return items
+
+
+def reconcile_capability_intelligence(
+    intelligence: JobCapabilityIntelligence,
+    *,
+    accepted_extraction: dict[str, Any],
+    analysis_fields: dict[str, Any],
+    evidence_catalog: dict[str, str] | None = None,
+) -> JobCapabilityIntelligence:
+    """Reconcile mechanically provable P1.6 facts after model reasoning.
+
+    The model chooses which accepted P1.6 requirements/responsibilities support a capability.
+    JobHunter then owns the bookkeeping that must not drift: requirement strength is derived from
+    linked accepted requirement types and source-explicit depth is copied from linked P1.6 depth
+    signals. Model-produced source-explicit depth entries are discarded; derived depth reasoning
+    may remain.
+    """
+
+    requirements = accepted_extraction.get("requirements") or []
+    if not isinstance(requirements, list):
+        raise ValueError("accepted_extraction.requirements must be a list")
+
+    payload = intelligence.model_dump(mode="json")
+    for profile in payload.get("capabilities") or []:
+        requirement_indices = profile.get("source_requirement_indices") or []
+        profile["requirement_strength"] = _deterministic_requirement_strength(
+            requirement_indices,
+            requirements,
+        )
+        model_depth = [
+            item
+            for item in profile.get("depth_signals") or []
+            if item.get("evidence_status") != "source_explicit"
+        ]
+        profile["depth_signals"] = [
+            *_deterministic_depth_expectations(requirement_indices, requirements),
+            *model_depth,
+        ]
+
+    return JobCapabilityIntelligence.model_validate(
+        payload,
+        context={
+            "analysis_fields": analysis_fields,
+            "evidence_catalog": evidence_catalog or {},
+            "accepted_extraction": accepted_extraction,
+        },
+    )
