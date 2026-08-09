@@ -2,6 +2,7 @@ from types import SimpleNamespace
 
 import jobhunter.capability_inference as capability_inference
 from jobhunter.capability_inference import CapabilityInferenceProvider
+from jobhunter.capability_v7_models import CapabilityReasoningDraft
 
 
 class _Result:
@@ -76,9 +77,11 @@ def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> Non
         "field:description": "Job text."
     }
     assert instructor_client.kwargs["context"]["accepted_extraction"] == accepted_extraction
+    assert instructor_client.kwargs["response_model"] is CapabilityReasoningDraft
     assert result.request_body["runtime"] == {
         "read_timeout_seconds": None,
         "connect_timeout_seconds": 10.0,
         "transport_retries": 0,
         "configured_network_retries": 4,
     }
+    assert result.request_body["instructor"]["response_model"] == "CapabilityReasoningDraft"

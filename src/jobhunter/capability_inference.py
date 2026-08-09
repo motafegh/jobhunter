@@ -10,7 +10,7 @@ import httpx
 import instructor
 from openai import APIConnectionError, APITimeoutError, OpenAI
 
-from jobhunter.capability_models import JobCapabilityIntelligence
+from jobhunter.capability_v7_models import CapabilityReasoningDraft
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
 
 
@@ -118,7 +118,7 @@ class CapabilityInferenceProvider:
         try:
             result, completion = client.create_with_completion(
                 model=self._model,
-                response_model=JobCapabilityIntelligence,
+                response_model=CapabilityReasoningDraft,
                 messages=messages,
                 context={
                     "analysis_fields": analysis_fields,
@@ -158,9 +158,9 @@ class CapabilityInferenceProvider:
             },
             "instructor": {
                 "mode": "JSON_SCHEMA",
-                "response_model": "JobCapabilityIntelligence",
+                "response_model": "CapabilityReasoningDraft",
                 "validation_retries": self._validation_retries,
-                "schema": JobCapabilityIntelligence.model_json_schema(),
+                "schema": CapabilityReasoningDraft.model_json_schema(),
             },
         }
         return CapabilityInferenceResult(
