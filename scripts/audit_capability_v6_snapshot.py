@@ -22,7 +22,10 @@ def _require(condition: bool, message: str) -> None:
         raise AuditError(message)
 
 
-def _expected_strength(requirement_indices: list[int], requirements: list[dict[str, Any]]) -> str:
+def _expected_strength(
+    requirement_indices: list[int],
+    requirements: list[dict[str, Any]],
+) -> str:
     strengths = {
         requirements[index].get("requirement_type")
         for index in requirement_indices
@@ -64,7 +67,10 @@ def audit_snapshot(
         capability.get("schema_version") == EXPECTED_SCHEMA_VERSION,
         f"Expected {EXPECTED_SCHEMA_VERSION}, got {capability.get('schema_version')!r}",
     )
-    _require(status.get("capability_is_current_chain") is True, "Capability is not current-chain")
+    _require(
+        status.get("capability_is_current_chain") is True,
+        "Capability is not current-chain",
+    )
     _require(
         snapshot.get("role_capability_blueprint") is None,
         "Blueprint must remain absent until Capability v6 passes B3",
@@ -97,7 +103,10 @@ def audit_snapshot(
             f"{label}: no accepted P1.6 source links",
         )
         _require(
-            all(isinstance(index, int) and 0 <= index < len(requirements) for index in requirement_indices),
+            all(
+                isinstance(index, int) and 0 <= index < len(requirements)
+                for index in requirement_indices
+            ),
             f"{label}: invalid requirement link",
         )
         _require(
@@ -119,7 +128,9 @@ def audit_snapshot(
 
         depth_signals = profile.get("depth_signals") or []
         explicit_depth = [
-            item for item in depth_signals if item.get("evidence_status") == "source_explicit"
+            item
+            for item in depth_signals
+            if item.get("evidence_status") == "source_explicit"
         ]
         expected_statements: set[str] = set()
 
@@ -134,7 +145,9 @@ def audit_snapshot(
             expected_statements.add(f"{concept} — employer-stated depth: {depth}")
 
         actual_statements = {
-            item.get("statement") for item in explicit_depth if isinstance(item.get("statement"), str)
+            item.get("statement")
+            for item in explicit_depth
+            if isinstance(item.get("statement"), str)
         }
         _require(
             actual_statements == expected_statements,
