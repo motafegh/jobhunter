@@ -46,19 +46,19 @@ P1.6 strict factual extraction
   Original: job-analysis-original-v9
   schema:   job-analysis-v4
         ↓
-Capability Intelligence — active B3 candidate
+Capability Intelligence — B3 accepted baseline
   prompt:   job-capability-intelligence-v7
   schema:   job-capability-intelligence-v4
         ↓
-Role Capability Blueprint
-  prompt:   role-capability-blueprint-v2
-  schema:   role-capability-blueprint-v1
+Role Capability Blueprint — active B4 candidate
+  prompt:   role-capability-blueprint-v3
+  schema:   role-capability-blueprint-v2
         ↓
 Review Snapshot
   schema:   job-review-snapshot-v1
 ```
 
-**B3 is not accepted yet.** v7/v4 is the current runtime candidate on `main`; live `tG9K` evidence must pass mechanical and semantic review before Blueprint B4 continues.
+Capability v7/v4 passed the bounded rich `tG9K` B3 gate on artifact **9** and is frozen while B4 proceeds. Blueprint v3/v2 is implemented on `main` but is **not semantically accepted** until a live artifact built from Capability 9 passes mechanical and complete semantic review.
 
 ## P1.6 — factual substrate
 
@@ -88,40 +88,61 @@ accepted P1.6
 → persisted Capability
 ```
 
-Key properties:
+The accepted `tG9K` artifact proves 25/25 capability-relevant requirements and 7/7 responsibilities are linked. Role-level requirements 25 and 26 remain deterministic source truth rather than being forced into capability profiles.
 
-- all accepted P1.6 facts remain in deterministic `source_truth`;
-- every capability-relevant requirement must be linked;
-- every responsibility must be linked;
-- education and standalone experience-duration constraints remain role-level source truth;
-- dense jobs require more than one coherent capability profile;
-- source-explicit depth and work activities are generated deterministically;
-- positive autonomy/ownership inference is deferred;
-- cross-capability synthesis is deferred;
-- model reasoning remains responsible for coherent grouping, derived prerequisites/context, and unknown boundaries.
-
-Capability v6/v3 artifact 8 is retained as negative B3 evidence. It proved deterministic reconciliation worked for linked facts but also proved that model-selected source links were too weak.
+The CLI reports five of six explicit depth facts inside profiles because the sixth is intentionally role-level professional experience (`three to six years`, requirement 26). No accepted depth fact is lost.
 
 See:
 
 ```text
-docs/experiments/2026-08-09_CAPABILITY_V6_DETERMINISTIC_RECONCILIATION.md
-docs/experiments/2026-08-09_CAPABILITY_V7_SOURCE_TRUTH_BOUNDARY.md
+docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-## Current acceptance workflow
+## Role Capability Blueprint v3
 
-Keep `tG9K` P1.6 artifact 29 fixed.
+Blueprint remains the human-facing professional interpretation layer, but v3 makes strong interpretations auditable against accepted upstream truth.
+
+Key v3 properties:
+
+- every Blueprint area links accepted Capability profile indices and collectively covers the accepted Capability substrate;
+- source-named tools link accepted P1.6 facts;
+- JobHunter derives source-named tool strength and explicit depth deterministically;
+- inferred examples carry no employer-source strength/depth;
+- preferred/contextual tools cannot silently become mandatory;
+- role-level degree/experience constraints are injected from Capability v7 source truth;
+- highly-likely hidden requirements require accepted upstream grounding;
+- every end-to-end scenario is either `source_stated_workflow` or `professional_example`;
+- practitioner-created examples cannot be `highly_likely`;
+- unresolved assumptions cannot hide inside highly-likely scenarios;
+- a technology list is not treated as an employer architecture specification.
+
+See:
+
+```text
+docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
+```
+
+## Current B4 acceptance workflow
+
+Keep these upstream artifacts fixed:
+
+```text
+English projection: 33
+English P1.6:        29
+Capability v7:       9
+```
+
+Run only the downstream Blueprint stage:
 
 ```bash
-jobhunter jobs capability tG9K
+jobhunter jobs blueprint tG9K
 jobhunter jobs snapshot tG9K
-python scripts/audit_capability_v7_snapshot.py
+python scripts/audit_blueprint_v3_snapshot.py
 ```
 
-Do **not** rerun English analysis or rebuild Blueprint merely to test v7.
+Do **not** rerun P1.6 or Capability merely to test Blueprint.
 
-The audit is necessary but not sufficient. B3 also requires semantic review for coherent grouping, evidence relevance, optionality preservation, technically sound prerequisites, useful unknowns, and absence of unsupported architecture/ownership claims.
+The audit is necessary but not sufficient. B4 still requires full semantic review for useful professional interpretation, technical correctness, optionality preservation, scenario realism, unknown boundaries, and absence of invented employer architecture.
 
 ## Review Snapshots
 
@@ -144,7 +165,7 @@ Inspect and intentionally publish selected examples only:
 ```bash
 git diff -- review-snapshots/jobs/tG9K.json
 git add review-snapshots/jobs/tG9K.json
-git commit -m "review: evaluate tG9K capability v7"
+git commit -m "review: evaluate tG9K blueprint v3"
 git push origin main
 ```
 
@@ -166,7 +187,7 @@ capability: gemma-4-e2b-it
 blueprint:  gemma-4-e2b-it
 ```
 
-Do not change the capability model during the first v7 same-job acceptance run. If v7 is mechanically correct but E2B remains semantically inadequate, compare a stronger reasoning model with source/P1.6/contract/rubric held fixed.
+Keep the Blueprint model fixed for the first v3 same-job acceptance run. If the contract is mechanically correct but E2B remains semantically inadequate, compare a stronger reasoning model with source/P1.6/Capability/contract/rubric held fixed.
 
 ## Start the application
 
@@ -210,8 +231,8 @@ Browser and CLI share the same services/state.
 ## Current near-term sequence
 
 ```text
-B3: live Capability v7/v4 tG9K acceptance
-→ B4: Blueprint calibration/model comparison if needed
+B3: Capability v7/v4 accepted on bounded tG9K gate
+→ B4: live Blueprint v3/v2 tG9K acceptance
 → B5/CI-3: heterogeneous live-role review
 → Phase-1 Market/source/lifecycle/partial-success/P1.7 closure
 → only then corpus-wide Phase 2
