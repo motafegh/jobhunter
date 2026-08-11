@@ -135,7 +135,9 @@ class _Provider:
                     {
                         "interpretation_strength": "highly_likely",
                         "likely_depth": "Practical application and integration engineering.",
-                        "why_this_matters": "The accepted work connects AI tools to internal systems.",
+                        "why_this_matters": (
+                            "The accepted work connects AI tools to internal systems."
+                        ),
                         "likely_subskills": ["HTTP/JSON", "validation"],
                         "suggested_tools_or_examples": [
                             {
@@ -236,8 +238,9 @@ def test_v4_service_sends_compact_inputs_and_attaches_provenance() -> None:
     blueprint = store.artifact.blueprint
     assert blueprint["source_capability_coverage"] == [0]
     assert blueprint["capability_areas"][0]["source_capability_index"] == 0
-    assert blueprint["capability_areas"][0]["source_requirements"][0]["requirement_index"] == 0
-    assert blueprint["capability_areas"][0]["source_requirements"][0]["depth_signal"] == "expert"
+    source_requirement = blueprint["capability_areas"][0]["source_requirements"][0]
+    assert source_requirement["requirement_index"] == 0
+    assert source_requirement["depth_signal"] == "expert"
     assert blueprint["source_role_constraints"][0]["requirement_index"] == 1
     assert blueprint["professional_example_scenarios"][0]["scenario_basis"] == (
         "professional_example"
