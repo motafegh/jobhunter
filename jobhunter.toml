@@ -1,0 +1,93 @@
+# JobHunter local configuration
+
+[jobhunter]
+
+data_dir = "data"
+evidence_dir = "data/evidence"
+database_path = "data/jobhunter.sqlite3"
+
+# ============================================================
+# LM Studio
+# ============================================================
+
+lm_studio_base_url = "http://127.0.0.1:12345/v1"
+
+# Leave this commented for now.
+# We can select models specifically after seeing what LM Studio exposes.
+# lm_studio_model = "exact-model-id"
+
+# Only needed if you configured authentication in LM Studio.
+# lm_studio_api_token = ""
+
+inference_timeout_seconds = 30.0
+inference_max_retries = 1
+
+# Independent semantic roles. E4B is the accepted local P1.6 baseline for the dense tG9K
+# extraction contract; downstream roles remain unchanged until their own calibration gates.
+analysis_lm_studio_model = "gemma-4-e4b-it-ud"
+capability_lm_studio_model = "gemma-4-e2b-it"
+blueprint_lm_studio_model = "gemma-4-e2b-it"
+
+# ============================================================
+# Jobinja acquisition
+# ============================================================
+
+jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
+jobinja_request_timeout_seconds = 30.0
+jobinja_request_delay_seconds = 1.0
+
+jobinja_search_request_budget = 40
+jobinja_max_expanded_searches = 40
+jobinja_default_keyword_max_pages = 1
+
+# Our data-driven bilingual search profile.
+jobinja_search_profiles = ["ai-security-python"]
+jobinja_search_packs = []
+jobinja_excluded_terms = []
+
+# Daily/sync detail acquisition.
+jobinja_sync_missing_limit = 10
+jobinja_sync_refresh_limit = 5
+jobinja_refresh_after_hours = 24.0
+
+# ============================================================
+# Local English translation corpus
+# ============================================================
+
+translation_enabled = true
+
+# Keep false until we validate one or several real translations.
+translation_auto_after_sync = false
+
+# Local-first provider. No Google API key required.
+translation_provider = "lm-studio"
+translation_target_language = "en"
+
+translation_batch_limit = 20
+translation_timeout_seconds = 30.0
+translation_max_retries = 1
+
+# Leave this commented initially.
+#
+# Selection order is:
+# 1. translation_lm_studio_model
+# 2. lm_studio_model
+# 3. automatic selection ONLY if LM Studio exposes exactly one model
+#
+translation_lm_studio_model = "gemma-4-e2b-it"
+
+translation_lm_studio_max_tokens = 4096
+translation_lm_studio_character_target = 6000
+
+# ============================================================
+# Optional Google provider
+# ============================================================
+
+# Nothing here is required when using LM Studio.
+google_translation_model = "nmt"
+
+# ============================================================
+# Logging
+# ============================================================
+
+log_level = "INFO"
