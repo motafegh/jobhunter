@@ -49,7 +49,7 @@ def test_role_blueprint_page_renders_before_capability_analysis(tmp_path: Path) 
     assert response.status_code == 200
     assert "Role Capability Blueprint" in response.text
     assert "Capability Intelligence required" in response.text
-    assert "human-facing" in response.text
+    assert "professional interpretation" in response.text
 
 
 def test_role_blueprint_template_exposes_v5_boundary_not_legacy_expansion() -> None:
