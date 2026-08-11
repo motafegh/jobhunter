@@ -1,7 +1,7 @@
 # JobHunter Semantic Quality Acceptance Plan
 
 **Status:** Active bounded acceptance plan  
-**Date:** 2026-08-09  
+**Date:** 2026-08-11  
 **Scope:** P1.6 factual extraction, Capability Intelligence, Role Capability Blueprint, model-role comparison, and selected Review Snapshots  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and product/domain/source/architecture constraints.
 
@@ -40,16 +40,16 @@ English P1.6:                 job-analysis-english-v9
 Original P1.6:                job-analysis-original-v9
 P1.6 schema:                  job-analysis-v4
 
-Capability candidate:         job-capability-intelligence-v7
+Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Blueprint:                    role-capability-blueprint-v2
-Blueprint schema:             role-capability-blueprint-v1
+Blueprint candidate:          role-capability-blueprint-v3
+Blueprint schema:             role-capability-blueprint-v2
 
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Capability v7/v4 is implemented but **not accepted** until the live B3 artifact passes.
+B3 Capability is accepted for the bounded `tG9K` gate on artifact 9. B4 Blueprint is the current active gate and is not yet semantically accepted.
 
 ## 3. Permanent layer contract
 
@@ -65,7 +65,7 @@ Capability Intelligence
 → no loss or strengthening of accepted source truth
 
 Role Capability Blueprint
-→ later human-facing professional interpretation
+→ human-facing professional interpretation
 → useful likely scope/examples/scenarios with calibrated uncertainty
 ```
 
@@ -105,36 +105,17 @@ Current analysis role:
 gemma-4-e4b-it-ud
 ```
 
-Keep artifact 29 fixed during current B3 calibration.
-
 ## 6. SQ-2 — Capability Intelligence calibration
 
-**Current gate: active / not accepted.**
+**Accepted for the bounded rich `tG9K` gate on Capability artifact 9.**
 
-### Historical negative evidence
+Historical negative evidence remains useful:
 
-v4/v2 artifact 7:
-- omitted explicit depth;
-- over-strengthened stack/cloud/ownership;
-- evidence-area leakage.
+- v4/v2 artifact 7 omitted explicit depth and over-strengthened stack/cloud/ownership;
+- v5 exhausted bounded output budget and was reverted;
+- v6/v3 artifact 8 proved deterministic reconciliation of linked facts but model-selected links were too incomplete and semantic overreach remained.
 
-v5:
-- prompt-heavy experimental correction;
-- bounded retry exhausted output budget;
-- reverted; no accepted artifact.
-
-v6/v3 artifact 8:
-- deterministic strength/depth worked for linked facts;
-- model linked only 3/27 requirements and 2/7 responsibilities;
-- missing links silently removed accepted source information from the profile view;
-- unsupported autonomy and end-to-end ownership reappeared;
-- contextual tools/cloud remained over-strengthened;
-- dense role collapsed into one profile;
-- evidence relevance remained imperfect.
-
-v6 is therefore rejected B3 evidence.
-
-### Current v7 boundary
+Accepted v7 boundary:
 
 ```text
 accepted P1.6
@@ -145,75 +126,104 @@ accepted P1.6
 → persisted v7 artifact
 ```
 
-v7 guarantees:
+`tG9K` acceptance evidence:
 
-- complete accepted P1.6 source truth persists independently of the model;
-- every capability-relevant accepted requirement is linked;
-- every responsibility is linked;
-- education and standalone experience-duration constraints remain role-level truth;
-- dense sources require actual multi-profile decomposition;
-- profile `requirement_strength` is deterministic;
-- source-explicit depth is deterministic;
-- source-explicit work activity is deterministic;
-- positive autonomy/ownership synthesis is deferred;
-- cross-capability synthesis is deferred.
+```text
+P1.6 artifact 29
+Capability artifact 9
+25/25 capability-relevant requirements linked
+7/7 responsibilities linked
+27/27 requirements retained in source truth
+6/6 explicit depth facts retained in source truth
+role-level requirement indices [25, 26]
+2 coherent capability profiles
+no positive independence expectation
+cross_capability_observations []
+```
 
-### Current v7 mechanical gate for `tG9K`
+Five of the six depth facts appear inside profiles. The sixth is intentionally role-level professional experience (`three to six years`, requirement 26). This is correct partitioning, not missing depth.
+
+Decision record:
+
+```text
+docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
+```
+
+Freeze v7 unless downstream or heterogeneous evidence shows a repeatable correctness defect.
+
+## 7. SQ-3 — Blueprint calibration
+
+**Current gate: active / not yet accepted.**
+
+Current candidate:
+
+```text
+role-capability-blueprint-v3
+schema role-capability-blueprint-v2
+```
+
+### v3 deterministic/model boundary
+
+Blueprint remains the freer human-facing interpretation layer, but mechanically provable upstream facts are no longer left to model bookkeeping.
+
+Required invariants:
+
+1. every Blueprint capability area links accepted Capability profile indices;
+2. the union of areas covers all accepted Capability profiles;
+3. `source_named` tools link accepted P1.6 facts;
+4. JobHunter derives source-named tool requirement strength and explicit depth;
+5. inferred tool examples carry no source links/strength/depth;
+6. non-required tools cannot be described as mandatory/required/necessary;
+7. `expert`/`mastery` for a tool requires matching P1.6 explicit depth;
+8. role-level degree/experience constraints are copied from Capability source truth;
+9. a `highly_likely` hidden requirement must link accepted upstream work;
+10. every scenario declares `source_stated_workflow` or `professional_example`;
+11. professional examples cannot be `highly_likely`;
+12. source-stated workflows must link accepted responsibilities;
+13. highly-likely scenarios cannot depend on unresolved assumptions;
+14. technology list != architecture.
+
+### Fixed `tG9K` B4 chain
+
+```text
+English projection artifact 33
+English P1.6 artifact 29
+Capability v7 artifact 9
+Blueprint model gemma-4-e2b-it
+```
+
+Do not rebuild P1.6 or Capability for this test.
 
 Run:
 
 ```bash
-jobhunter jobs capability tG9K
+jobhunter jobs blueprint tG9K
 jobhunter jobs snapshot tG9K
-python scripts/audit_capability_v7_snapshot.py
+python scripts/audit_blueprint_v3_snapshot.py
 ```
 
-Expected:
+### SQ-3 semantic gate
+
+Mechanical validity is necessary but insufficient. Reject B4 if the complete artifact:
+
+- simply paraphrases P1.6/Capability instead of adding professional value;
+- promotes contextual/preferred frameworks/cloud/edge/MATLAB/C/C++;
+- spreads Python `expert` depth to neighboring frameworks;
+- assembles named technologies into one claimed hidden company architecture;
+- labels practitioner-created workflows as employer-likely topology;
+- hides assumptions about latency/topology/vendor/batch-stream/cloud-edge/ownership;
+- contradicts important unknowns;
+- invents generic hidden requirements/curriculum;
+- misuses technical tools/protocols/platforms;
+- amplifies broad Capability wording into ownership/autonomy certainty.
+
+B4 passes only when the human-facing explanation is materially useful, technically sound, and calibrated.
+
+Experiment record:
 
 ```text
-P1.6 artifact 29 fixed
-Capability v7/v4 current-chain
->=2 profiles
-25/25 capability requirements linked
-7/7 responsibilities linked
-all 27 requirements retained in source_truth
-all 7 responsibilities retained in source_truth
-all explicit depth retained in source_truth
-role-level requirement indices [25, 26]
-no positive independence expectation
-cross_capability_observations []
-no current Blueprint
+docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
 ```
-
-### SQ-2 semantic gate
-
-Mechanical validity is necessary but insufficient. Reject B3 if the artifact:
-
-- groups unrelated facts solely to satisfy coverage;
-- promotes contextual/preferred tools to mandatory/mastery/essential without support;
-- treats cloud/edge lists as required architecture;
-- attaches exact but semantically irrelevant evidence;
-- invents generic curricula/prerequisites;
-- produces technically weak derived conclusions;
-- hides important unknowns;
-- recreates ownership/autonomy claims elsewhere;
-- is not materially more useful than P1.6.
-
-If v7 is mechanically correct but E2B reasoning remains inadequate, compare one stronger Capability model with source, English projection, P1.6, prompt/schema, and rubric held fixed. Do not add another prompt-patch collection first.
-
-## 7. SQ-3 — Blueprint calibration
-
-Blocked until SQ-2/B3 passes.
-
-Permanent rules:
-
-1. technology list != architecture;
-2. source optionality survives downstream;
-3. possible/likely examples remain examples;
-4. `highly_likely` cannot contradict unresolved unknowns;
-5. technical correctness outranks sophisticated prose;
-6. scenario detail scales with evidence;
-7. avoid domain-specific prompt patches.
 
 ## 8. SQ-4 — Controlled model-role comparison
 
@@ -225,17 +235,18 @@ Hold fixed:
 source semantic version
 English projection
 accepted P1.6
-Capability/Blueprint contract
+accepted Capability
+Blueprint contract
 review rubric
 ```
 
-Change only the model. Compare technical correctness, calibration, useful decomposition, unsupported inference, uncertainty, and usefulness per token/time.
+Change only the Blueprint model. Compare technical correctness, calibration, useful professional interpretation, unsupported inference, uncertainty, and usefulness per token/time.
 
 No multi-model voting/ensemble.
 
 ## 9. SQ-5 / CI-3 — heterogeneous live acceptance
 
-After B3/B4, review materially different jobs:
+After B4, review materially different jobs:
 
 1. `t4jp` sparse/ambiguous;
 2. `tG9K` rich AI/ML;
