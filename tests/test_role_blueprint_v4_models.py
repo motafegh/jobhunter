@@ -92,7 +92,9 @@ def _draft_payload() -> dict:
                     {
                         "name": "httpx",
                         "relationship": "possible_example",
-                        "why_relevant": "One possible HTTP client for integration-heavy implementations.",
+                        "why_relevant": (
+                            "One possible HTTP client for integration-heavy implementations."
+                        ),
                     }
                 ],
                 "likely_work_products": ["Production model service"],
@@ -113,7 +115,9 @@ def _draft_payload() -> dict:
         "hidden_requirements": [
             {
                 "title": "Operational debugging",
-                "explanation": "Production services plausibly imply debugging under failure conditions.",
+                "explanation": (
+                    "Production services plausibly imply debugging under failure conditions."
+                ),
                 "interpretation_strength": "plausible",
             }
         ],
