@@ -14,13 +14,7 @@ htmlcov/
 venv/
 env/
 
-# Build and package output
-build/
-dist/
-*.egg-info/
-
-# Local configuration and secrets
-jobhunter.toml
+# Local secrets and machine-only overrides
 .env
 .env.*
 !.env.example
