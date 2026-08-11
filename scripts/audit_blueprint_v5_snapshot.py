@@ -242,6 +242,8 @@ def audit_snapshot(path: Path, *, job_id: str = DEFAULT_JOB_ID) -> dict[str, int
             not _uses_absolute_inference_language(interpretation),
             "practical interpretation claims employer obligation/full ownership",
         )
+        boundary = str(area.get("interpretation_uncertainty") or "")
+        _require(bool(boundary.strip()), "missing interpretation uncertainty/boundary")
 
         expected_requirement_indices = list(profile.get("source_requirement_indices") or [])
         actual_requirements = list(area.get("source_requirements") or [])
