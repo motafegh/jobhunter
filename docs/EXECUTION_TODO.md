@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-09  
+**Date:** 2026-08-11  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
 **Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
 
@@ -51,71 +51,113 @@ Do not jump to corpus-wide Phase 2.
 
 ### B3 — Capability Intelligence calibration / SQ-2
 
-**Status: [~] active. B3 is not accepted.**
+**Status: [x] accepted for the bounded rich `tG9K` gate on Capability artifact 9.**
 
 Historical evidence:
 
 - [x] v4/v2 artifact 7 reviewed and rejected.
 - [x] v5 output-budget experiment recorded/reverted.
-- [x] v6/v3 artifact 8 generated and reviewed.
-- [x] v6 mechanical reconciliation proved useful.
-- [x] v6 semantic result rejected because model-selected source links lost most P1.6 coverage and repeated ownership/autonomy/optionality failures.
+- [x] v6/v3 artifact 8 generated and rejected after semantic review.
+- [x] v6 proved model-selected source linkage was too weak despite correct reconciliation of linked facts.
 
-Current candidate:
+Accepted baseline:
 
 ```text
 job-capability-intelligence-v7
 schema job-capability-intelligence-v4
+artifact 9 on tG9K
 ```
 
-Implementation:
+Acceptance evidence:
 
 - [x] complete deterministic `source_truth`.
 - [x] capability-vs-role-level P1.6 partition.
-- [x] hard coverage of all capability-relevant requirements.
-- [x] hard coverage of all responsibilities.
-- [x] dense-source multi-profile guard.
-- [x] deterministic requirement strength.
-- [x] deterministic source-explicit depth.
-- [x] deterministic source-explicit work activities.
-- [x] positive independence/ownership inference deferred.
+- [x] 25/25 capability-relevant requirements linked.
+- [x] 7/7 responsibilities linked.
+- [x] all 27 accepted requirements remain in source truth.
+- [x] all six explicit depth facts remain in source truth.
+- [x] five capability-level depth facts are represented in profiles.
+- [x] the sixth depth fact, `three to six years`, remains correctly role-level on requirement 26.
+- [x] two coherent capability profiles rather than one coverage-driven catch-all.
+- [x] deterministic requirement strength/source depth/source work activities.
+- [x] positive independence/ownership synthesis deferred.
 - [x] cross-capability synthesis deferred.
-- [x] v7 repository audit script.
-- [x] deterministic regression coverage.
-- [x] Ruff/full pytest/warnings-as-errors green on current v7 implementation.
+- [x] repository audit passed.
+- [x] complete semantic review found no B3-blocking source-truth or calibration failure.
+- [x] CI on the committed artifact passed.
 
-Live acceptance still required:
+Decision record:
 
-- [ ] B3.1 Run v7 against fixed `tG9K` P1.6 artifact 29 with current E2B Capability model.
-- [ ] B3.2 Regenerate `review-snapshots/jobs/tG9K.json`.
-- [ ] B3.3 Run `python scripts/audit_capability_v7_snapshot.py`.
-- [ ] B3.4 Verify 25/25 capability-relevant requirements linked and 7/7 responsibilities linked.
-- [ ] B3.5 Verify `source_truth` retains all 27 requirements, all 7 responsibilities, and all explicit depth.
-- [ ] B3.6 Verify >=2 coherent capability profiles rather than coverage-driven catch-all grouping.
-- [ ] B3.7 Verify contextual/preferred tools are not promoted to mandatory/mastery in prose.
-- [ ] B3.8 Verify cloud/edge does not become required deployment architecture.
-- [ ] B3.9 Verify evidence relevance; exact evidence alone is insufficient if semantically unrelated.
-- [ ] B3.10 Verify derived prerequisites are technically useful, not generic curriculum.
-- [ ] B3.11 Verify no ownership/autonomy overreach survives elsewhere.
-- [ ] B3.12 Accept B3 only if the complete artifact is materially more useful than P1.6 and correctly calibrated.
+```text
+docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
+```
 
-If the model cannot satisfy v7 coverage within the bounded call, diagnose the exact failure. Prefer bounded partitioning/output reduction or controlled model comparison over more prompt patching.
+Freeze v7 unless downstream/heterogeneous evidence reveals a repeatable correctness defect.
 
-### B4 — Blueprint calibration / SQ-3 and model comparison if needed
+### B4 — Role Capability Blueprint calibration / SQ-3
 
-Blocked until B3 passes.
+**Status: [~] active. Blueprint v3/v2 candidate is implemented; live `tG9K` acceptance remains open.**
 
-- [ ] Preserve accepted upstream optionality/unknowns.
-- [ ] technology list != architecture.
-- [ ] `highly_likely` must not contradict unresolved unknowns.
-- [ ] examples remain non-mandatory unless source requires them.
-- [ ] review regenerated `tG9K` Blueprint.
-- [ ] compare one stronger reasoning model only if evidence warrants it.
+Current candidate:
+
+```text
+role-capability-blueprint-v3
+schema role-capability-blueprint-v2
+```
+
+Implemented deterministic boundary:
+
+- [x] every Blueprint area carries accepted Capability profile links.
+- [x] union of Blueprint areas must cover all accepted Capability profiles.
+- [x] source-named tools must link accepted P1.6 facts.
+- [x] source-named tool requirement strength is JobHunter-derived.
+- [x] source-named explicit tool depth is JobHunter-derived.
+- [x] inferred tool examples cannot carry source strength/depth or source links.
+- [x] non-required source-named tools cannot be described as mandatory/required/necessary.
+- [x] framework/tool `expert`/`mastery` claims require matching P1.6 depth.
+- [x] role-level degree/experience constraints are deterministically injected.
+- [x] highly-likely hidden requirements require accepted upstream grounding.
+- [x] scenarios declare `source_stated_workflow` or `professional_example`.
+- [x] practitioner-created professional examples cannot be `highly_likely`.
+- [x] source-stated workflows require responsibility links.
+- [x] highly-likely scenarios cannot depend on unresolved assumptions.
+- [x] dedicated Blueprint v3 Review Snapshot audit exists.
+- [x] regression coverage exists for v2 failure classes.
+
+Live acceptance required against fixed upstream chain:
+
+```text
+English projection artifact 33
+English P1.6 artifact 29
+Capability v7 artifact 9
+Blueprint model gemma-4-e2b-it
+```
+
+- [ ] B4.1 Run `jobhunter jobs blueprint tG9K` without rebuilding P1.6/Capability.
+- [ ] B4.2 Regenerate `review-snapshots/jobs/tG9K.json`.
+- [ ] B4.3 Run `python scripts/audit_blueprint_v3_snapshot.py`.
+- [ ] B4.4 Verify both accepted Capability profiles are covered.
+- [ ] B4.5 Verify role-level Master's + 3–6 years constraints are preserved exactly.
+- [ ] B4.6 Verify only independently depth-qualified tools inherit explicit depth; Python expert must not spread to frameworks.
+- [ ] B4.7 Verify contextual/preferred frameworks/cloud/edge/MATLAB/C/C++ remain calibrated.
+- [ ] B4.8 Verify technology list does not become one hidden company architecture.
+- [ ] B4.9 Verify professional-example workflows are clearly examples with explicit assumptions.
+- [ ] B4.10 Verify highly-likely workflows do not contradict important unknowns.
+- [ ] B4.11 Verify hidden requirements are professionally useful and grounded.
+- [ ] B4.12 Verify tools/protocols/platforms keep normal technical meaning.
+- [ ] B4.13 Accept B4 only if the Blueprint adds useful practitioner interpretation beyond Capability without manufacturing certainty.
+- [ ] B4.14 Compare one stronger reasoning model only if the fixed-contract E2B result demonstrates a model limitation.
 - [-] no multi-model voting/ensemble.
+
+Experiment record:
+
+```text
+docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
+```
 
 ### B5 — CI-3 heterogeneous live review
 
-After B3/B4:
+After B4:
 
 - [ ] sparse/ambiguous anchor (`t4jp`);
 - [ ] rich AI/ML anchor (`tG9K`);
