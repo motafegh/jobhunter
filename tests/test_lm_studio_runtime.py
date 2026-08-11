@@ -11,6 +11,7 @@ def _model_payload(*, context_length: int, max_context_length: int = 32768) -> d
     return {
         "models": [
             {
+                "type": "llm",
                 "key": "model",
                 "max_context_length": max_context_length,
                 "loaded_instances": [
@@ -85,6 +86,70 @@ def test_runtime_reloads_insufficient_context() -> None:
     ]
     assert state.action == "reloaded"
     assert state.context_length == 16384
+
+
+def test_runtime_exclusive_llm_unloads_other_llm_only() -> None:
+    requests: list[tuple[str, str, dict | None]] = []
+    payload = {
+        "models": [
+            {
+                "type": "llm",
+                "key": "model",
+                "max_context_length": 32768,
+                "loaded_instances": [
+                    {
+                        "id": "model",
+                        "config": {"context_length": 8192},
+                    }
+                ],
+            },
+            {
+                "type": "llm",
+                "key": "other-llm",
+                "max_context_length": 32768,
+                "loaded_instances": [
+                    {
+                        "id": "other-llm",
+                        "config": {"context_length": 4096},
+                    }
+                ],
+            },
+            {
+                "type": "embedding",
+                "key": "embedding-model",
+                "max_context_length": 2048,
+                "loaded_instances": [
+                    {
+                        "id": "embedding-model",
+                        "config": {"context_length": 2048},
+                    }
+                ],
+            },
+        ]
+    }
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        body = json.loads(request.content) if request.content else None
+        requests.append((request.method, request.url.path, body))
+        if request.method == "GET":
+            return httpx.Response(200, json=payload)
+        assert request.url.path.endswith("/unload")
+        return httpx.Response(200, json=body)
+
+    state = ensure_lm_studio_model_context(
+        openai_base_url="http://127.0.0.1:1234/v1",
+        model="model",
+        context_length=8192,
+        exclusive_llm=True,
+        transport=httpx.MockTransport(handler),
+    )
+
+    assert requests == [
+        ("GET", "/api/v1/models", None),
+        ("POST", "/api/v1/models/unload", {"instance_id": "other-llm"}),
+    ]
+    assert state.action == "reused"
+    assert state.context_length == 8192
 
 
 def test_runtime_rejects_model_with_too_small_native_context() -> None:
