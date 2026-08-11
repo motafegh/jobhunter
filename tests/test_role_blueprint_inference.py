@@ -12,6 +12,7 @@ def _blueprint_payload() -> dict:
         "capability_areas": [
             {
                 "name": "Production AI integration",
+                "source_capability_indices": [0],
                 "interpretation_strength": "highly_likely",
                 "likely_depth": "Independent implementation and debugging of production workflows.",
                 "why_this_matters": "The role combines model usage with application delivery.",
@@ -25,16 +26,20 @@ def _blueprint_payload() -> dict:
         "hidden_requirements": [],
         "likely_end_to_end_scenarios": [
             {
-                "name": "Request-to-answer flow",
-                "why_likely": "The role delivers an interactive AI system.",
+                "name": "Illustrative request-to-answer flow",
+                "why_likely": "A coherent professional example for an interactive AI system.",
                 "flow_steps": ["Receive request", "Generate and validate response"],
                 "engineering_concerns": ["latency"],
-                "interpretation_strength": "highly_likely",
+                "interpretation_strength": "plausible",
+                "scenario_basis": "professional_example",
+                "source_capability_indices": [0],
+                "source_responsibility_indices": [],
+                "assumptions": ["The source does not specify the serving topology."],
             }
         ],
         "what_probably_does_not_matter": [],
         "important_unknowns": [],
-        "bottom_line": "The engineer must turn AI capability into a reliable application.",
+        "bottom_line": "The engineer turns AI capability into a reliable application.",
     }
 
 
