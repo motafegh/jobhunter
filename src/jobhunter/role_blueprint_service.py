@@ -1,9 +1,11 @@
 """Current Role Capability Blueprint service entrypoint.
 
-Blueprint v2 remains historical in Git history. The active B4 candidate is v3/v2.
+Blueprint v3/v2 remains historical negative B4 evidence. The active B4 candidate
+is v4/v3, which keeps semantic interpretation in the model while attaching
+Capability/P1.6 provenance deterministically in JobHunter.
 """
 
-from jobhunter.role_blueprint_service_v3 import (
+from jobhunter.role_blueprint_service_v4 import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
     RoleBlueprintError,
