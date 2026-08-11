@@ -8,6 +8,7 @@ __pycache__/
 .coverage
 .coverage.*
 htmlcov/
+*.egg-info/
 
 # Virtual environments
 .venv/
