@@ -54,12 +54,14 @@ def ensure_lm_studio_model_context(
     api_token: str | None = None,
     connect_timeout_seconds: float = 10.0,
     transport: httpx.BaseTransport | None = None,
+    exclusive_llm: bool = False,
 ) -> LMStudioContextState:
     """Ensure a configured LM Studio model key is loaded with enough context.
 
     JobHunter keeps using the OpenAI-compatible endpoint for Instructor structured
     output. LM Studio's native v1 API is used only to inspect/reconfigure the loaded
-    model before that call.
+    model before that call. When ``exclusive_llm`` is true, other loaded LLM instances
+    are unloaded first while embedding models are left untouched.
     """
 
     if context_length < 4096:
@@ -117,6 +119,27 @@ def ensure_lm_studio_model_context(
                     f"LM Studio model {model!r} supports at most {max_context} context tokens, "
                     f"below JobHunter's required {context_length}."
                 )
+
+            if exclusive_llm:
+                for candidate in raw_models:
+                    if not isinstance(candidate, dict) or candidate.get("type") != "llm":
+                        continue
+                    loaded_instances = candidate.get("loaded_instances")
+                    if not isinstance(loaded_instances, list):
+                        continue
+                    for loaded_instance in loaded_instances:
+                        if not isinstance(loaded_instance, dict):
+                            continue
+                        instance_id = loaded_instance.get("id")
+                        if not isinstance(instance_id, str) or not instance_id:
+                            continue
+                        if instance_id == model:
+                            continue
+                        unload_other = client.post(
+                            "models/unload",
+                            json={"instance_id": instance_id},
+                        )
+                        unload_other.raise_for_status()
 
             raw_instances = entry.get("loaded_instances")
             instances = raw_instances if isinstance(raw_instances, list) else []
