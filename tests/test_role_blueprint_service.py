@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from jobhunter.role_blueprint_inference import RoleBlueprintInferenceResult
+from jobhunter.role_blueprint_inference_v4 import RoleBlueprintInferenceResult
 from jobhunter.role_blueprint_service import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
@@ -33,12 +33,14 @@ class _AnalysisStore:
                 "requirements": [
                     {
                         "concept": "Python",
+                        "concept_type": "skill",
                         "requirement_type": "contextual",
-                        "depth_signal": None,
-                        "evidence": ["Python"],
+                        "depth_signal": "expert",
+                        "evidence": ["Python (expert)"],
                     },
                     {
                         "concept": "Professional experience",
+                        "concept_type": "experience",
                         "requirement_type": "required",
                         "depth_signal": "three years",
                         "evidence": ["three years"],
@@ -62,8 +64,48 @@ class _CapabilityStore:
                 analysis_artifact_id=20,
                 intelligence={
                     "role_interpretation": "Applied AI automation work.",
-                    "capabilities": [{"capability_label": "AI integration"}],
-                    "source_truth": {"role_level_requirement_indices": [1]},
+                    "capabilities": [
+                        {
+                            "capability_label": "AI integration",
+                            "summary": "Integrate AI capability into internal workflows.",
+                            "source_requirement_indices": [0],
+                            "source_responsibility_indices": [0],
+                            "sub_capabilities": [],
+                            "underlying_knowledge": [],
+                            "operational_practices": [],
+                            "operational_context": [],
+                            "unknown_scope": [],
+                        }
+                    ],
+                    "source_truth": {
+                        "role_purpose": [],
+                        "requirements": [
+                            {
+                                "index": 0,
+                                "concept": "Python",
+                                "concept_type": "skill",
+                                "requirement_type": "contextual",
+                                "depth_signal": "expert",
+                                "evidence": ["Python (expert)"],
+                            },
+                            {
+                                "index": 1,
+                                "concept": "Professional experience",
+                                "concept_type": "experience",
+                                "requirement_type": "required",
+                                "depth_signal": "three years",
+                                "evidence": ["three years"],
+                            },
+                        ],
+                        "responsibilities": [
+                            {
+                                "index": 0,
+                                "statement": "Integrate AI tools with internal systems",
+                                "evidence": ["Integrate AI tools with internal systems"],
+                            }
+                        ],
+                        "role_level_requirement_indices": [1],
+                    },
                 },
             )
 
@@ -93,42 +135,32 @@ class _Provider:
     def complete(self, **kwargs):
         self.calls.append(kwargs)
         return RoleBlueprintInferenceResult(
-            model="analysis-model",
+            model="blueprint-model",
             blueprint={
                 "role_read": "This is applied AI automation/integration work.",
                 "likely_role_shape": "Applied AI Automation / Integration Engineer",
-                "capability_areas": [
+                "capability_interpretations": [
                     {
-                        "name": "AI integration engineering",
-                        "source_capability_indices": [0],
                         "interpretation_strength": "highly_likely",
-                        "likely_depth": "Practical application/API engineering.",
-                        "why_this_matters": "The role connects AI tools and internal systems.",
+                        "likely_depth": "Practical application and integration engineering.",
+                        "why_this_matters": (
+                            "The accepted work connects AI tools and internal systems."
+                        ),
                         "likely_subskills": ["HTTP/JSON", "validation"],
-                        "likely_tools_or_examples": [
-                            {
-                                "name": "Python",
-                                "relationship": "source_named",
-                                "why_relevant": "Python is named for the work.",
-                                "source_requirement_indices": [0],
-                            }
-                        ],
+                        "suggested_tools_or_examples": [],
                         "likely_work_products": ["AI integration service"],
                         "likely_failure_modes_or_operational_concerns": ["timeouts"],
                         "probably_not_required": ["foundation-model pretraining"],
                     }
                 ],
                 "hidden_requirements": [],
-                "likely_end_to_end_scenarios": [
+                "professional_example_scenarios": [
                     {
                         "name": "Illustrative integration flow",
-                        "why_likely": "A useful example of how the integration work could connect.",
+                        "why_useful": "Shows one possible way the integration work could connect.",
                         "flow_steps": ["Receive input", "Call service", "Validate result"],
                         "engineering_concerns": ["idempotency"],
                         "interpretation_strength": "plausible",
-                        "scenario_basis": "professional_example",
-                        "source_capability_indices": [0],
-                        "source_responsibility_indices": [0],
                         "assumptions": ["Exact internal platform is not stated."],
                     }
                 ],
@@ -183,13 +215,13 @@ def _service(*, capability_store=None):
         blueprint_store=blueprint_store,
         provider=provider,
         analysis_model="analysis-model",
-        capability_model="analysis-model",
-        blueprint_model="analysis-model",
+        capability_model="capability-model",
+        blueprint_model="blueprint-model",
     )
     return service, provider, blueprint_store
 
 
-def test_role_blueprint_v3_reconciles_upstream_truth_and_reuses() -> None:
+def test_role_blueprint_v4_attaches_upstream_truth_and_reuses() -> None:
     service, provider, store = _service()
 
     first = service.build("job1")
@@ -203,8 +235,15 @@ def test_role_blueprint_v3_reconciles_upstream_truth_and_reuses() -> None:
     assert store.artifact.schema_version == BLUEPRINT_SCHEMA_VERSION
     assert store.artifact.blueprint["source_capability_coverage"] == [0]
     assert store.artifact.blueprint["source_role_constraints"][0]["requirement_index"] == 1
-    tool = store.artifact.blueprint["capability_areas"][0]["likely_tools_or_examples"][0]
-    assert tool["source_requirement_strength"] == "contextual"
+    area = store.artifact.blueprint["capability_areas"][0]
+    assert area["source_capability_index"] == 0
+    assert area["source_requirements"][0]["requirement_index"] == 0
+    assert area["source_requirements"][0]["depth_signal"] == "expert"
+
+    payload = provider.calls[0]["user_payload"]
+    assert "accepted_extraction" not in payload
+    assert "capability_intelligence" not in payload
+    assert payload["contract"]["capability_interpretation_count"] == 1
 
 
 def test_role_blueprint_requires_current_capability_intelligence() -> None:
