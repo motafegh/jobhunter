@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from jobhunter.role_blueprint_inference_v4 import RoleBlueprintInferenceResult
+from jobhunter.role_blueprint_inference_v5 import RoleBlueprintInferenceResult
 from jobhunter.role_blueprint_service import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
@@ -24,6 +24,12 @@ class _AnalysisStore:
             job_detail_version_id=10,
             translation_artifact_id=30,
             analysis={
+                "role_purpose": [
+                    {
+                        "statement": "Integrate AI tools with internal systems",
+                        "evidence": ["Integrate AI tools with internal systems"],
+                    }
+                ],
                 "responsibilities": [
                     {
                         "statement": "Integrate AI tools with internal systems",
@@ -63,22 +69,25 @@ class _CapabilityStore:
                 translation_artifact_id=30,
                 analysis_artifact_id=20,
                 intelligence={
-                    "role_interpretation": "Applied AI automation work.",
+                    "role_interpretation": "Derived prose should not reach Blueprint v5.",
                     "capabilities": [
                         {
                             "capability_label": "AI integration",
-                            "summary": "Integrate AI capability into internal workflows.",
+                            "summary": "Derived summary should be excluded.",
                             "source_requirement_indices": [0],
                             "source_responsibility_indices": [0],
-                            "sub_capabilities": [],
-                            "underlying_knowledge": [],
-                            "operational_practices": [],
-                            "operational_context": [],
-                            "unknown_scope": [],
+                            "sub_capabilities": [
+                                {
+                                    "statement": "Derived sub-capability should be excluded.",
+                                    "evidence_status": "strongly_implied_by_work",
+                                }
+                            ],
                         }
                     ],
                     "source_truth": {
-                        "role_purpose": [],
+                        "role_purpose": [
+                            {"statement": "Integrate AI tools with internal systems"}
+                        ],
                         "requirements": [
                             {
                                 "index": 0,
@@ -120,10 +129,9 @@ class _CapabilityStore:
             job_detail_version_id=10,
             fields={
                 "title": "AI Automation Specialist",
-                "company_description": "International freight-forwarding company.",
-                "description": "Integrate AI tools with CRM and email. Python is listed.",
+                "company_description": "Excluded from the v5 model context.",
+                "description": "Excluded long source description.",
                 "language": "en",
-                "parser_version": "test",
             },
         )
 
@@ -137,36 +145,30 @@ class _Provider:
         return RoleBlueprintInferenceResult(
             model="blueprint-model",
             blueprint={
-                "role_read": "This is applied AI automation/integration work.",
-                "likely_role_shape": "Applied AI Automation / Integration Engineer",
                 "capability_interpretations": [
                     {
-                        "interpretation_strength": "highly_likely",
-                        "likely_depth": "Practical application and integration engineering.",
-                        "why_this_matters": (
-                            "The accepted work connects AI tools and internal systems."
+                        "practical_interpretation": (
+                            "This area involves applying Python in internal AI integrations."
                         ),
-                        "likely_subskills": ["HTTP/JSON", "validation"],
-                        "suggested_tools_or_examples": [],
-                        "likely_work_products": ["AI integration service"],
-                        "likely_failure_modes_or_operational_concerns": ["timeouts"],
-                        "probably_not_required": ["foundation-model pretraining"],
+                        "interpretation_uncertainty": (
+                            "The vacancy does not state the exact integration boundary."
+                        ),
+                        "professional_considerations": [
+                            {
+                                "statement": "Input validation may matter in integration work.",
+                                "interpretation_strength": "plausible",
+                                "uncertainty": (
+                                    "The vacancy does not state the serving boundary."
+                                ),
+                            }
+                        ],
+                        "probably_not_required": [
+                            "Foundation-model pretraining is probably not central."
+                        ],
+                        "important_unknowns": ["The internal platform is not stated."],
                     }
                 ],
-                "hidden_requirements": [],
-                "professional_example_scenarios": [
-                    {
-                        "name": "Illustrative integration flow",
-                        "why_useful": "Shows one possible way the integration work could connect.",
-                        "flow_steps": ["Receive input", "Call service", "Validate result"],
-                        "engineering_concerns": ["idempotency"],
-                        "interpretation_strength": "plausible",
-                        "assumptions": ["Exact internal platform is not stated."],
-                    }
-                ],
-                "what_probably_does_not_matter": ["training foundation models"],
-                "important_unknowns": ["Exact CRM platform is not stated."],
-                "bottom_line": "The role is about reliable applied-AI integration.",
+                "overall_unknowns": ["Exact production topology is not stated."],
             },
             request_body={"fake": True},
             raw_response={"id": "fake"},
@@ -221,7 +223,7 @@ def _service(*, capability_store=None):
     return service, provider, blueprint_store
 
 
-def test_role_blueprint_v4_attaches_upstream_truth_and_reuses() -> None:
+def test_role_blueprint_v5_attaches_upstream_truth_and_reuses() -> None:
     service, provider, store = _service()
 
     first = service.build("job1")
@@ -233,16 +235,22 @@ def test_role_blueprint_v4_attaches_upstream_truth_and_reuses() -> None:
     assert store.artifact is not None
     assert store.artifact.prompt_version == BLUEPRINT_PROMPT_VERSION
     assert store.artifact.schema_version == BLUEPRINT_SCHEMA_VERSION
-    assert store.artifact.blueprint["source_capability_coverage"] == [0]
-    assert store.artifact.blueprint["source_role_constraints"][0]["requirement_index"] == 1
-    area = store.artifact.blueprint["capability_areas"][0]
+    blueprint = store.artifact.blueprint
+    assert blueprint["source_capability_coverage"] == [0]
+    assert blueprint["source_role_constraints"][0]["requirement_index"] == 1
+    assert blueprint["source_role_purpose"][0]["statement"].startswith("Integrate")
+    area = blueprint["capability_areas"][0]
     assert area["source_capability_index"] == 0
+    assert area["interpretation_strength"] == "plausible"
     assert area["source_requirements"][0]["requirement_index"] == 0
     assert area["source_requirements"][0]["depth_signal"] == "expert"
 
     payload = provider.calls[0]["user_payload"]
     assert "accepted_extraction" not in payload
     assert "capability_intelligence" not in payload
+    capability_input = payload["blueprint_inputs"]["capabilities"][0]
+    assert "summary" not in capability_input
+    assert "sub_capabilities" not in capability_input
     assert payload["contract"]["capability_interpretation_count"] == 1
 
 
