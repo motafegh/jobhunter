@@ -4,7 +4,7 @@
 **Date:** 2026-08-11  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Current gate:** B4 / SQ-3 Role Capability Blueprint  
-**Purpose:** Resume from the real current repository state without reconstructing the recent semantic-calibration work.
+**Purpose:** Resume from the real current repository state without reconstructing recent semantic-calibration work.
 
 This file is not a controlling specification. Higher-authority product/domain/source/architecture, roadmap, implementation, Phase-1, focused acceptance, and TODO documents win on conflict.
 
@@ -26,7 +26,7 @@ MARKET
 
 Architecture remains a local Python modular monolith with SQLite structured state, immutable evidence, FastAPI/Uvicorn/Jinja browser UI, shared CLI services, and local-first LM Studio. Do not introduce Node/npm/React, vector/RAG, graph DB, generic plugin frameworks, or agent orchestration without demonstrated need.
 
-## 2. Current contracts
+## 2. Current contracts and model roles
 
 ```text
 parser:                       jobinja-detail-v2
@@ -40,8 +40,8 @@ P1.6 schema:                  job-analysis-v4
 Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Blueprint candidate:          role-capability-blueprint-v3
-Blueprint schema:             role-capability-blueprint-v2
+Blueprint candidate:          role-capability-blueprint-v4
+Blueprint schema:             role-capability-blueprint-v3
 
 Review Snapshot:              job-review-snapshot-v1
 ```
@@ -51,8 +51,10 @@ Controlled model roles:
 ```text
 analysis:   gemma-4-e4b-it-ud
 capability: gemma-4-e2b-it
-blueprint:  gemma-4-e2b-it
+blueprint:  gemma-4-e4b-it-ud
 ```
+
+Blueprint runtime automatically prepares the selected LM Studio model at a 16,384-token context window. Manual LM Studio context reconfiguration is not required.
 
 ## 3. Fixed `tG9K` upstream chain
 
@@ -62,7 +64,7 @@ English projection artifact 33
 → accepted Capability v7 artifact 9
 ```
 
-Do not rerun P1.6 or Capability merely to test Blueprint.
+Do not rerun translation, P1.6, or Capability merely to test Blueprint.
 
 Artifact 29 is B2/SQ-1 accepted:
 
@@ -92,165 +94,229 @@ B3 decision:
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-## 4. Capability history relevant to later review
+## 4. Blueprint v3 failure and decision
 
-- v4/v2 artifact 7: rejected; depth omitted, contextual stack/cloud strengthened, ownership overreach, evidence leakage.
-- v5: historical failed output-budget experiment; do not reuse identity.
-- v6/v3 artifact 8: rejected; deterministic reconciliation worked only for model-selected links, but model linked too little and repeated autonomy/ownership/optionality failures.
-- v7/v4 artifact 9: accepted bounded B3 baseline. Freeze unless downstream or heterogeneous evidence exposes a repeatable correctness problem.
+Blueprint v3/v2 asked the model to reproduce several numeric provenance namespaces and then reconciled source strength/depth deterministically.
 
-## 5. Current B4 Blueprint v3 design
+Controlled live evidence:
 
-Blueprint remains the human-facing professional interpretation layer. v3 adds a stronger deterministic/model boundary without turning it into another factual extraction layer.
+- E2B completed generation but failed provenance validation, confused P1.6 requirement indices with Capability-profile indices, and overreached semantically.
+- The first E4B attempt failed only because the LM Studio instance was loaded at 4,096 context for a ~9,521-token prompt. Automatic 16,384 context preparation was then implemented and verified.
+- E4B subsequently completed both the initial generation and Instructor repair attempt, but still failed the v3 contract.
+- E4B correctly reasoned that source tools mapped to requirements such as 10, 6, 14, 18 and 15/16, but wrote those IDs into `source_depth_signals` instead of `source_requirement_indices`.
+- E4B also repeated the Capability/P1.6 namespace confusion and retained streaming/cloud/edge/MLOps architecture overreach.
 
-### Capability grounding
-
-Every Blueprint capability area carries `source_capability_indices`. The union of all areas must cover every accepted Capability profile.
-
-For current `tG9K`, accepted Capability indices are:
+Decision:
 
 ```text
-0  Advanced ML/Statistical Modeling for Industrial Data
-1  Full-Stack ML Engineering & MLOps
+Blueprint v3/v2 fails B4.
+Do not weaken validators.
+Do not add prompt patches.
+Do not model-shop to 12B to compensate for deterministic bookkeeping.
 ```
 
-The Blueprint may reorganize/explain those areas, but it cannot silently ignore one or add a generic ungrounded curriculum area.
-
-### Source-named tools
-
-A `source_named` tool must link accepted P1.6 requirement/responsibility indices.
-
-JobHunter deterministically derives:
-
-```text
-source_requirement_strength
-source_depth_signals
-```
-
-This prevents Python `expert` from spreading to PyTorch/TensorFlow/XGBoost/etc. and prevents contextual/preferred tools from silently becoming mandatory.
-
-`likely_example` / `possible_example` tools have no P1.6 source links, source strength, or source depth.
-
-### Role-level constraints
-
-JobHunter deterministically copies Capability source-truth role-level requirements into Blueprint.
-
-Expected `tG9K` constraints:
-
-```text
-25  Master's degree                         required
-26  Professional experience                required; three to six years
-```
-
-### Hidden requirements
-
-A `highly_likely` hidden requirement must link accepted Capability work and/or responsibilities. It is still interpretation, not employer fact.
-
-### Scenario basis
-
-Every scenario declares:
-
-```text
-source_stated_workflow
-professional_example
-```
-
-A practitioner-created `professional_example` cannot be `highly_likely`. Unstated topology, latency, vendor, batch/stream mode, cloud/edge placement, scale, or ownership assumptions must remain explicit. A highly-likely scenario cannot depend on unresolved assumptions.
-
-## 6. Current implementation files
-
-```text
-src/jobhunter/role_blueprint_models.py
-src/jobhunter/role_blueprint_service.py
-src/jobhunter/role_blueprint_service_v3.py
-src/jobhunter/role_blueprint_inference.py
-scripts/audit_blueprint_v3_snapshot.py
-```
-
-Regression coverage includes:
-
-```text
-tests/test_role_blueprint_models.py
-tests/test_role_blueprint_service.py
-tests/test_role_blueprint_inference.py
-tests/test_role_blueprint_evidence_shape.py
-```
-
-B4 experiment:
+Historical record:
 
 ```text
 docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
 ```
 
-## 7. Exact next action
+## 5. Current Blueprint v4 design
 
-Keep accepted upstream artifacts and model roles fixed.
+Architectural rule:
 
-Run locally:
+> **The model reasons; JobHunter owns provenance bookkeeping.**
+
+Current v4 boundary:
+
+```text
+accepted P1.6 + accepted Capability v7
+→ JobHunter builds compact ordered capability inputs
+→ model emits semantic interpretation only
+→ JobHunter deterministically attaches all upstream provenance/source anchors
+→ Blueprint v4/v3 artifact
+```
+
+### Model-facing draft
+
+The LLM does **not** emit:
+
+```text
+Capability indices
+P1.6 requirement indices
+P1.6 responsibility indices
+source strength
+source depth
+role constraints
+scenario basis
+```
+
+It returns exactly one `capability_interpretations` item per accepted Capability profile, in source order. It cannot regroup, merge, split, or rename accepted Capability profiles.
+
+### Deterministic persisted source anchors
+
+Each persisted Blueprint area receives:
+
+```text
+source_capability_index
+source_requirements[]
+source_responsibilities[]
+```
+
+Source requirements preserve exact:
+
+```text
+requirement_index
+concept
+concept_type
+requirement_type
+depth_signal
+evidence
+```
+
+Role-level degree/experience constraints are injected from Capability `source_truth`.
+
+### Suggested tools
+
+Employer/source-named technologies remain visible through deterministic source requirements. The model only creates:
+
+```text
+suggested_tools_or_examples
+```
+
+with `likely_example` or `possible_example`. Suggested tools carry no source provenance and cannot be mandatory/required/necessary or inherit expert/mastery depth.
+
+### Hidden requirements and workflow examples
+
+Model-created hidden requirements are only `plausible` or `speculative`.
+
+Model-created workflows are stored as:
+
+```text
+professional_example_scenarios
+```
+
+They are only `plausible` or `speculative`, and JobHunter injects `scenario_basis = professional_example` deterministically. Unstated topology/latency/vendor/batch-stream/cloud-edge/scale/ownership/orchestration/feedback-loop choices belong in explicit assumptions.
+
+Current design record:
+
+```text
+docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md
+```
+
+## 6. Current implementation files
+
+Active v4:
+
+```text
+src/jobhunter/role_blueprint_service.py          # public shim → v4
+src/jobhunter/role_blueprint_service_v4.py
+src/jobhunter/role_blueprint_inference_v4.py
+src/jobhunter/role_blueprint_v4_models.py
+src/jobhunter/inference/lm_studio_runtime.py
+scripts/audit_blueprint_v4_snapshot.py
+```
+
+Historical v3 remains preserved:
+
+```text
+src/jobhunter/role_blueprint_service_v3.py
+src/jobhunter/role_blueprint_inference.py
+src/jobhunter/role_blueprint_models.py
+scripts/audit_blueprint_v3_snapshot.py
+```
+
+V4 regression coverage includes:
+
+```text
+tests/test_role_blueprint_v4_models.py
+tests/test_role_blueprint_inference_v4.py
+tests/test_role_blueprint_service_v4.py
+tests/test_role_blueprint_service.py
+tests/test_lm_studio_runtime.py
+```
+
+The browser template now shows deterministic employer/source anchors separately from practitioner-created examples and labels model-created workflows as professional examples rather than employer architecture.
+
+## 7. Exact next live action
+
+First sync and confirm the active contract:
+
+```bash
+git pull --ff-only origin main
+python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION; print(BLUEPRINT_PROMPT_VERSION); print(BLUEPRINT_SCHEMA_VERSION)"
+```
+
+Expected:
+
+```text
+role-capability-blueprint-v4
+role-capability-blueprint-v3
+```
+
+Then run **only**:
 
 ```bash
 jobhunter jobs blueprint tG9K
-jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v3_snapshot.py
 ```
 
 Do not run:
 
 ```text
+translation again
 Analyze English / P1.6 again
 Capability again
 full jobhunter run
 ```
 
-for this controlled B4 test.
-
 If Blueprint generation fails, preserve the failed attempt and inspect the exact validation/output/model error. Do not fabricate or commit an empty snapshot.
 
-If generation succeeds, the mechanical audit must confirm:
+If generation succeeds:
+
+```bash
+jobhunter jobs snapshot tG9K
+python scripts/audit_blueprint_v4_snapshot.py
+```
+
+The mechanical audit must confirm:
 
 - English analysis artifact 29;
 - Capability artifact 9 / v7/v4 current chain;
-- Blueprint v3/v2 depends on Capability 9;
-- all accepted Capability profiles are covered;
-- source-named tools have valid P1.6 links and deterministic strength/depth;
-- inferred tools carry no source strength/depth;
+- Blueprint v4/v3 depends on Capability 9 and P1.6 29;
+- exactly one Blueprint area per accepted Capability profile, in the same order and with the exact accepted label;
+- deterministic source requirements exactly match each Capability profile's P1.6 links, including strength/depth/evidence;
+- deterministic source responsibilities exactly match the accepted links;
 - role-level constraints match source truth;
-- professional-example scenarios are not highly likely;
-- source-stated workflows link accepted responsibilities;
-- highly-likely scenarios have no unresolved assumptions.
+- suggested tools contain no legacy source provenance fields;
+- hidden requirements are only plausible/speculative;
+- professional example scenarios are only plausible/speculative and carry deterministic `professional_example` basis;
+- legacy v3 provenance/scenario fields are absent.
 
 A mechanical pass is necessary but not sufficient.
 
-## 8. Semantic review after the live push
+## 8. Semantic B4 review after a valid v4 artifact
 
 Review whether:
 
 - the Blueprint adds useful practitioner interpretation rather than paraphrasing P1.6/Capability;
-- capability-area organization is coherent;
-- Python alone carries explicit expert depth unless another tool has independent depth evidence;
+- role shape is calibrated and does not inflate the vacancy into a broader MLOps/platform identity;
+- Python alone carries explicit expert source depth unless another concept has independent depth evidence;
 - contextual/preferred frameworks, cloud/edge, MATLAB, and C/C++ remain calibrated;
 - a technology list is not assembled into a hidden company architecture;
-- professional-example workflows are technically coherent and visibly hypothetical;
-- source-stated/high-confidence workflows do not contradict unresolved unknowns;
-- hidden requirements are useful and grounded rather than generic curriculum;
-- tools/protocols/platforms retain normal technical meaning;
+- Spark/Kafka, databases, Airflow/Prefect, MLflow/Docker and cloud/edge remain separate source facts unless an illustrative scenario clearly labels assumptions;
+- professional examples are technically coherent and visibly hypothetical;
+- real-time, microservices, CI/CD, model registry, regulatory constraints and control loops are not asserted without support;
+- hidden requirements are role-specific and useful, not generic curriculum;
 - important unknowns preserve real architecture/operational uncertainty;
+- tools/protocols/platforms retain normal technical meaning;
 - the model does not amplify broad Capability wording into ownership/autonomy claims.
-
-### Decision after review
 
 If B4 passes:
 1. mark B4/SQ-3 accepted for the bounded `tG9K` gate;
-2. freeze Blueprint v3/v2 for the next heterogeneous review tranche;
+2. freeze Blueprint v4/v3 for the next heterogeneous review tranche;
 3. continue B5/CI-3 with sparse, Python/software, network/security, and operations/platform roles.
 
-If B4 is mechanically correct but E2B remains semantically weak:
-1. keep source/P1.6/Capability/prompt/schema/rubric fixed;
-2. compare one stronger Blueprint reasoning model;
-3. compare correctness/calibration rather than eloquence;
-4. do not build multi-model voting.
-
-If B4 exposes a repeatable deterministic defect, fix the correct layer and rerun the same bounded case before heterogeneous expansion.
+If v4 still fails semantically, diagnose the failure at the correct layer. Do not immediately change upstream artifacts, model, prompt, and schema together.
 
 ## 9. Phase sequence after B4
 
