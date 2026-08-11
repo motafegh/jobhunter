@@ -127,20 +127,16 @@ class RoleBlueprintResult:
     capability_artifact_id: int
 
 
-def _evidence_list(value: Any) -> list[str]:
-    if isinstance(value, str):
-        return [value.strip()] if value.strip() else []
-    if isinstance(value, list):
-        return [str(item).strip() for item in value if str(item).strip()]
-    return []
-
-
 def _compact_role_context(fields: dict[str, Any]) -> dict[str, Any]:
-    return {
-        key: fields[key]
-        for key in _ROLE_CONTEXT_KEYS
-        if key in fields and fields[key] not in {None, "", []}
-    }
+    result: dict[str, Any] = {}
+    for key in _ROLE_CONTEXT_KEYS:
+        if key not in fields:
+            continue
+        value = fields[key]
+        if value is None or value == "" or value == []:
+            continue
+        result[key] = value
+    return result
 
 
 def _reasoning_projection(profile: dict[str, Any]) -> dict[str, Any]:
@@ -186,6 +182,8 @@ def _blueprint_inputs(
     requirements = list(source_truth.get("requirements") or [])
     responsibilities = list(source_truth.get("responsibilities") or [])
     capability_profiles = list(capability_intelligence.get("capabilities") or [])
+    if not capability_profiles:
+        raise RoleBlueprintError("Blueprint v4 requires at least one accepted Capability profile")
 
     capabilities: list[dict[str, Any]] = []
     for profile in capability_profiles:
