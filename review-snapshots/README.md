@@ -19,22 +19,6 @@ jobhunter jobs snapshot <job-id>
 git diff -- review-snapshots/jobs/<job-id>.json
 ```
 
-For the current B3 `tG9K` Capability v7 acceptance:
-
-```bash
-jobhunter jobs capability tG9K
-jobhunter jobs snapshot tG9K
-python scripts/audit_capability_v7_snapshot.py
-```
-
-Then, after inspecting the diff:
-
-```bash
-git add review-snapshots/jobs/tG9K.json
-git commit -m "review: evaluate tG9K capability v7"
-git push origin main
-```
-
 The standalone compatibility entry point remains:
 
 ```bash
@@ -69,7 +53,7 @@ blueprint_is_current_chain
 
 A stale downstream artifact is not exported as current.
 
-## Current `tG9K` state
+## Current `tG9K` acceptance chain
 
 Configured role models:
 
@@ -79,15 +63,49 @@ capability: gemma-4-e2b-it
 blueprint:  gemma-4-e2b-it
 ```
 
-Accepted upstream anchor:
+Accepted fixed upstream chain:
 
 ```text
 English projection artifact 33
-English P1.6 artifact 29
+→ English P1.6 artifact 29
+→ Capability v7/v4 artifact 9
 ```
 
-The currently committed snapshot contains **Capability artifact 8, v6/v3**, as negative B3 evidence. That artifact is dependency-current but semantically rejected. Blueprint is absent from the current chain because it was built against an older Capability dependency.
+Capability artifact 9 passed the bounded B3 acceptance gate. The currently committed snapshot has no current-chain Blueprint yet because B4 has not been run against Capability artifact 9.
 
-The runtime on `main` is now the unaccepted **Capability v7/v4** candidate. After a successful local v7 run, regenerate this snapshot and run `scripts/audit_capability_v7_snapshot.py` before committing it.
+## Current B4 Blueprint review workflow
+
+Do **not** rerun accepted P1.6 or Capability merely to test Blueprint. With the fixed chain above and the configured Blueprint model available in LM Studio, run:
+
+```bash
+jobhunter jobs blueprint tG9K
+jobhunter jobs snapshot tG9K
+python scripts/audit_blueprint_v3_snapshot.py
+```
+
+The expected active Blueprint contract is:
+
+```text
+role-capability-blueprint-v3
+role-capability-blueprint-v2
+```
+
+The mechanical audit checks dependency/current-chain identity, complete accepted-Capability grounding, deterministic source-named tool strength/depth, role-level constraints, and scenario-basis/certainty invariants. A mechanical pass does **not** itself accept B4; complete semantic review still decides whether the Blueprint is professionally useful and correctly calibrated.
+
+After a successful generation and audit, inspect the snapshot diff:
+
+```bash
+git diff --check
+git status --short
+git diff -- review-snapshots/jobs/tG9K.json
+```
+
+If only the intended review snapshot changed, publish it deliberately:
+
+```bash
+git add review-snapshots/jobs/tG9K.json
+git commit -m "review: evaluate tG9K blueprint v3"
+git push origin main
+```
 
 Do not automatically snapshot/commit the whole corpus.
