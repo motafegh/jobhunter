@@ -1,15 +1,13 @@
 # JobHunter Role Capability Blueprint Plan
 
-**Status:** Implemented bounded per-job slice; semantic-quality acceptance active  
-**Date:** 2026-08-08  
+**Status:** Blueprint v3/v2 implemented as active B4 candidate; live semantic acceptance open  
+**Date:** 2026-08-11  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, the active Phase-1 gate, and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`  
-**Scope:** Human-facing professional interpretation above strict P1.6 and Capability Intelligence. No corpus-wide automatic generation is authorized yet.
-
----
+**Scope:** Human-facing professional interpretation above accepted P1.6 and Capability Intelligence. No corpus-wide automatic generation is authorized yet.
 
 ## 1. Purpose
 
-JobHunter deliberately separates three jobs:
+JobHunter separates three semantic jobs:
 
 ```text
 P1.6
@@ -24,22 +22,20 @@ Role Capability Blueprint
 
 The Blueprint answers:
 
-> Given the complete vacancy, factual extraction, and evidence-qualified capability reasoning, what does this role probably require in practice when interpreted by an experienced practitioner in the relevant domain?
+> Given the vacancy, accepted factual substrate, and accepted Capability reasoning, what does this role probably require in practice when interpreted by an experienced practitioner in the relevant domain?
 
-It should teach the user something useful beyond simply rereading the advertisement.
-
----
+It should teach the user something useful beyond rereading the advertisement without disguising professional inference as employer fact.
 
 ## 2. Current contract
 
-Active identity:
+Active B4 candidate:
 
 ```text
-prompt/runtime: role-capability-blueprint-v2
-schema:         role-capability-blueprint-v1
+prompt/runtime: role-capability-blueprint-v3
+schema:         role-capability-blueprint-v2
 ```
 
-Persistence identity:
+Persistence identity remains:
 
 ```text
 job detail version
@@ -51,13 +47,11 @@ job detail version
 + Blueprint schema version
 ```
 
-Historical Blueprint prompt/runtime versions remain preserved and are not reused as v2 artifacts.
+Historical Blueprint v2/v1 artifacts remain historical and are not current-chain v3 artifacts.
 
----
+## 3. Inputs and authority
 
-## 3. Inputs
-
-The Blueprint reads together:
+The Blueprint reads:
 
 ```text
 analysis_fields
@@ -65,64 +59,133 @@ accepted_extraction
 capability_intelligence
 ```
 
-`analysis_fields` supplies the complete hardened English vacancy/company context.
+Authority remains:
 
-`accepted_extraction` supplies strict factual duties/requirements.
+```text
+source
+→ English projection
+→ accepted P1.6 facts
+→ accepted Capability source truth/reasoning
+→ Blueprint interpretation
+```
 
-`capability_intelligence` supplies auditable reasoning context, but it is not a cage. The Blueprint may reorganize, narrow, or improve the human explanation so long as it does not overwrite source truth.
+`analysis_fields` gives complete vacancy/company context. `accepted_extraction` supplies strict duties/requirements. `capability_intelligence` supplies accepted Capability profiles and deterministic source truth.
 
----
+Blueprint may reorganize and explain; it must not overwrite upstream truth.
 
 ## 4. Professional-frame rule
 
-The model is a **senior practitioner/domain specialist**, not always a software engineer.
+The model is a **senior practitioner/domain specialist**, not automatically a software engineer.
 
-Use the professional frame that matches the vacancy:
-
-- software role → software-engineering interpretation;
-- ML role → ML/data/industrial interpretation;
-- content/media role → content/media interpretation;
-- operations role → operations/platform interpretation;
-- security role → security/network interpretation;
-- other domains → corresponding practitioner frame.
+Use the frame appropriate to the vacancy: software, ML/data/industrial, content/media, operations/platform, security/network, or another relevant discipline.
 
 Do not force non-software jobs into engineering language merely because AI appears in the title.
 
----
+## 5. v3 grounding contract
 
-## 5. Freedom contract
+### Capability areas
 
-The Blueprint may:
+Every Blueprint capability area carries:
+
+```text
+source_capability_indices[]
+```
+
+Across all Blueprint areas, the union must cover every accepted Capability profile. This is deterministic coverage, not an instruction to copy Capability wording one-for-one.
+
+### Source-named tools
+
+Each tool/example has:
+
+```text
+relationship
+source_requirement_indices[]
+source_responsibility_indices[]
+source_requirement_strength
+source_depth_signals[]
+```
+
+Relationships remain:
+
+```text
+source_named
+likely_example
+possible_example
+```
+
+For `source_named`, the model links accepted P1.6 facts. JobHunter deterministically derives `source_requirement_strength` and `source_depth_signals`.
+
+Consequences:
+
+- Python `expert` cannot automatically spread to PyTorch/TensorFlow/XGBoost/etc.;
+- a contextual or preferred tool cannot silently become required;
+- source-named tools must actually be traceable to accepted P1.6;
+- `likely_example`/`possible_example` cannot carry employer-source strength/depth or claim employer specification.
+
+### Role-level constraints
+
+Blueprint contains deterministic:
+
+```text
+source_role_constraints[]
+```
+
+These are copied from Capability v7 role-level source truth rather than inferred by the model. On current `tG9K`, expected constraints are Master's degree and three-to-six-years professional experience.
+
+### Hidden requirements
+
+A `highly_likely` hidden requirement must link accepted Capability profiles and/or responsibilities. It remains a professional interpretation, not a new employer fact.
+
+### End-to-end scenarios
+
+Each scenario declares:
+
+```text
+scenario_basis:
+  source_stated_workflow
+  professional_example
+
+source_capability_indices[]
+source_responsibility_indices[]
+assumptions[]
+```
+
+Rules:
+
+- `source_stated_workflow` requires accepted responsibility grounding;
+- `professional_example` is practitioner-created and cannot be `highly_likely`;
+- highly-likely scenarios cannot depend on unresolved assumptions;
+- unstated topology, latency, vendor, batch/stream mode, cloud/edge placement, scale, or ownership must remain assumptions/unknowns rather than hidden facts.
+
+## 6. Freedom contract
+
+Blueprint may:
 
 - synthesize conclusions not literally present in source text;
 - use relevant domain/technical knowledge;
 - infer likely subskills and practical depth;
-- suggest plausible libraries/frameworks/APIs/protocols/tools as examples;
+- suggest plausible tools/protocols/libraries as examples;
 - explain likely operational concerns/failure modes;
-- propose plausible end-to-end workflows;
+- propose coherent professional-example workflows;
 - identify hidden prerequisites that genuinely follow from the work;
-- identify what probably does **not** matter despite belonging to the broad domain.
+- identify what probably does not matter despite belonging to the broad domain.
 
 It must not:
 
-- present inferred tools/libraries as employer-explicit requirements;
+- present inferred tools/libraries as employer requirements;
 - invent factual company systems/vendors/scale/architecture;
 - turn a technology list into a claimed architecture;
 - turn optional/plus/helpful wording into mandatory mastery;
-- dump a generic curriculum for every technology;
-- repeat obvious advertisement facts without analytical purpose;
-- use strong certainty where the source leaves important unknowns;
+- spread explicit depth from one technology to neighboring tools;
+- dump a generic curriculum;
+- use strong certainty where material unknowns remain;
 - silently redefine technical terms, metrics, protocols, libraries, or operational roles.
 
 Guiding rule:
 
-> Be professionally useful; label uncertainty instead of suppressing reasonable inference or disguising speculation as fact.
+> Be professionally useful; preserve the distinction between source truth, strong inference, plausible examples, and unresolved uncertainty.
 
----
-
-## 6. Interpretation strength
-
-Use:
+## 7. Interpretation strength
 
 ```text
 highly_likely
@@ -132,48 +195,21 @@ speculative
 
 These describe professional interpretation, not employer truth.
 
-### `highly_likely`
+`highly_likely` requires strong upstream support and no unresolved assumption that makes the conclusion uncertain.
 
-Requires strong support from explicit work, repeated clues, or a direct domain dependency.
+`plausible` is useful and credible, but alternatives remain or implementation details are unstated.
 
-A `highly_likely` conclusion must not contradict an `important_unknown` that makes the conclusion unresolved.
-
-### `plausible`
-
-Reasonable and useful, but credible alternatives exist or the source does not establish the implementation path.
-
-### `speculative`
-
-Possible but weakly supported. Include only when it helps define uncertainty or decision space.
-
----
-
-## 7. Tool/example relationship
-
-Use:
-
-```text
-source_named
-likely_example
-possible_example
-```
-
-A tool marked `likely_example` or `possible_example` must never be described as mandatory, required, necessary, or employer-specified unless a separate source fact actually establishes that.
-
-Named technologies also do not prove that the employer combines all of them into one deployed system.
-
----
+`speculative` is weakly supported and should be included only when it clarifies the decision/uncertainty space.
 
 ## 8. Whole-job reasoning
 
-Reason from combinations, not isolated keywords.
-
-Good pattern:
+Reason from combinations:
 
 ```text
 responsibility
 + deliverable
 + requirement
++ accepted Capability
 + domain context
 + operational evidence
 → professional interpretation
@@ -186,20 +222,20 @@ Python
 → generic Python curriculum
 
 Kafka + Spark + Airflow + MLflow + Docker
-→ invented end-to-end architecture
+→ invented end-to-end employer architecture
 ```
 
-A vacancy's tool list defines candidate evidence and possibilities. It does not automatically define runtime topology, data flow, latency model, ownership boundaries, or which alternatives are simultaneously used.
-
----
+A technology list does not define runtime topology, data flow, latency model, ownership boundaries, or which alternatives are simultaneously used.
 
 ## 9. Artifact shape
 
-`RoleCapabilityBlueprint` contains:
+`RoleCapabilityBlueprint` now contains:
 
 ```text
 role_read
 likely_role_shape
+source_capability_coverage[]
+source_role_constraints[]
 capability_areas[]
 hidden_requirements[]
 likely_end_to_end_scenarios[]
@@ -208,106 +244,78 @@ important_unknowns[]
 bottom_line
 ```
 
-Each capability area contains:
+Each capability area includes `source_capability_indices[]` plus the existing depth/subskill/tool/work-product/failure-mode/probable-non-requirement interpretation fields.
 
-```text
-name
-interpretation_strength
-likely_depth
-why_this_matters
-likely_subskills[]
-likely_tools_or_examples[]
-likely_work_products[]
-likely_failure_modes_or_operational_concerns[]
-probably_not_required[]
-```
+No exact-quote requirement exists for ordinary Blueprint prose. Audit-grade source evidence remains upstream. Deterministically copied source constraints/tool strength/depth retain their upstream grounding.
 
-Each scenario contains:
+## 10. Historical v2 lesson
 
-```text
-name
-why_likely
-flow_steps[]
-engineering_concerns[]
-interpretation_strength
-```
+The old `tG9K` v2 result proved the product structure was useful but exposed calibration failures:
 
-No exact-quote requirement exists in the Blueprint. Audit-grade exact evidence belongs upstream.
+- independently named technologies were assembled into one `highly_likely` architecture;
+- a real-time anomaly-detection flow was called highly likely while latency remained unknown;
+- optional edge deployment was treated too strongly;
+- tools were assigned specific runtime roles the vacancy did not establish;
+- plausible domain ideas became too specific/certain.
 
----
+v3 addresses the general failure classes structurally rather than accumulating semiconductor-specific prompt patches.
 
-## 10. Current implementation
+## 11. Current implementation
 
 Implemented:
 
-- independent Blueprint persistence/attempt history;
 - exact source/translation/P1.6/Capability dependency identity;
-- one bounded generation plus one structural validation retry;
-- no arbitrary long-read deadline after successful local connection;
+- independent Blueprint persistence/attempt history;
+- bounded generation plus one structural validation retry;
+- no arbitrary read deadline after successful local connection;
 - dedicated Blueprint model configuration;
-- browser Blueprint page;
-- CLI `jobhunter jobs blueprint <job-id>`;
-- Review Snapshot export;
-- interpretation-strength enum;
-- source-named/likely-example/possible-example tool relationships;
-- structural certainty-language checks for some obvious contradictions;
-- practitioner/domain-specialist prompt framing;
-- generic optionality and evidence-density calibration rules.
+- browser/CLI/Review Snapshot integration;
+- v3 typed grounding contract;
+- deterministic Capability coverage validation;
+- deterministic source-named tool strength/depth;
+- deterministic role-level constraints;
+- hidden-requirement grounding rule;
+- scenario-basis/certainty/assumption rules;
+- repository-native B4 audit script;
+- regression tests for the generic v2 failure classes.
 
----
+## 12. Current live B4 gate
 
-## 11. Live acceptance evidence
-
-### `t4jp`
-
-Sparse AI/content posting. Useful for checking that the Blueprint does not manufacture sophisticated engineering depth from a weak advertisement.
-
-Observed lesson:
-
-- source weakness must remain visible;
-- `child health` company context does not automatically prove a highly regulated/clinical workflow;
-- `website design` does not prove a CMS/backend/deployment stack;
-- AI-assisted content work does not automatically mean AI pipeline engineering.
-
-### `tG9K`
-
-Rich semiconductor/industrial-ML posting. Current full chain completed successfully and is available through:
+Fixed chain:
 
 ```text
-review-snapshots/jobs/tG9K.json
+English projection artifact 33
+English P1.6 artifact 29
+Capability v7 artifact 9
+Blueprint model gemma-4-e2b-it
 ```
 
-The product structure proved useful, but the first v2 snapshot still showed expert-judgment calibration problems:
+Run:
 
-- independently named technologies were assembled into one `highly_likely` architecture;
-- a real-time anomaly-detection flow was called highly likely while required latency remained unknown;
-- optional edge deployment was treated too strongly;
-- some named tools were assigned specific runtime roles not established by the vacancy;
-- plausible domain ideas became more specific than the source justified.
+```bash
+jobhunter jobs blueprint tG9K
+jobhunter jobs snapshot tG9K
+python scripts/audit_blueprint_v3_snapshot.py
+```
 
-These are not reasons to weaken the layer into source restatement. They are reasons to improve general certainty discipline and compare stronger reasoning models.
+Do not rerun P1.6 or Capability merely to test Blueprint.
 
----
+Mechanical acceptance requires current-chain/dependency correctness, full Capability coverage, deterministic source tool strength/depth, exact role constraints, and scenario-basis invariants.
 
-## 12. Quality strategy
+Semantic acceptance additionally requires:
 
-Do not build a prompt patch list for individual semiconductor mistakes.
+1. materially improved human understanding beyond the ad/Capability;
+2. preserved upstream optionality/depth;
+3. no systematic architecture invention from stack lists;
+4. coherent interpretation-strength usage;
+5. examples remain clearly examples;
+6. acceptable technical/domain correctness;
+7. no generic curriculum dumping;
+8. useful probable non-requirements and unknowns;
+9. professional-example scenarios are realistic but visibly hypothetical;
+10. strong hidden requirements are defensible and grounded.
 
-General rules:
-
-1. A technology list is not an architecture specification.
-2. Optional source wording must remain optional.
-3. `highly_likely` cannot coexist with a directly contradictory unresolved unknown.
-4. Tool/framework/protocol/metric names keep their normal technical meaning.
-5. Company-domain text supports context but does not manufacture regulation, scale, or proprietary systems.
-6. Scenario detail scales with evidence density.
-7. Reasonable alternatives remain visible when the vacancy does not pick one.
-8. Prefer useful narrowing over curriculum dumping.
-9. Technical correctness matters more than sophisticated prose.
-
-Repeatable deterministic contradictions may become validators/tests. Domain correctness should primarily be evaluated through heterogeneous live examples and model comparison rather than hard-coding domain lessons.
-
----
+The exact acceptance sequence is controlled by `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` and `docs/EXECUTION_TODO.md`.
 
 ## 13. Independent Blueprint model role
 
@@ -324,36 +332,11 @@ dedicated Blueprint model
 → effective Capability model
 ```
 
-The Blueprint model may therefore be stronger than the P1.6 extractor without changing factual extraction.
-
-Controlled comparison keeps source, translation, P1.6, Capability artifact, prompt/schema, and review rubric fixed while changing the Blueprint model.
+First evaluate v3 on the existing E2B model. Only if the fixed contract is mechanically correct but semantically inadequate should a stronger Blueprint model be compared with source, P1.6, Capability, prompt/schema, and rubric held fixed.
 
 Do not introduce multi-model voting.
 
----
-
-## 14. Acceptance gate
-
-Blueprint v2 is accepted for the bounded slice only when representative review shows that it:
-
-1. materially improves human understanding beyond the advertisement;
-2. preserves upstream optionality and unknowns;
-3. does not systematically invent architecture from stack lists;
-4. uses `highly_likely`, `plausible`, and `speculative` coherently;
-5. keeps inferred tools/examples clearly non-employer-factual;
-6. demonstrates acceptable domain/tool correctness across materially different roles;
-7. avoids generic curriculum dumping;
-8. provides useful probable non-requirements and unknowns;
-9. persists/reuses exact dependency identity;
-10. is reviewable through repository snapshots;
-11. passes deterministic Ruff/pytest/warnings gates for the accepted head;
-12. is not automatically generated across the corpus before CI-3 acceptance.
-
-The representative job set and exact execution order are controlled by `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
-
----
-
-## 15. Non-goals
+## 14. Non-goals
 
 Do not build yet:
 
