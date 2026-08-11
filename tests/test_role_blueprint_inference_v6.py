@@ -78,6 +78,7 @@ def test_v6_inference_uses_bounded_draft_and_prepares_runtime_context(monkeypatc
     )
 
     assert runtime_call["context_length"] == 8_192
+    assert runtime_call["exclusive_llm"] is True
     assert captured["max_retries"] == 0
     assert captured["timeout"].read is None
     assert result.request_body["runtime"]["context_length_tokens"] == 8_192
