@@ -84,6 +84,7 @@ class BlueprintProfessionalConsiderationDraft(_StrictModel):
 
 class BlueprintCapabilityInterpretationDraft(_StrictModel):
     practical_interpretation: str = Field(min_length=1)
+    interpretation_uncertainty: str = Field(min_length=1)
     professional_considerations: list[BlueprintProfessionalConsiderationDraft] = Field(
         default_factory=list,
         max_length=8,
@@ -161,6 +162,7 @@ class BlueprintCapabilityArea(_StrictModel):
     source_capability_index: int
     interpretation_strength: Literal["plausible"] = "plausible"
     practical_interpretation: str
+    interpretation_uncertainty: str
     source_requirements: list[BlueprintSourceRequirement] = Field(
         default_factory=list,
         max_length=40,
@@ -264,6 +266,7 @@ def reconcile_role_blueprint_v5(
                 name=str(profile.get("capability_label") or f"Capability {capability_index + 1}"),
                 source_capability_index=capability_index,
                 practical_interpretation=interpretation.practical_interpretation,
+                interpretation_uncertainty=interpretation.interpretation_uncertainty,
                 source_requirements=[
                     _source_requirement(requirements[index], requirement_index=index)
                     for index in requirement_indices
