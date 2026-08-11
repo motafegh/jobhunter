@@ -14,7 +14,7 @@ from jobhunter.inference import InferenceConnectionError, InferenceResponseError
 from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.role_blueprint_v6_models import RoleBlueprintDraft
 
-_BLUEPRINT_CONTEXT_LENGTH = 16_384
+_BLUEPRINT_CONTEXT_LENGTH = 8_192
 
 
 @dataclass(frozen=True, slots=True)
