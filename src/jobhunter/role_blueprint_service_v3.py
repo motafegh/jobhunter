@@ -75,8 +75,9 @@ Sparse advertisements should produce fewer strong claims and more unknowns. Rich
 may support deeper interpretation. Do not manufacture the same detail for both.
 
 ROLE-LEVEL CONSTRAINTS
-Do not invent or restate degree/experience constraints as model inference. JobHunter deterministically
-copies role-level P1.6 constraints into the persisted Blueprint after generation.
+Do not invent or restate degree/experience constraints as model inference.
+JobHunter deterministically copies role-level P1.6 constraints into the persisted Blueprint
+after generation.
 
 OUTPUT
 Write for a technically curious human. Explain what the person would probably need to be able to
@@ -232,8 +233,9 @@ class RoleBlueprintService:
                 "schema_version": BLUEPRINT_SCHEMA_VERSION,
                 "capability_artifact_id": capability.id,
                 "deterministic_reconciliation": (
-                    "JobHunter validates Capability/P1.6 links, preserves source tool strength/depth, "
-                    "injects role-level constraints, and enforces scenario certainty boundaries."
+                    "JobHunter validates Capability/P1.6 links, preserves source tool "
+                    "strength/depth, injects role-level constraints, and enforces scenario "
+                    "certainty boundaries."
                 ),
             },
         }
