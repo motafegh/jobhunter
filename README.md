@@ -51,8 +51,8 @@ Capability Intelligence — B3 accepted baseline
   schema:   job-capability-intelligence-v4
         ↓
 Role Capability Blueprint — active B4 candidate
-  prompt:   role-capability-blueprint-v5
-  schema:   role-capability-blueprint-v4
+  prompt:   role-capability-blueprint-v6
+  schema:   role-capability-blueprint-v5
         ↓
 Review Snapshot
   schema:   job-review-snapshot-v1
@@ -63,8 +63,9 @@ Capability v7/v4 passed the bounded rich `tG9K` B3 gate on artifact **9** and is
 Blueprint history is intentionally preserved:
 
 - v3/v2 failed B4 structurally and semantically with both E2B and E4B;
-- v4/v3 fixed deterministic provenance and passed its mechanical live audit, but failed B4 semantic review because generated prose still invented real-time/low-latency control, employer topology, process-physics obligation, strengthened edge importance, specific governance implementation and end-to-end lifecycle ownership;
-- v5/v4 is the current candidate and deliberately narrows what the model is allowed to create.
+- v4/v3 fixed deterministic provenance and passed its mechanical live audit, but failed B4 semantic review because generated prose still invented employer-specific operating assumptions and ownership;
+- v5/v4 excluded Capability-derived prose and removed most expansion surfaces, but its remaining free-form `practical_interpretation` still inflated Area 2 into end-to-end infrastructure/streaming/deployment-lifecycle scope; live artifact **6** is therefore rejected B4 evidence;
+- v6/v5 is the current candidate and removes the free-form positive role-summary surface entirely.
 
 ## P1.6 — factual substrate
 
@@ -98,7 +99,7 @@ The accepted `tG9K` artifact proves 25/25 capability-relevant requirements and 7
 
 The CLI reports five of six explicit depth facts inside profiles because the sixth is intentionally role-level professional experience (`three to six years`, requirement 26). No accepted depth fact is lost.
 
-A key downstream lesson from B4 is now explicit: **accepted Capability grouping may flow downstream, but Capability model-derived prose is not automatically authoritative downstream context.**
+A key downstream lesson from B4 is explicit: **accepted Capability grouping may flow downstream, but Capability model-derived prose is not automatically authoritative downstream context.**
 
 See:
 
@@ -106,19 +107,17 @@ See:
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-## Role Capability Blueprint v5
+## Role Capability Blueprint v6
 
 Blueprint remains the human-facing professional interpretation layer.
 
-The permanent provenance rule remains:
+Permanent rules:
 
 > **The model reasons; JobHunter owns provenance bookkeeping.**
 
-v5 adds a second rule:
-
 > **Model-created Blueprint prose is professional inference, not employer truth.**
 
-The v5 model receives only:
+The v6 model receives only:
 
 ```text
 selected neutral role context
@@ -131,23 +130,37 @@ exact linked P1.6 responsibility statements
 
 It does not receive Capability summaries/sub-capabilities/underlying-knowledge/operational prose or duplicated long vacancy/company-description text.
 
-Every accepted Capability gets exactly one model interpretation in source order. JobHunter then attaches the authoritative Capability identity plus exact P1.6 requirements, responsibilities, obligation strength, explicit depth, evidence, role purpose and role-level constraints.
+JobHunter deterministically persists the authoritative Capability identity plus exact P1.6 requirements, responsibilities, obligation strength, explicit depth, evidence, role purpose and role-level constraints.
 
-Every main model interpretation is persisted as **plausible professional inference** and requires an `interpretation_uncertainty` sentence explaining what the vacancy does not establish. Optional professional considerations are only `plausible` or `speculative` and each carries its own uncertainty sentence.
-
-v5 deliberately removes high-risk free-text expansion from the B4 contract:
+The model can create only:
 
 ```text
-no model-generated role shape
-no likely-depth claim
-no hidden requirements
-no tool recommendations
-no work-product list
-no scenario/topology generation
-no model-generated bottom line
+professional_considerations[]
+  statement
+  interpretation_strength = plausible | speculative
+  uncertainty
+
+important_unknowns[]   # at least one per Capability
+overall_unknowns[]
 ```
 
-Generic validators also reject unqualified employer-obligation/full-ownership language in model prose.
+There is deliberately no model-generated:
+
+```text
+practical role summary / interpretation paragraph
+role shape
+likely depth
+hidden requirements
+tool recommendations
+work-product list
+scenario/topology generation
+probably-not-required list
+bottom line
+```
+
+Every positive generated consideration therefore carries an explicit uncertainty statement by construction. Generic validation rejects employer-obligation language and full/end-to-end lifecycle/stack/pipeline/system/infrastructure scope claims.
+
+The v6 prompt also forbids common inference shortcuts such as high-volume data → streaming, process control → real-time control, APC/SPC → automated feedback, cloud/edge names → deployment placement, or deployment/governance → lifecycle ownership.
 
 See:
 
@@ -155,6 +168,7 @@ See:
 docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
 docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md
 docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md
+docs/experiments/2026-08-11_BLUEPRINT_V5_SEMANTIC_FAILURE_AND_V6_BOUNDARY.md
 ```
 
 ## Current B4 acceptance workflow
@@ -176,8 +190,8 @@ python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION
 Expected:
 
 ```text
+role-capability-blueprint-v6
 role-capability-blueprint-v5
-role-capability-blueprint-v4
 ```
 
 Run only the downstream Blueprint stage:
@@ -192,10 +206,10 @@ If a valid Blueprint artifact is produced:
 
 ```bash
 jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v5_snapshot.py
+python scripts/audit_blueprint_v6_snapshot.py
 ```
 
-The audit is necessary but not sufficient. B4 still requires complete semantic review. Reject a mechanically valid artifact if it still turns real-time/low-latency control, factory-floor topology, process physics, cloud/edge placement, tool combinations, governance implementation or lifecycle ownership into employer fact.
+The audit is necessary but not sufficient. B4 still requires complete semantic review. Reject a mechanically valid artifact if its professional considerations smuggle in source-unsupported streaming/real-time/low-latency/cloud-edge/full-lifecycle/architecture assumptions, or if its unknowns themselves presume systems the vacancy never establishes.
 
 ## Review Snapshots
 
@@ -213,7 +227,7 @@ Default output:
 review-snapshots/jobs/tG9K.json
 ```
 
-Inspect and intentionally publish selected examples only after live semantic acceptance review. A locally generated v4 snapshot is rejected B4 evidence and should not be committed as an accepted example.
+The currently committed Blueprint v5 artifact 6 is **review evidence, not an accepted B4 baseline**. A new snapshot should replace it only after generating the active v6 candidate and reviewing it.
 
 Snapshots exclude raw model responses/prompts, SQLite/WAL/SHM, raw HTML contents, secrets, logs, and future private user state.
 
@@ -233,11 +247,13 @@ capability: gemma-4-e2b-it
 blueprint:  gemma-4-e4b-it-ud
 ```
 
-Blueprint inference automatically prepares the selected LM Studio instance with a 16,384-token context window, reusing or reloading the same model as needed. Manual LM Studio context-window setup is not part of the normal workflow.
+Blueprint inference automatically prepares the selected LM Studio instance with a 16,384-token context window, reusing or reloading the same model as needed. V6 caps its smaller structured completion at 4,096 tokens. Manual LM Studio context-window setup is not part of the normal workflow.
 
 Do not change evidence, upstream artifacts, Blueprint contract and model simultaneously. No multi-model voting.
 
 The tracked `jobhunter.toml` is public configuration and currently contains no secret. Do not put actual API tokens/passwords/keys into it; use an ignored local secret mechanism.
+
+Editable installs may create `*.egg-info/`; package metadata is ignored by Git.
 
 ## Start the application
 
@@ -282,7 +298,7 @@ Browser and CLI share the same services/state.
 
 ```text
 B3: Capability v7/v4 accepted on bounded tG9K gate
-→ B4: live Blueprint v5/v4 tG9K acceptance
+→ B4: live Blueprint v6/v5 tG9K acceptance
 → B5/CI-3: heterogeneous live-role review
 → Phase-1 Market/source/lifecycle/partial-success/P1.7 closure
 → only then corpus-wide Phase 2
