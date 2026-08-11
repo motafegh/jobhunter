@@ -101,7 +101,9 @@ class BlueprintCapabilityInterpretationDraft(_StrictModel):
     probably_not_required: list[str] = Field(default_factory=list, max_length=12)
 
     @model_validator(mode="after")
-    def uncertain_depth_cannot_use_absolute_language(self) -> BlueprintCapabilityInterpretationDraft:
+    def uncertain_depth_cannot_use_absolute_language(
+        self,
+    ) -> BlueprintCapabilityInterpretationDraft:
         if (
             self.interpretation_strength != "highly_likely"
             and _uses_absolute_requirement_language(self.likely_depth)
