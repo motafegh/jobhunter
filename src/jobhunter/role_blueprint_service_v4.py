@@ -200,7 +200,9 @@ def _blueprint_inputs(
         responsibility_facts: list[dict[str, Any]] = []
         for index in profile.get("source_responsibility_indices") or []:
             if not isinstance(index, int) or not 0 <= index < len(responsibilities):
-                raise RoleBlueprintError("Accepted Capability contains invalid responsibility links")
+                raise RoleBlueprintError(
+                    "Accepted Capability contains invalid responsibility links"
+                )
             responsibility = responsibilities[index]
             if isinstance(responsibility, dict):
                 responsibility_facts.append(_source_responsibility_projection(responsibility))
@@ -290,9 +292,13 @@ class RoleBlueprintService:
                 "Build current Capability Intelligence before building a Role Capability Blueprint"
             )
         if capability.job_detail_version_id != source.job_detail_version_id:
-            raise RoleBlueprintError("Capability Intelligence is stale for the current source version")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current source version"
+            )
         if capability.analysis_artifact_id != analysis.id:
-            raise RoleBlueprintError("Capability Intelligence is stale for the current English analysis")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current English analysis"
+            )
         if analysis.translation_artifact_id is None:
             raise RoleBlueprintError("English analysis does not reference an English projection")
         if capability.translation_artifact_id != analysis.translation_artifact_id:
@@ -308,9 +314,13 @@ class RoleBlueprintService:
             capability.translation_artifact_id
         )
         if translation is None:
-            raise RoleBlueprintError("Capability Intelligence references a missing English projection")
+            raise RoleBlueprintError(
+                "Capability Intelligence references a missing English projection"
+            )
         if translation.job_detail_version_id != source.job_detail_version_id:
-            raise RoleBlueprintError("Referenced English projection is stale for the current source version")
+            raise RoleBlueprintError(
+                "Referenced English projection is stale for the current source version"
+            )
         return source, translation, analysis, capability
 
     def build(self, source_job_id: str) -> RoleBlueprintResult:
