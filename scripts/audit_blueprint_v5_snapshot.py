@@ -76,7 +76,10 @@ def _uses_absolute_inference_language(value: str) -> bool:
 def _assert_no_legacy_keys(value: Any, *, path: str = "blueprint") -> None:
     if isinstance(value, dict):
         for key, item in value.items():
-            _require(key not in _FORBIDDEN_LEGACY_KEYS, f"legacy v4 key remains at {path}.{key}")
+            _require(
+                key not in _FORBIDDEN_LEGACY_KEYS,
+                f"legacy v4 key remains at {path}.{key}",
+            )
             _assert_no_legacy_keys(item, path=f"{path}.{key}")
     elif isinstance(value, list):
         for index, item in enumerate(value):
@@ -91,7 +94,10 @@ def _check_source_requirement(
 ) -> None:
     _require(actual.get("requirement_index") == expected_index, "requirement index mismatch")
     for key in ("concept", "concept_type", "requirement_type", "depth_signal"):
-        _require(actual.get(key) == expected.get(key), f"requirement {expected_index} {key} mismatch")
+        _require(
+            actual.get(key) == expected.get(key),
+            f"requirement {expected_index} {key} mismatch",
+        )
     _require(
         _evidence(actual.get("evidence")) == _evidence(expected.get("evidence")),
         f"requirement {expected_index} evidence mismatch",
@@ -187,7 +193,10 @@ def audit_snapshot(path: Path, *, job_id: str = DEFAULT_JOB_ID) -> dict[str, int
     _require(len(actual_purpose) == len(expected_purpose), "role purpose count mismatch")
     for actual, expected in zip(actual_purpose, expected_purpose, strict=True):
         _require(actual.get("statement") == expected["statement"], "role purpose mismatch")
-        _require(_evidence(actual.get("evidence")) == expected["evidence"], "purpose evidence mismatch")
+        _require(
+            _evidence(actual.get("evidence")) == expected["evidence"],
+            "purpose evidence mismatch",
+        )
 
     role_indices = list(source_truth.get("role_level_requirement_indices") or [])
     constraints = list(blueprint.get("source_role_constraints") or [])
@@ -200,7 +209,10 @@ def audit_snapshot(path: Path, *, job_id: str = DEFAULT_JOB_ID) -> dict[str, int
             actual.get("requirement_type") == expected.get("requirement_type"),
             "constraint strength mismatch",
         )
-        _require(actual.get("depth_signal") == expected.get("depth_signal"), "constraint depth mismatch")
+        _require(
+            actual.get("depth_signal") == expected.get("depth_signal"),
+            "constraint depth mismatch",
+        )
         _require(
             _evidence(actual.get("evidence")) == _evidence(expected.get("evidence")),
             "constraint evidence mismatch",
@@ -212,8 +224,14 @@ def audit_snapshot(path: Path, *, job_id: str = DEFAULT_JOB_ID) -> dict[str, int
     for capability_index, (area, profile) in enumerate(
         zip(areas, capability_profiles, strict=True)
     ):
-        _require(area.get("source_capability_index") == capability_index, "capability link mismatch")
-        _require(area.get("name") == profile.get("capability_label"), "capability label mismatch")
+        _require(
+            area.get("source_capability_index") == capability_index,
+            "capability link mismatch",
+        )
+        _require(
+            area.get("name") == profile.get("capability_label"),
+            "capability label mismatch",
+        )
         _require(
             area.get("interpretation_strength") == "plausible",
             "v5 capability interpretation must be mechanically plausible",
