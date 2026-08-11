@@ -169,12 +169,18 @@ def audit(snapshot: dict[str, Any], *, job_id: str) -> dict[str, int]:
             else:
                 inferred_tools += 1
                 _require(not requirement_links, "Inferred tool contains P1.6 requirement links")
-                _require(not responsibility_links, "Inferred tool contains P1.6 responsibility links")
+                _require(
+                    not responsibility_links,
+                    "Inferred tool contains P1.6 responsibility links",
+                )
                 _require(
                     tool.get("source_requirement_strength") == "unspecified",
                     "Inferred tool carries source requirement strength",
                 )
-                _require(not (tool.get("source_depth_signals") or []), "Inferred tool carries source depth")
+                _require(
+                    not (tool.get("source_depth_signals") or []),
+                    "Inferred tool carries source depth",
+                )
 
     _require(
         sorted(area_coverage) == expected_capabilities,
@@ -194,7 +200,10 @@ def audit(snapshot: dict[str, Any], *, job_id: str) -> dict[str, int]:
     )
     for constraint, requirement_index in zip(constraints, role_indices, strict=True):
         requirement = requirements[requirement_index]
-        _require(constraint.get("concept") == requirement.get("concept"), "Role constraint concept drift")
+        _require(
+            constraint.get("concept") == requirement.get("concept"),
+            "Role constraint concept drift",
+        )
         _require(
             constraint.get("requirement_type") == requirement.get("requirement_type"),
             "Role constraint strength drift",
