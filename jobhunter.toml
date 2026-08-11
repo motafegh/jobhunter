@@ -22,11 +22,11 @@ lm_studio_base_url = "http://127.0.0.1:12345/v1"
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
 
-# Independent semantic roles. E4B is the accepted local P1.6 baseline for the dense tG9K
-# extraction contract; downstream roles remain unchanged until their own calibration gates.
+# Independent semantic roles. Keep the accepted P1.6 and Capability models frozen.
+# Blueprint uses the stronger 12B QAT model for the controlled v6/v5 comparison.
 analysis_lm_studio_model = "gemma-4-e4b-it-ud"
 capability_lm_studio_model = "gemma-4-e2b-it"
-blueprint_lm_studio_model = "gemma-4-e4b-it-ud"
+blueprint_lm_studio_model = "gemma-4-12b-it-qat"
 
 # ============================================================
 # Jobinja acquisition
