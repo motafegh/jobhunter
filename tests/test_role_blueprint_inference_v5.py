@@ -12,6 +12,9 @@ def _draft_payload() -> dict:
                 "practical_interpretation": (
                     "This capability involves applying accepted ML skills to the stated work."
                 ),
+                "interpretation_uncertainty": (
+                    "The vacancy does not establish the exact implementation boundary."
+                ),
                 "professional_considerations": [
                     {
                         "statement": "Input validation may matter in production-oriented work.",
