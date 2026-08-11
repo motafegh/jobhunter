@@ -188,8 +188,13 @@ class BlueprintScenario(_StrictModel):
             and self.interpretation_strength == "highly_likely"
         ):
             raise ValueError("Professional example scenarios cannot be highly_likely")
-        if self.scenario_basis == "source_stated_workflow" and not self.source_responsibility_indices:
-            raise ValueError("source_stated_workflow scenarios must link an accepted responsibility")
+        if (
+            self.scenario_basis == "source_stated_workflow"
+            and not self.source_responsibility_indices
+        ):
+            raise ValueError(
+                "source_stated_workflow scenarios must link an accepted responsibility"
+            )
         if self.interpretation_strength == "highly_likely" and self.assumptions:
             raise ValueError("Highly likely scenarios cannot depend on unresolved assumptions")
         return self
@@ -201,7 +206,10 @@ class RoleCapabilityBlueprint(_StrictModel):
     role_read: str
     likely_role_shape: str
     source_capability_coverage: list[int] = Field(default_factory=list, max_length=24)
-    source_role_constraints: list[BlueprintSourceConstraint] = Field(default_factory=list, max_length=16)
+    source_role_constraints: list[BlueprintSourceConstraint] = Field(
+        default_factory=list,
+        max_length=16,
+    )
     capability_areas: list[BlueprintCapabilityArea] = Field(min_length=1, max_length=12)
     hidden_requirements: list[BlueprintInsight] = Field(max_length=16)
     likely_end_to_end_scenarios: list[BlueprintScenario] = Field(max_length=8)
