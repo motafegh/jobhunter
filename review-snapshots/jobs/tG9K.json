@@ -1,21 +1,30 @@
 {
   "capability_intelligence": {
     "analysis_artifact_id": 29,
-    "artifact_id": 8,
-    "created_at": "2026-08-09T16:50:48.320185+00:00",
+    "artifact_id": 9,
+    "created_at": "2026-08-11T18:02:39.673363+00:00",
     "intelligence": {
       "capabilities": [
         {
-          "capability_label": "Semiconductor Data Science & Modeling",
+          "capability_label": "Advanced ML/Statistical Modeling for Industrial Data",
           "depth_signals": [
             {
               "confidence": "high",
               "evidence": [
-                "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data."
+                "Solid statistics and signal-processing fundamentals."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "Deterministically propagated from accepted P1.6 requirement 22; not model-inferred.",
-              "statement": "Experience applying AI/ML to semiconductor or comparable industrial / manufacturing data — employer-stated depth: Strong"
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 0; not model-inferred.",
+              "statement": "Statistics and signal-processing fundamentals — employer-stated depth: Solid"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Python (expert)"
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 2; not model-inferred.",
+              "statement": "Python — employer-stated depth: expert"
             },
             {
               "confidence": "high",
@@ -25,117 +34,172 @@
               "evidence_status": "source_explicit",
               "rationale": "Deterministically propagated from accepted P1.6 requirement 23; not model-inferred.",
               "statement": "Experience with process control, manufacturing analytics, yield optimization, or fault / anomaly detection — employer-stated depth: Hands-on"
-            }
-          ],
-          "independence_expectation": {
-            "confidence": "medium",
-            "evidence": [
-              "Partner with the semiconductor technical lead and engineering to move models toward production."
-            ],
-            "evidence_status": "model_inferred_prerequisite",
-            "rationale": "The responsibility to 'Partner with the semiconductor technical lead and engineering to move models toward production' implies a high degree of technical autonomy in translating research into deployable solutions.",
-            "statement": "The specialist is expected to operate autonomously in the modeling and pipeline design phases, partnering with engineering leads rather than executing all low-level implementation details."
-          },
-          "operational_context": [
+            },
             {
               "confidence": "high",
               "evidence": [
-                "What you’ll do ● Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data. ● Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection. ● Handle high-volume, high-dimensional sensor / trace and metrology data; build robust pipelines. ● Turn manufacturing problems into well-scoped modeling problems with the technical team. ● Design rigorous validation and monitoring for models running in an industrial setting. ● Partner with the semiconductor technical lead and engineering to move models toward production. ● Ensure traceability, reproducibility, and governance of models and data. What we’re looking for ● Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data. ● Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection. ● Comfort with high-dimensional time-series / sensor / metrology data and its noise. ● Solid statistics and signal-processing fundamentals. ● Discipline around validation, reproducibility, and documentation. Technical skill stack The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most. ● Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful ● ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM ● Data & statistics: pandas, NumPy, SciPy, statsmodels; multivariate analysis (PCA / PLS) ● Time-series & signal: signal processing, FFT / wavelets, anomaly detection; tsfresh, sktime ● Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods ● Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis ● Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data ● Data platforms: Spark, Kafka; time-series stores (InfluxDB / TimescaleDB); PostgreSQL ● MLOps: MLflow, Docker; pipelines with Airflow or Prefect; model deployment ● Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus",
-                "Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus"
-              ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "The work is explicitly situated in an industrial setting, requiring deployment considerations across cloud/edge environments (AWS, GCP, Azure) and specific industrial deployment knowledge.",
-              "statement": "Industrial Deployment Focus:"
-            }
-          ],
-          "operational_practices": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Discipline around validation, reproducibility, and documentation."
+                "Comfort with high-dimensional time-series / sensor / metrology data and its noise."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "The candidate must establish rigorous processes for validation, reproducibility, and documentation of their models and data governance.",
-              "statement": "Validation and Governance:"
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 24; not model-inferred.",
+              "statement": "Working with high-dimensional time-series / sensor / metrology data and its noise — employer-stated depth: Comfort"
             }
           ],
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
           "overall_confidence": "high",
           "requirement_strength": "mixed",
           "source_requirement_indices": [
-            22,
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            15,
             23,
-            3
+            24
           ],
           "source_responsibility_indices": [
             0,
-            3
+            1
           ],
-          "sub_capabilities": [
+          "sub_capabilities": [],
+          "summary": "Expertise in applying machine learning and statistical methods to high-dimensional time-series and sensor data derived from industrial processes, coupled with strong fundamentals in signal processing, multivariate analysis, and domain-specific knowledge.",
+          "underlying_knowledge": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis",
+                "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+              ],
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "Knowledge of FDC/APC/SPC, virtual metrology, and yield analysis within the semiconductor domain.",
+              "statement": "Semiconductor Process & Yield Analytics"
+            }
+          ],
+          "unknown_scope": [],
+          "work_activities": [
             {
               "confidence": "high",
               "evidence": [
                 "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
               ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "The role explicitly requires work on yield optimization, process control (APC/SPC), fault detection and classification (FDC), and anomaly detection.",
-              "statement": "Process and Anomaly Detection:"
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 0; not model-inferred.",
+              "statement": "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
             },
             {
               "confidence": "high",
               "evidence": [
-                "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most.",
-                "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis",
-                "pipelines with Airflow or Prefect"
+                "Handle high-volume, high-dimensional sensor / trace and metrology data"
               ],
-              "evidence_status": "strongly_implied_by_work",
-              "rationale": "The candidate must understand the specific terminology and context of semiconductor metrics, including FDC/APC/SPC, virtual metrology, and run-to-run control.",
-              "statement": "Domain-Specific Knowledge Application:"
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 1; not model-inferred.",
+              "statement": "Handle high-volume, high-dimensional sensor / trace and metrology data"
+            }
+          ]
+        },
+        {
+          "capability_label": "Full-Stack ML Engineering & MLOps",
+          "depth_signals": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 22; not model-inferred.",
+              "statement": "Experience applying AI/ML to semiconductor or comparable industrial / manufacturing data — employer-stated depth: Strong"
             }
           ],
-          "summary": "The specialist must be able to apply AI/ML methodologies directly to semiconductor process, equipment, and manufacturing data to achieve specific industrial goals. This involves framing complex manufacturing challenges (like yield optimization or fault detection) into well-scoped, solvable modeling problems.",
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
+          "overall_confidence": "high",
+          "requirement_strength": "mixed",
+          "source_requirement_indices": [
+            13,
+            14,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22
+          ],
+          "source_responsibility_indices": [
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "sub_capabilities": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "Python (expert)",
+                "ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM"
+              ],
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "Requires expert Python skills and mastery of core ML/DL frameworks (PyTorch, TensorFlow, etc.).",
+              "statement": "Programming & Core ML Implementation"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Data platforms: Spark, Kafka",
+                "time-series stores (InfluxDB / TimescaleDB)",
+                "Cloud & edge: AWS, GCP, or Azure",
+                "industrial / edge deployment a plus"
+              ],
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "Involves using Spark/Kafka, time-series stores (InfluxDB/TimescaleDB), and MLOps tools (MLflow, Docker, Airflow/Prefect).",
+              "statement": "Data Infrastructure & Orchestration"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "model deployment",
+                "Cloud & edge: AWS, GCP, or Azure"
+              ],
+              "evidence_status": "strongly_implied_by_work",
+              "rationale": "Covers model deployment and cloud/edge considerations.",
+              "statement": "Deployment Strategy"
+            }
+          ],
+          "summary": "Proficiency in the end-to-end lifecycle of ML projects, encompassing data preparation, model development using major frameworks, pipeline orchestration, and production deployment on cloud/edge infrastructure.",
           "underlying_knowledge": [
             {
               "confidence": "high",
               "evidence": [
-                "Solid statistics and signal-processing fundamentals.",
-                "Time-series & signal: signal processing, FFT / wavelets, anomaly detection"
-              ],
-              "evidence_status": "source_explicit",
-              "rationale": "A solid foundation in statistics, signal processing (FFT/wavelets), and multivariate analysis (PCA/PLS) is explicitly required to handle noisy sensor data effectively.",
-              "statement": "Industrial Statistics & Signal Processing:"
-            },
-            {
-              "confidence": "high",
-              "evidence": [
-                "tsfresh, sktime",
-                "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods",
-                "Comfort with high-dimensional time-series / sensor / metrology data and its noise."
+                "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data"
               ],
               "evidence_status": "strongly_implied_by_work",
-              "rationale": "The ability to handle high-dimensional time-series data, including noise, using specialized libraries like tsfresh and sktime, is essential for analyzing sensor/metrology streams.",
-              "statement": "Time-Series Analysis:"
+              "rationale": "Requires familiarity with MES, SECS/GEM, and equipment trace data.",
+              "statement": "Industrial Data Systems Knowledge"
             }
           ],
-          "unknown_scope": [
-            {
-              "confidence": "high",
-              "evidence": [
-                "Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful"
-              ],
-              "evidence_status": "unknown_or_unsupported",
-              "rationale": "While Python (expert) and specific ML/Data libraries are listed, the exact required depth for secondary tools like MATLAB, C/C++, or specific data platforms (Spark vs. Kafka usage) is not quantified beyond 'helpful' or contextual.",
-              "statement": "Specific Tool Depth:"
-            }
-          ],
+          "unknown_scope": [],
           "work_activities": [
             {
               "confidence": "high",
               "evidence": [
-                "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+                "build robust pipelines."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "This is the core purpose of the role.",
-              "statement": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 2; not model-inferred.",
+              "statement": "Build robust pipelines for handling high-volume, high-dimensional sensor / trace and metrology data"
             },
             {
               "confidence": "high",
@@ -143,45 +207,506 @@
                 "Turn manufacturing problems into well-scoped modeling problems with the technical team."
               ],
               "evidence_status": "source_explicit",
-              "rationale": "This defines the necessary analytical translation skill.",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 3; not model-inferred.",
               "statement": "Turn manufacturing problems into well-scoped modeling problems with the technical team."
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Design rigorous validation and monitoring for models running in an industrial setting."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 4; not model-inferred.",
+              "statement": "Design rigorous validation and monitoring for models running in an industrial setting."
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Partner with the semiconductor technical lead and engineering to move models toward production."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 5; not model-inferred.",
+              "statement": "Partner with the semiconductor technical lead and engineering to move models toward production."
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "Ensure traceability, reproducibility, and governance of models and data."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 6; not model-inferred.",
+              "statement": "Ensure traceability, reproducibility, and governance of models and data."
             }
           ]
         }
       ],
-      "cross_capability_observations": [
-        {
-          "confidence": "high",
-          "evidence": [
-            "build robust pipelines.",
-            "MLOps: MLflow, Docker",
-            "pipelines with Airflow or Prefect",
-            "model deployment"
-          ],
-          "evidence_status": "model_inferred_prerequisite",
-          "rationale": "The combination of building pipelines (Airflow/Prefect), MLOps tools (MLflow/Docker), and model deployment suggests the role requires end-to-end ownership over the ML lifecycle in an industrial context, not just model training.",
-          "statement": "End-to-End ML Engineering Focus:"
-        },
-        {
-          "confidence": "high",
-          "evidence": [
-            "Data platforms: Spark, Kafka; time-series stores (InfluxDB / TimescaleDB); PostgreSQL"
-          ],
-          "evidence_status": "strongly_implied_by_work",
-          "rationale": "The requirement to handle high-volume data and the listing of specific time-series stores (InfluxDB/TimescaleDB) and big data tools (Spark, Kafka) implies the specialist must understand how to structure and manage industrial trace data within modern data platforms.",
-          "statement": "Data Infrastructure Awareness:"
-        }
-      ],
-      "role_interpretation": "The role requires an experienced Machine Learning/AI specialist capable of bridging advanced statistical modeling and deep learning techniques with complex, high-dimensional time-series data generated from semiconductor manufacturing processes to drive tangible improvements in yield, quality control, and fault detection.",
+      "cross_capability_observations": [],
+      "role_interpretation": "The role is an Artificial Intelligence Specialist focused on applying Machine Learning and advanced data science techniques to complex semiconductor process, equipment, and manufacturing data to drive optimization, fault detection, and yield improvement in an industrial setting.",
+      "source_truth": {
+        "capability_requirement_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "explicit_depth_requirement_indices": [
+          0,
+          2,
+          22,
+          23,
+          24,
+          26
+        ],
+        "linked_explicit_depth_requirement_indices": [
+          0,
+          2,
+          22,
+          23,
+          24
+        ],
+        "linked_requirement_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "linked_responsibility_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "requirements": [
+          {
+            "concept": "Statistics and signal-processing fundamentals",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": "Solid",
+            "evidence": [
+              "Solid statistics and signal-processing fundamentals."
+            ],
+            "index": 0,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Validation, reproducibility, and documentation discipline",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Discipline around validation, reproducibility, and documentation."
+            ],
+            "index": 1,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Python",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": "expert",
+            "evidence": [
+              "Python (expert)"
+            ],
+            "index": 2,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "SQL",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "SQL"
+            ],
+            "index": 3,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "MATLAB",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "MATLAB a plus"
+            ],
+            "index": 4,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "C / C++",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "some C / C++ helpful"
+            ],
+            "index": 5,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Machine learning and deep learning frameworks (scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM"
+            ],
+            "index": 6,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Data and statistics libraries (pandas, NumPy, SciPy, statsmodels)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Data & statistics: pandas, NumPy, SciPy, statsmodels"
+            ],
+            "index": 7,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Multivariate analysis (PCA / PLS)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "multivariate analysis (PCA / PLS)"
+            ],
+            "index": 8,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Time-series and signal processing (signal processing, FFT / wavelets, anomaly detection)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Time-series & signal: signal processing, FFT / wavelets, anomaly detection"
+            ],
+            "index": 9,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Time-series and signal processing libraries (tsfresh, sktime)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "tsfresh, sktime"
+            ],
+            "index": 10,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Industrial statistics (SPC, design of experiments (DOE), capability analysis, Bayesian methods)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods"
+            ],
+            "index": 11,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Semiconductor domain knowledge (FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis"
+            ],
+            "index": 12,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Fab data systems knowledge (MES, SECS / GEM, and equipment / metrology / trace data)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data"
+            ],
+            "index": 13,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Data platforms (Spark, Kafka)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Data platforms: Spark, Kafka"
+            ],
+            "index": 14,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Time-series stores (InfluxDB / TimescaleDB)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "time-series stores (InfluxDB / TimescaleDB)"
+            ],
+            "index": 15,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "PostgreSQL",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "PostgreSQL"
+            ],
+            "index": 16,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "MLOps tools (MLflow, Docker)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "MLOps: MLflow, Docker"
+            ],
+            "index": 17,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "ML pipelines (Airflow or Prefect)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "pipelines with Airflow or Prefect"
+            ],
+            "index": 18,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Model deployment experience",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "model deployment"
+            ],
+            "index": 19,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Cloud and edge platforms (AWS, GCP, or Azure)",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Cloud & edge: AWS, GCP, or Azure"
+            ],
+            "index": 20,
+            "requirement_type": "contextual"
+          },
+          {
+            "concept": "Industrial or edge deployment experience",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "industrial / edge deployment a plus"
+            ],
+            "index": 21,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Experience applying AI/ML to semiconductor or comparable industrial / manufacturing data",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": "Strong",
+            "evidence": [
+              "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data."
+            ],
+            "index": 22,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Experience with process control, manufacturing analytics, yield optimization, or fault / anomaly detection",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": "Hands-on",
+            "evidence": [
+              "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection."
+            ],
+            "index": 23,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Working with high-dimensional time-series / sensor / metrology data and its noise",
+            "concept_type": "knowledge",
+            "confidence": "high",
+            "depth_signal": "Comfort",
+            "evidence": [
+              "Comfort with high-dimensional time-series / sensor / metrology data and its noise."
+            ],
+            "index": 24,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Master's degree",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Master's degree"
+            ],
+            "index": 25,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Professional experience",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": "three to six years",
+            "evidence": [
+              "three to six years"
+            ],
+            "index": 26,
+            "requirement_type": "required"
+          }
+        ],
+        "responsibilities": [
+          {
+            "confidence": "high",
+            "evidence": [
+              "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+            ],
+            "index": 0,
+            "statement": "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "Handle high-volume, high-dimensional sensor / trace and metrology data"
+            ],
+            "index": 1,
+            "statement": "Handle high-volume, high-dimensional sensor / trace and metrology data"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "build robust pipelines."
+            ],
+            "index": 2,
+            "statement": "Build robust pipelines for handling high-volume, high-dimensional sensor / trace and metrology data"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "Turn manufacturing problems into well-scoped modeling problems with the technical team."
+            ],
+            "index": 3,
+            "statement": "Turn manufacturing problems into well-scoped modeling problems with the technical team."
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "Design rigorous validation and monitoring for models running in an industrial setting."
+            ],
+            "index": 4,
+            "statement": "Design rigorous validation and monitoring for models running in an industrial setting."
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "Partner with the semiconductor technical lead and engineering to move models toward production."
+            ],
+            "index": 5,
+            "statement": "Partner with the semiconductor technical lead and engineering to move models toward production."
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "Ensure traceability, reproducibility, and governance of models and data."
+            ],
+            "index": 6,
+            "statement": "Ensure traceability, reproducibility, and governance of models and data."
+          }
+        ],
+        "role_level_requirement_indices": [
+          25,
+          26
+        ],
+        "role_purpose": [
+          {
+            "confidence": "high",
+            "evidence": [
+              "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+            ],
+            "index": 0,
+            "statement": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+          }
+        ],
+        "unlinked_capability_requirement_indices": [],
+        "unlinked_explicit_depth_requirement_indices": [
+          26
+        ],
+        "unlinked_responsibility_indices": []
+      },
       "uncertainties": [
-        "The exact required proficiency level for C/C++ and MATLAB is only listed as 'helpful' or 'a plus', suggesting these are secondary skills supporting the core ML/Data science mandate.",
-        "The depth of experience in MLOps tools (MLflow, Docker, Airflow/Prefect) is implied by the responsibility to deploy models but not explicitly quantified as a mandatory expertise level."
+        "The specific depth of expertise in the 'Semiconductor domain' (FDC/APC/SPC) versus the general ML engineering stack needs further qualification.",
+        "The required proficiency level for C/C++ and MATLAB is listed as 'helpful'/'a plus', suggesting they are secondary to Python/ML frameworks."
       ]
     },
     "job_detail_version_id": 40,
     "model": "gemma-4-e2b-it",
-    "prompt_version": "job-capability-intelligence-v6",
-    "schema_version": "job-capability-intelligence-v3",
+    "prompt_version": "job-capability-intelligence-v7",
+    "schema_version": "job-capability-intelligence-v4",
     "translation_artifact_id": 33
   },
   "configured_models": {
