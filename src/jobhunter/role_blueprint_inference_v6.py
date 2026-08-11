@@ -74,6 +74,7 @@ class RoleBlueprintInferenceProvider:
             api_token=self._api_token,
             connect_timeout_seconds=self._connect_timeout_seconds,
             transport=self._transport,
+            exclusive_llm=True,
         )
 
         timeout = httpx.Timeout(
