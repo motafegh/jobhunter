@@ -56,14 +56,28 @@ class _InstructorClient:
         return RoleCapabilityBlueprint.model_validate(_blueprint_payload()), _Completion()
 
 
-def test_blueprint_disables_read_timeout_and_transport_replay(monkeypatch) -> None:
+def test_blueprint_disables_read_timeout_and_prepares_runtime_context(monkeypatch) -> None:
     captured: dict = {}
+    runtime_call: dict = {}
 
     def fake_openai(**kwargs):
         captured.update(kwargs)
         return object()
 
+    def fake_context(**kwargs):
+        runtime_call.update(kwargs)
+        return SimpleNamespace(
+            context_length=16_384,
+            action="reused",
+            instance_id="model",
+        )
+
     monkeypatch.setattr(blueprint_inference, "OpenAI", fake_openai)
+    monkeypatch.setattr(
+        blueprint_inference,
+        "ensure_lm_studio_model_context",
+        fake_context,
+    )
     monkeypatch.setattr(
         blueprint_inference.instructor,
         "from_openai",
@@ -82,6 +96,9 @@ def test_blueprint_disables_read_timeout_and_transport_replay(monkeypatch) -> No
         max_tokens=4096,
     )
 
+    assert runtime_call["openai_base_url"] == "http://127.0.0.1:1234/v1"
+    assert runtime_call["model"] == "model"
+    assert runtime_call["context_length"] == 16_384
     assert captured["max_retries"] == 0
     assert captured["timeout"].read is None
     assert captured["timeout"].connect == 10.0
@@ -90,4 +107,7 @@ def test_blueprint_disables_read_timeout_and_transport_replay(monkeypatch) -> No
         "connect_timeout_seconds": 10.0,
         "transport_retries": 0,
         "configured_network_retries": 4,
+        "context_length_tokens": 16_384,
+        "context_action": "reused",
+        "model_instance_id": "model",
     }
