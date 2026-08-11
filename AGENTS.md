@@ -54,8 +54,8 @@ P1.6 schema:                  job-analysis-v4
 Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Role Blueprint candidate:     role-capability-blueprint-v5
-Blueprint schema:             role-capability-blueprint-v4
+Role Blueprint candidate:     role-capability-blueprint-v6
+Blueprint schema:             role-capability-blueprint-v5
 
 Review Snapshot:              job-review-snapshot-v1
 ```
@@ -64,11 +64,12 @@ Accepted English P1.6 anchor for the current dense live case is `tG9K` artifact 
 
 Capability v7/v4 passed the bounded B3 `tG9K` semantic gate and is frozen while B4 proceeds. This does not replace the later heterogeneous CI-3/B5 review. Capability v6/v3 artifact 8 remains rejected live evidence; Capability v5 remains a historical failed output-budget experiment.
 
-Blueprint v3/v2 failed B4 structurally and semantically with both E2B and E4B. Preserve it as negative evidence; do not weaken validators or revive it with prompt patches.
+Blueprint history:
 
-Blueprint v4/v3 fixed provenance: the live `tG9K` run completed and `scripts/audit_blueprint_v4_snapshot.py` passed with 2/2 Capability areas, 25 deterministic source requirements, 7 deterministic source responsibilities and exact role constraints. B4 nevertheless **failed semantically** because model prose still invented real-time/low-latency control, factory-floor/data-path assumptions, process-physics obligation, strengthened edge importance, specific governance implementation and end-to-end lifecycle ownership. Mechanical provenance success is not semantic acceptance.
-
-Blueprint v5/v4 is now the active **B4 candidate runtime on `main`**. It is not semantically accepted until a live Blueprint built from Capability artifact 9 passes the v5 mechanical audit and complete semantic review.
+- v3/v2 failed B4 structurally and semantically with E2B and E4B; preserve its validators and negative evidence;
+- v4/v3 fixed deterministic provenance and passed its live mechanical audit, but failed B4 semantic calibration because generated prose manufactured employer-specific operating/topology/ownership claims;
+- v5/v4 excluded Capability-derived prose and removed most expansion surfaces, but live `tG9K` artifact **6** still failed B4 because its free-form `practical_interpretation` described end-to-end infrastructure, telemetry streaming, automated MLOps workflows, and deployment-lifecycle scope while its uncertainty admitted ownership boundaries were unknown;
+- v6/v5 removes the remaining free-form positive summary surface and is the active **B4 candidate runtime on `main`**.
 
 Current controlled model roles are:
 
@@ -84,10 +85,10 @@ Blueprint:     gemma-4-e4b-it-ud
 1. keep tG9K English projection artifact 33 fixed
 2. keep tG9K English P1.6 artifact 29 fixed
 3. keep accepted Capability v7/v4 artifact 9 fixed
-4. run Blueprint v5/v4 against that exact chain with Blueprint E4B
-5. regenerate the tG9K Review Snapshot only after a valid v5 artifact exists
-6. run scripts/audit_blueprint_v5_snapshot.py
-7. perform complete semantic review of every v5 interpretation and uncertainty boundary
+4. run Blueprint v6/v5 against that exact chain with Blueprint E4B
+5. regenerate the tG9K Review Snapshot only after a valid v6 artifact exists
+6. run scripts/audit_blueprint_v6_snapshot.py
+7. perform complete semantic review of every v6 professional consideration and unknown
 8. if B4 passes, freeze the bounded Blueprint contract and continue heterogeneous CI-3/B5
 9. if B4 fails, diagnose the general contract/model failure; do not accumulate prompt patches
 10. finish Phase-1 Market/source/lifecycle/partial-success/P1.7 gates
@@ -158,42 +159,46 @@ Important downstream rule learned from B4: **accepted Capability grouping may fl
 
 Blueprint is the human-facing professional interpretation layer.
 
-Current v5 boundary:
+Current v6 boundary:
 
 ```text
 accepted P1.6 + accepted Capability grouping
 → JobHunter builds source-grounded ordered Capability inputs
-→ model creates one bounded professional interpretation per Capability
-→ every interpretation carries an explicit uncertainty/boundary sentence
+→ model emits only explicitly uncertain professional considerations + unknowns
 → JobHunter deterministically attaches Capability identity/coverage
 → JobHunter deterministically attaches P1.6 requirements/responsibilities/evidence
 → JobHunter deterministically attaches source role purpose and role-level constraints
-→ persisted Blueprint v5/v4 artifact
+→ persisted Blueprint v6/v5 artifact
 ```
 
-For v5:
+For v6:
 
 - the model does **not** receive Capability `summary`, `sub_capabilities`, `underlying_knowledge`, operational reasoning, or other derived Capability prose;
-- the model does **not** receive the duplicated long vacancy/company-description prose after P1.6 has established source truth;
+- the model does **not** receive duplicated long vacancy/company-description prose after P1.6 has established source truth;
 - the model does **not** emit Capability, requirement, or responsibility numeric provenance;
 - the model does not regroup, merge, split, or rename accepted Capability profiles;
 - persisted Blueprint areas map one-to-one to accepted Capability profiles in source order;
 - source role purpose, requirements, responsibilities, obligation strength, explicit depth, evidence and role constraints are JobHunter-owned deterministic anchors;
-- every model-created main interpretation is mechanically labeled `plausible`, never `highly_likely` or employer fact;
-- every main interpretation requires `interpretation_uncertainty` explaining what the vacancy does not establish;
-- optional professional considerations are only `plausible` or `speculative` and each requires its own uncertainty sentence;
-- model-created obligation/full-ownership wording is rejected generically;
-- v5 deliberately has no model-generated role shape, likely depth, hidden requirements, tool recommendations, work-product lists, scenario topology, or bottom line at this B4 gate;
+- there is no free-form model-generated `practical_interpretation`, role shape, likely depth, hidden requirement, tool recommendation, work-product list, scenario/topology, probably-not-required list, or bottom line;
+- positive model output exists only as `professional_considerations` with `plausible` or `speculative` strength plus mandatory uncertainty;
+- every Capability must expose at least one `important_unknown`;
+- model-created obligation language and full/end-to-end lifecycle/stack/pipeline/system/infrastructure scope are rejected generically;
 - technology list != architecture;
-- process control/deployment/cloud/edge evidence does not prove real-time inference, low latency, active feedback loops, factory-floor deployment or autonomous adjustment;
+- high-volume data does not prove streaming;
+- process control/anomaly detection does not prove real-time or low-latency behavior;
+- APC/SPC terminology does not prove an automated feedback loop;
+- cloud/edge names do not prove deployment placement;
+- deployment/governance work does not prove lifecycle ownership;
+- unknowns must not smuggle assumptions into their wording;
 - contextual/preferred source items remain contextual/preferred;
 - explicit depth remains attached to the exact source concept;
 - technical correctness and calibrated uncertainty matter more than impressive prose;
 - avoid domain-specific prompt-patch collections.
 
 Historical v3 failure: `docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md`.  
-Historical v4 provenance redesign: `docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md`.  
-Current v4 failure/v5 decision: `docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md`.
+Historical v4 provenance/semantic result: `docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md`.  
+Historical v4 failure/v5 decision: `docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md`.  
+Historical v5 failure/v6 decision: `docs/experiments/2026-08-11_BLUEPRINT_V5_SEMANTIC_FAILURE_AND_V6_BOUNDARY.md`.
 
 ## 6. Current live acceptance anchors
 
@@ -210,7 +215,7 @@ Selected review artifact:
 review-snapshots/jobs/tG9K.json
 ```
 
-The committed repository snapshot remains a selected review artifact, not runtime truth. A locally generated v4 snapshot is rejected B4 evidence and must not be committed as accepted output. The next intended snapshot is generated only after the live v5 candidate succeeds.
+The currently committed snapshot contains Blueprint v5 artifact 6 as **rejected review evidence**, not an accepted B4 baseline. The next intended snapshot is generated only after the active v6 candidate succeeds.
 
 The Capability CLI showing five of six explicit depth facts inside profiles is intentional: the sixth depth fact is role-level professional experience (`three to six years`, requirement 26) and remains in deterministic source truth instead of being forced into a capability profile.
 
@@ -294,7 +299,7 @@ max tokens: bounded
 validation retries: bounded separately
 ```
 
-Blueprint runtime prepares the selected LM Studio model automatically at a 16,384-token context window. Do not require manual LM Studio context reconfiguration for normal Blueprint execution.
+Blueprint runtime prepares the selected LM Studio model automatically at a 16,384-token context window. V6 caps its structured completion at 4,096 tokens. Do not require manual LM Studio context reconfiguration for normal Blueprint execution.
 
 Independent model roles are supported:
 
@@ -305,6 +310,8 @@ blueprint_lm_studio_model = "..."
 ```
 
 Use controlled same-job comparison when model adequacy is the variable. Do not change evidence, contract, and model simultaneously. No multi-model voting unless future measured evidence justifies it.
+
+Editable installs may create `*.egg-info/`; package metadata is ignored by Git.
 
 ## 11. Market and personal-evidence boundaries
 
