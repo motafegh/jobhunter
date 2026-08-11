@@ -26,7 +26,7 @@ inference_max_retries = 1
 # extraction contract; downstream roles remain unchanged until their own calibration gates.
 analysis_lm_studio_model = "gemma-4-e4b-it-ud"
 capability_lm_studio_model = "gemma-4-e2b-it"
-blueprint_lm_studio_model = "gemma-4-e2b-it"
+blueprint_lm_studio_model = "gemma-4-e4b-it-ud"
 
 # ============================================================
 # Jobinja acquisition
