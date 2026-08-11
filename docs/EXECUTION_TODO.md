@@ -96,63 +96,78 @@ Freeze v7 unless downstream/heterogeneous evidence reveals a repeatable correctn
 
 ### B4 — Role Capability Blueprint calibration / SQ-3
 
-**Status: [~] active. Blueprint v3/v2 candidate is implemented; live `tG9K` acceptance remains open.**
+**Status: [~] active. Blueprint v3/v2 failed B4; Blueprint v4/v3 is the active candidate and live `tG9K` acceptance remains open.**
 
-Current candidate:
+Historical v3 evidence:
+
+- [x] E2B completed v3 generation but failed provenance/namespace validation and semantic calibration.
+- [x] automatic 16,384-token LM Studio Blueprint context preparation implemented after the first E4B request exposed a 4,096 runtime-context mismatch.
+- [x] E4B then completed v3 generation + Instructor repair and still failed the provenance contract.
+- [x] E4B repair mapped requirement numbers into the depth field and repeated P1.6-vs-Capability index confusion.
+- [x] E4B retained streaming/cloud/edge/MLOps architecture overreach.
+- [x] v3/v2 declared failed; validators preserved; no prompt-patch/model-shopping workaround adopted.
+
+Active candidate:
 
 ```text
-role-capability-blueprint-v3
-schema role-capability-blueprint-v2
+role-capability-blueprint-v4
+schema role-capability-blueprint-v3
+Blueprint model gemma-4-e4b-it-ud
 ```
 
-Implemented deterministic boundary:
+V4 deterministic/model boundary:
 
-- [x] every Blueprint area carries accepted Capability profile links.
-- [x] union of Blueprint areas must cover all accepted Capability profiles.
-- [x] source-named tools must link accepted P1.6 facts.
-- [x] source-named tool requirement strength is JobHunter-derived.
-- [x] source-named explicit tool depth is JobHunter-derived.
-- [x] inferred tool examples cannot carry source strength/depth or source links.
-- [x] non-required source-named tools cannot be described as mandatory/required/necessary.
-- [x] framework/tool `expert`/`mastery` claims require matching P1.6 depth.
+- [x] model-facing schema contains no Capability/P1.6 numeric provenance.
+- [x] model returns exactly one interpretation per accepted Capability profile in source order.
+- [x] model cannot regroup/merge/split/rename accepted Capability profiles.
+- [x] JobHunter deterministically attaches `source_capability_index` and complete coverage.
+- [x] JobHunter deterministically attaches each Capability profile's P1.6 source requirements.
+- [x] source requirement strength, exact depth and evidence remain upstream-owned.
+- [x] JobHunter deterministically attaches each Capability profile's accepted responsibilities.
+- [x] source-named technologies are represented through deterministic source requirements rather than model-created `source_named` tool records.
+- [x] model-created suggested tools are only `likely_example` / `possible_example` with no source provenance.
+- [x] suggested tools cannot become mandatory/required/necessary or inherit expert/mastery depth.
 - [x] role-level degree/experience constraints are deterministically injected.
-- [x] highly-likely hidden requirements require accepted upstream grounding.
-- [x] scenarios declare `source_stated_workflow` or `professional_example`.
-- [x] practitioner-created professional examples cannot be `highly_likely`.
-- [x] source-stated workflows require responsibility links.
-- [x] highly-likely scenarios cannot depend on unresolved assumptions.
-- [x] dedicated Blueprint v3 Review Snapshot audit exists.
-- [x] regression coverage exists for v2 failure classes.
+- [x] hidden requirements are structurally limited to plausible/speculative.
+- [x] model-created workflows are `professional_example_scenarios`, structurally limited to plausible/speculative.
+- [x] `scenario_basis = professional_example` is JobHunter-injected.
+- [x] compact Blueprint input avoids duplicating raw long job text and ambiguous provenance namespaces.
+- [x] browser surface separates deterministic employer/source anchors from practitioner examples.
+- [x] dedicated Blueprint v4 Review Snapshot audit exists.
+- [x] standalone v4 model/service/inference/runtime regression coverage exists.
 
-Live acceptance required against fixed upstream chain:
+Fixed live chain:
 
 ```text
 English projection artifact 33
 English P1.6 artifact 29
 Capability v7 artifact 9
-Blueprint model gemma-4-e2b-it
+Blueprint model gemma-4-e4b-it-ud
 ```
 
-- [ ] B4.1 Run `jobhunter jobs blueprint tG9K` without rebuilding P1.6/Capability.
-- [ ] B4.2 Regenerate `review-snapshots/jobs/tG9K.json`.
-- [ ] B4.3 Run `python scripts/audit_blueprint_v3_snapshot.py`.
-- [ ] B4.4 Verify both accepted Capability profiles are covered.
-- [ ] B4.5 Verify role-level Master's + 3–6 years constraints are preserved exactly.
-- [ ] B4.6 Verify only independently depth-qualified tools inherit explicit depth; Python expert must not spread to frameworks.
-- [ ] B4.7 Verify contextual/preferred frameworks/cloud/edge/MATLAB/C/C++ remain calibrated.
-- [ ] B4.8 Verify technology list does not become one hidden company architecture.
-- [ ] B4.9 Verify professional-example workflows are clearly examples with explicit assumptions.
-- [ ] B4.10 Verify highly-likely workflows do not contradict important unknowns.
-- [ ] B4.11 Verify hidden requirements are professionally useful and grounded.
-- [ ] B4.12 Verify tools/protocols/platforms keep normal technical meaning.
-- [ ] B4.13 Accept B4 only if the Blueprint adds useful practitioner interpretation beyond Capability without manufacturing certainty.
-- [ ] B4.14 Compare one stronger reasoning model only if the fixed-contract E2B result demonstrates a model limitation.
+- [ ] B4.1 Pull active v4/v3 runtime and confirm contract identity.
+- [ ] B4.2 Run `jobhunter jobs blueprint tG9K` without rebuilding translation/P1.6/Capability.
+- [ ] B4.3 If valid, regenerate `review-snapshots/jobs/tG9K.json`.
+- [ ] B4.4 Run `python scripts/audit_blueprint_v4_snapshot.py`.
+- [ ] B4.5 Verify exactly two areas, one-to-one with accepted Capability profiles 0/1 and exact accepted labels.
+- [ ] B4.6 Verify deterministic source requirements/responsibilities exactly match Capability artifact 9 links and P1.6 truth.
+- [ ] B4.7 Verify role-level Master's + 3–6 years constraints are preserved exactly.
+- [ ] B4.8 Verify only Python carries explicit `expert` source depth unless another concept has independent source depth.
+- [ ] B4.9 Verify contextual/preferred frameworks/cloud/edge/MATLAB/C/C++ remain calibrated.
+- [ ] B4.10 Verify technology list does not become one asserted company architecture.
+- [ ] B4.11 Verify professional examples are visibly hypothetical and state material assumptions.
+- [ ] B4.12 Verify real-time/microservices/CI-CD/model-registry/control-loop claims are not presented as employer facts without support.
+- [ ] B4.13 Verify hidden requirements are useful, role-specific and only plausible/speculative.
+- [ ] B4.14 Verify tools/protocols/platforms keep normal technical meaning.
+- [ ] B4.15 Verify important unknowns preserve unresolved topology/latency/deployment/ownership questions.
+- [ ] B4.16 Accept B4 only if the Blueprint adds useful practitioner interpretation beyond Capability without manufacturing certainty.
 - [-] no multi-model voting/ensemble.
 
-Experiment record:
+Records:
 
 ```text
 docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
+docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md
 ```
 
 ### B5 — CI-3 heterogeneous live review
