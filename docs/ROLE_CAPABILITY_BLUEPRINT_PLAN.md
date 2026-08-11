@@ -1,6 +1,6 @@
 # JobHunter Role Capability Blueprint Plan
 
-**Status:** Blueprint v4/v3 implemented as active B4 candidate; live semantic acceptance open  
+**Status:** Blueprint v5/v4 implemented as active B4 candidate; live semantic acceptance open  
 **Date:** 2026-08-11  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, the active Phase-1 gate, and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`  
 **Scope:** Human-facing professional interpretation above accepted P1.6 and Capability Intelligence. No corpus-wide automatic generation is authorized yet.
@@ -14,25 +14,26 @@ P1.6
 → strict factual extraction / evidence boundary
 
 Capability Intelligence
-→ auditable machine reasoning / decomposition
+→ auditable grouping/reasoning above P1.6
 
 Role Capability Blueprint
 → human-facing professional interpretation
 ```
 
-The Blueprint answers:
+The Blueprint should teach the user something useful beyond rereading the vacancy while keeping two categories unmistakably separate:
 
-> Given the vacancy, accepted factual substrate, and accepted Capability reasoning, what does this role probably require in practice when interpreted by an experienced practitioner in the relevant domain?
-
-It should teach the user something useful beyond rereading the advertisement without disguising professional inference as employer fact.
+```text
+employer/source truth
+professional interpretation
+```
 
 ## 2. Current contract
 
 Active B4 candidate:
 
 ```text
-prompt/runtime: role-capability-blueprint-v4
-schema:         role-capability-blueprint-v3
+prompt/runtime: role-capability-blueprint-v5
+schema:         role-capability-blueprint-v4
 ```
 
 Persistence identity remains:
@@ -47,330 +48,314 @@ job detail version
 + Blueprint schema version
 ```
 
-Historical Blueprint v3/v2 and earlier artifacts remain historical. V3/v2 failed B4 with both E2B and E4B and must not be revived by weakening validators or adding model-specific prompt patches.
+Historical identities remain immutable evidence:
 
-## 3. Authority and input boundary
+- v3/v2 failed structural provenance and semantic calibration;
+- v4/v3 passed deterministic provenance but failed live B4 semantic calibration;
+- do not reuse those identities for material redesigns.
 
-Authority remains:
+## 3. Authority
 
 ```text
 source
 → English projection
 → accepted P1.6 facts
-→ accepted Capability source truth/reasoning
-→ Blueprint interpretation
+→ accepted Capability grouping/source truth
+→ Blueprint professional interpretation
 ```
 
-V4 does **not** send raw provenance namespaces to the model. JobHunter first builds a compact ordered projection containing:
+No downstream layer overwrites upstream truth.
+
+Mechanical linkage is not semantic certification. The v4 live result proved that a Blueprint can preserve every source index correctly and still invent employer-specific certainty in generated prose.
+
+## 4. Why v4 was rejected
+
+The live v4 `tG9K` artifact passed its mechanical audit but generated claims stronger than accepted P1.6 supports, including:
+
+- real-time APC/process adjustment;
+- low-latency active control loops;
+- factory-floor/MES-SECS data-path topology;
+- process physics as a candidate obligation;
+- a specific code/training-data/hyperparameter audit-trail implementation;
+- strengthened edge importance;
+- ownership of the entire lifecycle.
+
+Root cause:
+
+1. v4 passed Capability model-derived prose downstream, where aggressive `Full-Stack ML Engineering & MLOps` reasoning could be amplified;
+2. v4 still exposed broad model-owned role-shape/depth/work-product/scenario/bottom-line surfaces.
+
+Decision record:
 
 ```text
-selected role/company context
-role purpose
-role-level source constraints for context
-ordered accepted Capability labels
-source requirement facts without numeric IDs
-source responsibility statements without numeric IDs
-compact accepted Capability reasoning
+docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md
 ```
 
-The long source description is not duplicated merely to reconstruct already accepted facts.
+## 5. V5 governing rules
 
-Blueprint may explain and interpret; it must not overwrite upstream truth.
+Two rules are permanent:
 
-## 4. Professional-frame rule
+> **JobHunter owns provenance bookkeeping.**
 
-The model is a **senior practitioner/domain specialist**, not automatically a software engineer.
+> **Everything the Blueprint model creates is professional inference, not employer truth.**
 
-Use the frame appropriate to the vacancy: software, ML/data/industrial, content/media, operations/platform, security/network, or another relevant discipline.
+## 6. Model input boundary
 
-Do not force non-software jobs into engineering language merely because AI appears in the title.
-
-## 5. Why v3 failed
-
-V3 attempted to make the LLM reproduce:
+V5 sends the model only:
 
 ```text
-Capability profile indices
-P1.6 requirement indices
-P1.6 responsibility indices
-source-named tool provenance
-scenario grounding/basis
+selected neutral role context
+source-stated role purpose
+role-level source constraints
+accepted Capability labels
+exact P1.6 requirements linked to each Capability
+exact P1.6 responsibilities linked to each Capability
 ```
 
-Both E2B and E4B confused P1.6 requirement IDs with Capability-profile IDs. E4B's repair even recognized correct source requirement numbers but wrote them into `source_depth_signals` rather than `source_requirement_indices`.
-
-Both models also retained semantic overreach by assembling technology lists into stronger streaming/MLOps/cloud/edge architecture than the accepted source established.
-
-The architectural conclusion is:
-
-> **The model reasons; JobHunter owns provenance bookkeeping.**
-
-Detailed evidence is preserved in `docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md`.
-
-## 6. V4 deterministic provenance contract
-
-### One interpretation per accepted Capability
-
-The model returns:
+V5 intentionally does **not** send:
 
 ```text
-capability_interpretations[]
+Capability summary
+Capability sub-capabilities
+Capability underlying knowledge
+Capability operational practices/context
+other Capability-derived explanatory prose
+long vacancy description duplicated after P1.6
+company-description prose
 ```
 
-with exactly one item per accepted Capability profile, in source order.
+This distinction matters: Capability v7's **grouping/source-truth boundary** is B3 accepted, but model-derived Capability prose is not automatically authoritative input to another generative layer.
 
-The model does not regroup, merge, split, rename, or create replacement Capability areas.
+## 7. Capability-order contract
 
-JobHunter constructs each persisted area with authoritative:
+The model returns exactly one `capability_interpretations` item per accepted Capability profile, in the same order.
+
+It cannot:
+
+- create a new Capability area;
+- merge profiles;
+- split profiles;
+- rename authoritative Capability labels;
+- emit provenance indices.
+
+JobHunter constructs the persisted areas with authoritative:
 
 ```text
 name
 source_capability_index
+source_capability_coverage
 ```
 
-and deterministic total coverage.
+## 8. Deterministic source anchors
 
-### Source requirements and responsibilities
+JobHunter copies accepted source truth into the final Blueprint.
 
-For each accepted Capability profile, JobHunter attaches the exact P1.6 items already linked by Capability v7.
-
-Persisted source requirement anchors contain:
+### Role purpose
 
 ```text
-requirement_index
-concept
-concept_type
-requirement_type
-depth_signal
-evidence
+source_role_purpose[]
+  statement
+  evidence
 ```
 
-Persisted source responsibility anchors contain:
+### Capability requirements
 
 ```text
-responsibility_index
-statement
-evidence
+source_requirements[]
+  requirement_index
+  concept
+  concept_type
+  requirement_type
+  depth_signal
+  evidence
 ```
 
-The model never reproduces these indices or source metadata.
+### Capability responsibilities
 
-Consequences:
-
-- Python `expert` cannot spread to frameworks;
-- contextual frameworks/platforms remain contextual;
-- preferred MATLAB/C++/edge remain preferred;
-- required industrial-experience depth remains attached to its exact concept;
-- source evidence cannot disappear because the model forgot a provenance link.
+```text
+source_responsibilities[]
+  responsibility_index
+  statement
+  evidence
+```
 
 ### Role-level constraints
 
-JobHunter deterministically copies Capability v7 role-level source truth into:
-
 ```text
 source_role_constraints[]
+  requirement_index
+  concept
+  requirement_type
+  depth_signal
+  evidence
 ```
 
-For current `tG9K`, expected constraints are Master's degree and three-to-six-years professional experience.
+For current `tG9K`, expected role constraints remain Master's degree and three-to-six-years professional experience.
 
-## 7. Suggested tools / examples
+## 9. Model-owned interpretation contract
 
-Source-named technologies are already visible through deterministic source requirements. The model does not create `source_named` tool records.
-
-Model-created tools live only under:
+The v5 draft contains only:
 
 ```text
-suggested_tools_or_examples[]
+capability_interpretations[]
+overall_unknowns[]
 ```
 
-with relationships:
+Each Capability interpretation contains:
 
 ```text
-likely_example
-possible_example
+practical_interpretation
+interpretation_uncertainty
+professional_considerations[]
+probably_not_required[]
+important_unknowns[]
 ```
 
-Rules:
+### Main interpretation
 
-- no source requirement/responsibility indices;
-- no source strength/depth fields;
-- cannot be described as mandatory/required/necessary;
-- cannot claim expert/mastery depth;
-- must remain examples, not employer specifications.
-
-## 8. Hidden requirements
-
-A model-created hidden requirement is professional inference, never employer fact.
-
-V4 permits only:
+Each main interpretation is persisted with deterministic strength:
 
 ```text
 plausible
-speculative
 ```
 
-There is no `highly_likely` hidden-requirement mode. This avoids asking the model to fabricate provenance just to justify strong certainty.
+It is never treated as employer fact.
 
-Prefer a small number of role-specific, genuinely useful insights over generic curriculum prerequisites.
+Every main interpretation requires `interpretation_uncertainty`: a concrete sentence explaining what the vacancy does not establish or what remains inferred.
 
-## 9. Professional example scenarios
+### Professional considerations
 
-All model-created workflows are persisted as:
+A professional consideration contains:
 
 ```text
-professional_example_scenarios[]
+statement
+interpretation_strength: plausible | speculative
+uncertainty
 ```
 
-JobHunter injects:
+Use these sparingly and only when they add role-specific professional value.
+
+## 10. Generic language guard
+
+Model-created interpretation is rejected when it uses unqualified employer-obligation/full-ownership language such as:
 
 ```text
-scenario_basis = professional_example
+mandatory
+required
+must
+necessary
+expected to
+responsible for
+own the entire/full/end-to-end lifecycle/stack/pipeline/system
 ```
 
-Allowed interpretation strengths:
+Cautious negative scope such as `probably not required` remains allowed.
 
-```text
-plausible
-speculative
-```
+The guard is deliberately generic. Do not turn it into a domain-specific blacklist of semiconductor phrases.
 
-There is no v4 model-generated `source_stated_workflow` category. Source-stated responsibilities already survive independently as deterministic source anchors.
+## 11. High-risk fields removed from B4
 
-A professional example may choose a coherent implementation, but unstated choices must remain explicit assumptions, including:
-
-```text
-topology
-latency / real-time behavior
-vendor
-batch vs stream mode
-cloud vs edge placement
-scale
-ownership boundaries
-orchestration
-feedback/control-loop behavior
-```
-
-A technology list does not define runtime topology or prove that all alternatives are simultaneously used.
-
-## 10. Freedom contract
-
-Blueprint may:
-
-- synthesize conclusions not literally present in source text;
-- use relevant domain/technical knowledge;
-- infer practical depth and subskills within each accepted Capability;
-- suggest plausible implementation tools as examples;
-- explain likely operational concerns/failure modes;
-- propose coherent professional-example workflows with assumptions;
-- identify useful hidden prerequisites at plausible/speculative strength;
-- identify what probably does not matter despite belonging to the broad domain.
-
-It must not:
-
-- present inferred tools/libraries as employer requirements;
-- invent factual company systems/vendors/scale/architecture;
-- turn a technology list into a claimed architecture;
-- turn optional/contextual wording into mandatory mastery;
-- spread explicit depth from one technology to neighboring tools;
-- dump a generic curriculum;
-- use strong certainty where material unknowns remain;
-- silently redefine technical terms, metrics, protocols, libraries, or operational roles.
-
-Guiding rule:
-
-> Be professionally useful; preserve the distinction between source truth, accepted Capability reasoning, professional inference, illustrative examples, and unresolved uncertainty.
-
-## 11. Interpretation strength
-
-Capability interpretations may use:
-
-```text
-highly_likely
-plausible
-speculative
-```
-
-because each interpretation is anchored by position to an accepted Capability profile.
-
-Hidden requirements and professional examples may use only:
-
-```text
-plausible
-speculative
-```
-
-These labels describe professional interpretation, not employer truth.
-
-## 12. Artifact shape
-
-Persisted `RoleCapabilityBlueprint` contains:
+V5 deliberately does not ask the model to generate:
 
 ```text
 role_read
 likely_role_shape
-source_capability_coverage[]
-source_role_constraints[]
-capability_areas[]
-hidden_requirements[]
-professional_example_scenarios[]
-what_probably_does_not_matter[]
-important_unknowns[]
+likely_depth
+hidden requirements
+tool recommendations
+work-product lists
+failure-mode lists
+end-to-end scenarios
+runtime topology
 bottom_line
 ```
 
-Each capability area includes:
+These may be reconsidered later only if heterogeneous evidence shows a concrete user benefit and a safe representation. They are not required to prove B4.
+
+## 12. Semantic guardrails
+
+### Technology list != architecture
+
+A list containing Spark, Kafka, Airflow/Prefect, MLflow, Docker, cloud platforms, databases, MES/SECS-GEM or ML frameworks does not establish one deployed system or data path.
+
+### Process control != real-time proof
+
+Process control, anomaly detection, manufacturing data, deployment experience, cloud names or preferred edge experience do not by themselves prove:
+
+```text
+real-time inference
+low-latency control
+active feedback loops
+factory-floor deployment
+autonomous process adjustment
+```
+
+### Domain context != unstated obligation
+
+Semiconductor/domain knowledge may make process or equipment physics professionally useful, but it is not an employer requirement unless source-stated.
+
+### Optionality/depth remain exact
+
+- contextual stays contextual;
+- preferred stays preferred;
+- Python `expert` applies only to Python;
+- explicit depth does not spread to neighboring frameworks/tools.
+
+## 13. Artifact shape
+
+Persisted `RoleCapabilityBlueprint` contains:
+
+```text
+source_role_purpose[]
+source_capability_coverage[]
+source_role_constraints[]
+capability_areas[]
+overall_unknowns[]
+```
+
+Each area contains:
 
 ```text
 name
 source_capability_index
-interpretation_strength
-likely_depth
-why_this_matters
-likely_subskills[]
+interpretation_strength = plausible
+practical_interpretation
+interpretation_uncertainty
 source_requirements[]
 source_responsibilities[]
-suggested_tools_or_examples[]
-likely_work_products[]
-likely_failure_modes_or_operational_concerns[]
+professional_considerations[]
 probably_not_required[]
+important_unknowns[]
 ```
 
-No exact-quote requirement exists for ordinary Blueprint prose. Audit-grade source evidence remains upstream and is copied deterministically into source anchors.
+The browser and CLI must visibly distinguish source anchors from professional inference and display the interpretation boundary adjacent to model prose.
 
-## 13. Current implementation
+## 14. Current implementation
 
-Active files:
+Active:
 
 ```text
 src/jobhunter/role_blueprint_service.py
-src/jobhunter/role_blueprint_service_v4.py
-src/jobhunter/role_blueprint_inference_v4.py
-src/jobhunter/role_blueprint_v4_models.py
+src/jobhunter/role_blueprint_service_v5.py
+src/jobhunter/role_blueprint_inference_v5.py
+src/jobhunter/role_blueprint_v5_models.py
 src/jobhunter/inference/lm_studio_runtime.py
-scripts/audit_blueprint_v4_snapshot.py
+scripts/audit_blueprint_v5_snapshot.py
 ```
 
-Implemented:
+Regression coverage:
 
-- exact source/translation/P1.6/Capability dependency identity;
-- independent Blueprint persistence/attempt history;
-- bounded generation plus one structural validation retry;
-- no arbitrary read deadline after successful local connection;
-- automatic 16,384-token LM Studio Blueprint context preparation;
-- dedicated Blueprint model configuration;
-- browser/CLI/Review Snapshot integration;
-- model-facing provenance-free draft contract;
-- deterministic one-to-one Capability mapping and coverage;
-- deterministic P1.6 source requirement/responsibility attachment;
-- deterministic role-level constraints;
-- bounded inferred-tool contract;
-- structurally downgraded hidden requirements/scenarios;
-- repository-native B4 audit script;
-- v4 regression tests.
+```text
+tests/test_role_blueprint_v5_models.py
+tests/test_role_blueprint_inference_v5.py
+tests/test_role_blueprint_service_v5.py
+tests/test_role_blueprint_service.py
+tests/test_role_blueprint_web.py
+```
 
-Historical v3 implementation remains preserved for negative evidence and regression reference.
+Historical v3/v4 implementation remains preserved for negative evidence and regression reference.
 
-## 14. Current live B4 gate
+## 15. Current live B4 gate
 
 Fixed chain:
 
@@ -381,7 +366,7 @@ Capability v7 artifact 9
 Blueprint model gemma-4-e4b-it-ud
 ```
 
-Confirm active contract:
+Confirm:
 
 ```bash
 python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION; print(BLUEPRINT_PROMPT_VERSION); print(BLUEPRINT_SCHEMA_VERSION)"
@@ -390,8 +375,8 @@ python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION
 Expected:
 
 ```text
+role-capability-blueprint-v5
 role-capability-blueprint-v4
-role-capability-blueprint-v3
 ```
 
 Run only:
@@ -402,57 +387,42 @@ jobhunter jobs blueprint tG9K
 
 Do not rerun translation, P1.6 or Capability merely to test Blueprint.
 
-If a valid Blueprint artifact is produced:
+If generation succeeds:
 
 ```bash
 jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v4_snapshot.py
+python scripts/audit_blueprint_v5_snapshot.py
 ```
+
+## 16. B4 acceptance criteria
 
 Mechanical acceptance requires:
 
-1. current-chain/dependency correctness;
-2. exactly one area per accepted Capability profile, in exact order with exact label;
-3. complete deterministic source-requirement/source-responsibility propagation;
-4. exact role-level constraints;
-5. no legacy v3 provenance fields in model-created content;
-6. only likely/possible suggested tools;
-7. only plausible/speculative hidden requirements and professional scenarios;
-8. `professional_example` scenario basis.
+- exact dependency identity;
+- exact Capability one-to-one mapping and coverage;
+- exact role purpose/requirements/responsibilities/role constraints;
+- source strength/depth/evidence preservation;
+- non-empty interpretation uncertainty per area;
+- professional considerations only plausible/speculative with uncertainty;
+- absence of legacy v4 expansion fields;
+- no generic obligation/full-ownership language in model prose.
 
 Semantic acceptance additionally requires:
 
-1. materially improved human understanding beyond the ad/Capability;
-2. calibrated role identity rather than MLOps/platform inflation;
-3. preserved upstream optionality/depth;
-4. no architecture invention from stack lists;
-5. coherent interpretation-strength usage;
-6. examples remain visibly examples with material assumptions;
-7. acceptable technical/domain correctness;
+1. materially useful professional interpretation beyond rereading source anchors;
+2. meaningful uncertainty boundaries rather than boilerplate disclaimers;
+3. no employer-specific topology/latency/ownership invention;
+4. no real-time/low-latency/control-loop claim without source support;
+5. no process-physics candidate obligation without source support;
+6. preserved contextual/preferred/depth semantics;
+7. no technology-list-to-architecture synthesis;
 8. no generic curriculum dumping;
-9. useful probable non-requirements and unknowns;
-10. no unsupported real-time/microservice/CI-CD/model-registry/control-loop certainty.
+9. important unknowns preserve material uncertainty;
+10. technical/domain correctness.
 
-The exact acceptance sequence is controlled by `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` and `docs/EXECUTION_TODO.md`.
+A mechanical PASS does not accept B4.
 
-## 15. Independent Blueprint model role
-
-Configuration:
-
-```toml
-blueprint_lm_studio_model = "..."
-```
-
-Effective fallback:
-
-```text
-dedicated Blueprint model
-→ effective Capability model
-```
-
-Current controlled B4 v4 model is `gemma-4-e4b-it-ud`. Do not change model and contract simultaneously during the first v4 live test. Do not introduce multi-model voting.
-
-## 16. Non-goals
+## 17. Non-goals
 
 Do not build yet:
 
