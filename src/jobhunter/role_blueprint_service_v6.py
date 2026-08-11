@@ -328,8 +328,9 @@ class RoleBlueprintService:
                     capability.intelligence.get("capabilities") or []
                 ),
                 "trust_boundary": (
-                    "Model output contains only explicitly uncertain professional considerations "
-                    "and unknowns. JobHunter owns all accepted source facts and Capability identity."
+                    "Model output contains only explicitly uncertain professional "
+                    "considerations and unknowns. JobHunter owns all accepted source facts "
+                    "and Capability identity."
                 ),
             },
         }
