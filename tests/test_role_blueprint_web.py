@@ -52,15 +52,18 @@ def test_role_blueprint_page_renders_before_capability_analysis(tmp_path: Path) 
     assert "professional interpretation" in response.text
 
 
-def test_role_blueprint_template_exposes_v5_boundary_not_legacy_expansion() -> None:
+def test_role_blueprint_template_exposes_v6_boundary_not_legacy_expansion() -> None:
     template = Path("src/jobhunter/web/templates/role_blueprint.html").read_text(
         encoding="utf-8"
     )
 
-    assert "interpretation_uncertainty" in template
     assert "professional_considerations" in template
+    assert "important_unknowns" in template
     assert "source_role_purpose" in template
     for legacy_key in (
+        "area.practical_interpretation",
+        "area.interpretation_uncertainty",
+        "area.probably_not_required",
         "bp.role_read",
         "bp.likely_role_shape",
         "area.likely_depth",
