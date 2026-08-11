@@ -142,6 +142,9 @@ class _Provider:
                         "practical_interpretation": (
                             "This area involves applying Python in internal AI integrations."
                         ),
+                        "interpretation_uncertainty": (
+                            "The vacancy does not state the exact integration boundary."
+                        ),
                         "professional_considerations": [
                             {
                                 "statement": (
@@ -239,5 +242,6 @@ def test_v5_service_excludes_derived_capability_prose_and_attaches_source_truth(
     area = blueprint["capability_areas"][0]
     assert area["source_capability_index"] == 0
     assert area["interpretation_strength"] == "plausible"
+    assert "does not state" in area["interpretation_uncertainty"]
     assert area["source_requirements"][0]["requirement_index"] == 0
     assert area["source_requirements"][0]["depth_signal"] == "expert"
