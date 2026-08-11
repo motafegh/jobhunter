@@ -9,13 +9,13 @@
   <div class="panel-header">
     <div>
       <p class="eyebrow">Human-facing interpretation layer</p>
-      <h2>Source truth first; professional inference second</h2>
+      <h2>Source truth first; explicitly uncertain inference second</h2>
     </div>
     {% if blueprint_artifact and blueprint_current %}<span class="badge good">Current</span>{% elif blueprint_artifact %}<span class="badge warn">Stale dependency</span>{% else %}<span class="badge">Not built</span>{% endif %}
   </div>
   <div class="guide-content">
     <p><strong>Employer/source facts are attached deterministically from accepted P1.6 and Capability artifacts.</strong> The model does not reproduce their provenance, strength, depth, or evidence.</p>
-    <p>Every model-created interpretation is explicitly a plausible professional reading, not an employer requirement. Each interpretation is paired with a boundary describing what the vacancy does not establish.</p>
+    <p>Model output is limited to professional considerations and explicit unknowns. Each positive consideration carries a plausible/speculative label plus a concrete uncertainty statement; there is no model-generated role summary or architecture claim.</p>
   </div>
   {% if capability_artifact %}
     <form method="post" action="/jobs/{{ source_job_id }}/role-blueprint" data-operation-form>
@@ -59,13 +59,7 @@
 <section class="panel analysis-panel">
   <div class="panel-header">
     <div><p class="eyebrow">Accepted Capability {{ area.source_capability_index + 1 }}</p><h2>{{ area.name }}</h2></div>
-    <span class="badge">plausible · professional inference</span>
-  </div>
-
-  <div class="claim-card">
-    <strong>Professional interpretation</strong>
-    <p class="long-copy">{{ area.practical_interpretation }}</p>
-    <p class="muted"><strong>Interpretation boundary:</strong> {{ area.interpretation_uncertainty }}</p>
+    <span class="badge good">Source-grounded</span>
   </div>
 
   {% if area.source_requirements or area.source_responsibilities %}
@@ -87,7 +81,7 @@
 
   {% if area.professional_considerations %}
   <div class="analysis-section">
-    <h3>Professional considerations</h3>
+    <h3>Professional considerations <span class="muted">· inference, not employer fact</span></h3>
     {% for item in area.professional_considerations %}
       <div class="claim-card">
         <div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge {% if item.interpretation_strength == 'speculative' %}warn{% endif %}">{{ item.interpretation_strength }}</span></div>
@@ -97,19 +91,10 @@
   </div>
   {% endif %}
 
-  {% if area.probably_not_required %}
-  <div class="analysis-section">
-    <h3>Probably not required <span class="muted">· professional inference</span></h3>
-    <ul>{% for item in area.probably_not_required %}<li>{{ item }}</li>{% endfor %}</ul>
-  </div>
-  {% endif %}
-
-  {% if area.important_unknowns %}
   <div class="analysis-section">
     <h3>Important unknowns</h3>
     <ul>{% for item in area.important_unknowns %}<li>{{ item }}</li>{% endfor %}</ul>
   </div>
-  {% endif %}
 </section>
 {% endfor %}
 
@@ -122,6 +107,6 @@
 
 <div class="artifact-meta"><span>{{ blueprint_artifact.prompt_version }}</span><span>{{ blueprint_artifact.schema_version }}</span><span>Capability Intelligence {{ blueprint_artifact.capability_artifact_id }}</span><span>English analysis {{ blueprint_artifact.analysis_artifact_id }}</span><span>English projection {{ blueprint_artifact.translation_artifact_id }}</span></div>
 {% else %}
-<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get a bounded professional interpretation above the accepted source truth.</div></section>
+<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get a source-grounded view with explicitly uncertain professional considerations.</div></section>
 {% endif %}
 {% endblock %}
