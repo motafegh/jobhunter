@@ -14,8 +14,8 @@
     {% if blueprint_artifact and blueprint_current %}<span class="badge good">Current</span>{% elif blueprint_artifact %}<span class="badge warn">Stale dependency</span>{% else %}<span class="badge">Not built</span>{% endif %}
   </div>
   <div class="guide-content">
-    <p><strong>This layer is intentionally freer than Capability Intelligence.</strong> It reads the complete job/company context plus the strict and auditable analytical layers, then explains the likely real-world technical scope like an experienced engineer/domain specialist.</p>
-    <p>Libraries, frameworks and implementation patterns may be suggested even when the employer did not name them. They are labeled as source-named, likely examples or possible examples rather than being presented as employer facts.</p>
+    <p><strong>This layer interprets the accepted analytical substrate without asking the model to reproduce provenance.</strong> Employer requirements, responsibilities, explicit depth and role constraints are attached by JobHunter from accepted P1.6/Capability artifacts.</p>
+    <p>Practitioner-created tools and workflow examples are shown separately as likely or possible examples. They are not employer requirements and do not establish the employer's architecture.</p>
   </div>
   {% if capability_artifact %}
     <form method="post" action="/jobs/{{ source_job_id }}/role-blueprint" data-operation-form>
@@ -35,24 +35,54 @@
   <div class="claim-card"><strong>Likely role shape</strong><p class="long-copy">{{ bp.likely_role_shape }}</p></div>
 </section>
 
+{% if bp.source_role_constraints %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Employer-stated entry constraints</p><h2>Role-level source constraints</h2></div><span class="badge good">Deterministic</span></div>
+  {% for item in bp.source_role_constraints %}
+    <div class="claim-card">
+      <div class="claim-head"><strong>{{ item.concept }}</strong><span class="badge good">{{ item.requirement_type }}</span></div>
+      {% if item.depth_signal %}<p class="muted"><strong>Explicit depth / extent:</strong> {{ item.depth_signal }}</p>{% endif %}
+      {% if item.evidence %}<p class="muted"><strong>Source:</strong> {{ item.evidence | join(' · ') }}</p>{% endif %}
+    </div>
+  {% endfor %}
+</section>
+{% endif %}
+
 {% for area in bp.capability_areas %}
 <section class="panel analysis-panel">
   <div class="panel-header">
-    <div><p class="eyebrow">Capability area {{ loop.index }}</p><h2>{{ area.name }}</h2></div>
+    <div><p class="eyebrow">Accepted Capability {{ area.source_capability_index + 1 }}</p><h2>{{ area.name }}</h2></div>
     <span class="badge {% if area.interpretation_strength == 'highly_likely' %}good{% elif area.interpretation_strength == 'speculative' %}warn{% endif %}">{{ area.interpretation_strength.replace('_', ' ') }}</span>
   </div>
   <div class="claim-card">
-    <strong>Likely depth</strong>
+    <strong>Likely practical depth</strong>
     <p class="long-copy">{{ area.likely_depth }}</p>
     <p class="muted"><strong>Why this matters here:</strong> {{ area.why_this_matters }}</p>
   </div>
 
+  {% if area.source_requirements or area.source_responsibilities %}
+  <div class="analysis-section">
+    <h3>Employer / accepted source anchors</h3>
+    {% for item in area.source_requirements %}
+      <div class="claim-card">
+        <div class="claim-head"><strong>{{ item.concept }}</strong><span class="badge good">{{ item.requirement_type }}</span></div>
+        {% if item.depth_signal %}<p class="muted"><strong>Explicit depth:</strong> {{ item.depth_signal }}</p>{% endif %}
+        {% if item.evidence %}<p class="muted"><strong>Source:</strong> {{ item.evidence | join(' · ') }}</p>{% endif %}
+      </div>
+    {% endfor %}
+    {% if area.source_responsibilities %}
+      <strong>Accepted responsibilities</strong>
+      <ul>{% for item in area.source_responsibilities %}<li>{{ item.statement }}</li>{% endfor %}</ul>
+    {% endif %}
+  </div>
+  {% endif %}
+
   {% if area.likely_subskills %}<div class="analysis-section"><h3>What probably matters inside this area</h3><ul>{% for item in area.likely_subskills %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
 
-  {% if area.likely_tools_or_examples %}
-  <div class="analysis-section"><h3>Likely tools / implementation examples</h3>
-    {% for tool in area.likely_tools_or_examples %}
-    <div class="claim-card"><div class="claim-head"><strong>{{ tool.name }}</strong><span class="badge {% if tool.relationship == 'source_named' %}good{% elif tool.relationship == 'possible_example' %}warn{% endif %}">{{ tool.relationship.replace('_', ' ') }}</span></div><p class="muted">{{ tool.why_relevant }}</p></div>
+  {% if area.suggested_tools_or_examples %}
+  <div class="analysis-section"><h3>Practitioner-created implementation examples</h3>
+    {% for tool in area.suggested_tools_or_examples %}
+    <div class="claim-card"><div class="claim-head"><strong>{{ tool.name }}</strong><span class="badge {% if tool.relationship == 'possible_example' %}warn{% endif %}">{{ tool.relationship.replace('_', ' ') }}</span></div><p class="muted">{{ tool.why_relevant }}</p></div>
     {% endfor %}
   </div>
   {% endif %}
@@ -64,14 +94,22 @@
 {% endfor %}
 
 {% if bp.hidden_requirements %}
-<section class="panel"><div class="panel-header"><div><p class="eyebrow">Not necessarily written in the ad</p><h2>Hidden / unstated but likely requirements</h2></div></div>
-{% for item in bp.hidden_requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.title }}</strong><span class="badge {% if item.interpretation_strength == 'highly_likely' %}good{% elif item.interpretation_strength == 'speculative' %}warn{% endif %}">{{ item.interpretation_strength.replace('_', ' ') }}</span></div><p class="long-copy">{{ item.explanation }}</p></div>{% endfor %}
+<section class="panel"><div class="panel-header"><div><p class="eyebrow">Professional inference, not employer fact</p><h2>Hidden / unstated but plausible requirements</h2></div></div>
+{% for item in bp.hidden_requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.title }}</strong><span class="badge {% if item.interpretation_strength == 'speculative' %}warn{% endif %}">{{ item.interpretation_strength.replace('_', ' ') }}</span></div><p class="long-copy">{{ item.explanation }}</p></div>{% endfor %}
 </section>
 {% endif %}
 
-{% if bp.likely_end_to_end_scenarios %}
-<section class="panel"><div class="panel-header"><div><p class="eyebrow">Put the requirements together</p><h2>Likely end-to-end work scenarios</h2></div></div>
-{% for scenario in bp.likely_end_to_end_scenarios %}<div class="claim-card"><div class="claim-head"><strong>{{ scenario.name }}</strong><span class="badge {% if scenario.interpretation_strength == 'highly_likely' %}good{% elif scenario.interpretation_strength == 'speculative' %}warn{% endif %}">{{ scenario.interpretation_strength.replace('_', ' ') }}</span></div><p class="muted"><strong>Why likely:</strong> {{ scenario.why_likely }}</p><ol>{% for step in scenario.flow_steps %}<li>{{ step }}</li>{% endfor %}</ol>{% if scenario.engineering_concerns %}<strong>Engineering concerns</strong><ul>{% for concern in scenario.engineering_concerns %}<li>{{ concern }}</li>{% endfor %}</ul>{% endif %}</div>{% endfor %}
+{% if bp.professional_example_scenarios %}
+<section class="panel"><div class="panel-header"><div><p class="eyebrow">Illustrative, not company architecture</p><h2>Professional example scenarios</h2></div></div>
+{% for scenario in bp.professional_example_scenarios %}
+<div class="claim-card">
+  <div class="claim-head"><strong>{{ scenario.name }}</strong><span class="badge {% if scenario.interpretation_strength == 'speculative' %}warn{% endif %}">{{ scenario.interpretation_strength.replace('_', ' ') }}</span></div>
+  <p class="muted"><strong>Why useful:</strong> {{ scenario.why_useful }}</p>
+  <ol>{% for step in scenario.flow_steps %}<li>{{ step }}</li>{% endfor %}</ol>
+  {% if scenario.assumptions %}<strong>Assumptions</strong><ul>{% for assumption in scenario.assumptions %}<li>{{ assumption }}</li>{% endfor %}</ul>{% endif %}
+  {% if scenario.engineering_concerns %}<strong>Engineering concerns</strong><ul>{% for concern in scenario.engineering_concerns %}<li>{{ concern }}</li>{% endfor %}</ul>{% endif %}
+</div>
+{% endfor %}
 </section>
 {% endif %}
 
@@ -82,6 +120,6 @@
 
 <div class="artifact-meta"><span>{{ blueprint_artifact.prompt_version }}</span><span>{{ blueprint_artifact.schema_version }}</span><span>Capability Intelligence {{ blueprint_artifact.capability_artifact_id }}</span><span>English analysis {{ blueprint_artifact.analysis_artifact_id }}</span><span>English projection {{ blueprint_artifact.translation_artifact_id }}</span></div>
 {% else %}
-<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get the freer senior-engineer interpretation.</div></section>
+<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get the senior-practitioner interpretation.</div></section>
 {% endif %}
 {% endblock %}
