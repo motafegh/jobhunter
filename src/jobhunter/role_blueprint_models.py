@@ -45,6 +45,17 @@ def _dedupe_indices(values: list[int]) -> list[int]:
     return result
 
 
+def _evidence_list(value: Any) -> list[str]:
+    if value is None:
+        return []
+    if isinstance(value, str):
+        cleaned = value.strip()
+        return [cleaned] if cleaned else []
+    if isinstance(value, list):
+        return [str(item).strip() for item in value if str(item).strip()]
+    raise ValueError("Accepted P1.6 evidence must be a string or list of strings")
+
+
 def _derived_strength(
     indices: list[int],
     requirements: list[dict[str, Any]],
@@ -317,7 +328,7 @@ def reconcile_role_blueprint(
             "concept": str(requirements[index].get("concept") or ""),
             "requirement_type": str(requirements[index].get("requirement_type") or ""),
             "depth_signal": requirements[index].get("depth_signal"),
-            "evidence": list(requirements[index].get("evidence") or []),
+            "evidence": _evidence_list(requirements[index].get("evidence")),
         }
         for index in role_level_indices
     ]
