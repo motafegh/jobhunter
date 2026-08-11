@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from jobhunter.role_blueprint_inference_v5 import RoleBlueprintInferenceResult
+from jobhunter.role_blueprint_inference_v6 import RoleBlueprintInferenceResult
 from jobhunter.role_blueprint_service import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
@@ -69,7 +69,7 @@ class _CapabilityStore:
                 translation_artifact_id=30,
                 analysis_artifact_id=20,
                 intelligence={
-                    "role_interpretation": "Derived prose should not reach Blueprint v5.",
+                    "role_interpretation": "Derived prose should not reach Blueprint v6.",
                     "capabilities": [
                         {
                             "capability_label": "AI integration",
@@ -129,7 +129,7 @@ class _CapabilityStore:
             job_detail_version_id=10,
             fields={
                 "title": "AI Automation Specialist",
-                "company_description": "Excluded from the v5 model context.",
+                "company_description": "Excluded from the v6 model context.",
                 "description": "Excluded long source description.",
                 "language": "en",
             },
@@ -147,12 +147,6 @@ class _Provider:
             blueprint={
                 "capability_interpretations": [
                     {
-                        "practical_interpretation": (
-                            "This area involves applying Python in internal AI integrations."
-                        ),
-                        "interpretation_uncertainty": (
-                            "The vacancy does not state the exact integration boundary."
-                        ),
                         "professional_considerations": [
                             {
                                 "statement": "Input validation may matter in integration work.",
@@ -161,9 +155,6 @@ class _Provider:
                                     "The vacancy does not state the serving boundary."
                                 ),
                             }
-                        ],
-                        "probably_not_required": [
-                            "Foundation-model pretraining is probably not central."
                         ],
                         "important_unknowns": ["The internal platform is not stated."],
                     }
@@ -223,7 +214,7 @@ def _service(*, capability_store=None):
     return service, provider, blueprint_store
 
 
-def test_role_blueprint_v5_attaches_upstream_truth_and_reuses() -> None:
+def test_role_blueprint_v6_attaches_upstream_truth_and_reuses() -> None:
     service, provider, store = _service()
 
     first = service.build("job1")
@@ -241,9 +232,11 @@ def test_role_blueprint_v5_attaches_upstream_truth_and_reuses() -> None:
     assert blueprint["source_role_purpose"][0]["statement"].startswith("Integrate")
     area = blueprint["capability_areas"][0]
     assert area["source_capability_index"] == 0
-    assert area["interpretation_strength"] == "plausible"
     assert area["source_requirements"][0]["requirement_index"] == 0
     assert area["source_requirements"][0]["depth_signal"] == "expert"
+    assert area["important_unknowns"] == ["The internal platform is not stated."]
+    assert "practical_interpretation" not in area
+    assert "interpretation_uncertainty" not in area
 
     payload = provider.calls[0]["user_payload"]
     assert "accepted_extraction" not in payload
