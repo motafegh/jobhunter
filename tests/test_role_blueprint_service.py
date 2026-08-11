@@ -3,7 +3,12 @@ from types import SimpleNamespace
 import pytest
 
 from jobhunter.role_blueprint_inference import RoleBlueprintInferenceResult
-from jobhunter.role_blueprint_service import RoleBlueprintError, RoleBlueprintService
+from jobhunter.role_blueprint_service import (
+    BLUEPRINT_PROMPT_VERSION,
+    BLUEPRINT_SCHEMA_VERSION,
+    RoleBlueprintError,
+    RoleBlueprintService,
+)
 from jobhunter.role_blueprint_store import RoleBlueprintArtifact
 
 
@@ -18,7 +23,28 @@ class _AnalysisStore:
             id=20,
             job_detail_version_id=10,
             translation_artifact_id=30,
-            analysis={"requirements": [{"concept": "Python"}]},
+            analysis={
+                "responsibilities": [
+                    {
+                        "statement": "Integrate AI tools with internal systems",
+                        "evidence": ["Integrate AI tools with internal systems"],
+                    }
+                ],
+                "requirements": [
+                    {
+                        "concept": "Python",
+                        "requirement_type": "contextual",
+                        "depth_signal": None,
+                        "evidence": ["Python"],
+                    },
+                    {
+                        "concept": "Professional experience",
+                        "requirement_type": "required",
+                        "depth_signal": "three years",
+                        "evidence": ["three years"],
+                    },
+                ],
+            },
         )
 
     def latest_current(self, _source_job_id: str, **_kwargs):
@@ -37,6 +63,7 @@ class _CapabilityStore:
                 intelligence={
                     "role_interpretation": "Applied AI automation work.",
                     "capabilities": [{"capability_label": "AI integration"}],
+                    "source_truth": {"role_level_requirement_indices": [1]},
                 },
             )
 
@@ -52,10 +79,7 @@ class _CapabilityStore:
             fields={
                 "title": "AI Automation Specialist",
                 "company_description": "International freight-forwarding company.",
-                "description": (
-                    "Integrate AI tools with CRM and email. Process shipping documents. "
-                    "Python is an advantage."
-                ),
+                "description": "Integrate AI tools with CRM and email. Python is listed.",
                 "language": "en",
                 "parser_version": "test",
             },
@@ -71,61 +95,46 @@ class _Provider:
         return RoleBlueprintInferenceResult(
             model="analysis-model",
             blueprint={
-                "role_read": (
-                    "This is probably applied AI automation/integration work rather than "
-                    "model-training research."
-                ),
+                "role_read": "This is applied AI automation/integration work.",
                 "likely_role_shape": "Applied AI Automation / Integration Engineer",
                 "capability_areas": [
                     {
-                        "name": "Python integration engineering",
+                        "name": "AI integration engineering",
+                        "source_capability_indices": [0],
                         "interpretation_strength": "highly_likely",
-                        "likely_depth": "Practical intermediate application/API engineering.",
-                        "why_this_matters": (
-                            "The described work connects AI APIs, documents and internal systems."
-                        ),
-                        "likely_subskills": ["HTTP/JSON", "validation", "error handling"],
+                        "likely_depth": "Practical application/API engineering.",
+                        "why_this_matters": "The role connects AI tools and internal systems.",
+                        "likely_subskills": ["HTTP/JSON", "validation"],
                         "likely_tools_or_examples": [
                             {
-                                "name": "httpx",
-                                "relationship": "likely_example",
-                                "why_relevant": "Typical Python HTTP client for API integration.",
+                                "name": "Python",
+                                "relationship": "source_named",
+                                "why_relevant": "Python is named for the work.",
+                                "source_requirement_indices": [0],
                             }
                         ],
-                        "likely_work_products": ["Document-to-CRM automation service"],
-                        "likely_failure_modes_or_operational_concerns": [
-                            "timeouts",
-                            "malformed AI output",
-                        ],
-                        "probably_not_required": ["deep model training"],
+                        "likely_work_products": ["AI integration service"],
+                        "likely_failure_modes_or_operational_concerns": ["timeouts"],
+                        "probably_not_required": ["foundation-model pretraining"],
                     }
                 ],
-                "hidden_requirements": [
-                    {
-                        "title": "Human review boundaries",
-                        "explanation": (
-                            "Consequential document fields likely need validation/review."
-                        ),
-                        "interpretation_strength": "highly_likely",
-                    }
-                ],
+                "hidden_requirements": [],
                 "likely_end_to_end_scenarios": [
                     {
-                        "name": "Document automation",
-                        "why_likely": "The posting directly combines document AI and integrations.",
-                        "flow_steps": [
-                            "Ingest document",
-                            "Extract fields",
-                            "Validate",
-                            "Update CRM",
-                        ],
-                        "engineering_concerns": ["idempotency", "auditability"],
-                        "interpretation_strength": "highly_likely",
+                        "name": "Illustrative integration flow",
+                        "why_likely": "A useful example of how the integration work could connect.",
+                        "flow_steps": ["Receive input", "Call service", "Validate result"],
+                        "engineering_concerns": ["idempotency"],
+                        "interpretation_strength": "plausible",
+                        "scenario_basis": "professional_example",
+                        "source_capability_indices": [0],
+                        "source_responsibility_indices": [0],
+                        "assumptions": ["Exact internal platform is not stated."],
                     }
                 ],
                 "what_probably_does_not_matter": ["training foundation models"],
                 "important_unknowns": ["Exact CRM platform is not stated."],
-                "bottom_line": "The role is about reliable applied-AI business automation.",
+                "bottom_line": "The role is about reliable applied-AI integration.",
             },
             request_body={"fake": True},
             raw_response={"id": "fake"},
@@ -180,7 +189,7 @@ def _service(*, capability_store=None):
     return service, provider, blueprint_store
 
 
-def test_role_blueprint_uses_all_upstream_context_and_reuses() -> None:
+def test_role_blueprint_v3_reconciles_upstream_truth_and_reuses() -> None:
     service, provider, store = _service()
 
     first = service.build("job1")
@@ -188,19 +197,14 @@ def test_role_blueprint_uses_all_upstream_context_and_reuses() -> None:
 
     assert first.outcome == "completed"
     assert second.outcome == "reused"
-    assert second.artifact_id == first.artifact_id == 50
     assert len(provider.calls) == 1
-    payload = provider.calls[0]["user_payload"]
-    assert payload["analysis_fields"]["title"] == "AI Automation Specialist"
-    assert payload["accepted_extraction"]["requirements"][0]["concept"] == "Python"
-    assert payload["capability_intelligence"]["capabilities"][0]["capability_label"] == (
-        "AI integration"
-    )
     assert store.artifact is not None
-    assert store.artifact.blueprint["capability_areas"][0]["likely_tools_or_examples"][0][
-        "name"
-    ] == "httpx"
-    assert [attempt["outcome"] for attempt in store.attempts] == ["completed", "reused"]
+    assert store.artifact.prompt_version == BLUEPRINT_PROMPT_VERSION
+    assert store.artifact.schema_version == BLUEPRINT_SCHEMA_VERSION
+    assert store.artifact.blueprint["source_capability_coverage"] == [0]
+    assert store.artifact.blueprint["source_role_constraints"][0]["requirement_index"] == 1
+    tool = store.artifact.blueprint["capability_areas"][0]["likely_tools_or_examples"][0]
+    assert tool["source_requirement_strength"] == "contextual"
 
 
 def test_role_blueprint_requires_current_capability_intelligence() -> None:
@@ -214,19 +218,19 @@ def test_role_blueprint_requires_current_capability_intelligence() -> None:
     assert provider.calls == []
 
 
-def test_role_blueprint_rejects_stale_capability_dependency() -> None:
+def test_role_blueprint_requires_capability_v7_source_truth() -> None:
     capability_store = _CapabilityStore(
         capability=SimpleNamespace(
             id=40,
-            job_detail_version_id=9,
+            job_detail_version_id=10,
             translation_artifact_id=30,
             analysis_artifact_id=20,
-            intelligence={},
+            intelligence={"capabilities": [{"capability_label": "AI integration"}]},
         )
     )
     service, provider, _store = _service(capability_store=capability_store)
 
-    with pytest.raises(RoleBlueprintError, match="stale for the current source version"):
+    with pytest.raises(RoleBlueprintError, match="requires accepted Capability v7 source truth"):
         service.build("job1")
 
     assert provider.calls == []
