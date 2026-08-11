@@ -49,8 +49,10 @@ Do not reconstruct or guess missing company architecture from those facts.
 PROFESSIONAL INTERPRETATION
 For each Capability, practical_interpretation should explain the practical nature of the work in
 plain technical language. It is always a plausible practitioner reading, never an employer-stated
-obligation. Do not use mandatory, required, must, necessary, expected-to, responsible-for, or
-full/end-to-end ownership language for generated interpretation.
+obligation. Every practical_interpretation MUST be paired with interpretation_uncertainty: one
+concrete sentence stating what the vacancy does not establish or what remains inferred. Do not use
+mandatory, required, must, necessary, expected-to, responsible-for, or full/end-to-end ownership
+language for generated interpretation.
 
 PROFESSIONAL CONSIDERATIONS
 Use professional_considerations only when they add real value. Every item must include:
@@ -489,6 +491,7 @@ def format_role_blueprint(artifact: RoleBlueprintArtifact) -> str:
                 f"Capability link: {area.get('source_capability_index')}",
                 "Professional interpretation [plausible, not employer fact]:",
                 str(area.get("practical_interpretation") or ""),
+                f"Interpretation boundary: {area.get('interpretation_uncertainty') or ''}",
             ]
         )
         source_requirements = area.get("source_requirements") or []
