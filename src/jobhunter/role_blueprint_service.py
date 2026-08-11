@@ -1,11 +1,12 @@
 """Current Role Capability Blueprint service entrypoint.
 
-Blueprint v3/v2 remains historical negative B4 evidence. The active B4 candidate
-is v4/v3, which keeps semantic interpretation in the model while attaching
-Capability/P1.6 provenance deterministically in JobHunter.
+Blueprint v3/v2 remains historical structural failure evidence. Blueprint v4/v3
+proved deterministic provenance but failed B4 semantic calibration. The active
+candidate is v5/v4, which also bounds model-created interpretation as explicit
+professional inference and excludes derived Capability prose from model input.
 """
 
-from jobhunter.role_blueprint_service_v4 import (
+from jobhunter.role_blueprint_service_v5 import (
     BLUEPRINT_PROMPT_VERSION,
     BLUEPRINT_SCHEMA_VERSION,
     RoleBlueprintError,
