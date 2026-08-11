@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-09  
+**Date:** 2026-08-11  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Current gate:** B3 / SQ-2 Capability Intelligence  
-**Purpose:** Resume from the real current repository state without reconstructing the recent semantic-calibration work from chat history.
+**Current gate:** B4 / SQ-3 Role Capability Blueprint  
+**Purpose:** Resume from the real current repository state without reconstructing the recent semantic-calibration work.
 
 This file is not a controlling specification. Higher-authority product/domain/source/architecture, roadmap, implementation, Phase-1, focused acceptance, and TODO documents win on conflict.
 
@@ -24,7 +24,7 @@ MARKET
 ↺
 ```
 
-Current architecture remains a local Python modular monolith with SQLite structured state, immutable evidence, FastAPI/Uvicorn/Jinja browser UI, shared CLI services, and local-first LM Studio. Do not introduce Node/npm/React, vector/RAG, graph DB, generic plugin frameworks, or agent orchestration without demonstrated need.
+Architecture remains a local Python modular monolith with SQLite structured state, immutable evidence, FastAPI/Uvicorn/Jinja browser UI, shared CLI services, and local-first LM Studio. Do not introduce Node/npm/React, vector/RAG, graph DB, generic plugin frameworks, or agent orchestration without demonstrated need.
 
 ## 2. Current contracts
 
@@ -37,16 +37,16 @@ English P1.6:                 job-analysis-english-v9
 Original P1.6:                job-analysis-original-v9
 P1.6 schema:                  job-analysis-v4
 
-Capability candidate:         job-capability-intelligence-v7
+Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Blueprint:                    role-capability-blueprint-v2
-Blueprint schema:             role-capability-blueprint-v1
+Blueprint candidate:          role-capability-blueprint-v3
+Blueprint schema:             role-capability-blueprint-v2
 
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Current controlled model roles:
+Controlled model roles:
 
 ```text
 analysis:   gemma-4-e4b-it-ud
@@ -54,255 +54,208 @@ capability: gemma-4-e2b-it
 blueprint:  gemma-4-e2b-it
 ```
 
-## 3. Accepted upstream anchor
-
-`tG9K` is the dense semiconductor/industrial-ML acceptance case.
-
-Fixed upstream chain:
+## 3. Fixed `tG9K` upstream chain
 
 ```text
 English projection artifact 33
 → accepted English P1.6 artifact 29
+→ accepted Capability v7 artifact 9
 ```
+
+Do not rerun P1.6 or Capability merely to test Blueprint.
 
 Artifact 29 is B2/SQ-1 accepted:
 
-- 7 responsibilities;
 - 27 requirements;
-- all 28 requirement-coverage inputs accounted for;
-- all 8 duty-coverage inputs accounted for;
-- explicit optionality preserved;
-- explicit depth preserved;
-- Python `expert` does not spread to neighboring frameworks;
-- education and 3–6 years experience are present.
+- 7 responsibilities;
+- complete deterministic coverage accounting;
+- optionality preserved;
+- Python-specific `expert` depth preserved;
+- education and 3–6 years experience present.
 
-Do **not** rerun English analysis for current Capability calibration.
+Artifact 9 is B3/SQ-2 accepted for the bounded rich `tG9K` gate:
 
-## 4. Capability history
+- 25/25 capability-relevant requirements linked;
+- 7/7 responsibilities linked;
+- two coherent capability profiles;
+- all 27 requirements preserved in deterministic source truth;
+- all six explicit depth facts preserved;
+- requirements 25/26 remain role-level;
+- no positive independence expectation;
+- no cross-capability synthesis.
 
-### v4/v2
+The CLI showing five of six explicit depths inside profiles is intentional: requirement 26 (`Professional experience — three to six years`) is role-level and must not be forced into a capability profile.
 
-Capability artifact 7 was structurally valid but failed B3 semantic review:
-
-- accepted explicit depth disappeared;
-- contextual frameworks/cloud were over-strengthened;
-- pipelines/MLOps became unsupported end-to-end ownership;
-- evidence leaked across capability areas.
-
-### v5
-
-Historical prompt-heavy experiment. Focused deterministic tests passed, but live bounded retry exhausted `max_tokens`; no accepted artifact. Do not reuse v5 identity.
-
-### v6/v3 — live artifact 8, rejected
-
-v6 added profile source indices plus deterministic requirement-strength and explicit-depth reconciliation.
-
-The live `tG9K` generation completed and proved the mechanism works **for linked facts**, but B3 failed:
-
-- only requirements `[22, 23, 3]` were linked out of 27;
-- only responsibilities `[0, 3]` were linked out of 7;
-- only `Strong` and `Hands-on` depth survived into profiles;
-- Python `expert`, statistics `Solid`, high-dimensional-data `Comfort`, and 3–6 years were absent from the profile-level view;
-- unsupported autonomy reappeared;
-- unsupported end-to-end lifecycle ownership reappeared;
-- contextual tools/cloud were still strengthened in prose;
-- the dense role collapsed into one catch-all capability;
-- cross-capability synthesis existed despite one profile;
-- exact evidence could still be semantically irrelevant.
-
-Committed negative review snapshot:
+B3 decision:
 
 ```text
-review-snapshots/jobs/tG9K.json
-Capability artifact 8
-job-capability-intelligence-v6 / v3
+docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-## 5. Current v7/v4 design
+## 4. Capability history relevant to later review
 
-v7 moves source survival outside LLM control:
+- v4/v2 artifact 7: rejected; depth omitted, contextual stack/cloud strengthened, ownership overreach, evidence leakage.
+- v5: historical failed output-budget experiment; do not reuse identity.
+- v6/v3 artifact 8: rejected; deterministic reconciliation worked only for model-selected links, but model linked too little and repeated autonomy/ownership/optionality failures.
+- v7/v4 artifact 9: accepted bounded B3 baseline. Freeze unless downstream or heterogeneous evidence exposes a repeatable correctness problem.
+
+## 5. Current B4 Blueprint v3 design
+
+Blueprint remains the human-facing professional interpretation layer. v3 adds a stronger deterministic/model boundary without turning it into another factual extraction layer.
+
+### Capability grounding
+
+Every Blueprint capability area carries `source_capability_indices`. The union of all areas must cover every accepted Capability profile.
+
+For current `tG9K`, accepted Capability indices are:
 
 ```text
-accepted P1.6
-→ deterministic source partition
-→ model grouping + derived reasoning draft
-→ complete coverage validator
-→ deterministic source_truth / strength / explicit depth / explicit work
-→ persisted v7 artifact
+0  Advanced ML/Statistical Modeling for Industrial Data
+1  Full-Stack ML Engineering & MLOps
 ```
 
-### Source partition
+The Blueprint may reorganize/explain those areas, but it cannot silently ignore one or add a generic ungrounded curriculum area.
 
-For capability grouping, all accepted requirements are capability-relevant except narrowly mechanical role-level constraints:
+### Source-named tools
 
-- education;
-- standalone experience-duration constraints such as `three to six years`.
+A `source_named` tool must link accepted P1.6 requirement/responsibility indices.
 
-For current `tG9K` this should produce:
+JobHunter deterministically derives:
 
 ```text
-capability requirements: 0..24
-role-level requirements:  [25, 26]
-responsibilities:         0..6
+source_requirement_strength
+source_depth_signals
 ```
 
-### Hard coverage
+This prevents Python `expert` from spreading to PyTorch/TensorFlow/XGBoost/etc. and prevents contextual/preferred tools from silently becoming mandatory.
 
-The model draft must link:
+`likely_example` / `possible_example` tools have no P1.6 source links, source strength, or source depth.
 
-- every capability-relevant requirement;
-- every responsibility.
+### Role-level constraints
 
-Dense sources (>=12 requirements and >=5 responsibilities) require at least two profiles. Missing coverage is a validation failure rather than silent loss.
+JobHunter deterministically copies Capability source-truth role-level requirements into Blueprint.
 
-### Persisted source truth
+Expected `tG9K` constraints:
 
-`source_truth` deterministically retains:
+```text
+25  Master's degree                         required
+26  Professional experience                required; three to six years
+```
 
-- complete role purpose;
-- all 27 requirements with index/type/strength/depth/evidence/confidence;
-- all 7 responsibilities;
-- role-level/capability partition;
-- linked/unlinked coverage;
-- all explicit-depth indices.
+### Hidden requirements
 
-### Deterministic profile facts
+A `highly_likely` hidden requirement must link accepted Capability work and/or responsibilities. It is still interpretation, not employer fact.
 
-JobHunter owns:
+### Scenario basis
 
-- `requirement_strength`;
-- source-explicit depth;
-- source-explicit work activities.
+Every scenario declares:
 
-The model supplies semantic grouping and derived reasoning only.
+```text
+source_stated_workflow
+professional_example
+```
 
-### Deliberately deferred
-
-Because two live artifacts repeatedly overreached:
-
-- positive `independence_expectation` is cleared in v7; exact autonomy remains unknown unless a future explicit authority contract is designed;
-- `cross_capability_observations` are cleared in v7; broader professional synthesis belongs downstream after Capability itself is accepted.
+A practitioner-created `professional_example` cannot be `highly_likely`. Unstated topology, latency, vendor, batch/stream mode, cloud/edge placement, scale, or ownership assumptions must remain explicit. A highly-likely scenario cannot depend on unresolved assumptions.
 
 ## 6. Current implementation files
 
-Current public runtime:
-
 ```text
-src/jobhunter/capability_service.py
-→ re-exports v7 current service
+src/jobhunter/role_blueprint_models.py
+src/jobhunter/role_blueprint_service.py
+src/jobhunter/role_blueprint_service_v3.py
+src/jobhunter/role_blueprint_inference.py
+scripts/audit_blueprint_v3_snapshot.py
 ```
 
-New/changed v7 files:
+Regression coverage includes:
 
 ```text
-src/jobhunter/capability_v7_models.py
-src/jobhunter/capability_service_v7.py
-src/jobhunter/capability_inference.py
-tests/test_capability_v7.py
-tests/test_capability_inference.py
-scripts/audit_capability_v7_snapshot.py
+tests/test_role_blueprint_models.py
+tests/test_role_blueprint_service.py
+tests/test_role_blueprint_inference.py
+tests/test_role_blueprint_evidence_shape.py
 ```
 
-Historical v6 service is retained at:
+B4 experiment:
 
 ```text
-src/jobhunter/capability_service_v6.py
+docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
 ```
 
-Experiment records:
+## 7. Exact next action
 
-```text
-docs/experiments/2026-08-09_CAPABILITY_V6_DETERMINISTIC_RECONCILIATION.md
-docs/experiments/2026-08-09_CAPABILITY_V7_SOURCE_TRUTH_BOUNDARY.md
-```
+Keep accepted upstream artifacts and model roles fixed.
 
-## 7. Deterministic status
-
-Current v7 implementation CI is green on `main`:
-
-```text
-ruff check .                  PASS
-python -m pytest             PASS
-python -m pytest -W error    PASS
-```
-
-B3 is still **not accepted** because the live v7 semantic artifact has not yet been reviewed.
-
-## 8. Exact next action
-
-Keep the accepted P1.6/model setup fixed.
-
-Local sequence:
+Run locally:
 
 ```bash
-jobhunter jobs capability tG9K
+jobhunter jobs blueprint tG9K
 jobhunter jobs snapshot tG9K
-python scripts/audit_capability_v7_snapshot.py
+python scripts/audit_blueprint_v3_snapshot.py
 ```
 
 Do not run:
 
 ```text
 Analyze English / P1.6 again
-Blueprint
+Capability again
 full jobhunter run
 ```
 
-until the v7 B3 decision is made.
+for this controlled B4 test.
 
-Expected mechanical result for `tG9K`:
+If Blueprint generation fails, preserve the failed attempt and inspect the exact validation/output/model error. Do not fabricate or commit an empty snapshot.
 
-```text
-Capability v7/v4 current-chain
->= 2 capability profiles
-25/25 capability requirements linked
-7/7 responsibilities linked
-source_truth retains all 27 requirements
-source_truth retains all 7 responsibilities
-source_truth retains all 6 explicit depth signals
-role-level requirement indices [25, 26]
-no positive independence expectation
-cross_capability_observations []
-no current Blueprint
-```
+If generation succeeds, the mechanical audit must confirm:
+
+- English analysis artifact 29;
+- Capability artifact 9 / v7/v4 current chain;
+- Blueprint v3/v2 depends on Capability 9;
+- all accepted Capability profiles are covered;
+- source-named tools have valid P1.6 links and deterministic strength/depth;
+- inferred tools carry no source strength/depth;
+- role-level constraints match source truth;
+- professional-example scenarios are not highly likely;
+- source-stated workflows link accepted responsibilities;
+- highly-likely scenarios have no unresolved assumptions.
 
 A mechanical pass is necessary but not sufficient.
 
-## 9. Semantic review after the live push
+## 8. Semantic review after the live push
 
 Review whether:
 
-- capability groupings are coherent rather than coverage-driven catch-alls;
-- contextual/preferred tools remain contextual/preferred in prose;
-- cloud/edge is not turned into required architecture;
-- evidence is directly relevant to each derived claim;
-- prerequisites are technically defensible rather than generic curriculum;
-- unknown boundaries are useful;
-- no hidden ownership/autonomy language reappears elsewhere;
-- the artifact is materially more useful than P1.6.
+- the Blueprint adds useful practitioner interpretation rather than paraphrasing P1.6/Capability;
+- capability-area organization is coherent;
+- Python alone carries explicit expert depth unless another tool has independent depth evidence;
+- contextual/preferred frameworks, cloud/edge, MATLAB, and C/C++ remain calibrated;
+- a technology list is not assembled into a hidden company architecture;
+- professional-example workflows are technically coherent and visibly hypothetical;
+- source-stated/high-confidence workflows do not contradict unresolved unknowns;
+- hidden requirements are useful and grounded rather than generic curriculum;
+- tools/protocols/platforms retain normal technical meaning;
+- important unknowns preserve real architecture/operational uncertainty;
+- the model does not amplify broad Capability wording into ownership/autonomy claims.
 
 ### Decision after review
 
-If v7 passes:
-1. mark B3/SQ-2 accepted;
-2. reconcile accepted-state docs;
-3. move to B4 Blueprint calibration.
+If B4 passes:
+1. mark B4/SQ-3 accepted for the bounded `tG9K` gate;
+2. freeze Blueprint v3/v2 for the next heterogeneous review tranche;
+3. continue B5/CI-3 with sparse, Python/software, network/security, and operations/platform roles.
 
-If v7 is mechanically valid but E2B remains semantically weak:
-1. keep source/P1.6/prompt/schema/rubric fixed;
-2. run a controlled stronger Capability-model comparison;
-3. compare technical correctness/calibration, not prose quality.
+If B4 is mechanically correct but E2B remains semantically weak:
+1. keep source/P1.6/Capability/prompt/schema/rubric fixed;
+2. compare one stronger Blueprint reasoning model;
+3. compare correctness/calibration rather than eloquence;
+4. do not build multi-model voting.
 
-If v7 fails completeness/validation/output-budget:
-1. inspect the exact failure/attempt;
-2. prefer bounded partitioning/output reduction or a justified model comparison;
-3. do not respond with another large prompt-patch collection.
+If B4 exposes a repeatable deterministic defect, fix the correct layer and rerun the same bounded case before heterogeneous expansion.
 
-## 10. Phase sequence after B3
+## 9. Phase sequence after B4
 
 ```text
-B4 Blueprint calibration/model comparison if needed
-→ B5/CI-3 heterogeneous review
+B5/CI-3 heterogeneous review
 → Market truthfulness
 → source/lifecycle acceptance
 → partial-success semantics
