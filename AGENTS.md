@@ -51,37 +51,38 @@ English P1.6:                 job-analysis-english-v9
 Original P1.6:                job-analysis-original-v9
 P1.6 schema:                  job-analysis-v4
 
-Capability candidate:         job-capability-intelligence-v7
+Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Role Blueprint:               role-capability-blueprint-v2
-Blueprint schema:             role-capability-blueprint-v1
+Role Blueprint candidate:     role-capability-blueprint-v3
+Blueprint schema:             role-capability-blueprint-v2
 
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Accepted English P1.6 anchor for the current dense live case is `tG9K` artifact **29**.
+Accepted English P1.6 anchor for the current dense live case is `tG9K` artifact **29**. Accepted B3 Capability anchor is `tG9K` artifact **9**.
 
-Capability v7/v4 is the active **B3 candidate runtime on `main`**, not an accepted semantic contract yet. Capability v6/v3 artifact 8 is retained as rejected live evidence. Capability v5 is a historical failed output-budget experiment. Do not call v4/v2, v5, or v6/v3 the current Capability runtime.
+Capability v7/v4 passed the bounded B3 `tG9K` semantic gate and is frozen while B4 proceeds. This does not replace the later heterogeneous CI-3/B5 review. Capability v6/v3 artifact 8 remains rejected live evidence; v5 remains a historical failed output-budget experiment.
 
-Do not rebuild the Role Blueprint until B3 Capability acceptance passes.
+Blueprint v3/v2 is the active **B4 candidate runtime on `main`**. It is not semantically accepted until a live Blueprint built from Capability artifact 9 passes mechanical and complete semantic review. Do not call Blueprint v2/v1 the current runtime contract.
 
 ## 4. Current exact next-work rule
 
 ```text
-1. run Capability v7/v4 against fixed tG9K P1.6 artifact 29
-2. regenerate the tG9K Review Snapshot
-3. run scripts/audit_capability_v7_snapshot.py
-4. perform complete semantic review of the v7 artifact
-5. if B3 passes, reconcile acceptance docs and continue to Blueprint B4
-6. if B3 fails, diagnose the bounded structural/model failure; do not accumulate prompt patches
-7. after B4, complete heterogeneous CI-3 review
-8. finish Phase-1 Market/source/lifecycle/partial-success/P1.7 gates
-9. close Phase 1
-10. only then begin corpus-wide Phase 2
+1. keep tG9K English P1.6 artifact 29 fixed
+2. keep accepted Capability v7/v4 artifact 9 fixed
+3. run Blueprint v3/v2 against that exact chain
+4. regenerate the tG9K Review Snapshot
+5. run scripts/audit_blueprint_v3_snapshot.py
+6. perform complete semantic review of the Blueprint artifact
+7. if B4 passes, freeze the bounded Blueprint contract and continue heterogeneous CI-3/B5
+8. if B4 fails, diagnose the bounded structural/model failure; do not accumulate prompt patches
+9. finish Phase-1 Market/source/lifecycle/partial-success/P1.7 gates
+10. close Phase 1
+11. only then begin corpus-wide Phase 2
 ```
 
-Do not rerun accepted P1.6 merely to test Capability. Keep model roles fixed during the first v7 `tG9K` comparison.
+Do not rerun accepted P1.6 or Capability merely to test Blueprint. Keep model roles fixed during the first v3 `tG9K` comparison.
 
 ## 5. Permanent semantic layer boundary
 
@@ -136,16 +137,30 @@ For v7:
 - model reasoning must not strengthen contextual/preferred tools into mandatory/mastery claims;
 - evidence must be semantically relevant, not merely an exact quote.
 
+B3 acceptance note: `docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md`.
+
 ### Role Capability Blueprint
 
-Blueprint is the later human-facing professional interpretation layer.
+Blueprint is the human-facing professional interpretation layer.
 
+Current v3 boundary:
+
+- every Blueprint area links accepted Capability profile indices and the union covers the accepted Capability substrate;
+- source-named tools link accepted P1.6 facts;
+- JobHunter derives source-named tool strength and explicit depth deterministically;
+- inferred tool examples carry no source strength/depth and cannot become employer requirements;
+- role-level degree/experience constraints are copied deterministically from Capability source truth;
+- `highly_likely` hidden requirements require accepted upstream grounding;
+- every scenario declares `source_stated_workflow` or `professional_example`;
+- practitioner-created professional examples cannot be `highly_likely`;
+- a highly-likely scenario cannot depend on unresolved assumptions;
 - technology list != architecture;
 - examples remain examples;
-- `highly_likely` must not contradict unresolved unknowns;
 - source optionality survives downstream;
 - technical correctness matters more than sophisticated prose;
 - avoid domain-specific prompt-patch collections.
+
+B4 experiment: `docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md`.
 
 ## 6. Current live acceptance anchors
 
@@ -162,7 +177,9 @@ Selected review artifact:
 review-snapshots/jobs/tG9K.json
 ```
 
-Current committed `tG9K` snapshot contains accepted P1.6 artifact 29 and rejected Capability v6/v3 artifact 8. It is negative B3 evidence until a live v7 snapshot replaces it.
+The current committed `tG9K` snapshot contains accepted P1.6 artifact 29 and accepted B3 Capability v7/v4 artifact 9. It has no current-chain Blueprint yet; the next live step is to generate Blueprint v3/v2 from that exact chain.
+
+The Capability CLI showing five of six explicit depth facts inside profiles is intentional: the sixth depth fact is role-level professional experience (`three to six years`, requirement 26) and remains in deterministic source truth instead of being forced into a capability profile.
 
 ## 7. Review Snapshot rules
 
