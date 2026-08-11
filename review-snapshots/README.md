@@ -60,7 +60,7 @@ Configured role models:
 ```text
 analysis:   gemma-4-e4b-it-ud
 capability: gemma-4-e2b-it
-blueprint:  gemma-4-e2b-it
+blueprint:  gemma-4-e4b-it-ud
 ```
 
 Accepted fixed upstream chain:
@@ -71,28 +71,54 @@ English projection artifact 33
 → Capability v7/v4 artifact 9
 ```
 
-Capability artifact 9 passed the bounded B3 acceptance gate. The currently committed snapshot has no current-chain Blueprint yet because B4 has not been run against Capability artifact 9.
+Capability artifact 9 passed the bounded B3 acceptance gate. The currently committed snapshot has no accepted current-chain Blueprint yet. Blueprint v3/v2 failed B4 with both E2B and E4B; v4/v3 is now the active candidate.
 
 ## Current B4 Blueprint review workflow
 
-Do **not** rerun accepted P1.6 or Capability merely to test Blueprint. With the fixed chain above and the configured Blueprint model available in LM Studio, run:
+Do **not** rerun translation, accepted P1.6 or Capability merely to test Blueprint.
+
+Confirm the active contract:
+
+```bash
+python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION; print(BLUEPRINT_PROMPT_VERSION); print(BLUEPRINT_SCHEMA_VERSION)"
+```
+
+Expected:
+
+```text
+role-capability-blueprint-v4
+role-capability-blueprint-v3
+```
+
+Run only:
 
 ```bash
 jobhunter jobs blueprint tG9K
+```
+
+If a valid Blueprint artifact is produced, then:
+
+```bash
 jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v3_snapshot.py
+python scripts/audit_blueprint_v4_snapshot.py
 ```
 
-The expected active Blueprint contract is:
+The v4 mechanical audit checks:
 
-```text
-role-capability-blueprint-v3
-role-capability-blueprint-v2
-```
+- exact P1.6 artifact 29 / Capability artifact 9 dependency identity;
+- one-to-one Blueprint-area mapping to accepted Capability profiles in exact source order;
+- complete deterministic Capability coverage;
+- exact P1.6 source requirement/responsibility anchors per Capability;
+- exact source strength/depth/evidence propagation;
+- exact role-level constraints;
+- absence of legacy v3 provenance bookkeeping in model-created content;
+- suggested tools only as likely/possible examples;
+- hidden requirements and professional scenarios only as plausible/speculative;
+- deterministic `professional_example` scenario basis.
 
-The mechanical audit checks dependency/current-chain identity, complete accepted-Capability grounding, deterministic source-named tool strength/depth, role-level constraints, and scenario-basis/certainty invariants. A mechanical pass does **not** itself accept B4; complete semantic review still decides whether the Blueprint is professionally useful and correctly calibrated.
+A mechanical pass does **not** itself accept B4; complete semantic review still decides whether the Blueprint is professionally useful, technically correct, and calibrated without invented employer architecture.
 
-After a successful generation and audit, inspect the snapshot diff:
+After successful generation, audit and semantic review, inspect the snapshot diff:
 
 ```bash
 git diff --check
@@ -104,7 +130,7 @@ If only the intended review snapshot changed, publish it deliberately:
 
 ```bash
 git add review-snapshots/jobs/tG9K.json
-git commit -m "review: evaluate tG9K blueprint v3"
+git commit -m "review: evaluate tG9K blueprint v4"
 git push origin main
 ```
 
