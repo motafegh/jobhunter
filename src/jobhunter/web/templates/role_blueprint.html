@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Role Capability Blueprint · {{ detail.fields.title if detail else source_job_id }} · JobHunter{% endblock %}
 {% block heading %}Role Capability Blueprint{% endblock %}
-{% block eyebrow %}{{ detail.fields.title if detail else source_job_id }} · expert interpretation{% endblock %}
+{% block eyebrow %}{{ detail.fields.title if detail else source_job_id }} · bounded professional interpretation{% endblock %}
 {% block topbar_actions %}<a class="button ghost" href="/jobs/{{ source_job_id }}/capability-intelligence">Back to Capability Intelligence</a>{% endblock %}
 
 {% block content %}
 <section class="panel">
   <div class="panel-header">
     <div>
-      <p class="eyebrow">Human-facing expert layer</p>
-      <h2>What this position probably requires in practice</h2>
+      <p class="eyebrow">Human-facing interpretation layer</p>
+      <h2>Source truth first; professional inference second</h2>
     </div>
     {% if blueprint_artifact and blueprint_current %}<span class="badge good">Current</span>{% elif blueprint_artifact %}<span class="badge warn">Stale dependency</span>{% else %}<span class="badge">Not built</span>{% endif %}
   </div>
   <div class="guide-content">
-    <p><strong>This layer interprets the accepted analytical substrate without asking the model to reproduce provenance.</strong> Employer requirements, responsibilities, explicit depth and role constraints are attached by JobHunter from accepted P1.6/Capability artifacts.</p>
-    <p>Practitioner-created tools and workflow examples are shown separately as likely or possible examples. They are not employer requirements and do not establish the employer's architecture.</p>
+    <p><strong>Employer/source facts are attached deterministically from accepted P1.6 and Capability artifacts.</strong> The model does not reproduce their provenance, strength, depth, or evidence.</p>
+    <p>Every model-created interpretation is explicitly a plausible professional reading, not an employer requirement. Each interpretation is paired with a boundary describing what the vacancy does not establish.</p>
   </div>
   {% if capability_artifact %}
     <form method="post" action="/jobs/{{ source_job_id }}/role-blueprint" data-operation-form>
@@ -23,17 +23,24 @@
       <button class="button primary" type="submit">{{ 'Rebuild Role Capability Blueprint' if blueprint_artifact else 'Build Role Capability Blueprint' }}</button>
     </form>
   {% else %}
-    <div class="notice warn-notice"><strong>Capability Intelligence required.</strong> Build the current Capability Intelligence artifact first; the blueprint is a human-facing interpretation above that analytical substrate.</div>
+    <div class="notice warn-notice"><strong>Capability Intelligence required.</strong> Build the current Capability Intelligence artifact first; the Blueprint depends on its accepted grouping and P1.6 source links.</div>
   {% endif %}
 </section>
 
 {% if blueprint_artifact %}
 {% set bp = blueprint_artifact.blueprint %}
+
+{% if bp.source_role_purpose %}
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Senior-engineer read</p><h2>What this role probably is</h2></div><span class="badge">{{ blueprint_artifact.model }}</span></div>
-  <p class="long-copy">{{ bp.role_read }}</p>
-  <div class="claim-card"><strong>Likely role shape</strong><p class="long-copy">{{ bp.likely_role_shape }}</p></div>
+  <div class="panel-header"><div><p class="eyebrow">Employer-stated purpose</p><h2>Source role purpose</h2></div><span class="badge good">Deterministic</span></div>
+  {% for item in bp.source_role_purpose %}
+    <div class="claim-card">
+      <p class="long-copy"><strong>{{ item.statement }}</strong></p>
+      {% if item.evidence %}<p class="muted"><strong>Source:</strong> {{ item.evidence | join(' · ') }}</p>{% endif %}
+    </div>
+  {% endfor %}
 </section>
+{% endif %}
 
 {% if bp.source_role_constraints %}
 <section class="panel">
@@ -52,12 +59,13 @@
 <section class="panel analysis-panel">
   <div class="panel-header">
     <div><p class="eyebrow">Accepted Capability {{ area.source_capability_index + 1 }}</p><h2>{{ area.name }}</h2></div>
-    <span class="badge {% if area.interpretation_strength == 'highly_likely' %}good{% elif area.interpretation_strength == 'speculative' %}warn{% endif %}">{{ area.interpretation_strength.replace('_', ' ') }}</span>
+    <span class="badge">plausible · professional inference</span>
   </div>
+
   <div class="claim-card">
-    <strong>Likely practical depth</strong>
-    <p class="long-copy">{{ area.likely_depth }}</p>
-    <p class="muted"><strong>Why this matters here:</strong> {{ area.why_this_matters }}</p>
+    <strong>Professional interpretation</strong>
+    <p class="long-copy">{{ area.practical_interpretation }}</p>
+    <p class="muted"><strong>Interpretation boundary:</strong> {{ area.interpretation_uncertainty }}</p>
   </div>
 
   {% if area.source_requirements or area.source_responsibilities %}
@@ -77,49 +85,43 @@
   </div>
   {% endif %}
 
-  {% if area.likely_subskills %}<div class="analysis-section"><h3>What probably matters inside this area</h3><ul>{% for item in area.likely_subskills %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
-
-  {% if area.suggested_tools_or_examples %}
-  <div class="analysis-section"><h3>Practitioner-created implementation examples</h3>
-    {% for tool in area.suggested_tools_or_examples %}
-    <div class="claim-card"><div class="claim-head"><strong>{{ tool.name }}</strong><span class="badge {% if tool.relationship == 'possible_example' %}warn{% endif %}">{{ tool.relationship.replace('_', ' ') }}</span></div><p class="muted">{{ tool.why_relevant }}</p></div>
+  {% if area.professional_considerations %}
+  <div class="analysis-section">
+    <h3>Professional considerations</h3>
+    {% for item in area.professional_considerations %}
+      <div class="claim-card">
+        <div class="claim-head"><strong>{{ item.statement }}</strong><span class="badge {% if item.interpretation_strength == 'speculative' %}warn{% endif %}">{{ item.interpretation_strength }}</span></div>
+        <p class="muted"><strong>Uncertainty:</strong> {{ item.uncertainty }}</p>
+      </div>
     {% endfor %}
   </div>
   {% endif %}
 
-  {% if area.likely_work_products %}<div class="analysis-section"><h3>What you would probably need to build / deliver / operate</h3><ul>{% for item in area.likely_work_products %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
-  {% if area.likely_failure_modes_or_operational_concerns %}<div class="analysis-section"><h3>Operational concerns a competent practitioner should expect</h3><ul>{% for item in area.likely_failure_modes_or_operational_concerns %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
-  {% if area.probably_not_required %}<div class="analysis-section"><h3>Probably not required for this role</h3><ul>{% for item in area.probably_not_required %}<li>{{ item }}</li>{% endfor %}</ul></div>{% endif %}
+  {% if area.probably_not_required %}
+  <div class="analysis-section">
+    <h3>Probably not required <span class="muted">· professional inference</span></h3>
+    <ul>{% for item in area.probably_not_required %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+
+  {% if area.important_unknowns %}
+  <div class="analysis-section">
+    <h3>Important unknowns</h3>
+    <ul>{% for item in area.important_unknowns %}<li>{{ item }}</li>{% endfor %}</ul>
+  </div>
+  {% endif %}
 </section>
 {% endfor %}
 
-{% if bp.hidden_requirements %}
-<section class="panel"><div class="panel-header"><div><p class="eyebrow">Professional inference, not employer fact</p><h2>Hidden / unstated but plausible requirements</h2></div></div>
-{% for item in bp.hidden_requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.title }}</strong><span class="badge {% if item.interpretation_strength == 'speculative' %}warn{% endif %}">{{ item.interpretation_strength.replace('_', ' ') }}</span></div><p class="long-copy">{{ item.explanation }}</p></div>{% endfor %}
+{% if bp.overall_unknowns %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Do not fake certainty</p><h2>Whole-role unknowns</h2></div></div>
+  <ul>{% for item in bp.overall_unknowns %}<li>{{ item }}</li>{% endfor %}</ul>
 </section>
 {% endif %}
-
-{% if bp.professional_example_scenarios %}
-<section class="panel"><div class="panel-header"><div><p class="eyebrow">Illustrative, not company architecture</p><h2>Professional example scenarios</h2></div></div>
-{% for scenario in bp.professional_example_scenarios %}
-<div class="claim-card">
-  <div class="claim-head"><strong>{{ scenario.name }}</strong><span class="badge {% if scenario.interpretation_strength == 'speculative' %}warn{% endif %}">{{ scenario.interpretation_strength.replace('_', ' ') }}</span></div>
-  <p class="muted"><strong>Why useful:</strong> {{ scenario.why_useful }}</p>
-  <ol>{% for step in scenario.flow_steps %}<li>{{ step }}</li>{% endfor %}</ol>
-  {% if scenario.assumptions %}<strong>Assumptions</strong><ul>{% for assumption in scenario.assumptions %}<li>{{ assumption }}</li>{% endfor %}</ul>{% endif %}
-  {% if scenario.engineering_concerns %}<strong>Engineering concerns</strong><ul>{% for concern in scenario.engineering_concerns %}<li>{{ concern }}</li>{% endfor %}</ul>{% endif %}
-</div>
-{% endfor %}
-</section>
-{% endif %}
-
-{% if bp.what_probably_does_not_matter %}<section class="panel"><div class="panel-header"><div><p class="eyebrow">Scope control</p><h2>What probably does not matter much here</h2></div></div><ul>{% for item in bp.what_probably_does_not_matter %}<li>{{ item }}</li>{% endfor %}</ul></section>{% endif %}
-{% if bp.important_unknowns %}<section class="panel"><div class="panel-header"><div><p class="eyebrow">Do not fake certainty</p><h2>Important unknowns</h2></div></div><ul>{% for item in bp.important_unknowns %}<li>{{ item }}</li>{% endfor %}</ul></section>{% endif %}
-
-<section class="panel"><div class="panel-header"><div><p class="eyebrow">Practical summary</p><h2>Bottom line</h2></div></div><p class="long-copy"><strong>{{ bp.bottom_line }}</strong></p></section>
 
 <div class="artifact-meta"><span>{{ blueprint_artifact.prompt_version }}</span><span>{{ blueprint_artifact.schema_version }}</span><span>Capability Intelligence {{ blueprint_artifact.capability_artifact_id }}</span><span>English analysis {{ blueprint_artifact.analysis_artifact_id }}</span><span>English projection {{ blueprint_artifact.translation_artifact_id }}</span></div>
 {% else %}
-<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get the senior-practitioner interpretation.</div></section>
+<section class="panel"><div class="empty-state tall">No Role Capability Blueprint exists yet. Build one after Capability Intelligence to get a bounded professional interpretation above the accepted source truth.</div></section>
 {% endif %}
 {% endblock %}
