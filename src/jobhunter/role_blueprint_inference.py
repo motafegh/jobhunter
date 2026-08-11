@@ -11,7 +11,10 @@ import instructor
 from openai import APIConnectionError, APITimeoutError, OpenAI
 
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
+from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.role_blueprint_models import RoleCapabilityBlueprint
+
+_BLUEPRINT_CONTEXT_LENGTH = 16_384
 
 
 @dataclass(frozen=True, slots=True)
@@ -63,6 +66,15 @@ class RoleBlueprintInferenceProvider:
     ) -> RoleBlueprintInferenceResult:
         if not 1 <= max_tokens <= 32768:
             raise ValueError("max_tokens must be between 1 and 32768")
+
+        runtime_context = ensure_lm_studio_model_context(
+            openai_base_url=self._base_url,
+            model=self._model,
+            context_length=_BLUEPRINT_CONTEXT_LENGTH,
+            api_token=self._api_token,
+            connect_timeout_seconds=self._connect_timeout_seconds,
+            transport=self._transport,
+        )
 
         # A local expert synthesis may legitimately take several minutes. Bound connection setup,
         # but do not impose an arbitrary read deadline once LM Studio is actively generating.
@@ -128,6 +140,9 @@ class RoleBlueprintInferenceProvider:
                 "connect_timeout_seconds": self._connect_timeout_seconds,
                 "transport_retries": 0,
                 "configured_network_retries": self._network_retries,
+                "context_length_tokens": runtime_context.context_length,
+                "context_action": runtime_context.action,
+                "model_instance_id": runtime_context.instance_id,
             },
             "instructor": {
                 "mode": "JSON_SCHEMA",
