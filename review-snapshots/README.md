@@ -71,7 +71,15 @@ English projection artifact 33
 → Capability v7/v4 artifact 9
 ```
 
-Capability artifact 9 passed the bounded B3 acceptance gate. The currently committed snapshot has no accepted current-chain Blueprint yet. Blueprint v3/v2 failed B4 with both E2B and E4B; v4/v3 is now the active candidate.
+Capability artifact 9 passed the bounded B3 acceptance gate.
+
+Blueprint status:
+
+- v3/v2 failed B4 structurally/semantically;
+- v4/v3 completed and passed its mechanical audit but failed complete semantic review;
+- v5/v4 is the active B4 candidate.
+
+A locally generated v4 `tG9K` snapshot is rejected B4 evidence. Do not commit it as an accepted review example. The next intended selected snapshot is a v5 candidate after successful generation, audit and semantic review.
 
 ## Current B4 Blueprint review workflow
 
@@ -86,8 +94,8 @@ python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION
 Expected:
 
 ```text
+role-capability-blueprint-v5
 role-capability-blueprint-v4
-role-capability-blueprint-v3
 ```
 
 Run only:
@@ -100,23 +108,24 @@ If a valid Blueprint artifact is produced, then:
 
 ```bash
 jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v4_snapshot.py
+python scripts/audit_blueprint_v5_snapshot.py
 ```
 
-The v4 mechanical audit checks:
+The v5 mechanical audit checks:
 
 - exact P1.6 artifact 29 / Capability artifact 9 dependency identity;
-- one-to-one Blueprint-area mapping to accepted Capability profiles in exact source order;
+- one-to-one Blueprint-area mapping to accepted Capability profiles in source order;
 - complete deterministic Capability coverage;
+- exact source role purpose;
 - exact P1.6 source requirement/responsibility anchors per Capability;
 - exact source strength/depth/evidence propagation;
 - exact role-level constraints;
-- absence of legacy v3 provenance bookkeeping in model-created content;
-- suggested tools only as likely/possible examples;
-- hidden requirements and professional scenarios only as plausible/speculative;
-- deterministic `professional_example` scenario basis.
+- each model-created Capability interpretation is mechanically `plausible` and carries non-empty `interpretation_uncertainty`;
+- professional considerations are only plausible/speculative and carry uncertainty;
+- generic obligation/full-ownership language is absent from model prose;
+- legacy v4 expansion fields such as role shape, likely depth, hidden requirements, tool suggestions, scenarios and bottom line are absent.
 
-A mechanical pass does **not** itself accept B4; complete semantic review still decides whether the Blueprint is professionally useful, technically correct, and calibrated without invented employer architecture.
+A mechanical pass does **not** itself accept B4. Complete semantic review must still reject employer-specific topology, latency, real-time/control-loop behavior, process-physics obligation, ownership, optionality/depth promotion or other unsupported certainty.
 
 After successful generation, audit and semantic review, inspect the snapshot diff:
 
@@ -126,11 +135,11 @@ git status --short
 git diff -- review-snapshots/jobs/tG9K.json
 ```
 
-If only the intended review snapshot changed, publish it deliberately:
+If only the intended review snapshot changed and B4 is actually accepted, publish it deliberately:
 
 ```bash
 git add review-snapshots/jobs/tG9K.json
-git commit -m "review: evaluate tG9K blueprint v4"
+git commit -m "review: evaluate tG9K blueprint v5"
 git push origin main
 ```
 
