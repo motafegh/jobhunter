@@ -135,9 +135,13 @@ class _Provider:
                     {
                         "professional_considerations": [
                             {
-                                "statement": "Input validation may matter in integration-heavy work.",
+                                "statement": (
+                                    "Input validation may matter in integration-heavy work."
+                                ),
                                 "interpretation_strength": "plausible",
-                                "uncertainty": "The vacancy does not state the integration boundary.",
+                                "uncertainty": (
+                                    "The vacancy does not state the integration boundary."
+                                ),
                             }
                         ],
                         "important_unknowns": ["The internal platform is not stated."],
