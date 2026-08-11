@@ -48,7 +48,7 @@ def test_v6_inference_uses_bounded_draft_and_prepares_runtime_context(monkeypatc
     def fake_context(**kwargs):
         runtime_call.update(kwargs)
         return SimpleNamespace(
-            context_length=16_384,
+            context_length=8_192,
             action="reused",
             instance_id="model",
         )
@@ -77,10 +77,10 @@ def test_v6_inference_uses_bounded_draft_and_prepares_runtime_context(monkeypatc
         max_tokens=4096,
     )
 
-    assert runtime_call["context_length"] == 16_384
+    assert runtime_call["context_length"] == 8_192
     assert captured["max_retries"] == 0
     assert captured["timeout"].read is None
-    assert result.request_body["runtime"]["context_length_tokens"] == 16_384
+    assert result.request_body["runtime"]["context_length_tokens"] == 8_192
     assert result.request_body["instructor"]["response_model"] == "RoleBlueprintDraft"
     properties = result.request_body["instructor"]["schema"]["properties"]
     assert "capability_interpretations" in properties
