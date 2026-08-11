@@ -80,6 +80,9 @@ def _draft_payload() -> dict:
                 "practical_interpretation": (
                     "This area is centered on implementing and validating applied ML behavior."
                 ),
+                "interpretation_uncertainty": (
+                    "The vacancy does not establish the exact implementation boundary."
+                ),
                 "professional_considerations": [
                     {
                         "statement": "Input validation may become operationally important.",
@@ -93,6 +96,9 @@ def _draft_payload() -> dict:
             {
                 "practical_interpretation": (
                     "This area connects model work with repeatable production operation."
+                ),
+                "interpretation_uncertainty": (
+                    "The vacancy does not establish a deployment topology or platform."
                 ),
                 "professional_considerations": [],
                 "probably_not_required": [],
@@ -119,6 +125,7 @@ def test_v5_reconciliation_keeps_source_truth_separate_from_inference() -> None:
     assert result.capability_areas[0].source_requirements[0].depth_signal == "expert"
     assert result.capability_areas[1].source_requirements[0].requirement_type == "preferred"
     assert result.capability_areas[0].interpretation_strength == "plausible"
+    assert "does not establish" in result.capability_areas[0].interpretation_uncertainty
 
 
 def test_v5_requires_one_interpretation_per_accepted_capability() -> None:
@@ -149,6 +156,13 @@ def test_v5_rejects_obligation_and_full_lifecycle_ownership_language() -> None:
         RoleBlueprintDraft.model_validate(payload)
 
 
+def test_v5_requires_interpretation_uncertainty() -> None:
+    payload = _draft_payload()
+    payload["capability_interpretations"][0]["interpretation_uncertainty"] = ""
+    with pytest.raises(ValidationError):
+        RoleBlueprintDraft.model_validate(payload)
+
+
 def test_v5_allows_cautious_negative_scope_language() -> None:
     payload = _draft_payload()
     payload["capability_interpretations"][0]["probably_not_required"] = [
@@ -173,4 +187,4 @@ def test_model_facing_v5_schema_has_no_legacy_blueprint_expansion_fields() -> No
     ):
         assert forbidden not in serialized
     assert "professional_considerations" in serialized
-    assert "uncertainty" in serialized
+    assert "interpretation_uncertainty" in serialized
