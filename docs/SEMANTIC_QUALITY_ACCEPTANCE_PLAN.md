@@ -29,6 +29,12 @@ t4jp  sparse/ambiguous source
 tG9K  rich semiconductor/industrial-ML source
 ```
 
+A second permanent principle now applies:
+
+> **Mechanical provenance correctness and semantic calibration are separate acceptance gates.**
+
+A downstream artifact can be perfectly linked to upstream truth and still fail if its generated interpretation manufactures certainty.
+
 ## 2. Current contracts
 
 ```text
@@ -43,8 +49,8 @@ P1.6 schema:                  job-analysis-v4
 Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 
-Blueprint candidate:          role-capability-blueprint-v4
-Blueprint schema:             role-capability-blueprint-v3
+Blueprint candidate:          role-capability-blueprint-v5
+Blueprint schema:             role-capability-blueprint-v4
 
 Review Snapshot:              job-review-snapshot-v1
 ```
@@ -60,16 +66,16 @@ P1.6
 → conservative strength/depth/evidence
 
 Capability Intelligence
-→ auditable reasoning above P1.6
-→ grouping, prerequisites/context, unknown scope
-→ no loss or strengthening of accepted source truth
+→ auditable grouping/reasoning above P1.6
+→ source truth must survive
 
 Role Capability Blueprint
 → human-facing professional interpretation
-→ useful scope/examples/scenarios with calibrated uncertainty
+→ source truth displayed separately from inference
+→ interpretation uncertainty must remain visible
 ```
 
-A downstream layer never upgrades an incorrect or uncertain upstream claim into truth.
+A downstream layer never upgrades an incorrect, uncertain, contextual or preferred upstream claim into truth.
 
 ## 4. SQ-0 — Review Snapshot correctness
 
@@ -136,12 +142,12 @@ Capability artifact 9
 27/27 requirements retained in source truth
 6/6 explicit depth facts retained in source truth
 role-level requirement indices [25, 26]
-2 coherent capability profiles
+2 accepted Capability profiles
 no positive independence expectation
 cross_capability_observations []
 ```
 
-Five of the six depth facts appear inside profiles. The sixth is intentionally role-level professional experience (`three to six years`, requirement 26). This is correct partitioning, not missing depth.
+Five of the six depth facts appear inside profiles. The sixth is intentionally role-level professional experience (`three to six years`, requirement 26).
 
 Decision record:
 
@@ -151,6 +157,8 @@ docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 
 Freeze v7 unless downstream or heterogeneous evidence shows a repeatable correctness defect.
 
+Downstream caution learned during B4: Capability **grouping and deterministic source truth** may be accepted while some Capability model-derived explanatory prose remains too aggressive to treat as authoritative input to another generative layer.
+
 ## 7. SQ-3 — Blueprint calibration
 
 **Current gate: active / not yet accepted.**
@@ -158,40 +166,61 @@ Freeze v7 unless downstream or heterogeneous evidence shows a repeatable correct
 Current candidate:
 
 ```text
-role-capability-blueprint-v4
-schema role-capability-blueprint-v3
+role-capability-blueprint-v5
+schema role-capability-blueprint-v4
 Blueprint model gemma-4-e4b-it-ud
 ```
 
-### Why v3 was rejected
+### Historical v3 result
 
-Blueprint v3/v2 was tested against the fixed `tG9K` chain with both E2B and E4B.
+Blueprint v3/v2 failed B4 with both E2B and E4B. Both models confused P1.6 requirement indices with Capability-profile indices and retained architecture/optionality overreach. Its validators remain useful negative evidence and must not be weakened.
 
-Both models confused P1.6 requirement indices with Capability-profile indices. E4B's bounded repair correctly identified several requirement numbers but placed them into `source_depth_signals` rather than `source_requirement_indices`. Both runs also retained material semantic overreach around streaming, cloud/edge, MLOps and end-to-end architecture.
+### Historical v4 result
 
-Therefore v3/v2 fails B4. Its validators remain correct and must not be weakened. Do not revive v3 with prompt patches or a larger model merely to make the LLM reproduce deterministic provenance.
+Blueprint v4/v3 correctly removed model-owned provenance bookkeeping. The live E4B `tG9K` run completed and its mechanical audit passed with:
 
-### V4 deterministic/model boundary
+```text
+2 Capability areas
+25 deterministic source requirements
+7 deterministic source responsibilities
+2 exact role-level constraints
+0 suggested tools
+0 hidden requirements
+0 professional scenarios
+```
 
-V4 applies the Capability-v7 lesson again:
+B4 nevertheless failed semantic review because generated prose still invented or strengthened:
 
-> **The model reasons; JobHunter owns provenance bookkeeping.**
+- real-time process adjustment;
+- low-latency active control loops;
+- factory-floor/MES-SECS data-path topology;
+- process physics as a candidate obligation;
+- a specific code/training-slice/hyperparameter audit trail;
+- edge importance based on unstated topology;
+- end-to-end lifecycle ownership.
+
+This is the canonical proof that **mechanical audit PASS does not equal B4 PASS**.
+
+### V5 deterministic/model boundary
+
+V5 keeps v4's provenance success and reduces the model's semantic authority.
 
 Required invariants:
 
-1. model-facing Blueprint schema contains no Capability/P1.6 numeric provenance;
-2. model returns exactly one interpretation per accepted Capability profile, in source order;
-3. JobHunter deterministically attaches exact Capability identity and complete coverage;
-4. JobHunter deterministically attaches each Capability profile's source requirements and responsibilities;
-5. source requirement strength, explicit depth and evidence come from accepted upstream truth;
-6. source-named technologies are represented by deterministic source requirements, not model-created `source_named` records;
-7. model-created suggested tools are only `likely_example` or `possible_example`, carry no source provenance, and cannot be required/mandatory/necessary or expert/mastery claims;
-8. role-level degree/experience constraints are copied from Capability source truth;
-9. hidden requirements are only plausible/speculative;
-10. model-created workflows are explicitly `professional_example_scenarios` and only plausible/speculative;
-11. JobHunter injects `scenario_basis = professional_example`;
-12. material unstated architecture/topology/latency/vendor/batch-stream/cloud-edge/scale/ownership/orchestration/feedback choices remain assumptions;
-13. technology list != architecture.
+1. the model receives accepted Capability labels/grouping but not Capability `summary`, `sub_capabilities`, `underlying_knowledge`, operational reasoning or other model-derived Capability prose;
+2. the long vacancy/company-description prose is not redundantly supplied after accepted P1.6 establishes source facts;
+3. model-facing schema contains no Capability/P1.6 numeric provenance;
+4. model returns exactly one interpretation per accepted Capability profile, in source order;
+5. JobHunter deterministically attaches Capability identity and complete coverage;
+6. JobHunter deterministically attaches exact source role purpose, source requirements, source responsibilities, obligation strength, explicit depth, evidence and role-level constraints;
+7. each main model interpretation is persisted with fixed `plausible` strength and is explicitly not employer fact;
+8. every main interpretation requires a non-empty `interpretation_uncertainty` boundary;
+9. professional considerations are only `plausible` or `speculative` and each requires an uncertainty sentence;
+10. generic validation rejects unqualified obligation/full-ownership wording in model prose;
+11. v5 has no model-generated role shape, likely-depth field, hidden requirements, tool suggestions, work-product list, scenario/topology or bottom line at B4;
+12. technology list != architecture;
+13. process-control/deployment/cloud/edge evidence does not prove real-time inference, low latency, active feedback, factory-floor deployment or autonomous process adjustment;
+14. contextual/preferred source items remain contextual/preferred and explicit depth remains exact.
 
 ### Fixed `tG9K` B4 chain
 
@@ -213,8 +242,8 @@ python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION
 Expected:
 
 ```text
+role-capability-blueprint-v5
 role-capability-blueprint-v4
-role-capability-blueprint-v3
 ```
 
 Run only:
@@ -227,56 +256,55 @@ If a valid Blueprint artifact is produced:
 
 ```bash
 jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v4_snapshot.py
+python scripts/audit_blueprint_v5_snapshot.py
 ```
 
 ### SQ-3 mechanical gate
 
-The v4 audit must confirm:
+The v5 audit must confirm:
 
-- English analysis artifact 29 and Capability artifact 9 remain the exact upstream dependencies;
-- Blueprint contract is v4/v3;
-- persisted Blueprint contains exactly one area per accepted Capability profile in the same order and with the exact label;
+- English analysis artifact 29 and Capability artifact 9 remain exact upstream dependencies;
+- Blueprint contract is v5/v4;
+- exactly one area per accepted Capability profile, in source order with exact labels;
 - `source_capability_coverage` is complete;
-- each area carries exact deterministic P1.6 source requirements and responsibilities matching Capability artifact 9 links;
-- source concept/type/strength/depth/evidence remains exact;
-- role-level constraints remain exact;
-- suggested tools contain no source provenance fields;
-- hidden requirements are only plausible/speculative;
-- professional examples are only plausible/speculative and carry deterministic `professional_example` basis;
-- legacy v3 provenance/scenario fields are absent.
+- exact deterministic role purpose, P1.6 requirements/responsibilities and role-level constraints survive with exact strength/depth/evidence;
+- every area is mechanically `plausible` professional inference;
+- every area has non-empty interpretation uncertainty;
+- every professional consideration is plausible/speculative and has uncertainty;
+- model prose does not contain unqualified obligation/full-ownership patterns;
+- legacy v4 expansion fields are absent.
 
 ### SQ-3 semantic gate
 
-Mechanical validity is necessary but insufficient. Reject B4 if the complete artifact:
+Mechanical validity is necessary but insufficient. Reject B4 if the complete v5 artifact:
 
-- simply paraphrases P1.6/Capability instead of adding professional value;
-- inflates the role into a broader MLOps/platform identity without support;
+- merely paraphrases source anchors without adding useful practitioner context;
+- uses uncertainty as boilerplate while still asserting employer-specific architecture/operations;
 - promotes contextual/preferred frameworks/cloud/edge/MATLAB/C/C++;
 - spreads Python `expert` depth to neighboring frameworks;
-- assembles named technologies into one claimed hidden company architecture;
-- labels illustrative workflows as employer topology;
-- hides assumptions about latency/topology/vendor/batch-stream/cloud-edge/ownership;
-- asserts real-time, microservices, CI/CD, model registry, regulatory constraints, autonomous feedback or control loops without support;
-- invents generic hidden requirements/curriculum;
-- misuses technical tools/protocols/platforms;
-- amplifies broad Capability wording into ownership/autonomy certainty;
-- fails to preserve important unknowns.
+- assembles named technologies into one hidden company architecture;
+- implies real-time/low-latency/factory-floor/active-control-loop behavior as employer fact;
+- turns process/equipment physics into a candidate obligation without source support;
+- converts general traceability/reproducibility/governance into one specific implementation and presents it as required;
+- creates ownership/autonomy certainty not established upstream;
+- loses important topology, latency, deployment, ownership, scale or exact-tool-use unknowns;
+- produces generic curriculum-like professional considerations rather than role-specific interpretation.
 
-B4 passes only when the human-facing explanation is materially useful, technically sound, and calibrated.
+B4 passes only when source truth and professional inference remain unmistakably separate **and** the inference is materially useful.
 
 Records:
 
 ```text
 docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
 docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md
+docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md
 ```
 
 ## 8. SQ-4 — Controlled model-role comparison
 
-The v3 E2B→E4B comparison is complete and established a contract-boundary problem rather than a reason to continue model shopping.
+The v3 E2B→E4B comparison established a contract-boundary problem, not a reason for indefinite model shopping.
 
-For future model comparisons, hold fixed:
+For future comparisons, hold fixed:
 
 ```text
 source semantic version
@@ -289,11 +317,11 @@ review rubric
 
 Change only the Blueprint model. Compare technical correctness, calibration, useful professional interpretation, unsupported inference, uncertainty, and usefulness per token/time.
 
-Do not compare another model during the first v4 live run. No multi-model voting/ensemble.
+No multi-model voting/ensemble.
 
 ## 9. SQ-5 / CI-3 — heterogeneous live acceptance
 
-After B4, review materially different jobs:
+After bounded B4 acceptance, review materially different jobs:
 
 1. `t4jp` sparse/ambiguous;
 2. `tG9K` rich AI/ML;
