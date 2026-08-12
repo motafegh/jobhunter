@@ -33,15 +33,29 @@ class _InstructorClient:
         return _Result(), _Completion()
 
 
-def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> None:
+def test_capability_uses_managed_context_and_unbounded_read(monkeypatch) -> None:
     captured: dict = {}
+    runtime_calls: list[dict] = []
     instructor_client = _InstructorClient()
 
     def fake_openai(**kwargs):
         captured.update(kwargs)
         return object()
 
+    def fake_runtime(**kwargs):
+        runtime_calls.append(kwargs)
+        return SimpleNamespace(
+            context_length=16_384,
+            action="loaded",
+            instance_id="model",
+        )
+
     monkeypatch.setattr(capability_inference, "OpenAI", fake_openai)
+    monkeypatch.setattr(
+        capability_inference,
+        "ensure_lm_studio_model_context",
+        fake_runtime,
+    )
     monkeypatch.setattr(
         capability_inference.instructor,
         "from_openai",
@@ -70,6 +84,16 @@ def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> Non
         max_tokens=4096,
     )
 
+    assert runtime_calls == [
+        {
+            "openai_base_url": "http://127.0.0.1:1234/v1",
+            "model": "model",
+            "context_length": 16_384,
+            "api_token": None,
+            "connect_timeout_seconds": 10.0,
+            "exclusive_llm": True,
+        }
+    ]
     assert captured["max_retries"] == 0
     assert captured["timeout"].read is None
     assert captured["timeout"].connect == 10.0
@@ -83,5 +107,9 @@ def test_capability_uses_bounded_connect_but_no_read_timeout(monkeypatch) -> Non
         "connect_timeout_seconds": 10.0,
         "transport_retries": 0,
         "configured_network_retries": 4,
+        "context_length_tokens": 16_384,
+        "context_action": "loaded",
+        "model_instance_id": "model",
+        "exclusive_llm": True,
     }
     assert result.request_body["instructor"]["response_model"] == "CapabilityReasoningDraft"
