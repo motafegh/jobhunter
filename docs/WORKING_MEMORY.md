@@ -3,7 +3,7 @@
 **Status:** Rolling non-authoritative handoff  
 **Date:** 2026-08-12  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Current gate:** heterogeneous semantic validation of P1.6 + Capability v7; isolated P1.6 v11 candidate active on sparse `t4jp`  
+**Current gate:** heterogeneous semantic validation of P1.6 + Capability v7; isolated P1.6 v12 candidate active on sparse `t4jp`  
 **Purpose:** Resume from the real repository state without reconstructing recent semantic-calibration work.
 
 This file is not controlling. Product/domain/source/architecture, roadmap, implementation, active acceptance plan, and TODO win on conflict.
@@ -47,7 +47,7 @@ Review Snapshot:              job-review-snapshot-v1
 Active isolated acceptance candidate:
 
 ```text
-English P1.6 candidate:       job-analysis-english-v11
+English P1.6 candidate:       job-analysis-english-v12
 Candidate schema:             job-analysis-v4
 Status:                       NOT promoted; sparse + dense validation required
 ```
@@ -57,10 +57,11 @@ Historical sparse candidates:
 ```text
 v9 artifact 30  → rejected
 v10 artifact 31 → mechanical PASS / semantic FAIL
-v11             → active isolated candidate
+v11             → failed closed before persistence: evidence-reference protocol mismatch
+v12             → active isolated candidate
 ```
 
-The normal `jobhunter jobs analyze` path remains v9. Candidate-only v11 tooling is listed below.
+The normal `jobhunter jobs analyze` path remains v9. Candidate-only v12 tooling is listed below.
 
 Current configured model roles:
 
@@ -254,18 +255,9 @@ Decision record:
 docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
 ```
 
-## 9. Isolated P1.6 v11 candidate — active
+## 9. P1.6 v11 — failed evidence-reference protocol experiment
 
-Candidate identity:
-
-```text
-job-analysis-english-v11
-job-analysis-v4
-```
-
-v11 retains v10's structured-skill and qualification-vs-duty rules and adds generic **qualification-list granularity**.
-
-For clearly introduced comma-separated qualification lists, JobHunter deterministically exposes exact item spans. For `t4jp` the expected spans are:
+v11 correctly introduced generic qualification-list granularity and identified these four exact `t4jp` items:
 
 ```text
 Skills in content creation with AI
@@ -274,36 +266,96 @@ website design
 ability to produce visual content full-time and part-time
 ```
 
-Each must survive as its own exact-evidence requirement.
-
-A broad legacy coverage span containing multiple exact items may not remain a catch-all requirement. It is superseded by item-level claims and persisted truthfully as:
+It also defined coarse-span supersession with durable:
 
 ```text
 decomposed_requirement
 ```
 
-not `excluded_non_requirement`.
+provenance.
 
-Generic regression examples ensure:
+However the first live v11 generation failed closed before persistence:
 
-- `Skills in Python, SQL, Docker.` is decomposed;
-- benefits comma lists are not treated as qualification lists;
-- missing list items fail validation;
-- coarse multi-item requirement evidence fails;
-- qualification-list evidence cannot become a responsibility.
+```text
+P1.6 v11 omitted explicit qualification-list items: all four expected items
+```
+
+Root cause was model-facing evidence protocol, not list detection. Production P1.6 tells the model to cite supplied `evidence_references` IDs, while v11 supplied its mandatory qualification items as separate raw strings under `candidate_required_qualification_spans`. Those strings were valid exact source excerpts but were not first-class evidence references. The bounded repair repeated the missing raw spans without resolving that contradiction.
+
+Therefore:
+
+- no v11 `t4jp` artifact was persisted;
+- v11 is concluded as an evidence-plumbing failure;
+- the failure is not classified as proof of model semantic incapability;
+- v11 identity is not mutated in place.
+
+Decision record:
+
+```text
+docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
+```
+
+## 10. Isolated P1.6 v12 candidate — active
+
+Candidate identity:
+
+```text
+job-analysis-english-v12
+job-analysis-v4
+```
+
+v12 preserves the v11 semantic boundary and changes the candidate evidence plumbing so every deterministic qualification item is addressable through the normal P1.6 reference protocol.
+
+The isolated v12 runtime creates a temporary exact-source alias field only inside the inference call:
+
+```text
+__candidate_qualification_evidence
+```
+
+For `t4jp`, Instructor then exposes normal evidence IDs:
+
+```text
+field:__candidate_qualification_evidence:0
+field:__candidate_qualification_evidence:1
+field:__candidate_qualification_evidence:2
+field:__candidate_qualification_evidence:3
+```
+
+The model receives those IDs in:
+
+```text
+candidate_required_qualification_references
+```
+
+and must cite each ID in a separate requirement. Instructor canonicalizes emitted IDs back to exact source text before persistence.
+
+Trust boundary:
+
+- every alias value is an exact contiguous excerpt already present in the real description;
+- no inferred/paraphrased text is added to the evidence catalog;
+- the persisted English projection is not mutated;
+- production/public v9 Instructor and analysis paths remain unchanged.
+
+v12 retains:
+
+- v10 structured `skills[]` coverage;
+- qualification-vs-duty protection;
+- v11 qualification-list granularity;
+- coarse requirement-span supersession;
+- truthful `decomposed_requirement` provenance.
 
 Implementation/tooling:
 
 ```text
-src/jobhunter/analysis_service_v11.py
-src/jobhunter/analysis_runtime_v11.py
-scripts/run_p16_v11_candidate.py
-scripts/export_p16_v11_candidate_snapshot.py
-scripts/audit_p16_v11_candidate_snapshot.py
-tests/test_analysis_v11_candidate.py
+src/jobhunter/analysis_service_v12.py
+src/jobhunter/analysis_runtime_v12.py
+scripts/run_p16_v12_candidate.py
+scripts/export_p16_v12_candidate_snapshot.py
+scripts/audit_p16_v12_candidate_snapshot.py
+tests/test_analysis_v12_candidate.py
 ```
 
-The current v11 implementation gate is green:
+The v12 implementation gate is green:
 
 ```text
 Ruff:                    PASS
@@ -311,33 +363,35 @@ full pytest:             PASS
 warnings-as-errors:      PASS
 ```
 
+This proves code-path correctness only, not sparse semantic acceptance.
+
 Decision record:
 
 ```text
-docs/experiments/2026-08-12_P16_V10_SEMANTIC_FAILURE_AND_V11_QUALIFICATION_GRANULARITY.md
+docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
 ```
 
-## 10. Exact next work
+## 11. Exact next work
 
-Do **not** run Capability for `t4jp` and do **not** run `tG9K` v11 yet.
+Do **not** run Capability for `t4jp` and do **not** run `tG9K` v12 yet.
 
 Next:
 
-1. run isolated v11 on `t4jp`;
-2. export its candidate snapshot;
-3. run the v11 mechanical audit;
+1. run isolated v12 on `t4jp`;
+2. if generation succeeds, export its candidate snapshot;
+3. run the v12 mechanical audit;
 4. commit/push the snapshot;
-5. review every v11 requirement/responsibility and coverage disposition against source/projection;
-6. only if sparse v11 passes semantic review, run dense `tG9K` v11 regression against accepted artifact `29`;
-7. only if sparse+dense pass, decide whether v11 should replace public v9;
+5. review every v12 requirement/responsibility and coverage disposition against source/projection;
+6. only if sparse v12 passes semantic review, run dense `tG9K` v12 regression against accepted artifact `29`;
+7. only if sparse+dense pass, decide whether v12 should replace public v9;
 8. only after P1.6 promotion/acceptance, rebuild and review Capability v7 on the promoted identity.
 
 Candidate commands:
 
 ```bash
-python scripts/run_p16_v11_candidate.py --job-id t4jp
-python scripts/export_p16_v11_candidate_snapshot.py --job-id t4jp
-python scripts/audit_p16_v11_candidate_snapshot.py --job-id t4jp
+python scripts/run_p16_v12_candidate.py --job-id t4jp
+python scripts/export_p16_v12_candidate_snapshot.py --job-id t4jp
+python scripts/audit_p16_v12_candidate_snapshot.py --job-id t4jp
 ```
 
 After heterogeneous semantic acceptance:
