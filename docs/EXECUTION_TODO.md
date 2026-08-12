@@ -59,21 +59,25 @@ Sparse CI-3 evidence:
 - [x] `t4jp` v10 artifact `31` produced 0 responsibilities, 7 requirements, 3/3 structured skills and mechanical PASS.
 - [!] v10 artifact `31` rejected semantically: coarse description coverage still allowed explicit comma-separated qualifications (`content creation with AI`, `creativity ...`) to disappear.
 - [x] v10 experiment concluded; do not run dense `tG9K` under v10 and do not promote v10.
-- [x] isolated `job-analysis-english-v11` / `job-analysis-v4` candidate implemented.
-- [x] v11 adds generic qualification-list itemization, coarse-span supersession, and truthful `decomposed_requirement` provenance.
-- [x] v11 regression gate passes Ruff, full pytest, and warnings-as-errors.
-- [~] run/review v11 candidate on sparse `t4jp`.
-- [ ] only if sparse v11 passes, run dense `tG9K` v11 regression against accepted artifact `29`.
-- [ ] only after sparse+dense v11 success decide whether v11 replaces public v9.
+- [x] isolated v11 implemented generic qualification-list itemization, coarse-span supersession, and truthful `decomposed_requirement` provenance.
+- [!] first live v11 `t4jp` run failed closed before persistence: all four mandatory qualification items were omitted because v11 supplied raw candidate spans while the surrounding P1.6 protocol required model evidence-reference IDs.
+- [x] v11 classified as evidence-plumbing/protocol failure, not model semantic incapability; do not mutate v11 identity in place.
+- [x] isolated `job-analysis-english-v12` / `job-analysis-v4` candidate implemented.
+- [x] v12 exposes the deterministic qualification items as normal model-visible evidence IDs while keeping public v9 unchanged.
+- [x] v12 regression gate passes Ruff, full pytest, and warnings-as-errors.
+- [~] run/review v12 candidate on sparse `t4jp`.
+- [ ] only if sparse v12 passes, run dense `tG9K` v12 regression against accepted artifact `29`.
+- [ ] only after sparse+dense v12 success decide whether v12 replaces public v9.
 
 Experiment records:
 
 ```text
 docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
 docs/experiments/2026-08-12_P16_V10_SEMANTIC_FAILURE_AND_V11_QUALIFICATION_GRANULARITY.md
+docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
 ```
 
-Do **not** run Capability above rejected `t4jp` artifacts `30` or `31`.
+Do **not** run Capability above rejected `t4jp` artifacts `30` or `31`, and do not run it while v12 P1.6 remains unaccepted.
 
 ### B3 — Capability Intelligence
 
@@ -156,12 +160,12 @@ Reusable accepted-stack audit:
 python scripts/audit_ci3_capability_snapshot.py --job-id <job-id>
 ```
 
-Current isolated P1.6 v11 candidate tooling while public v9 remains unchanged:
+Current isolated P1.6 v12 candidate tooling while public v9 remains unchanged:
 
 ```bash
-python scripts/run_p16_v11_candidate.py --job-id <job-id>
-python scripts/export_p16_v11_candidate_snapshot.py --job-id <job-id>
-python scripts/audit_p16_v11_candidate_snapshot.py --job-id <job-id>
+python scripts/run_p16_v12_candidate.py --job-id <job-id>
+python scripts/export_p16_v12_candidate_snapshot.py --job-id <job-id>
+python scripts/audit_p16_v12_candidate_snapshot.py --job-id <job-id>
 ```
 
 Permanent CI-3 workflow rule:
@@ -178,9 +182,9 @@ snapshot current local state first
 
 Target materially different roles:
 
-- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 artifact 31 rejected; v11 active;
+- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 artifact 31 rejected; v11 failed protocol; v12 active;
 - [x] rich AI/ML anchor (`tG9K`) as accepted v9/v7 dense baseline;
-- [ ] dense `tG9K` v11 regression, only after sparse v11 passes;
+- [ ] dense `tG9K` v12 regression, only after sparse v12 passes;
 - [ ] Python/software role;
 - [ ] network/security role;
 - [ ] operations/platform/DevOps role;
