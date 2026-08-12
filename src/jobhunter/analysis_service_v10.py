@@ -11,19 +11,18 @@ from datetime import UTC, datetime
 from typing import Any
 
 from jobhunter.analysis_service import (
+    _ANALYSIS_SCHEMA,
+    _ENGLISH_SYSTEM_PROMPT,
     ANALYSIS_SCHEMA_VERSION,
     AnalysisJobResult,
     AnalysisValidationError,
     JobAnalysisService,
-    _ANALYSIS_SCHEMA,
-    _ENGLISH_SYSTEM_PROMPT,
     _analysis_fields_for_english,
     _persisted_analysis,
     _result,
     _validate_evidence,
 )
 from jobhunter.analysis_store import AnalysisStore
-from jobhunter.inference import InferenceProviderError
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
