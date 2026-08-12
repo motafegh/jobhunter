@@ -1,0 +1,180 @@
+{
+  "capability_intelligence": null,
+  "configured_models": {
+    "analysis": "gemma-4-e4b-it-ud",
+    "blueprint": "gemma-4-12b-it-qat",
+    "capability": "gemma-4-e2b-it"
+  },
+  "english_analysis": {
+    "analysis": {
+      "coverage": [
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "A persisted requirement cites this exact coverage input."
+        }
+      ],
+      "requirements": [
+        {
+          "concept": "Content creation with Artificial Intelligence",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "The segment lists 'in content creation with AI' as an expectation.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Creativity in creating visual and video content",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "The segment requires 'creativity in creating visual and video content'.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Website design",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "The segment lists 'website design' as an expectation.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Ethics and work commitment",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "The segment states 'Ethics and your work commitment are important to us'.",
+          "requirement_type": "required"
+        }
+      ],
+      "responsibilities": [
+        {
+          "confidence": "high",
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "statement": "Produce visual content full-time and part-time"
+        }
+      ],
+      "responsibility_coverage": [],
+      "role_purpose": []
+    },
+    "artifact_id": 30,
+    "created_at": "2026-08-12T17:17:02.314591+00:00",
+    "job_detail_version_id": 41,
+    "model": "gemma-4-e4b-it-ud",
+    "prompt_version": "job-analysis-english-v9",
+    "schema_version": "job-analysis-v4",
+    "translation_artifact_id": 34
+  },
+  "english_projection": {
+    "artifact_id": 34,
+    "created_at": "2026-08-06T18:24:36.676888+00:00",
+    "fields": {
+      "company": "Lora | Lora",
+      "company_description": "The Laura brand, in the field of child health, has active and enthusiastic colleagues along with educational classes in these difficult circumstances.",
+      "date_posted": "2026-08-05",
+      "description": "Skills in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+      "education": "it doesn't matter",
+      "employment_type": "Full-time",
+      "gender": "it doesn't matter",
+      "job_category": "Content Production and Management",
+      "location": "Tehran",
+      "military_service": "It doesn't matter",
+      "minimum_experience": "it doesn't matter",
+      "salary": "from 35,000,000 Toman",
+      "skills": [
+        "Artificial Intelligence",
+        "Video content production",
+        "social networks"
+      ],
+      "title": "Artificial Intelligence Expert",
+      "valid_through": null
+    },
+    "job_detail_version_id": 41,
+    "model": "gemma-4-e2b-it",
+    "native_segment_count": 1,
+    "provider": "lm-studio-translation-v2",
+    "schema_version": "english-projection-v2",
+    "segment_provenance": {
+      "company": "translated",
+      "company_description": "translated",
+      "date_posted": "native",
+      "description": "translated",
+      "education": "translated",
+      "employment_type": "translated",
+      "gender": "translated",
+      "job_category": "translated",
+      "location": "translated",
+      "military_service": "translated",
+      "minimum_experience": "translated",
+      "salary": "translated",
+      "skills[0]": "translated",
+      "skills[1]": "translated",
+      "skills[2]": "translated",
+      "title": "translated"
+    },
+    "source_language": "mixed",
+    "source_semantic_sha256": "6dd9641ad00fe69ac1bbd562f13d7b415dc9ba4a500575d10200a9eb9cab7b58",
+    "target_language": "en",
+    "translated_segment_count": 15,
+    "translation_sha256": "b6239039cf138ec02f0b426c76ccfc4b841549a86c40e5bd72f165588bbd3b19"
+  },
+  "original_analysis": null,
+  "role_capability_blueprint": null,
+  "snapshot_schema_version": "job-review-snapshot-v1",
+  "source": {
+    "canonical_url": "https://jobinja.ir/companies/lora-1/jobs/t4jp/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+    "content_sha256": "3f1fcd51692f2c85c9591b7312bf60c907f95ee28c28b833d6eb85a16befe9a9",
+    "evidence_path": "data/evidence/jobinja/job-pages/t4jp-bd04e77212/20260806T182427.126187Z_detail_3f1fcd51692f.html",
+    "fetched_at": "2026-08-06T18:24:27.126187+00:00",
+    "fields": {
+      "company": "لورا | Lora",
+      "company_description": "برند لورا در حوزه سلامت کودک در این شرایط سخت به همکارانی فعال و پر ذوق داریم همراه کلاس های اموزشی",
+      "date_posted": "2026-08-05",
+      "description": "مهارت تولید محتوا با ai خلاقیت در ساخت محتوای تصویری و ویدیویی طراحی سایت توانایی تولید محتوا تصویری تمام وقت و پاره وقت کار آموزش دادنیه برای ما مهم اخلاق و تعهد کاری شما می باشد. لطفا برای غیر حضوری رزومه نفرستید. (((((( لوکیشن :غرب تهران ))))))))) مزایا بیمه پارکینك فضای استراحت بن تخفیف ماهیانه پورسانت سفر کاری دو هفته در سال به کیش پاداش",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "تولید و مدیریت محتوا",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۳۵,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "تولید محتوا ویدئویی",
+        "شبکه های اجتماعی"
+      ],
+      "title": "کارشناس هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/lora-1/jobs/t4jp/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+    "first_seen_at": "2026-08-06T18:24:21.826921+00:00",
+    "job_detail_version_id": 41,
+    "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+    "lifecycle_state": "active",
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "6dd9641ad00fe69ac1bbd562f13d7b415dc9ba4a500575d10200a9eb9cab7b58",
+    "source_job_id": "t4jp",
+    "status_code": 200,
+    "title_observed": "کارشناس هوش مصنوعی"
+  },
+  "source_job_id": "t4jp",
+  "status": {
+    "blueprint_is_current_chain": false,
+    "capability_intelligence_present": false,
+    "capability_is_current_chain": false,
+    "english_analysis_present": true,
+    "english_projection_present": true,
+    "original_analysis_present": false,
+    "role_capability_blueprint_present": false,
+    "translation_matches_english_analysis": true
+  }
+}
