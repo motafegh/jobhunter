@@ -171,6 +171,21 @@ def _persisted_analysis_v11(
     analysis = _persisted_analysis_v10(structured, analysis_fields)
     coverage = analysis.setdefault("coverage", [])
     requirements = analysis.get("requirements") or []
+    spans = qualification_list_spans(analysis_fields)
+
+    # v9/v10 know only "excluded_non_requirement" for a coverage exclusion. In v11 a broad
+    # requirement-bearing span may be excluded only because finer exact requirements supersede
+    # it. Preserve that distinction in durable provenance.
+    for item in coverage:
+        if not isinstance(item, dict):
+            continue
+        evidence = str(item.get("evidence") or "")
+        if (
+            item.get("disposition") == "excluded_non_requirement"
+            and _qualification_span_count(evidence, spans) >= 2
+        ):
+            item["disposition"] = "decomposed_requirement"
+
     requirement_evidence = {
         _normalize(str(item.get("evidence") or ""))
         for item in requirements
@@ -181,7 +196,7 @@ def _persisted_analysis_v11(
         for item in coverage
         if isinstance(item, dict)
     }
-    for span in qualification_list_spans(analysis_fields):
+    for span in spans:
         normalized = _normalize(span)
         if normalized not in requirement_evidence:
             raise AnalysisValidationError(
