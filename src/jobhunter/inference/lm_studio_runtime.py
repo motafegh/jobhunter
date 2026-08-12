@@ -56,12 +56,12 @@ def ensure_lm_studio_model_context(
     transport: httpx.BaseTransport | None = None,
     exclusive_llm: bool = False,
 ) -> LMStudioContextState:
-    """Ensure a configured LM Studio model key is loaded with enough context.
+    """Ensure a configured LM Studio model key is loaded with the requested context.
 
-    JobHunter keeps using the OpenAI-compatible endpoint for Instructor structured
-    output. LM Studio's native v1 API is used only to inspect/reconfigure the loaded
-    model before that call. When ``exclusive_llm`` is true, other loaded LLM instances
-    are unloaded first while embedding models are left untouched.
+    JobHunter keeps using the OpenAI-compatible endpoint for generation. LM Studio's
+    native v1 API is used only to inspect/reconfigure the loaded model before that call.
+    When ``exclusive_llm`` is true, other loaded LLM instances are unloaded first while
+    embedding models are left untouched.
     """
 
     if context_length < 4096:
@@ -108,9 +108,9 @@ def ensure_lm_studio_model_context(
 
             if entry is None:
                 raise InferenceResponseError(
-                    "Automatic Blueprint context management requires "
-                    f"blueprint_lm_studio_model={model!r} to be an LM Studio model key "
-                    "returned by GET /api/v1/models."
+                    "Automatic LM Studio runtime management requires "
+                    f"configured model {model!r} to be an LM Studio model key returned by "
+                    "GET /api/v1/models."
                 )
 
             max_context = entry.get("max_context_length")
@@ -201,7 +201,7 @@ def ensure_lm_studio_model_context(
             )
             if applied_context != context_length:
                 raise InferenceResponseError(
-                    "LM Studio did not apply the requested Blueprint context length: "
+                    "LM Studio did not apply the requested context length: "
                     f"requested={context_length}, applied={applied_context!r}"
                 )
 
