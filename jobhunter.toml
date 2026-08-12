@@ -22,8 +22,9 @@ lm_studio_base_url = "http://127.0.0.1:12345/v1"
 inference_timeout_seconds = 30.0
 inference_max_retries = 1
 
-# Independent semantic roles. Keep the accepted P1.6 and Capability models frozen.
-# Blueprint uses the stronger 12B QAT model for the controlled v6/v5 comparison.
+# Independent semantic roles. P1.6 and Capability are the accepted Phase-1 roles.
+# Blueprint remains available for experimental inspection only; its current 12B model
+# is not an accepted decision/recommendation layer.
 analysis_lm_studio_model = "gemma-4-e4b-it-ud"
 capability_lm_studio_model = "gemma-4-e2b-it"
 blueprint_lm_studio_model = "gemma-4-12b-it-qat"
