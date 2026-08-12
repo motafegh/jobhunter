@@ -12,25 +12,49 @@
           "disposition": "extracted_requirement",
           "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
           "rationale": "A persisted requirement cites this exact coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Artificial Intelligence",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Video content production",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "social networks",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
         }
       ],
       "requirements": [
         {
-          "concept": "Content creation with Artificial Intelligence",
+          "concept": "Artificial Intelligence",
           "concept_type": "skill",
           "confidence": "high",
           "depth_signal": null,
-          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "The segment lists 'in content creation with AI' as an expectation.",
+          "evidence": "Artificial Intelligence",
+          "rationale": "Structured skill listed in the skills array.",
           "requirement_type": "required"
         },
         {
-          "concept": "Creativity in creating visual and video content",
+          "concept": "Video content production",
           "concept_type": "skill",
           "confidence": "high",
           "depth_signal": null,
-          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "The segment requires 'creativity in creating visual and video content'.",
+          "evidence": "Video content production",
+          "rationale": "Structured skill listed in the skills array.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Social networks",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "social networks",
+          "rationale": "Structured skill listed in the skills array.",
           "requirement_type": "required"
         },
         {
@@ -39,34 +63,46 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "The segment lists 'website design' as an expectation.",
+          "rationale": "Listed as a required area of content creation.",
           "requirement_type": "required"
         },
         {
-          "concept": "Ethics and work commitment",
+          "concept": "Producing visual content",
           "concept_type": "skill",
           "confidence": "high",
           "depth_signal": null,
           "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "The segment states 'Ethics and your work commitment are important to us'.",
+          "rationale": "Stated as an ability required for the role.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Ethics",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "Explicitly stated as important to the company.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Work commitment",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+          "rationale": "Explicitly stated as important to the company.",
           "requirement_type": "required"
         }
       ],
-      "responsibilities": [
-        {
-          "confidence": "high",
-          "evidence": "in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "statement": "Produce visual content full-time and part-time"
-        }
-      ],
+      "responsibilities": [],
       "responsibility_coverage": [],
       "role_purpose": []
     },
-    "artifact_id": 30,
-    "created_at": "2026-08-12T17:17:02.314591+00:00",
+    "artifact_id": 31,
+    "created_at": "2026-08-12T17:41:38.674529+00:00",
     "job_detail_version_id": 41,
     "model": "gemma-4-e4b-it-ud",
-    "prompt_version": "job-analysis-english-v9",
+    "prompt_version": "job-analysis-english-v10",
     "schema_version": "job-analysis-v4",
     "translation_artifact_id": 34
   },
