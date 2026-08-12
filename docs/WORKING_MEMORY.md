@@ -3,7 +3,7 @@
 **Status:** Rolling non-authoritative handoff  
 **Date:** 2026-08-12  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Current gate:** heterogeneous semantic validation of P1.6 + Capability v7  
+**Current gate:** heterogeneous semantic validation of P1.6 + Capability v7; isolated P1.6 v10 candidate active on sparse `t4jp`  
 **Purpose:** Resume from the real repository state without reconstructing the recent semantic-calibration work.
 
 This file is not controlling. Product/domain/source/architecture, roadmap, implementation, active acceptance plan, and TODO win on conflict.
@@ -28,12 +28,14 @@ Architecture remains a local Python modular monolith with SQLite structured stat
 
 ## 2. Current contracts
 
+Accepted/public baseline:
+
 ```text
 parser:                       jobinja-detail-v2
 translation:                  lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6:                 job-analysis-english-v9
+English P1.6 accepted/public: job-analysis-english-v9
 Original P1.6:                job-analysis-original-v9
 P1.6 schema:                  job-analysis-v4
 
@@ -46,6 +48,16 @@ Blueprint schema:             role-capability-blueprint-v5
 Review Snapshot:              job-review-snapshot-v1
 ```
 
+Active isolated acceptance candidate:
+
+```text
+English P1.6 candidate:       job-analysis-english-v10
+Candidate schema:             job-analysis-v4
+Status:                       NOT promoted; sparse + dense validation required
+```
+
+The normal `jobhunter jobs analyze` path remains v9 during the v10 experiment. Candidate-only tooling is listed below.
+
 Current configured model roles:
 
 ```text
@@ -54,13 +66,13 @@ capability: gemma-4-e2b-it
 blueprint:  gemma-4-12b-it-qat   # experimental only
 ```
 
-Blueprint runtime uses automatic LM Studio model preparation with an 8,192-token context and exclusive LLM loading to avoid keeping multiple large LLMs resident. This is runtime behavior, not semantic acceptance.
+Analysis runtime and Blueprint runtime automatically prepare LM Studio rather than requiring manual model/context commands. Blueprint remains non-authoritative regardless of runtime correctness.
 
 ## 3. Accepted dense `tG9K` chain
 
 ```text
 English projection artifact 33
-→ accepted English P1.6 artifact 29
+→ accepted English P1.6 v9 artifact 29
 → accepted Capability v7 artifact 9
 ```
 
@@ -96,7 +108,7 @@ Decision record:
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-Freeze Capability v7 unless heterogeneous evidence shows a repeatable material correctness defect.
+Freeze Capability v7 unless heterogeneous evidence shows a repeatable material correctness defect. If P1.6 is promoted from v9 to v10, Capability v7 must be rebuilt against the new accepted analysis artifact; do not reuse an artifact tied to v9.
 
 ## 4. Blueprint experiment conclusion
 
@@ -121,7 +133,7 @@ v6/v5 + gemma-4-12b-it-qat
 → mechanically valid and materially better; still violated explicit semantic boundary
 ```
 
-### Best bounded experimental Blueprint artifact
+Best bounded experimental Blueprint artifact:
 
 ```text
 job: tG9K
@@ -134,23 +146,7 @@ model: gemma-4-12b-it-qat
 snapshot commit: 671bd6e3c43555c631958531671a0f1be9726554
 ```
 
-Mechanical audit passed:
-
-```text
-2 Capability areas
-25 deterministic source requirements
-7 deterministic source responsibilities
-4 professional considerations
-4 important unknowns
-2 role-level constraints
-1 role-purpose item
-```
-
-CI passed too.
-
-B4 still failed semantic review because some model-created unknowns/considerations smuggled source-unstated assumptions, including automated APC/SPC feedback-loop framing, assumed cloud/on-prem model-hosting choices, `raw sensor physics`, and strict data-lineage/model-weight versioning tied to unspecified quality standards.
-
-Do not accept artifact 7 as employer truth or an authoritative downstream decision layer.
+B4 failed semantic review because model-created unknowns/considerations still smuggled source-unstated feedback-loop/platform/implementation assumptions.
 
 Decision record:
 
@@ -158,96 +154,145 @@ Decision record:
 docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 ```
 
-### Phase-1 Blueprint rule
+Do not create Blueprint v7, weaken its validators, or reopen model shopping during Phase 1. Blueprint may be observed as non-gating research evidence only.
 
-Do not:
+## 5. CI-3 heterogeneous validation
 
-- create Blueprint v7;
-- weaken v6 validators;
-- add vacancy/domain-specific prompt patches;
-- continue adjacent model shopping;
-- use Blueprint in Market, personal readiness, automatic recommendations, or other authoritative Phase-1 decisions.
-
-Blueprint may be observed as non-gating research evidence only. Reopen only when a materially different grounding/inference approach or a demonstrated product-value gap justifies it.
-
-## 5. Current active semantic gate
-
-Validate the accepted stack across materially different roles:
+Target stack:
 
 ```text
 source
 → English projection
-→ P1.6
-→ Capability v7
+→ accepted/candidate P1.6 under review
+→ Capability v7 only after P1.6 for that job is semantically accepted
 ```
 
 Target set:
 
 ```text
-t4jp  sparse/ambiguous anchor
+t4jp  sparse/ambiguous anchor — active
 tG9K  rich industrial AI/ML baseline
 + Python/software
 + network/security
 + operations/platform/DevOps
 ```
 
-For each role inspect:
-
-### P1.6
-
-- factual false positives/negatives;
-- responsibilities vs candidate qualifications;
-- requirement strength;
-- optional/contextual wording;
-- explicit depth attachment;
-- education/experience;
-- evidence relevance/exactness;
-- dense-source completeness vs sparse-source restraint.
-
-### Capability v7
-
-- complete capability-relevant requirement coverage;
-- complete responsibility coverage;
-- coherent grouping;
-- role-level requirement partition;
-- deterministic source truth;
-- source strength/depth/work reconciliation;
-- no unsupported ownership/autonomy;
-- no contextual/preferred tool promotion.
-
-Repeatable deterministic failures become tests. Model limitations are documented separately. Do not patch one vacancy at a time.
-
-## 6. Current implementation notes
-
-Blueprint v6 implementation remains:
+Permanent workflow:
 
 ```text
-src/jobhunter/role_blueprint_service.py
-src/jobhunter/role_blueprint_service_v6.py
-src/jobhunter/role_blueprint_inference_v6.py
-src/jobhunter/role_blueprint_v6_models.py
-src/jobhunter/inference/lm_studio_runtime.py
-scripts/audit_blueprint_v6_snapshot.py
+snapshot current local state first
+→ mechanical audit
+→ inspect source / projection / P1.6 semantics
+→ generate Capability only after P1.6 passes
+→ inspect Capability semantics
+→ regenerate only a stage proved missing/stale
 ```
 
-The current `tG9K` Review Snapshot contains accepted P1.6/Capability anchors plus rejected experimental Blueprint artifact 7. Current-chain status does not imply semantic acceptance.
+Do not patch one vacancy at a time. Repeatable deterministic failures become tests; model limitations are documented separately.
 
-`*.egg-info/` is ignored so editable installs do not dirty normal Git status.
+## 6. `t4jp` v9 result and rejection
 
-## 7. Exact next work
+The evidence-first workflow produced English P1.6 artifact `30`:
 
-Do **not** rerun `tG9K` Blueprint again for calibration.
+```text
+job:             t4jp
+translation:     artifact 34
+English P1.6:    artifact 30
+prompt/schema:   job-analysis-english-v9 / job-analysis-v4
+model:           gemma-4-e4b-it-ud
+role purpose:    0
+responsibilities:1
+requirements:    4
+snapshot commit: f77f1378ad638eba5ab66ccd36762386a140eabd
+```
 
-Next:
+Artifact `30` is **not accepted for sparse CI-3**.
 
-1. choose/confirm the heterogeneous review jobs;
-2. build or reuse their current English/P1.6/Capability chain;
-3. export Review Snapshots;
-4. review each source → English → P1.6 → Capability chain;
-5. fix only repeatable general defects;
-6. freeze P1.6 + Capability v7 when the bounded heterogeneous sample passes.
+The source/projection contains explicit structured required skills:
 
-After semantic acceptance:
+```text
+Artificial Intelligence
+Video content production
+social networks
+```
+
+Two general defects were identified:
+
+1. v9 `build_requirement_coverage_plan()` did not include top-level structured `skills[]`, so an explicit skill such as `social networks` could disappear while validation still passed;
+2. sparse qualification wording (`ability to produce visual content...`) was paraphrased into a responsibility despite the existing qualification-vs-duty rule.
+
+Therefore Capability must **not** be generated above artifact `30`.
+
+Experiment record:
+
+```text
+docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
+```
+
+## 7. Isolated P1.6 v10 candidate
+
+Candidate identity:
+
+```text
+job-analysis-english-v10
+job-analysis-v4
+```
+
+v10 remains isolated so the accepted `tG9K` v9 chain is not invalidated before regression proof.
+
+Candidate invariants:
+
+- every non-empty structured `skills[]` item must survive as an exact-evidence `required` requirement;
+- structured skills receive deterministic persisted coverage accounting;
+- responsibility output may not reuse exact qualification evidence;
+- `ability to ...` and other obvious qualification wording may not be paraphrased into work;
+- one bounded candidate correction is allowed after the existing Instructor/Pydantic validation; second failure fails closed.
+
+Implementation/tooling:
+
+```text
+src/jobhunter/analysis_service_v10.py
+src/jobhunter/analysis_runtime_v10.py
+scripts/run_p16_v10_candidate.py
+scripts/export_p16_v10_candidate_snapshot.py
+scripts/audit_p16_v10_candidate_snapshot.py
+tests/test_analysis_v10_candidate.py
+```
+
+The v10 implementation gate is green:
+
+```text
+Ruff:                    PASS
+full pytest:             PASS
+warnings-as-errors:      PASS
+```
+
+This proves code correctness only, not semantic acceptance.
+
+## 8. Exact next work
+
+Do not run Capability for `t4jp` yet.
+
+Next exact sequence:
+
+1. run isolated v10 on `t4jp`;
+2. export the candidate snapshot;
+3. run the v10 candidate mechanical audit;
+4. commit/push the candidate snapshot;
+5. review every `t4jp` v10 requirement/responsibility against source and English projection;
+6. if sparse semantics pass, run the same v10 candidate on dense `tG9K` and compare against accepted artifact `29`;
+7. only if sparse + dense pass, decide whether to promote v10 into the public P1.6 path;
+8. only after P1.6 promotion/acceptance, build Capability v7 for the heterogeneous roles.
+
+Candidate commands:
+
+```bash
+python scripts/run_p16_v10_candidate.py --job-id t4jp
+python scripts/export_p16_v10_candidate_snapshot.py --job-id t4jp
+python scripts/audit_p16_v10_candidate_snapshot.py --job-id t4jp
+```
+
+After heterogeneous semantic acceptance:
 
 ```text
 Market truthfulness
