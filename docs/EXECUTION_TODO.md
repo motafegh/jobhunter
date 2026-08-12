@@ -24,6 +24,7 @@ Status vocabulary:
 - [x] independent analysis/capability/blueprint model roles.
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
+- [x] targeted `jobhunter jobs analyze <id>` command for one explicit P1.6 job without broad orchestration.
 
 ## B. Semantic-quality gate
 
@@ -37,15 +38,38 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**Accepted for dense `tG9K` on artifact 29.**
+**Dense baseline accepted for `tG9K` on v9 artifact 29; heterogeneous acceptance remains open.**
+
+Accepted dense evidence:
 
 - [x] 27 requirements / 7 responsibilities retained.
-- [x] deterministic coverage accounting.
+- [x] deterministic coverage accounting for the dense description/structured experience/education case.
 - [x] optionality preserved.
 - [x] Python `expert` remains Python-specific.
 - [x] MATLAB/C++ remain preferred.
 - [x] contextual stack remains contextual.
 - [x] explicit depth and 3–6 years experience preserved.
+
+Sparse CI-3 evidence:
+
+- [x] snapshot-first workflow proved `t4jp` initially lacked current P1.6.
+- [x] targeted v9 analysis produced artifact `30` without rerunning acquisition/translation.
+- [!] `t4jp` v9 artifact `30` rejected for sparse semantic acceptance.
+- [!] general defect: top-level structured `skills[]` values were outside v9 deterministic requirement coverage, allowing explicit `social networks` to disappear.
+- [!] general defect: qualification wording (`ability to ...`) could be paraphrased into a responsibility when no explicit duty section existed.
+- [x] isolated `job-analysis-english-v10` / `job-analysis-v4` candidate implemented rather than silently mutating accepted v9 identity.
+- [x] v10 candidate regression gate passes Ruff, full pytest, and warnings-as-errors.
+- [~] run/review v10 candidate on sparse `t4jp`.
+- [ ] if sparse passes, run v10 candidate on dense `tG9K` and prove no regression against artifact `29`.
+- [ ] only after sparse+dense success decide whether v10 replaces public v9.
+
+Experiment record:
+
+```text
+docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
+```
+
+Do **not** run Capability above rejected `t4jp` artifact `30`.
 
 ### B3 — Capability Intelligence
 
@@ -77,13 +101,13 @@ Decision record:
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-Freeze v7 unless heterogeneous evidence reveals a repeatable correctness defect.
+Freeze v7 unless heterogeneous evidence reveals a repeatable correctness defect. If P1.6 is promoted to a new identity, rebuild Capability v7 against that accepted analysis artifact rather than reusing artifacts tied to v9.
 
 ### B4 — Role Capability Blueprint experiment
 
 **Status: [-] not accepted for Phase-1 use; further Blueprint tuning deferred from the Phase-1 critical path.**
 
-The bounded experiment has now tested v3→v6 across E2B, E4B and 12B local models.
+The bounded experiment tested v3→v6 across E2B, E4B and 12B local models.
 
 Key evidence:
 
@@ -93,9 +117,9 @@ Key evidence:
 - [x] v6/v5 removed free-form role-summary interpretation and limited generation to bounded professional considerations + unknowns.
 - [!] v6/E4B still failed structured repair and introduced unstated assumptions.
 - [x] controlled v6/12B comparison kept P1.6 29, Capability 9, v6/v5 and rubric fixed; only Blueprint model changed.
-- [x] v6/12B artifact 7 passed `scripts/audit_blueprint_v6_snapshot.py` and CI.
-- [!] complete semantic review still found unknowns/considerations that smuggled automated-feedback/platform/implementation assumptions not established by source.
-- [x] conclusion: do not create Blueprint v7, do not weaken validators, and do not continue nearby model shopping during Phase 1.
+- [x] v6/12B artifact 7 passed its mechanical audit and CI.
+- [!] complete semantic review still found automated-feedback/platform/implementation assumptions not established by source.
+- [x] conclusion: do not create Blueprint v7, weaken validators, or continue nearby model shopping during Phase 1.
 
 Best bounded experimental artifact:
 
@@ -115,43 +139,50 @@ Decision record:
 docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 ```
 
-Reopen Blueprint only when a materially different grounding/inference approach or a demonstrated user-value gap justifies it. Do not reopen merely for another prompt version or adjacent local model.
+### B5 — CI-3 heterogeneous live review — active gate
 
-### B5 — CI-3 heterogeneous live review — active next gate
-
-Validate the layers that have actually passed bounded acceptance:
+Validate:
 
 ```text
 source
 → English projection
-→ P1.6
+→ semantically accepted P1.6 for that job
 → Capability v7
 ```
 
-Blueprint may be observed as non-gating research evidence only.
+Blueprint is non-gating research evidence only.
 
-Reusable mechanical audit:
+Reusable accepted-stack audit remains:
 
 ```bash
 python scripts/audit_ci3_capability_snapshot.py --job-id <job-id>
 ```
 
-The CI-3 audit is deliberately job-agnostic. It verifies the current English P1.6 v9/v4 → Capability v7/v4 dependency chain, complete deterministic source truth, capability-vs-role-level partition, requirement/responsibility coverage, explicit-depth accounting, deterministic strength/work reconciliation, and the v7 ownership/cross-capability boundaries. A current experimental Blueprint payload is ignored by CI-3 acceptance.
+Candidate-specific P1.6 v10 tooling while v9 remains public:
+
+```bash
+python scripts/run_p16_v10_candidate.py --job-id <job-id>
+python scripts/export_p16_v10_candidate_snapshot.py --job-id <job-id>
+python scripts/audit_p16_v10_candidate_snapshot.py --job-id <job-id>
+```
 
 Permanent CI-3 workflow rule:
 
 ```text
 snapshot current local state first
-→ run mechanical CI-3 audit
-→ inspect source/P1.6/Capability semantics
-→ regenerate only a stage that the snapshot proves missing/stale
+→ run the matching mechanical audit
+→ inspect source/projection/P1.6 semantics
+→ generate Capability only after P1.6 passes
+→ inspect Capability semantics
+→ regenerate only a stage proved missing/stale
 → never rerun accepted upstream stages merely to create a fresh artifact
 ```
 
 Target materially different roles:
 
-- [~] sparse/ambiguous anchor (`t4jp`) — first action is snapshot/audit without regeneration;
-- [x] rich AI/ML anchor (`tG9K`) as dense baseline;
+- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 candidate active;
+- [x] rich AI/ML anchor (`tG9K`) as accepted v9/v7 dense baseline;
+- [ ] dense `tG9K` v10 regression, but only after sparse v10 passes;
 - [ ] Python/software role;
 - [ ] network/security role;
 - [ ] operations/platform/DevOps role;
