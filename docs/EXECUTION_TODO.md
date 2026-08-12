@@ -24,7 +24,7 @@ Status vocabulary:
 - [x] independent analysis/capability/blueprint model roles.
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
-- [x] targeted `jobhunter jobs analyze <id>` command for one explicit P1.6 job without broad orchestration.
+- [x] targeted `jobhunter jobs analyze <id>` command for one explicit public P1.6 job without broad orchestration.
 
 ## B. Semantic-quality gate
 
@@ -38,7 +38,7 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**Dense baseline accepted for `tG9K` on v9 artifact 29; heterogeneous acceptance remains open.**
+**Dense baseline accepted for `tG9K` on public v9 artifact 29; heterogeneous acceptance remains open.**
 
 Accepted dense evidence:
 
@@ -54,22 +54,26 @@ Sparse CI-3 evidence:
 
 - [x] snapshot-first workflow proved `t4jp` initially lacked current P1.6.
 - [x] targeted v9 analysis produced artifact `30` without rerunning acquisition/translation.
-- [!] `t4jp` v9 artifact `30` rejected for sparse semantic acceptance.
-- [!] general defect: top-level structured `skills[]` values were outside v9 deterministic requirement coverage, allowing explicit `social networks` to disappear.
-- [!] general defect: qualification wording (`ability to ...`) could be paraphrased into a responsibility when no explicit duty section existed.
-- [x] isolated `job-analysis-english-v10` / `job-analysis-v4` candidate implemented rather than silently mutating accepted v9 identity.
-- [x] v10 candidate regression gate passes Ruff, full pytest, and warnings-as-errors.
-- [~] run/review v10 candidate on sparse `t4jp`.
-- [ ] if sparse passes, run v10 candidate on dense `tG9K` and prove no regression against artifact `29`.
-- [ ] only after sparse+dense success decide whether v10 replaces public v9.
+- [!] `t4jp` v9 artifact `30` rejected: structured `skills[]` coverage hole + qualification-to-responsibility leakage.
+- [x] isolated v10 implemented to address those two general defects without mutating public v9 identity.
+- [x] `t4jp` v10 artifact `31` produced 0 responsibilities, 7 requirements, 3/3 structured skills and mechanical PASS.
+- [!] v10 artifact `31` rejected semantically: coarse description coverage still allowed explicit comma-separated qualifications (`content creation with AI`, `creativity ...`) to disappear.
+- [x] v10 experiment concluded; do not run dense `tG9K` under v10 and do not promote v10.
+- [x] isolated `job-analysis-english-v11` / `job-analysis-v4` candidate implemented.
+- [x] v11 adds generic qualification-list itemization, coarse-span supersession, and truthful `decomposed_requirement` provenance.
+- [x] v11 regression gate passes Ruff, full pytest, and warnings-as-errors.
+- [~] run/review v11 candidate on sparse `t4jp`.
+- [ ] only if sparse v11 passes, run dense `tG9K` v11 regression against accepted artifact `29`.
+- [ ] only after sparse+dense v11 success decide whether v11 replaces public v9.
 
-Experiment record:
+Experiment records:
 
 ```text
 docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
+docs/experiments/2026-08-12_P16_V10_SEMANTIC_FAILURE_AND_V11_QUALIFICATION_GRANULARITY.md
 ```
 
-Do **not** run Capability above rejected `t4jp` artifact `30`.
+Do **not** run Capability above rejected `t4jp` artifacts `30` or `31`.
 
 ### B3 — Capability Intelligence
 
@@ -109,14 +113,8 @@ Freeze v7 unless heterogeneous evidence reveals a repeatable correctness defect.
 
 The bounded experiment tested v3→v6 across E2B, E4B and 12B local models.
 
-Key evidence:
-
-- [x] v3/v2 showed model-owned provenance/index bookkeeping was unsafe.
-- [x] v4/v3 fixed deterministic provenance but broad generated prose still invented employer-specific operating/topology/ownership claims.
-- [x] v5/v4 removed Capability-derived prose and most expansion surfaces, but free-form interpretation still inflated end-to-end/streaming/lifecycle scope.
-- [x] v6/v5 removed free-form role-summary interpretation and limited generation to bounded professional considerations + unknowns.
-- [!] v6/E4B still failed structured repair and introduced unstated assumptions.
-- [x] controlled v6/12B comparison kept P1.6 29, Capability 9, v6/v5 and rubric fixed; only Blueprint model changed.
+- [x] provenance/index failure class identified and mechanically fixed.
+- [x] later contracts progressively reduced free-form authority.
 - [x] v6/12B artifact 7 passed its mechanical audit and CI.
 - [!] complete semantic review still found automated-feedback/platform/implementation assumptions not established by source.
 - [x] conclusion: do not create Blueprint v7, weaken validators, or continue nearby model shopping during Phase 1.
@@ -131,7 +129,7 @@ model gemma-4-12b-it-qat
 review snapshot commit 671bd6e3c43555c631958531671a0f1be9726554
 ```
 
-This artifact is **review evidence, not an accepted decision layer**.
+This artifact is review evidence, not an accepted decision layer.
 
 Decision record:
 
@@ -152,18 +150,18 @@ source
 
 Blueprint is non-gating research evidence only.
 
-Reusable accepted-stack audit remains:
+Reusable accepted-stack audit:
 
 ```bash
 python scripts/audit_ci3_capability_snapshot.py --job-id <job-id>
 ```
 
-Candidate-specific P1.6 v10 tooling while v9 remains public:
+Current isolated P1.6 v11 candidate tooling while public v9 remains unchanged:
 
 ```bash
-python scripts/run_p16_v10_candidate.py --job-id <job-id>
-python scripts/export_p16_v10_candidate_snapshot.py --job-id <job-id>
-python scripts/audit_p16_v10_candidate_snapshot.py --job-id <job-id>
+python scripts/run_p16_v11_candidate.py --job-id <job-id>
+python scripts/export_p16_v11_candidate_snapshot.py --job-id <job-id>
+python scripts/audit_p16_v11_candidate_snapshot.py --job-id <job-id>
 ```
 
 Permanent CI-3 workflow rule:
@@ -180,9 +178,9 @@ snapshot current local state first
 
 Target materially different roles:
 
-- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 candidate active;
+- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 artifact 31 rejected; v11 active;
 - [x] rich AI/ML anchor (`tG9K`) as accepted v9/v7 dense baseline;
-- [ ] dense `tG9K` v10 regression, but only after sparse v10 passes;
+- [ ] dense `tG9K` v11 regression, only after sparse v11 passes;
 - [ ] Python/software role;
 - [ ] network/security role;
 - [ ] operations/platform/DevOps role;
