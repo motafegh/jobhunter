@@ -127,8 +127,14 @@ def audit_snapshot(path: Path, *, job_id: str) -> None:
     print(f"Artifact: {analysis.get('artifact_id')}")
     print(f"Requirements: {len(requirements)}")
     print(f"Responsibilities: {len(responsibilities)}")
-    print(f"Structured required skills covered: {len(structured_skills)}/{len(structured_skills)}")
-    print(f"Qualification-list items covered: {len(qualification_spans)}/{len(qualification_spans)}")
+    print(
+        "Structured required skills covered: "
+        f"{len(structured_skills)}/{len(structured_skills)}"
+    )
+    print(
+        "Qualification-list items covered: "
+        f"{len(qualification_spans)}/{len(qualification_spans)}"
+    )
     print(f"Coverage decisions: {len(coverage)}")
 
 
