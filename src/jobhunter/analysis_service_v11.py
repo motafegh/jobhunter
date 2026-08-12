@@ -55,12 +55,19 @@ P1.6 V11 CANDIDATE — QUALIFICATION-LIST GRANULARITY:
   clearly begins as a qualification list. Every listed span MUST be represented by its own
   requirement citing that exact span as evidence.
 - Do not satisfy one qualification-list item by citing a neighboring item or the whole paragraph.
+- If one broad requirement_coverage item contains multiple candidate_required_qualification_spans,
+  treat that broad coverage item as superseded by decomposition: put its coverage ID in
+  coverage_exclusions with a concise rationale explaining that exact item-level qualification
+  requirements replace the coarse span. Do not keep a broad paragraph requirement merely to
+  satisfy legacy coverage accounting.
 - Preserve the actual source meaning. A structured skill tag and a narrower description phrase
   are separate facts when they are not semantically equivalent (for example a broad technology
   tag versus using that technology for a particular kind of work).
 - Bare short noun phrases that continue an explicit comma-separated qualification list are still
   qualification items; do not drop them merely because the qualification marker appears only in
   the first item.
+- Qualification facts outside the comma list may still be extracted, but cite the narrowest exact
+  contiguous source excerpt rather than reusing the whole mixed paragraph.
 """
 
 _ENGLISH_SYSTEM_PROMPT_V11 = _ENGLISH_SYSTEM_PROMPT_V10 + _V11_RULES
@@ -107,6 +114,11 @@ def qualification_list_spans(fields: dict[str, Any]) -> list[str]:
     return result
 
 
+def _qualification_span_count(evidence: str, spans: list[str]) -> int:
+    normalized_evidence = _normalize(evidence)
+    return sum(1 for span in spans if _normalize(span) in normalized_evidence)
+
+
 def validate_v11_candidate_structured(
     structured: dict[str, Any],
     analysis_fields: dict[str, Any],
@@ -128,6 +140,16 @@ def validate_v11_candidate_structured(
         raise AnalysisValidationError(
             "P1.6 v11 omitted explicit qualification-list items: " + " | ".join(missing)
         )
+
+    for index, item in enumerate(requirements):
+        if not isinstance(item, dict):
+            continue
+        evidence = str(item.get("evidence") or "")
+        if _qualification_span_count(evidence, spans) >= 2:
+            raise AnalysisValidationError(
+                f"P1.6 v11 requirement[{index}] uses coarse evidence containing multiple "
+                "qualification-list items; decompose the coverage span instead"
+            )
 
     span_evidence = {_normalize(span) for span in spans}
     for index, item in enumerate(responsibilities):
