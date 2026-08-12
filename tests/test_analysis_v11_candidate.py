@@ -156,7 +156,7 @@ def test_v11_persistence_accounts_for_structured_and_list_coverage() -> None:
         assert coverage[evidence] == "extracted_requirement"
 
     assert any(
-        item["disposition"] == "excluded_from_requirements"
+        item["disposition"] == "decomposed_requirement"
         and "content creation with AI" in item["evidence"]
         for item in analysis["coverage"]
     )
