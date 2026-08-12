@@ -14,13 +14,13 @@ from typing import Any
 
 from jobhunter.analysis_service import (
     _ANALYSIS_SCHEMA,
-    _analysis_fields_for_english,
-    _result,
-    _validate_evidence,
     ANALYSIS_SCHEMA_VERSION,
     AnalysisJobResult,
     AnalysisValidationError,
     JobAnalysisService,
+    _analysis_fields_for_english,
+    _result,
+    _validate_evidence,
 )
 from jobhunter.analysis_service_v10 import (
     _ENGLISH_SYSTEM_PROMPT_V10,
