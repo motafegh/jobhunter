@@ -15,6 +15,33 @@ class _RunService:
         return SimpleNamespace(has_failures=self.has_failures)
 
 
+class _AnalysisService:
+    def __init__(self) -> None:
+        self.calls: list[tuple[str, str]] = []
+
+    def analyze_english_job(self, source_job_id: str):
+        self.calls.append(("english", source_job_id))
+        return SimpleNamespace(
+            source_job_id=source_job_id,
+            artifact_id=41,
+            outcome="completed",
+            model="analysis-model",
+            responsibilities=2,
+            requirements=3,
+        )
+
+    def analyze_original_job(self, source_job_id: str):
+        self.calls.append(("original", source_job_id))
+        return SimpleNamespace(
+            source_job_id=source_job_id,
+            artifact_id=42,
+            outcome="reused",
+            model="analysis-model",
+            responsibilities=1,
+            requirements=4,
+        )
+
+
 def test_run_command_uses_bounded_settings_defaults(monkeypatch, capsys) -> None:
     settings = Settings(
         jobinja_search_request_budget=7,
@@ -142,9 +169,61 @@ def test_global_config_can_precede_jobs_health(monkeypatch) -> None:
     assert captured["config"] == Path("custom.toml")
 
 
+def test_jobs_analyze_defaults_to_english_and_uses_targeted_service(monkeypatch, capsys) -> None:
+    settings = Settings()
+    service = _AnalysisService()
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
+    monkeypatch.setattr(entrypoint, "build_job_analysis_service", lambda _settings: service)
+
+    exit_code = entrypoint.main(["jobs", "analyze", "t4jp"])
+
+    assert exit_code == 0
+    assert service.calls == [("english", "t4jp")]
+    output = capsys.readouterr().out
+    assert "English P1.6 for t4jp" in output
+    assert "Artifact: 41" in output
+    assert "job-analysis-english-v9 / job-analysis-v4" in output
+
+
+def test_jobs_analyze_can_target_original_language(monkeypatch, capsys) -> None:
+    settings = Settings()
+    service = _AnalysisService()
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
+    monkeypatch.setattr(entrypoint, "build_job_analysis_service", lambda _settings: service)
+
+    exit_code = entrypoint.main(["jobs", "analyze", "t4jp", "--mode", "original"])
+
+    assert exit_code == 0
+    assert service.calls == [("original", "t4jp")]
+    output = capsys.readouterr().out
+    assert "Original-language P1.6 for t4jp" in output
+    assert "Artifact: 42" in output
+    assert "job-analysis-original-v9 / job-analysis-v4" in output
+
+
+def test_global_config_can_precede_jobs_analyze(monkeypatch) -> None:
+    captured = {}
+    service = _AnalysisService()
+
+    def load(path):
+        captured["config"] = path
+        return Settings()
+
+    monkeypatch.setattr(entrypoint, "_load_settings", load)
+    monkeypatch.setattr(entrypoint, "build_job_analysis_service", lambda _settings: service)
+
+    assert (
+        entrypoint.main(["--config", "custom.toml", "jobs", "analyze", "t4jp"])
+        == 0
+    )
+    assert captured["config"] == Path("custom.toml")
+    assert service.calls == [("english", "t4jp")]
+
+
 def test_global_help_surfaces_phase1_commands(capsys) -> None:
     assert entrypoint.main(["--help"]) == 0
     output = capsys.readouterr().out
     assert "Additional Phase-1 commands" in output
     assert "run --help" in output
     assert "jobs health <id>" in output
+    assert "jobs analyze <id>" in output
