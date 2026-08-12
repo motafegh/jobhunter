@@ -43,6 +43,13 @@ def _valid_requirements():
     ]
 
 
+def _coarse_coverage_exclusion():
+    return {
+        "evidence_reference": "field:description:segment:0",
+        "rationale": "Superseded by exact qualification-list item requirements.",
+    }
+
+
 def test_v11_has_distinct_artifact_identity() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v11"
 
@@ -90,6 +97,21 @@ def test_v11_rejects_missing_qualification_item() -> None:
         validate_v11_candidate_structured(structured, _fields())
 
 
+def test_v11_rejects_coarse_requirement_evidence_after_decomposition() -> None:
+    structured = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [
+            *_valid_requirements(),
+            _requirement(_fields()["description"], concept="General content qualifications"),
+        ],
+        "coverage_exclusions": [],
+    }
+
+    with pytest.raises(AnalysisValidationError, match="coarse evidence"):
+        validate_v11_candidate_structured(structured, _fields())
+
+
 def test_v11_rejects_qualification_list_item_as_responsibility() -> None:
     structured = {
         "role_purpose": [],
@@ -113,7 +135,7 @@ def test_v11_persistence_accounts_for_structured_and_list_coverage() -> None:
         "role_purpose": [],
         "responsibilities": [],
         "requirements": _valid_requirements(),
-        "coverage_exclusions": [],
+        "coverage_exclusions": [_coarse_coverage_exclusion()],
     }
 
     analysis = _persisted_analysis_v11(structured, _fields())
@@ -132,3 +154,9 @@ def test_v11_persistence_accounts_for_structured_and_list_coverage() -> None:
         "ability to produce visual content full-time and part-time",
     ]:
         assert coverage[evidence] == "extracted_requirement"
+
+    assert any(
+        item["disposition"] == "excluded_from_requirements"
+        and "content creation with AI" in item["evidence"]
+        for item in analysis["coverage"]
+    )
