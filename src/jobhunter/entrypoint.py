@@ -9,6 +9,13 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
+from jobhunter.analysis_runtime import build_job_analysis_service
+from jobhunter.analysis_service import (
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
+    ORIGINAL_PROMPT_VERSION,
+    AnalysisValidationError,
+)
 from jobhunter.capability_service import (
     CAPABILITY_PROMPT_VERSION,
     CAPABILITY_SCHEMA_VERSION,
@@ -20,6 +27,7 @@ from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.cli import build_parser as build_legacy_parser
 from jobhunter.cli import main as legacy_main
 from jobhunter.config import ConfigLoadError, Settings
+from jobhunter.inference import InferenceProviderError
 from jobhunter.phase1_run import (
     build_phase1_run_service,
     configured_searches,
@@ -132,6 +140,30 @@ def _health_parser(*, default_config: Path | None = None) -> argparse.ArgumentPa
         ),
     )
     parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
+def _analysis_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs analyze",
+        description=(
+            "Build or reuse P1.6 semantic analysis for one explicit current job without "
+            "running discovery, refresh, translation, or batch orchestration."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--mode",
+        choices=("english", "original"),
+        default="english",
+        help="Evidence representation to analyze (default: english)",
+    )
     parser.add_argument(
         "--config",
         type=Path,
@@ -329,6 +361,42 @@ def _show_source_health(arguments: list[str], *, default_config: Path | None) ->
     return 0
 
 
+def _run_job_analysis(
+    arguments: list[str],
+    *,
+    default_config: Path | None,
+) -> int:
+    parser = _analysis_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        service = build_job_analysis_service(settings)
+        result = (
+            service.analyze_english_job(parsed.job_id)
+            if parsed.mode == "english"
+            else service.analyze_original_job(parsed.job_id)
+        )
+    except (AnalysisValidationError, ValueError) as exc:
+        print(f"P1.6 analysis is not ready: {exc}", file=sys.stderr)
+        return 2
+    except (InferenceProviderError, OSError, RuntimeError) as exc:
+        print(f"P1.6 analysis failed: {exc}", file=sys.stderr)
+        return 1
+
+    prompt_version = (
+        ENGLISH_PROMPT_VERSION if parsed.mode == "english" else ORIGINAL_PROMPT_VERSION
+    )
+    label = "English" if parsed.mode == "english" else "Original-language"
+    print(f"Outcome: {result.outcome}")
+    print(f"{label} P1.6 for {result.source_job_id}")
+    print(f"Artifact: {result.artifact_id}")
+    print(f"Model: {result.model}")
+    print(f"Contract: {prompt_version} / {ANALYSIS_SCHEMA_VERSION}")
+    print(f"Responsibilities: {result.responsibilities}")
+    print(f"Requirements: {result.requirements}")
+    return 0
+
+
 def _run_capability_intelligence(
     arguments: list[str],
     *,
@@ -423,6 +491,7 @@ def _print_combined_help() -> None:
     print("  run                      Run bounded source -> English -> analysis -> Market pipeline")
     print("  run --help               Show Phase-1 run limits and options")
     print("  jobs health <id>         Summarize last success/failures and lifecycle state")
+    print("  jobs analyze <id>        Build/reuse targeted P1.6 analysis (English by default)")
     print("")
     print("Capability intelligence commands:")
     print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
@@ -445,6 +514,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     is_health, default_config, health_arguments = _extract_jobs_invocation(arguments, "health")
     if is_health:
         return _show_source_health(health_arguments, default_config=default_config)
+
+    is_analysis, default_config, analysis_arguments = _extract_jobs_invocation(
+        arguments,
+        "analyze",
+    )
+    if is_analysis:
+        return _run_job_analysis(
+            analysis_arguments,
+            default_config=default_config,
+        )
 
     is_capability, default_config, capability_arguments = _extract_jobs_invocation(
         arguments,
