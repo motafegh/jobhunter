@@ -2,7 +2,7 @@
 
 JobHunter is a **local-first personal career-intelligence application**.
 
-It acquires approved public job-market evidence, preserves authoritative source data, creates a hardened English projection, performs strict evidence-backed factual extraction, and builds bounded reasoning layers for capability and professional-role interpretation.
+It acquires approved public job-market evidence, preserves authoritative source data, creates a hardened English projection, performs strict evidence-backed factual extraction, and builds auditable capability intelligence above that source truth.
 
 The browser application is the primary human interface. The CLI remains supported for automation, debugging, tests, and advanced workflows.
 
@@ -34,7 +34,7 @@ Current entry points:
 
 Accepted/strong Phase-1 foundation includes bounded Jobinja discovery/acquisition, immutable evidence, stable source identity/versioning, deterministic `jobinja-detail-v2` parsing, `english-projection-v2`, browser + CLI surfaces, independent LM Studio model roles, and Review Snapshot export.
 
-Current semantic stack:
+Current accepted semantic stack:
 
 ```text
 Jobinja source
@@ -46,26 +46,23 @@ P1.6 strict factual extraction
   Original: job-analysis-original-v9
   schema:   job-analysis-v4
         ↓
-Capability Intelligence — B3 accepted baseline
+Capability Intelligence — bounded B3 accepted baseline
   prompt:   job-capability-intelligence-v7
   schema:   job-capability-intelligence-v4
-        ↓
-Role Capability Blueprint — active B4 candidate
-  prompt:   role-capability-blueprint-v6
-  schema:   role-capability-blueprint-v5
         ↓
 Review Snapshot
   schema:   job-review-snapshot-v1
 ```
 
-Capability v7/v4 passed the bounded rich `tG9K` B3 gate on artifact **9** and is frozen while B4 proceeds.
+Role Capability Blueprint remains implemented experimentally at:
 
-Blueprint history is intentionally preserved:
+```text
+prompt: role-capability-blueprint-v6
+schema: role-capability-blueprint-v5
+best bounded model tested: gemma-4-12b-it-qat
+```
 
-- v3/v2 failed B4 structurally and semantically with both E2B and E4B;
-- v4/v3 fixed deterministic provenance and passed its mechanical live audit, but failed B4 semantic review because generated prose still invented employer-specific operating assumptions and ownership;
-- v5/v4 excluded Capability-derived prose and removed most expansion surfaces, but its remaining free-form `practical_interpretation` still inflated Area 2 into end-to-end infrastructure/streaming/deployment-lifecycle scope; live artifact **6** is therefore rejected B4 evidence;
-- v6/v5 is the current candidate and removes the free-form positive role-summary surface entirely.
+Blueprint is **not an accepted Phase-1 decision layer** and is not on the Phase-1 critical path after the completed calibration experiment.
 
 ## P1.6 — factual substrate
 
@@ -82,9 +79,15 @@ P1.6 records conservative employer-supported facts:
 
 The accepted dense `tG9K` anchor is English analysis artifact **29**. It contains 27 requirements and 7 responsibilities with reviewed obligation/depth preservation.
 
+Current analysis model:
+
+```text
+gemma-4-e4b-it-ud
+```
+
 ## Capability Intelligence v7
 
-v7 moves source survival outside model control:
+Capability v7 moves source survival outside model control:
 
 ```text
 accepted P1.6
@@ -95,139 +98,120 @@ accepted P1.6
 → persisted Capability
 ```
 
-The accepted `tG9K` artifact proves 25/25 capability-relevant requirements and 7/7 responsibilities are linked. Role-level requirements 25 and 26 remain deterministic source truth rather than being forced into capability profiles.
+The accepted `tG9K` artifact **9** links 25/25 capability-relevant requirements and 7/7 responsibilities. Role-level requirements 25 and 26 remain deterministic source truth rather than being forced into capability profiles.
 
-The CLI reports five of six explicit depth facts inside profiles because the sixth is intentionally role-level professional experience (`three to six years`, requirement 26). No accepted depth fact is lost.
+Five of six explicit depth facts appear inside profiles because the sixth is intentionally role-level professional experience (`three to six years`, requirement 26). No accepted depth fact is lost.
 
-A key downstream lesson from B4 is explicit: **accepted Capability grouping may flow downstream, but Capability model-derived prose is not automatically authoritative downstream context.**
+A key downstream lesson is explicit: **accepted Capability grouping may flow downstream, but Capability model-derived explanatory prose is not automatically authoritative downstream context.**
 
-See:
+Decision record:
 
 ```text
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-## Role Capability Blueprint v6
+## Blueprint experiment disposition
 
-Blueprint remains the human-facing professional interpretation layer.
+Blueprint was investigated as a bounded human-facing professional interpretation layer.
 
-Permanent rules:
-
-> **The model reasons; JobHunter owns provenance bookkeeping.**
-
-> **Model-created Blueprint prose is professional inference, not employer truth.**
-
-The v6 model receives only:
+The experiment intentionally tested progressively stronger deterministic boundaries:
 
 ```text
-selected neutral role context
-source-stated role purpose
-role-level source constraints
-accepted Capability labels
-exact linked P1.6 requirement facts
-exact linked P1.6 responsibility statements
+v3/v2 + E2B/E4B
+→ provenance/index confusion + semantic architecture overreach
+
+v4/v3 + E4B
+→ deterministic provenance fixed; broad generated prose still overreached
+
+v5/v4 + E4B
+→ Capability-derived prose removed; free-form interpretation still inflated scope
+
+v6/v5 + E4B
+→ narrow contract; structured repair failed and assumptions remained
+
+v6/v5 + gemma-4-12b-it-qat
+→ mechanically valid and materially better; still violated explicit semantic boundary
 ```
 
-It does not receive Capability summaries/sub-capabilities/underlying-knowledge/operational prose or duplicated long vacancy/company-description text.
-
-JobHunter deterministically persists the authoritative Capability identity plus exact P1.6 requirements, responsibilities, obligation strength, explicit depth, evidence, role purpose and role-level constraints.
-
-The model can create only:
+Best bounded experimental evidence:
 
 ```text
-professional_considerations[]
-  statement
-  interpretation_strength = plausible | speculative
-  uncertainty
-
-important_unknowns[]   # at least one per Capability
-overall_unknowns[]
+job: tG9K
+Blueprint artifact: 7
+P1.6 artifact: 29
+Capability artifact: 9
+model: gemma-4-12b-it-qat
+snapshot commit: 671bd6e3c43555c631958531671a0f1be9726554
 ```
 
-There is deliberately no model-generated:
+The v6 mechanical audit and CI passed, but complete semantic review still found assumption-bearing unknowns/considerations: automated APC/SPC feedback-loop framing, assumed cloud/on-prem model-hosting choices, `raw sensor physics`, and strict versioning/quality-standard implications not established by source.
+
+Therefore:
+
+- Blueprint code remains available and inspectable;
+- artifact 7 remains review evidence;
+- Blueprint is not accepted for Market, personal readiness, recommendations, or other authoritative Phase-1 decisions;
+- no Blueprint v7, validator weakening, vacancy-specific prompt patching, or adjacent model shopping is planned during Phase 1;
+- Blueprint may be revisited later only with a materially different grounding/inference approach or a demonstrated product-value gap.
+
+Decision record:
 
 ```text
-practical role summary / interpretation paragraph
-role shape
-likely depth
-hidden requirements
-tool recommendations
-work-product list
-scenario/topology generation
-probably-not-required list
-bottom line
+docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 ```
 
-Every positive generated consideration therefore carries an explicit uncertainty statement by construction. Generic validation rejects employer-obligation language and full/end-to-end lifecycle/stack/pipeline/system/infrastructure scope claims.
+## Current semantic acceptance workflow
 
-The v6 prompt also forbids common inference shortcuts such as high-volume data → streaming, process control → real-time control, APC/SPC → automated feedback, cloud/edge names → deployment placement, or deployment/governance → lifecycle ownership.
-
-See:
+The active gate is heterogeneous validation of the layers that have actually passed bounded acceptance:
 
 ```text
-docs/experiments/2026-08-11_BLUEPRINT_V3_GROUNDED_INTERPRETATION.md
-docs/experiments/2026-08-11_BLUEPRINT_V4_DETERMINISTIC_PROVENANCE_BOUNDARY.md
-docs/experiments/2026-08-11_BLUEPRINT_V4_SEMANTIC_FAILURE_AND_V5_BOUNDARY.md
-docs/experiments/2026-08-11_BLUEPRINT_V5_SEMANTIC_FAILURE_AND_V6_BOUNDARY.md
+source
+→ English projection
+→ P1.6
+→ Capability v7
 ```
 
-## Current B4 acceptance workflow
-
-Keep these upstream artifacts fixed:
+Target materially different roles:
 
 ```text
-English projection: 33
-English P1.6:        29
-Capability v7:       9
+t4jp  sparse/ambiguous anchor
+tG9K  rich industrial AI/ML baseline
++ Python/software
++ network/security
++ operations/platform/DevOps
 ```
 
-Confirm the active Blueprint contract:
+For each selected role review:
 
-```bash
-python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION; print(BLUEPRINT_PROMPT_VERSION); print(BLUEPRINT_SCHEMA_VERSION)"
-```
+- factual coverage and exact evidence;
+- responsibility vs candidate-qualification classification;
+- requirement strength and optionality;
+- explicit depth attachment;
+- education/experience preservation;
+- Capability requirement/responsibility coverage;
+- Capability grouping coherence;
+- deterministic source truth;
+- no unsupported ownership/autonomy or contextual-tool promotion.
 
-Expected:
-
-```text
-role-capability-blueprint-v6
-role-capability-blueprint-v5
-```
-
-Run only the downstream Blueprint stage:
-
-```bash
-jobhunter jobs blueprint tG9K
-```
-
-Do **not** rerun translation, P1.6 or Capability merely to test Blueprint.
-
-If a valid Blueprint artifact is produced:
-
-```bash
-jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v6_snapshot.py
-```
-
-The audit is necessary but not sufficient. B4 still requires complete semantic review. Reject a mechanically valid artifact if its professional considerations smuggle in source-unsupported streaming/real-time/low-latency/cloud-edge/full-lifecycle/architecture assumptions, or if its unknowns themselves presume systems the vacancy never establishes.
+Repeatable deterministic defects become tests. Model limitations are documented separately.
 
 ## Review Snapshots
 
 The live SQLite database remains local and ignored.
 
-Generate a selected repository-safe review snapshot:
+Generate a repository-safe review snapshot:
 
 ```bash
-jobhunter jobs snapshot tG9K
+jobhunter jobs snapshot <job-id>
 ```
 
-Default output:
+Selected example:
 
 ```text
 review-snapshots/jobs/tG9K.json
 ```
 
-The currently committed Blueprint v5 artifact 6 is **review evidence, not an accepted B4 baseline**. A new snapshot should replace it only after generating the active v6 candidate and reviewing it.
+The current `tG9K` snapshot contains accepted P1.6 artifact 29 and Capability artifact 9 plus **experimental rejected Blueprint artifact 7**. Current-chain status does not mean semantic acceptance.
 
 Snapshots exclude raw model responses/prompts, SQLite/WAL/SHM, raw HTML contents, secrets, logs, and future private user state.
 
@@ -239,21 +223,17 @@ capability_lm_studio_model = "..."
 blueprint_lm_studio_model = "..."
 ```
 
-Current controlled `tG9K` roles:
+Current configured roles:
 
 ```text
 analysis:   gemma-4-e4b-it-ud
 capability: gemma-4-e2b-it
-blueprint:  gemma-4-e4b-it-ud
+blueprint:  gemma-4-12b-it-qat   # experimental Blueprint only
 ```
 
-Blueprint inference automatically prepares the selected LM Studio instance with a 16,384-token context window, reusing or reloading the same model as needed. V6 caps its smaller structured completion at 4,096 tokens. Manual LM Studio context-window setup is not part of the normal workflow.
+Blueprint runtime automatically prepares the selected LM Studio model with an 8,192-token context and unloads other loaded LLM instances first; embedding models are left alone. Manual context/model switching is not part of normal Blueprint execution.
 
-Do not change evidence, upstream artifacts, Blueprint contract and model simultaneously. No multi-model voting.
-
-The tracked `jobhunter.toml` is public configuration and currently contains no secret. Do not put actual API tokens/passwords/keys into it; use an ignored local secret mechanism.
-
-Editable installs may create `*.egg-info/`; package metadata is ignored by Git.
+The tracked `jobhunter.toml` is public configuration and contains no secret. Do not put actual API tokens/passwords/keys into it; use an ignored local secret mechanism.
 
 ## Start the application
 
@@ -284,7 +264,7 @@ jobhunter jobs health <job-id>
 jobhunter jobs checks <job-id>
 jobhunter jobs audit
 jobhunter jobs capability <job-id>
-jobhunter jobs blueprint <job-id>
+jobhunter jobs blueprint <job-id>   # experimental
 jobhunter jobs snapshot <job-id>
 jobhunter translations status
 jobhunter translations models
@@ -297,10 +277,12 @@ Browser and CLI share the same services/state.
 ## Current near-term sequence
 
 ```text
-B3: Capability v7/v4 accepted on bounded tG9K gate
-→ B4: live Blueprint v6/v5 tG9K acceptance
-→ B5/CI-3: heterogeneous live-role review
-→ Phase-1 Market/source/lifecycle/partial-success/P1.7 closure
+P1.6 dense baseline accepted on tG9K
+→ Capability v7 bounded baseline accepted on tG9K
+→ Blueprint calibration experiment concluded/deferred
+→ heterogeneous P1.6 + Capability review
+→ Market/source/lifecycle/partial-success/P1.7 closure
+→ Phase-1 closure
 → only then corpus-wide Phase 2
 ```
 
