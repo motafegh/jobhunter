@@ -130,9 +130,27 @@ source
 
 Blueprint may be observed as non-gating research evidence only.
 
+Reusable mechanical audit:
+
+```bash
+python scripts/audit_ci3_capability_snapshot.py --job-id <job-id>
+```
+
+The CI-3 audit is deliberately job-agnostic. It verifies the current English P1.6 v9/v4 → Capability v7/v4 dependency chain, complete deterministic source truth, capability-vs-role-level partition, requirement/responsibility coverage, explicit-depth accounting, deterministic strength/work reconciliation, and the v7 ownership/cross-capability boundaries. A current experimental Blueprint payload is ignored by CI-3 acceptance.
+
+Permanent CI-3 workflow rule:
+
+```text
+snapshot current local state first
+→ run mechanical CI-3 audit
+→ inspect source/P1.6/Capability semantics
+→ regenerate only a stage that the snapshot proves missing/stale
+→ never rerun accepted upstream stages merely to create a fresh artifact
+```
+
 Target materially different roles:
 
-- [ ] sparse/ambiguous anchor (`t4jp`);
+- [~] sparse/ambiguous anchor (`t4jp`) — first action is snapshot/audit without regeneration;
 - [x] rich AI/ML anchor (`tG9K`) as dense baseline;
 - [ ] Python/software role;
 - [ ] network/security role;
