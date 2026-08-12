@@ -711,7 +711,7 @@
   },
   "configured_models": {
     "analysis": "gemma-4-e4b-it-ud",
-    "blueprint": "gemma-4-e4b-it-ud",
+    "blueprint": "gemma-4-12b-it-qat",
     "capability": "gemma-4-e2b-it"
   },
   "english_analysis": {
@@ -1252,21 +1252,25 @@
   "original_analysis": null,
   "role_capability_blueprint": {
     "analysis_artifact_id": 29,
-    "artifact_id": 6,
+    "artifact_id": 7,
     "blueprint": {
       "capability_areas": [
         {
-          "important_unknowns": [],
-          "interpretation_strength": "plausible",
-          "interpretation_uncertainty": "The specific operational scale and the exact nature of the feedback loops these statistical models influence are not detailed in this profile.",
+          "important_unknowns": [
+            "Whether any automated feedback loops for APC/SPC are currently operational or if models are primarily used for diagnostic reporting.",
+            "The specific volume of 'high-volume' data handled daily in terms of records or throughput."
+          ],
           "name": "Advanced ML/Statistical Modeling for Industrial Data",
-          "practical_interpretation": "The work involves applying advanced statistical and signal processing techniques to complex, high-dimensional sensor data derived from industrial processes. This includes utilizing methods like spectral analysis or multivariate decomposition for feature extraction, alongside implementing established quality control methodologies (like SPC) to build predictive models capable of identifying process deviations or anomalies.",
-          "probably_not_required": [],
           "professional_considerations": [
             {
               "interpretation_strength": "plausible",
-              "statement": "In environments utilizing industrial statistics (SPC, DOE), a common professional challenge involves ensuring that model performance metrics correlate meaningfully with established process capability standards.",
-              "uncertainty": "The vacancy does not establish whether the primary application of these models is for historical review or for immediate operational control."
+              "statement": "The intersection of signal processing (FFT/wavelets) and industrial statistics (SPC/DOE) may involve translating raw sensor physics into actionable process control metrics.",
+              "uncertainty": "It is not established whether the focus is on real-time signal cleaning or post-process batch analysis of historical traces."
+            },
+            {
+              "interpretation_strength": "plausible",
+              "statement": "Handling high-dimensional noise in semiconductor metrology often involves utilizing dimensionality reduction (PCA/PLS) to isolate meaningful process variations from sensor artifacts.",
+              "uncertainty": "The vacancy does not specify the typical number of dimensions or the primary source of noise (e.g., environmental vs. mechanical)."
             }
           ],
           "source_capability_index": 0,
@@ -1450,17 +1454,21 @@
           ]
         },
         {
-          "important_unknowns": [],
-          "interpretation_strength": "plausible",
-          "interpretation_uncertainty": "The specific boundaries of system ownership—whether this role builds the entire stack or integrates with existing platform services—remains inferred.",
+          "important_unknowns": [
+            "Whether the 'robust pipelines' are intended for batch processing of historical metrology data or near-real-time ingestion from fab equipment.",
+            "Which specific cloud provider (AWS, GCP, Azure) or on-premise infrastructure is currently utilized for model hosting."
+          ],
           "name": "Full-Stack ML Engineering & MLOps",
-          "practical_interpretation": "This function centers on designing and implementing the end-to-end infrastructure for machine learning applications within a manufacturing context. This involves building robust data ingestion pipelines capable of handling high-volume telemetry streams, developing automated workflows for model training and validation using MLOps tooling, and managing the deployment lifecycle of these models into operational environments while ensuring strict governance.",
-          "probably_not_required": [],
           "professional_considerations": [
             {
               "interpretation_strength": "plausible",
-              "statement": "When integrating fab data systems knowledge with MLOps tooling, a typical professional consideration is managing the transition from laboratory-validated models to reliable execution within complex industrial IT/OT boundaries.",
-              "uncertainty": "The profile does not establish whether the role's scope involves pioneering new deployment patterns or refining established ones."
+              "statement": "Partnering with technical leads to scope manufacturing problems suggests a role that bridges the gap between domain engineering and data science.",
+              "uncertainty": "The vacancy does not establish the specific organizational hierarchy or who holds final sign-off on model production readiness."
+            },
+            {
+              "interpretation_strength": "plausible",
+              "statement": "Requirements for traceability and governance in an industrial setting often imply a need for strict versioning of both data lineage and model weights to meet quality standards.",
+              "uncertainty": "The vacancy does not specify the regulatory framework or internal audit requirements governing these models."
             }
           ],
           "source_capability_index": 1,
@@ -1630,11 +1638,11 @@
       ]
     },
     "capability_artifact_id": 9,
-    "created_at": "2026-08-11T20:42:06.957228+00:00",
+    "created_at": "2026-08-12T10:46:08.098827+00:00",
     "job_detail_version_id": 40,
-    "model": "gemma-4-e4b-it-ud",
-    "prompt_version": "role-capability-blueprint-v5",
-    "schema_version": "role-capability-blueprint-v4",
+    "model": "gemma-4-12b-it-qat",
+    "prompt_version": "role-capability-blueprint-v6",
+    "schema_version": "role-capability-blueprint-v5",
     "translation_artifact_id": 33
   },
   "snapshot_schema_version": "job-review-snapshot-v1",
