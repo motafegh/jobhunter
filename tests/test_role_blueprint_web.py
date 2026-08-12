@@ -49,7 +49,8 @@ def test_role_blueprint_page_renders_before_capability_analysis(tmp_path: Path) 
     assert response.status_code == 200
     assert "Role Capability Blueprint" in response.text
     assert "Capability Intelligence required" in response.text
-    assert "professional interpretation" in response.text
+    assert "experimental professional interpretation" in response.text
+    assert "not an accepted Phase-1 decision layer" in response.text
 
 
 def test_role_blueprint_template_exposes_v6_boundary_not_legacy_expansion() -> None:
@@ -60,6 +61,8 @@ def test_role_blueprint_template_exposes_v6_boundary_not_legacy_expansion() -> N
     assert "professional_considerations" in template
     assert "important_unknowns" in template
     assert "source_role_purpose" in template
+    assert "Current chain · experimental" in template
+    assert "non-authoritative inference" in template
     for legacy_key in (
         "area.practical_interpretation",
         "area.interpretation_uncertainty",
