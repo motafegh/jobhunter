@@ -12,6 +12,9 @@ from openai import APIConnectionError, APITimeoutError, OpenAI
 
 from jobhunter.capability_v7_models import CapabilityReasoningDraft
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
+from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
+
+_CAPABILITY_CONTEXT_LENGTH = 16_384
 
 
 @dataclass(frozen=True, slots=True)
@@ -83,6 +86,17 @@ class CapabilityInferenceProvider:
                 "evidence_catalog must map string references to exact source text"
             )
 
+        runtime_context = None
+        if self._transport is None:
+            runtime_context = ensure_lm_studio_model_context(
+                openai_base_url=self._base_url,
+                model=self._model,
+                context_length=_CAPABILITY_CONTEXT_LENGTH,
+                api_token=self._api_token,
+                connect_timeout_seconds=self._connect_timeout_seconds,
+                exclusive_llm=True,
+            )
+
         # Local long-form reasoning has no read ceiling. Connection establishment remains bounded,
         # and transport replay is disabled so a disconnected long generation is never duplicated.
         timeout = httpx.Timeout(
@@ -143,6 +157,21 @@ class CapabilityInferenceProvider:
             http_client.close()
 
         finish_reason = completion.choices[0].finish_reason if completion.choices else None
+        runtime_payload: dict[str, Any] = {
+            "read_timeout_seconds": None,
+            "connect_timeout_seconds": self._connect_timeout_seconds,
+            "transport_retries": 0,
+            "configured_network_retries": self._network_retries,
+        }
+        if runtime_context is not None:
+            runtime_payload.update(
+                {
+                    "context_length_tokens": runtime_context.context_length,
+                    "context_action": runtime_context.action,
+                    "model_instance_id": runtime_context.instance_id,
+                    "exclusive_llm": True,
+                }
+            )
         request_body = {
             "model": self._model,
             "messages": messages,
@@ -150,12 +179,7 @@ class CapabilityInferenceProvider:
             "seed": seed,
             "max_tokens": max_tokens,
             "stream": False,
-            "runtime": {
-                "read_timeout_seconds": None,
-                "connect_timeout_seconds": self._connect_timeout_seconds,
-                "transport_retries": 0,
-                "configured_network_retries": self._network_retries,
-            },
+            "runtime": runtime_payload,
             "instructor": {
                 "mode": "JSON_SCHEMA",
                 "response_model": "CapabilityReasoningDraft",
