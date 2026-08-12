@@ -2,14 +2,14 @@
 
 `review-snapshots/` contains deliberately exported, repository-safe JSON snapshots of selected public Jobinja jobs. These files are **not** the live SQLite database and are not runtime inputs.
 
-A snapshot makes the selected dependency chain reviewable:
+A snapshot can make this dependency chain reviewable:
 
 ```text
 public Jobinja source
 → English projection
 → English P1.6 factual analysis
 → Capability Intelligence
-→ Role Capability Blueprint
+→ optional experimental Role Capability Blueprint
 ```
 
 ## Create / inspect / publish
@@ -41,9 +41,9 @@ Snapshots do not export SQLite/WAL/SHM, raw HTML contents, raw LM Studio respons
 
 The repository is public. Commit selected review examples intentionally.
 
-## Dependency status
+## Dependency status vs semantic acceptance
 
-The `status` object is authoritative for whether a downstream artifact belongs to the selected current chain:
+The `status` object records whether a downstream artifact belongs to the selected dependency chain:
 
 ```text
 translation_matches_english_analysis
@@ -51,19 +51,21 @@ capability_is_current_chain
 blueprint_is_current_chain
 ```
 
-A stale downstream artifact is not exported as current.
+These are **dependency/currentness flags, not semantic-acceptance flags**.
 
-## Current `tG9K` acceptance chain
+A current-chain Blueprint can still be rejected after semantic review. This distinction is now demonstrated by the selected `tG9K` snapshot.
 
-Configured role models:
+## Current `tG9K` review state
+
+Configured model roles:
 
 ```text
 analysis:   gemma-4-e4b-it-ud
 capability: gemma-4-e2b-it
-blueprint:  gemma-4-e4b-it-ud
+blueprint:  gemma-4-12b-it-qat   # experimental only
 ```
 
-Accepted fixed upstream chain:
+Accepted bounded chain:
 
 ```text
 English projection artifact 33
@@ -71,80 +73,74 @@ English projection artifact 33
 → Capability v7/v4 artifact 9
 ```
 
-Capability artifact 9 passed bounded B3 acceptance.
+P1.6 artifact 29 and Capability artifact 9 are accepted bounded anchors pending heterogeneous confirmation.
 
-Blueprint history:
-
-- v3/v2 failed B4 structurally and semantically;
-- v4/v3 passed deterministic mechanical provenance but failed semantic review;
-- v5/v4 artifact 6 was a valid current-chain review candidate and was committed in snapshot commit `ffa690361e5cbbb755fff7bcd587d6903d5dce89`, but complete semantic review rejected its remaining free-form role-summary inference;
-- v6/v5 is the active B4 candidate.
-
-The currently committed `tG9K` snapshot therefore contains **rejected v5 review evidence**, not an accepted Blueprint baseline. Replace it only with a newly generated v6 candidate.
-
-## Current B4 Blueprint review workflow
-
-Do **not** rerun translation, accepted P1.6 or Capability merely to test Blueprint.
-
-Confirm the active contract:
-
-```bash
-python -c "from jobhunter.role_blueprint_service import BLUEPRINT_PROMPT_VERSION, BLUEPRINT_SCHEMA_VERSION; print(BLUEPRINT_PROMPT_VERSION); print(BLUEPRINT_SCHEMA_VERSION)"
-```
-
-Expected:
+The currently committed snapshot also contains:
 
 ```text
+Blueprint artifact 7
 role-capability-blueprint-v6
-role-capability-blueprint-v5
+schema role-capability-blueprint-v5
+model gemma-4-12b-it-qat
 ```
 
-Run only:
+Artifact 7 passed the v6 mechanical audit and CI, but **failed complete B4 semantic acceptance**. It remains intentionally committed as the best bounded experimental Blueprint evidence, not an accepted decision layer.
+
+Failure examples included assumption-bearing unknowns/considerations around automated APC/SPC feedback loops, cloud/on-prem model hosting, `raw sensor physics`, and strict versioning/quality-standard implementation expectations not established by the vacancy.
+
+Decision record:
+
+```text
+docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
+```
+
+## Current semantic review workflow
+
+The active Phase-1 semantic gate is now heterogeneous review of:
+
+```text
+source
+→ English projection
+→ P1.6
+→ Capability v7
+```
+
+Blueprint may be present in a snapshot as non-gating research evidence, but it is not part of Phase-1 semantic acceptance.
+
+For each selected role, inspect:
+
+- source/English provenance;
+- P1.6 factual coverage, strength, optionality, explicit depth and evidence;
+- Capability requirement/responsibility coverage;
+- Capability grouping coherence;
+- role-level source partition;
+- deterministic source truth;
+- absence of unsupported ownership/autonomy or contextual-tool promotion.
+
+Target materially different roles, including `t4jp`, `tG9K`, Python/software, network/security, and operations/platform roles where available.
+
+## Blueprint audit remains available for research
+
+If intentionally generating an experimental v6 Blueprint:
 
 ```bash
-jobhunter jobs blueprint tG9K
+jobhunter jobs blueprint <job-id>
+jobhunter jobs snapshot <job-id>
+python scripts/audit_blueprint_v6_snapshot.py review-snapshots/jobs/<job-id>.json --job-id <job-id>
 ```
 
-If a valid Blueprint artifact is produced:
+The audit checks mechanical provenance/shape only. A PASS never means semantic acceptance.
 
-```bash
-jobhunter jobs snapshot tG9K
-python scripts/audit_blueprint_v6_snapshot.py
-```
+Do not create Blueprint v7, weaken validators, add vacancy-specific prompt patches, or continue nearby model shopping during Phase 1 merely to obtain a passing artifact.
 
-The v6 mechanical audit checks:
+## Publishing selected snapshots
 
-- exact P1.6 artifact 29 / Capability artifact 9 dependency identity;
-- one-to-one Blueprint-area mapping to accepted Capability profiles in source order;
-- complete deterministic Capability coverage;
-- exact source role purpose;
-- exact P1.6 source requirement/responsibility anchors per Capability;
-- exact source strength/depth/evidence propagation;
-- exact role-level constraints;
-- absence of v5 free-form `practical_interpretation`, `interpretation_uncertainty`, area-level strength and `probably_not_required` fields;
-- at least one important unknown per Capability;
-- professional considerations only plausible/speculative with non-empty uncertainty;
-- generic employer-obligation/full-scope wording absent from positive model-generated considerations;
-- older expansion fields such as role shape, likely depth, hidden requirements, tool suggestions, scenarios and bottom line absent.
-
-A mechanical pass does **not** accept B4. Complete semantic review must still reject source-unsupported streaming, real-time/low-latency behavior, automated feedback, cloud/edge placement, lifecycle ownership, architecture synthesis, optionality/depth promotion, or unknowns that themselves presume unstated systems.
-
-After successful generation and audit, inspect the snapshot diff:
+Before committing a selected review snapshot:
 
 ```bash
 git diff --check
 git status --short
-git diff -- review-snapshots/jobs/tG9K.json
+git diff -- review-snapshots/jobs/<job-id>.json
 ```
 
-To publish the candidate for review:
-
-```bash
-git add review-snapshots/jobs/tG9K.json
-git commit -m "review: capture tG9K Blueprint v6 candidate"
-git push origin main
-```
-
-Publishing a candidate makes it reviewable; it does not itself mean B4 is accepted.
-
-Do not automatically snapshot/commit the whole corpus.
+Commit only deliberately selected public review evidence. Do not automatically snapshot/commit the whole corpus.
