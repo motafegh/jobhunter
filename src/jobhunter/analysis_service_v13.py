@@ -23,11 +23,11 @@ from jobhunter.analysis_service import (
     _validate_evidence,
 )
 from jobhunter.analysis_service_v11 import (
+    _ENGLISH_SYSTEM_PROMPT_V11,
     _persisted_analysis_v11,
     qualification_list_spans,
     validate_v11_candidate_structured,
 )
-from jobhunter.analysis_service_v12 import _ENGLISH_SYSTEM_PROMPT_V12
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.evidence_refs import build_requirement_coverage_plan
 from jobhunter.translation_service import TranslationService
@@ -38,17 +38,24 @@ PROMPT_VERSION = ENGLISH_PROMPT_VERSION
 
 _V13_RULES = """
 
-P1.6 V13 CANDIDATE — DETERMINISTIC DECOMPOSITION OWNERSHIP:
+P1.6 V13 CANDIDATE — FIRST-CLASS QUALIFICATION REFERENCES + DETERMINISTIC DECOMPOSITION:
+- candidate_required_qualification_references contains JobHunter evidence-reference IDs, not raw
+  employer text. Every listed ID MUST be cited by one requirement's evidence field.
+- The referenced text is also present in evidence_references. Follow the normal P1.6 evidence
+  protocol: cite the ID exactly; do not copy or paraphrase the referenced text into evidence.
+- Evidence IDs beginning with field:__candidate_qualification_evidence: are JobHunter-generated
+  exact-source aliases copied verbatim from the real description solely to make deterministic
+  qualification items addressable. They are not new employer facts.
 - JobHunter may omit a broad legacy requirement_coverage item when it has mechanically proven
-  that the same exact source span is decomposed into multiple mandatory item-level qualification
+  that the same source span is decomposed into multiple mandatory item-level qualification
   references. Do not recreate that coarse paragraph as a catch-all requirement.
 - Do not add a coverage_exclusion merely to satisfy bookkeeping for a deterministically decomposed
   span. JobHunter owns and persists that decomposition provenance after semantic generation.
-- Continue to cite every candidate_required_qualification_references ID as its own requirement.
-- Keep all v10-v12 source-truth, structured-skill, qualification-vs-duty, and evidence rules.
+- Preserve structured required skills, qualification-vs-duty separation, source obligation
+  strength, and exact evidence. Qualification wording is not technical depth.
 """
 
-_ENGLISH_SYSTEM_PROMPT_V13 = _ENGLISH_SYSTEM_PROMPT_V12 + _V13_RULES
+_ENGLISH_SYSTEM_PROMPT_V13 = _ENGLISH_SYSTEM_PROMPT_V11 + _V13_RULES
 
 
 def _normalize(value: str) -> str:
