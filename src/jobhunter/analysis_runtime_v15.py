@@ -2,21 +2,52 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import replace
 from typing import Any
 
 from jobhunter.analysis_runtime import _translation_service
 from jobhunter.analysis_runtime_v14 import (
+    _ANALYSIS_CONTEXT_LENGTH,
     V14CandidateAnalysisProvider,
+    _complete_with_v14_response_model,
     _v14_candidate_evidence_view,
 )
 from jobhunter.analysis_service import AnalysisValidationError
-from jobhunter.analysis_service_v13 import decomposed_requirement_references
-from jobhunter.analysis_service_v15 import JobAnalysisServiceV15
+from jobhunter.analysis_service_v13 import (
+    decomposed_requirement_references,
+    inject_decomposition_exclusions,
+)
+from jobhunter.analysis_service_v15 import (
+    JobAnalysisServiceV15,
+    validate_v15_candidate_structured,
+)
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.translation_store import TranslationStore
+
+_CAPABILITY_CONCEPT_TYPES = {"skill", "knowledge", "practice", "domain", "experience", "tool"}
+_SCHEDULE_CONCEPT_RE = re.compile(
+    r"\b(?:"
+    r"full[ -]?time(?:\s*(?:and|or|/)\s*part[ -]?time)?|"
+    r"part[ -]?time(?:\s*(?:and|or|/)\s*full[ -]?time)?"
+    r")\b",
+    re.I,
+)
+_GENERIC_SCHEDULE_REMAINDERS = {
+    "availability",
+    "employment",
+    "job",
+    "position",
+    "role",
+    "schedule",
+    "work arrangement",
+    "working arrangement",
+    "working hours",
+    "working time",
+}
 
 
 def _v15_candidate_evidence_view(
@@ -31,6 +62,50 @@ def _v15_candidate_evidence_view(
     for reference in residual_refs:
         neutral_plan[reference]["obligation_hint"] = None
     return effective_fields, qualification_refs, residual_refs, neutral_plan
+
+
+def _normalize_v15_schedule_concepts(
+    structured: dict[str, Any],
+) -> tuple[dict[str, Any], list[int]]:
+    """Strip work-schedule wording only when a meaningful capability concept remains.
+
+    Exact evidence is never changed. Pure schedule/logistics concepts remain untouched so the
+    strict v14/v15 validator still rejects them rather than manufacturing a capability.
+    """
+
+    requirements = structured.get("requirements")
+    if not isinstance(requirements, list):
+        return structured, []
+
+    normalized_requirements: list[Any] = []
+    changed_indexes: list[int] = []
+    for index, item in enumerate(requirements):
+        if not isinstance(item, dict):
+            normalized_requirements.append(item)
+            continue
+        concept = str(item.get("concept") or "").strip()
+        concept_type = str(item.get("concept_type") or "").strip()
+        if concept_type not in _CAPABILITY_CONCEPT_TYPES or not _SCHEDULE_CONCEPT_RE.search(concept):
+            normalized_requirements.append(item)
+            continue
+
+        candidate = _SCHEDULE_CONCEPT_RE.sub(" ", concept)
+        candidate = re.sub(r"(?:^|\s)(?:and|or)(?:\s|$)", " ", candidate, flags=re.I)
+        candidate = " ".join(candidate.strip(" ,;:-/").split())
+        if not candidate or candidate.casefold() in _GENERIC_SCHEDULE_REMAINDERS:
+            normalized_requirements.append(item)
+            continue
+
+        normalized_item = dict(item)
+        normalized_item["concept"] = candidate
+        normalized_requirements.append(normalized_item)
+        changed_indexes.append(index)
+
+    if not changed_indexes:
+        return structured, []
+    normalized = dict(structured)
+    normalized["requirements"] = normalized_requirements
+    return normalized, changed_indexes
 
 
 def _mark_v15_runtime(
@@ -57,6 +132,66 @@ def _mark_v15_runtime(
 
 class V15CandidateAnalysisProvider(V14CandidateAnalysisProvider):
     """Reuse v14 typed/depth boundary with v15 residual strength semantics."""
+
+    def _run_once(
+        self,
+        *,
+        kwargs: dict[str, Any],
+        system_prompt: str,
+        original_fields: dict[str, Any],
+        effective_fields: dict[str, Any],
+        qualification_refs: list[str],
+        residual_refs: list[str],
+        additional_plan: dict[str, dict[str, Any]],
+        decomposed_refs: list[str],
+    ) -> StructuredInferenceResult:
+        selected_model = str(kwargs.get("model") or self._configured_model).strip()
+        runtime = ensure_lm_studio_model_context(
+            openai_base_url=self._base_url,
+            model=selected_model,
+            context_length=_ANALYSIS_CONTEXT_LENGTH,
+            api_token=self._api_token,
+            connect_timeout_seconds=min(self._timeout_seconds, 10.0),
+            exclusive_llm=True,
+        )
+        payload = dict(kwargs.get("user_payload") or {})
+        payload["analysis_fields"] = effective_fields
+        payload["candidate_required_qualification_references"] = qualification_refs
+        payload["candidate_residual_requirement_references"] = residual_refs
+
+        result = _complete_with_v14_response_model(
+            base_url=f"{self._base_url}/",
+            api_token=self._api_token,
+            timeout_seconds=self._timeout_seconds,
+            network_retries=self._max_retries,
+            selected_model=selected_model,
+            system_prompt=system_prompt,
+            user_payload=payload,
+            schema=kwargs["schema"],
+            max_tokens=int(kwargs.get("max_tokens") or 8192),
+            seed=int(kwargs.get("seed") or 0),
+            suppressed_requirement_coverage_references=decomposed_refs,
+            additional_requirement_coverage_plan=additional_plan,
+            validation_retries=1,
+        )
+        structured, normalized_indexes = _normalize_v15_schedule_concepts(result.structured)
+        structured = inject_decomposition_exclusions(structured, original_fields)
+        validate_v15_candidate_structured(structured, original_fields)
+
+        request_body = dict(result.request_body)
+        runtime_payload = dict(request_body.get("runtime") or {})
+        runtime_payload.update(
+            {
+                "context_length_tokens": runtime.context_length,
+                "context_action": runtime.action,
+                "model_instance_id": runtime.instance_id,
+                "exclusive_llm": True,
+                "p16_v15_schedule_depth_normalization": True,
+                "p16_v15_schedule_concept_normalization": normalized_indexes,
+            }
+        )
+        request_body["runtime"] = runtime_payload
+        return replace(result, structured=structured, request_body=request_body)
 
     def complete_structured(self, **kwargs: Any) -> StructuredInferenceResult:
         payload = kwargs.get("user_payload") or {}
@@ -138,6 +273,7 @@ def build_v15_candidate_analysis_service(settings: Settings) -> JobAnalysisServi
 
 __all__ = [
     "V15CandidateAnalysisProvider",
+    "_normalize_v15_schedule_concepts",
     "_v15_candidate_evidence_view",
     "build_v15_candidate_analysis_service",
 ]
