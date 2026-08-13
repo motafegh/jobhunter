@@ -3,7 +3,10 @@ from __future__ import annotations
 import pytest
 
 from jobhunter.analysis_runtime_v14 import _v14_candidate_evidence_view
-from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
+from jobhunter.analysis_runtime_v15 import (
+    _normalize_v15_schedule_concepts,
+    _v15_candidate_evidence_view,
+)
 from jobhunter.analysis_service import AnalysisValidationError
 from jobhunter.analysis_service_v13 import inject_decomposition_exclusions
 from jobhunter.analysis_service_v14 import (
@@ -213,3 +216,29 @@ def test_v15_residual_coverage_is_strength_neutral_and_type_contract_is_explicit
     assert "Use other for explicit candidate traits, values, behavioral expectations" in (
         _ENGLISH_SYSTEM_PROMPT_V15
     )
+
+
+def test_v15_normalizes_schedule_words_out_of_real_capability_concept() -> None:
+    structured = _valid_structured()
+    target = structured["requirements"][3]
+    original_evidence = target["evidence"]
+    target["concept"] = "Producing visual content full-time and part-time"
+
+    normalized, changed = _normalize_v15_schedule_concepts(structured)
+
+    assert changed == [3]
+    assert normalized["requirements"][3]["concept"] == "Producing visual content"
+    assert normalized["requirements"][3]["evidence"] == original_evidence
+    validate_v14_candidate_structured(normalized, _fields())
+
+
+def test_v15_does_not_turn_pure_schedule_logistics_into_capability() -> None:
+    structured = _valid_structured()
+    structured["requirements"][3]["concept"] = "Full-time availability"
+
+    normalized, changed = _normalize_v15_schedule_concepts(structured)
+
+    assert changed == []
+    assert normalized["requirements"][3]["concept"] == "Full-time availability"
+    with pytest.raises(AnalysisValidationError, match="schedule"):
+        validate_v14_candidate_structured(normalized, _fields())
