@@ -13,13 +13,17 @@ from jobhunter.inference import InferenceProviderError
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run isolated English P1.6 v14 candidate analysis for one current job.")
+    parser = argparse.ArgumentParser(
+        description="Run isolated English P1.6 v14 candidate analysis for one current job."
+    )
     parser.add_argument("--job-id", required=True)
     parser.add_argument("--config", type=Path, default=None)
     args = parser.parse_args()
     try:
         settings = Settings.load(args.config)
-        result = build_v14_candidate_analysis_service(settings).analyze_english_job(args.job_id)
+        result = build_v14_candidate_analysis_service(settings).analyze_english_job(
+            args.job_id
+        )
     except (ConfigLoadError, AnalysisValidationError, ValueError) as exc:
         print(f"P1.6 v14 candidate is not ready: {exc}", file=sys.stderr)
         return 2
