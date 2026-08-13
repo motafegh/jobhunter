@@ -51,7 +51,7 @@
         {
           "disposition": "excluded_non_requirement",
           "evidence": "the work is teachable.",
-          "rationale": "This describes the nature of the work being teachable, not a candidate career qualification."
+          "rationale": "The work is teachable, which relates to logistics/trainability rather than a candidate qualification."
         },
         {
           "disposition": "extracted_requirement",
@@ -61,67 +61,22 @@
         {
           "disposition": "excluded_non_requirement",
           "evidence": "Please do not send your resume for remote work.",
-          "rationale": "This is an instruction/logistical constraint regarding remote work application submission, not a candidate qualification."
+          "rationale": "Instruction regarding remote work application process (logistics)."
         },
         {
           "disposition": "excluded_non_requirement",
           "evidence": "(Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "This lists benefits and location details, which are logistical information, not candidate qualifications."
+          "rationale": "Details about location, benefits, and travel are logistical/compensation details."
         }
       ],
       "requirements": [
-        {
-          "concept": "Content creation with AI",
-          "concept_type": "skill",
-          "confidence": "high",
-          "depth_signal": null,
-          "evidence": "Skills in content creation with AI",
-          "rationale": "Directly listed as a required skill.",
-          "requirement_type": "required"
-        },
-        {
-          "concept": "Creativity in creating visual and video content",
-          "concept_type": "skill",
-          "confidence": "high",
-          "depth_signal": null,
-          "evidence": "creativity in creating visual and video content",
-          "rationale": "Directly listed as a required skill.",
-          "requirement_type": "required"
-        },
-        {
-          "concept": "Website design",
-          "concept_type": "skill",
-          "confidence": "high",
-          "depth_signal": null,
-          "evidence": "website design",
-          "rationale": "Directly listed as a required skill.",
-          "requirement_type": "required"
-        },
-        {
-          "concept": "Producing visual content",
-          "concept_type": "skill",
-          "confidence": "high",
-          "depth_signal": null,
-          "evidence": "ability to produce visual content full-time and part-time",
-          "rationale": "Directly listed as a required skill/ability.",
-          "requirement_type": "required"
-        },
-        {
-          "concept": "Work commitment and ethics",
-          "concept_type": "skill",
-          "confidence": "high",
-          "depth_signal": null,
-          "evidence": "Ethics and your work commitment are important to us.",
-          "rationale": "Explicitly stated as important to the employer.",
-          "requirement_type": "required"
-        },
         {
           "concept": "Artificial Intelligence",
           "concept_type": "skill",
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Artificial Intelligence",
-          "rationale": "Listed in the structured skills array.",
+          "rationale": "Structured skill requirement.",
           "requirement_type": "required"
         },
         {
@@ -130,7 +85,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Video content production",
-          "rationale": "Listed in the structured skills array.",
+          "rationale": "Structured skill requirement.",
           "requirement_type": "required"
         },
         {
@@ -139,7 +94,52 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "social networks",
-          "rationale": "Listed in the structured skills array.",
+          "rationale": "Structured skill requirement.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Content creation with AI",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Skills in content creation with AI",
+          "rationale": "Explicit qualification requirement.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Creativity in creating visual and video content",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "creativity in creating visual and video content",
+          "rationale": "Explicit qualification requirement.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Website design",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "website design",
+          "rationale": "Explicit qualification requirement.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Visual content production ( )",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "ability to produce visual content full-time and part-time",
+          "rationale": "Explicit qualification requirement regarding production ability and availability.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Ethics and work commitment",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ethics and your work commitment are important to us.",
+          "rationale": "Residual text explicitly states importance.",
           "requirement_type": "required"
         }
       ],
@@ -147,11 +147,11 @@
       "responsibility_coverage": [],
       "role_purpose": []
     },
-    "artifact_id": 33,
-    "created_at": "2026-08-13T19:24:44.189666+00:00",
+    "artifact_id": 34,
+    "created_at": "2026-08-13T21:30:26.021876+00:00",
     "job_detail_version_id": 41,
     "model": "gemma-4-e4b-it-ud",
-    "prompt_version": "job-analysis-english-v14",
+    "prompt_version": "job-analysis-english-v15",
     "schema_version": "job-analysis-v4",
     "translation_artifact_id": 34
   },
