@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import replace
+from threading import Lock
 from typing import Any
 
 from jobhunter.analysis_runtime import _translation_service
@@ -19,7 +20,7 @@ from jobhunter.analysis_service_v14 import (
 )
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
-from jobhunter.inference.instructor_lm_studio_v13 import complete_analysis_with_instructor_v13
+from jobhunter.inference import instructor_lm_studio_v13 as instructor_v13
 from jobhunter.inference.instructor_lm_studio_v14 import JobAnalysisResponseV14
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
@@ -27,6 +28,25 @@ from jobhunter.translation_store import TranslationStore
 
 _ANALYSIS_CONTEXT_LENGTH = 16_384
 _RESIDUAL_FIELD = "__candidate_residual_requirement_evidence"
+_V14_TYPED_MODEL_LOCK = Lock()
+
+
+def _complete_with_v14_response_model(**kwargs: Any) -> StructuredInferenceResult:
+    """Run the historical candidate helper with a v14-only typed response model.
+
+    v13 is an isolated historical candidate helper, not a public production path. Keep its source
+    unchanged and substitute the v14 response model only for the duration of this bounded call.
+    The lock prevents overlapping v14 substitutions inside one process, and the original model is
+    restored even when validation or transport fails.
+    """
+
+    with _V14_TYPED_MODEL_LOCK:
+        original_model = instructor_v13.JobAnalysisResponse
+        instructor_v13.JobAnalysisResponse = JobAnalysisResponseV14
+        try:
+            return instructor_v13.complete_analysis_with_instructor_v13(**kwargs)
+        finally:
+            instructor_v13.JobAnalysisResponse = original_model
 
 
 def _v14_candidate_evidence_view(
@@ -104,7 +124,7 @@ class V14CandidateAnalysisProvider:
         payload["candidate_required_qualification_references"] = qualification_refs
         payload["candidate_residual_requirement_references"] = residual_refs
 
-        result = complete_analysis_with_instructor_v13(
+        result = _complete_with_v14_response_model(
             base_url=f"{self._base_url}/",
             api_token=self._api_token,
             timeout_seconds=self._timeout_seconds,
@@ -118,7 +138,6 @@ class V14CandidateAnalysisProvider:
             suppressed_requirement_coverage_references=decomposed_refs,
             additional_requirement_coverage_plan=additional_plan,
             validation_retries=1,
-            response_model=JobAnalysisResponseV14,
         )
         structured = inject_decomposition_exclusions(result.structured, original_fields)
         validate_v14_candidate_structured(structured, original_fields)
@@ -211,6 +230,7 @@ def build_v14_candidate_analysis_service(settings: Settings) -> JobAnalysisServi
 
 __all__ = [
     "V14CandidateAnalysisProvider",
+    "_complete_with_v14_response_model",
     "_v14_candidate_evidence_view",
     "build_v14_candidate_analysis_service",
 ]
