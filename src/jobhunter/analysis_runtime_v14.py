@@ -20,6 +20,7 @@ from jobhunter.analysis_service_v14 import (
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.inference.instructor_lm_studio_v13 import complete_analysis_with_instructor_v13
+from jobhunter.inference.instructor_lm_studio_v14 import JobAnalysisResponseV14
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.translation_store import TranslationStore
@@ -117,6 +118,7 @@ class V14CandidateAnalysisProvider:
             suppressed_requirement_coverage_references=decomposed_refs,
             additional_requirement_coverage_plan=additional_plan,
             validation_retries=1,
+            response_model=JobAnalysisResponseV14,
         )
         structured = inject_decomposition_exclusions(result.structured, original_fields)
         validate_v14_candidate_structured(structured, original_fields)
@@ -131,6 +133,7 @@ class V14CandidateAnalysisProvider:
                 "p16_v14_required_qualification_references": qualification_refs,
                 "p16_v14_residual_requirement_references": residual_refs,
                 "p16_v14_deterministic_decomposition_references": decomposed_refs,
+                "p16_v14_schedule_depth_normalization": True,
             }
         )
         request_body["runtime"] = runtime_payload
