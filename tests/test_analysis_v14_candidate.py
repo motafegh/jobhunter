@@ -13,9 +13,9 @@ from jobhunter.analysis_service_v14 import (
     residual_requirement_spans,
     validate_v14_candidate_structured,
 )
+from jobhunter.analysis_service_v15 import _ENGLISH_SYSTEM_PROMPT_V15
 from jobhunter.analysis_service_v15 import (
     ENGLISH_PROMPT_VERSION as V15_ENGLISH_PROMPT_VERSION,
-    _ENGLISH_SYSTEM_PROMPT_V15,
 )
 from jobhunter.inference.instructor_lm_studio_v14 import (
     JobAnalysisResponseV14,
