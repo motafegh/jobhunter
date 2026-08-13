@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import jobhunter.analysis_runtime_v15 as runtime_v15
-
 from jobhunter.p16_v15_runtime_guard import (
     normalize_ability_wrappers,
     v15_ability_wrapper_guard,
