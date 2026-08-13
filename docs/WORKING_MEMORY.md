@@ -1,12 +1,12 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-12  
+**Date:** 2026-08-13  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Current gate:** heterogeneous semantic validation of P1.6 + Capability v7; isolated P1.6 v12 candidate active on sparse `t4jp`  
+**Current gate:** CI-3 heterogeneous semantic validation of P1.6 + Capability v7; isolated P1.6 v15 candidate active on sparse `t4jp`  
 **Purpose:** Resume from the real repository state without reconstructing recent semantic-calibration work.
 
-This file is not controlling. Product/domain/source/architecture, roadmap, implementation, active acceptance plan, and TODO win on conflict.
+This file is not controlling. Product/domain/source/architecture, roadmap, implementation, active acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict.
 
 ## 1. Product / architecture identity
 
@@ -47,21 +47,12 @@ Review Snapshot:              job-review-snapshot-v1
 Active isolated acceptance candidate:
 
 ```text
-English P1.6 candidate:       job-analysis-english-v12
+English P1.6 candidate:       job-analysis-english-v15
 Candidate schema:             job-analysis-v4
 Status:                       NOT promoted; sparse + dense validation required
 ```
 
-Historical sparse candidates:
-
-```text
-v9 artifact 30  → rejected
-v10 artifact 31 → mechanical PASS / semantic FAIL
-v11             → failed closed before persistence: evidence-reference protocol mismatch
-v12             → active isolated candidate
-```
-
-The normal `jobhunter jobs analyze` path remains v9. Candidate-only v12 tooling is listed below.
+The normal `jobhunter jobs analyze` path remains public v9. Candidate-only v15 tooling is listed below.
 
 Current configured model roles:
 
@@ -102,29 +93,19 @@ Capability artifact `9` remains the bounded accepted B3 baseline:
 - no positive ownership/independence synthesis;
 - no cross-capability synthesis.
 
+Freeze Capability v7 unless heterogeneous evidence reveals a repeatable material defect. If P1.6 is promoted to a new identity, Capability v7 must be rebuilt against the promoted analysis artifact; do not reuse v9-linked Capability artifacts.
+
 Decision record:
 
 ```text
 docs/experiments/2026-08-11_CAPABILITY_V7_B3_ACCEPTANCE.md
 ```
 
-Freeze Capability v7 unless heterogeneous evidence reveals a repeatable material defect. If P1.6 is promoted to a new identity, Capability v7 must be rebuilt against the promoted analysis artifact; do not reuse v9-linked Capability artifacts.
-
 ## 4. Blueprint experiment conclusion
 
 Blueprint is implemented but **not accepted for Phase-1 decisions**.
 
-Best bounded experimental evidence remains:
-
-```text
-job: tG9K
-Blueprint artifact: 7
-analysis artifact: 29
-Capability artifact: 9
-prompt/schema: role-capability-blueprint-v6 / role-capability-blueprint-v5
-model: gemma-4-12b-it-qat
-snapshot commit: 671bd6e3c43555c631958531671a0f1be9726554
-```
+Best bounded experimental evidence remains Blueprint artifact `7` on `tG9K` using `role-capability-blueprint-v6 / role-capability-blueprint-v5` and model `gemma-4-12b-it-qat`.
 
 Mechanical checks passed, but semantic review still found source-unstated feedback-loop/platform/implementation assumptions. Do not create Blueprint v7, weaken its validators, or reopen nearby model shopping during Phase 1.
 
@@ -199,199 +180,135 @@ teachable. Ethics and your work commitment are important to us. ...
 
 No explicit responsibility section exists.
 
-## 7. `t4jp` v9 artifact 30 — rejected
+## 7. Sparse P1.6 experiment history
 
 ```text
-prompt/schema:    job-analysis-english-v9 / job-analysis-v4
-artifact:         30
-responsibilities: 1
-requirements:     4
-snapshot commit:  f77f1378ad638eba5ab66ccd36762386a140eabd
+v9 artifact 30
+→ rejected: structured skills could disappear; qualification became responsibility
+
+v10 artifact 31
+→ mechanical PASS / semantic FAIL: coarse coverage lost explicit neighboring qualifications
+
+v11
+→ failed before persistence: qualification spans were not first-class evidence-reference IDs
+
+v12
+→ evidence-reference problem fixed
+→ failed before persistence because coarse coverage still remained model-owned bookkeeping
+
+v13 artifact 32
+→ 0 responsibilities / 7 requirements
+→ 3/3 structured skills + 4/4 qualification items
+→ semantic FAIL: whole-span suppression hid Ethics/work commitment and one concept retained
+  Ability-to + schedule wording
+
+v14 artifact 33
+→ 0 responsibilities / 8 requirements
+→ 3/3 structured skills + 4/4 qualification items + 4/4 residual decisions
+→ 1 decomposed coarse span / 12 coverage decisions
+→ complete mechanical PASS
+→ semantic FAIL only at remaining ontology/strength boundary:
+   1. Work commitment and ethics typed as `skill` instead of behavioral/value `other`
+   2. residual coverage mechanically forced `obligation_hint = required`
 ```
 
-General defects:
+Artifact `33` is important positive evidence: v14 solved the earlier recall, qualification-vs-duty, residual-loss, concept-normalization, and schedule-vs-depth failure classes. It is still not promotable because P1.6 concept type and requirement strength are downstream facts too.
 
-1. top-level structured `skills[]` were outside deterministic requirement coverage, allowing explicit `social networks` to disappear;
-2. qualification wording (`ability to ...`) was paraphrased into a responsibility despite no explicit duty section.
+Capability must not be generated above rejected sparse artifacts `30`, `31`, `32`, or `33`.
 
-Capability must not be generated above artifact `30`.
-
-## 8. `t4jp` v10 artifact 31 — mechanical PASS / semantic FAIL
-
-v10 added exact structured-skill coverage and stricter qualification-vs-duty validation.
-
-Live result:
-
-```text
-prompt/schema:       job-analysis-english-v10 / job-analysis-v4
-artifact:            31
-model:               gemma-4-e4b-it-ud
-responsibilities:    0
-requirements:        7
-structured skills:   3/3
-mechanical audit:    PASS
-snapshot commit:     23348b2
-```
-
-v10 fixed its targeted defects but still failed semantic acceptance because coarse description coverage allowed explicit neighboring qualifications to disappear. Artifact `31` omitted distinct source facts including:
-
-```text
-Skills in content creation with AI
-creativity in creating visual and video content
-```
-
-The broad structured tag `Artificial Intelligence` is not semantically equivalent to the narrower `content creation with AI` qualification.
-
-Therefore:
-
-- artifact `31` is rejected;
-- do not run Capability above it;
-- do not run dense `tG9K` under v10;
-- v10 is concluded, not active.
-
-Decision record:
+Detailed records:
 
 ```text
 docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
-```
-
-## 9. P1.6 v11 — failed evidence-reference protocol experiment
-
-v11 correctly introduced generic qualification-list granularity and identified these four exact `t4jp` items:
-
-```text
-Skills in content creation with AI
-creativity in creating visual and video content
-website design
-ability to produce visual content full-time and part-time
-```
-
-It also defined coarse-span supersession with durable:
-
-```text
-decomposed_requirement
-```
-
-provenance.
-
-However the first live v11 generation failed closed before persistence:
-
-```text
-P1.6 v11 omitted explicit qualification-list items: all four expected items
-```
-
-Root cause was model-facing evidence protocol, not list detection. Production P1.6 tells the model to cite supplied `evidence_references` IDs, while v11 supplied its mandatory qualification items as separate raw strings under `candidate_required_qualification_spans`. Those strings were valid exact source excerpts but were not first-class evidence references. The bounded repair repeated the missing raw spans without resolving that contradiction.
-
-Therefore:
-
-- no v11 `t4jp` artifact was persisted;
-- v11 is concluded as an evidence-plumbing failure;
-- the failure is not classified as proof of model semantic incapability;
-- v11 identity is not mutated in place.
-
-Decision record:
-
-```text
+docs/experiments/2026-08-12_P16_V10_SEMANTIC_FAILURE_AND_V11_QUALIFICATION_GRANULARITY.md
 docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
+docs/experiments/2026-08-13_P16_V12_COARSE_COVERAGE_FAILURE_AND_V13_DETERMINISTIC_DECOMPOSITION.md
+docs/experiments/2026-08-13_P16_V13_SEMANTIC_FAILURE_AND_V14_COMPLETE_DECOMPOSITION.md
+docs/working-memory/2026-08-13_P16_V15_HANDOFF.md
 ```
 
-## 10. Isolated P1.6 v12 candidate — active
+## 8. Isolated P1.6 v15 candidate — active
 
 Candidate identity:
 
 ```text
-job-analysis-english-v12
+job-analysis-english-v15
 job-analysis-v4
 ```
 
-v12 preserves the v11 semantic boundary and changes the candidate evidence plumbing so every deterministic qualification item is addressable through the normal P1.6 reference protocol.
+v15 preserves all successful v14 mechanics:
 
-The isolated v12 runtime creates a temporary exact-source alias field only inside the inference call:
-
-```text
-__candidate_qualification_evidence
-```
-
-For `t4jp`, Instructor then exposes normal evidence IDs:
-
-```text
-field:__candidate_qualification_evidence:0
-field:__candidate_qualification_evidence:1
-field:__candidate_qualification_evidence:2
-field:__candidate_qualification_evidence:3
-```
-
-The model receives those IDs in:
-
-```text
-candidate_required_qualification_references
-```
-
-and must cite each ID in a separate requirement. Instructor canonicalizes emitted IDs back to exact source text before persistence.
-
-Trust boundary:
-
-- every alias value is an exact contiguous excerpt already present in the real description;
-- no inferred/paraphrased text is added to the evidence catalog;
-- the persisted English projection is not mutated;
-- production/public v9 Instructor and analysis paths remain unchanged.
-
-v12 retains:
-
-- v10 structured `skills[]` coverage;
+- structured `skills[]` deterministic coverage;
 - qualification-vs-duty protection;
-- v11 qualification-list granularity;
-- coarse requirement-span supersession;
-- truthful `decomposed_requirement` provenance.
+- exact qualification-list evidence references;
+- complete coarse-span decomposition;
+- exact residual sentence coverage;
+- durable `decomposed_requirement` provenance;
+- normalized capability concepts;
+- schedule-only depth normalization;
+- strict exact evidence and source accounting.
 
-Implementation/tooling:
+v15 changes only two remaining boundaries.
 
-```text
-src/jobhunter/analysis_service_v12.py
-src/jobhunter/analysis_runtime_v12.py
-scripts/run_p16_v12_candidate.py
-scripts/export_p16_v12_candidate_snapshot.py
-scripts/audit_p16_v12_candidate_snapshot.py
-tests/test_analysis_v12_candidate.py
-```
-
-The v12 implementation gate is green:
+### Residual coverage no longer forces strength
 
 ```text
-Ruff:                    PASS
-full pytest:             PASS
-warnings-as-errors:      PASS
+coverage obligation != employer obligation strength
 ```
 
-This proves code-path correctness only, not sparse semantic acceptance.
-
-Decision record:
+Residual coverage uses:
 
 ```text
-docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
+obligation_hint = null
 ```
 
-## 11. Exact next work
+Every residual still must be extracted or explicitly excluded, but required/preferred/contextual must come from exact source wording. Mandatory qualification-list items remain required because their qualification-list context establishes that strength.
 
-Do **not** run Capability for `t4jp` and do **not** run `tG9K` v12 yet.
+### Concept-type ontology is explicit
+
+```text
+skill      = ability/proficiency to perform a task/activity
+tool       = named technology/instrument
+knowledge  = subject-matter understanding
+practice   = method/discipline
+domain     = industry/problem area
+experience = prior applied exposure
+education  = credential
+other      = candidate traits, values, behavioral expectations, professional qualities
+```
+
+The type decision remains model-owned semantic judgment plus human review. No vacancy-specific `ethics`/`commitment` keyword patch was added.
+
+v15 deterministic implementation/tests are green:
+
+```text
+Ruff:               PASS
+full pytest:        PASS
+warnings-as-errors: PASS
+```
+
+## 9. Exact next work
+
+Do **not** run Capability for `t4jp` and do **not** run dense `tG9K` v15 yet.
 
 Next:
 
-1. run isolated v12 on `t4jp`;
+1. run isolated v15 on `t4jp`;
 2. if generation succeeds, export its candidate snapshot;
-3. run the v12 mechanical audit;
+3. run the v15 mechanical audit;
 4. commit/push the snapshot;
-5. review every v12 requirement/responsibility and coverage disposition against source/projection;
-6. only if sparse v12 passes semantic review, run dense `tG9K` v12 regression against accepted artifact `29`;
-7. only if sparse+dense pass, decide whether v12 should replace public v9;
-8. only after P1.6 promotion/acceptance, rebuild and review Capability v7 on the promoted identity.
+5. review every v15 requirement/responsibility/coverage decision against source/projection;
+6. verify `Work commitment and ethics` is represented as `concept_type = other` and strength is source-supported rather than mechanically forced;
+7. only if sparse v15 passes semantic review, run dense `tG9K` v15 regression against accepted artifact `29`;
+8. only if sparse+dense pass, decide whether v15 replaces public v9;
+9. only after P1.6 promotion/acceptance, rebuild and review Capability v7 on the promoted identity.
 
 Candidate commands:
 
 ```bash
-python scripts/run_p16_v12_candidate.py --job-id t4jp
-python scripts/export_p16_v12_candidate_snapshot.py --job-id t4jp
-python scripts/audit_p16_v12_candidate_snapshot.py --job-id t4jp
+python scripts/run_p16_v15_candidate.py --job-id t4jp
+python scripts/export_p16_v15_candidate_snapshot.py --job-id t4jp
+python scripts/audit_p16_v15_candidate_snapshot.py --job-id t4jp
 ```
 
 After heterogeneous semantic acceptance:
