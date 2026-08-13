@@ -1,8 +1,10 @@
 import pytest
 
+from jobhunter.analysis_service import AnalysisValidationError
 from jobhunter.analysis_service_v13 import (
     ENGLISH_PROMPT_VERSION,
     _persisted_analysis_v13,
+    _validate_evidence_v13,
     decomposed_requirement_references,
     inject_decomposition_exclusions,
     qualification_list_spans,
@@ -117,3 +119,18 @@ def test_v13_persistence_marks_coarse_span_as_decomposed_requirement() -> None:
     assert {"Artificial Intelligence", "Video content production", "social networks"}.issubset(
         extracted
     )
+
+
+def test_v13_final_evidence_guard_accepts_deterministic_decomposition() -> None:
+    analysis = _persisted_analysis_v13(_valid_structured(), _fields())
+    _validate_evidence_v13(analysis, _fields())
+
+
+def test_v13_final_evidence_guard_rejects_fake_decomposition() -> None:
+    analysis = _persisted_analysis_v13(_valid_structured(), _fields())
+    decomposed = next(
+        item for item in analysis["coverage"] if item["disposition"] == "decomposed_requirement"
+    )
+    decomposed["evidence"] = "Ethics and work commitment are important."
+    with pytest.raises(AnalysisValidationError, match="non-deterministic"):
+        _validate_evidence_v13(analysis, _fields())
