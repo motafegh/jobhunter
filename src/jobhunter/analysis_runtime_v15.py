@@ -85,7 +85,10 @@ def _normalize_v15_schedule_concepts(
             continue
         concept = str(item.get("concept") or "").strip()
         concept_type = str(item.get("concept_type") or "").strip()
-        if concept_type not in _CAPABILITY_CONCEPT_TYPES or not _SCHEDULE_CONCEPT_RE.search(concept):
+        if (
+            concept_type not in _CAPABILITY_CONCEPT_TYPES
+            or not _SCHEDULE_CONCEPT_RE.search(concept)
+        ):
             normalized_requirements.append(item)
             continue
 
