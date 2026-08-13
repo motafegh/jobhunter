@@ -1,241 +1,65 @@
 """Candidate-only Instructor path for P1.6 v13 deterministic decomposition.
 
-The production Instructor path remains unchanged. This helper differs only in one place: callers
-may supply a set of requirement-coverage references that JobHunter has already proved are coarse
-spans deterministically superseded by finer exact evidence. Those references are removed from the
-model/Pydantic coverage obligation while all evidence remains available for grounding.
-"""
+The production Instructor path remains unchanged. ThhÈ[\ˆY™™\œÈÛ›H[ˆÛ™HXÙNˆØ[\œÂ›X^HÝ\HHÙ]Ùˆ™\]Z\™[Y[XÛÝ™\˜YÙH™Y™\™[˜Ù\È]›Ø’[\ˆ\È[™XYH›Ý™Y\™HÛØ\œÙBœÜ[œÈ]\›Z[š\ÝXØ[HÝ\\œÙYYžHš[™\ˆ^XÝ]šY[˜ÙKˆÜÙH™Y™\™[˜Ù\È\™H™[[Ý™Yœ›ÛHB›[Ù[ÔY[XÈÛÝ™\˜YÙHØ›YØ][ÛˆÚ[H[]šY[˜ÙH™[XZ[œÈ]˜Z[X›H›ÜˆÜ›Ý[™[™Ë‚ˆˆˆ‚‚™œ›ÛH×Ù]\™W×È[\Ü[››Ý][ÛœÂ‚š[\ÜœÛÛ‚™œ›ÛH\[™È[\Ü[žB‚š[\Üš[\Ü[œÝXÝÜ‚™œ›ÛHÜ[˜ZH[\ÜTPÛÛ›™XÝ[Û‘\œ›Ü‹TU[Y[Ý]\œ›Ü‹Ü[RB™œ›ÛHY[XÈ[\Ü˜\ÙS[Ù[‚™œ›ÛH›Øš[\‹™]šY[˜ÙWÜ™YœÈ[\Ü
+ˆZ[ÙšY[Ù]šY[˜ÙWØØ][ÙËˆZ[Ü™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[‹ˆZ[Ü™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[‹ˆ]šY[˜ÙWÜ™Y™\™[˜ÙWÜ^[ØYˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ^[ØYˆ™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ^[ØYŠB™œ›ÛH›Øš[\‹š[™™\™[˜ÙK˜˜\ÙH[\Ü[™™\™[˜ÙPÛÛ›™XÝ[Û‘\œ›Ü‹[™™\™[˜ÙT™\ÜÛœÙQ\œ›Ü‚™œ›ÛH›Øš[\‹š[™™\™[˜ÙKš[œÝXÝÜ—ÛWÜÝY[È[\Ü
+ˆ›Ø[˜[\Ú\Ô™\ÜÛœÙKˆÛXY—Ù]šY[˜ÙWØØ][ÙËŠB™œ›ÛH›Øš[\‹š[™™\™[˜ÙK›WÜÝY[È[\ÜÝXÝ\™Y[™™\™[˜ÙT™\Ý[‚‚™Yˆš[\™YÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[Šˆ[˜[\Ú\×ÙšY[ÎˆXÝÜÝ‹[žWKˆÝ\™\ÜÙYÜ™Y™\™[˜Ù\Îˆ\ÝÜÝ—KŠHOˆXÝÜÝ‹XÝÜÝ‹[žWWN‚ˆˆˆ‘š[\ˆÛ›HYXÚ[šXØ[H^ÛYX›HÛÝ™\˜YÙH™YœÎÈ˜Z[ÛÜÙYÛˆ[œØY™HÝ\™\ÜÚ[Û‹ˆˆˆ‚‚ˆ[ˆHZ[Ü™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[Š[˜[\Ú\×ÙšY[ÊBˆ™\]Y\ÝYHÜ™Y™\™[˜ÙKœÝš\
 
-from __future__ import annotations
+H›Üˆ™Y™\™[˜ÙH[ˆÝ\™\ÜÙYÜ™Y™\™[˜Ù\ÈYˆ™Y™\™[˜ÙKœÝš\
 
-import json
-from typing import Any
-
-import httpx
-import instructor
-from openai import APIConnectionError, APITimeoutError, OpenAI
-
-from jobhunter.evidence_refs import (
-    build_field_evidence_catalog,
-    build_requirement_coverage_plan,
-    build_responsibility_coverage_plan,
-    evidence_reference_payload,
-    requirement_coverage_payload,
-    responsibility_coverage_payload,
-)
-from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
-from jobhunter.inference.instructor_lm_studio import (
-    JobAnalysisResponse,
-    _leaf_evidence_catalog,
-)
-from jobhunter.inference.lm_studio import StructuredInferenceResult
-
-
-def filtered_requirement_coverage_plan(
-    analysis_fields: dict[str, Any],
-    suppressed_references: list[str],
-) -> dict[str, dict[str, Any]]:
-    """Filter only mechanically excludable coverage refs; fail closed on unsafe suppression."""
-
-    plan = build_requirement_coverage_plan(analysis_fields)
-    requested = {reference.strip() for reference in suppressed_references if reference.strip()}
-    unknown = sorted(requested - set(plan))
-    if unknown:
-        raise InferenceResponseError(
-            "P1.6 v13 requested suppression for unknown coverage references: "
-            + ", ".join(unknown)
-        )
-    unsafe = sorted(
-        reference
-        for reference in requested
-        if not bool(plan[reference].get("allow_exclusion", False))
-    )
-    if unsafe:
-        raise InferenceResponseError(
-            "P1.6 v13 cannot suppress non-excludable coverage references: "
-            + ", ".join(unsafe)
-        )
-    return {
-        reference: candidate
-        for reference, candidate in plan.items()
-        if reference not in requested
-    }
-
-
-def _merge_additional_requirement_coverage(
-    plan: dict[str, dict[str, Any]],
-    catalog: dict[str, str],
-    additional_plan: dict[str, dict[str, Any]] | None,
-) -> dict[str, dict[str, Any]]:
-    """Merge optional candidate-only exact evidence coverage; inert when not supplied."""
-
-    if not additional_plan:
-        return plan
-    merged = dict(plan)
-    for reference, candidate in additional_plan.items():
-        if reference in merged:
-            raise InferenceResponseError(
-                f"Additional requirement coverage collides with existing reference: {reference}"
-            )
-        evidence = catalog.get(reference)
-        if evidence is None:
-            raise InferenceResponseError(
-                f"Additional requirement coverage references unknown evidence: {reference}"
-            )
-        if str(candidate.get("text") or "") != evidence:
-            raise InferenceResponseError(
-                f"Additional requirement coverage text is not exact evidence: {reference}"
-            )
-        merged[reference] = dict(candidate)
-    return merged
-
-
-def complete_analysis_with_instructor_v13(
-    *,
-    base_url: str,
-    api_token: str | None,
-    timeout_seconds: float,
-    network_retries: int,
-    selected_model: str,
-    system_prompt: str,
-    user_payload: dict[str, Any],
-    schema: dict[str, Any],
-    max_tokens: int,
-    seed: int,
-    suppressed_requirement_coverage_references: list[str],
-    validation_retries: int = 1,
-    additional_requirement_coverage_plan: dict[str, dict[str, Any]] | None = None,
-) -> StructuredInferenceResult:
-    """Run typed analysis with deterministic coarse coverage removed from model duty."""
-
-    if not 0 <= validation_retries <= 3:
-        raise ValueError("validation_retries must be between 0 and 3")
-    analysis_fields = user_payload.get("analysis_fields")
-    if not isinstance(analysis_fields, dict):
-        raise InferenceResponseError(
-            "Instructor analysis requires dictionary analysis_fields"
-        )
-
-    evidence_catalog = build_field_evidence_catalog(analysis_fields)
-    model_evidence_catalog = _leaf_evidence_catalog(evidence_catalog)
-    requirement_coverage_plan = filtered_requirement_coverage_plan(
-        analysis_fields,
-        suppressed_requirement_coverage_references,
-    )
-    requirement_coverage_plan = _merge_additional_requirement_coverage(
-        requirement_coverage_plan,
-        evidence_catalog,
-        additional_requirement_coverage_plan,
-    )
-    responsibility_coverage_plan = build_responsibility_coverage_plan(analysis_fields)
-
-    enriched_payload = dict(user_payload)
-    enriched_payload.pop("analysis_fields", None)
-    enriched_payload["analysis_field_names"] = sorted(analysis_fields)
-    enriched_payload["evidence_references"] = evidence_reference_payload(
-        model_evidence_catalog
-    )
-    enriched_payload["requirement_coverage"] = requirement_coverage_payload(
-        requirement_coverage_plan
-    )
-    enriched_payload["responsibility_coverage"] = responsibility_coverage_payload(
-        responsibility_coverage_plan
-    )
-
-    connect_timeout = min(float(timeout_seconds), 10.0)
-    timeout = httpx.Timeout(
-        connect=connect_timeout,
-        read=None,
-        write=30.0,
-        pool=30.0,
-    )
-    http_client = httpx.Client(timeout=timeout, trust_env=False)
-    openai_client = OpenAI(
-        base_url=base_url,
-        api_key=api_token or "lm-studio-local",
-        timeout=timeout,
-        max_retries=0,
-        http_client=http_client,
-    )
-    client = instructor.from_openai(openai_client, mode=instructor.Mode.JSON_SCHEMA)
-    messages = [
-        {"role": "system", "content": system_prompt},
-        {
-            "role": "user",
-            "content": json.dumps(enriched_payload, ensure_ascii=False, sort_keys=True),
-        },
-    ]
-
-    try:
-        result, completion = client.create_with_completion(
-            model=selected_model,
-            response_model=JobAnalysisResponse,
-            messages=messages,
-            context={
-                "analysis_fields": analysis_fields,
-                "evidence_catalog": evidence_catalog,
-                "analysis_mode": user_payload.get("analysis_mode"),
-                "requirement_coverage_plan": requirement_coverage_plan,
-                "responsibility_coverage_plan": responsibility_coverage_plan,
-            },
-            max_retries=validation_retries,
-            temperature=0,
-            seed=seed,
-            max_tokens=max_tokens,
-        )
-    except (APIConnectionError, APITimeoutError) as exc:
-        raise InferenceConnectionError(
-            f"Could not reach LM Studio for Instructor analysis: {exc}"
-        ) from exc
-    except Exception as exc:
-        raise InferenceResponseError(
-            "Instructor could not produce a JobHunter-valid structured analysis "
-            f"after {validation_retries} bounded validation retries: {exc}"
-        ) from exc
-    finally:
-        http_client.close()
-
-    structured = result.model_dump(mode="json")
-    raw_response = completion.model_dump(mode="json")
-    finish_reason = completion.choices[0].finish_reason if completion.choices else None
-    request_body = {
-        "model": selected_model,
-        "messages": messages,
-        "temperature": 0,
-        "seed": seed,
-        "max_tokens": max_tokens,
-        "stream": False,
-        "runtime": {
-            "read_timeout_seconds": None,
-            "connect_timeout_seconds": connect_timeout,
-            "transport_retries": 0,
-            "configured_network_retries": network_retries,
-            "deterministic_decomposition_suppressed_coverage": sorted(
-                suppressed_requirement_coverage_references
-            ),
-            "additional_requirement_coverage": sorted(
-                additional_requirement_coverage_plan or {}
-            ),
-        },
-        "instructor": {
-            "mode": "JSON_SCHEMA",
-            "response_model": "JobAnalysisResponse",
-            "validation_retries": validation_retries,
-            "schema": JobAnalysisResponse.model_json_schema(),
-        },
-    }
-
-    return StructuredInferenceResult(
-        model=selected_model,
-        structured=structured,
-        request_body=request_body,
-        raw_response=raw_response,
-        finish_reason=str(finish_reason) if finish_reason is not None else None,
-    )
-
-
-__all__ = [
-    "_merge_additional_requirement_coverage",
-    "complete_analysis_with_instructor_v13",
-    "filtered_requirement_coverage_plan",
-]
+_Bˆ[šÛ›ÝÛˆHÛÜY
+™\]Y\ÝYHÙ]
+[ŠJBˆYˆ[šÛ›ÝÛŽ‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆ”KˆŒLÈ™\]Y\ÝYÝ\™\ÜÚ[Ûˆ›Üˆ[šÛ›ÝÛˆÛÝ™\˜YÙH™Y™\™[˜Ù\Îˆ‚ˆ
+È‹‹š›Ú[Š[šÛ›ÝÛŠBˆ
+Bˆ[œØY™HHÛÜY
+ˆ™Y™\™[˜ÙBˆ›Üˆ™Y™\™[˜ÙH[ˆ™\]Y\ÝYˆYˆ›Ý›ÛÛ
+[–Ü™Y™\™[˜ÙWK™Ù]
+˜[Ý×Ù^Û\Ú[Ûˆ‹˜[ÙJJBˆ
+BˆYˆ[œØY™N‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆ”KˆŒLÈØ[››ÝÝ\™\ÜÈ›Û‹Y^ÛYX›HÛÝ™\˜YÙH™Y™\™[˜Ù\Îˆ‚ˆ
+È‹‹š›Ú[Š[œØY™JBˆ
+Bˆ™]\›ˆÂˆ™Y™\™[˜ÙNˆØ[™Y]Bˆ›Üˆ™Y™\™[˜ÙKØ[™Y]H[ˆ[‹š][\Ê
+BˆYˆ™Y™\™[˜ÙH›Ý[ˆ™\]Y\ÝYˆB‚‚™YˆÛY\™ÙWØY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙJˆ[ŽˆXÝÜÝ‹XÝÜÝ‹[žWWKˆØ][ÙÎˆXÝÜÝ‹Ý—KˆY][Û˜[Ü[ŽˆXÝÜÝ‹XÝÜÝ‹[žWWH›Û™KŠHOˆXÝÜÝ‹XÝÜÝ‹[žWWN‚ˆˆˆ“Y\™ÙHÜ[Û˜[Ø[™Y]K[Û›H^XÝ]šY[˜ÙHÛÝ™\˜YÙNÈ[™\Ú[ˆ›ÝÝ\YYˆˆˆ‚‚ˆYˆ›ÝY][Û˜[Ü[Ž‚ˆ™]\›ˆ[‚ˆY\™ÙYHXÝ
+[ŠBˆ›Üˆ™Y™\™[˜ÙKØ[™Y]H[ˆY][Û˜[Ü[‹š][\Ê
+N‚ˆYˆ™Y™\™[˜ÙH[ˆY\™ÙY‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆˆY][Û˜[™\]Z\™[Y[ÛÝ™\˜YÙHÛÛY\ÈÚ]^\Ý[™È™Y™\™[˜ÙNˆÜ™Y™\™[˜Ù_H‚ˆ
+Bˆ]šY[˜ÙHHØ][ÙË™Ù]
+™Y™\™[˜ÙJBˆYˆ]šY[˜ÙH\È›Û™N‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆˆY][Û˜[™\]Z\™[Y[ÛÝ™\˜YÙH™Y™\™[˜Ù\È[šÛ›ÝÛˆ]šY[˜ÙNˆÜ™Y™\™[˜Ù_H‚ˆ
+BˆYˆÝŠØ[™Y]K™Ù]
+^ŠHÜˆˆŠHOH]šY[˜ÙN‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆˆY][Û˜[™\]Z\™[Y[ÛÝ™\˜YÙH^\È›Ý^XÝ]šY[˜ÙNˆÜ™Y™\™[˜Ù_H‚ˆ
+BˆY\™ÙYÜ™Y™\™[˜ÙWHHXÝ
+Ø[™Y]JBˆ™]\›ˆY\™ÙY‚‚™YˆÛÛ\]WØ[˜[\Ú\×ÝÚ]Ú[œÝXÝÜ—ÝŒLÊˆ
+‹ˆ˜\ÙWÝ\›ˆÝ‹ˆ\WÝÚÙ[ŽˆÝˆ›Û™Kˆ[Y[Ý]ÜÙXÛÛ™Îˆ›Ø]ˆ™]ÛÜš×Ü™]šY\Îˆ[ˆÙ[XÝYÛ[Ù[ˆÝ‹ˆÞ\Ý[WÜ›Û\ˆÝ‹ˆ\Ù\—Ü^[ØYˆXÝÜÝ‹[žWKˆØÚ[XNˆXÝÜÝ‹[žWKˆX^ÝÚÙ[œÎˆ[ˆÙYYˆ[ˆÝ\™\ÜÙYÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ™Y™\™[˜Ù\Îˆ\ÝÜÝ—Kˆ˜[Y][Û—Ü™]šY\Îˆ[HKˆY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ŽˆXÝÜÝ‹XÝÜÝ‹[žWWH›Û™HH›Û™Kˆ™\ÜÛœÙWÛ[Ù[ˆ\VÐ˜\ÙS[Ù[HH›Ø[˜[\Ú\Ô™\ÜÛœÙKŠHOˆÝXÝ\™Y[™™\™[˜ÙT™\Ý[‚ˆˆˆ”[ˆ\Y[˜[\Ú\ÈÚ]]\›Z[š\ÝXÈÛØ\œÙHÛÝ™\˜YÙH™[[Ý™Yœ›ÛH[Ù[]Kˆˆˆ‚‚ˆYˆ›ÝH˜[Y][Û—Ü™]šY\ÈHÎ‚ˆ˜Z\ÙH˜[YQ\œ›ÜŠ˜[Y][Û—Ü™]šY\È]\Ý™H™]ÙY[ˆ[™ÈŠBˆ[˜[\Ú\×ÙšY[ÈH\Ù\—Ü^[ØY™Ù]
+˜[˜[\Ú\×ÙšY[ÈŠBˆYˆ›Ý\Ú[œÝ[˜ÙJ[˜[\Ú\×ÙšY[ËXÝ
+N‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆ’[œÝXÝÜˆ[˜[\Ú\È™\]Z\™\ÈXÝ[Û˜\žH[˜[\Ú\×ÙšY[È‚ˆ
+B‚ˆ]šY[˜ÙWØØ][ÙÈHZ[ÙšY[Ù]šY[˜ÙWØØ][ÙÊ[˜[\Ú\×ÙšY[ÊBˆ[Ù[Ù]šY[˜ÙWØØ][ÙÈHÛXY—Ù]šY[˜ÙWØØ][ÙÊ]šY[˜ÙWØØ][ÙÊBˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ˆHš[\™YÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[Šˆ[˜[\Ú\×ÙšY[ËˆÝ\™\ÜÙYÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ™Y™\™[˜Ù\Ëˆ
+Bˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ˆHÛY\™ÙWØY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙJˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[‹ˆ]šY[˜ÙWØØ][ÙËˆY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[‹ˆ
+Bˆ™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[ˆHZ[Ü™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[Š[˜[\Ú\×ÙšY[ÊB‚ˆ[œšXÚYÜ^[ØYHXÝ
+\Ù\—Ü^[ØY
+Bˆ[œšXÚYÜ^[ØYœÜ
+˜[˜[\Ú\×ÙšY[È‹›Û™JBˆ[œšXÚYÜ^[ØYÈ˜[˜[\Ú\×ÙšY[Û˜[Y\È—HHÛÜY
+[˜[\Ú\×ÙšY[ÊBˆ[œšXÚYÜ^[ØYÈ™]šY[˜ÙWÜ™Y™\™[˜Ù\È—HH]šY[˜ÙWÜ™Y™\™[˜ÙWÜ^[ØY
+ˆ[Ù[Ù]šY[˜ÙWØØ][ÙÂˆ
+Bˆ[œšXÚYÜ^[ØYÈœ™\]Z\™[Y[ØÛÝ™\˜YÙH—HH™\]Z\™[Y[ØÛÝ™\˜YÙWÜ^[ØY
+ˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[‚ˆ
+Bˆ[œšXÚYÜ^[ØYÈœ™\ÜÛœÚXš[]WØÛÝ™\˜YÙH—HH™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ^[ØY
+ˆ™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[‚ˆ
+B‚ˆÛÛ›™XÝÝ[Y[Ý]HZ[Š›Ø]
+[Y[Ý]ÜÙXÛÛ™ÊKLŒ
+Bˆ[Y[Ý]H•[Y[Ý]
+ˆÛÛ›™XÝXÛÛ›™XÝÝ[Y[Ý]ˆ™XYS›Û™KˆÜš]OLÌŒˆÛÛLÌŒˆ
+BˆØÛY[HÛY[
+[Y[Ý]][Y[Ý]\ÝÙ[Q˜[ÙJBˆÜ[˜ZWØÛY[HÜ[RJˆ˜\ÙWÝ\›X˜\ÙWÝ\›ˆ\WÚÙ^OX\WÝÚÙ[ˆÜˆ›K\ÝY[Ë[ØØ[‹ˆ[Y[Ý]][Y[Ý]ˆX^Ü™]šY\ÏLˆØÛY[ZØÛY[ˆ
+BˆÛY[H[œÝXÝÜ‹™œ›ÛWÛÜ[˜ZJÜ[˜ZWØÛY[[ÙOZ[œÝXÝÜ‹“[ÙK’”ÓÓ—ÔÐÒSPJBˆY\ÜØYÙ\ÈHÂˆÈœ›ÛHŽˆœÞ\Ý[H‹˜ÛÛ[ŽˆÞ\Ý[WÜ›Û\KˆÂˆœ›ÛHŽˆ\Ù\ˆ‹ˆ˜ÛÛ[ŽˆœÛÛ‹™[\Ê[œšXÚYÜ^[ØY[œÝ\™WØ\ØÚZOQ˜[ÙKÛÜÚÙ^\ÏUYJKˆKˆB‚ˆžN‚ˆ™\Ý[ÛÛ\][ÛˆHÛY[˜Ü™X]WÝÚ]ØÛÛ\][ÛŠˆ[Ù[\Ù[XÝYÛ[Ù[ˆ™\ÜÛœÙWÛ[Ù[\™\ÜÛœÙWÛ[Ù[ˆY\ÜØYÙ\Ï[Y\ÜØYÙ\ËˆÛÛ^^Âˆ˜[˜[\Ú\×ÙšY[ÈŽˆ[˜[\Ú\×ÙšY[Ëˆ™]šY[˜ÙWØØ][ÙÈŽˆ]šY[˜ÙWØØ][ÙËˆ˜[˜[\Ú\×Û[ÙHŽˆ\Ù\—Ü^[ØY™Ù]
+˜[˜[\Ú\×Û[ÙHŠKˆœ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ˆŽˆ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[‹ˆœ™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[ˆŽˆ™\ÜÛœÚXš[]WØÛÝ™\˜YÙWÜ[‹ˆKˆX^Ü™]šY\Ï]˜[Y][Û—Ü™]šY\Ëˆ[\\˜]\™OLˆÙYY\ÙYYˆX^ÝÚÙ[œÏ[X^ÝÚÙ[œËˆ
+Bˆ^Ù\
+TPÛÛ›™XÝ[Û‘\œ›Ü‹TU[Y[Ý]\œ›ÜŠH\È^Î‚ˆ˜Z\ÙH[™™\™[˜ÙPÛÛ›™XÝ[Û‘\œ›ÜŠˆˆÛÝ[›Ý™XXÚHÝY[È›Üˆ[œÝXÝÜˆ[˜[\Ú\ÎˆÙ^ßH‚ˆ
+Hœ›ÛH^Âˆ^Ù\^Ù\[Ûˆ\È^Î‚ˆ˜Z\ÙH[™™\™[˜ÙT™\ÜÛœÙQ\œ›ÜŠˆ’[œÝXÝÜˆÛÝ[›Ý›ÙXÙHH›Ø’[\‹]˜[YÝXÝ\™Y[˜[\Ú\È‚ˆˆ˜Y\ˆÝ˜[Y][Û—Ü™]šY\ßH›Ý[™Y˜[Y][Ûˆ™]šY\ÎˆÙ^ßH‚ˆ
+Hœ›ÛH^Âˆš[˜[N‚ˆØÛY[˜ÛÜÙJ
+B‚ˆÝXÝ\™YH™\Ý[›[Ù[Ù[\
+[ÙOHšœÛÛˆŠBˆ˜]×Ü™\ÜÛœÙHHÛÛ\][Û‹›[Ù[Ù[\
+[ÙOHšœÛÛˆŠBˆš[š\ÚÜ™X\ÛÛˆHÛÛ\][Û‹˜ÚÚXÙ\ÖÌK™š[š\ÚÜ™X\ÛÛˆYˆÛÛ\][Û‹˜ÚÚXÙ\È[ÙH›Û™Bˆ™\]Y\ÝØ›ÙHHÂˆ›[Ù[ŽˆÙ[XÝYÛ[Ù[ˆ›Y\ÜØYÙ\ÈŽˆY\ÜØYÙ\Ëˆ[\\˜]\™HŽˆˆœÙYYŽˆÙYYˆ›X^ÝÚÙ[œÈŽˆX^ÝÚÙ[œËˆœÝ™X[HŽˆ˜[ÙKˆœ[[YHŽˆÂˆœ™XYÝ[Y[Ý]ÜÙXÛÛ™ÈŽˆ›Û™Kˆ˜ÛÛ›™XÝÝ[Y[Ý]ÜÙXÛÛ™ÈŽˆÛÛ›™XÝÝ[Y[Ý]ˆ˜[œÜÜÜ™]šY\ÈŽˆˆ˜ÛÛ™šYÝ\™YÛ™]ÛÜš×Ü™]šY\ÈŽˆ™]ÛÜš×Ü™]šY\Ëˆ™]\›Z[š\ÝX×ÙXÛÛ\ÜÚ][Û—ÜÝ\™\ÜÙYØÛÝ™\˜YÙHŽˆÛÜY
+ˆÝ\™\ÜÙYÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ™Y™\™[˜Ù\Âˆ
+Kˆ˜Y][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙHŽˆÛÜY
+ˆY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ˆÜˆßBˆ
+KˆKˆš[œÝXÝÜˆŽˆÂˆ›[ÙHŽˆ’”ÓÓ—ÔÐÒSPH‹ˆœ™\ÜÛœÙWÛ[Ù[Žˆ™\ÜÛœÙWÛ[Ù[—×Û˜[YW×Ëˆ˜[Y][Û—Ü™]šY\ÈŽˆ˜[Y][Û—Ü™]šY\ËˆœØÚ[XHŽˆ™\ÜÛœÙWÛ[Ù[›[Ù[ÚœÛÛ—ÜØÚ[XJ
+KˆKˆB‚ˆ™]\›ˆÝXÝ\™Y[™™\™[˜ÙT™\Ý[
+ˆ[Ù[\Ù[XÝYÛ[Ù[ˆÝXÝ\™Y\ÝXÝ\™Yˆ™\]Y\ÝØ›ÙO\™\]Y\ÝØ›ÙKˆ˜]×Ü™\ÜÛœÙO\˜]×Ü™\ÜÛœÙKˆš[š\ÚÜ™X\ÛÛ\ÝŠš[š\ÚÜ™X\ÛÛŠHYˆš[š\ÚÜ™X\ÛÛˆ\È›Ý›Û™H[ÙH›Û™Kˆ
+B‚‚—×Ø[×ÈHÂˆ—ÛY\™ÙWØY][Û˜[Ü™\]Z\™[Y[ØÛÝ™\˜YÙH‹ˆ˜ÛÛ\]WØ[˜[\Ú\×ÝÚ]Ú[œÝXÝÜ—ÝŒLÈ‹ˆ™š[\™YÜ™\]Z\™[Y[ØÛÝ™\˜YÙWÜ[ˆ‹—B
