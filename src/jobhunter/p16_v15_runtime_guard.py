@@ -8,8 +8,9 @@ wrapper before the existing strict v15/v14 validator, then restore the original 
 from __future__ import annotations
 
 import re
+from collections.abc import Iterator
 from contextlib import contextmanager
-from typing import Any, Iterator
+from typing import Any
 
 import jobhunter.analysis_runtime_v15 as runtime_v15
 
