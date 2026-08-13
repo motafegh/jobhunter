@@ -9,7 +9,9 @@ from jobhunter.p16_v14_audit import AuditError, audit_snapshot
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Audit isolated English P1.6 v14 candidate snapshot.")
+    parser = argparse.ArgumentParser(
+        description="Audit isolated English P1.6 v14 candidate snapshot."
+    )
     parser.add_argument("--job-id", required=True)
     parser.add_argument("--snapshot", type=Path, default=None)
     args = parser.parse_args()
@@ -25,9 +27,12 @@ def main() -> int:
     print(f"Artifact: {result['artifact_id']}")
     print(f"Requirements: {result['requirements']}")
     print(f"Responsibilities: {result['responsibilities']}")
-    print(f"Structured required skills covered: {result['structured_skills']}/{result['structured_skills']}")
-    print(f"Qualification-list items covered: {result['qualification_spans']}/{result['qualification_spans']}")
-    print(f"Residual coverage decisions: {result['residual_spans']}/{result['residual_spans']}")
+    structured = result["structured_skills"]
+    qualifications = result["qualification_spans"]
+    residuals = result["residual_spans"]
+    print(f"Structured required skills covered: {structured}/{structured}")
+    print(f"Qualification-list items covered: {qualifications}/{qualifications}")
+    print(f"Residual coverage decisions: {residuals}/{residuals}")
     print(f"Decomposed coarse coverage decisions: {result['decomposed']}")
     print(f"Coverage decisions: {result['coverage']}")
     return 0
