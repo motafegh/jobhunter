@@ -83,6 +83,12 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
 
     for index, item in enumerate(requirements):
         concept = str(item.get("concept") or "")
+        depth_signal = str(item.get("depth_signal") or "")
+        _require(
+            re.search(r"\b(?:full[ -]?time|part[ -]?time)\b", depth_signal, re.I)
+            is None,
+            f"requirement[{index}] depth_signal contains schedule wording",
+        )
         if str(item.get("concept_type") or "") == "skill":
             _require(
                 re.search(r"^ability\s+to\b", concept, re.I) is None,
