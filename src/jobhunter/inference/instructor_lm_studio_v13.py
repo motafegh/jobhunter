@@ -62,6 +62,34 @@ def filtered_requirement_coverage_plan(
     }
 
 
+def _merge_additional_requirement_coverage(
+    plan: dict[str, dict[str, Any]],
+    catalog: dict[str, str],
+    additional_plan: dict[str, dict[str, Any]] | None,
+) -> dict[str, dict[str, Any]]:
+    """Merge optional candidate-only exact evidence coverage; inert when not supplied."""
+
+    if not additional_plan:
+        return plan
+    merged = dict(plan)
+    for reference, candidate in additional_plan.items():
+        if reference in merged:
+            raise InferenceResponseError(
+                f"Additional requirement coverage collides with existing reference: {reference}"
+            )
+        evidence = catalog.get(reference)
+        if evidence is None:
+            raise InferenceResponseError(
+                f"Additional requirement coverage references unknown evidence: {reference}"
+            )
+        if str(candidate.get("text") or "") != evidence:
+            raise InferenceResponseError(
+                f"Additional requirement coverage text is not exact evidence: {reference}"
+            )
+        merged[reference] = dict(candidate)
+    return merged
+
+
 def complete_analysis_with_instructor_v13(
     *,
     base_url: str,
@@ -76,8 +104,9 @@ def complete_analysis_with_instructor_v13(
     seed: int,
     suppressed_requirement_coverage_references: list[str],
     validation_retries: int = 1,
+    additional_requirement_coverage_plan: dict[str, dict[str, Any]] | None = None,
 ) -> StructuredInferenceResult:
-    """Run the typed analysis path with deterministic coarse coverage removed from model duty."""
+    """Run typed analysis with deterministic coarse coverage removed from model duty."""
 
     if not 0 <= validation_retries <= 3:
         raise ValueError("validation_retries must be between 0 and 3")
@@ -92,6 +121,11 @@ def complete_analysis_with_instructor_v13(
     requirement_coverage_plan = filtered_requirement_coverage_plan(
         analysis_fields,
         suppressed_requirement_coverage_references,
+    )
+    requirement_coverage_plan = _merge_additional_requirement_coverage(
+        requirement_coverage_plan,
+        evidence_catalog,
+        additional_requirement_coverage_plan,
     )
     responsibility_coverage_plan = build_responsibility_coverage_plan(analysis_fields)
 
@@ -179,6 +213,9 @@ def complete_analysis_with_instructor_v13(
             "deterministic_decomposition_suppressed_coverage": sorted(
                 suppressed_requirement_coverage_references
             ),
+            "additional_requirement_coverage": sorted(
+                additional_requirement_coverage_plan or {}
+            ),
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
@@ -198,6 +235,7 @@ def complete_analysis_with_instructor_v13(
 
 
 __all__ = [
+    "_merge_additional_requirement_coverage",
     "complete_analysis_with_instructor_v13",
     "filtered_requirement_coverage_plan",
 ]
