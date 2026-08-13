@@ -144,6 +144,54 @@ def _persisted_analysis_v13(
     return _persisted_analysis_v11(structured, analysis_fields)
 
 
+def _validate_evidence_v13(
+    analysis: dict[str, Any],
+    analysis_fields: dict[str, Any],
+) -> None:
+    """Validate v13 provenance while preserving the production v9 final guard unchanged.
+
+    The shared v9 guard predates ``decomposed_requirement`` and therefore recognizes only the
+    original three requirement-coverage dispositions. v13 first proves that every decomposed
+    coverage item is exactly one deterministic coarse span, then validates an ephemeral copy with
+    that one disposition mapped to the legacy exclusion state. The persisted v13 artifact keeps
+    the truthful ``decomposed_requirement`` value.
+    """
+
+    coverage_plan = build_requirement_coverage_plan(analysis_fields)
+    expected_references = decomposed_requirement_references(analysis_fields)
+    expected_evidence = {
+        _normalize(str(coverage_plan[reference]["text"]))
+        for reference in expected_references
+    }
+
+    coverage = analysis.get("coverage") or []
+    actual_decomposed: list[str] = []
+    validation_coverage: list[Any] = []
+    for index, item in enumerate(coverage):
+        if not isinstance(item, dict):
+            validation_coverage.append(item)
+            continue
+        copied = dict(item)
+        if copied.get("disposition") == "decomposed_requirement":
+            normalized = _normalize(str(copied.get("evidence") or ""))
+            if normalized not in expected_evidence:
+                raise AnalysisValidationError(
+                    f"coverage[{index}] marks non-deterministic evidence as decomposed_requirement"
+                )
+            actual_decomposed.append(normalized)
+            copied["disposition"] = "excluded_non_requirement"
+        validation_coverage.append(copied)
+
+    if set(actual_decomposed) != expected_evidence:
+        raise AnalysisValidationError(
+            "P1.6 v13 persisted decomposition coverage does not match deterministic coarse spans"
+        )
+
+    validation_analysis = dict(analysis)
+    validation_analysis["coverage"] = validation_coverage
+    _validate_evidence(validation_analysis, analysis_fields)
+
+
 class JobAnalysisServiceV13(JobAnalysisService):
     """Persist an isolated English P1.6 v13 candidate without promoting v9 globally."""
 
@@ -216,7 +264,7 @@ class JobAnalysisServiceV13(JobAnalysisService):
             structured = inject_decomposition_exclusions(result.structured, analysis_fields)
             validate_v13_candidate_structured(structured, analysis_fields)
             analysis = _persisted_analysis_v13(structured, analysis_fields)
-            _validate_evidence(analysis, analysis_fields)
+            _validate_evidence_v13(analysis, analysis_fields)
         except Exception as exc:
             self._record_failed_attempt(
                 source=source,
@@ -274,6 +322,7 @@ __all__ = [
     "ENGLISH_PROMPT_VERSION",
     "JobAnalysisServiceV13",
     "PROMPT_VERSION",
+    "_validate_evidence_v13",
     "decomposed_requirement_references",
     "inject_decomposition_exclusions",
     "qualification_list_spans",
