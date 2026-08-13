@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-12  
+**Date:** 2026-08-13  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
 **Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
 
@@ -62,22 +62,34 @@ Sparse CI-3 evidence:
 - [x] isolated v11 implemented generic qualification-list itemization, coarse-span supersession, and truthful `decomposed_requirement` provenance.
 - [!] first live v11 `t4jp` run failed closed before persistence: all four mandatory qualification items were omitted because v11 supplied raw candidate spans while the surrounding P1.6 protocol required model evidence-reference IDs.
 - [x] v11 classified as evidence-plumbing/protocol failure, not model semantic incapability; do not mutate v11 identity in place.
-- [x] isolated `job-analysis-english-v12` / `job-analysis-v4` candidate implemented.
-- [x] v12 exposes the deterministic qualification items as normal model-visible evidence IDs while keeping public v9 unchanged.
-- [x] v12 regression gate passes Ruff, full pytest, and warnings-as-errors.
-- [~] run/review v12 candidate on sparse `t4jp`.
-- [ ] only if sparse v12 passes, run dense `tG9K` v12 regression against accepted artifact `29`.
-- [ ] only after sparse+dense v12 success decide whether v12 replaces public v9.
+- [x] isolated v12 exposed qualification items as normal model-visible evidence IDs while keeping public v9 unchanged.
+- [!] v12 live sparse run proved the qualification references worked but failed before persistence because the old coarse coverage span still remained model-owned bookkeeping.
+- [x] isolated v13 moved coarse-span decomposition ownership into deterministic JobHunter bookkeeping.
+- [x] `t4jp` v13 artifact `32` produced 0 responsibilities, 7 requirements, 3/3 structured skills and 4/4 granular qualification items.
+- [!] v13 artifact `32` rejected semantically: whole-span suppression hid explicit Ethics/work commitment, and one normalized concept retained Ability-to + full-time/part-time schedule wording.
+- [x] isolated v14 implemented complete decomposition: mandatory qualification items + exact residual sentences; every residual must be extracted or explicitly excluded.
+- [x] v14 also added normalized capability-concept and schedule-vs-depth protections.
+- [x] `t4jp` v14 artifact `33` passed the complete mechanical sparse audit: 0 responsibilities, 8 requirements, 3/3 structured skills, 4/4 qualification items, 4/4 residual decisions, 1 decomposed coarse span, 12 coverage decisions.
+- [!] v14 artifact `33` rejected semantically despite the mechanical pass: `Work commitment and ethics` was typed as `skill`, and v14 residual coverage mechanically forced every residual to `required` regardless of source wording.
+- [x] isolated `job-analysis-english-v15` / `job-analysis-v4` implemented without mutating v14.
+- [x] v15 keeps all successful v14 decomposition/depth mechanics, makes residual coverage strength-neutral (`obligation_hint = null`), and explicitly defines `other` for behavioral/value/professional-quality expectations.
+- [x] v15 regression gate passes Ruff, full pytest, and warnings-as-errors.
+- [~] run/review v15 candidate on sparse `t4jp`.
+- [ ] only if sparse v15 passes, run dense `tG9K` v15 regression against accepted artifact `29`.
+- [ ] only after sparse+dense v15 success decide whether v15 replaces public v9.
 
-Experiment records:
+Experiment / handoff records:
 
 ```text
 docs/experiments/2026-08-12_P16_V10_SPARSE_STRUCTURED_SKILLS_BOUNDARY.md
 docs/experiments/2026-08-12_P16_V10_SEMANTIC_FAILURE_AND_V11_QUALIFICATION_GRANULARITY.md
 docs/experiments/2026-08-12_P16_V11_EVIDENCE_PROTOCOL_FAILURE_AND_V12_REFERENCE_FIX.md
+docs/experiments/2026-08-13_P16_V12_COARSE_COVERAGE_FAILURE_AND_V13_DETERMINISTIC_DECOMPOSITION.md
+docs/experiments/2026-08-13_P16_V13_SEMANTIC_FAILURE_AND_V14_COMPLETE_DECOMPOSITION.md
+docs/working-memory/2026-08-13_P16_V15_HANDOFF.md
 ```
 
-Do **not** run Capability above rejected `t4jp` artifacts `30` or `31`, and do not run it while v12 P1.6 remains unaccepted.
+Do **not** run Capability above rejected sparse artifacts `30`, `31`, `32`, or `33`, and do not run it while v15 P1.6 remains unaccepted.
 
 ### B3 — Capability Intelligence
 
@@ -160,12 +172,12 @@ Reusable accepted-stack audit:
 python scripts/audit_ci3_capability_snapshot.py --job-id <job-id>
 ```
 
-Current isolated P1.6 v12 candidate tooling while public v9 remains unchanged:
+Current isolated P1.6 v15 candidate tooling while public v9 remains unchanged:
 
 ```bash
-python scripts/run_p16_v12_candidate.py --job-id <job-id>
-python scripts/export_p16_v12_candidate_snapshot.py --job-id <job-id>
-python scripts/audit_p16_v12_candidate_snapshot.py --job-id <job-id>
+python scripts/run_p16_v15_candidate.py --job-id <job-id>
+python scripts/export_p16_v15_candidate_snapshot.py --job-id <job-id>
+python scripts/audit_p16_v15_candidate_snapshot.py --job-id <job-id>
 ```
 
 Permanent CI-3 workflow rule:
@@ -182,9 +194,9 @@ snapshot current local state first
 
 Target materially different roles:
 
-- [~] sparse/ambiguous anchor (`t4jp`) — v9 artifact 30 rejected; v10 artifact 31 rejected; v11 failed protocol; v12 active;
+- [~] sparse/ambiguous anchor (`t4jp`) — v9/v10/v13/v14 artifacts rejected; v11/v12 failed before persistence; v15 active;
 - [x] rich AI/ML anchor (`tG9K`) as accepted v9/v7 dense baseline;
-- [ ] dense `tG9K` v12 regression, only after sparse v12 passes;
+- [ ] dense `tG9K` v15 regression, only after sparse v15 passes;
 - [ ] Python/software role;
 - [ ] network/security role;
 - [ ] operations/platform/DevOps role;
