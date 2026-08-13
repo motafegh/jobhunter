@@ -20,9 +20,10 @@ from jobhunter.analysis_service import (
     _analysis_fields_for_english,
     _result,
 )
+from jobhunter.analysis_service_v13 import _validate_evidence_v13
 from jobhunter.analysis_service_v14 import (
-    JobAnalysisServiceV14,
     _ENGLISH_SYSTEM_PROMPT_V14,
+    JobAnalysisServiceV14,
     _persisted_analysis_v14,
     validate_v14_candidate_structured,
 )
@@ -131,8 +132,6 @@ class JobAnalysisServiceV15(JobAnalysisServiceV14):
             )
             validate_v15_candidate_structured(result.structured, analysis_fields)
             analysis = _persisted_analysis_v14(result.structured, analysis_fields)
-            from jobhunter.analysis_service_v13 import _validate_evidence_v13
-
             _validate_evidence_v13(analysis, analysis_fields)
         except Exception as exc:
             self._record_failed_attempt(
