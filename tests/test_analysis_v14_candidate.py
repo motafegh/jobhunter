@@ -12,6 +12,10 @@ from jobhunter.analysis_service_v14 import (
     residual_requirement_spans,
     validate_v14_candidate_structured,
 )
+from jobhunter.inference.instructor_lm_studio_v14 import (
+    JobAnalysisResponseV14,
+    _schedule_only_depth_signal,
+)
 
 
 def _fields():
@@ -78,6 +82,35 @@ def _valid_structured():
     return inject_decomposition_exclusions(structured, fields)
 
 
+def _typed_requirement_payload(*, evidence: str, depth_signal: str | None) -> dict:
+    return {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [
+            {
+                "concept": "Visual content production",
+                "depth_signal": depth_signal,
+                "requirement_type": "required",
+                "concept_type": "skill",
+                "evidence": evidence,
+                "confidence": "high",
+                "rationale": "Explicit source qualification.",
+            }
+        ],
+        "coverage_exclusions": [],
+    }
+
+
+def _typed_context(description: str) -> dict:
+    return {
+        "analysis_fields": {"description": description},
+        "evidence_catalog": {},
+        "analysis_mode": "english",
+        "requirement_coverage_plan": {},
+        "responsibility_coverage_plan": {},
+    }
+
+
 def test_v14_has_distinct_identity() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v14"
 
@@ -118,6 +151,32 @@ def test_v14_rejects_ability_wrapper_and_schedule_words_in_capability_concept() 
     target["concept"] = "Visual content production full-time"
     with pytest.raises(AnalysisValidationError, match="schedule"):
         validate_v14_candidate_structured(structured, _fields())
+
+
+def test_v14_schedule_only_depth_is_normalized_before_shared_validation() -> None:
+    evidence = "ability to produce visual content full-time and part-time"
+    assert _schedule_only_depth_signal("full-time and part-time") is True
+    result = JobAnalysisResponseV14.model_validate(
+        _typed_requirement_payload(
+            evidence=evidence,
+            depth_signal="full-time and part-time",
+        ),
+        context=_typed_context(evidence),
+    )
+    assert result.requirements[0].depth_signal is None
+
+
+def test_v14_schedule_normalization_preserves_real_depth_signal() -> None:
+    evidence = "expert visual content production full-time"
+    assert _schedule_only_depth_signal("expert visual content production full-time") is False
+    result = JobAnalysisResponseV14.model_validate(
+        _typed_requirement_payload(
+            evidence=evidence,
+            depth_signal="expert visual content production full-time",
+        ),
+        context=_typed_context(evidence),
+    )
+    assert result.requirements[0].depth_signal == "expert"
 
 
 def test_v14_persistence_accounts_for_every_residual_sentence() -> None:
