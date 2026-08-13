@@ -67,7 +67,9 @@ def _valid_structured():
         "requirements": requirements,
         "coverage_exclusions": [
             {
-                "evidence_reference": f"field:__candidate_residual_requirement_evidence:{index}",
+                "evidence_reference": (
+                    f"field:__candidate_residual_requirement_evidence:{index}"
+                ),
                 "rationale": "This residual is logistics or non-qualification context.",
             }
             for index in (0, 2, 3)
@@ -85,12 +87,17 @@ def test_v14_residual_spans_preserve_remaining_exact_sentences() -> None:
         "the work is teachable.",
         "Ethics and your work commitment are important to us.",
         "Please do not send your resume for remote work.",
-        "(Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel.",
+        (
+            "(Location: West Tehran) Benefits include insurance, parking, rest area, "
+            "monthly discount, commission, business travel."
+        ),
     ]
 
 
 def test_v14_candidate_view_adds_mandatory_and_residual_coverage() -> None:
-    effective, qualification_refs, residual_refs, plan = _v14_candidate_evidence_view(_fields())
+    effective, qualification_refs, residual_refs, plan = _v14_candidate_evidence_view(
+        _fields()
+    )
     assert len(qualification_refs) == 4
     assert len(residual_refs) == 4
     assert len(plan) == 8
@@ -115,10 +122,15 @@ def test_v14_rejects_ability_wrapper_and_schedule_words_in_capability_concept() 
 
 def test_v14_persistence_accounts_for_every_residual_sentence() -> None:
     analysis = _persisted_analysis_v14(_valid_structured(), _fields())
-    coverage = {item["evidence"]: item["disposition"] for item in analysis["coverage"]}
+    coverage = {
+        item["evidence"]: item["disposition"] for item in analysis["coverage"]
+    }
     residuals = residual_requirement_spans(_fields())
     assert coverage[residuals[1]] == "extracted_requirement"
     assert coverage[residuals[0]] == "excluded_non_requirement"
     assert coverage[residuals[2]] == "excluded_non_requirement"
     assert coverage[residuals[3]] == "excluded_non_requirement"
-    assert any(item["disposition"] == "decomposed_requirement" for item in analysis["coverage"])
+    assert any(
+        item["disposition"] == "decomposed_requirement"
+        for item in analysis["coverage"]
+    )
