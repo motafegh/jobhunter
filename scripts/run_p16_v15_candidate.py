@@ -10,6 +10,7 @@ from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, AnalysisValidati
 from jobhunter.analysis_service_v15 import ENGLISH_PROMPT_VERSION
 from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.inference import InferenceProviderError
+from jobhunter.p16_v15_runtime_guard import v15_ability_wrapper_guard
 
 
 def main() -> int:
@@ -21,9 +22,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         settings = Settings.load(args.config)
-        result = build_v15_candidate_analysis_service(settings).analyze_english_job(
-            args.job_id
-        )
+        with v15_ability_wrapper_guard():
+            result = build_v15_candidate_analysis_service(settings).analyze_english_job(
+                args.job_id
+            )
     except (ConfigLoadError, AnalysisValidationError, ValueError) as exc:
         print(f"P1.6 v15 candidate is not ready: {exc}", file=sys.stderr)
         return 2
