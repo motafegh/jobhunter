@@ -35,8 +35,14 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
     analysis = snapshot.get("english_analysis") or {}
     projection = snapshot.get("english_projection") or {}
     _require(snapshot.get("source_job_id") == job_id, "Wrong job snapshot")
-    _require(analysis.get("prompt_version") == ENGLISH_PROMPT_VERSION, "Wrong P1.6 candidate contract")
-    _require(analysis.get("schema_version") == ANALYSIS_SCHEMA_VERSION, "Wrong analysis schema")
+    _require(
+        analysis.get("prompt_version") == ENGLISH_PROMPT_VERSION,
+        "Wrong P1.6 candidate contract",
+    )
+    _require(
+        analysis.get("schema_version") == ANALYSIS_SCHEMA_VERSION,
+        "Wrong analysis schema",
+    )
     _require(
         analysis.get("translation_artifact_id") == projection.get("artifact_id"),
         "Wrong projection dependency",
@@ -47,10 +53,16 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
     responsibilities = payload.get("responsibilities") or []
     coverage = payload.get("coverage") or []
     fields = projection.get("fields") or {}
-    skills = [v.strip() for v in (fields.get("skills") or []) if isinstance(v, str) and v.strip()]
+    skills = [
+        value.strip()
+        for value in (fields.get("skills") or [])
+        if isinstance(value, str) and value.strip()
+    ]
     qualification_spans = qualification_list_spans(fields)
     residual_spans = residual_requirement_spans(fields)
-    requirement_evidence = {_norm(str(item.get("evidence") or "")) for item in requirements}
+    requirement_evidence = {
+        _norm(str(item.get("evidence") or "")) for item in requirements
+    }
     coverage_by_evidence = {
         _norm(str(item.get("evidence") or "")): item
         for item in coverage
@@ -67,7 +79,8 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
     for residual in residual_spans:
         decision = coverage_by_evidence.get(_norm(residual)) or {}
         _require(
-            decision.get("disposition") in {"extracted_requirement", "excluded_non_requirement"},
+            decision.get("disposition")
+            in {"extracted_requirement", "excluded_non_requirement"},
             f"Residual not accounted: {residual!r}",
         )
 
@@ -76,7 +89,10 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
         depth = str(item.get("depth_signal") or "")
         evidence = str(item.get("evidence") or "")
         concept_type = str(item.get("concept_type") or "")
-        _require(not _EMPTY_GROUP_RE.search(concept), f"requirement[{index}] has empty punctuation debris")
+        _require(
+            not _EMPTY_GROUP_RE.search(concept),
+            f"requirement[{index}] has empty punctuation debris",
+        )
         _require(
             re.search(r"\b(?:full[ -]?time|part[ -]?time)\b", concept, re.I) is None,
             f"requirement[{index}] concept contains schedule wording",
@@ -101,7 +117,8 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
     decomposed = sum(
         1
         for item in coverage
-        if isinstance(item, dict) and item.get("disposition") == "decomposed_requirement"
+        if isinstance(item, dict)
+        and item.get("disposition") == "decomposed_requirement"
     )
     _require(decomposed > 0, "No coarse coverage marked decomposed")
     return {

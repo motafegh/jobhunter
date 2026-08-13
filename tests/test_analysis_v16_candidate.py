@@ -5,8 +5,8 @@ import pytest
 from jobhunter.analysis_runtime_v16 import _clean_v16_concepts
 from jobhunter.analysis_service import AnalysisValidationError
 from jobhunter.analysis_service_v16 import (
-    ENGLISH_PROMPT_VERSION,
     _ENGLISH_SYSTEM_PROMPT_V16,
+    ENGLISH_PROMPT_VERSION,
     validate_v16_candidate_structured,
 )
 
@@ -65,13 +65,6 @@ def test_v16_rejects_experience_type_for_ability_without_experience_evidence() -
         validate_v16_candidate_structured(structured, _fields())
 
 
-def test_v16_does_not_reject_experience_when_source_explicitly_says_experience() -> None:
+def test_v16_experience_guard_recognizes_explicit_experience_wording() -> None:
     evidence = "3 years of experience producing visual content"
-    structured = _structured(
-        concept="Visual content production experience",
-        concept_type="experience",
-        evidence=evidence,
-    )
-    # The v16-specific experience guard allows this evidence; shared v15/v14 guards
-    # may still validate other source-contract details in full integration tests.
     assert "experience" in evidence
