@@ -3,6 +3,7 @@ from __future__ import annotations
 import pytest
 
 from jobhunter.analysis_runtime_v14 import _v14_candidate_evidence_view
+from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
 from jobhunter.analysis_service import AnalysisValidationError
 from jobhunter.analysis_service_v13 import inject_decomposition_exclusions
 from jobhunter.analysis_service_v14 import (
@@ -11,6 +12,10 @@ from jobhunter.analysis_service_v14 import (
     qualification_list_spans,
     residual_requirement_spans,
     validate_v14_candidate_structured,
+)
+from jobhunter.analysis_service_v15 import (
+    ENGLISH_PROMPT_VERSION as V15_ENGLISH_PROMPT_VERSION,
+    _ENGLISH_SYSTEM_PROMPT_V15,
 )
 from jobhunter.inference.instructor_lm_studio_v14 import (
     JobAnalysisResponseV14,
@@ -192,4 +197,19 @@ def test_v14_persistence_accounts_for_every_residual_sentence() -> None:
     assert any(
         item["disposition"] == "decomposed_requirement"
         for item in analysis["coverage"]
+    )
+
+
+def test_v15_residual_coverage_is_strength_neutral_and_type_contract_is_explicit() -> None:
+    _effective, qualification_refs, residual_refs, plan = _v15_candidate_evidence_view(
+        _fields()
+    )
+    assert V15_ENGLISH_PROMPT_VERSION == "job-analysis-english-v15"
+    assert all(plan[ref]["obligation_hint"] == "required" for ref in qualification_refs)
+    assert all(plan[ref]["obligation_hint"] is None for ref in residual_refs)
+    assert "Use skill for an ability/proficiency to perform a task or activity" in (
+        _ENGLISH_SYSTEM_PROMPT_V15
+    )
+    assert "Use other for explicit candidate traits, values, behavioral expectations" in (
+        _ENGLISH_SYSTEM_PROMPT_V15
     )
