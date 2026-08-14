@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
+from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.capability_inference import CapabilityInferenceResult
 from jobhunter.capability_service import (
@@ -159,7 +159,7 @@ def _prepare(database_path: Path, *, with_analysis: bool = True):
             translation_artifact_id=translation_id,
             model="analysis-model",
             prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ANALYSIS_SCHEMA_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
             analysis={
                 "role_purpose": [],
                 "responsibilities": [
