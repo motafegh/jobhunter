@@ -44,12 +44,13 @@ Do not jump to corpus-wide Phase 2.
 - [x] current-chain snapshot routing preserves model/dependency identities.
 - [x] current-chain flags are trustworthy.
 - [x] repository-safe exclusions remain intact.
+- [x] public Review Snapshot lookup now distinguishes English v20/v5 from original v9/v4.
 
 ### B2 — P1.6 factual extraction
 
-**V20 dense + sparse bounded calibration is complete and all implementation/history is now on `main`. Public/accepted P1.6 remains v9/schema-v4 until explicit promotion routing is implemented and verified. Active gate: P1.6 v20 promotion implementation on `main`.**
+**V20 dense + sparse bounded calibration is complete. Public-current routing is implemented on `main`: English uses `job-analysis-english-v20` / `job-analysis-v5`; original-language remains `job-analysis-original-v9` / `job-analysis-v4`. Deterministic promotion CI passed. Active gate: local reuse/current-chain verification of accepted artifacts 36 and 37.**
 
-#### Accepted public baseline before promotion
+#### Historical accepted baseline
 
 Dense `tG9K` v9 artifact 29:
 
@@ -105,6 +106,7 @@ docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.m
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
 docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
 docs/working-memory/2026-08-15_P16_V20_PROMOTION_ROUTING_DESIGN.md
+docs/working-memory/2026-08-15_P16_V20_PUBLIC_ROUTING_IMPLEMENTED_CI_PASS.md
 ```
 
 #### Dense v20 `tG9K` artifact 36 — PASS
@@ -166,32 +168,32 @@ Semantic non-regression:     PASS
 - [x] sparse t4jp semantic non-regression PASS.
 - [x] full v17→v20 stack merged to `main`.
 
-#### P1.6 v20 promotion — ACTIVE GATE ON MAIN
-
-Promotion is authorized for implementation/review, but **not yet completed**.
+#### P1.6 v20 promotion — LOCAL VERIFICATION GATE
 
 - [x] inspect public routing impact and record promotion design.
-- [x] choose minimal architecture direction: keep historical v9 module semantics and introduce a neutral current-public facade instead of circular aliasing.
-- [ ] implement current-public facade for mode-specific English v20/v5 and original v9/v4 routing.
-- [ ] make targeted English analysis use v20/v5.
-- [ ] preserve targeted original-language analysis on v9/v4.
-- [ ] provide a public English batch surface compatible with Phase-1 partial-failure behavior.
-- [ ] align `phase1_run.py` eligibility/current-artifact/Market routing to v20/v5.
-- [ ] align browser analysis and Market/current-analysis routing to v20/v5.
-- [ ] align Review Snapshot to English v20/v5 and original v9/v4 independently.
-- [ ] align Capability v7 dependency selection to current English v20/v5.
-- [ ] ensure free-form P1.6 rationale cannot override normalized source truth downstream.
-- [ ] preserve old artifact/history/module reproducibility and avoid circular imports.
-- [ ] add/update promotion regression tests.
-- [ ] Ruff PASS.
-- [ ] full pytest PASS.
-- [ ] warnings-as-errors PASS.
-- [ ] verify accepted v20 artifacts 36 and 37 remain current/reusable after promotion.
-- [ ] update public contract docs only after implementation is proven.
+- [x] keep historical v9 module semantics and introduce neutral current-public facade.
+- [x] implement current-public facade for English v20/v5 and original v9/v4.
+- [x] make targeted English analysis use v20/v5.
+- [x] preserve targeted original-language analysis on v9/v4.
+- [x] provide public English batch surface compatible with Phase-1 partial-failure behavior.
+- [x] align `phase1_run.py` eligibility/current-artifact/Market routing to v20/v5.
+- [x] align browser analysis and Market/current-analysis routing to v20/v5.
+- [x] align browser dashboard/list/system analyzed-state routing to v20/v5.
+- [x] align Review Snapshot to English v20/v5 and original v9/v4 independently.
+- [x] align Capability v7 dependency selection to current English v20/v5.
+- [x] preserve old artifact/history/module reproducibility and avoid circular imports.
+- [x] add/update promotion regression tests and current-contract fixtures.
+- [x] Ruff PASS — CI 801.
+- [x] full pytest PASS — CI 801.
+- [x] warnings-as-errors PASS — CI 801.
+- [x] update rolling/public-current contract documentation after implementation proof.
+- [~] verify accepted v20 artifacts 36 and 37 remain current/reusable through normal public commands on the user's local database.
+- [ ] verify normal Review Snapshot selects English artifacts 36 and 37 after public routing.
+- [ ] declare operational P1.6 v20 promotion complete only after those local checks pass.
 
 ### B3 — Capability Intelligence
 
-**Accepted bounded baseline:** Capability v7 artifact 9 tied to P1.6 v9 artifact 29.
+**Accepted bounded baseline:** Capability v7 artifact 9 tied to historical P1.6 v9 artifact 29.
 
 - [x] `job-capability-intelligence-v7` / schema v4 accepted for bounded tG9K.
 - [x] complete deterministic source truth.
@@ -200,8 +202,8 @@ Promotion is authorized for implementation/review, but **not yet completed**.
 - [x] all 27 requirements retained in source truth.
 - [x] all six explicit-depth facts retained.
 - [x] two coherent capability profiles.
-- [!] do not rebuild Capability against v20 until P1.6 promotion routing is complete.
-- [ ] after promotion, rebuild/review Capability v7 against promoted P1.6 dependency.
+- [!] do not rebuild Capability until public P1.6 local reuse/current verification passes.
+- [ ] after promotion closure, rebuild/review Capability v7 against promoted P1.6 artifact 36.
 - [ ] ensure model-generated P1.6 rationale does not override normalized source truth/strength/depth/evidence.
 
 ### B4 — Role Capability Blueprint experiment
