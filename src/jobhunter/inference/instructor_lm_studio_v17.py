@@ -13,8 +13,6 @@ and responsibility-coverage defect together so the correction receives the compl
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.inference.instructor_lm_studio import (
@@ -112,9 +110,7 @@ class JobAnalysisResponseV17(JobAnalysisResponseV14):
                     if obligation_hint in {"required", "preferred", "contextual"} and not any(
                         item.requirement_type == obligation_hint for item in matching
                     ):
-                        obligation_mismatches.append(
-                            f"{reference}=>{obligation_hint}"
-                        )
+                        obligation_mismatches.append(f"{reference}=>{obligation_hint}")
                     continue
 
                 if reference not in exclusions:
