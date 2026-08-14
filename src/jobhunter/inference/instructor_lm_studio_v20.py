@@ -9,6 +9,12 @@ word ``some`` from ``some C / C++ helpful`` into ``depth_signal``. JobHunter doe
 vague quantifier as an accepted technical-depth signal. V20 therefore clears it only when the exact
 same evidence independently proves a preferred/optional requirement and contains no accepted depth
 or experience-extent marker. Exact source evidence is never changed.
+
+The next live partition exposed the adjacent scope/depth boundary: ``industrial / edge deployment``
+was placed in ``depth_signal`` even though it names the deployment scope itself. V20 preserves that
+exact source-supported scope in the normalized concept, clears the non-depth signal, and separately
+rejects ``concept_type=experience`` when preferred evidence does not actually state prior applied
+exposure.
 """
 
 from __future__ import annotations
@@ -32,7 +38,9 @@ from jobhunter.evidence_refs import (
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
 from jobhunter.inference.instructor_lm_studio import (
     _DEPTH_SIGNAL_PATTERNS,
+    _equivalent_source_excerpt,
     _leaf_evidence_catalog,
+    _normalize,
 )
 from jobhunter.inference.instructor_lm_studio_v19 import (
     AnalysisRequirementV19,
@@ -42,18 +50,35 @@ from jobhunter.inference.instructor_lm_studio_v19 import (
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _VAGUE_PREFERENCE_EXTENT_RE = re.compile(r"^some$", re.I)
+_PRIOR_APPLIED_EXPOSURE_RE = re.compile(
+    r"\b(?:experience|experienced|hands?[ -]on|years?|worked|working background|"
+    r"prior background|background|practical exposure|applied exposure)\b",
+    re.I,
+)
 
 
 def _has_accepted_depth(text: str) -> bool:
     return any(pattern.search(text) for pattern in _DEPTH_SIGNAL_PATTERNS.values())
 
 
+def _signal_is_scoped_concept(concept: str, signal: str) -> bool:
+    """Return whether a non-depth signal is the same concept with source-supported scope added."""
+
+    normalized_concept = _normalize(concept)
+    normalized_signal = _normalize(signal)
+    if not normalized_concept or not normalized_signal:
+        return False
+    return normalized_signal == normalized_concept or normalized_signal.endswith(
+        f" {normalized_concept}"
+    )
+
+
 class AnalysisRequirementV20(AnalysisRequirementV19):
-    """Keep v19 strictness while clearing one provably non-canonical vague preference extent."""
+    """Keep v19 strictness while canonicalizing proven preferred scope/depth boundary mistakes."""
 
     @model_validator(mode="before")
     @classmethod
-    def normalize_vague_preference_extent(
+    def normalize_preferred_non_depth_signal(
         cls,
         value: Any,
         info: ValidationInfo,
@@ -65,21 +90,51 @@ class AnalysisRequirementV20(AnalysisRequirementV19):
         if (
             value.get("requirement_type") != "preferred"
             or not isinstance(signal, str)
-            or _VAGUE_PREFERENCE_EXTENT_RE.fullmatch(signal.strip()) is None
+            or not signal.strip()
         ):
             return value
 
         evidence = _raw_evidence_text(value, info)
-        if (
-            not has_english_optionality_signal(evidence)
-            or re.search(r"\bsome\b", evidence, re.I) is None
-            or _has_accepted_depth(evidence)
-        ):
-            return value
-
         normalized = dict(value)
-        normalized["depth_signal"] = None
+
+        if (
+            _VAGUE_PREFERENCE_EXTENT_RE.fullmatch(signal.strip()) is not None
+            and has_english_optionality_signal(evidence)
+            and re.search(r"\bsome\b", evidence, re.I) is not None
+            and not _has_accepted_depth(evidence)
+        ):
+            normalized["depth_signal"] = None
+            return normalized
+
+        concept = value.get("concept")
+        if (
+            isinstance(concept, str)
+            and concept.strip()
+            and has_english_optionality_signal(evidence)
+            and not _has_accepted_depth(evidence)
+            and not _has_accepted_depth(signal)
+            and _equivalent_source_excerpt(signal.strip(), evidence) is not None
+            and _signal_is_scoped_concept(concept.strip(), signal.strip())
+        ):
+            normalized["concept"] = signal.strip()
+            normalized["depth_signal"] = None
         return normalized
+
+    @model_validator(mode="after")
+    def reject_unproven_preferred_experience(self) -> AnalysisRequirementV20:
+        """Do not turn a preferred subject phrase into prior experience without source support."""
+
+        if (
+            self.requirement_type == "preferred"
+            and self.concept_type == "experience"
+            and has_english_optionality_signal(self.evidence)
+            and _PRIOR_APPLIED_EXPOSURE_RE.search(self.evidence) is None
+        ):
+            raise ValueError(
+                "concept_type=experience requires explicit prior applied exposure in the cited "
+                "evidence; a preferred subject/scope phrase alone does not prove experience"
+            )
+        return self
 
 
 class JobAnalysisResponseV20(JobAnalysisResponseV19):
@@ -236,6 +291,8 @@ def complete_analysis_partition_with_instructor_v20(
             "p16_v20_requirement_partition_refs": sorted(requirement_plan),
             "p16_v20_responsibility_partition_refs": sorted(responsibility_plan),
             "p16_v20_vague_preference_extent_normalization": True,
+            "p16_v20_preferred_scope_depth_normalization": True,
+            "p16_v20_preferred_experience_evidence_guard": True,
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
@@ -257,6 +314,7 @@ def complete_analysis_partition_with_instructor_v20(
 __all__ = [
     "AnalysisRequirementV20",
     "JobAnalysisResponseV20",
+    "_signal_is_scoped_concept",
     "_validated_partition_plan",
     "complete_analysis_partition_with_instructor_v20",
 ]
