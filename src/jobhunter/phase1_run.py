@@ -9,17 +9,17 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from jobhunter.analysis_service import (
-    ANALYSIS_SCHEMA_VERSION,
-    PROMPT_VERSION,
+from jobhunter.analysis_current import (
+    ENGLISH_ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
     AnalysisBatchSummary,
     JobAnalysisService,
+    build_job_analysis_service,
     format_analysis_batch_summary,
 )
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.evidence import EvidenceStore
-from jobhunter.inference import LMStudioProvider
 from jobhunter.job_audit import JobDetailAuditor
 from jobhunter.job_catalog import JobCatalog
 from jobhunter.job_detail_observations import JobDetailObservationStore
@@ -117,8 +117,8 @@ class Phase1RunService:
             current = self._analysis_store.latest_current(
                 source.source_job_id,
                 model=self._analysis_model,
-                prompt_version=PROMPT_VERSION,
-                schema_version=ANALYSIS_SCHEMA_VERSION,
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
             )
             if current is not None:
                 continue
@@ -322,22 +322,7 @@ def build_phase1_run_service(
     translation_service = _translation_service(settings)
     analysis_store = AnalysisStore(settings.database_path)
     model = settings.effective_analysis_lm_studio_model()
-    analysis_service = None
-    if model:
-        analysis_service = JobAnalysisService(
-            source_store=translation_store,
-            translation_service=translation_service,
-            analysis_store=analysis_store,
-            provider=LMStudioProvider(
-                base_url=settings.lm_studio_base_url,
-                configured_model=model,
-                api_token=settings.lm_studio_api_token,
-                timeout_seconds=settings.inference_timeout_seconds,
-                max_retries=settings.inference_max_retries,
-            ),
-            model=model,
-            max_tokens=settings.analysis_max_tokens,
-        )
+    analysis_service = build_job_analysis_service(settings) if model else None
 
     return Phase1RunService(
         sync_service=sync_service,
@@ -349,8 +334,8 @@ def build_phase1_run_service(
         market_insights=MarketInsights(
             settings.database_path,
             analysis_model=model,
-            analysis_prompt_version=PROMPT_VERSION,
-            analysis_schema_version=ANALYSIS_SCHEMA_VERSION,
+            analysis_prompt_version=ENGLISH_PROMPT_VERSION,
+            analysis_schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
         ),
         translation_enabled=settings.translation_enabled,
         analysis_model=model,
