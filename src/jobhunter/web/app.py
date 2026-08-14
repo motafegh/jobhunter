@@ -13,18 +13,18 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from jobhunter.analysis_service import (
-    ANALYSIS_SCHEMA_VERSION,
+from jobhunter.analysis_current import (
+    ENGLISH_ANALYSIS_SCHEMA_VERSION,
     ENGLISH_PROMPT_VERSION,
+    ORIGINAL_ANALYSIS_SCHEMA_VERSION,
     ORIGINAL_PROMPT_VERSION,
-    PROMPT_VERSION,
     JobAnalysisService,
+    build_job_analysis_service,
     format_analysis_batch_summary,
 )
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.evidence import EvidenceStore
-from jobhunter.inference import LMStudioProvider
 from jobhunter.job_audit import JobDetailAuditor, format_job_audit
 from jobhunter.job_catalog import JobCatalog
 from jobhunter.job_detail_observations import JobDetailObservationStore
@@ -134,34 +134,15 @@ def _translation_service(settings: Settings) -> TranslationService:
 
 
 def _analysis_service(settings: Settings) -> JobAnalysisService:
-    model = settings.effective_analysis_lm_studio_model()
-    if not model:
-        raise ValueError(
-            "No analysis model is configured. Set analysis_lm_studio_model, lm_studio_model, "
-            "or an explicit translation_lm_studio_model fallback."
-        )
-    return JobAnalysisService(
-        source_store=TranslationStore(settings.database_path),
-        translation_service=_translation_service(settings),
-        analysis_store=AnalysisStore(settings.database_path),
-        provider=LMStudioProvider(
-            base_url=settings.lm_studio_base_url,
-            configured_model=model,
-            api_token=settings.lm_studio_api_token,
-            timeout_seconds=settings.inference_timeout_seconds,
-            max_retries=settings.inference_max_retries,
-        ),
-        model=model,
-        max_tokens=settings.analysis_max_tokens,
-    )
+    return build_job_analysis_service(settings)
 
 
 def _market_insights(settings: Settings) -> MarketInsights:
     return MarketInsights(
         settings.database_path,
         analysis_model=settings.effective_analysis_lm_studio_model(),
-        analysis_prompt_version=PROMPT_VERSION,
-        analysis_schema_version=ANALYSIS_SCHEMA_VERSION,
+        analysis_prompt_version=ENGLISH_PROMPT_VERSION,
+        analysis_schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
     )
 
 
@@ -556,13 +537,13 @@ def create_app(
             source_job_id,
             model=model,
             prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ANALYSIS_SCHEMA_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
         )
         original_analysis_artifact = analysis_store.latest_current(
             source_job_id,
             model=model,
             prompt_version=ORIGINAL_PROMPT_VERSION,
-            schema_version=ANALYSIS_SCHEMA_VERSION,
+            schema_version=ORIGINAL_ANALYSIS_SCHEMA_VERSION,
         )
         return _TEMPLATES.TemplateResponse(
             request=request,
@@ -692,7 +673,7 @@ def create_app(
                         limit=5000,
                         model=model,
                         prompt_version=ENGLISH_PROMPT_VERSION,
-                        schema_version=ANALYSIS_SCHEMA_VERSION,
+                        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
                     )
                 ),
                 translation_schema=TRANSLATION_SCHEMA_VERSION,
