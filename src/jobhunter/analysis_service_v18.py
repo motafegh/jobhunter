@@ -20,9 +20,9 @@ from jobhunter.analysis_service import (
 )
 from jobhunter.analysis_service_v14 import _persisted_analysis_v14
 from jobhunter.analysis_service_v17 import (
-    ANALYSIS_SCHEMA_VERSION,
     _ANALYSIS_SCHEMA_V17,
     _ENGLISH_SYSTEM_PROMPT_V17,
+    ANALYSIS_SCHEMA_VERSION,
     _validate_evidence_v17,
     validate_v17_candidate_structured,
 )
