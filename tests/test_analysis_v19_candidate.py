@@ -4,10 +4,10 @@ import pytest
 from pydantic import ValidationError
 
 from jobhunter.analysis_service_v19 import (
-    ANALYSIS_SCHEMA_VERSION,
-    ENGLISH_PROMPT_VERSION,
     _ANALYSIS_SCHEMA_V19,
     _ENGLISH_SYSTEM_PROMPT_V19,
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
 )
 from jobhunter.evidence_refs import build_field_evidence_catalog
 from jobhunter.inference.instructor_lm_studio_v19 import (
