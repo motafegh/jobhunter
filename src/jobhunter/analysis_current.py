@@ -14,16 +14,22 @@ from jobhunter.analysis_runtime import build_job_analysis_service as build_v9_jo
 from jobhunter.analysis_runtime_v20 import build_v20_candidate_analysis_service
 from jobhunter.analysis_service import (
     ANALYSIS_SCHEMA_VERSION as V9_ANALYSIS_SCHEMA_VERSION,
+)
+from jobhunter.analysis_service import (
     ORIGINAL_PROMPT_VERSION,
     AnalysisBatchSummary,
     AnalysisFailure,
     AnalysisJobResult,
     AnalysisValidationError,
-    JobAnalysisService as JobAnalysisServiceV9,
     format_analysis_batch_summary,
+)
+from jobhunter.analysis_service import (
+    JobAnalysisService as JobAnalysisServiceV9,
 )
 from jobhunter.analysis_service_v20 import (
     ANALYSIS_SCHEMA_VERSION as ENGLISH_ANALYSIS_SCHEMA_VERSION,
+)
+from jobhunter.analysis_service_v20 import (
     ENGLISH_PROMPT_VERSION,
     JobAnalysisServiceV20,
 )
