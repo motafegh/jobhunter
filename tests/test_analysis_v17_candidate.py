@@ -5,11 +5,11 @@ from pydantic import ValidationError
 
 from jobhunter.analysis_service import _ANALYSIS_SCHEMA, AnalysisValidationError
 from jobhunter.analysis_service_v17 import (
-    ANALYSIS_SCHEMA_VERSION,
-    ENGLISH_PROMPT_VERSION,
     _ANALYSIS_SCHEMA_V17,
     _ENGLISH_SYSTEM_PROMPT_V17,
     _validate_evidence_v17,
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
 )
 from jobhunter.evidence_refs import build_field_evidence_catalog
 from jobhunter.inference.instructor_lm_studio_v14 import JobAnalysisResponseV14
