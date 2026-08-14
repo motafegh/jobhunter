@@ -120,7 +120,8 @@ def audit_snapshot(path: Path, *, job_id: str) -> dict[str, int]:
         if isinstance(item, dict)
         and item.get("disposition") == "decomposed_requirement"
     )
-    _require(decomposed > 0, "No coarse coverage marked decomposed")
+    if qualification_spans or residual_spans:
+        _require(decomposed > 0, "No coarse coverage marked decomposed")
     return {
         "artifact_id": int(analysis.get("artifact_id") or 0),
         "requirements": len(requirements),
