@@ -182,7 +182,7 @@ def test_jobs_analyze_defaults_to_english_and_uses_targeted_service(monkeypatch,
     output = capsys.readouterr().out
     assert "English P1.6 for t4jp" in output
     assert "Artifact: 41" in output
-    assert "job-analysis-english-v9 / job-analysis-v4" in output
+    assert "job-analysis-english-v20 / job-analysis-v5" in output
 
 
 def test_jobs_analyze_can_target_original_language(monkeypatch, capsys) -> None:
