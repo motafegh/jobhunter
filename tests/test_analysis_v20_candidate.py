@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import pytest
+from pydantic import ValidationError
 
 from jobhunter.analysis_runtime_v20 import (
     _PARTITION_SIZE,
@@ -15,6 +16,8 @@ from jobhunter.analysis_service_v20 import (
     ANALYSIS_SCHEMA_VERSION,
     ENGLISH_PROMPT_VERSION,
 )
+from jobhunter.evidence_refs import build_field_evidence_catalog
+from jobhunter.inference.instructor_lm_studio_v20 import AnalysisRequirementV20
 
 
 def _candidate(
@@ -58,10 +61,20 @@ def _empty_part() -> dict:
     }
 
 
+def _context(fields: dict) -> dict:
+    return {
+        "analysis_fields": fields,
+        "analysis_mode": "english",
+        "evidence_catalog": build_field_evidence_catalog(fields),
+    }
+
+
 def test_v20_has_partition_prompt_identity_without_changing_v5_shape() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v20"
     assert ANALYSIS_SCHEMA_VERSION == "job-analysis-v5"
     assert "SOURCE-LED BOUNDED SEMANTIC PARTITIONING" in _ENGLISH_SYSTEM_PROMPT_V20
+    assert "high-level" in _ENGLISH_SYSTEM_PROMPT_V20
+    assert '"some"' in _ENGLISH_SYSTEM_PROMPT_V20
     assert "maxItems" not in _ANALYSIS_SCHEMA_V20["properties"]["requirements"]
 
 
@@ -127,6 +140,63 @@ def test_v20_merge_preserves_valid_facts_from_separate_retry_like_slices() -> No
         "ML & deep learning: scikit-learn, PyTorch",
         "Data platforms: Spark, Kafka",
     }
+
+
+def test_v20_clears_some_from_preferred_cpp_depth_without_changing_evidence() -> None:
+    fields = {"description": "some C / C++ helpful"}
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": "C / C++",
+            "depth_signal": "some",
+            "requirement_type": "preferred",
+            "concept_type": "tool",
+            "evidence": "some C / C++ helpful",
+            "confidence": "high",
+            "rationale": "Explicitly helpful; some is a vague quantifier, not accepted depth.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.requirement_type == "preferred"
+    assert result.depth_signal is None
+    assert result.evidence == "some C / C++ helpful"
+
+
+def test_v20_preserves_real_depth_even_when_requirement_is_preferred() -> None:
+    fields = {"description": "Strong C / C++ preferred"}
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": "C / C++",
+            "depth_signal": "Strong",
+            "requirement_type": "preferred",
+            "concept_type": "tool",
+            "evidence": "Strong C / C++ preferred",
+            "confidence": "high",
+            "rationale": "Source explicitly states both preference and technical depth.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.requirement_type == "preferred"
+    assert result.depth_signal == "Strong"
+
+
+def test_v20_does_not_clear_some_without_explicit_preference_evidence() -> None:
+    fields = {"description": "some C / C++"}
+
+    with pytest.raises(ValidationError, match="explicit employer depth"):
+        AnalysisRequirementV20.model_validate(
+            {
+                "concept": "C / C++",
+                "depth_signal": "some",
+                "requirement_type": "contextual",
+                "concept_type": "tool",
+                "evidence": "some C / C++",
+                "confidence": "high",
+                "rationale": "No explicit preference marker.",
+            },
+            context=_context(fields),
+        )
 
 
 def test_v20_merge_deduplicates_only_exact_requirement_identity() -> None:
