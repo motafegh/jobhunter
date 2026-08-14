@@ -51,7 +51,7 @@
         {
           "disposition": "excluded_non_requirement",
           "evidence": "the work is teachable.",
-          "rationale": "The work is teachable, which relates to logistics/trainability rather than a candidate qualification."
+          "rationale": "The work is teachable, which describes the job nature, not a candidate qualification."
         },
         {
           "disposition": "extracted_requirement",
@@ -61,12 +61,12 @@
         {
           "disposition": "excluded_non_requirement",
           "evidence": "Please do not send your resume for remote work.",
-          "rationale": "Instruction regarding remote work application process (logistics)."
+          "rationale": "Instruction regarding application logistics (no remote resume)."
         },
         {
           "disposition": "excluded_non_requirement",
           "evidence": "(Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
-          "rationale": "Details about location, benefits, and travel are logistical/compensation details."
+          "rationale": "Listing of benefits and location details, not a candidate qualification."
         }
       ],
       "requirements": [
@@ -76,7 +76,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Artificial Intelligence",
-          "rationale": "Structured skill requirement.",
+          "rationale": "Structured skill listed in job posting.",
           "requirement_type": "required"
         },
         {
@@ -85,7 +85,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Video content production",
-          "rationale": "Structured skill requirement.",
+          "rationale": "Structured skill listed in job posting.",
           "requirement_type": "required"
         },
         {
@@ -94,7 +94,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "social networks",
-          "rationale": "Structured skill requirement.",
+          "rationale": "Structured skill listed in job posting.",
           "requirement_type": "required"
         },
         {
@@ -103,7 +103,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Skills in content creation with AI",
-          "rationale": "Explicit qualification requirement.",
+          "rationale": "Explicit qualification listed.",
           "requirement_type": "required"
         },
         {
@@ -112,7 +112,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "creativity in creating visual and video content",
-          "rationale": "Explicit qualification requirement.",
+          "rationale": "Explicit qualification listed.",
           "requirement_type": "required"
         },
         {
@@ -121,16 +121,16 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "website design",
-          "rationale": "Explicit qualification requirement.",
+          "rationale": "Explicit qualification listed.",
           "requirement_type": "required"
         },
         {
-          "concept": "Visual content production ( )",
-          "concept_type": "experience",
+          "concept": "Production of visual content",
+          "concept_type": "skill",
           "confidence": "high",
           "depth_signal": null,
           "evidence": "ability to produce visual content full-time and part-time",
-          "rationale": "Explicit qualification requirement regarding production ability and availability.",
+          "rationale": "Explicit qualification listed.",
           "requirement_type": "required"
         },
         {
@@ -139,7 +139,7 @@
           "confidence": "high",
           "depth_signal": null,
           "evidence": "Ethics and your work commitment are important to us.",
-          "rationale": "Residual text explicitly states importance.",
+          "rationale": "Explicit expectation listed in residual text.",
           "requirement_type": "required"
         }
       ],
@@ -147,11 +147,11 @@
       "responsibility_coverage": [],
       "role_purpose": []
     },
-    "artifact_id": 34,
-    "created_at": "2026-08-13T21:30:26.021876+00:00",
+    "artifact_id": 35,
+    "created_at": "2026-08-14T13:45:54.873347+00:00",
     "job_detail_version_id": 41,
     "model": "gemma-4-e4b-it-ud",
-    "prompt_version": "job-analysis-english-v15",
+    "prompt_version": "job-analysis-english-v16",
     "schema_version": "job-analysis-v4",
     "translation_artifact_id": 34
   },
