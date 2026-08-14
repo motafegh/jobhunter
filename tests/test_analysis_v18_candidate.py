@@ -9,12 +9,15 @@ from jobhunter.analysis_runtime_v18 import (
     _v18_structured_skill_coverage_plan,
 )
 from jobhunter.analysis_service_v14 import _persisted_analysis_v14
-from jobhunter.analysis_service_v17 import _validate_evidence_v17, validate_v17_candidate_structured
+from jobhunter.analysis_service_v17 import (
+    _validate_evidence_v17,
+    validate_v17_candidate_structured,
+)
 from jobhunter.analysis_service_v18 import (
-    ANALYSIS_SCHEMA_VERSION,
-    ENGLISH_PROMPT_VERSION,
     _ANALYSIS_SCHEMA_V18,
     _ENGLISH_SYSTEM_PROMPT_V18,
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
 )
 from jobhunter.evidence_refs import build_field_evidence_catalog
 from jobhunter.inference.instructor_lm_studio_v17 import JobAnalysisResponseV17
@@ -134,10 +137,7 @@ def test_v18_materialized_structured_facts_pass_existing_strict_validation() -> 
     analysis = _persisted_analysis_v14(structured, fields)
     _validate_evidence_v17(analysis, fields)
 
-    by_evidence = {
-        item["evidence"]: item
-        for item in analysis["requirements"]
-    }
+    by_evidence = {item["evidence"]: item for item in analysis["requirements"]}
     assert by_evidence["three to six years"]["concept"] == "Professional experience"
     assert by_evidence["three to six years"]["depth_signal"] == "three to six years"
     assert by_evidence["Master's degree"]["concept_type"] == "education"
