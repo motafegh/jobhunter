@@ -17,9 +17,9 @@ from jobhunter.analysis_service_v17 import (
     validate_v17_candidate_structured,
 )
 from jobhunter.analysis_service_v18 import (
-    ANALYSIS_SCHEMA_VERSION,
     _ANALYSIS_SCHEMA_V18,
     _ENGLISH_SYSTEM_PROMPT_V18,
+    ANALYSIS_SCHEMA_VERSION,
 )
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.translation_service import TranslationService
