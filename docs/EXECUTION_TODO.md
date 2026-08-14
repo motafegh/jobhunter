@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-14  
+**Date:** 2026-08-15  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
 **Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
 
@@ -38,13 +38,13 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v20/schema-v5 on `agent/p16-v20-source-led-partitioning`. Dense v20 artifact 36 has now persisted with 33 requirements / 8 responsibilities. Active gate is artifact 36 mechanical snapshot audit + semantic review. Do not run sparse `t4jp` yet.**
+**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v20 artifact 36 passed persistence, mechanical audit, and semantic review. Active candidate remains v20/schema-v5 on `agent/p16-v20-source-led-partitioning`. The active gate is now sparse `t4jp` v20 non-regression.**
 
 #### Accepted baselines
 
 Dense `tG9K` v9 artifact 29:
 
-- [x] 27 requirements / 7 responsibilities.
+- [x] 27 requirements / 7 responsibilities / 1 role purpose.
 - [x] optionality preserved.
 - [x] `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` preserved.
 - [x] MATLAB/C++ preferred.
@@ -76,37 +76,19 @@ Sparse `t4jp` v16 artifact 35:
 - [x] `experience` requires prior-applied-exposure evidence.
 - [x] fail closed before persistence when the complete contract is not satisfied.
 
-#### Dense correction chain
+#### V17 → V20 correction chain
 
-V17:
-
-- [x] removed arbitrary 32-requirement ceiling.
-- [x] aggregate requirement/responsibility coverage defects into one bounded correction.
-
-V18:
-
-- [x] deterministic parseable structured minimum experience.
-- [x] deterministic structured education.
-- [x] structured skills non-excludable.
-
-V19:
-
-- [x] optionality separated from technical depth.
-- [x] unsupported generated depth vocabulary guarded.
-- [x] genuine source depth preserved.
-- [x] dense whole-answer retry oscillation identified.
-
-V20:
-
-- [x] source-led bounded requirement partitions (max 8 model-owned refs).
-- [x] exact partition-scope enforcement.
-- [x] independent partition merge by exact identity.
-- [x] deterministic structured facts materialized after merge.
-- [x] inherited whole-artifact validators retained.
-- [x] `some C / C++ helpful` corrected to preferred + null depth in the proven case.
-- [x] `industrial / edge deployment` scope kept in concept rather than technical depth.
-- [x] unsupported preferred `experience` remains fail-closed without prior-exposure evidence.
-- [x] role-purpose versus concrete-duty distinction remains semantic/model-owned.
+- [x] v17 removed arbitrary 32-requirement ceiling.
+- [x] v17 aggregated dense coverage defects for bounded retry feedback.
+- [x] v18 deterministically owns parseable structured minimum experience and education.
+- [x] v18 makes structured skills non-excludable.
+- [x] v19 separates optionality from technical depth and protects genuine source depth.
+- [x] v19 dense run identified whole-answer retry oscillation.
+- [x] v20 uses bounded source-led partitions (max 8 model-owned refs).
+- [x] v20 enforces partition scope and merges independently-valid partitions.
+- [x] v20 preserves `some C / C++ helpful` as preferred + null depth.
+- [x] v20 preserves `industrial / edge deployment` as scope, not technical depth.
+- [x] v20 refuses unsupported preferred `experience` without prior-exposure evidence.
 
 Detailed records:
 
@@ -120,79 +102,75 @@ docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
 docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
 docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
 docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
+docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.md
+docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
 ```
 
-#### Dense v20 artifact 36 — current gate
-
-Persisted local result:
+#### Dense v20 artifact 36 — bounded PASS
 
 ```text
-Artifact: 36
-Contract: job-analysis-english-v20 / job-analysis-v5
-Requirements: 33
-Responsibilities: 8
+Artifact:          36
+Contract:          job-analysis-english-v20 / job-analysis-v5
+Requirements:      33
+Responsibilities:  8
+Role purpose:      0
+Mechanical audit:  PASS
+Semantic review:   PASS WITH ACCEPTABLE DIFFERENCE
 ```
 
-- [x] one dense v20 artifact persisted.
-- [x] complete v20 generation/partition/merge/validation/persistence path passed.
-- [x] v20-specific snapshot exporter implemented.
-- [x] v20-specific mechanical snapshot auditor implemented.
-- [x] review-tool regression binds audit to v20 prompt/schema identity.
-- [x] review-tool CI passed Ruff + full pytest + warnings-as-errors.
-- [~] export artifact 36 review snapshot.
-- [ ] run v20 mechanical snapshot audit.
-- [ ] inspect required `Master's degree`.
-- [ ] inspect `Professional experience` + exact `three to six years` depth.
-- [ ] inspect all six structured `skills[]` surfaces.
-- [ ] inspect high-level role purpose versus concrete responsibilities.
-- [ ] explain/accept/reject 8 responsibilities versus accepted v9 baseline 7.
-- [ ] compare dense factual coverage against accepted v9 artifact 29 and source/projection; no silent fact loss.
-- [ ] inspect `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` depth attachment.
-- [ ] verify MATLAB/C++ preferred with null technical depth unless independently supported.
-- [ ] verify `industrial / edge deployment` retains scope without fabricated depth or experience.
-- [ ] verify contextual stack remains contextual.
-- [ ] verify semiconductor-domain concept has no unsupported expertise wording.
-- [ ] preserve provenance distinction between structured Python and prose `Python (expert)`.
-- [ ] review concept-type differences for semantic defensibility.
+- [x] dense v20 artifact persisted.
+- [x] complete generation/partition/merge/validation/persistence path passed.
+- [x] v20-specific snapshot export/audit passed.
+- [x] required `Master's degree` retained.
+- [x] `Professional experience` retains exact `three to six years` depth.
+- [x] all six structured skills retained.
+- [x] all 27 accepted dense v9 source-derived requirements retained; 33 total = 27 + 6 structured skills.
+- [x] no silent dense factual loss.
+- [x] `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` retained correctly.
+- [x] MATLAB/C++ preferred with null technical depth.
+- [x] `industrial / edge deployment` remains preferred scope with null depth and no fabricated experience.
+- [x] contextual technical stack remains contextual.
+- [x] semiconductor-domain concept contains no unsupported expertise wording.
+- [x] structured Python and prose `Python (expert)` remain provenance-distinct.
+- [x] concept-type differences are semantically defensible.
+- [x] 8-vs-7 responsibility difference explained: v20 treats the opening `Build and validate ML/AI models...` bullet as a concrete responsibility; v9 used it as role purpose. Exact meaning remains represented, so this is accepted rather than blocking.
 
-Local review commands:
+#### Sparse v20 non-regression — ACTIVE GATE
+
+Run only:
 
 ```bash
 cd ~/projects/jobhunter
 
 git pull --ff-only origin agent/p16-v20-source-led-partitioning
-
-python scripts/export_p16_v20_candidate_snapshot.py --job-id tG9K
-python scripts/audit_p16_v20_candidate_snapshot.py --job-id tG9K
-```
-
-Review file:
-
-```text
-review-snapshots/jobs/tG9K.json
-```
-
-Do **not** run sparse `t4jp` until artifact 36 mechanical + semantic PASS.
-
-#### Sparse v20 non-regression — only after dense PASS
-
-```bash
 python scripts/run_p16_v20_candidate.py --job-id t4jp
 ```
 
-- [ ] compare with accepted sparse v16 artifact 35.
-- [ ] ensure partitioning/deterministic ownership does not create sparse over-extraction.
-- [ ] retain structured skills, qualification/residual accounting, and zero fabricated duties/purpose.
+Acceptance target against sparse v16 artifact 35:
+
+- [~] run sparse v20 locally against configured LM Studio/current database.
+- [ ] one sparse v20 artifact persists.
+- [ ] 3/3 structured required skills represented.
+- [ ] 4/4 qualification items represented.
+- [ ] complete residual coverage decisions.
+- [ ] 0 responsibilities.
+- [ ] 0 role purpose.
+- [ ] no fabricated duty/purpose.
+- [ ] no deterministic over-extraction.
+- [ ] export/audit/review sparse v20 artifact after persistence.
 
 #### Current B2 decision boundary
 
-- [x] public v9/schema v4 stays authoritative.
-- [x] sparse v16 acceptance remains valid.
+- [x] public v9/schema v4 stays authoritative until promotion.
+- [x] sparse v16 acceptance remains valid baseline.
 - [x] v17-v20 deterministic correction gates passed.
-- [x] dense v20 artifact 36 mechanically persisted.
-- [!] v20 public promotion blocked until artifact 36 semantic PASS + sparse non-regression PASS.
+- [x] dense v20 artifact 36 persistence PASS.
+- [x] dense v20 artifact 36 mechanical audit PASS.
+- [x] dense v20 artifact 36 semantic PASS with acceptable classification difference.
+- [!] v20 public promotion blocked until sparse v20 non-regression PASS.
 - [!] Capability v7 rebuild above v20 blocked until P1.6 promotion.
-- [!] heterogeneous-role progression blocked until dense/sparse v20 decision.
+- [!] heterogeneous-role progression blocked until sparse v20 decision.
+- [!] candidate PR merge blocked until sparse v20 decision and promotion decision.
 
 ### B3 — Capability Intelligence
 
@@ -232,16 +210,14 @@ snapshot current local state first
 
 Current targets:
 
-- [x] sparse `t4jp` — v16 bounded acceptance.
-- [x] rich AI/ML `tG9K` — accepted v9/v7 baseline retained.
-- [~] dense `tG9K` v20 artifact 36 — mechanical + semantic review now.
-- [ ] sparse `t4jp` v20 non-regression after dense PASS.
-- [ ] Python/software role — gated on v20 decision.
-- [ ] network/security role — gated on v20 decision.
-- [ ] operations/platform/DevOps role — gated on v20 decision.
+- [x] rich AI/ML `tG9K` v20 dense bounded acceptance.
+- [~] sparse `t4jp` v20 non-regression.
+- [ ] Python/software role — gated on sparse v20 decision/promotion.
+- [ ] network/security role — gated on sparse v20 decision/promotion.
+- [ ] operations/platform/DevOps role — gated on sparse v20 decision/promotion.
 - [ ] convert repeatable deterministic defects into fixtures.
 - [ ] record model limitations separately from deterministic defects.
-- [ ] decide whether P1.6 + Capability v7 is good enough to freeze as Phase-2 input.
+- [ ] decide whether promoted P1.6 + Capability v7 is good enough to freeze as Phase-2 input.
 
 ## C. Phase-1 closure after heterogeneous semantic acceptance
 
