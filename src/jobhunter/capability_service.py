@@ -17,8 +17,10 @@ from jobhunter.capability_service_v7 import (
     CAPABILITY_SCHEMA_VERSION,
     CapabilityIntelligenceError,
     CapabilityIntelligenceResult,
-    CapabilityIntelligenceService as CapabilityIntelligenceServiceV7,
     format_capability_intelligence,
+)
+from jobhunter.capability_service_v7 import (
+    CapabilityIntelligenceService as CapabilityIntelligenceServiceV7,
 )
 from jobhunter.capability_store import (
     CapabilityIntelligenceStore,
