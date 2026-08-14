@@ -75,6 +75,8 @@ def test_v20_has_partition_prompt_identity_without_changing_v5_shape() -> None:
     assert "SOURCE-LED BOUNDED SEMANTIC PARTITIONING" in _ENGLISH_SYSTEM_PROMPT_V20
     assert "high-level" in _ENGLISH_SYSTEM_PROMPT_V20
     assert '"some"' in _ENGLISH_SYSTEM_PROMPT_V20
+    assert "Scope/domain qualifiers" in _ENGLISH_SYSTEM_PROMPT_V20
+    assert "prior applied exposure" in _ENGLISH_SYSTEM_PROMPT_V20
     assert "maxItems" not in _ANALYSIS_SCHEMA_V20["properties"]["requirements"]
 
 
@@ -160,6 +162,65 @@ def test_v20_clears_some_from_preferred_cpp_depth_without_changing_evidence() ->
     assert result.requirement_type == "preferred"
     assert result.depth_signal is None
     assert result.evidence == "some C / C++ helpful"
+
+
+def test_v20_moves_preferred_scope_phrase_from_depth_into_concept() -> None:
+    fields = {"description": "industrial / edge deployment a plus"}
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": "Deployment",
+            "depth_signal": "industrial / edge deployment",
+            "requirement_type": "preferred",
+            "concept_type": "skill",
+            "evidence": "industrial / edge deployment a plus",
+            "confidence": "high",
+            "rationale": "Deployment in industrial or edge settings is explicitly a plus.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.concept == "industrial / edge deployment"
+    assert result.depth_signal is None
+    assert result.requirement_type == "preferred"
+    assert result.concept_type == "skill"
+    assert result.evidence == "industrial / edge deployment a plus"
+
+
+def test_v20_rejects_experience_type_without_prior_exposure_evidence() -> None:
+    fields = {"description": "industrial / edge deployment a plus"}
+
+    with pytest.raises(ValidationError, match="prior applied exposure"):
+        AnalysisRequirementV20.model_validate(
+            {
+                "concept": "Deployment",
+                "depth_signal": "industrial / edge deployment",
+                "requirement_type": "preferred",
+                "concept_type": "experience",
+                "evidence": "industrial / edge deployment a plus",
+                "confidence": "high",
+                "rationale": "The source states a preference but not prior exposure.",
+            },
+            context=_context(fields),
+        )
+
+
+def test_v20_accepts_preferred_experience_when_prior_exposure_is_explicit() -> None:
+    fields = {"description": "Experience with industrial / edge deployment preferred"}
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": "Industrial / edge deployment",
+            "depth_signal": None,
+            "requirement_type": "preferred",
+            "concept_type": "experience",
+            "evidence": "Experience with industrial / edge deployment preferred",
+            "confidence": "high",
+            "rationale": "The source explicitly asks for experience and marks it preferred.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.concept_type == "experience"
+    assert result.depth_signal is None
 
 
 def test_v20_preserves_real_depth_even_when_requirement_is_preferred() -> None:
