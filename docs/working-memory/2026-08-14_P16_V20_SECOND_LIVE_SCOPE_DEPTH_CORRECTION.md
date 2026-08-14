@@ -150,7 +150,14 @@ full pytest: PASS
 pytest -W error: PASS
 ```
 
-A final CI pass is required after rolling handoff/TODO reconciliation.
+After rolling working-memory and execution-TODO reconciliation, final branch CI also passed:
+
+```text
+run 762
+Ruff: PASS
+full pytest: PASS
+pytest -W error: PASS
+```
 
 ## 7. Acceptance boundary
 
