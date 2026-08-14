@@ -12,10 +12,7 @@ from jobhunter.analysis_runtime_v14 import (
 )
 from jobhunter.analysis_runtime_v15 import _normalize_v15_schedule_concepts
 from jobhunter.analysis_runtime_v16 import V16CandidateAnalysisProvider
-from jobhunter.analysis_service_v13 import (
-    decomposed_requirement_references,
-    inject_decomposition_exclusions,
-)
+from jobhunter.analysis_service_v13 import inject_decomposition_exclusions
 from jobhunter.analysis_service_v15 import validate_v15_candidate_structured
 from jobhunter.analysis_service_v17 import JobAnalysisServiceV17
 from jobhunter.analysis_store import AnalysisStore
