@@ -32,13 +32,13 @@ Do not jump to corpus-wide Phase 2.
 
 ### B1 — Review Snapshot routing
 
-- [x] `jobhunter jobs snapshot <id>` preserves effective model/dependency identities.
+- [x] current-chain snapshot routing preserves model/dependency identities.
 - [x] current-chain flags are trustworthy.
 - [x] repository-safe exclusions remain intact.
 
 ### B2 — P1.6 factual extraction
 
-**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v20/schema-v5 on `agent/p16-v20-source-led-partitioning`. The second v20 live run progressed beyond the former first-partition blocker and exposed a later scope/depth representation defect; that correction passes CI run 759 and the next dense rerun is the active gate.**
+**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v20/schema-v5 on `agent/p16-v20-source-led-partitioning`. Dense v20 artifact 36 has now persisted with 33 requirements / 8 responsibilities. Active gate is artifact 36 mechanical snapshot audit + semantic review. Do not run sparse `t4jp` yet.**
 
 #### Accepted baselines
 
@@ -76,27 +76,39 @@ Sparse `t4jp` v16 artifact 35:
 - [x] `experience` requires prior-applied-exposure evidence.
 - [x] fail closed before persistence when the complete contract is not satisfied.
 
-#### Dense correction history
+#### Dense correction chain
 
 V17:
 
 - [x] removed arbitrary 32-requirement ceiling.
-- [x] aggregate requirement + responsibility coverage defects in one correction message.
+- [x] aggregate requirement/responsibility coverage defects into one bounded correction.
 
 V18:
 
-- [x] deterministic structured minimum-experience ownership when years are mechanically parseable.
-- [x] deterministic structured education ownership.
-- [x] structured skills made non-excludable coverage.
+- [x] deterministic parseable structured minimum experience.
+- [x] deterministic structured education.
+- [x] structured skills non-excludable.
 
 V19:
 
-- [x] `a plus` / `helpful` kept as optionality rather than technical depth.
-- [x] unsupported generated depth vocabulary removable only when exact source proves it was added.
-- [x] genuine source depth such as `Python (expert)` remains preserved.
-- [x] dense v19 live run exposed whole-answer retry oscillation.
+- [x] optionality separated from technical depth.
+- [x] unsupported generated depth vocabulary guarded.
+- [x] genuine source depth preserved.
+- [x] dense whole-answer retry oscillation identified.
 
-Detailed history:
+V20:
+
+- [x] source-led bounded requirement partitions (max 8 model-owned refs).
+- [x] exact partition-scope enforcement.
+- [x] independent partition merge by exact identity.
+- [x] deterministic structured facts materialized after merge.
+- [x] inherited whole-artifact validators retained.
+- [x] `some C / C++ helpful` corrected to preferred + null depth in the proven case.
+- [x] `industrial / edge deployment` scope kept in concept rather than technical depth.
+- [x] unsupported preferred `experience` remains fail-closed without prior-exposure evidence.
+- [x] role-purpose versus concrete-duty distinction remains semantic/model-owned.
+
+Detailed records:
 
 ```text
 docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
@@ -104,112 +116,63 @@ docs/working-memory/2026-08-14_P16_V17_SOURCE_LED_CAPACITY_IMPLEMENTATION.md
 docs/working-memory/2026-08-14_P16_V17_DENSE_COVERAGE_FEEDBACK_CORRECTION.md
 docs/working-memory/2026-08-14_P16_V18_DETERMINISTIC_STRUCTURED_REQUIREMENTS.md
 docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
-```
-
-#### V20 — source-led bounded semantic partitioning
-
-Candidate:
-
-```text
-English P1.6: job-analysis-english-v20
-schema shape: job-analysis-v5
-branch: agent/p16-v20-source-led-partitioning
-stacked draft PR: #8
-base candidate: agent/p16-v19-depth-optionality-canonicalization / PR #7
-```
-
-- [x] complete model-owned coverage ledger built before inference.
-- [x] maximum 8 model-owned requirement references per partition.
-- [x] core/non-excludable/required/preferred/structured-skill coverage before contextual/excludable coverage.
-- [x] responsibility coverage assigned only to first partition.
-- [x] every partition keeps full exact evidence catalog for grounding.
-- [x] partition output restricted to assigned requirement/duty/exclusion ledger.
-- [x] cross-partition leakage fails closed.
-- [x] independently validated partitions merge by exact identity.
-- [x] deterministic education/experience materialization occurs after merge.
-- [x] inherited whole-artifact validators remain active after merge.
-- [x] exact v19 oscillation shape preserved across merge in regression tests.
-- [x] base implementation CI run 747 passed all gates.
-
-Record:
-
-```text
 docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
-```
-
-#### First dense v20 live run — vague `some` extent
-
-- [!] no v20 artifact persisted.
-- [x] bounded partitioning reached partition 1.
-- [!] C/C++ was preferred but model emitted `depth_signal="some"` from `some C / C++ helpful`.
-- [x] shared strict validator correctly rejected `some` as non-canonical technical depth.
-- [x] correction clears `some` only in the exact proven preferred/no-real-depth case.
-- [x] real preferred depth remains preserved.
-- [x] non-preferred `some` remains fail-closed.
-- [x] role-purpose vs concrete-duty distinction reinforced in prompt without hardcoded tG9K rewriting.
-- [x] correction implementation CI run 753 passed; documentation-reconciled run 756 passed.
-
-Record:
-
-```text
 docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
+docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
+docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
 ```
 
-#### Second dense v20 live run — scope misfiled as depth
+#### Dense v20 artifact 36 — current gate
 
-- [!] no v20 artifact persisted.
-- [x] previous C/C++ blocker did not recur; the run progressed beyond the former first-partition failure.
-- [x] failing later partition had no responsibility ledger.
-- [x] all six structured `skills[]` were represented in both generations: Artificial Intelligence, Python, Microsoft Office, Machine learning, Linux, Git.
-- [!] exact evidence `industrial / edge deployment a plus` was represented as `concept=Deployment` plus `depth_signal="industrial / edge deployment"`.
-- [!] generation 1 additionally typed the bare preferred scope as `experience` without explicit prior-exposure evidence.
-- [x] generation 2 switched ontology to `skill`, confirming ontology is model-judged, but still repeated the scope/depth error.
-- [x] strict depth validator correctly rejected both generations.
-
-#### V20 second-live correction
-
-- [x] exact source-supported scope can move from a non-depth `depth_signal` into the normalized concept only when the signal is an exact excerpt, evidence proves preference, no accepted depth marker exists, and the signal is mechanically the same concept with added leading scope.
-- [x] live shape therefore normalizes to `concept="industrial / edge deployment"`, `requirement_type=preferred`, `depth_signal=null`, exact evidence unchanged.
-- [x] preferred `concept_type=experience` now fails when exact evidence lacks explicit prior-applied-exposure wording.
-- [x] unsupported experience is **not** silently relabeled to another ontology.
-- [x] explicit preferred experience evidence remains valid.
-- [x] regression tests cover exact live scope/depth and experience shapes plus all prior v20 cases.
-- [x] correction implementation CI run 759 passed Ruff, full pytest, and warnings-as-errors.
-
-Record:
+Persisted local result:
 
 ```text
-docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
+Artifact: 36
+Contract: job-analysis-english-v20 / job-analysis-v5
+Requirements: 33
+Responsibilities: 8
 ```
 
-#### Current dense v20 live gate — `tG9K` rerun
+- [x] one dense v20 artifact persisted.
+- [x] complete v20 generation/partition/merge/validation/persistence path passed.
+- [x] v20-specific snapshot exporter implemented.
+- [x] v20-specific mechanical snapshot auditor implemented.
+- [x] review-tool regression binds audit to v20 prompt/schema identity.
+- [x] review-tool CI passed Ruff + full pytest + warnings-as-errors.
+- [~] export artifact 36 review snapshot.
+- [ ] run v20 mechanical snapshot audit.
+- [ ] inspect required `Master's degree`.
+- [ ] inspect `Professional experience` + exact `three to six years` depth.
+- [ ] inspect all six structured `skills[]` surfaces.
+- [ ] inspect high-level role purpose versus concrete responsibilities.
+- [ ] explain/accept/reject 8 responsibilities versus accepted v9 baseline 7.
+- [ ] compare dense factual coverage against accepted v9 artifact 29 and source/projection; no silent fact loss.
+- [ ] inspect `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` depth attachment.
+- [ ] verify MATLAB/C++ preferred with null technical depth unless independently supported.
+- [ ] verify `industrial / edge deployment` retains scope without fabricated depth or experience.
+- [ ] verify contextual stack remains contextual.
+- [ ] verify semiconductor-domain concept has no unsupported expertise wording.
+- [ ] preserve provenance distinction between structured Python and prose `Python (expert)`.
+- [ ] review concept-type differences for semantic defensibility.
+
+Local review commands:
 
 ```bash
 cd ~/projects/jobhunter
 
-git fetch origin
-git switch agent/p16-v20-source-led-partitioning
 git pull --ff-only origin agent/p16-v20-source-led-partitioning
 
-python scripts/run_p16_v20_candidate.py --job-id tG9K
+python scripts/export_p16_v20_candidate_snapshot.py --job-id tG9K
+python scripts/audit_p16_v20_candidate_snapshot.py --job-id tG9K
 ```
 
-- [~] rerun dense v20 locally against configured LM Studio/current database.
-- [ ] confirm one v20 artifact persists.
-- [ ] confirm required `Master's degree`.
-- [ ] confirm `Professional experience` + exact `three to six years` depth.
-- [ ] confirm all six structured `skills[]` surfaces.
-- [ ] confirm high-level role purpose is represented appropriately and concrete duty surfaces remain responsibilities.
-- [ ] compare dense factual coverage against accepted v9 artifact 29; no silent fact loss.
-- [ ] inspect `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` depth attachment.
-- [ ] verify MATLAB/C++ preferred with null technical depth unless independently supported.
-- [ ] verify `industrial / edge deployment` retains its scope without fabricated depth or experience.
-- [ ] verify contextual stack remains contextual.
-- [ ] verify semiconductor-domain concept has no unsupported expertise wording.
-- [ ] preserve provenance distinction between structured Python and prose `Python (expert)`.
-- [ ] review concept-type differences only after mechanical validity.
+Review file:
 
-Do not run sparse `t4jp` until dense v20 mechanical + semantic PASS.
+```text
+review-snapshots/jobs/tG9K.json
+```
+
+Do **not** run sparse `t4jp` until artifact 36 mechanical + semantic PASS.
 
 #### Sparse v20 non-regression — only after dense PASS
 
@@ -225,13 +188,9 @@ python scripts/run_p16_v20_candidate.py --job-id t4jp
 
 - [x] public v9/schema v4 stays authoritative.
 - [x] sparse v16 acceptance remains valid.
-- [x] v17 capacity + aggregate-feedback deterministic gates passed.
-- [x] v18 deterministic structured ownership gate passed.
-- [x] v19 depth/optionality canonicalization gate passed.
-- [x] v20 partition implementation gate passed.
-- [x] v20 first-live correction gate passed.
-- [x] v20 second-live scope/depth correction implementation gate passed.
-- [!] v20 public promotion blocked until dense semantic PASS + sparse non-regression PASS.
+- [x] v17-v20 deterministic correction gates passed.
+- [x] dense v20 artifact 36 mechanically persisted.
+- [!] v20 public promotion blocked until artifact 36 semantic PASS + sparse non-regression PASS.
 - [!] Capability v7 rebuild above v20 blocked until P1.6 promotion.
 - [!] heterogeneous-role progression blocked until dense/sparse v20 decision.
 
@@ -247,7 +206,7 @@ python scripts/run_p16_v20_candidate.py --job-id t4jp
 - [x] all six accepted explicit-depth facts retained.
 - [x] two coherent capability profiles.
 
-Freeze v7 unless heterogeneous evidence reveals a repeatable correctness defect. After eventual P1.6 promotion, rebuild Capability v7 against the promoted analysis artifact rather than reusing artifact 9 as though it were current-chain.
+Freeze v7 until a promoted P1.6 artifact exists. Then rebuild Capability v7 against the promoted P1.6 dependency rather than treating artifact 9 as current-chain.
 
 ### B4 — Role Capability Blueprint experiment
 
@@ -255,8 +214,8 @@ Freeze v7 unless heterogeneous evidence reveals a repeatable correctness defect.
 
 - [x] provenance/index failure class identified and mechanically fixed.
 - [x] v6/12B artifact 7 passed mechanical audit and CI.
-- [!] semantic review still found unsupported automated-feedback/platform/implementation assumptions.
-- [x] do not create Blueprint v7, weaken validators, or resume nearby model shopping during this gate.
+- [!] semantic review still found unsupported assumptions.
+- [x] do not create Blueprint v7 or resume nearby model shopping during this gate.
 
 ### B5 — CI-3 heterogeneous live review
 
@@ -275,7 +234,7 @@ Current targets:
 
 - [x] sparse `t4jp` — v16 bounded acceptance.
 - [x] rich AI/ML `tG9K` — accepted v9/v7 baseline retained.
-- [~] dense `tG9K` v20 — second corrected live rerun next.
+- [~] dense `tG9K` v20 artifact 36 — mechanical + semantic review now.
 - [ ] sparse `t4jp` v20 non-regression after dense PASS.
 - [ ] Python/software role — gated on v20 decision.
 - [ ] network/security role — gated on v20 decision.
