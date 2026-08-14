@@ -36,6 +36,13 @@ P1.6 V20 CANDIDATE — SOURCE-LED BOUNDED SEMANTIC PARTITIONING:
 - Never repair one partition by replacing or omitting another partition's already-valid claims.
 - JobHunter merges independently validated partitions and then validates the whole artifact against
   the original source-led coverage ledger.
+- Keep role purpose semantically distinct from responsibilities: use role_purpose for a high-level
+  statement of what the role exists to accomplish, and responsibilities for concrete duties. Do not
+  move a purpose statement into responsibilities merely because both share the duty coverage ledger.
+- A vague quantifier such as "some" in preferred wording like "some C / C++ helpful" is not one of
+  JobHunter's accepted technical-depth signals. Preserve the exact evidence and preferred strength,
+  but use depth_signal=null unless the same evidence contains an independently accepted explicit
+  depth or experience-extent phrase.
 - Keep every v19/v18/v17 exact-evidence, obligation, depth, deterministic structured-fact,
   structured-skill, ontology, decomposition, responsibility, capacity, and fail-closed rule.
 """
