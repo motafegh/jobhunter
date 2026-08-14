@@ -38,7 +38,7 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v18/schema-v5 on `agent/p16-v18-deterministic-structured-requirements`. V18 deterministic CI passes; dense live `tG9K` is the next gate.**
+**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v19/schema-v5 on `agent/p16-v19-depth-optionality-canonicalization`. V19 deterministic CI passes; dense live `tG9K` is the next gate.**
 
 #### Accepted dense v9 baseline — `tG9K`
 
@@ -61,7 +61,7 @@ Do not jump to corpus-wide Phase 2.
 
 Earlier v9→v15 sparse failures remain preserved in dated working-memory and are not reopened unless new evidence requires it.
 
-#### Permanent semantic boundaries inherited by v18
+#### Permanent semantic boundaries inherited by v19
 
 - [x] exact source evidence/provenance.
 - [x] no unsupported/invented career claims.
@@ -107,18 +107,10 @@ docs/working-memory/2026-08-14_P16_V17_SOURCE_LED_CAPACITY_IMPLEMENTATION.md
 
 #### V17 correction 2 — aggregate dense coverage feedback
 
-First v17 dense run:
-
-- [!] failed before persistence.
-- [x] did not hit 32; first generation had 15 requirements, retry 16.
-- [!] first generation omitted minimum experience and one duty surface.
-- [!] one-error-at-a-time coverage feedback caused retry to fix minimum experience, then discover education after retry exhaustion.
-
-Correction:
-
+- [x] first v17 dense run proved old 32 cap was not the active failure mechanism.
 - [x] requirement + responsibility coverage defects now aggregate into one retry message.
 - [x] one bounded retry retained; retry count not increased.
-- [x] regression test proves minimum experience + education + another missing requirement + missing responsibility can be reported together.
+- [x] regression test proves multiple requirement deficits + missing responsibility can be reported together.
 - [x] deterministic CI passed.
 
 Record:
@@ -135,7 +127,7 @@ docs/working-memory/2026-08-14_P16_V17_DENSE_COVERAGE_FEEDBACK_CORRECTION.md
 - [x] generation 2 added both structured facts.
 - [!] retry represented minimum experience as `Professional experience of three to six years` while also using `three to six years` as `depth_signal`.
 - [x] strict depth-neutral concept validator correctly rejected that representation.
-- [x] failure classified as unnecessary model authority over mechanically known structured facts, not as a reason to weaken validation.
+- [x] failure classified as unnecessary model authority over mechanically known structured facts.
 
 #### V18 — deterministic structured-fact ownership
 
@@ -149,19 +141,14 @@ stacked draft PR: #6
 base candidate: agent/p16-v17-source-led-capacity / PR #5
 ```
 
-- [x] parseable structured `minimum_experience` is removed from model-facing evidence and deterministically materialized as:
-  - `Professional experience`
-  - exact years `depth_signal`
-  - required / experience
-  - exact structured-field evidence.
-- [x] structured `education` is removed from model-facing evidence and deterministically materialized as required education with exact evidence.
-- [x] unparseable minimum-experience wording stays model-owned/fail-closed; code does not guess.
-- [x] structured `skills[]` remain model-visible for semantic concept-type classification.
-- [x] every structured skill gets explicit non-excludable coverage so all omissions are reported together.
-- [x] deterministic requirements are combined before the existing semantic/persistence/final-validation chain; no guard is bypassed.
+- [x] parseable structured `minimum_experience` removed from model-facing evidence and deterministically materialized as `Professional experience` + exact years depth + required/experience + exact evidence.
+- [x] structured `education` removed from model-facing evidence and deterministically materialized as required education with exact evidence.
+- [x] unparseable minimum-experience wording stays model-owned/fail-closed.
+- [x] structured `skills[]` remain model-visible for concept-type classification.
+- [x] every structured skill gets explicit non-excludable coverage.
+- [x] deterministic requirements combine before existing semantic/persistence/final-validation chain.
 - [x] materialization is idempotent.
-- [x] regression tests cover deterministic partition, conservative fallback, structured-skill coverage, aggregate missing-skill feedback, strict final validation, and idempotence.
-- [x] CI run 731 passed Ruff, full pytest, and warnings-as-errors before docs reconciliation.
+- [x] CI run 734 passed after documentation reconciliation.
 
 Record:
 
@@ -169,40 +156,84 @@ Record:
 docs/working-memory/2026-08-14_P16_V18_DETERMINISTIC_STRUCTURED_REQUIREMENTS.md
 ```
 
-#### Current dense v18 live gate — `tG9K`
+#### First dense v18 live run — depth/optionality canonicalization defect
+
+- [!] no v18 artifact persisted.
+- [x] all seven duty surfaces were represented.
+- [x] all six structured skills were represented.
+- [x] education/minimum-experience were no longer the typed-model failure class because v18 removed them from model ownership.
+- [!] `MATLAB a plus` was emitted as preferred **and** `depth_signal="a plus"`.
+- [!] `some C / C++ helpful` was emitted as preferred **and** `depth_signal="helpful"`.
+- [!] `Semiconductor domain: ...` was normalized to a concept containing unsupported `expertise`.
+- [x] strict validators correctly rejected all three.
+- [x] one bounded retry repeated the same three representation defects.
+- [x] failure classified as mechanical depth/optionality normalization, not a reason to weaken semantic validation.
+
+#### V19 — depth / optionality canonicalization
+
+Candidate:
+
+```text
+English P1.6: job-analysis-english-v19
+schema shape: job-analysis-v5
+branch: agent/p16-v19-depth-optionality-canonicalization
+stacked draft PR: #7
+base candidate: agent/p16-v18-deterministic-structured-requirements / PR #6
+```
+
+- [x] optionality-only `depth_signal` is cleared only when:
+  - requirement is already preferred;
+  - proposed signal contains no accepted depth/experience-extent signal;
+  - proposed signal contains explicit optionality wording;
+  - exact evidence also contains explicit optionality wording.
+- [x] MATLAB/C++ preferred obligation therefore remains intact while `a plus` / `helpful` stop masquerading as technical depth.
+- [x] generated depth vocabulary is removed from normalized concept only when absent from exact source and cleanup leaves a meaningful non-generic concept.
+- [x] destructive cleanup still fails closed.
+- [x] genuine source depth remains governed by inherited strict validation; `Python (expert)` regression stays `depth_signal=expert`.
+- [x] exact three live v18 failure shapes validate together in the v19 regression suite.
+- [x] CI run 737 passed Ruff, full pytest, and warnings-as-errors before documentation reconciliation.
+
+Record:
+
+```text
+docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
+```
+
+#### Current dense v19 live gate — `tG9K`
 
 Run:
 
 ```bash
 git fetch origin
-git switch agent/p16-v18-deterministic-structured-requirements
-git pull --ff-only origin agent/p16-v18-deterministic-structured-requirements
-python scripts/run_p16_v18_candidate.py --job-id tG9K
+git switch agent/p16-v19-depth-optionality-canonicalization
+git pull --ff-only origin agent/p16-v19-depth-optionality-canonicalization
+python scripts/run_p16_v19_candidate.py --job-id tG9K
 ```
 
-- [~] run dense v18 locally against configured LM Studio/current database.
-- [ ] confirm one v18 artifact persists.
+- [~] run dense v19 locally against configured LM Studio/current database.
+- [ ] confirm one v19 artifact persists.
 - [ ] confirm `Master's degree` is present as required education.
 - [ ] confirm `Professional experience` + exact `three to six years` depth coexist correctly.
 - [ ] confirm all six structured `skills[]` surfaces are represented.
 - [ ] confirm all seven dense duty surfaces are represented.
 - [ ] compare dense factual coverage against accepted v9 artifact 29; no silent fact loss.
 - [ ] inspect `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` depth attachment.
-- [ ] verify MATLAB/C++ remain preferred.
+- [ ] verify MATLAB/C++ remain preferred with null technical depth unless independently supported.
 - [ ] verify contextual stack remains contextual where source wording requires it.
+- [ ] verify semiconductor-domain normalized concept contains no unsupported expertise wording.
 - [ ] preserve provenance distinction between structured Python and prose `Python (expert)`.
 - [ ] review concept-type differences only after mechanical validity.
 
-If v18 fails, classify the new concrete failure. Do not increase retries or weaken semantic validation by default.
+If v19 fails, classify the new concrete failure. Do not increase retries or weaken semantic validation by default.
 
-#### Sparse v18 non-regression — only after dense PASS
+#### Sparse v19 non-regression — only after dense PASS
 
 ```bash
-python scripts/run_p16_v18_candidate.py --job-id t4jp
+python scripts/run_p16_v19_candidate.py --job-id t4jp
 ```
 
 - [ ] compare with accepted sparse v16 artifact 35.
-- [ ] ensure deterministic structured ownership does not create sparse over-extraction.
+- [ ] ensure deterministic ownership/canonicalization does not create sparse over-extraction.
 - [ ] retain structured skills, qualification/residual accounting, and zero fabricated duties/purpose.
 
 #### Current B2 decision boundary
@@ -211,10 +242,11 @@ python scripts/run_p16_v18_candidate.py --job-id t4jp
 - [x] sparse v16 acceptance remains valid.
 - [x] v17 capacity correction deterministic gate passed.
 - [x] v17 aggregate feedback correction deterministic gate passed.
-- [x] v18 deterministic structured ownership implementation gate passed.
-- [!] v18 public promotion blocked until dense semantic PASS + sparse non-regression PASS.
-- [!] Capability v7 rebuild above v18 blocked until P1.6 promotion.
-- [!] heterogeneous-role progression blocked until the dense/sparse v18 decision.
+- [x] v18 deterministic structured ownership gate passed.
+- [x] v19 depth/optionality canonicalization deterministic gate passed.
+- [!] v19 public promotion blocked until dense semantic PASS + sparse non-regression PASS.
+- [!] Capability v7 rebuild above v19 blocked until P1.6 promotion.
+- [!] heterogeneous-role progression blocked until the dense/sparse v19 decision.
 
 ### B3 — Capability Intelligence
 
@@ -256,11 +288,11 @@ Current targets:
 
 - [x] sparse `t4jp` — v16 bounded acceptance.
 - [x] rich AI/ML `tG9K` — accepted v9/v7 baseline retained.
-- [~] dense `tG9K` v18 — live gate next.
-- [ ] sparse `t4jp` v18 non-regression after dense PASS.
-- [ ] Python/software role — gated on v18 decision.
-- [ ] network/security role — gated on v18 decision.
-- [ ] operations/platform/DevOps role — gated on v18 decision.
+- [~] dense `tG9K` v19 — live gate next.
+- [ ] sparse `t4jp` v19 non-regression after dense PASS.
+- [ ] Python/software role — gated on v19 decision.
+- [ ] network/security role — gated on v19 decision.
+- [ ] operations/platform/DevOps role — gated on v19 decision.
 - [ ] convert repeatable deterministic defects into fixtures.
 - [ ] record model limitations separately from deterministic defects.
 - [ ] decide whether P1.6 + Capability v7 is good enough to freeze as Phase-2 input.
