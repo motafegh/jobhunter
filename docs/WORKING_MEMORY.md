@@ -4,9 +4,9 @@
 **Date:** 2026-08-14  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Current gate:** CI-3 heterogeneous semantic validation of P1.6 + Capability v7  
-**Exact current point:** first dense `tG9K` v17 live run failed before persistence because response-level requirement coverage exposed missing references one at a time; aggregate dense-coverage feedback is now implemented and deterministic CI passes; rerun dense `tG9K` next.
+**Exact current point:** P1.6 v18 deterministic-structured-requirement candidate is implemented and deterministic CI passes; dense `tG9K` live acceptance is the next gate.
 
-This file is not controlling. Product/domain/source/architecture constraints, roadmap/implementation plans, the active semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Detailed dated working-memory and experiment records preserve the evidence trail.
+This file is not controlling. Product/domain/source/architecture constraints, roadmap/implementation plans, the active semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory records preserve the detailed evidence trail.
 
 ## 1. Product / architecture identity
 
@@ -52,267 +52,217 @@ tG9K English projection artifact 33
 → Capability v7 artifact 9
 ```
 
-Do not treat any candidate artifact as public truth until its acceptance gate passes. Capability artifact 9 remains tied to analysis artifact 29 and must not be represented as though it came from v16/v17.
+No candidate artifact is public truth until its acceptance gate passes. Capability artifact 9 remains tied to analysis artifact 29.
 
-## 3. Current isolated P1.6 candidate
+## 3. Current isolated candidate
 
 ```text
-branch:                       agent/p16-v17-source-led-capacity
-draft PR:                     #5
-English P1.6 candidate:       job-analysis-english-v17
-Candidate schema:             job-analysis-v5
-Deterministic CI:             PASS (run 723 before documentation reconciliation)
-Dense tG9K live status:       FAILED before persistence on first v17 live run
-Current correction:           aggregate all dense coverage defects into one bounded retry
-Sparse t4jp v17 regression:   waits for dense reviewable artifact
-Public promotion:             NOT AUTHORIZED
+base candidate branch:        agent/p16-v17-source-led-capacity
+base draft PR:                #5
+active branch:                agent/p16-v18-deterministic-structured-requirements
+stacked draft PR:             #6
+English P1.6 candidate:       job-analysis-english-v18
+candidate schema shape:       job-analysis-v5
+deterministic CI:             PASS (run 731 before docs reconciliation)
+dense tG9K v18 live status:   NOT RUN YET
+sparse t4jp v18 regression:   waits for dense semantic acceptance
+public promotion:             NOT AUTHORIZED
 ```
 
-Detailed current records:
+Detailed current record:
 
 ```text
+docs/working-memory/2026-08-14_P16_V18_DETERMINISTIC_STRUCTURED_REQUIREMENTS.md
+```
+
+Supporting history:
+
+```text
+docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
 docs/working-memory/2026-08-14_P16_V17_SOURCE_LED_CAPACITY_IMPLEMENTATION.md
 docs/working-memory/2026-08-14_P16_V17_DENSE_COVERAGE_FEEDBACK_CORRECTION.md
 ```
 
-Previous dense-failure record:
+## 4. What v17 established
+
+V17 corrected two real dense-path defects while preserving accepted/public v9/v4:
+
+1. removed the inherited fixed 32-requirement ceiling from the isolated candidate;
+2. changed response-level coverage feedback from first-error-only to one aggregate repair set while keeping one bounded retry.
+
+The second live `tG9K` v17 run proved the aggregate feedback worked:
 
 ```text
-docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
+generation 1
+→ all seven duties represented
+→ dense requirements represented
+→ one error reported BOTH field:minimum_experience + field:education
+
+generation 2
+→ added both structured facts
+→ failed because concept included years wording:
+   "Professional experience of three to six years"
+→ strict depth-neutral concept rule correctly rejected it
 ```
 
-## 4. V16 capacity defect remains real, but was not the whole dense failure
+Positive but non-authoritative v17 signals included `Solid`, `Strong`, `Hands-on`, `Comfort`, Python `expert`, MATLAB/C++ preference, and broad dense stack coverage. No v17 artifact persisted.
 
-The first dense `tG9K` v16 run failed before persistence after the initial generation plus one Instructor validation retry.
+## 5. Why v18 exists
+
+The v17 rerun showed that some failures are caused by giving the LLM authority over facts whose representation JobHunter already knows exactly.
+
+V18 therefore refines ownership rather than weakening validation:
 
 ```text
-generation 1: 32 requirements; education present; minimum_experience missing
-generation 2: 32 requirements; minimum_experience present; education missing
+JobHunter owns
+→ deterministic evidence identity
+→ mechanically provable structured facts
+→ coverage/provenance/accounting
+→ fail-closed guards
+
+LLM owns
+→ bounded semantic interpretation where meaning/classification really requires reasoning
 ```
 
-Code analysis confirmed an inherited hard 32-requirement ceiling in the typed response model, accepted `job-analysis-v4` JSON schema, and final evidence validator. Accepted dense v9 already has 27 requirements, while later candidate hardening protects six additional structured `skills[]` source surfaces. There is no product/domain rule limiting a vacancy to 32 factual requirements.
+This is the preferred direction for reducing repeated model-format failures without accepting weaker data.
 
-V17 therefore correctly removed the arbitrary requirement-array ceiling in an isolated schema-v5 candidate while leaving accepted v9/v4 untouched.
+## 6. V18 deterministic structured facts
 
-However, the first v17 live run did not reach 32 requirements. It produced only 15 requirements initially and 16 on retry. Therefore the capacity defect was a real structural hazard, but not the active mechanism of this v17 failure.
+### Minimum experience
 
-## 5. First dense v17 live run — new confirmed blocker
-
-Command:
-
-```bash
-python scripts/run_p16_v17_candidate.py --job-id tG9K
-```
-
-No v17 artifact persisted.
-
-### Generation 1
+When the shared P1.6 years parser can prove an exact years phrase, JobHunter materializes:
 
 ```text
-role purpose:       1
-responsibilities:   6
-requirements:       15
-coverage exclusions: 0
+concept:           Professional experience
+depth_signal:      exact years phrase
+requirement_type:  required
+concept_type:      experience
+evidence:          exact structured field value
 ```
 
-The generation preserved all six structured skills and these explicit depth signals:
-
-```text
-Solid
-Strong
-Hands-on
-Comfort
-Python expert
-```
-
-It omitted `field:minimum_experience`. The inherited response-level requirement coverage validator raised immediately on that first missing reference.
-
-The generation also represented only six of the seven expected dense duty surfaces, but responsibility validation was never reached because requirement validation failed first.
-
-### Generation 2
-
-Instructor's one bounded retry saw only the minimum-experience error and repaired it with:
+For `tG9K`:
 
 ```text
 Professional experience
 three to six years
-required
-experience
 ```
 
-The second response then failed on the next previously hidden mandatory reference:
+If an experience field cannot be mechanically parsed, V18 does not guess; it remains model-owned/fail-closed.
+
+### Education
+
+A meaningful structured education credential is materialized directly as:
 
 ```text
-field:education
+concept:           exact credential value
+requirement_type:  required
+concept_type:      education
+depth_signal:      null
+evidence:          exact credential value
 ```
 
-The retry budget was exhausted.
+For `tG9K`, `Master's degree` no longer depends on LLM recall or formatting.
 
-### Current failure classification
+### Structured skills
 
-```text
-dense initial output contains multiple coverage omissions
-→ fail-fast requirement validator reveals only omission A
-→ one bounded retry repairs A
-→ validator reveals omission B
-→ no retry remains
-```
+Top-level `skills[]` remain model-visible because ontology classification can genuinely require semantic judgment. However every skill now receives an explicit non-excludable coverage reference so the aggregate retry reports all missing skills together and no structured skill may silently disappear.
 
-The primary current blocker is therefore **dense coverage feedback granularity / fail-fast response validation**.
+## 7. Strictness remains intact
 
-## 6. Aggregate dense-coverage correction now implemented
+V18 does not bypass validation. The combined model + deterministic output still passes through:
 
-The isolated `JobAnalysisResponseV17` response-level validator now overrides only the historical fail-fast coverage loop.
+- exact evidence/provenance checks;
+- required/preferred/contextual strength rules;
+- depth-neutral concept/depth separation;
+- skill/tool/knowledge/practice/domain/experience/education/other ontology;
+- qualification-vs-duty protection;
+- structured-skill coverage;
+- qualification/residual decomposition accounting;
+- duplicate protection;
+- source-led requirement capacity;
+- one bounded correction and fail-closed behavior.
 
-Accepted/public response models remain unchanged. Requirement-item evidence/depth/optionality semantics remain inherited from the strict v14/v16 path.
+Deterministic structured requirements are inserted before the existing semantic/persistence/final-validation chain.
 
-One validation error now aggregates, when present:
+## 8. Deterministic verification
 
-```text
-missing non-excludable requirement references
-unaccounted excludable requirement references
-obligation mismatches
-both-extracted-and-excluded references
-illegal context-only extraction/exclusion
-non-excludable references illegally excluded
-missing responsibility references
-```
-
-The correction message explicitly tells the single bounded retry to repair **all listed defects in the same response**.
-
-This does not increase retry count and does not weaken fail-closed behavior.
-
-Regression coverage proves one error can simultaneously expose minimum experience, education, another unaccounted requirement, and a missing responsibility.
-
-## 7. Deterministic verification
-
-After the aggregate-feedback correction and lint cleanup:
+V18 implementation CI:
 
 ```text
-CI run 723
-head e55ee3776f6d5d1ff9a751fb5f71727ade39c3ec
+run 731
+head b95bcdfa4188adc26d715dfbf5c64a31ebfde00d
 Ruff: PASS
 pytest: PASS
 pytest -W error: PASS
 ```
 
-Documentation reconciliation commits occur after that head and must keep the normal CI gate green before merge/promotion decisions.
+Regression tests prove deterministic partitioning, conservative fallback for unparseable experience, structured-skill coverage, aggregate missing-skill feedback, strict final validation, and idempotent materialization.
 
-## 8. Sparse calibration history remains valid
+Documentation reconciliation commits follow this head and must keep normal CI green.
 
-```text
-v9 t4jp artifact 30
-→ rejected: structured skills could disappear; qualification became responsibility
+## 9. Next action — dense v18 `tG9K`
 
-v10 artifact 31
-→ structured skills fixed; coarse coverage still hid explicit neighboring qualifications
-
-v11
-→ failed: qualification spans were outside evidence-reference protocol
-
-v12
-→ first-class qualification references worked; coarse bookkeeping still model-owned
-
-v13 artifact 32
-→ deterministic decomposition worked; residual facts/concept normalization still wrong
-
-v14 artifact 33
-→ complete mechanical sparse coverage; trait ontology/residual strength wrong
-
-v15 artifact 34
-→ mechanical PASS; punctuation debris + ability→experience typing wrong
-
-v16 artifact 35
-→ bounded sparse mechanical + semantic PASS
-```
-
-V16 sparse acceptance remains valid. V17 must prove it does not regress that restraint after the dense gate.
-
-## 9. Generic semantic boundaries inherited by v17
-
-- deterministic coverage of non-empty structured `skills[]`;
-- exact qualification-list item evidence;
-- deterministic coarse-span decomposition bookkeeping;
-- complete residual sentence accounting;
-- qualification-vs-responsibility protection;
-- coverage obligation separated from employer requirement strength;
-- schedule wording cannot become technical depth;
-- schedule wording removed from reusable capability concepts without changing evidence;
-- valid `Ability to ...` wrapper normalization;
-- no empty grouping punctuation in normalized concepts;
-- explicit ontology for skill/tool/knowledge/practice/domain/experience/education/other;
-- behavioral/value expectations use `other` instead of being forced into technical classes;
-- `experience` requires prior-applied-exposure evidence rather than mere ability wording;
-- one bounded correction and fail-closed behavior.
-
-Core ownership principle remains:
-
-```text
-model owns bounded semantic interpretation
-JobHunter owns deterministic evidence identity, coverage, provenance, accounting, and fail-closed guards
-```
-
-## 10. Next action — rerun dense tG9K only
-
-Update the local candidate branch and rerun:
+On the local machine:
 
 ```bash
-git pull --ff-only origin agent/p16-v17-source-led-capacity
-python scripts/run_p16_v17_candidate.py --job-id tG9K
+git fetch origin
+git switch agent/p16-v18-deterministic-structured-requirements
+git pull --ff-only origin agent/p16-v18-deterministic-structured-requirements
+python scripts/run_p16_v18_candidate.py --job-id tG9K
 ```
 
-Do not run sparse `t4jp` yet.
+Do not run `t4jp` yet.
 
-If a v17 artifact persists, inspect it against accepted v9 artifact 29 and source/projection for:
+If a v18 artifact persists, review it against accepted v9 artifact 29 and the source/projection for:
 
-- Master's degree and `three to six years` professional experience coexisting;
+- `Master's degree` present as required education;
+- `Professional experience` + exact `three to six years` depth;
 - all six structured skills represented;
-- complete dense requirement coverage without quota-driven fact loss;
-- all seven accepted duty surfaces represented;
-- explicit depth: `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort`, `three to six years`;
-- MATLAB/C++ preference preserved;
-- contextual stack semantics preserved where source wording requires it;
-- structured `Python` and prose `Python (expert)` kept provenance-distinct unless an explicit later reconciliation rule is accepted;
-- concept-type differences reviewed only after a valid artifact exists.
+- all seven duty surfaces represented;
+- no dense factual assertion silently lost;
+- `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` correctly attached;
+- MATLAB/C++ remain preferred;
+- contextual technical-stack semantics remain contextual where source wording requires it;
+- structured Python and prose `Python (expert)` remain provenance-distinct;
+- concept-type differences reviewed only after mechanical validity.
 
-If the rerun still fails, classify the new aggregate error/output rather than increasing retries or weakening coverage.
+If v18 fails, classify the concrete new failure rather than increasing retries or loosening semantic validation by default.
 
-## 11. Then sparse v17 non-regression
+## 10. Sparse non-regression and promotion boundary
 
-Only after dense v17 yields a reviewable artifact:
+Only after dense v18 semantic acceptance:
 
 ```bash
-python scripts/run_p16_v17_candidate.py --job-id t4jp
+python scripts/run_p16_v18_candidate.py --job-id t4jp
 ```
 
-Compare with v16 artifact 35. Removing dense capacity and improving correction feedback must not create sparse over-extraction.
+Compare against sparse v16 artifact 35. Deterministic ownership must not cause unsupported sparse extraction or fabricated duties/purpose.
 
-## 12. Capability / heterogeneous progression remains gated
-
-Until P1.6 v17 passes dense + sparse semantic acceptance:
+Promotion remains blocked until:
 
 ```text
-v17 public promotion             → blocked
-Capability v7 rebuild over v17   → blocked
-Python/software CI-3 role        → blocked
-network/security CI-3 role       → blocked
-operations/platform CI-3 role    → blocked
+v18 deterministic CI PASS
++ dense tG9K mechanical PASS
++ dense tG9K semantic PASS
++ sparse t4jp non-regression PASS
 ```
 
-After P1.6 promotion, Capability v7 must be rebuilt against the promoted P1.6 artifact and reviewed as a new dependency chain rather than reusing artifact 9.
-
-## 13. Blueprint remains deferred
-
-Blueprint is implemented but not accepted for Phase-1 decision use.
+Until then:
 
 ```text
-role-capability-blueprint-v6 / role-capability-blueprint-v5
-artifact 7 on tG9K
-model gemma-4-12b-it-qat
+public P1.6 promotion           → blocked
+Capability v7 rebuild over v18 → blocked
+Python/software CI-3 role      → blocked
+network/security CI-3 role     → blocked
+operations/platform CI-3 role  → blocked
 ```
 
-Do not create Blueprint v7, weaken validators, or reopen nearby model shopping during this gate.
+After eventual P1.6 promotion, rebuild Capability v7 against the promoted P1.6 artifact rather than reusing artifact 9 as though it were current-chain.
 
-## 14. Follow-up capacity audit
+## 11. Blueprint remains deferred
 
-Other historical list ceilings exist, notably responsibility/coverage bounds. They are not the current blocker unless live evidence demonstrates failure, but they should receive a separate source-led-capacity audit later so JobHunter does not simply move from one arbitrary ceiling to another.
+Blueprint remains implemented but not accepted for Phase-1 decision use. Do not create Blueprint v7, weaken its validators, or reopen nearby model shopping during this gate.
+
+## 12. Later engineering audit
+
+Historical fixed list ceilings remain elsewhere (notably responsibility/coverage bounds). They are not the current blocker unless live evidence demonstrates one, but they should receive a separate source-led-capacity audit after the current P1.6 acceptance path is stable.
