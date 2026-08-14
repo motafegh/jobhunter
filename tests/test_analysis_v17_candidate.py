@@ -3,12 +3,12 @@ from __future__ import annotations
 import pytest
 from pydantic import ValidationError
 
-from jobhunter.analysis_service import AnalysisValidationError, _ANALYSIS_SCHEMA
+from jobhunter.analysis_service import _ANALYSIS_SCHEMA, AnalysisValidationError
 from jobhunter.analysis_service_v17 import (
-    ANALYSIS_SCHEMA_VERSION,
-    ENGLISH_PROMPT_VERSION,
     _ANALYSIS_SCHEMA_V17,
     _ENGLISH_SYSTEM_PROMPT_V17,
+    ANALYSIS_SCHEMA_VERSION,
+    ENGLISH_PROMPT_VERSION,
     _validate_evidence_v17,
 )
 from jobhunter.evidence_refs import build_field_evidence_catalog
