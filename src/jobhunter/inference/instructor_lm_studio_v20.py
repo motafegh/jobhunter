@@ -3,27 +3,89 @@
 V20 keeps the full evidence catalog available for grounding but gives each model call a bounded,
 explicit subset of requirement/responsibility coverage. This prevents a correction for one dense
 subset from replacing another already-correct subset.
+
+The first live v20 dense run exposed one further item-normalization edge case: the model copied the
+word ``some`` from ``some C / C++ helpful`` into ``depth_signal``. JobHunter does not treat that
+vague quantifier as an accepted technical-depth signal. V20 therefore clears it only when the exact
+same evidence independently proves a preferred/optional requirement and contains no accepted depth
+or experience-extent marker. Exact source evidence is never changed.
 """
 
 from __future__ import annotations
 
 import json
+import re
 from typing import Any
 
 import httpx
 import instructor
 from openai import APIConnectionError, APITimeoutError, OpenAI
+from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.evidence_refs import (
     build_field_evidence_catalog,
     evidence_reference_payload,
+    has_english_optionality_signal,
     requirement_coverage_payload,
     responsibility_coverage_payload,
 )
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
-from jobhunter.inference.instructor_lm_studio import _leaf_evidence_catalog
-from jobhunter.inference.instructor_lm_studio_v19 import JobAnalysisResponseV19
+from jobhunter.inference.instructor_lm_studio import (
+    _DEPTH_SIGNAL_PATTERNS,
+    _leaf_evidence_catalog,
+)
+from jobhunter.inference.instructor_lm_studio_v19 import (
+    AnalysisRequirementV19,
+    JobAnalysisResponseV19,
+    _raw_evidence_text,
+)
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+_VAGUE_PREFERENCE_EXTENT_RE = re.compile(r"^some$", re.I)
+
+
+def _has_accepted_depth(text: str) -> bool:
+    return any(pattern.search(text) for pattern in _DEPTH_SIGNAL_PATTERNS.values())
+
+
+class AnalysisRequirementV20(AnalysisRequirementV19):
+    """Keep v19 strictness while clearing one provably non-canonical vague preference extent."""
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_vague_preference_extent(
+        cls,
+        value: Any,
+        info: ValidationInfo,
+    ) -> Any:
+        if not isinstance(value, dict):
+            return value
+
+        signal = value.get("depth_signal")
+        if (
+            value.get("requirement_type") != "preferred"
+            or not isinstance(signal, str)
+            or _VAGUE_PREFERENCE_EXTENT_RE.fullmatch(signal.strip()) is None
+        ):
+            return value
+
+        evidence = _raw_evidence_text(value, info)
+        if (
+            not has_english_optionality_signal(evidence)
+            or re.search(r"\bsome\b", evidence, re.I) is None
+            or _has_accepted_depth(evidence)
+        ):
+            return value
+
+        normalized = dict(value)
+        normalized["depth_signal"] = None
+        return normalized
+
+
+class JobAnalysisResponseV20(JobAnalysisResponseV19):
+    """V19 response-level coverage semantics with v20 requirement-item normalization."""
+
+    requirements: list[AnalysisRequirementV20] = Field()
 
 
 def _validated_partition_plan(
@@ -130,7 +192,7 @@ def complete_analysis_partition_with_instructor_v20(
     try:
         result, completion = client.create_with_completion(
             model=selected_model,
-            response_model=JobAnalysisResponseV19,
+            response_model=JobAnalysisResponseV20,
             messages=messages,
             context={
                 "analysis_fields": analysis_fields,
@@ -173,12 +235,13 @@ def complete_analysis_partition_with_instructor_v20(
             "configured_network_retries": network_retries,
             "p16_v20_requirement_partition_refs": sorted(requirement_plan),
             "p16_v20_responsibility_partition_refs": sorted(responsibility_plan),
+            "p16_v20_vague_preference_extent_normalization": True,
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
-            "response_model": "JobAnalysisResponseV19",
+            "response_model": "JobAnalysisResponseV20",
             "validation_retries": validation_retries,
-            "schema": JobAnalysisResponseV19.model_json_schema(),
+            "schema": JobAnalysisResponseV20.model_json_schema(),
         },
     }
 
@@ -192,6 +255,8 @@ def complete_analysis_partition_with_instructor_v20(
 
 
 __all__ = [
+    "AnalysisRequirementV20",
+    "JobAnalysisResponseV20",
     "_validated_partition_plan",
     "complete_analysis_partition_with_instructor_v20",
 ]
