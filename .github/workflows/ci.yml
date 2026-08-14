@@ -30,16 +30,8 @@ jobs:
       - name: Install package and development tools
         run: python -m pip install -e ".[dev]"
 
-      - name: Reveal Ruff import normalization
-        run: |
-          ruff check tests/test_analysis_v17_candidate.py --fix
-          python - <<'PY'
-          from pathlib import Path
-          text = "\n".join(Path("tests/test_analysis_v17_candidate.py").read_text().splitlines()[:18])
-          escaped = text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
-          print(f"::error file=tests/test_analysis_v17_candidate.py::{escaped}")
-          raise SystemExit(1)
-          PY
+      - name: Run Ruff
+        run: ruff check .
 
       - name: Run tests
         run: pytest
