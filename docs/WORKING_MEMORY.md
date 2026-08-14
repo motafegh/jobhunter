@@ -4,7 +4,7 @@
 **Date:** 2026-08-14  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Current gate:** CI-3 heterogeneous semantic validation of P1.6 + Capability v7  
-**Exact current point:** first dense `tG9K` v20 live run failed in partition 1 on vague `depth_signal="some"`; the narrow v20 correction is implemented and deterministic CI passes; dense `tG9K` v20 rerun is next.
+**Exact current point:** the second dense `tG9K` v20 live run progressed beyond the previously failing first partition, then failed on `industrial / edge deployment` being misfiled as technical depth. The narrow v20 scope/depth + experience-evidence correction is implemented and CI run 759 passes; dense `tG9K` v20 rerun is next.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, the semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve the detailed evidence trail.
 
@@ -44,7 +44,7 @@ Blueprint schema:             role-capability-blueprint-v5
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Accepted dense chain remains:
+Accepted dense chain:
 
 ```text
 tG9K English projection artifact 33
@@ -52,7 +52,7 @@ tG9K English projection artifact 33
 → Capability v7 artifact 9
 ```
 
-Sparse calibration anchor remains `t4jp` P1.6 v16 artifact 35.
+Sparse calibration anchor: `t4jp` P1.6 v16 artifact 35.
 
 No candidate artifact is public truth until its acceptance gate passes. Capability artifact 9 remains tied to analysis artifact 29.
 
@@ -69,14 +69,15 @@ schema shape:      job-analysis-v5
 public promotion:  NOT AUTHORIZED
 ```
 
-Current detailed records:
+Current detailed v20 records:
 
 ```text
 docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
 docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
+docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
 ```
 
-Supporting evidence trail:
+Earlier dense correction trail:
 
 ```text
 docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
@@ -92,29 +93,24 @@ docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
 
 - removed the arbitrary 32-requirement ceiling;
 - aggregated dense coverage defects into one correction message;
-- proved education/minimum-experience failures were unnecessary model ownership rather than a source-capacity problem.
+- exposed unnecessary model ownership of mechanically known education/minimum-experience facts.
 
 ### v18
 
-- moved mechanically provable structured education and minimum experience to deterministic JobHunter ownership;
+- moved mechanically provable structured education and minimum experience to JobHunter ownership;
 - kept ambiguous semantics model-owned and fail-closed;
 - made every structured skill non-excludable coverage.
 
 ### v19
 
-- kept preference/optionality (`a plus`, `helpful`) separate from technical depth;
-- removed unsupported generated depth vocabulary such as `expertise` only when exact source evidence proves it was added by the model;
-- preserved genuine source depth such as `Python (expert)`.
+- kept optionality (`a plus`, `helpful`) separate from technical depth;
+- removed unsupported generated depth vocabulary only when exact source evidence proves it was model-added;
+- preserved real source depth such as `Python (expert)`;
+- dense live run exposed whole-answer retry oscillation: one generation repaired a subset while losing another already-valid subset.
 
-### v19 live dense result
+### v20
 
-No artifact persisted. Generation 1 retained segment-13 Python expert / SQL / MATLAB / C++ but omitted structured Python plus the long contextual stack. Generation 2 repaired those omissions but dropped the four previously valid segment-13 facts.
-
-This established **whole-answer retry oscillation / dense cognitive load** as the active failure mechanism.
-
-## 5. V20 — source-led bounded semantic partitioning
-
-V20 changes extraction granularity instead of weakening validation or increasing retries.
+V20 changes extraction granularity rather than weakening validation or increasing retries:
 
 ```text
 complete source-led coverage ledger
@@ -122,80 +118,107 @@ complete source-led coverage ledger
 → exact partition-scope enforcement
 → merge validated partitions
 → deterministic education/experience materialization
-→ existing normalization/semantic guards
+→ inherited normalization/semantic guards
 → full original-source validation
 → persistence only if everything passes
 ```
 
-Partition rules:
+Each model-owned requirement partition is bounded to at most 8 references. Responsibility coverage belongs only to partition 1. Cross-partition requirement/duty/exclusion leakage fails closed.
 
-- maximum 8 model-owned requirement references per partition;
-- core/non-excludable/required/preferred/structured-skill coverage first;
-- contextual/excludable coverage in later slices;
-- responsibility coverage only in the first partition;
-- full exact evidence catalog remains available for grounding;
-- each partition may emit claims only for its assigned ledger;
-- cross-partition requirement/duty/exclusion leakage fails closed;
-- merge removes only exact duplicate identities;
-- merged output still passes the original complete source-led validators.
+## 5. First live v20 result and correction
 
-This prevents `fix B → forget A` behavior while preserving semantic strictness.
-
-## 6. First dense v20 live result
-
-The first live v20 `tG9K` run did **not** persist an artifact. It reached partition 1 and failed on one item before later partitions ran.
-
-Both Instructor generations produced C/C++ as:
-
-```text
-concept:          C / C++
-requirement_type: preferred
-depth_signal:     some
-evidence:         some C / C++ helpful
-```
-
-The shared strict validator rejected `some` because it is not one of JobHunter's accepted technical-depth / experience-extent signals.
-
-This is classified as an inherited **vague preference-extent normalization gap**, not a partitioning defect and not a reason to increase retries.
-
-The same output also placed source segment 0 in `responsibilities` with `role_purpose=[]`. That is not being deterministically rewritten: role purpose versus duty remains semantic/model-owned, but the v20 prompt now explicitly preserves that distinction. It is an acceptance-review item if an artifact persists.
-
-## 7. V20 live correction
-
-For exact preferred evidence such as:
+The first live `tG9K` v20 run stopped in partition 1 on:
 
 ```text
 some C / C++ helpful
+→ preferred
+→ model depth_signal=some
 ```
 
-v20 now represents:
+`some` is preserved in exact evidence but is not accepted JobHunter technical depth. V20 now clears it only in the mechanically proven preferred case while preserving real depth such as `Strong`.
+
+The same run showed a role-purpose/responsibility semantic drift. No tG9K-specific rewrite was added; the prompt now reinforces high-level purpose vs concrete-duty semantics, which remains an acceptance-review item after persistence.
+
+Implementation CI for that correction: run 753 PASS. Documentation-reconciled CI: run 756 PASS.
+
+## 6. Second live v20 result — current evidence
+
+The second live `tG9K` run **progressed past the prior partition-1 blocker**. That is evidence that the first correction worked and that bounded partitioning is advancing rather than oscillating over the whole artifact.
+
+The failing later partition had no responsibility ledger and contained:
 
 ```text
-concept:          C / C++
+field:description:segment:22:clause:1
+field:skills:0
+field:skills:1
+field:skills:2
+field:skills:3
+field:skills:4
+field:skills:5
+```
+
+Both generations represented all six structured skills:
+
+```text
+Artificial Intelligence
+Python
+Microsoft Office
+Machine learning
+Linux
+Git
+```
+
+The blocker was:
+
+```text
+source:            industrial / edge deployment a plus
+model concept:     Deployment
+model depth:       industrial / edge deployment
+requirement_type:  preferred
+```
+
+Generation 1 typed it as `experience`; generation 2 changed the type to `skill`, but both retained the invalid depth representation. No artifact persisted.
+
+## 7. Current v20 correction
+
+The source means:
+
+```text
+industrial / edge deployment   a plus
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^   ^^^^^^
+subject/scope                   preference
+```
+
+V20 now handles this conservatively:
+
+```text
+concept:          industrial / edge deployment
 requirement_type: preferred
 depth_signal:     null
-evidence:         some C / C++ helpful
+exact evidence:   unchanged
 ```
 
-The normalization is deliberately narrow. `depth_signal="some"` is cleared only when:
+The scope move happens only when the proposed signal is an exact source excerpt, the evidence independently proves preference, no accepted depth marker exists, and the signal is mechanically the same concept with additional leading scope.
 
-1. the requirement is already preferred;
-2. the proposed signal is exactly `some`;
-3. exact evidence contains `some`;
-4. exact evidence independently contains an explicit optionality/preference signal;
-5. exact evidence contains no accepted explicit JobHunter depth/experience-extent marker.
+Separately, preferred `concept_type=experience` now fails unless the exact evidence explicitly states prior applied exposure. V20 does **not** silently relabel unsupported experience to skill/domain/practice; ontology remains model-owned within the strict evidence boundary.
 
-Exact evidence remains unchanged, so the original wording is not lost.
+Regression coverage proves:
 
-Real source depth remains protected. For example:
+- exact live scope phrase moves from depth into concept without losing evidence;
+- unsupported preferred `experience` fails closed;
+- explicit preferred experience remains accepted;
+- previous C/C++ `some` normalization still passes;
+- genuine preferred depth remains preserved;
+- all partition/merge/leakage tests remain active.
+
+Implementation CI:
 
 ```text
-Strong C / C++ preferred
-→ requirement_type=preferred
-→ depth_signal=Strong
+run 759
+Ruff: PASS
+full pytest: PASS
+pytest -W error: PASS
 ```
-
-And `some C / C++` without explicit preference is **not** silently repaired; it remains fail-closed.
 
 ## 8. Strictness remains intact
 
@@ -204,55 +227,22 @@ V20 retains:
 - exact evidence/provenance;
 - no unsupported career claims;
 - required/preferred/contextual separation;
-- technical depth separate from obligation and normalized concept;
+- technical depth separate from obligation and concept scope;
+- prior-applied-exposure evidence for `experience`;
 - deterministic structured education/minimum experience;
 - structured-skill non-excludable coverage;
 - source-led requirement capacity;
 - qualification/residual decomposition accounting;
 - responsibility coverage;
 - skill/tool/knowledge/practice/domain/experience/education/other ontology;
-- `experience` evidence guard;
 - schedule/depth normalization;
 - v19 depth/optionality canonicalization;
 - duplicate protection;
 - fail-closed persistence.
 
-Partitioning and the new vague-extent cleanup are ownership/normalization changes, not weaker truth contracts.
+These corrections move mechanically provable representation decisions out of the LLM path; they do not weaken the truth contract.
 
-## 9. Deterministic verification
-
-Base v20 partition implementation:
-
-```text
-run 747
-Ruff: PASS
-pytest: PASS
-pytest -W error: PASS
-```
-
-First-live correction implementation:
-
-```text
-run 753
-Ruff: PASS
-pytest: PASS
-pytest -W error: PASS
-```
-
-Regression coverage now proves:
-
-- every dense coverage reference is assigned exactly once;
-- every partition stays bounded;
-- segment-13 and long contextual-stack subsets survive merge together;
-- structured Python and prose `Python (expert)` remain provenance-distinct;
-- cross-partition leakage is rejected;
-- exact live `some C / C++ helpful` normalizes to preferred + null depth;
-- real preferred technical depth remains preserved;
-- vague `some` is not silently cleared outside the proven preferred case.
-
-Documentation reconciliation follows run 753; final branch CI must remain green.
-
-## 10. Next action — dense v20 `tG9K` rerun
+## 9. Next action — dense v20 `tG9K` rerun
 
 ```bash
 cd ~/projects/jobhunter
@@ -271,16 +261,17 @@ If a v20 artifact persists, review it against accepted v9 artifact 29 and source
 - required `Master's degree`;
 - `Professional experience` + exact `three to six years` depth;
 - all six structured skills;
-- correct role purpose and all concrete dense duty surfaces;
+- correct high-level role purpose and concrete duty surfaces;
 - no silent dense factual loss;
 - `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` correctly attached;
 - MATLAB/C++ preferred with null technical depth unless independently supported;
-- contextual technical stack retained as contextual;
+- `industrial / edge deployment` retains scope without fabricated technical depth or experience;
+- contextual technical stack remains contextual;
 - semiconductor-domain concept has no unsupported expertise wording;
 - structured Python and prose `Python (expert)` remain provenance-distinct;
 - concept-type differences reviewed after mechanical validity.
 
-## 11. Sparse non-regression and promotion boundary
+## 10. Promotion boundary
 
 Only after dense v20 mechanical + semantic PASS:
 
@@ -288,9 +279,9 @@ Only after dense v20 mechanical + semantic PASS:
 python scripts/run_p16_v20_candidate.py --job-id t4jp
 ```
 
-Compare against sparse v16 artifact 35.
+Compare with sparse v16 artifact 35.
 
-Promotion remains blocked until:
+Promotion requires:
 
 ```text
 v20 deterministic CI PASS
@@ -307,11 +298,12 @@ Capability v7 rebuild over v20  → blocked
 Python/software CI-3 role       → blocked
 network/security CI-3 role      → blocked
 operations/platform CI-3 role   → blocked
+candidate PR merge              → blocked
 ```
 
-After eventual P1.6 promotion, rebuild Capability v7 against the promoted P1.6 artifact rather than reusing artifact 9 as though it were current-chain.
+After eventual P1.6 promotion, rebuild Capability v7 against the promoted P1.6 artifact rather than treating artifact 9 as current-chain.
 
-## 12. Deferred boundaries
+## 11. Deferred boundaries
 
 Blueprint remains implemented but not accepted for Phase-1 decision use. Do not create Blueprint v7 or resume nearby model shopping during this gate.
 
