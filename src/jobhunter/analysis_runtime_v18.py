@@ -177,7 +177,10 @@ class V18CandidateAnalysisProvider(V17CandidateAnalysisProvider):
             effective_fields,
         )
         skill_plan = _v18_structured_skill_coverage_plan(model_fields)
-        merged_plan = {reference: dict(candidate) for reference, candidate in additional_plan.items()}
+        merged_plan = {
+            reference: dict(candidate)
+            for reference, candidate in additional_plan.items()
+        }
         for reference, candidate in skill_plan.items():
             if reference in merged_plan:
                 raise AnalysisValidationError(
