@@ -9,12 +9,13 @@ from pathlib import Path
 
 from pydantic import ValidationError
 
-from jobhunter.analysis_runtime import build_job_analysis_service
-from jobhunter.analysis_service import (
-    ANALYSIS_SCHEMA_VERSION,
+from jobhunter.analysis_current import (
+    ENGLISH_ANALYSIS_SCHEMA_VERSION,
     ENGLISH_PROMPT_VERSION,
+    ORIGINAL_ANALYSIS_SCHEMA_VERSION,
     ORIGINAL_PROMPT_VERSION,
     AnalysisValidationError,
+    build_job_analysis_service,
 )
 from jobhunter.capability_service import (
     CAPABILITY_PROMPT_VERSION,
@@ -383,15 +384,19 @@ def _run_job_analysis(
         print(f"P1.6 analysis failed: {exc}", file=sys.stderr)
         return 1
 
-    prompt_version = (
-        ENGLISH_PROMPT_VERSION if parsed.mode == "english" else ORIGINAL_PROMPT_VERSION
-    )
-    label = "English" if parsed.mode == "english" else "Original-language"
+    if parsed.mode == "english":
+        prompt_version = ENGLISH_PROMPT_VERSION
+        schema_version = ENGLISH_ANALYSIS_SCHEMA_VERSION
+        label = "English"
+    else:
+        prompt_version = ORIGINAL_PROMPT_VERSION
+        schema_version = ORIGINAL_ANALYSIS_SCHEMA_VERSION
+        label = "Original-language"
     print(f"Outcome: {result.outcome}")
     print(f"{label} P1.6 for {result.source_job_id}")
     print(f"Artifact: {result.artifact_id}")
     print(f"Model: {result.model}")
-    print(f"Contract: {prompt_version} / {ANALYSIS_SCHEMA_VERSION}")
+    print(f"Contract: {prompt_version} / {schema_version}")
     print(f"Responsibilities: {result.responsibilities}")
     print(f"Requirements: {result.requirements}")
     return 0
