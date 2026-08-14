@@ -2,7 +2,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
+from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.capability_service import CAPABILITY_PROMPT_VERSION, CAPABILITY_SCHEMA_VERSION
 from jobhunter.capability_store import CapabilityIntelligenceStore
@@ -78,7 +78,7 @@ def _prepare_complete_chain(database_path: Path) -> None:
         translation_artifact_id=translation_id,
         model="analysis-model",
         prompt_version=ENGLISH_PROMPT_VERSION,
-        schema_version=ANALYSIS_SCHEMA_VERSION,
+        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
         analysis={
             "role_purpose": [],
             "responsibilities": [
