@@ -3,12 +3,24 @@
 **Status:** Rolling non-authoritative handoff  
 **Date:** 2026-08-15  
 **Repository:** `https://github.com/motafegh/jobhunter`  
+**Active working branch:** `main`  
 **Current gate:** P1.6 v20 promotion work after bounded dense + sparse calibration  
-**Exact current point:** dense `tG9K` v20 artifact **36** passed persistence, mechanical audit, and semantic review; sparse `t4jp` v20 artifact **37** passed persistence, mechanical audit, and semantic non-regression. The v20 calibration boundary is satisfied. **Public P1.6 is still v9/v4 until promotion is deliberately implemented and verified.** Capability artifact 9 remains tied to P1.6 artifact 29.
+**Exact current point:** dense `tG9K` v20 artifact **36** passed persistence, mechanical audit, and semantic review; sparse `t4jp` v20 artifact **37** passed persistence, mechanical audit, and semantic non-regression. The complete v17→v20 implementation/calibration stack has been merged into `main`. **Public P1.6 is still v9/v4 until promotion routing is deliberately implemented and verified.** Capability artifact 9 remains tied to P1.6 artifact 29.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, the semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve detailed evidence.
 
-## 1. Product / architecture identity
+## 1. Repository workflow rule
+
+JobHunter now uses **main-only development** by default:
+
+```text
+current work → main
+next work    → main
+```
+
+Do not create a new working branch or PR stack unless the user explicitly changes this rule. Historical merged PRs/branches remain evidence only; they are not active development paths.
+
+## 2. Product / architecture identity
 
 JobHunter is a local-first personal career-intelligence application.
 
@@ -28,7 +40,7 @@ Architecture remains a local Python modular monolith with SQLite structured stat
 
 Do not introduce Node/npm/React, vector/RAG, graph DB, generic plugin frameworks, agent orchestration, or similar infrastructure without demonstrated need.
 
-## 2. Accepted/public contracts before promotion
+## 3. Accepted/public contracts before promotion
 
 ```text
 parser:                       jobinja-detail-v2
@@ -52,20 +64,23 @@ tG9K English projection artifact 33
 → Capability v7 artifact 9
 ```
 
-No candidate artifact becomes public truth merely because its calibration gate passed.
+V20 calibration passing does not itself change current public routing.
 
-## 3. V20 candidate chain and records
+## 4. V17 → V20 history now consolidated on main
+
+The following historical PRs have been merged into `main` in order:
 
 ```text
-v17: agent/p16-v17-source-led-capacity                    PR #5
-v18: agent/p16-v18-deterministic-structured-requirements  PR #6
-v19: agent/p16-v19-depth-optionality-canonicalization     PR #7
-v20: agent/p16-v20-source-led-partitioning                PR #8
+PR #5 → v17 source-led requirement capacity
+PR #6 → v18 deterministic structured requirements
+PR #7 → v19 depth/optionality canonicalization
+PR #8 → v20 source-led partitioning + accepted calibration evidence
+```
 
-candidate English contract: job-analysis-english-v20
-candidate schema:           job-analysis-v5
-dense candidate artifact:  tG9K 36
-sparse candidate artifact: t4jp 37
+Current candidate/next-public English contract under promotion review:
+
+```text
+job-analysis-english-v20 / job-analysis-v5
 ```
 
 Key records:
@@ -78,9 +93,10 @@ docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.md
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
 docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
+docs/working-memory/2026-08-15_P16_V20_PROMOTION_ROUTING_DESIGN.md
 ```
 
-## 4. What v17 → v20 established
+## 5. What v17 → v20 established
 
 ```text
 v17 → remove arbitrary 32-requirement ceiling + aggregate dense coverage feedback
@@ -96,7 +112,7 @@ V20 live corrections also established:
 - unsupported preferred `experience` fails closed without prior-applied-exposure evidence;
 - role-purpose vs concrete-duty remains semantic/model-owned rather than vacancy-specific hardcoding.
 
-## 5. Dense calibration — tG9K artifact 36 PASS
+## 6. Dense calibration — tG9K artifact 36 PASS
 
 ```text
 Contract:          job-analysis-english-v20 / job-analysis-v5
@@ -111,7 +127,7 @@ Artifact 36 preserves all 27 accepted dense v9 source-derived requirements and a
 
 The 8-vs-7 responsibility difference is fully explained by the opening `Build and validate ML/AI models...` source bullet. V9 classified it as role purpose; v20 classifies it as a concrete responsibility. The other seven duty surfaces are unchanged. This was accepted because the source sentence is itself a concrete imperative under `What you'll do` and no meaning is lost.
 
-## 6. Sparse calibration — t4jp artifact 37 PASS
+## 7. Sparse calibration — t4jp artifact 37 PASS
 
 ```text
 Contract:                    job-analysis-english-v20 / job-analysis-v5
@@ -140,7 +156,7 @@ Ontology difference: `social networks` is `tool` in v20 versus `skill` in v16. T
 
 Non-gating hygiene note: the `Visual content production` requirement has correct authoritative fields (`depth_signal=null`) but one model-generated rationale inaccurately says it is “capturing scope/schedule as depth.” Treat free-form rationale as explanatory text, not authority. Capability/downstream review must not let such prose override normalized P1.6 fields/evidence.
 
-## 7. V20 calibration boundary — satisfied
+## 8. V20 calibration boundary — satisfied
 
 ```text
 v20 deterministic CI PASS
@@ -154,22 +170,29 @@ v20 deterministic CI PASS
 
 This authorizes **P1.6 v20 promotion work**. It does not itself perform promotion.
 
-## 8. Current action — promotion design/implementation
+## 9. Current action — promotion implementation on main
 
-Before changing public routing, inspect all public P1.6 entrypoints and dependency consumers. Promotion must:
+The promotion-routing design is recorded in:
 
-- make the accepted English path use v20/v5;
-- preserve the still-valid original-language v9 path unless separately revalidated;
+```text
+docs/working-memory/2026-08-15_P16_V20_PROMOTION_ROUTING_DESIGN.md
+```
+
+Promotion must:
+
+- make the public English path use v20/v5;
+- preserve the still-valid original-language v9/v4 path unless separately revalidated;
 - keep exact current-artifact/dependency routing correct;
-- avoid circular imports between public v9 modules and v20 candidate modules;
-- keep CLI/browser/batch paths aligned;
-- keep old artifacts reproducible/history-safe;
-- run deterministic CI after promotion;
+- avoid circular imports between historical v9 modules and v20 modules;
+- align targeted CLI, complete Phase-1 batch, browser, Review Snapshot, Market and Capability dependency selection;
+- preserve historical artifact/module reproducibility;
+- add promotion regression tests;
+- pass Ruff, full pytest, and warnings-as-errors;
 - only then rebuild Capability v7 against the promoted English P1.6 dependency.
 
-Do not merge candidate PRs or rebuild Capability as if v20 were public before this routing work is explicitly completed and verified.
+All implementation for this gate proceeds directly on `main`.
 
-## 9. After promotion
+## 10. After promotion
 
 ```text
 promoted English P1.6 v20/v5
