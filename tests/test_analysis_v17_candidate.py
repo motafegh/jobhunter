@@ -11,7 +11,11 @@ from jobhunter.analysis_service_v17 import (
     ENGLISH_PROMPT_VERSION,
     _validate_evidence_v17,
 )
-from jobhunter.evidence_refs import build_field_evidence_catalog
+from jobhunter.evidence_refs import (
+    build_field_evidence_catalog,
+    build_requirement_coverage_plan,
+    build_responsibility_coverage_plan,
+)
 from jobhunter.inference.instructor_lm_studio_v14 import JobAnalysisResponseV14
 from jobhunter.inference.instructor_lm_studio_v17 import JobAnalysisResponseV17
 
@@ -57,6 +61,22 @@ def _persisted_payload(count: int = 33) -> dict:
     }
 
 
+def _dense_feedback_fields() -> dict:
+    return {
+        "title": "Dense role",
+        "minimum_experience": "three years",
+        "education": "Bachelor's degree",
+        "description": (
+            "Responsibilities:\n"
+            "Build models.\n"
+            "Monitor models.\n"
+            "Requirements:\n"
+            "Python required.\n"
+            "SQL helpful."
+        ),
+    }
+
+
 def test_v17_has_new_prompt_and_schema_identity() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v17"
     assert ANALYSIS_SCHEMA_VERSION == "job-analysis-v5"
@@ -81,6 +101,51 @@ def test_v17_typed_model_accepts_33_requirements_while_v14_stays_bounded() -> No
 
     result = JobAnalysisResponseV17.model_validate(payload, context=context)
     assert len(result.requirements) == 33
+
+
+def test_v17_reports_all_dense_coverage_defects_in_one_validation_error() -> None:
+    fields = _dense_feedback_fields()
+    requirement_plan = build_requirement_coverage_plan(fields)
+    responsibility_plan = build_responsibility_coverage_plan(fields)
+    payload = {
+        "role_purpose": [
+            {
+                "statement": "Build models.",
+                "evidence": "field:description:segment:0",
+                "confidence": "high",
+            }
+        ],
+        "responsibilities": [],
+        "requirements": [
+            {
+                "concept": "Python",
+                "depth_signal": None,
+                "requirement_type": "required",
+                "concept_type": "skill",
+                "evidence": "field:description:segment:2",
+                "confidence": "high",
+                "rationale": "Explicit requirement.",
+            }
+        ],
+        "coverage_exclusions": [],
+    }
+    context = {
+        "analysis_fields": fields,
+        "evidence_catalog": build_field_evidence_catalog(fields),
+        "analysis_mode": "english",
+        "requirement_coverage_plan": requirement_plan,
+        "responsibility_coverage_plan": responsibility_plan,
+    }
+
+    with pytest.raises(ValidationError) as exc_info:
+        JobAnalysisResponseV17.model_validate(payload, context=context)
+
+    error = str(exc_info.value)
+    assert "Correct ALL listed defects in the same retry" in error
+    assert "field:minimum_experience" in error
+    assert "field:education" in error
+    assert "field:description:segment:3" in error
+    assert "field:description:segment:1" in error
 
 
 def test_v17_final_guard_accepts_33_grounded_unique_requirements() -> None:
