@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, PROMPT_VERSION
+from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.job_detail_observations import JobDetailObservationStore
 from jobhunter.job_workflow import JobWorkflowStore
@@ -80,8 +80,8 @@ class WebRepository:
         *,
         translation_schema_version: str = TRANSLATION_SCHEMA_VERSION,
         analysis_model: str | None = None,
-        analysis_prompt_version: str = PROMPT_VERSION,
-        analysis_schema_version: str = ANALYSIS_SCHEMA_VERSION,
+        analysis_prompt_version: str = ENGLISH_PROMPT_VERSION,
+        analysis_schema_version: str = ENGLISH_ANALYSIS_SCHEMA_VERSION,
     ) -> None:
         self._database_path = database_path
         self._translation_schema_version = translation_schema_version
