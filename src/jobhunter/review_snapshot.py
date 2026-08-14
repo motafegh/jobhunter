@@ -12,9 +12,10 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from jobhunter.analysis_service import (
-    ANALYSIS_SCHEMA_VERSION,
+from jobhunter.analysis_current import (
+    ENGLISH_ANALYSIS_SCHEMA_VERSION,
     ENGLISH_PROMPT_VERSION,
+    ORIGINAL_ANALYSIS_SCHEMA_VERSION,
     ORIGINAL_PROMPT_VERSION,
 )
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
@@ -184,13 +185,13 @@ def build_review_snapshot(
         source_job_id,
         model=analysis_model,
         prompt_version=ENGLISH_PROMPT_VERSION,
-        schema_version=ANALYSIS_SCHEMA_VERSION,
+        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
     )
     original_analysis = analysis_store.latest_current(
         source_job_id,
         model=analysis_model,
         prompt_version=ORIGINAL_PROMPT_VERSION,
-        schema_version=ANALYSIS_SCHEMA_VERSION,
+        schema_version=ORIGINAL_ANALYSIS_SCHEMA_VERSION,
     )
 
     translation = None
