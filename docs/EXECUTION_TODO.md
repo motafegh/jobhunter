@@ -38,7 +38,7 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v20/schema-v5 on `agent/p16-v20-source-led-partitioning`.**
+**Public/accepted P1.6 remains v9/schema v4. Dense `tG9K` v9 artifact 29 remains authoritative. Active candidate is v20/schema-v5 on `agent/p16-v20-source-led-partitioning`. First v20 live run failed in partition 1; the narrow correction is implemented and dense rerun is the active gate.**
 
 #### Accepted baselines
 
@@ -94,8 +94,9 @@ V19:
 - [x] `a plus` / `helpful` kept as optionality rather than technical depth.
 - [x] unsupported generated depth vocabulary removable only when exact source proves it was added.
 - [x] genuine source depth such as `Python (expert)` remains preserved.
+- [x] dense v19 live run exposed whole-answer retry oscillation: one generation retained segment-13 facts while omitting the long stack; retry repaired the long stack but dropped segment-13 facts.
 
-Detailed records:
+Detailed history:
 
 ```text
 docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
@@ -104,17 +105,6 @@ docs/working-memory/2026-08-14_P16_V17_DENSE_COVERAGE_FEEDBACK_CORRECTION.md
 docs/working-memory/2026-08-14_P16_V18_DETERMINISTIC_STRUCTURED_REQUIREMENTS.md
 docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
 ```
-
-#### Dense v19 live result — retry oscillation
-
-- [!] no v19 artifact persisted.
-- [x] v18 depth/optionality failure trio no longer blocked the output.
-- [x] generation 1 retained segment-13 Python expert / SQL / MATLAB / C++ surfaces.
-- [!] generation 1 omitted structured Python and the long contextual stack.
-- [x] aggregate feedback reported all missing surfaces.
-- [x] generation 2 repaired structured Python and the long contextual stack.
-- [!] generation 2 dropped the four segment-13 surfaces that generation 1 had already represented.
-- [x] failure classified as whole-answer retry oscillation / dense cognitive load, not a new semantic-rule defect.
 
 #### V20 — source-led bounded semantic partitioning
 
@@ -130,16 +120,16 @@ base candidate: agent/p16-v19-depth-optionality-canonicalization / PR #7
 
 - [x] complete model-owned coverage ledger built before inference.
 - [x] maximum 8 model-owned requirement references per partition.
-- [x] core/non-excludable/required/preferred/structured-skill coverage partitioned before contextual/excludable coverage.
+- [x] core/non-excludable/required/preferred/structured-skill coverage before contextual/excludable coverage.
 - [x] responsibility coverage assigned only to first partition.
 - [x] every partition keeps full exact evidence catalog for grounding.
-- [x] every partition is restricted to its assigned requirement/duty/exclusion ledger.
+- [x] partition output restricted to assigned requirement/duty/exclusion ledger.
 - [x] cross-partition leakage fails closed.
 - [x] independently validated partitions merge by exact identity.
-- [x] v18 deterministic education/experience materialization occurs after merge.
-- [x] existing v15/v16/v17/v18/v19 whole-artifact validators remain active after merge.
-- [x] tests prove the exact v19 oscillation shape preserves both subsets simultaneously.
-- [x] implementation CI run 747 passed Ruff, full pytest, and warnings-as-errors.
+- [x] deterministic education/experience materialization occurs after merge.
+- [x] inherited whole-artifact validators remain active after merge.
+- [x] exact v19 oscillation shape preserved across merge in regression tests.
+- [x] base implementation CI run 747 passed all gates.
 
 Record:
 
@@ -147,9 +137,34 @@ Record:
 docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
 ```
 
-#### Current dense v20 live gate — `tG9K`
+#### First dense v20 live run — partition-1 vague extent defect
 
-Run:
+- [!] no v20 artifact persisted.
+- [x] source-led partitioning reached bounded partition 1.
+- [x] both generations preserved MATLAB as preferred with null depth.
+- [!] both generations emitted C/C++ as preferred with `depth_signal="some"` from exact evidence `some C / C++ helpful`.
+- [x] shared strict depth validator correctly rejected `some` because it is not an accepted explicit technical-depth / experience-extent signal.
+- [x] failure classified as a narrow inherited item-normalization gap, not a partitioning failure and not a reason to increase retries.
+- [~] same live output moved the high-level segment-0 statement into responsibilities with `role_purpose=[]`; prompt now reinforces semantic purpose-vs-duty separation, but this remains a live semantic review item rather than a hardcoded rewrite.
+
+#### V20 first-live correction
+
+- [x] partition calls now use `AnalysisRequirementV20` / `JobAnalysisResponseV20`.
+- [x] `depth_signal="some"` is cleared only when the requirement is preferred, exact evidence contains `some`, exact evidence independently proves optionality, and exact evidence contains no accepted explicit depth/experience-extent marker.
+- [x] exact evidence stays unchanged; the word `some` remains reviewable in provenance.
+- [x] real preferred depth such as `Strong C / C++ preferred` remains `depth_signal=Strong`.
+- [x] `some C / C++` without preference is not silently repaired and remains fail-closed.
+- [x] v20 prompt now explicitly distinguishes high-level role purpose from concrete responsibilities.
+- [x] regression tests cover the exact live C/C++ shape, real preferred depth preservation, non-preferred fail-closed behavior, and prompt semantics.
+- [x] correction implementation CI run 753 passed Ruff, full pytest, and warnings-as-errors.
+
+Record:
+
+```text
+docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
+```
+
+#### Current dense v20 live gate — `tG9K` rerun
 
 ```bash
 cd ~/projects/jobhunter
@@ -161,12 +176,12 @@ git pull --ff-only origin agent/p16-v20-source-led-partitioning
 python scripts/run_p16_v20_candidate.py --job-id tG9K
 ```
 
-- [~] run dense v20 locally against configured LM Studio/current database.
+- [~] rerun dense v20 locally against configured LM Studio/current database.
 - [ ] confirm one v20 artifact persists.
-- [ ] confirm `Master's degree` as required education.
+- [ ] confirm required `Master's degree`.
 - [ ] confirm `Professional experience` + exact `three to six years` depth.
 - [ ] confirm all six structured `skills[]` surfaces.
-- [ ] confirm all seven dense duty surfaces.
+- [ ] confirm high-level role purpose is represented appropriately and concrete duty surfaces remain responsibilities.
 - [ ] compare dense factual coverage against accepted v9 artifact 29; no silent fact loss.
 - [ ] inspect `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` depth attachment.
 - [ ] verify MATLAB/C++ preferred with null technical depth unless independently supported.
@@ -194,7 +209,8 @@ python scripts/run_p16_v20_candidate.py --job-id t4jp
 - [x] v17 capacity + aggregate-feedback deterministic gates passed.
 - [x] v18 deterministic structured ownership gate passed.
 - [x] v19 depth/optionality canonicalization gate passed.
-- [x] v20 source-led partition implementation gate passed.
+- [x] v20 partition implementation gate passed.
+- [x] v20 first-live vague-extent correction deterministic gate passed.
 - [!] v20 public promotion blocked until dense semantic PASS + sparse non-regression PASS.
 - [!] Capability v7 rebuild above v20 blocked until P1.6 promotion.
 - [!] heterogeneous-role progression blocked until dense/sparse v20 decision.
@@ -239,7 +255,7 @@ Current targets:
 
 - [x] sparse `t4jp` — v16 bounded acceptance.
 - [x] rich AI/ML `tG9K` — accepted v9/v7 baseline retained.
-- [~] dense `tG9K` v20 — live gate next.
+- [~] dense `tG9K` v20 — corrected live rerun next.
 - [ ] sparse `t4jp` v20 non-regression after dense PASS.
 - [ ] Python/software role — gated on v20 decision.
 - [ ] network/security role — gated on v20 decision.
