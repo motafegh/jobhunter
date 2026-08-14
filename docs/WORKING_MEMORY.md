@@ -1,12 +1,12 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-14  
+**Date:** 2026-08-15  
 **Repository:** `https://github.com/motafegh/jobhunter`  
-**Current gate:** CI-3 heterogeneous semantic validation of P1.6 + Capability v7  
-**Exact current point:** P1.6 v19 depth/optionality canonicalization candidate is implemented and deterministic CI passes; dense `tG9K` live acceptance is the next gate.
+**Current gate:** P1.6 v20 promotion work after bounded dense + sparse calibration  
+**Exact current point:** dense `tG9K` v20 artifact **36** passed persistence, mechanical audit, and semantic review; sparse `t4jp` v20 artifact **37** passed persistence, mechanical audit, and semantic non-regression. The v20 calibration boundary is satisfied. **Public P1.6 is still v9/v4 until promotion is deliberately implemented and verified.** Capability artifact 9 remains tied to P1.6 artifact 29.
 
-This file is not controlling. Product/domain/source/architecture constraints, roadmap/implementation plans, the active semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory records preserve the detailed evidence trail.
+This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, the semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve detailed evidence.
 
 ## 1. Product / architecture identity
 
@@ -28,15 +28,15 @@ Architecture remains a local Python modular monolith with SQLite structured stat
 
 Do not introduce Node/npm/React, vector/RAG, graph DB, generic plugin frameworks, agent orchestration, or similar infrastructure without demonstrated need.
 
-## 2. Accepted/public contracts remain frozen
+## 2. Accepted/public contracts before promotion
 
 ```text
 parser:                       jobinja-detail-v2
 translation:                  lm-studio-translation-v2
 English projection:           english-projection-v2
-English P1.6 accepted/public: job-analysis-english-v9
-Original P1.6:                job-analysis-original-v9
-P1.6 accepted schema:         job-analysis-v4
+English P1.6 public:          job-analysis-english-v9
+Original P1.6 public:         job-analysis-original-v9
+P1.6 public schema:           job-analysis-v4
 Capability accepted baseline: job-capability-intelligence-v7
 Capability schema:            job-capability-intelligence-v4
 Blueprint experimental:       role-capability-blueprint-v6
@@ -44,7 +44,7 @@ Blueprint schema:             role-capability-blueprint-v5
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Accepted dense chain remains:
+Accepted dense public chain remains until promotion:
 
 ```text
 tG9K English projection artifact 33
@@ -52,283 +52,132 @@ tG9K English projection artifact 33
 → Capability v7 artifact 9
 ```
 
-No candidate artifact is public truth until its acceptance gate passes. Capability artifact 9 remains tied to analysis artifact 29.
+No candidate artifact becomes public truth merely because its calibration gate passed.
 
-## 3. Current isolated candidate chain
-
-```text
-v17 branch:                   agent/p16-v17-source-led-capacity
-v17 draft PR:                 #5
-v18 branch:                   agent/p16-v18-deterministic-structured-requirements
-v18 stacked draft PR:         #6
-active v19 branch:            agent/p16-v19-depth-optionality-canonicalization
-active stacked draft PR:      #7
-English P1.6 candidate:       job-analysis-english-v19
-candidate schema shape:       job-analysis-v5
-deterministic CI:             PASS (run 737 before docs reconciliation)
-dense tG9K v19 live status:   NOT RUN YET
-sparse t4jp v19 regression:   waits for dense semantic acceptance
-public promotion:             NOT AUTHORIZED
-```
-
-Detailed current record:
+## 3. V20 candidate chain and records
 
 ```text
-docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
+v17: agent/p16-v17-source-led-capacity                    PR #5
+v18: agent/p16-v18-deterministic-structured-requirements  PR #6
+v19: agent/p16-v19-depth-optionality-canonicalization     PR #7
+v20: agent/p16-v20-source-led-partitioning                PR #8
+
+candidate English contract: job-analysis-english-v20
+candidate schema:           job-analysis-v5
+dense candidate artifact:  tG9K 36
+sparse candidate artifact: t4jp 37
 ```
 
-Supporting history:
+Key records:
 
 ```text
-docs/working-memory/2026-08-14_P16_V16_DENSE_REGRESSION_FAILURE_AND_STATE_RECONCILIATION.md
-docs/working-memory/2026-08-14_P16_V17_SOURCE_LED_CAPACITY_IMPLEMENTATION.md
-docs/working-memory/2026-08-14_P16_V17_DENSE_COVERAGE_FEEDBACK_CORRECTION.md
-docs/working-memory/2026-08-14_P16_V18_DETERMINISTIC_STRUCTURED_REQUIREMENTS.md
+docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
+docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
+docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
+docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
+docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.md
+docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
+docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
 ```
 
-## 4. What v17 established
-
-V17 corrected two real dense-path defects while preserving accepted/public v9/v4:
-
-1. removed the inherited fixed 32-requirement ceiling from the isolated candidate;
-2. changed response-level coverage feedback from first-error-only to one aggregate repair set while keeping one bounded retry.
-
-The second live `tG9K` v17 run proved aggregate feedback worked:
+## 4. What v17 → v20 established
 
 ```text
-generation 1
-→ all seven duties represented
-→ dense requirements represented
-→ one error reported BOTH field:minimum_experience + field:education
-
-generation 2
-→ added both structured facts
-→ failed because concept included years wording:
-   "Professional experience of three to six years"
-→ strict depth-neutral concept rule correctly rejected it
+v17 → remove arbitrary 32-requirement ceiling + aggregate dense coverage feedback
+v18 → deterministic structured education/minimum experience + non-excludable structured skills
+v19 → separate optionality from technical depth + expose whole-answer retry oscillation
+v20 → source-led bounded partitions + exact partition scope + merge + whole-source validation
 ```
 
-No v17 artifact persisted.
+V20 live corrections also established:
 
-## 5. What v18 established
+- `some C / C++ helpful` → preferred, `depth_signal=null`;
+- `industrial / edge deployment a plus` → preferred scope in concept, not depth or fabricated experience;
+- unsupported preferred `experience` fails closed without prior-applied-exposure evidence;
+- role-purpose vs concrete-duty remains semantic/model-owned rather than vacancy-specific hardcoding.
 
-The v17 rerun showed some failures came from giving the LLM authority over facts whose representation JobHunter already knows exactly.
-
-V18 refined ownership:
+## 5. Dense calibration — tG9K artifact 36 PASS
 
 ```text
-JobHunter owns
-→ deterministic evidence identity
-→ mechanically provable structured facts
-→ coverage/provenance/accounting
-→ fail-closed guards
-
-LLM owns
-→ bounded semantic interpretation where meaning/classification really requires reasoning
+Contract:          job-analysis-english-v20 / job-analysis-v5
+Requirements:      33
+Responsibilities:  8
+Role purpose:      0
+Mechanical audit:  PASS
+Semantic review:   PASS WITH ACCEPTABLE DIFFERENCE
 ```
 
-V18 moved parseable structured minimum experience and structured education out of model ownership while leaving ambiguous/unparseable experience model-owned. Structured skills remained model-visible because concept-type classification can require semantic judgment, but every skill received explicit non-excludable coverage.
+Artifact 36 preserves all 27 accepted dense v9 source-derived requirements and adds all six structured required skills, giving 33 total. It preserves Master's degree, exact `three to six years` professional-experience depth, `Strong`, `Hands-on`, `Comfort`, `Solid`, and Python `expert`; MATLAB/C++ remain preferred with null depth; contextual stack remains contextual; industrial/edge deployment has correct scope and no fabricated experience.
 
-The first dense v18 live run then failed on a narrower representation class, not on education/experience coverage.
+The 8-vs-7 responsibility difference is fully explained by the opening `Build and validate ML/AI models...` source bullet. V9 classified it as role purpose; v20 classifies it as a concrete responsibility. The other seven duty surfaces are unchanged. This was accepted because the source sentence is itself a concrete imperative under `What you'll do` and no meaning is lost.
 
-## 6. First dense v18 live run — confirmed narrower blocker
-
-Command:
-
-```bash
-python scripts/run_p16_v18_candidate.py --job-id tG9K
-```
-
-No v18 artifact persisted.
-
-The generated output represented:
-
-- all seven duty surfaces;
-- all six structured skills;
-- broad dense technical-stack coverage;
-- required/preferred/contextual distinctions broadly correctly.
-
-Three typed-item validation failures remained in both Instructor generations:
+## 6. Sparse calibration — t4jp artifact 37 PASS
 
 ```text
-MATLAB a plus
-→ requirement_type = preferred
-→ depth_signal = "a plus"
-→ invalid because optionality is not technical depth
-
-some C / C++ helpful
-→ requirement_type = preferred
-→ depth_signal = "helpful"
-→ invalid because optionality is not technical depth
-
-Semiconductor domain: FDC / APC / SPC, ...
-→ generated concept added unsupported word "expertise"
-→ strict depth-neutral concept rule rejected it
+Contract:                    job-analysis-english-v20 / job-analysis-v5
+Requirements:                8
+Responsibilities:            0
+Role purpose:                0
+Structured skills:           3/3
+Qualification-list items:    4/4
+Residual coverage decisions: 4/4
+Decomposed coarse decisions: 1
+Mechanical audit:            PASS
+Semantic non-regression:     PASS
 ```
 
-This failure does not justify weakening strictness. It demonstrates a mechanical normalization boundary:
+Artifact 37 matches accepted sparse v16 artifact 35 at the source-fact/obligation/evidence level:
+
+- all 3 structured required skills retained;
+- all 4 exact qualification-list items retained;
+- `Ethics and work commitment` retained;
+- `the work is teachable`, remote-application instruction, and location/benefits sentence remain excluded;
+- no responsibilities or role purpose fabricated;
+- no education/minimum-experience requirement fabricated from `it doesn't matter`;
+- schedule wording `full-time and part-time` does not enter concept or depth.
+
+Ontology difference: `social networks` is `tool` in v20 versus `skill` in v16. This is defensible and does not change the source fact or obligation.
+
+Non-gating hygiene note: the `Visual content production` requirement has correct authoritative fields (`depth_signal=null`) but one model-generated rationale inaccurately says it is “capturing scope/schedule as depth.” Treat free-form rationale as explanatory text, not authority. Capability/downstream review must not let such prose override normalized P1.6 fields/evidence.
+
+## 7. V20 calibration boundary — satisfied
 
 ```text
-obligation / optionality != technical depth
+v20 deterministic CI PASS
++ dense tG9K 36 persistence PASS
++ dense tG9K 36 mechanical PASS
++ dense tG9K 36 semantic PASS
++ sparse t4jp 37 persistence PASS
++ sparse t4jp 37 mechanical PASS
++ sparse t4jp 37 semantic non-regression PASS
 ```
 
-and normalized concepts must not gain unsupported depth vocabulary.
+This authorizes **P1.6 v20 promotion work**. It does not itself perform promotion.
 
-## 7. Why v19 exists
+## 8. Current action — promotion design/implementation
 
-V19 canonicalizes only mechanically provable depth/optionality representation mistakes before inherited strict item validation.
+Before changing public routing, inspect all public P1.6 entrypoints and dependency consumers. Promotion must:
 
-### Preference wording in depth_signal
+- make the accepted English path use v20/v5;
+- preserve the still-valid original-language v9 path unless separately revalidated;
+- keep exact current-artifact/dependency routing correct;
+- avoid circular imports between public v9 modules and v20 candidate modules;
+- keep CLI/browser/batch paths aligned;
+- keep old artifacts reproducible/history-safe;
+- run deterministic CI after promotion;
+- only then rebuild Capability v7 against the promoted English P1.6 dependency.
 
-V19 clears `depth_signal` only when all are true:
+Do not merge candidate PRs or rebuild Capability as if v20 were public before this routing work is explicitly completed and verified.
 
-1. requirement is already `preferred`;
-2. proposed depth contains no accepted P1.6 depth/experience-extent signal;
-3. proposed depth itself contains explicit optionality wording;
-4. exact cited evidence also contains explicit optionality wording.
-
-Therefore:
+## 9. After promotion
 
 ```text
-MATLAB a plus
-→ preferred
-→ depth_signal = null
-
-some C / C++ helpful
-→ preferred
-→ depth_signal = null
+promoted English P1.6 v20/v5
+→ rebuild/review Capability v7 against promoted P1.6
+→ heterogeneous Python/software role
+→ network/security role
+→ operations/platform/DevOps role
+→ decide whether P1.6 + Capability v7 are ready to freeze as Phase-2 input
 ```
 
-Obligation and exact evidence remain unchanged.
-
-### Unsupported depth vocabulary in concept
-
-V19 may remove a depth token from a generated concept only when:
-
-1. the generated concept contains a token already classified by P1.6 as depth vocabulary;
-2. that token is absent from the cited exact source evidence;
-3. cleanup leaves a meaningful non-generic concept.
-
-If cleanup would destroy the concept, no repair is applied and strict validation still fails closed.
-
-For `tG9K`:
-
-```text
-source:     Semiconductor domain: FDC / APC / SPC, ...
-generated:  Semiconductor domain expertise (...)
-v19:        Semiconductor domain (...)
-```
-
-Exact evidence remains unchanged.
-
-## 8. Strictness remains intact
-
-V19 does not bypass validation. It preserves:
-
-- v18 deterministic structured education/minimum-experience ownership;
-- v18 structured-skill coverage;
-- v17 source-led requirement capacity;
-- v17 aggregate dense coverage feedback;
-- exact evidence/provenance checks;
-- required/preferred/contextual strength rules;
-- genuine source depth extraction;
-- depth-neutral normalized concepts;
-- skill/tool/knowledge/practice/domain/experience/education/other ontology;
-- qualification-vs-duty protection;
-- qualification/residual decomposition accounting;
-- responsibility coverage;
-- duplicate protection;
-- one bounded correction and fail-closed behavior.
-
-Regression coverage explicitly proves genuine `Python (expert)` still becomes:
-
-```text
-concept = Python
-depth_signal = expert
-```
-
-and a cleanup that would leave only an empty/generic concept remains rejected.
-
-## 9. Deterministic verification
-
-V19 implementation CI:
-
-```text
-run 737
-head e19feb1fa70ed4e4bb8e8458cf289785a1c917bb
-Ruff: PASS
-pytest: PASS
-pytest -W error: PASS
-```
-
-The regression suite includes the exact three live v18 failure shapes in one typed response and proves they validate together under v19.
-
-Documentation reconciliation commits follow this head and must keep the normal CI gate green.
-
-## 10. Next action — dense v19 `tG9K`
-
-On the local machine:
-
-```bash
-git fetch origin
-git switch agent/p16-v19-depth-optionality-canonicalization
-git pull --ff-only origin agent/p16-v19-depth-optionality-canonicalization
-python scripts/run_p16_v19_candidate.py --job-id tG9K
-```
-
-Do not run `t4jp` yet.
-
-If a v19 artifact persists, review it against accepted v9 artifact 29 and source/projection for:
-
-- `Master's degree` present as required education;
-- `Professional experience` + exact `three to six years` depth;
-- all six structured skills represented;
-- all seven duty surfaces represented;
-- no dense factual assertion silently lost;
-- `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` correctly attached;
-- MATLAB/C++ remain preferred with null technical depth unless an independent depth phrase exists;
-- contextual technical-stack semantics remain contextual where source wording requires it;
-- semiconductor-domain concept does not gain unsupported expertise wording;
-- structured Python and prose `Python (expert)` remain provenance-distinct;
-- concept-type differences reviewed only after mechanical validity.
-
-If v19 fails, classify the concrete new failure rather than increasing retries or loosening semantic validation by default.
-
-## 11. Sparse non-regression and promotion boundary
-
-Only after dense v19 semantic acceptance:
-
-```bash
-python scripts/run_p16_v19_candidate.py --job-id t4jp
-```
-
-Compare against sparse v16 artifact 35. Deterministic ownership/canonicalization must not cause unsupported sparse extraction or fabricated duties/purpose.
-
-Promotion remains blocked until:
-
-```text
-v19 deterministic CI PASS
-+ dense tG9K mechanical PASS
-+ dense tG9K semantic PASS
-+ sparse t4jp non-regression PASS
-```
-
-Until then:
-
-```text
-public P1.6 promotion            → blocked
-Capability v7 rebuild over v19  → blocked
-Python/software CI-3 role       → blocked
-network/security CI-3 role      → blocked
-operations/platform CI-3 role   → blocked
-```
-
-After eventual P1.6 promotion, rebuild Capability v7 against the promoted P1.6 artifact rather than reusing artifact 9 as though it were current-chain.
-
-## 12. Blueprint remains deferred
-
-Blueprint remains implemented but not accepted for Phase-1 decision use. Do not create Blueprint v7, weaken its validators, or reopen nearby model shopping during this gate.
-
-## 13. Later engineering audit
-
-Historical fixed list ceilings remain elsewhere (notably responsibility/coverage bounds). They are not the current blocker unless live evidence demonstrates one, but they should receive a separate source-led-capacity audit after the current P1.6 acceptance path is stable.
+Blueprint remains implemented but not accepted for Phase-1 decision use. Do not resume Blueprint tuning or corpus-wide Phase 2 during this gate.
