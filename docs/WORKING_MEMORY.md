@@ -4,7 +4,7 @@
 **Date:** 2026-08-14  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Current gate:** CI-3 heterogeneous semantic validation of P1.6 + Capability v7  
-**Exact current point:** P1.6 v20 source-led partitioning is implemented and deterministic CI passes; dense `tG9K` live acceptance is the next gate.
+**Exact current point:** first dense `tG9K` v20 live run failed in partition 1 on vague `depth_signal="some"`; the narrow v20 correction is implemented and deterministic CI passes; dense `tG9K` v20 rerun is next.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, the semantic-quality acceptance plan, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve the detailed evidence trail.
 
@@ -69,10 +69,11 @@ schema shape:      job-analysis-v5
 public promotion:  NOT AUTHORIZED
 ```
 
-Current detailed record:
+Current detailed records:
 
 ```text
 docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
+docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
 ```
 
 Supporting evidence trail:
@@ -107,26 +108,13 @@ docs/working-memory/2026-08-14_P16_V19_DEPTH_OPTIONALITY_CANONICALIZATION.md
 
 ### v19 live dense result
 
-No artifact persisted, but the previous v18 normalization failures were gone.
+No artifact persisted. Generation 1 retained segment-13 Python expert / SQL / MATLAB / C++ but omitted structured Python plus the long contextual stack. Generation 2 repaired those omissions but dropped the four previously valid segment-13 facts.
 
-Generation 1 retained the four segment-13 facts:
+This established **whole-answer retry oscillation / dense cognitive load** as the active failure mechanism.
 
-```text
-Python (expert)
-SQL
-MATLAB a plus
-some C / C++ helpful
-```
+## 5. V20 — source-led bounded semantic partitioning
 
-but omitted structured Python plus the long contextual stack.
-
-Generation 2 repaired structured Python and the long contextual stack, but dropped those four already-valid segment-13 facts.
-
-This is classified as **whole-answer retry oscillation / dense cognitive-load failure**, not a new semantic-rule defect.
-
-## 5. Why v20 exists
-
-V20 changes extraction granularity instead of weakening validation or asking one retry to regenerate the whole dense artifact.
+V20 changes extraction granularity instead of weakening validation or increasing retries.
 
 ```text
 complete source-led coverage ledger
@@ -139,21 +127,77 @@ complete source-led coverage ledger
 → persistence only if everything passes
 ```
 
-### Partition rules
+Partition rules:
 
 - maximum 8 model-owned requirement references per partition;
-- core/non-excludable/required/preferred/structured-skill coverage processed first;
-- contextual/excludable coverage processed in later slices;
-- responsibility coverage belongs only to the first partition;
-- every partition sees the full exact evidence catalog for grounding;
-- every partition may emit claims only for its assigned coverage ledger;
+- core/non-excludable/required/preferred/structured-skill coverage first;
+- contextual/excludable coverage in later slices;
+- responsibility coverage only in the first partition;
+- full exact evidence catalog remains available for grounding;
+- each partition may emit claims only for its assigned ledger;
 - cross-partition requirement/duty/exclusion leakage fails closed;
 - merge removes only exact duplicate identities;
-- the whole merged artifact still has to satisfy the original complete source-led validators.
+- merged output still passes the original complete source-led validators.
 
 This prevents `fix B → forget A` behavior while preserving semantic strictness.
 
-## 6. Strictness remains intact
+## 6. First dense v20 live result
+
+The first live v20 `tG9K` run did **not** persist an artifact. It reached partition 1 and failed on one item before later partitions ran.
+
+Both Instructor generations produced C/C++ as:
+
+```text
+concept:          C / C++
+requirement_type: preferred
+depth_signal:     some
+evidence:         some C / C++ helpful
+```
+
+The shared strict validator rejected `some` because it is not one of JobHunter's accepted technical-depth / experience-extent signals.
+
+This is classified as an inherited **vague preference-extent normalization gap**, not a partitioning defect and not a reason to increase retries.
+
+The same output also placed source segment 0 in `responsibilities` with `role_purpose=[]`. That is not being deterministically rewritten: role purpose versus duty remains semantic/model-owned, but the v20 prompt now explicitly preserves that distinction. It is an acceptance-review item if an artifact persists.
+
+## 7. V20 live correction
+
+For exact preferred evidence such as:
+
+```text
+some C / C++ helpful
+```
+
+v20 now represents:
+
+```text
+concept:          C / C++
+requirement_type: preferred
+depth_signal:     null
+evidence:         some C / C++ helpful
+```
+
+The normalization is deliberately narrow. `depth_signal="some"` is cleared only when:
+
+1. the requirement is already preferred;
+2. the proposed signal is exactly `some`;
+3. exact evidence contains `some`;
+4. exact evidence independently contains an explicit optionality/preference signal;
+5. exact evidence contains no accepted explicit JobHunter depth/experience-extent marker.
+
+Exact evidence remains unchanged, so the original wording is not lost.
+
+Real source depth remains protected. For example:
+
+```text
+Strong C / C++ preferred
+→ requirement_type=preferred
+→ depth_signal=Strong
+```
+
+And `some C / C++` without explicit preference is **not** silently repaired; it remains fail-closed.
+
+## 8. Strictness remains intact
 
 V20 retains:
 
@@ -173,11 +217,11 @@ V20 retains:
 - duplicate protection;
 - fail-closed persistence.
 
-Partitioning is a workload/ownership change, not a weaker truth contract.
+Partitioning and the new vague-extent cleanup are ownership/normalization changes, not weaker truth contracts.
 
-## 7. Deterministic verification
+## 9. Deterministic verification
 
-V20 implementation CI passed:
+Base v20 partition implementation:
 
 ```text
 run 747
@@ -186,15 +230,29 @@ pytest: PASS
 pytest -W error: PASS
 ```
 
-Regression coverage proves:
+First-live correction implementation:
+
+```text
+run 753
+Ruff: PASS
+pytest: PASS
+pytest -W error: PASS
+```
+
+Regression coverage now proves:
 
 - every dense coverage reference is assigned exactly once;
 - every partition stays bounded;
-- segment-13 facts and long contextual-stack facts survive merge together;
+- segment-13 and long contextual-stack subsets survive merge together;
 - structured Python and prose `Python (expert)` remain provenance-distinct;
-- cross-partition leakage is rejected.
+- cross-partition leakage is rejected;
+- exact live `some C / C++ helpful` normalizes to preferred + null depth;
+- real preferred technical depth remains preserved;
+- vague `some` is not silently cleared outside the proven preferred case.
 
-## 8. Next action — dense v20 `tG9K`
+Documentation reconciliation follows run 753; final branch CI must remain green.
+
+## 10. Next action — dense v20 `tG9K` rerun
 
 ```bash
 cd ~/projects/jobhunter
@@ -213,7 +271,7 @@ If a v20 artifact persists, review it against accepted v9 artifact 29 and source
 - required `Master's degree`;
 - `Professional experience` + exact `three to six years` depth;
 - all six structured skills;
-- all seven duty surfaces;
+- correct role purpose and all concrete dense duty surfaces;
 - no silent dense factual loss;
 - `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` correctly attached;
 - MATLAB/C++ preferred with null technical depth unless independently supported;
@@ -222,7 +280,7 @@ If a v20 artifact persists, review it against accepted v9 artifact 29 and source
 - structured Python and prose `Python (expert)` remain provenance-distinct;
 - concept-type differences reviewed after mechanical validity.
 
-## 9. Sparse non-regression and promotion boundary
+## 11. Sparse non-regression and promotion boundary
 
 Only after dense v20 mechanical + semantic PASS:
 
@@ -253,8 +311,8 @@ operations/platform CI-3 role   → blocked
 
 After eventual P1.6 promotion, rebuild Capability v7 against the promoted P1.6 artifact rather than reusing artifact 9 as though it were current-chain.
 
-## 10. Deferred boundaries
+## 12. Deferred boundaries
 
 Blueprint remains implemented but not accepted for Phase-1 decision use. Do not create Blueprint v7 or resume nearby model shopping during this gate.
 
-Historical fixed list ceilings outside the current requirements path (notably responsibility/coverage bounds) remain a later source-led-capacity audit unless live evidence proves they are current blockers.
+Historical fixed list ceilings outside the current requirements path remain a later source-led-capacity audit unless live evidence proves they are current blockers.
