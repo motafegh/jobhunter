@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 from pathlib import Path
 
-from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, PROMPT_VERSION
+from jobhunter.analysis_current import ANALYSIS_SCHEMA_VERSION, PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
