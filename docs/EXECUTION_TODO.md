@@ -2,8 +2,16 @@
 
 **Status:** Active working checklist  
 **Date:** 2026-08-15  
+**Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
 **Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
+
+Repository workflow rule:
+
+```text
+All current and next JobHunter implementation work proceeds directly on main.
+Do not create a new working branch unless the user explicitly changes this rule.
+```
 
 Status vocabulary:
 
@@ -25,6 +33,7 @@ Status vocabulary:
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
+- [x] v17→v20 implementation/calibration stack consolidated into `main` through merged PRs #5–#8.
 
 ## B. Semantic-quality gate
 
@@ -38,7 +47,7 @@ Do not jump to corpus-wide Phase 2.
 
 ### B2 — P1.6 factual extraction
 
-**V20 dense + sparse bounded calibration is complete. Public/accepted P1.6 remains v9/schema-v4 until explicit promotion routing is implemented and verified. Active gate: P1.6 v20 promotion work.**
+**V20 dense + sparse bounded calibration is complete and all implementation/history is now on `main`. Public/accepted P1.6 remains v9/schema-v4 until explicit promotion routing is implemented and verified. Active gate: P1.6 v20 promotion implementation on `main`.**
 
 #### Accepted public baseline before promotion
 
@@ -80,6 +89,10 @@ Sparse `t4jp` v16 artifact 35 remains the historical sparse calibration baseline
 - [x] v20 `some C / C++ helpful` → preferred + null depth.
 - [x] v20 `industrial / edge deployment` → scope, not depth/unsupported experience.
 - [x] v20 preferred `experience` requires prior-exposure evidence.
+- [x] historical PR #5 merged to main.
+- [x] historical PR #6 merged to main.
+- [x] historical PR #7 merged to main.
+- [x] historical PR #8 merged to main.
 
 Detailed v20 records:
 
@@ -91,6 +104,7 @@ docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.md
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
 docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
+docs/working-memory/2026-08-15_P16_V20_PROMOTION_ROUTING_DESIGN.md
 ```
 
 #### Dense v20 `tG9K` artifact 36 — PASS
@@ -150,24 +164,30 @@ Semantic non-regression:     PASS
 - [x] sparse t4jp persistence PASS.
 - [x] sparse t4jp mechanical PASS.
 - [x] sparse t4jp semantic non-regression PASS.
+- [x] full v17→v20 stack merged to `main`.
 
-#### P1.6 v20 promotion — ACTIVE GATE
+#### P1.6 v20 promotion — ACTIVE GATE ON MAIN
 
-Promotion is now authorized for implementation/review, but **not yet completed**.
+Promotion is authorized for implementation/review, but **not yet completed**.
 
-- [~] inspect every public English/original P1.6 entrypoint and dependency consumer.
-- [ ] choose minimal promotion routing that avoids circular imports.
-- [ ] make public English P1.6 resolve to `job-analysis-english-v20` / `job-analysis-v5`.
-- [ ] preserve original-language `job-analysis-original-v9` unless independently revalidated.
-- [ ] align CLI/browser/batch/current-artifact routing.
-- [ ] preserve old artifact/history reproducibility.
+- [x] inspect public routing impact and record promotion design.
+- [x] choose minimal architecture direction: keep historical v9 module semantics and introduce a neutral current-public facade instead of circular aliasing.
+- [ ] implement current-public facade for mode-specific English v20/v5 and original v9/v4 routing.
+- [ ] make targeted English analysis use v20/v5.
+- [ ] preserve targeted original-language analysis on v9/v4.
+- [ ] provide a public English batch surface compatible with Phase-1 partial-failure behavior.
+- [ ] align `phase1_run.py` eligibility/current-artifact/Market routing to v20/v5.
+- [ ] align browser analysis and Market/current-analysis routing to v20/v5.
+- [ ] align Review Snapshot to English v20/v5 and original v9/v4 independently.
+- [ ] align Capability v7 dependency selection to current English v20/v5.
+- [ ] ensure free-form P1.6 rationale cannot override normalized source truth downstream.
+- [ ] preserve old artifact/history/module reproducibility and avoid circular imports.
 - [ ] add/update promotion regression tests.
 - [ ] Ruff PASS.
 - [ ] full pytest PASS.
 - [ ] warnings-as-errors PASS.
-- [ ] verify accepted v20 artifacts remain current/reusable after promotion.
+- [ ] verify accepted v20 artifacts 36 and 37 remain current/reusable after promotion.
 - [ ] update public contract docs only after implementation is proven.
-- [ ] decide PR/stack merge strategy; do not merge merely because calibration passed.
 
 ### B3 — Capability Intelligence
 
