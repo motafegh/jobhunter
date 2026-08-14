@@ -43,6 +43,12 @@ P1.6 V20 CANDIDATE — SOURCE-LED BOUNDED SEMANTIC PARTITIONING:
   JobHunter's accepted technical-depth signals. Preserve the exact evidence and preferred strength,
   but use depth_signal=null unless the same evidence contains an independently accepted explicit
   depth or experience-extent phrase.
+- Scope/domain qualifiers describe the concept, not technical depth. For wording such as
+  "industrial / edge deployment a plus", preserve "industrial / edge deployment" in the normalized
+  concept and use depth_signal=null unless the source separately states an accepted depth marker.
+- concept_type=experience requires explicit prior applied exposure in the cited evidence. A bare
+  preferred subject/scope phrase such as "industrial / edge deployment a plus" does not by itself
+  prove experience; classify the source-supported capability/domain appropriately instead.
 - Keep every v19/v18/v17 exact-evidence, obligation, depth, deterministic structured-fact,
   structured-skill, ontology, decomposition, responsibility, capacity, and fail-closed rule.
 """
