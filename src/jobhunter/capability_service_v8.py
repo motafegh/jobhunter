@@ -2,13 +2,19 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import replace
 from datetime import UTC, datetime
 from typing import Any
 
+from pydantic import BaseModel
+
 from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
-from jobhunter.capability_inference_v8 import CapabilityV8InferenceProvider
+from jobhunter.capability_inference_v8 import (
+    CapabilityV8InferenceProvider,
+    CapabilityV8InferenceResult,
+)
 from jobhunter.capability_service_v6 import (
     CapabilityIntelligenceError,
     CapabilityIntelligenceResult,
@@ -157,6 +163,25 @@ def _group_evidence_catalog(
     }
 
 
+def _validated_stage(
+    result: CapabilityV8InferenceResult,
+    fallback_model: type[BaseModel],
+    *,
+    context: dict[str, Any],
+) -> BaseModel:
+    """Use provider-normalized typed output; revalidate only legacy/fake provider results."""
+
+    if result.validated_model is not None:
+        if not isinstance(result.validated_model, fallback_model):
+            raise TypeError(
+                "Capability staged provider returned an incompatible validated model: "
+                f"expected {fallback_model.__name__}, got "
+                f"{type(result.validated_model).__name__}"
+            )
+        return result.validated_model
+    return fallback_model.model_validate(result.intelligence, context=context)
+
+
 class CapabilityIntelligenceServiceV8:
     """Build/reuse Capability v8 without making one model answer own whole-job coverage."""
 
@@ -171,6 +196,8 @@ class CapabilityIntelligenceServiceV8:
         capability_model: str,
         max_tokens: int = 8192,
         clock=lambda: datetime.now(UTC),
+        reasoning_draft_model: type[CapabilityReasoningDraft] = CapabilityReasoningDraft,
+        reconciler: Callable[..., Any] = reconcile_capability_intelligence,
     ) -> None:
         if not analysis_model.strip():
             raise ValueError("A concrete P1.6 English analysis model is required")
@@ -186,6 +213,8 @@ class CapabilityIntelligenceServiceV8:
         self._capability_model = capability_model.strip()
         self._max_tokens = max_tokens
         self._clock = clock
+        self._reasoning_draft_model = reasoning_draft_model
+        self._reconciler = reconciler
 
     def _current_dependencies(
         self,
@@ -309,27 +338,26 @@ class CapabilityIntelligenceServiceV8:
                     for index in range(len(responsibilities))
                 ],
             }
+            plan_context = {
+                "capability_requirement_count": len(capability_requirements),
+                "responsibility_count": len(responsibilities),
+            }
             plan_result = self._provider.complete(
                 response_model=CapabilityGroupPlanV8,
                 system_prompt=_GROUP_PLAN_PROMPT,
                 user_payload=plan_payload,
-                validation_context={
-                    "capability_requirement_count": len(capability_requirements),
-                    "responsibility_count": len(responsibilities),
-                },
+                validation_context=plan_context,
                 max_tokens=min(self._max_tokens, 3072),
                 seed=0,
             )
             stage_requests.append(plan_result.request_body)
             stage_responses.append(plan_result.raw_response)
-            plan = CapabilityGroupPlanV8.model_validate(
-                plan_result.intelligence,
-                context={
-                    "capability_requirement_count": len(capability_requirements),
-                    "responsibility_count": len(responsibilities),
-                },
+            plan = _validated_stage(
+                plan_result,
+                CapabilityGroupPlanV8,
+                context=plan_context,
             )
-            group_ids = {group.group_id for group in plan.groups}
+            group_ids = {group.group_id for group in plan.groups}  # type: ignore[attr-defined]
 
             requirement_groups: dict[int, set[int]] = {
                 index: set() for index in capability_requirements
@@ -346,7 +374,10 @@ class CapabilityIntelligenceServiceV8:
             ):
                 assignment_payload = {
                     "source_job_id": source.source_job_id,
-                    "groups": [group.model_dump(mode="json") for group in plan.groups],
+                    "groups": [
+                        group.model_dump(mode="json")
+                        for group in plan.groups  # type: ignore[attr-defined]
+                    ],
                     "owned_requirements": [
                         _requirement_fact(index, requirements)
                         for index in owned_requirements
@@ -371,13 +402,14 @@ class CapabilityIntelligenceServiceV8:
                 )
                 stage_requests.append(assignment_result.request_body)
                 stage_responses.append(assignment_result.raw_response)
-                assignment = CapabilityAssignmentPartitionV8.model_validate(
-                    assignment_result.intelligence,
+                assignment = _validated_stage(
+                    assignment_result,
+                    CapabilityAssignmentPartitionV8,
                     context=assignment_context,
                 )
-                for item in assignment.requirement_assignments:
+                for item in assignment.requirement_assignments:  # type: ignore[attr-defined]
                     requirement_groups[item.index].update(item.group_ids)
-                for item in assignment.responsibility_assignments:
+                for item in assignment.responsibility_assignments:  # type: ignore[attr-defined]
                     responsibility_groups[item.index].update(item.group_ids)
 
             used_group_ids = {
@@ -396,7 +428,7 @@ class CapabilityIntelligenceServiceV8:
 
             capabilities: list[dict[str, Any]] = []
             profile_uncertainties: list[str] = []
-            for group_offset, group in enumerate(plan.groups):
+            for group_offset, group in enumerate(plan.groups):  # type: ignore[attr-defined]
                 if group.group_id not in used_group_ids:
                     continue
                 group_requirement_indices = sorted(
@@ -428,69 +460,80 @@ class CapabilityIntelligenceServiceV8:
                     "evidence_reference_ids": sorted(group_catalog),
                     "evidence_references": evidence_reference_payload(group_catalog),
                 }
+                profile_context = {
+                    "analysis_fields": analysis_fields,
+                    "evidence_catalog": group_catalog,
+                }
                 profile_result = self._provider.complete(
                     response_model=CapabilityProfileReasoningV8,
                     system_prompt=_PROFILE_PROMPT,
                     user_payload=profile_payload,
-                    validation_context={
-                        "analysis_fields": analysis_fields,
-                        "evidence_catalog": group_catalog,
-                    },
+                    validation_context=profile_context,
                     max_tokens=min(self._max_tokens, 4096),
                     seed=200 + group_offset,
                 )
                 stage_requests.append(profile_result.request_body)
                 stage_responses.append(profile_result.raw_response)
-                profile = CapabilityProfileReasoningV8.model_validate(
-                    profile_result.intelligence,
-                    context={
-                        "analysis_fields": analysis_fields,
-                        "evidence_catalog": group_catalog,
-                    },
+                profile = _validated_stage(
+                    profile_result,
+                    CapabilityProfileReasoningV8,
+                    context=profile_context,
                 )
-                profile_uncertainties.extend(profile.uncertainties)
+                profile_uncertainties.extend(profile.uncertainties)  # type: ignore[attr-defined]
                 capabilities.append(
                     {
                         "capability_label": group.capability_label,
-                        "summary": profile.summary,
+                        "summary": profile.summary,  # type: ignore[attr-defined]
                         "source_requirement_indices": group_requirement_indices,
                         "source_responsibility_indices": group_responsibility_indices,
                         "requirement_strength": "unspecified",
                         "depth_signals": [
-                            item.model_dump(mode="json") for item in profile.depth_signals
+                            item.model_dump(mode="json")
+                            for item in profile.depth_signals  # type: ignore[attr-defined]
                         ],
                         "work_activities": [
-                            item.model_dump(mode="json") for item in profile.work_activities
+                            item.model_dump(mode="json")
+                            for item in profile.work_activities  # type: ignore[attr-defined]
                         ],
                         "sub_capabilities": [
-                            item.model_dump(mode="json") for item in profile.sub_capabilities
+                            item.model_dump(mode="json")
+                            for item in profile.sub_capabilities  # type: ignore[attr-defined]
                         ],
                         "underlying_knowledge": [
-                            item.model_dump(mode="json") for item in profile.underlying_knowledge
+                            item.model_dump(mode="json")
+                            for item in profile.underlying_knowledge  # type: ignore[attr-defined]
                         ],
                         "operational_practices": [
-                            item.model_dump(mode="json") for item in profile.operational_practices
+                            item.model_dump(mode="json")
+                            for item in profile.operational_practices  # type: ignore[attr-defined]
                         ],
                         "independence_expectation": None,
                         "operational_context": [
-                            item.model_dump(mode="json") for item in profile.operational_context
+                            item.model_dump(mode="json")
+                            for item in profile.operational_context  # type: ignore[attr-defined]
                         ],
                         "unknown_scope": [
-                            item.model_dump(mode="json") for item in profile.unknown_scope
+                            item.model_dump(mode="json")
+                            for item in profile.unknown_scope  # type: ignore[attr-defined]
                         ],
-                        "overall_confidence": profile.overall_confidence,
+                        "overall_confidence": profile.overall_confidence,  # type: ignore[attr-defined]
                     }
                 )
 
             draft_payload = {
-                "role_interpretation": plan.role_interpretation,
+                "role_interpretation": plan.role_interpretation,  # type: ignore[attr-defined]
                 "capabilities": capabilities,
                 "cross_capability_observations": [],
                 "uncertainties": list(
-                    dict.fromkeys([*plan.uncertainties, *profile_uncertainties])
+                    dict.fromkeys(
+                        [
+                            *plan.uncertainties,  # type: ignore[attr-defined]
+                            *profile_uncertainties,
+                        ]
+                    )
                 ),
             }
-            draft = CapabilityReasoningDraft.model_validate(
+            draft = self._reasoning_draft_model.model_validate(
                 draft_payload,
                 context={
                     "analysis_fields": analysis_fields,
@@ -498,7 +541,7 @@ class CapabilityIntelligenceServiceV8:
                     "accepted_extraction": accepted,
                 },
             )
-            reconciled = reconcile_capability_intelligence(
+            reconciled = self._reconciler(
                 draft,
                 accepted_extraction=accepted,
                 analysis_fields=analysis_fields,
