@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from copy import deepcopy
 import re
+from copy import deepcopy
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
