@@ -111,14 +111,17 @@ historical P1.6 artifact 29
 - [x] persisted v8 candidate remains historical evidence; do not overwrite/delete it.
 - [x] correct depth accounting: capability 5/5 + role-level 1 = all 6/6.
 
-#### Capability v9 initial guarded candidate — TWO LIVE FAILURES / NO ARTIFACT
+#### Capability v9 live failure history — THREE FAILURES / NO ARTIFACT
 
-- [!] live failure 1: model summary/derived items crossed semantic authority boundaries.
+- [!] live failure 1: model profile summary/derived items crossed semantic authority boundaries.
 - [x] no v9 artifact persisted.
 - [x] per-item fail-closed filtering implemented; CI 838 PASS.
 - [!] live failure 2: model returned neutral profile with no derived reasoning and inherited v8 forced-enrichment validator rejected it.
 - [x] no v9 artifact persisted.
 - [x] identified direct contradiction: `do not speculate` vs `must add derived reasoning or unknown scope`.
+- [!] live failure 3: useful five-group dense plan was rejected before assignment because non-authoritative planner prose used words such as `requires`, `advanced`, `expertise`, `deep`, `proficiency`, `necessary`, and `end-to-end`.
+- [x] no v9 artifact persisted.
+- [x] classify failure 3 as planner prose over-enforcement, not source-coverage or grouping-structure failure.
 
 #### Capability v9 strictness audit + simplification — IMPLEMENTED / DETERMINISTIC PASS
 
@@ -135,12 +138,13 @@ Truth-protection rules retained:
 - [x] valid owned indices remain mandatory.
 - [x] evidence grounding remains mandatory.
 - [x] dense multi-group protection remains mandatory.
+- [x] group IDs and normalized labels remain structurally distinct.
 - [x] role-level education / duration-only experience separation remains mandatory.
 - [x] source requirement strength remains deterministic.
 - [x] source-explicit depth remains deterministic.
 - [x] source work activities remain deterministic.
 - [x] preferred/contextual-only facts still cannot independently justify inferred prerequisites.
-- [x] unsupported ownership/lifecycle/autonomy/architecture remains blocked.
+- [x] unsupported ownership/lifecycle/autonomy/architecture analytical claims remain blocked.
 - [x] incomplete authoritative source truth still fails before persistence.
 
 Contradictory / unnecessary strictness removed or narrowed:
@@ -149,7 +153,7 @@ Contradictory / unnecessary strictness removed or narrowed:
 - [x] REMOVE forced `unknown_scope` filler when no genuine unknown claim exists.
 - [x] MAKE model-derived depth/sub-capability/knowledge/practice/context enrichment optional.
 - [x] REPLACE whole-profile failure for one unsafe optional inference with item-level fail-closed filtering.
-- [x] REPLACE inflated profile-summary retry with fallback to already-validated neutral group summary.
+- [x] REPLACE inflated profile-summary retry with fallback to normalized group summary.
 - [x] REMOVE duplicate hard-coded v8 revalidation after provider has already validated a v9 stage.
 - [x] preserve historical v8 fallback validation for fake/legacy providers and historical v8 behavior.
 - [x] NARROW prerequisite wording rule: explicit `model_inferred_prerequisite` may use necessity/prerequisite language.
@@ -159,6 +163,13 @@ Contradictory / unnecessary strictness removed or narrowed:
 - [x] v9 final profile/draft contract permits zero optional model enrichment.
 - [x] trusted deterministic reconciliation still injects source strength/depth/work truth.
 - [x] any internal compatibility bridge is removed before v9 persistence.
+- [x] REPLACE planner prose lexical hard-failure with deterministic normalization.
+- [x] preserve useful planner group IDs/boundaries when only planner wording overreaches.
+- [x] remove claim-like strength/depth/scope modifiers from planner labels while preserving legitimate `Deep Learning`.
+- [x] replace inflated planner summaries with `This capability area covers <label>.`.
+- [x] replace inflated role interpretation with neutral synthesis of normalized group labels.
+- [x] record planner normalization as deterministic uncertainty.
+- [x] KEEP duplicate/collapsed normalized labels, invalid IDs/group counts, and dense structural collapse as hard failures.
 
 Regression proofs:
 
@@ -169,16 +180,22 @@ Regression proofs:
 - [x] preferred-only inferred prerequisite is filtered.
 - [x] required-grounded inferred prerequisite can use prerequisite language.
 - [x] typed v9 response is not accidentally revalidated as v8.
+- [x] inflated planner prose normalizes instead of retrying.
+- [x] exact five-group structure from live failure 3 survives planner normalization.
+- [x] legitimate `Deep Learning` terminology survives label normalization.
 
-Deterministic gate:
+Deterministic gates:
 
 - [x] CI 849 Ruff PASS.
 - [x] CI 849 full pytest PASS — 434 tests.
 - [x] CI 849 warnings-as-errors PASS.
+- [x] CI 855 Ruff PASS.
+- [x] CI 855 full pytest PASS — 435 tests.
+- [x] CI 855 warnings-as-errors PASS.
 
 Live acceptance still pending:
 
-- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36.
+- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36 after planner normalization.
 - [ ] verify new v9 artifact identity/dependency if persisted.
 - [ ] verify 31/31 capability requirements linked.
 - [ ] verify 8/8 responsibilities linked.
@@ -187,6 +204,7 @@ Live acceptance still pending:
 - [ ] full semantic review: no source-strength/depth/ownership/lifecycle inflation.
 - [ ] verify preferred/contextual facts are not promoted.
 - [ ] accept zero optional enrichment as valid when a profile has nothing defensible to add.
+- [ ] verify planner normalization remains non-authoritative and does not alter source truth.
 - [ ] only after dense acceptance run sparse `t4jp` v9 non-regression.
 - [ ] only after dense + sparse acceptance decide whether v9 is suitable for public promotion.
 
