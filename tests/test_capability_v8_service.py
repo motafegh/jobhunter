@@ -75,7 +75,9 @@ class _Provider:
                 "work_activities": [],
                 "sub_capabilities": [
                     {
-                        "statement": "Apply the linked source facts together in this capability area.",
+                        "statement": (
+                            "Apply the linked source facts together in this capability area."
+                        ),
                         "evidence_status": "strongly_implied_by_work",
                         "evidence": [evidence_ref],
                         "rationale": "The linked work directly supports this bounded capability.",
