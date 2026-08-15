@@ -63,8 +63,9 @@ def _guard_model_owned_text(
     field_name: str,
     allow_depth_language: bool = False,
     allow_prerequisite_language: bool = False,
+    allow_source_obligation_language: bool = False,
 ) -> None:
-    if _SOURCE_OBLIGATION_RE.search(value):
+    if not allow_source_obligation_language and _SOURCE_OBLIGATION_RE.search(value):
         raise ValueError(
             f"{field_name} may not restate source requirement obligation; "
             "JobHunter owns source strength"
@@ -145,19 +146,20 @@ def _safe_derived_expectation(
 ) -> bool:
     """Fail closed on one optional model inference without discarding its whole profile."""
 
-    allow_prerequisite_language = item.evidence_status == "model_inferred_prerequisite"
+    inferred_prerequisite = item.evidence_status == "model_inferred_prerequisite"
     try:
         _guard_model_owned_text(
             item.statement,
             field_name=f"{field_name}.statement",
             allow_depth_language=allow_depth_language,
-            allow_prerequisite_language=allow_prerequisite_language,
+            allow_prerequisite_language=inferred_prerequisite,
         )
         _guard_model_owned_text(
             item.rationale,
             field_name=f"{field_name}.rationale",
             allow_depth_language=allow_depth_language,
-            allow_prerequisite_language=allow_prerequisite_language,
+            allow_prerequisite_language=inferred_prerequisite,
+            allow_source_obligation_language=inferred_prerequisite,
         )
         _validate_prerequisite_optionality(item, info, field_name=field_name)
     except ValueError:
