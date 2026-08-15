@@ -13,6 +13,8 @@ from jobhunter.capability_inference_v8 import (
 from jobhunter.capability_service_v6 import (
     CapabilityIntelligenceError,
     CapabilityIntelligenceResult,
+)
+from jobhunter.capability_service_v6 import (
     format_capability_intelligence as _format_capability_v6,
 )
 from jobhunter.capability_service_v8 import CapabilityIntelligenceServiceV8
