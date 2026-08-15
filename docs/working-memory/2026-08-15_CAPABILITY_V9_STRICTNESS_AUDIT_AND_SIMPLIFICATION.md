@@ -2,19 +2,20 @@
 
 **Date:** 2026-08-15  
 **Branch:** `main`  
-**Status:** implementation complete; deterministic CI PASS; dense live acceptance pending
+**Status:** implementation complete through planner normalization; deterministic CI PASS; dense live acceptance pending
 
 ## Why this audit happened
 
-Two dense `tG9K` Capability v9 live runs failed before persistence even though accepted English
+Three dense `tG9K` Capability v9 live runs failed before persistence even though accepted English
 P1.6 artifact 36 remained correct/current.
 
 The failures showed that JobHunter had mixed two very different kinds of strictness:
 
 1. **truth-protection strictness** — rules that protect source coverage, provenance, evidence,
    requirement strength, explicit depth, and fail-closed persistence;
-2. **forced-enrichment strictness** — rules that require the model to invent additional analytical
-   content even when accepted source facts are already sufficient.
+2. **forced-enrichment / prose-calibration strictness** — rules that require the model to invent
+   additional analytical content or reproduce perfectly calibrated wording even when the model's
+   structural result is otherwise useful.
 
 The second category created direct contradictions with v9's goal of avoiding unsupported semantic
 inflation. This audit removes or narrows that category while preserving the first.
@@ -22,11 +23,12 @@ inflation. This audit removes or narrows that category while preserving the firs
 ## Decision principle
 
 A validation rule remains hard only when violating it could corrupt or lose authoritative source
-truth, provenance, or the meaning of the accepted job evidence.
+truth, provenance, source-owned strength/depth, or the structural meaning of the accepted job
+evidence.
 
-A model-owned analytical enrichment is optional. If it is unsupported or unsafe, JobHunter may
-filter it. The system must not require another inference merely so the artifact looks more
-"intelligent."
+A model-owned analytical enrichment is optional. A planner's prose is non-authoritative. If either
+is unsupported or unsafe, JobHunter should filter or normalize it rather than regenerate correct
+structure merely to satisfy wording constraints.
 
 ## Rules retained as hard boundaries
 
@@ -37,11 +39,12 @@ filter it. The system must not require another inference merely so the artifact 
 | Assignment indices must exist and belong to owned partitions | KEEP HARD | Provenance integrity |
 | Evidence must resolve to known source evidence | KEEP HARD | Prevents invented evidence |
 | Dense jobs cannot collapse all source facts into one group | KEEP HARD | v7 live failures proved this architecture is unreliable |
+| Capability group IDs/labels must remain structurally distinct | KEEP HARD | Preserves usable grouping structure |
 | Education / duration-only experience remain role-level constraints | KEEP HARD | Prevents role-entry constraints becoming technical capability groups |
 | Requirement strength is JobHunter-owned/deterministic | KEEP HARD | Prevents preferred/contextual → required inflation |
 | Source-explicit depth is JobHunter-owned/deterministic | KEEP HARD | Prevents model depth inflation |
 | Preferred/contextual-only facts cannot independently justify an inferred prerequisite | KEEP HARD | Preserves source optionality |
-| Unsupported ownership/lifecycle/autonomy/architecture claims are rejected/filtered | KEEP HARD | Prevents authority/scope inflation |
+| Unsupported ownership/lifecycle/autonomy/architecture analytical claims are rejected/filtered | KEEP HARD | Prevents authority/scope inflation |
 | Incomplete final source truth cannot persist | KEEP HARD | Artifact integrity |
 
 ## Rules removed or relaxed
@@ -94,12 +97,13 @@ This does not affect deterministic source facts.
 
 ### 5. Inflated per-profile summary causing another model retry — REPLACED WITH SAFE FALLBACK
 
-The semantic group planner has already produced and validated a neutral group summary. If the later
-profile model expands that summary with unsupported depth/ownership/obligation, v9 falls back to the
-validated group summary and records the replacement.
+If the later profile model expands a neutral group summary with unsupported
+depth/ownership/obligation, v9 falls back to the already-normalized group summary and records the
+replacement.
 
-The group-planning semantic boundary itself remains hard because there is no earlier safe semantic
-grouping to fall back to.
+The third dense live run showed that the earlier assumption — keeping planner prose itself as a hard
+semantic gate — was still too strict. Planner prose is now normalized separately as described in
+section 8.
 
 ### 6. Blanket ban on `necessary` / `prerequisite` — NARROWED
 
@@ -120,6 +124,40 @@ New rule:
 depth is already deterministic. A profile is not considered incomplete merely because the model
 adds no extra depth inference.
 
+### 8. Planner prose lexical hard-failure — REPLACED WITH DETERMINISTIC NORMALIZATION
+
+The third dense v9 live run failed in `CapabilityGroupPlanV9` before assignment. The model produced
+five useful capability groups, but planner prose contained terms such as:
+
+```text
+requires
+advanced
+expertise
+proficiency
+necessary
+deep understanding
+end-to-end
+```
+
+Rejecting the whole group plan for these words was the wrong granularity. The group planner's
+primary job is **clustering**, not producing authoritative strength/depth/scope claims.
+
+V9 now keeps the useful group structure and normalizes planner-only prose:
+
+- claim-like modifiers are removed from capability labels while preserving genuine domain terms
+  such as `Deep Learning`;
+- an inflated group summary is replaced with deterministic neutral prose:
+  `This capability area covers <label>.`;
+- an inflated role interpretation is replaced with a neutral synthesis of the normalized group
+  labels;
+- a deterministic uncertainty records that planner prose was normalized;
+- duplicate IDs, duplicate/collapsed normalized labels, invalid group counts, and dense-job
+  structural collapse remain hard failures.
+
+This means JobHunter no longer spends a bounded retry asking a small model to wordsmith a useful
+clustering result. Semantic authority remains downstream in exact assignment, evidence validation,
+deterministic reconciliation, and optional-enrichment filtering.
+
 ## Compatibility approach
 
 Historical v7/v8 models remain intact.
@@ -129,7 +167,7 @@ source linkage. The trusted historical deterministic v7 reconciliation logic is 
 internal compatibility bridge for zero-enrichment profiles; that temporary bridge is removed before
 v9 validation/persistence and never becomes user-visible semantic content.
 
-The v8 staged engine is now version-neutral at two extension points:
+The v8 staged engine is version-neutral at two extension points:
 
 - version-specific reasoning-draft model;
 - version-specific reconciler.
@@ -146,17 +184,31 @@ The v9 tests now prove:
 - deterministic source strength/depth are still injected;
 - complete source truth remains required;
 - unsafe optional items are filtered individually;
-- summary inflation falls back to the validated group summary;
+- profile-summary inflation falls back to the normalized group summary;
 - required-grounded inferred prerequisites may use prerequisite language;
 - preferred-only inferred prerequisites are still filtered;
-- typed v9 stage output is not accidentally revalidated as v8.
+- typed v9 stage output is not accidentally revalidated as v8;
+- planner prose containing depth/strength/scope inflation is normalized rather than retried;
+- the exact five-group shape from the third dense live failure survives normalization;
+- `Deep Learning` is preserved as a legitimate capability/domain term.
 
-## Deterministic gate
+## Deterministic gates
+
+Initial simplified-contract gate:
 
 ```text
 CI run 849
 Ruff:               PASS
 full pytest:        PASS (434 tests)
+warnings-as-errors: PASS
+```
+
+Planner-normalization gate:
+
+```text
+CI run 855
+Ruff:               PASS
+full pytest:        PASS (435 tests)
 warnings-as-errors: PASS
 ```
 
@@ -171,10 +223,14 @@ accepted P1.6 source truth
 + source-explicit depth
 + source work activities
 + role-level constraints
++ structurally coherent group IDs/labels
 
-OPTIONAL / MODEL-OWNED
-neutral semantic grouping
-+ strongly implied decomposition when defensible
+NON-AUTHORITATIVE PLANNER PROSE
+normalize/fallback when inflated
++ do not retry correct clustering merely for wording
+
+OPTIONAL / MODEL-OWNED PROFILE ENRICHMENT
+strongly implied decomposition when defensible
 + inferred prerequisites when defensible
 + operational context/practices when defensible
 + work-implied extra depth when defensible
@@ -186,14 +242,17 @@ If optional enrichment is absent:
 If optional enrichment overreaches:
   FILTER/FALL BACK
 
-If authoritative source truth is incomplete or invalid:
+If planner prose overreaches but structure is usable:
+  NORMALIZE / CONTINUE
+
+If authoritative source truth or structural coverage is incomplete/invalid:
   FAIL CLOSED
 ```
 
 ## Current state and next gate
 
-No Capability v9 artifact existed before this simplification, so no persisted v9 artifact needs to
-be deleted or migrated. The candidate identity remains:
+No Capability v9 artifact has persisted yet, so no persisted v9 artifact needs to be deleted or
+migrated. The candidate identity remains:
 
 ```text
 job-capability-intelligence-v9 / job-capability-intelligence-v5
