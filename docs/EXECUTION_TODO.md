@@ -33,7 +33,7 @@ Status vocabulary:
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
-- [x] v17→v20 implementation/calibration stack consolidated into `main` through merged PRs #5–#8.
+- [x] v17→v20 P1.6 implementation/calibration stack consolidated into `main`.
 
 ## B. Semantic-quality gate
 
@@ -44,200 +44,198 @@ Do not jump to corpus-wide Phase 2.
 - [x] current-chain snapshot routing preserves model/dependency identities.
 - [x] current-chain flags are trustworthy.
 - [x] repository-safe exclusions remain intact.
-- [x] public Review Snapshot lookup now distinguishes English v20/v5 from original v9/v4.
+- [x] public Review Snapshot distinguishes English v20/v5 from original v9/v4.
 
-### B2 — P1.6 factual extraction
+### B2 — P1.6 factual extraction — PROMOTED / CLOSED
 
-**V20 dense + sparse bounded calibration is complete. Public-current routing is implemented on `main`: English uses `job-analysis-english-v20` / `job-analysis-v5`; original-language remains `job-analysis-original-v9` / `job-analysis-v4`. Deterministic promotion CI passed. Active gate: local reuse/current-chain verification of accepted artifacts 36 and 37.**
+Public-current contracts:
 
-#### Historical accepted baseline
+```text
+English:  job-analysis-english-v20 / job-analysis-v5
+Original: job-analysis-original-v9 / job-analysis-v4
+```
 
-Dense `tG9K` v9 artifact 29:
-
-- [x] 27 requirements / 7 responsibilities / 1 role purpose.
-- [x] optionality/depth/contextual stack calibrated.
-- [x] education and 3–6 years professional experience retained.
-
-Sparse `t4jp` v16 artifact 35 remains the historical sparse calibration baseline.
-
-#### Permanent semantic boundaries
+Permanent boundaries:
 
 - [x] exact source evidence/provenance.
 - [x] no unsupported/invented career claims.
 - [x] required/preferred/contextual strength distinct.
 - [x] depth separate from obligation and normalized concept/scope.
-- [x] structured `skills[]` cannot silently disappear.
+- [x] structured skills cannot silently disappear.
 - [x] exact qualification-list evidence.
-- [x] deterministic coarse-span decomposition bookkeeping.
-- [x] complete residual sentence accounting.
+- [x] complete residual/decomposed source accounting.
 - [x] qualification-vs-responsibility protection.
 - [x] schedule wording cannot become capability depth.
-- [x] clean reusable concepts.
-- [x] ontology: skill/tool/knowledge/practice/domain/experience/education/other.
+- [x] clean reusable concepts and ontology.
 - [x] `experience` requires prior-applied-exposure evidence.
 - [x] fail closed before persistence when complete contract is not satisfied.
 
-#### V17 → V20 correction chain
+Dense `tG9K` v20 artifact 36:
 
-- [x] v17 removed arbitrary 32-requirement ceiling.
-- [x] v17 aggregated dense coverage defects.
-- [x] v18 deterministic structured minimum experience + education.
-- [x] v18 structured skills non-excludable.
-- [x] v19 optionality/depth separation + genuine source depth preservation.
-- [x] v19 exposed dense whole-answer retry oscillation.
-- [x] v20 bounded source-led partitions (max 8 model-owned refs).
-- [x] v20 exact partition-scope enforcement + independent merge.
-- [x] v20 `some C / C++ helpful` → preferred + null depth.
-- [x] v20 `industrial / edge deployment` → scope, not depth/unsupported experience.
-- [x] v20 preferred `experience` requires prior-exposure evidence.
-- [x] historical PR #5 merged to main.
-- [x] historical PR #6 merged to main.
-- [x] historical PR #7 merged to main.
-- [x] historical PR #8 merged to main.
+- [x] 33 requirements / 8 responsibilities / 0 role purpose.
+- [x] mechanical audit PASS.
+- [x] semantic review PASS WITH ACCEPTABLE DIFFERENCE.
+- [x] all accepted dense source facts retained.
+- [x] all six structured required skills retained.
+- [x] education + exact 3–6 years professional experience retained.
+- [x] optionality/depth/contextual stack calibrated.
 
-Detailed v20 records:
+Sparse `t4jp` v20 artifact 37:
+
+- [x] 8 requirements / 0 responsibilities / 0 role purpose.
+- [x] 3/3 structured skills.
+- [x] 4/4 qualification-list items.
+- [x] 4/4 residual decisions.
+- [x] mechanical audit PASS.
+- [x] semantic non-regression PASS.
+
+Promotion closure:
+
+- [x] public English routing aligned across targeted CLI, batch, browser, Market, Review Snapshot and Capability dependency selection.
+- [x] public original-language path preserved on v9/v4.
+- [x] deterministic promotion CI PASS.
+- [x] normal `jobhunter jobs analyze tG9K` reuses artifact 36.
+- [x] normal `jobhunter jobs analyze t4jp` reuses artifact 37.
+- [x] normal Review Snapshot selects artifacts 36 and 37 with matching projection dependencies.
+- [x] old Capability/Blueprint artifacts correctly reported as present-but-non-current.
+- [x] operational P1.6 v20 promotion declared complete.
+
+Key records:
 
 ```text
-docs/working-memory/2026-08-14_P16_V20_SOURCE_LED_PARTITIONING.md
-docs/working-memory/2026-08-14_P16_V20_FIRST_LIVE_PARTITION_CORRECTION.md
-docs/working-memory/2026-08-14_P16_V20_SECOND_LIVE_SCOPE_DEPTH_CORRECTION.md
-docs/working-memory/2026-08-14_P16_V20_DENSE_ARTIFACT_36_PERSISTED.md
-docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_MECHANICAL_AUDIT_PASS.md
 docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
 docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
-docs/working-memory/2026-08-15_P16_V20_PROMOTION_ROUTING_DESIGN.md
-docs/working-memory/2026-08-15_P16_V20_PUBLIC_ROUTING_IMPLEMENTED_CI_PASS.md
+docs/working-memory/2026-08-15_P16_V20_PUBLIC_PROMOTION_ACCEPTANCE.md
 ```
 
-#### Dense v20 `tG9K` artifact 36 — PASS
+### B3 — Capability Intelligence — ACTIVE
+
+#### Historical accepted v7 baseline
 
 ```text
-Requirements:      33
-Responsibilities:  8
-Role purpose:      0
-Mechanical audit:  PASS
-Semantic review:   PASS WITH ACCEPTABLE DIFFERENCE
+historical P1.6 artifact 29
+→ Capability v7 artifact 9
 ```
 
-- [x] all 27 accepted v9 source-derived requirements retained.
-- [x] all six structured required skills added/retained.
-- [x] Master's degree and exact 3–6 year professional-experience depth correct.
-- [x] `Solid`, Python `expert`, `Strong`, `Hands-on`, `Comfort` correct.
-- [x] MATLAB/C++ preferred + null depth.
-- [x] industrial/edge deployment preferred scope + null depth, no fabricated experience.
-- [x] contextual stack remains contextual.
-- [x] no silent dense factual loss.
-- [x] 8-vs-7 duty count explained and accepted: v20 treats the opening concrete `Build and validate...` action as responsibility rather than v9 role purpose.
+- [x] `job-capability-intelligence-v7` / schema v4 accepted for the historical bounded `tG9K` chain.
+- [x] historical artifact 9 retained complete source truth for its old P1.6 dependency.
+- [x] artifact 9 is now intentionally non-current because promoted P1.6 is artifact 36.
 
-#### Sparse v20 `t4jp` artifact 37 — PASS
+#### P1.6 rationale boundary
+
+- [x] public Capability model-facing P1.6 view strips free-form `rationale` recursively.
+- [x] persisted P1.6 artifact remains unchanged.
+- [x] authoritative concept/type/strength/depth/evidence/confidence remain available.
+- [x] CI 807 passed rationale-boundary regression tests.
+
+#### Promoted-chain v7 rebuild — REJECTED FOR DENSE ONE-SHOT PATH
+
+Attempt 1 against P1.6 artifact 36:
+
+- [!] generation 1 omitted most capability-relevant source links.
+- [!] retry invented responsibility index `9` although only `0..7` exist.
+- [x] no invalid artifact persisted.
+- [x] narrow positive-out-of-range/exact-evidence source-link repair implemented without weakening strict coverage.
+- [x] CI 811 PASS after v7 repair.
+
+Attempt 2:
+
+- [!] both generations collapsed dense `tG9K` into one giant capability profile.
+- [!] retry knew the missing requirement ledger but still failed to restructure.
+- [!] final missing capability-relevant indices remained `[2, 3, 4, 5, 6, 9, 10, 12, 13, 15, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 29, 30]`.
+- [x] no invalid artifact persisted.
+- [x] classify this as stable one-shot architecture failure, not isolated index noise.
+- [x] do not increase retries.
+- [x] do not loosen final coverage validation.
+- [x] stop iterative mutation of historical/public v7 semantics for this dense input.
+
+Record:
 
 ```text
-Requirements:                8
-Responsibilities:            0
-Role purpose:                0
-Structured skills:           3/3
-Qualification-list items:    4/4
-Residual coverage decisions: 4/4
-Decomposed coarse decisions: 1
-Mechanical audit:            PASS
-Semantic non-regression:     PASS
+docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
 ```
 
-- [x] sparse v20 artifact persisted.
-- [x] 3/3 structured required skills represented.
-- [x] 4/4 qualification items represented.
-- [x] 4/4 residual decisions accounted.
-- [x] 0 responsibilities.
-- [x] 0 role purpose.
-- [x] no fabricated duty/purpose.
-- [x] no education/minimum-experience fabrication from `it doesn't matter`.
-- [x] no schedule wording in concept/depth.
-- [x] no deterministic over-extraction.
-- [x] semantic comparison against v16 artifact 35 passed.
-- [x] `social networks` ontology difference (`tool` vs prior `skill`) accepted as defensible with unchanged fact/evidence/strength.
-- [x] model rationale hygiene issue recorded separately: one correct `Visual content production` claim has `depth_signal=null` but rationale inaccurately mentions capturing schedule as depth. Do not treat free-form rationale as authoritative semantics.
+#### Capability v8 source-led candidate — IMPLEMENTED / LIVE ACCEPTANCE PENDING
 
-#### V20 calibration boundary
+Architecture:
 
-- [x] v20 deterministic CI PASS.
-- [x] dense tG9K persistence PASS.
-- [x] dense tG9K mechanical PASS.
-- [x] dense tG9K semantic PASS.
-- [x] sparse t4jp persistence PASS.
-- [x] sparse t4jp mechanical PASS.
-- [x] sparse t4jp semantic non-regression PASS.
-- [x] full v17→v20 stack merged to `main`.
+```text
+accepted P1.6 source truth
+→ compact semantic capability-group plan
+→ bounded exact source-fact assignment partitions
+→ bounded per-group reasoning
+→ deterministic source-link injection
+→ existing strict v7 reconciliation/source truth
+→ persist only after complete validation
+```
 
-#### P1.6 v20 promotion — LOCAL VERIFICATION GATE
+Implementation:
 
-- [x] inspect public routing impact and record promotion design.
-- [x] keep historical v9 module semantics and introduce neutral current-public facade.
-- [x] implement current-public facade for English v20/v5 and original v9/v4.
-- [x] make targeted English analysis use v20/v5.
-- [x] preserve targeted original-language analysis on v9/v4.
-- [x] provide public English batch surface compatible with Phase-1 partial-failure behavior.
-- [x] align `phase1_run.py` eligibility/current-artifact/Market routing to v20/v5.
-- [x] align browser analysis and Market/current-analysis routing to v20/v5.
-- [x] align browser dashboard/list/system analyzed-state routing to v20/v5.
-- [x] align Review Snapshot to English v20/v5 and original v9/v4 independently.
-- [x] align Capability v7 dependency selection to current English v20/v5.
-- [x] preserve old artifact/history/module reproducibility and avoid circular imports.
-- [x] add/update promotion regression tests and current-contract fixtures.
-- [x] Ruff PASS — CI 801.
-- [x] full pytest PASS — CI 801.
-- [x] warnings-as-errors PASS — CI 801.
-- [x] update rolling/public-current contract documentation after implementation proof.
-- [~] verify accepted v20 artifacts 36 and 37 remain current/reusable through normal public commands on the user's local database.
-- [ ] verify normal Review Snapshot selects English artifacts 36 and 37 after public routing.
-- [ ] declare operational P1.6 v20 promotion complete only after those local checks pass.
+- [x] `CapabilityGroupPlanV8` separates group semantics from source-index bookkeeping.
+- [x] dense group plan requires at least two groups.
+- [x] capability requirements partition in chunks of at most 8.
+- [x] responsibilities distributed into bounded assignment partitions exactly once.
+- [x] every assignment partition must cover exactly its owned requirement/responsibility indices.
+- [x] assignments may use only known group IDs.
+- [x] each source fact may map to at most two groups.
+- [x] dense final assignment must use at least two groups.
+- [x] per-group reasoning receives only assigned facts + matching evidence references.
+- [x] per-group model output owns no source links, source-explicit strength/depth, or source-explicit duties.
+- [x] JobHunter injects validated source links deterministically.
+- [x] existing v7 reconciliation still derives strength, explicit depth, source work activities, role-level constraints and complete source truth.
+- [x] P1.6 rationale remains excluded from model-facing payloads.
+- [x] persisted schema remains v4; candidate prompt identity is `job-capability-intelligence-v8`.
+- [x] isolated candidate runner added: `scripts/run_capability_v8_candidate.py`.
+- [x] model/partition/service tests added.
+- [x] Ruff PASS — CI 821.
+- [x] full pytest PASS — CI 821.
+- [x] warnings-as-errors PASS — CI 821.
+- [~] run dense `tG9K` v8 candidate against promoted P1.6 artifact 36.
+- [ ] if persisted, perform mechanical source-truth/dependency audit.
+- [ ] perform full semantic review of dense capability grouping/reasoning.
+- [ ] verify no contextual/preferred-tool strength inflation.
+- [ ] verify no ownership/autonomy/leadership fabrication.
+- [ ] verify no unsupported architecture or generic curriculum expansion.
+- [ ] run sparse `t4jp` v8 non-regression only after dense acceptance.
+- [ ] consider public Capability v8 promotion only after dense + sparse acceptance.
 
-### B3 — Capability Intelligence
+Detailed v8 record:
 
-**Accepted bounded baseline:** Capability v7 artifact 9 tied to historical P1.6 v9 artifact 29.
+```text
+docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
+```
 
-- [x] `job-capability-intelligence-v7` / schema v4 accepted for bounded tG9K.
-- [x] complete deterministic source truth.
-- [x] 25/25 capability-relevant requirements linked.
-- [x] 7/7 responsibilities linked.
-- [x] all 27 requirements retained in source truth.
-- [x] all six explicit-depth facts retained.
-- [x] two coherent capability profiles.
-- [!] do not rebuild Capability until public P1.6 local reuse/current verification passes.
-- [ ] after promotion closure, rebuild/review Capability v7 against promoted P1.6 artifact 36.
-- [ ] ensure model-generated P1.6 rationale does not override normalized source truth/strength/depth/evidence.
+**Next exact command:**
+
+```bash
+cd ~/projects/jobhunter
+git pull --ff-only origin main
+python scripts/run_capability_v8_candidate.py --job-id tG9K
+```
+
+Do not use normal `jobhunter jobs capability` for this candidate gate; the public route intentionally remains v7.
 
 ### B4 — Role Capability Blueprint experiment
 
-**Status: [-] not accepted for Phase-1 use; further tuning deferred.**
+**Status: [-] not accepted for Phase-1 use; tuning deferred.**
 
-- [x] deterministic provenance failure class fixed.
-- [x] v6/12B artifact 7 passed mechanical audit and CI.
+- [x] deterministic provenance failure class fixed historically.
+- [x] v6/12B artifact 7 passed mechanical audit and CI historically.
 - [!] semantic review still found unsupported assumptions.
-- [x] do not create Blueprint v7 or resume nearby model shopping during this gate.
+- [x] do not resume Blueprint tuning during the Capability gate.
 
-### B5 — CI-3 heterogeneous live review
+### B5 — Heterogeneous live review
 
-Permanent workflow:
+Do not begin until Capability candidate acceptance/promotion decision.
 
-```text
-snapshot current local state first
-→ run matching mechanical audit
-→ inspect source/projection/P1.6 semantics
-→ generate Capability only after P1.6 passes
-→ inspect Capability semantics
-→ regenerate only a stage proved missing/stale
-```
+Future targets:
 
-Current targets:
-
-- [x] rich AI/ML `tG9K` v20 bounded acceptance.
-- [x] sparse `t4jp` v20 bounded non-regression.
-- [ ] Python/software role — after P1.6 promotion + Capability dependency rebuild.
-- [ ] network/security role — after P1.6 promotion + Capability dependency rebuild.
-- [ ] operations/platform/DevOps role — after P1.6 promotion + Capability dependency rebuild.
+- [ ] Python/software role.
+- [ ] network/security role.
+- [ ] operations/platform/DevOps role.
 - [ ] convert repeatable deterministic defects into fixtures.
 - [ ] record model limitations separately from deterministic defects.
-- [ ] decide whether promoted P1.6 + Capability v7 is good enough to freeze as Phase-2 input.
+- [ ] decide whether promoted P1.6 + accepted Capability are good enough to freeze as Phase-2 input.
 
 ## C. Phase-1 closure after heterogeneous semantic acceptance
 
