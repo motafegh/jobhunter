@@ -385,11 +385,14 @@ class CapabilityIntelligenceServiceV8:
                 for values in [*requirement_groups.values(), *responsibility_groups.values()]
                 for group_id in values
             }
-            if len(capability_requirements) >= 12 and len(responsibilities) >= 5:
-                if len(used_group_ids) < 2:
-                    raise CapabilityIntelligenceError(
-                        "Dense Capability v8 assignment collapsed all source facts into one group"
-                    )
+            if (
+                len(capability_requirements) >= 12
+                and len(responsibilities) >= 5
+                and len(used_group_ids) < 2
+            ):
+                raise CapabilityIntelligenceError(
+                    "Dense Capability v8 assignment collapsed all source facts into one group"
+                )
 
             capabilities: list[dict[str, Any]] = []
             profile_uncertainties: list[str] = []
