@@ -5,7 +5,7 @@ import pytest
 
 from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
-from jobhunter.capability_inference import CapabilityInferenceResult
+from jobhunter.capability_inference_v8 import CapabilityV8InferenceResult
 from jobhunter.capability_service import (
     CAPABILITY_PROMPT_VERSION,
     CAPABILITY_SCHEMA_VERSION,
@@ -20,62 +20,68 @@ from jobhunter.translation_store import TranslationStore
 
 
 class _Provider:
+    """Deterministic staged provider for the promoted public Capability v9 service."""
+
     def __init__(self, *, valid: bool = True) -> None:
         self.calls: list[dict] = []
         self.valid = valid
 
-    def complete(self, **kwargs) -> CapabilityInferenceResult:
+    def complete(self, **kwargs) -> CapabilityV8InferenceResult:
         self.calls.append(kwargs)
-        unknown_scope = (
-            [
-                {
-                    "statement": (
-                        "The exact VPN vendor, topology, and high-availability design are not "
-                        "supported by the posting."
-                    ),
-                    "evidence_status": "unknown_or_unsupported",
-                    "evidence": [],
-                    "rationale": "No vendor, topology, or HA details are stated.",
-                    "confidence": "high",
-                }
-            ]
-            if self.valid
-            else []
-        )
-        return CapabilityInferenceResult(
-            model="capability-model",
-            intelligence={
-                "role_interpretation": (
-                    "The role applies secure-network knowledge to operational troubleshooting "
-                    "rather than merely recognizing VPN terminology."
-                ),
-                "capabilities": [
+        response_model = kwargs["response_model"]
+        model_name = response_model.__name__
+        context = kwargs.get("validation_context") or {}
+        user_payload = kwargs["user_payload"]
+
+        if "GroupPlan" in model_name:
+            payload = {
+                "role_interpretation": "The role combines Secure Network Connectivity.",
+                "groups": [
                     {
-                        "capability_label": "Secure network connectivity and VPN operations",
-                        "summary": (
-                            "VPN/network knowledge is expected to be applied in live "
-                            "connectivity diagnosis, while vendor-specific scope remains unknown."
-                        ),
-                        "source_requirement_indices": [0],
-                        "source_responsibility_indices": [0],
-                        "requirement_strength": "unspecified",
-                        "depth_signals": [],
-                        "work_activities": [],
-                        "sub_capabilities": [],
-                        "underlying_knowledge": [],
-                        "operational_practices": [],
-                        "independence_expectation": None,
-                        "operational_context": [],
-                        "unknown_scope": unknown_scope,
-                        "overall_confidence": "high",
+                        "group_id": 0,
+                        "capability_label": "Secure Network Connectivity",
+                        "summary": "This capability area covers secure network connectivity.",
                     }
                 ],
-                "cross_capability_observations": [],
-                "uncertainties": ["Exact VPN vendor is not stated."],
-            },
-            request_body={"provider": "fake"},
-            raw_response={"id": "fake"},
+                "uncertainties": [],
+            }
+        elif "AssignmentPartition" in model_name:
+            payload = {
+                "requirement_assignments": [
+                    {"index": index, "group_ids": [0]}
+                    for index in context.get("owned_requirement_indices", [])
+                ],
+                "responsibility_assignments": [
+                    {"index": index, "group_ids": [0]}
+                    for index in context.get("owned_responsibility_indices", [])
+                ],
+            }
+        elif "ProfileReasoning" in model_name:
+            group = user_payload.get("group") or {}
+            payload = {
+                "summary": group.get("summary")
+                or "This capability area covers secure network connectivity.",
+                "depth_signals": [],
+                "work_activities": [],
+                "sub_capabilities": [],
+                "underlying_knowledge": [],
+                "operational_practices": [],
+                "operational_context": [],
+                "unknown_scope": [],
+                "overall_confidence": "high" if self.valid else "certain",
+                "uncertainties": [],
+            }
+        else:  # pragma: no cover - protects the fixture from silent contract expansion
+            raise AssertionError(f"Unexpected Capability stage model: {model_name}")
+
+        validated = response_model.model_validate(payload, context=context)
+        return CapabilityV8InferenceResult(
+            model="capability-model",
+            intelligence=validated.model_dump(mode="json"),
+            request_body={"provider": "fake", "stage": model_name},
+            raw_response={"id": "fake", "stage": model_name},
             finish_reason="stop",
+            validated_model=validated,
         )
 
 
@@ -193,7 +199,7 @@ def _service(database_path: Path, provider: _Provider) -> CapabilityIntelligence
         source_store=TranslationStore(database_path),
         analysis_store=AnalysisStore(database_path),
         capability_store=CapabilityIntelligenceStore(database_path),
-        provider=provider,
+        provider=provider,  # type: ignore[arg-type]
         analysis_model="analysis-model",
         capability_model="capability-model",
     )
@@ -214,19 +220,20 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
     assert second.artifact_id == first.artifact_id
     assert first.translation_artifact_id == translation_id
     assert first.analysis_artifact_id == analysis_id
-    assert len(provider.calls) == 1
-    payload = provider.calls[0]["user_payload"]
-    assert payload["accepted_extraction"]["requirements"][0]["concept"] == (
+    assert len(provider.calls) == 3
+
+    plan_payload = provider.calls[0]["user_payload"]
+    assert plan_payload["capability_requirements"][0]["concept"] == (
         "VPN and network infrastructure"
     )
-    assert payload["contract"]["deterministic_reconciliation"] == {
-        "requirement_strength": "from linked accepted P1.6 requirement types",
-        "source_explicit_depth": "from linked accepted P1.6 depth_signal values",
-    }
-    assert "p1:requirements:0" in payload["evidence_reference_ids"]
-    assert provider.calls[0]["evidence_catalog"]["p1:requirements:0"] == (
-        "Mastery of VPN and network infrastructure"
+    assert plan_payload["responsibilities"][0]["statement"] == (
+        "Troubleshoot connectivity and security incidents"
     )
+
+    profile_payload = provider.calls[2]["user_payload"]
+    assert "p1:requirements:0" in profile_payload["evidence_reference_ids"]
+    assert "p1:responsibilities:0" in profile_payload["evidence_reference_ids"]
+
     artifact = CapabilityIntelligenceStore(database_path).latest_current(
         "vpn1",
         model="capability-model",
@@ -254,7 +261,10 @@ def test_capability_service_persists_and_reuses_exact_dependency_artifact(tmp_pa
             "confidence": "high",
         }
     ]
-    assert profile["unknown_scope"]
+    assert profile["unknown_scope"] == []
+    source_truth = artifact.intelligence["source_truth"]
+    assert source_truth["unlinked_capability_requirement_indices"] == []
+    assert source_truth["unlinked_responsibility_indices"] == []
 
 
 def test_capability_service_requires_current_accepted_english_analysis(tmp_path: Path) -> None:
@@ -305,10 +315,12 @@ def test_capability_service_uses_exact_p1_6_translation_amid_alternate_artifacts
 
     assert result.outcome == "completed"
     assert result.translation_artifact_id == original_translation_id
-    assert len(provider.calls) == 1
-    fields = provider.calls[0]["user_payload"]["analysis_fields"]
-    assert fields["title"] == "Infrastructure Security Specialist"
-    assert "Alternate experimental projection text" not in fields["description"]
+    assert len(provider.calls) == 3
+    plan_payload = provider.calls[0]["user_payload"]
+    assert plan_payload["title"] == "Infrastructure Security Specialist"
+    assert plan_payload["capability_requirements"][0]["evidence"] == [
+        "Mastery of VPN and network infrastructure"
+    ]
 
 
 def test_capability_service_revalidates_provider_output_before_persistence(tmp_path: Path) -> None:
@@ -317,10 +329,10 @@ def test_capability_service_revalidates_provider_output_before_persistence(tmp_p
     provider = _Provider(valid=False)
     service = _service(database_path, provider)
 
-    with pytest.raises(ValueError, match="must add derived reasoning"):
+    with pytest.raises(ValueError, match="overall_confidence"):
         service.analyze_job("vpn1")
 
-    assert len(provider.calls) == 1
+    assert len(provider.calls) == 3
     assert (
         CapabilityIntelligenceStore(database_path).latest_current(
             "vpn1",
