@@ -27,6 +27,25 @@ from jobhunter.translation_store import TranslationStore
 class CapabilityIntelligenceService(CapabilityIntelligenceServiceV9):
     """Current public Capability v9 service above accepted English P1.6 v20/v5."""
 
+    @property
+    def _analysis_model(self) -> str:
+        """Preserve the established neutral-facade inspection surface."""
+
+        return self._delegate._analysis_model
+
+    @property
+    def _capability_model(self) -> str:
+        """Preserve the established neutral-facade inspection surface."""
+
+        return self._delegate._capability_model
+
+    @property
+    def _provider(self) -> Any:
+        """Expose the configured underlying provider through the neutral facade."""
+
+        adapter = self._delegate._provider
+        return getattr(adapter, "_delegate", adapter)
+
     def _current_dependencies(self, source_job_id: str) -> tuple[Any, Any, Any]:
         """Expose the established current-dependency boundary for compatibility and review tests."""
 
