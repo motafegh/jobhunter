@@ -4,8 +4,8 @@
 **Date:** 2026-08-15  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Capability v9 guarded source-led candidate — dense `tG9K` live run pending  
-**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense artifact 36 and sparse artifact 37 are current through normal public routing. Historical/public Capability v7 remains the accepted baseline contract but cannot reliably rebuild dense artifact 36 with its one-shot generation architecture. Capability v8 proved the staged source-led architecture mechanically by completing `tG9K` with 31/31 capability requirements and 8/8 responsibilities, but semantic review found downstream depth/obligation/ownership inflation, so v8 is not accepted. Capability v9 preserves the v8 staged architecture, adds general semantic authority guardrails, separates role-level depth from capability-depth accounting, persists under a new v9/v5 identity, and passed deterministic CI 832. Next: run the isolated v9 candidate on `tG9K` and review it before any public promotion.
+**Current gate:** Capability design review — implementation explicitly paused after two failed dense v9 live runs  
+**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense `tG9K` artifact 36 and sparse `t4jp` artifact 37 are current through normal public routing. Public Capability remains v7/v4, but its historical artifact 9 depends on old P1.6 artifact 29 and is non-current. V8 proved source-led staged Capability reasoning can mechanically cover dense artifact 36 (31/31 capability requirements, 8/8 responsibilities) but was semantically rejected for downstream inflation. V9 added semantic authority guardrails and corrected depth accounting, yet two dense live runs failed before persistence. The second failure exposed a contract contradiction: v9 aims not to force unsupported derived reasoning, while inherited v8 validation still requires every profile to add derived reasoning or explicit unknown scope. No v9 artifact exists. Per explicit user instruction, stop implementation and live reruns; next action is design discussion only.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve detailed evidence.
 
@@ -50,12 +50,12 @@ English P1.6 public route:    job-analysis-english-v20 / job-analysis-v5
 Original P1.6 public route:   job-analysis-original-v9 / job-analysis-v4
 Capability public route:      job-capability-intelligence-v7 / job-capability-intelligence-v4
 Capability v8 historical candidate: job-capability-intelligence-v8 / job-capability-intelligence-v4
-Capability v9 active candidate:     job-capability-intelligence-v9 / job-capability-intelligence-v5
+Capability v9 unaccepted candidate:  job-capability-intelligence-v9 / job-capability-intelligence-v5
 Blueprint experimental:       role-capability-blueprint-v6 / role-capability-blueprint-v5
 Review Snapshot:              job-review-snapshot-v1
 ```
 
-Important: public `jobhunter jobs capability` still uses v7. V8 and v9 are candidate/history paths only until explicit acceptance and promotion.
+Public `jobhunter jobs capability` still uses v7. Neither v8 nor v9 is accepted or public-current.
 
 ## 4. P1.6 v20 — PROMOTED / CLOSED
 
@@ -86,83 +86,57 @@ tG9K → reused artifact 36 → job-analysis-english-v20 / job-analysis-v5
 t4jp → reused artifact 37 → job-analysis-english-v20 / job-analysis-v5
 ```
 
-Review Snapshot also selects artifacts 36 and 37 with matching English projection dependencies. Historical Capability/Blueprint artifacts remain present but correctly non-current.
+Review Snapshot selects artifacts 36 and 37 with matching English projection dependencies. Historical Capability/Blueprint artifacts can remain present while correctly non-current.
 
-The public Capability model-facing P1.6 view strips free-form `rationale` recursively while preserving authoritative concept/type/strength/depth/evidence/confidence. Persisted P1.6 remains unchanged.
+The Capability model-facing P1.6 view strips free-form `rationale` while preserving authoritative concept/type/strength/depth/evidence/confidence. Persisted P1.6 remains unchanged.
 
-Key records:
-
-```text
-docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
-docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
-docs/working-memory/2026-08-15_P16_V20_PUBLIC_PROMOTION_ACCEPTANCE.md
-```
-
-## 5. Capability v7 — historical accepted baseline; promoted dense rebuild rejected
+## 5. Capability v7 — historical/public baseline; promoted dense rebuild rejected
 
 Historical accepted chain:
 
 ```text
 tG9K English projection artifact 33
-→ historical P1.6 v9 artifact 29
+→ historical P1.6 artifact 29
 → Capability v7 artifact 9
 ```
 
-Artifact 9 remains useful historical evidence but is stale after P1.6 v20 promotion.
+Artifact 9 is historical and non-current after P1.6 v20 promotion.
 
-Two live v7 rebuild attempts against artifact 36 failed before persistence:
+Two live rebuild attempts against artifact 36 failed before persistence:
 
-1. first run: broad source-link omission; retry then invented responsibility index `9` outside valid `0..7`;
-2. second run: both generations collapsed dense evidence into one giant profile and omitted the same large requirement ledger even after explicit retry feedback.
+1. broad source-link omission followed by an invented responsibility index `9` outside valid `0..7`;
+2. repeated collapse of dense evidence into one oversized profile with 22 capability-relevant requirements omitted even after repair feedback.
 
-A narrow deterministic index/evidence repair passed CI 811 but could not solve the architectural one-shot failure. Do not increase retries or weaken coverage validation.
+A narrow deterministic index/evidence repair passed CI 811 but did not solve the architectural one-shot failure. Do not increase retries or weaken coverage validation.
 
-Record:
+## 6. Capability v8 — mechanical architecture proof / semantic reject
 
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
-```
-
-## 6. Capability v8 — staged architecture mechanically proved, semantically rejected
-
-V8 separated semantic grouping from source coverage bookkeeping:
+V8 changed the runtime shape to:
 
 ```text
 accepted P1.6 source truth
-→ compact semantic group plan
-→ bounded exact source-fact assignment partitions
+→ semantic group plan
+→ bounded exact source-fact assignment
 → bounded per-group reasoning
 → deterministic source-link injection
-→ strict v7 reconciliation/source truth
+→ strict reconciliation/source truth
 ```
 
-Deterministic CI 821 passed.
-
-Dense live `tG9K` then completed:
+Dense `tG9K` completed mechanically:
 
 ```text
-Contract:                    job-capability-intelligence-v8 / v4
-English P1.6 artifact:       36
+P1.6 dependency:             artifact 36
 Capability requirements:     31/31 linked
 Responsibilities:            8/8 linked
 Profiles:                    4
 Role-level requirement idx:  [31, 32]
 ```
 
-This proves the source-led staged architecture solved the v7 dense coverage failure.
+This proves source-led staging solves v7's dense coverage/linkage failure.
 
-However v8 is **not semantically accepted**. Review found generalized downstream inflation such as:
+V8 is **not semantically accepted**. Review found unsupported depth (`advanced`, `expertise`, `proficiency`, `deep`), ownership/lifecycle scope (`end-to-end`, `full lifecycle`), and escalation of preferred/contextual facts such as C/C++ and industrial/edge deployment.
 
-- unsupported `advanced` / `expertise` / `proficiency` depth in model-owned prose;
-- unsupported `end-to-end` / `full lifecycle` ownership or scope;
-- contextual tools described as necessary/required analytical foundations;
-- preferred C/C++ promoted into a prerequisite foundation;
-- preferred industrial/edge deployment escalated into a required ability/focus;
-- semiconductor domain context escalated into unsupported `deep` expertise.
-
-The v8 `5/6 explicit depth represented` line was also misleading rather than a missing source fact: five capability-relevant explicit depths were correctly linked, while the sixth explicit depth is role-level `three to six years` professional experience and was deliberately kept outside capability profiles.
-
-Correct accounting is:
+V8's old `5/6` depth metric was also misleading. Correct accounting is:
 
 ```text
 capability explicit depth: 5/5
@@ -170,91 +144,100 @@ role-level explicit depth: 1
 all explicit depth retained: 6/6
 ```
 
-Do not promote v8 and do not rewrite/delete its persisted candidate artifact.
+Do not promote or overwrite the persisted v8 candidate artifact.
 
-Records:
+## 7. Capability v9 — two live failures / no artifact / implementation paused
 
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
-docs/working-memory/2026-08-15_CAPABILITY_V8_LIVE_REVIEW_AND_V9_BOUNDARY.md
-```
-
-## 7. Capability v9 — ACTIVE CANDIDATE
-
-V9 deliberately preserves the successful v8 staged architecture while changing semantic authority and persistence identity:
+V9 preserves the v8 staged architecture under:
 
 ```text
 job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
-General v9 boundaries:
+It adds general semantic authority guardrails:
 
-- ordinary model-owned prose cannot restate requirement obligation (`required`, `must`, `mandatory`, `necessary`, `prerequisite`, etc.);
-- ordinary model-owned prose cannot add technical depth (`advanced`, `expertise`, `proficiency`, `mastery`, `strong`, `solid`, `hands-on`, `deep`), while legitimate `deep learning` remains allowed;
-- ordinary model-owned prose cannot infer `end-to-end`, `full lifecycle`, ownership, autonomy, leadership, or architecture;
-- only `depth_signals` may add bounded work-implied depth reasoning;
-- `model_inferred_prerequisite` cannot rest on a preferred/contextual-only source fact unless that same concept has an independent required basis;
-- source-truth accounting separates capability explicit depth from role-level explicit depth;
-- v9 uses a new prompt/schema identity, so the persisted v8 candidate cannot be silently reused as v9.
+- model-owned prose cannot restate source obligation;
+- ordinary model-owned prose cannot add unsupported technical depth;
+- model-owned prose cannot infer unsupported ownership/lifecycle/autonomy/architecture;
+- preferred/contextual-only facts cannot become prerequisites without an independent required basis;
+- source truth separates capability depth from role-level depth.
 
-Implementation:
+### Live failure 1
 
-```text
-src/jobhunter/capability_v9_models.py
-src/jobhunter/capability_service_v9.py
-scripts/run_capability_v9_candidate.py
-tests/test_capability_v9_boundary.py
-```
+No artifact persisted.
 
-Deterministic gate:
+- generation 1 summary used unsupported `expertise` and correctly hard-failed;
+- generation 2 corrected the summary but optional derived depth statements used `necessary`, `prerequisite`, `must`, and `necessitates`;
+- whole-profile rejection of one optional bad inference was judged too coarse;
+- a fail-closed per-expectation filtering correction passed deterministic CI 838.
 
-```text
-CI run 832
-Ruff:               PASS
-full pytest:        PASS
-warnings-as-errors: PASS
-```
+### Live failure 2
 
-## 8. Exact next action
+No artifact persisted.
 
-Run only the isolated v9 candidate for dense `tG9K`:
-
-```bash
-cd ~/projects/jobhunter
-git pull --ff-only origin main
-python scripts/run_capability_v9_candidate.py --job-id tG9K
-```
-
-Do **not** use normal `jobhunter jobs capability tG9K`; public Capability intentionally remains v7.
-
-Expected mechanical invariants:
+Both generations produced a bounded MLOps/production profile with a summary and no derived expectations. Validation failed with:
 
 ```text
-new v9 artifact identity
-English analysis artifact: 36
-Capability requirements linked: 31/31
-Responsibilities linked: 8/8
-Capability explicit depth represented: 5/5
-All explicit depth facts retained in source truth: 6/6
-Role-level explicit depth facts: 1
-Role-level requirement indices: [31, 32]
+Capability profile reasoning must add derived reasoning or an explicit unknown boundary
 ```
 
-Then review semantics, not counts alone. V9 must show no model-owned obligation inflation, no unsupported depth inflation, no ownership/lifecycle inflation, and no preferred/contextual fact promoted into a prerequisite.
-
-Only after dense semantic acceptance should sparse `t4jp` v9 non-regression run. Public promotion remains a separate later decision.
-
-## 9. After Capability bounded acceptance
+This is inherited from `CapabilityProfileReasoningV8` and exposes the current design contradiction:
 
 ```text
-dense v9 semantic acceptance
-→ sparse t4jp v9 non-regression
-→ decide whether v9 is fit for public Capability promotion
-→ only then align public CLI/browser/Review Snapshot/current-chain lookup
-→ heterogeneous Python/software role
-→ network/security role
-→ operations/platform/DevOps role
-→ decide whether P1.6 + Capability are ready to freeze as Phase-2 input
+v9 intent:
+  do not force speculative derived intelligence;
+  deterministic P1.6 facts may be enough for a bounded profile.
+
+inherited v8 invariant:
+  every profile must add derived reasoning or explicit unknown scope.
 ```
 
-Blueprint remains deferred and non-authoritative for this gate.
+The earlier filtering checkpoint's statement that a profile could survive with no safe derived expectations was therefore an intended property, not an actually effective runtime property. That documentation has been explicitly corrected rather than silently rewritten.
+
+Generation 2 also used `requires` in its summary, but the surfaced inherited-v8 failure happened before any persisted v9 artifact; do not interpret the run as a semantic pass apart from the reported error.
+
+## 8. Current exact state
+
+```text
+English P1.6 tG9K artifact 36       ACCEPTED / CURRENT
+English P1.6 t4jp artifact 37       ACCEPTED / CURRENT
+Capability v7 artifact 9            HISTORICAL / NON-CURRENT
+Capability v8 dense candidate       PERSISTED / MECHANICAL PASS / SEMANTIC REJECT
+Capability v9 artifact              NONE PERSISTED
+Capability public route             v7/v4
+Capability v9 candidate             IMPLEMENTED BUT LIVE-UNACCEPTED
+Blueprint                           DEFERRED / NON-AUTHORITATIVE
+Heterogeneous role review           BLOCKED
+Phase 2                             BLOCKED
+```
+
+## 9. Explicit pause and next action
+
+Per user instruction:
+
+```text
+STOP implementation for now.
+Do not patch v9 again.
+Do not create v10.
+Do not rerun Capability live generation.
+Document the current point, then discuss the design together.
+```
+
+Therefore the next action is **discussion/design review only**.
+
+The design discussion should decide what Capability is supposed to add beyond accepted P1.6 source truth, which model-owned outputs are mandatory versus optional, whether an evidence-grounded profile may legitimately contain no extra derived reasoning, and whether model-owned `depth_signals` should exist at all when source-explicit depth is already deterministic.
+
+Detailed current record:
+
+```text
+docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
+```
+
+Other relevant records:
+
+```text
+docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
+docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
+docs/working-memory/2026-08-15_CAPABILITY_V8_LIVE_REVIEW_AND_V9_BOUNDARY.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_DERIVED_EXPECTATION_FILTERING.md
+```
