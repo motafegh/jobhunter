@@ -122,34 +122,85 @@ def _compact_role_context(fields: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def _source_truth_payload(intelligence: dict[str, Any]) -> dict[str, Any]:
-    source_truth = intelligence.get("source_truth") or {}
-    if not isinstance(source_truth, dict):
-        raise RoleBlueprintError("Capability source_truth is not an object")
+def _source_requirement_projection(requirement: dict[str, Any]) -> dict[str, Any]:
     return {
-        "role_purpose": source_truth.get("role_purpose") or [],
-        "requirements": source_truth.get("requirements") or [],
-        "responsibilities": source_truth.get("responsibilities") or [],
-        "capability_requirement_indices": source_truth.get("capability_requirement_indices") or [],
-        "role_level_requirement_indices": source_truth.get("role_level_requirement_indices") or [],
-        "linked_requirement_indices": source_truth.get("linked_requirement_indices") or [],
-        "linked_responsibility_indices": source_truth.get("linked_responsibility_indices") or [],
-        "explicit_depth_requirement_indices": source_truth.get("explicit_depth_requirement_indices") or [],
+        "concept": str(requirement.get("concept") or ""),
+        "concept_type": str(requirement.get("concept_type") or ""),
+        "requirement_type": str(requirement.get("requirement_type") or ""),
+        "depth_signal": requirement.get("depth_signal"),
     }
 
 
-def _capability_payload(capability: dict[str, Any], index: int) -> dict[str, Any]:
+def _source_responsibility_projection(responsibility: dict[str, Any]) -> dict[str, Any]:
+    return {"statement": str(responsibility.get("statement") or "")}
+
+
+def _blueprint_inputs(
+    *,
+    analysis_fields: dict[str, Any],
+    capability_intelligence: dict[str, Any],
+) -> dict[str, Any]:
+    source_truth = capability_intelligence.get("source_truth")
+    if not isinstance(source_truth, dict):
+        raise RoleBlueprintError("Blueprint v6 requires accepted Capability v7 source truth")
+    requirements = list(source_truth.get("requirements") or [])
+    responsibilities = list(source_truth.get("responsibilities") or [])
+    capability_profiles = list(capability_intelligence.get("capabilities") or [])
+    if not capability_profiles:
+        raise RoleBlueprintError("Blueprint v6 requires at least one accepted Capability profile")
+
+    capabilities: list[dict[str, Any]] = []
+    for profile in capability_profiles:
+        if not isinstance(profile, dict):
+            raise RoleBlueprintError("Accepted Capability profile is not an object")
+        requirement_facts: list[dict[str, Any]] = []
+        for index in profile.get("source_requirement_indices") or []:
+            if not isinstance(index, int) or not 0 <= index < len(requirements):
+                raise RoleBlueprintError("Accepted Capability contains invalid requirement links")
+            requirement = requirements[index]
+            if isinstance(requirement, dict):
+                requirement_facts.append(_source_requirement_projection(requirement))
+
+        responsibility_facts: list[dict[str, Any]] = []
+        for index in profile.get("source_responsibility_indices") or []:
+            if not isinstance(index, int) or not 0 <= index < len(responsibilities):
+                raise RoleBlueprintError(
+                    "Accepted Capability contains invalid responsibility links"
+                )
+            responsibility = responsibilities[index]
+            if isinstance(responsibility, dict):
+                responsibility_facts.append(_source_responsibility_projection(responsibility))
+
+        capabilities.append(
+            {
+                "capability_label": str(profile.get("capability_label") or ""),
+                "source_requirements": requirement_facts,
+                "source_responsibilities": responsibility_facts,
+            }
+        )
+
+    role_constraints: list[dict[str, Any]] = []
+    for index in source_truth.get("role_level_requirement_indices") or []:
+        if not isinstance(index, int) or not 0 <= index < len(requirements):
+            raise RoleBlueprintError("Capability source truth contains invalid role constraint")
+        requirement = requirements[index]
+        if isinstance(requirement, dict):
+            role_constraints.append(_source_requirement_projection(requirement))
+
+    role_purpose = [
+        str(item.get("statement") or "")
+        for item in source_truth.get("role_purpose") or []
+        if isinstance(item, dict) and str(item.get("statement") or "").strip()
+    ]
     return {
-        "capability_index": index,
-        "capability_label": capability.get("capability_label"),
-        "source_requirement_indices": capability.get("source_requirement_indices") or [],
-        "source_responsibility_indices": capability.get("source_responsibility_indices") or [],
+        "role_context": _compact_role_context(analysis_fields),
+        "source_role_purpose": role_purpose,
+        "role_level_constraints": role_constraints,
+        "capabilities": capabilities,
     }
 
 
 class RoleBlueprintService:
-    """Build or reuse bounded Blueprint v6 above its historically validated v7 dependency."""
-
     def __init__(
         self,
         *,
@@ -164,14 +215,6 @@ class RoleBlueprintService:
         max_tokens: int = 4096,
         clock=lambda: datetime.now(UTC),
     ) -> None:
-        if not analysis_model.strip():
-            raise ValueError("A concrete analysis model is required")
-        if not capability_model.strip():
-            raise ValueError("A concrete Capability model is required")
-        if not blueprint_model.strip():
-            raise ValueError("A concrete Blueprint model is required")
-        if not 1 <= max_tokens <= 32768:
-            raise ValueError("max_tokens must be between 1 and 32768")
         self._source_store = source_store
         self._analysis_store = analysis_store
         self._capability_store = capability_store
@@ -182,8 +225,10 @@ class RoleBlueprintService:
         self._blueprint_model = blueprint_model.strip()
         self._max_tokens = max_tokens
         self._clock = clock
+        if not self._analysis_model or not self._capability_model or not self._blueprint_model:
+            raise ValueError("Concrete analysis/capability/blueprint model identities are required")
 
-    def build(self, source_job_id: str) -> RoleBlueprintResult:
+    def _dependencies(self, source_job_id: str):
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
             raise RoleBlueprintError("Job has no current successfully parsed source version")
@@ -195,7 +240,10 @@ class RoleBlueprintService:
             schema_version=ANALYSIS_SCHEMA_VERSION,
         )
         if analysis is None:
-            raise RoleBlueprintError("Job has no current accepted English P1.6 analysis")
+            raise RoleBlueprintError(
+                "Run Analyze English before building a Role Capability Blueprint"
+            )
+
         capability = self._capability_store.latest_current(
             source_job_id,
             model=self._capability_model,
@@ -204,20 +252,47 @@ class RoleBlueprintService:
         )
         if capability is None:
             raise RoleBlueprintError(
-                "Job has no current Blueprint-compatible Capability v7 artifact; "
-                "Blueprint remains deferred after Capability v9 promotion"
+                "Build current Capability Intelligence before building a Role Capability Blueprint"
             )
         if capability.job_detail_version_id != source.job_detail_version_id:
-            raise RoleBlueprintError("Capability artifact belongs to an older source version")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current source version"
+            )
         if capability.analysis_artifact_id != analysis.id:
-            raise RoleBlueprintError("Capability artifact does not depend on current P1.6 analysis")
+            raise RoleBlueprintError(
+                "Capability Intelligence is stale for the current English analysis"
+            )
+        if analysis.translation_artifact_id is None:
+            raise RoleBlueprintError("English analysis does not reference an English projection")
         if capability.translation_artifact_id != analysis.translation_artifact_id:
-            raise RoleBlueprintError("Capability artifact does not depend on current English projection")
+            raise RoleBlueprintError(
+                "Capability Intelligence and English analysis disagree on projection provenance"
+            )
+        if not isinstance(capability.intelligence.get("source_truth"), dict):
+            raise RoleBlueprintError(
+                "Blueprint v6 requires accepted Capability v7 source truth; rebuild Capability"
+            )
 
+        translation = self._capability_store.translation_dependency(
+            capability.translation_artifact_id
+        )
+        if translation is None:
+            raise RoleBlueprintError(
+                "Capability Intelligence references a missing English projection"
+            )
+        if translation.job_detail_version_id != source.job_detail_version_id:
+            raise RoleBlueprintError(
+                "Referenced English projection is stale for the current source version"
+            )
+        return source, translation, analysis, capability
+
+    def build(self, source_job_id: str) -> RoleBlueprintResult:
+        source, translation, analysis, capability = self._dependencies(source_job_id)
         attempted_at = self._clock()
+
         existing = self._blueprint_store.find_artifact(
             job_detail_version_id=source.job_detail_version_id,
-            translation_artifact_id=capability.translation_artifact_id,
+            translation_artifact_id=translation.id,
             analysis_artifact_id=analysis.id,
             capability_artifact_id=capability.id,
             model=self._blueprint_model,
@@ -228,7 +303,7 @@ class RoleBlueprintService:
             self._blueprint_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
                 attempted_at=attempted_at,
-                translation_artifact_id=capability.translation_artifact_id,
+                translation_artifact_id=translation.id,
                 analysis_artifact_id=analysis.id,
                 capability_artifact_id=capability.id,
                 model=self._blueprint_model,
@@ -237,50 +312,45 @@ class RoleBlueprintService:
                 outcome="reused",
                 artifact_id=existing.id,
             )
-            return RoleBlueprintResult(
-                source_job_id=source.source_job_id,
-                artifact_id=existing.id,
-                outcome="reused",
-                model=existing.model,
-                capability_areas=len(existing.blueprint.get("capability_interpretations") or []),
-                capability_artifact_id=capability.id,
-            )
+            return _result(existing, "reused")
 
-        capabilities = capability.intelligence.get("capabilities") or []
-        if not isinstance(capabilities, list) or not capabilities:
-            raise RoleBlueprintError("Capability artifact has no capability profiles")
+        user_payload = {
+            "source_job_id": source_job_id,
+            "blueprint_inputs": _blueprint_inputs(
+                analysis_fields=translation.fields,
+                capability_intelligence=capability.intelligence,
+            ),
+            "contract": {
+                "prompt_version": BLUEPRINT_PROMPT_VERSION,
+                "schema_version": BLUEPRINT_SCHEMA_VERSION,
+                "capability_artifact_id": capability.id,
+                "capability_interpretation_count": len(
+                    capability.intelligence.get("capabilities") or []
+                ),
+                "trust_boundary": (
+                    "Model output contains only explicitly uncertain professional "
+                    "considerations and unknowns. JobHunter owns all accepted source facts "
+                    "and Capability identity."
+                ),
+            },
+        }
 
-        payload = {
-            "source_job_id": source.source_job_id,
-            "role_context": _compact_role_context(source.fields),
-            "source_truth": _source_truth_payload(capability.intelligence),
-            "capabilities": [
-                _capability_payload(item, index)
-                for index, item in enumerate(capabilities)
-                if isinstance(item, dict)
-            ],
-        }
-        context = {
-            "source_truth": payload["source_truth"],
-            "capabilities": payload["capabilities"],
-        }
         try:
             inference = self._provider.complete(
                 system_prompt=_SYSTEM_PROMPT,
-                user_payload=payload,
-                validation_context=context,
+                user_payload=user_payload,
                 max_tokens=self._max_tokens,
-                seed=0,
             )
-            draft = RoleBlueprintDraft.model_validate(inference.blueprint, context=context)
-            blueprint = reconcile_role_blueprint_v6(
+            draft = RoleBlueprintDraft.model_validate(inference.blueprint)
+            reconciled = reconcile_role_blueprint_v6(
                 draft,
-                source_truth=payload["source_truth"],
-                capabilities=payload["capabilities"],
-            ).model_dump(mode="json")
+                accepted_extraction=analysis.analysis,
+                capability_intelligence=capability.intelligence,
+            )
+            blueprint = reconciled.model_dump(mode="json")
             artifact_id = self._blueprint_store.record_artifact(
                 job_detail_version_id=source.job_detail_version_id,
-                translation_artifact_id=capability.translation_artifact_id,
+                translation_artifact_id=translation.id,
                 analysis_artifact_id=analysis.id,
                 capability_artifact_id=capability.id,
                 model=inference.model,
@@ -294,10 +364,10 @@ class RoleBlueprintService:
             self._blueprint_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
                 attempted_at=attempted_at,
-                translation_artifact_id=capability.translation_artifact_id,
+                translation_artifact_id=translation.id,
                 analysis_artifact_id=analysis.id,
                 capability_artifact_id=capability.id,
-                model=inference.model,
+                model=self._blueprint_model,
                 prompt_version=BLUEPRINT_PROMPT_VERSION,
                 schema_version=BLUEPRINT_SCHEMA_VERSION,
                 outcome="completed",
@@ -307,7 +377,7 @@ class RoleBlueprintService:
             self._blueprint_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,
                 attempted_at=attempted_at,
-                translation_artifact_id=capability.translation_artifact_id,
+                translation_artifact_id=translation.id,
                 analysis_artifact_id=analysis.id,
                 capability_artifact_id=capability.id,
                 model=self._blueprint_model,
@@ -316,36 +386,35 @@ class RoleBlueprintService:
                 outcome="failed",
                 error=exc,
             )
-            if isinstance(exc, RoleBlueprintError):
-                raise
-            raise RoleBlueprintError(f"Blueprint v6 failed: {exc}") from exc
+            raise
 
-        artifact = self._blueprint_store.artifact_by_id(artifact_id)
-        if artifact is None:
-            raise RoleBlueprintError("Persisted Blueprint artifact could not be reloaded")
-        return RoleBlueprintResult(
-            source_job_id=source.source_job_id,
-            artifact_id=artifact.id,
-            outcome="completed",
-            model=artifact.model,
-            capability_areas=len(artifact.blueprint.get("capability_interpretations") or []),
+        artifact = self._blueprint_store.find_artifact(
+            job_detail_version_id=source.job_detail_version_id,
+            translation_artifact_id=translation.id,
+            analysis_artifact_id=analysis.id,
             capability_artifact_id=capability.id,
+            model=self._blueprint_model,
+            prompt_version=BLUEPRINT_PROMPT_VERSION,
+            schema_version=BLUEPRINT_SCHEMA_VERSION,
         )
+        if artifact is None:
+            raise RuntimeError("Role Capability Blueprint disappeared after persistence")
+        return _result(artifact, "completed")
 
 
 def build_role_blueprint_service(settings: Settings) -> RoleBlueprintService:
     analysis_model = settings.effective_analysis_lm_studio_model()
     if not analysis_model:
-        raise ValueError("No analysis model is configured")
+        raise ValueError("No LM Studio analysis model is configured")
     capability_model = settings.effective_capability_lm_studio_model()
     if not capability_model:
-        raise ValueError("No Capability model is configured")
+        raise ValueError("No LM Studio capability-intelligence model is configured")
     blueprint_model = settings.effective_blueprint_lm_studio_model()
     if not blueprint_model:
-        raise ValueError("No Blueprint model is configured")
-    source_store = TranslationStore(settings.database_path)
+        raise ValueError("No LM Studio Role Capability Blueprint model is configured")
+
     return RoleBlueprintService(
-        source_store=source_store,
+        source_store=TranslationStore(settings.database_path),
         analysis_store=AnalysisStore(settings.database_path),
         capability_store=CapabilityIntelligenceStore(settings.database_path),
         blueprint_store=RoleBlueprintStore(settings.database_path),
@@ -360,57 +429,89 @@ def build_role_blueprint_service(settings: Settings) -> RoleBlueprintService:
         analysis_model=analysis_model,
         capability_model=capability_model,
         blueprint_model=blueprint_model,
-        max_tokens=settings.analysis_max_tokens,
+        max_tokens=min(settings.analysis_max_tokens, 4096),
+    )
+
+
+def _result(artifact: RoleBlueprintArtifact, outcome: str) -> RoleBlueprintResult:
+    return RoleBlueprintResult(
+        source_job_id=artifact.source_job_id,
+        artifact_id=artifact.id,
+        outcome=outcome,
+        model=artifact.model,
+        capability_areas=len(artifact.blueprint.get("capability_areas") or []),
+        capability_artifact_id=artifact.capability_artifact_id,
     )
 
 
 def format_role_blueprint(artifact: RoleBlueprintArtifact) -> str:
+    data = artifact.blueprint
     lines = [
         f"Role Capability Blueprint for {artifact.source_job_id}",
         f"Model: {artifact.model}",
         f"Contract: {artifact.prompt_version} / {artifact.schema_version}",
         f"Capability artifact: {artifact.capability_artifact_id}",
         "",
+        "Source role purpose",
     ]
-    source_truth = artifact.blueprint.get("source_truth") or {}
-    capabilities = artifact.blueprint.get("capability_interpretations") or []
-    lines.append("Authoritative source truth")
-    lines.append(
-        "Capability requirements: "
-        f"{len(source_truth.get('linked_requirement_indices') or [])}/"
-        f"{len(source_truth.get('capability_requirement_indices') or [])} linked"
-    )
-    lines.append(
-        "Responsibilities: "
-        f"{len(source_truth.get('linked_responsibility_indices') or [])}/"
-        f"{len(source_truth.get('responsibilities') or [])} linked"
-    )
-    lines.append(
-        "Role-level requirements: "
-        f"{source_truth.get('role_level_requirement_indices') or []}"
-    )
-    lines.append("")
-    lines.append("Capability interpretations")
-    for item in capabilities:
-        lines.append(f"- {item.get('capability_label', '(unlabeled)')}")
-        for consideration in item.get("professional_considerations") or []:
-            lines.append(
-                "  consideration: "
-                f"[{consideration.get('interpretation_strength', 'unknown')}] "
-                f"{consideration.get('statement', '')}"
-            )
-            lines.append(f"    uncertainty: {consideration.get('uncertainty', '')}")
-        for unknown in item.get("important_unknowns") or []:
-            lines.append(f"  unknown: {unknown}")
+    purposes = data.get("source_role_purpose") or []
+    if not purposes:
+        lines.append("- none")
+    else:
+        lines.extend(f"- {item.get('statement')}" for item in purposes)
+
+    lines.extend(["", "Source role constraints"])
+    constraints = data.get("source_role_constraints") or []
+    if not constraints:
+        lines.append("- none")
+    for item in constraints:
+        depth = item.get("depth_signal")
+        suffix = f"; depth={depth}" if depth else ""
+        lines.append(
+            f"- P1.6 requirement {item.get('requirement_index')}: "
+            f"{item.get('concept')} ({item.get('requirement_type')}{suffix})"
+        )
+
+    for index, area in enumerate(data.get("capability_areas") or [], start=1):
+        lines.extend(
+            [
+                "",
+                f"Area {index}: {area.get('name', '(unnamed)')}",
+                f"Capability link: {area.get('source_capability_index')}",
+            ]
+        )
+        source_requirements = area.get("source_requirements") or []
+        if source_requirements:
+            lines.append("Source requirements:")
+            for item in source_requirements:
+                depth = item.get("depth_signal")
+                suffix = f"; depth={depth}" if depth else ""
+                lines.append(
+                    f"- P1.6 requirement {item.get('requirement_index')}: "
+                    f"{item.get('concept')} ({item.get('requirement_type')}{suffix})"
+                )
+        source_responsibilities = area.get("source_responsibilities") or []
+        if source_responsibilities:
+            lines.append("Source responsibilities:")
+            for item in source_responsibilities:
+                lines.append(
+                    f"- P1.6 responsibility {item.get('responsibility_index')}: "
+                    f"{item.get('statement')}"
+                )
+        considerations = area.get("professional_considerations") or []
+        if considerations:
+            lines.append("Professional considerations [inference, not employer fact]:")
+            for item in considerations:
+                lines.append(
+                    f"- [{item.get('interpretation_strength')}] {item.get('statement')}"
+                )
+                lines.append(f"  Uncertainty: {item.get('uncertainty')}")
+        unknowns = area.get("important_unknowns") or []
+        lines.append("Important unknowns:")
+        lines.extend(f"- {value}" for value in unknowns)
+
+    overall_unknowns = data.get("overall_unknowns") or []
+    if overall_unknowns:
+        lines.extend(["", "Whole-role unknowns"])
+        lines.extend(f"- {value}" for value in overall_unknowns)
     return "\n".join(lines)
-
-
-__all__ = [
-    "BLUEPRINT_PROMPT_VERSION",
-    "BLUEPRINT_SCHEMA_VERSION",
-    "RoleBlueprintError",
-    "RoleBlueprintResult",
-    "RoleBlueprintService",
-    "build_role_blueprint_service",
-    "format_role_blueprint",
-]
