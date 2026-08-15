@@ -111,7 +111,7 @@ historical P1.6 artifact 29
 - [x] persisted v8 candidate remains historical evidence; do not overwrite/delete it.
 - [x] correct depth accounting: capability 5/5 + role-level 1 = all 6/6.
 
-#### Capability v9 live failure history — THREE FAILURES / NO ARTIFACT
+#### Capability v9 live failure history — FOUR FAILURES / NO ARTIFACT
 
 - [!] live failure 1: model profile summary/derived items crossed semantic authority boundaries.
 - [x] no v9 artifact persisted.
@@ -122,6 +122,10 @@ historical P1.6 artifact 29
 - [!] live failure 3: useful five-group dense plan was rejected before assignment because non-authoritative planner prose used words such as `requires`, `advanced`, `expertise`, `deep`, `proficiency`, `necessary`, and `end-to-end`.
 - [x] no v9 artifact persisted.
 - [x] classify failure 3 as planner prose over-enforcement, not source-coverage or grouping-structure failure.
+- [!] live failure 4: bounded profile reasoning echoed source-owned `Hands-on` / `Solid` depth and source-backed operational context using `evidence_status="source_explicit"`; v9 rejected the whole profile because model-owned lists allowed only derived statuses.
+- [x] no v9 artifact persisted.
+- [x] classify failure 4 as redundant source-truth echo over-enforcement, not hallucination or source corruption.
+- [x] model-emitted `source_explicit` analytical items are now filtered as redundancy; deterministic reconciliation remains the sole source-explicit authority.
 
 #### Capability v9 strictness audit + simplification — IMPLEMENTED / DETERMINISTIC PASS
 
@@ -170,6 +174,9 @@ Contradictory / unnecessary strictness removed or narrowed:
 - [x] replace inflated role interpretation with neutral synthesis of normalized group labels.
 - [x] record planner normalization as deterministic uncertainty.
 - [x] KEEP duplicate/collapsed normalized labels, invalid IDs/group counts, and dense structural collapse as hard failures.
+- [x] FILTER model-emitted `source_explicit` analytical items as redundant/misplaced rather than failing the bounded profile.
+- [x] KEEP deterministic reconciliation as the only authority that injects accepted source-explicit depth/work/source truth.
+- [x] preserve the pre-filter v9 implementation in `capability_v9_models_core.py`; keep the public v9 model module as a thin inference-boundary wrapper.
 
 Regression proofs:
 
@@ -183,6 +190,8 @@ Regression proofs:
 - [x] inflated planner prose normalizes instead of retrying.
 - [x] exact five-group structure from live failure 3 survives planner normalization.
 - [x] legitimate `Deep Learning` terminology survives label normalization.
+- [x] source-explicit depth/context echoes are filtered without failing profile reasoning.
+- [x] accepted source-explicit truth is still injected deterministically downstream.
 
 Deterministic gates:
 
@@ -192,10 +201,14 @@ Deterministic gates:
 - [x] CI 855 Ruff PASS.
 - [x] CI 855 full pytest PASS — 435 tests.
 - [x] CI 855 warnings-as-errors PASS.
+- [x] CI 862 Ruff PASS.
+- [x] CI 862 full pytest PASS.
+- [x] CI 862 warnings-as-errors PASS.
+- [x] CI 864 final reconciled documentation head PASS.
 
 Live acceptance still pending:
 
-- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36 after planner normalization.
+- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36 after source-echo filtering.
 - [ ] verify new v9 artifact identity/dependency if persisted.
 - [ ] verify 31/31 capability requirements linked.
 - [ ] verify 8/8 responsibilities linked.
@@ -205,6 +218,7 @@ Live acceptance still pending:
 - [ ] verify preferred/contextual facts are not promoted.
 - [ ] accept zero optional enrichment as valid when a profile has nothing defensible to add.
 - [ ] verify planner normalization remains non-authoritative and does not alter source truth.
+- [ ] verify model-emitted source-explicit echoes are absent from accepted model-owned enrichment and represented only through deterministic source truth.
 - [ ] only after dense acceptance run sparse `t4jp` v9 non-regression.
 - [ ] only after dense + sparse acceptance decide whether v9 is suitable for public promotion.
 
