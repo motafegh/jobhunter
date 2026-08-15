@@ -102,7 +102,10 @@ def test_v9_discards_one_unsafe_derived_expectation_without_failing_profile() ->
     profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
 
     assert profile.sub_capabilities == []
-    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
+    assert any(
+        "discarded 1 optional model-derived expectation" in item
+        for item in profile.uncertainties
+    )
 
 
 def test_v9_discards_preferred_only_prerequisite_instead_of_retrying_profile() -> None:
@@ -113,7 +116,10 @@ def test_v9_discards_preferred_only_prerequisite_instead_of_retrying_profile() -
     profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
 
     assert profile.sub_capabilities == []
-    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
+    assert any(
+        "discarded 1 optional model-derived expectation" in item
+        for item in profile.uncertainties
+    )
 
 
 def test_v9_discards_obligation_in_derived_depth_but_keeps_safe_depth() -> None:
@@ -125,7 +131,9 @@ def test_v9_discards_obligation_in_derived_depth_but_keeps_safe_depth() -> None:
             "statement": "Practical implementation across multiple machine learning approaches.",
             "evidence_status": "strongly_implied_by_work",
             "evidence": ["p1:requirements:0"],
-            "rationale": "The bounded evidence supports this implementation-oriented interpretation.",
+            "rationale": (
+                "The bounded evidence supports this implementation-oriented interpretation."
+            ),
             "confidence": "medium",
         },
         {
@@ -141,7 +149,10 @@ def test_v9_discards_obligation_in_derived_depth_but_keeps_safe_depth() -> None:
 
     assert len(profile.depth_signals) == 1
     assert profile.depth_signals[0].statement.startswith("Practical implementation")
-    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
+    assert any(
+        "discarded 1 optional model-derived expectation" in item
+        for item in profile.uncertainties
+    )
 
 
 def _legacy_intelligence() -> dict:
