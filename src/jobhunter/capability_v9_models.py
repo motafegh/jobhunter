@@ -10,7 +10,6 @@ from jobhunter.capability_v9_models_core import (
     CapabilityFactAssignmentV9,
     CapabilityGroupPlanV9,
     CapabilityGroupSeedV8,
-    CapabilityProfileReasoningV9 as _CapabilityProfileReasoningV9Core,
     CapabilityProfileV9,
     CapabilityReasoningDraftV9,
     CapabilitySourceTruthV9,
@@ -18,6 +17,9 @@ from jobhunter.capability_v9_models_core import (
     assignment_partitions,
     build_v9_intelligence,
     reconcile_capability_intelligence_v9,
+)
+from jobhunter.capability_v9_models_core import (
+    CapabilityProfileReasoningV9 as _CapabilityProfileReasoningV9Core,
 )
 
 _DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
