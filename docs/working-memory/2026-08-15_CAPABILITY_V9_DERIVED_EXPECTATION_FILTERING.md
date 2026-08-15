@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-15  
 **Branch:** `main`  
-**Status:** deterministic correction PASS; dense live v9 acceptance still pending
+**Status:** deterministic correction PASS; follow-up live run exposed inherited schema contradiction; superseded for current-state guidance by `2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md`
 
 ## Trigger
 
@@ -71,9 +71,9 @@ This correction does **not** weaken deterministic P1.6 source truth, source-link
 requirement strength, explicit depth, source work activities, role-level constraints, or final
 whole-artifact reconciliation.
 
-A profile is allowed to contribute no safe model-derived expectations after filtering; its neutral
-semantic grouping plus JobHunter-owned deterministic source facts is preferable to forcing
-unsupported extra reasoning.
+At the time of this correction, the intended v9 policy was that a profile could contribute no safe
+model-derived expectations after filtering, relying on its neutral grouping plus JobHunter-owned
+deterministic source facts rather than forcing unsupported extra reasoning.
 
 ## Regression coverage
 
@@ -94,16 +94,32 @@ full pytest:        PASS
 warnings-as-errors: PASS
 ```
 
-## Current boundary
+## Follow-up live result — important correction to this checkpoint
+
+A second dense v9 live run failed before persistence with:
 
 ```text
-P1.6 v20 artifact 36                 accepted/current
-Capability v8 dense artifact         mechanical PASS / semantic reject
-Capability v9 first live attempt     failed before persistence
-Capability v9 filtering correction   deterministic PASS
-Capability v9 dense semantic gate    OPEN
-public Capability route              still v7
+Capability profile reasoning must add derived reasoning or an explicit unknown boundary
 ```
 
-Next action is to rerun only the isolated v9 candidate on `tG9K`, then inspect any persisted v9
-artifact mechanically and semantically before sparse validation or public promotion.
+Both generations returned a bounded profile with a summary and no derived expectations. The failure
+comes from the inherited `CapabilityProfileReasoningV8` validator, which still requires at least one
+derived item or explicit unknown-scope item.
+
+Therefore the intended statement above — that a v9 profile may contribute no safe model-derived
+expectations — was **not actually effective in the live runtime**. The filtering correction and its
+unit tests did not remove the inherited non-empty-derived invariant.
+
+This creates an unresolved design contradiction between v9's fail-closed semantic restraint and
+v8's inherited requirement to always add derived reasoning or unknown scope.
+
+No second-run v9 artifact persisted.
+
+Implementation is now explicitly paused. Do not infer a new implementation from this file. The
+current authoritative checkpoint for this issue is:
+
+```text
+docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
+```
+
+The next action is design discussion, not another patch or live rerun.
