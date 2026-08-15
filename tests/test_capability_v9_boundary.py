@@ -3,6 +3,8 @@ from types import SimpleNamespace
 
 import pytest
 
+from jobhunter.capability_inference_v8 import CapabilityV8InferenceResult
+from jobhunter.capability_service_v8 import _validated_stage
 from jobhunter.capability_service_v9 import (
     CAPABILITY_PROMPT_VERSION,
     CAPABILITY_SCHEMA_VERSION,
@@ -13,7 +15,10 @@ from jobhunter.capability_v8_models import CapabilityProfileReasoningV8
 from jobhunter.capability_v9_models import (
     CapabilityGroupPlanV9,
     CapabilityProfileReasoningV9,
+    CapabilityProfileV9,
+    CapabilityReasoningDraftV9,
     build_v9_intelligence,
+    reconcile_capability_intelligence_v9,
 )
 
 
@@ -58,6 +63,7 @@ def _profile_context(*, requirement_type: str = "preferred") -> dict:
             }
         ],
         "assigned_responsibilities": [],
+        "group_summary": "The capability covers deployment-related operational context.",
     }
 
 
@@ -84,12 +90,36 @@ def _profile_payload() -> dict:
     }
 
 
-def test_v9_profile_summary_inflation_remains_hard_failure() -> None:
+def test_v9_profile_summary_inflation_falls_back_to_validated_group_summary() -> None:
     context = _profile_context()
     payload = _profile_payload()
     payload["summary"] = "The capability covers end-to-end deployment operations."
-    with pytest.raises(ValueError, match="may not infer ownership"):
-        CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert profile.summary == context["group_summary"]
+    assert any("replaced model-expanded profile summary" in item for item in profile.uncertainties)
+
+
+def test_v9_profile_allows_no_optional_derived_reasoning_or_unknown_scope() -> None:
+    context = _profile_context()
+    payload = _profile_payload()
+    payload["sub_capabilities"] = []
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert profile.depth_signals == []
+    assert profile.sub_capabilities == []
+    assert profile.unknown_scope == []
+
+
+def test_historical_v8_profile_still_requires_derived_reasoning_or_unknown_scope() -> None:
+    context = _profile_context()
+    payload = _profile_payload()
+    payload["sub_capabilities"] = []
+
+    with pytest.raises(ValueError, match="must add derived reasoning"):
+        CapabilityProfileReasoningV8.model_validate(payload, context=context)
 
 
 def test_v9_discards_one_unsafe_derived_expectation_without_failing_profile() -> None:
@@ -111,7 +141,13 @@ def test_v9_discards_one_unsafe_derived_expectation_without_failing_profile() ->
 def test_v9_discards_preferred_only_prerequisite_instead_of_retrying_profile() -> None:
     context = _profile_context(requirement_type="preferred")
     payload = _profile_payload()
-    payload["sub_capabilities"][0]["evidence_status"] = "model_inferred_prerequisite"
+    payload["sub_capabilities"][0].update(
+        {
+            "statement": "This context is a necessary prerequisite for the bounded work.",
+            "evidence_status": "model_inferred_prerequisite",
+            "rationale": "The deployment context is treated as a prerequisite for this inference.",
+        }
+    )
 
     profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
 
@@ -120,6 +156,23 @@ def test_v9_discards_preferred_only_prerequisite_instead_of_retrying_profile() -
         "discarded 1 optional model-derived expectation" in item
         for item in profile.uncertainties
     )
+
+
+def test_v9_allows_prerequisite_language_for_required_grounded_inference() -> None:
+    context = _profile_context(requirement_type="required")
+    payload = _profile_payload()
+    payload["sub_capabilities"][0].update(
+        {
+            "statement": "This context is a necessary prerequisite for the bounded work.",
+            "evidence_status": "model_inferred_prerequisite",
+            "rationale": "The required source fact supports this prerequisite inference.",
+        }
+    )
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert len(profile.sub_capabilities) == 1
+    assert profile.sub_capabilities[0].evidence_status == "model_inferred_prerequisite"
 
 
 def test_v9_discards_obligation_in_derived_depth_but_keeps_safe_depth() -> None:
@@ -213,6 +266,71 @@ def test_v9_source_truth_separates_role_level_depth_from_capability_depth() -> N
     assert "unlinked_explicit_depth_requirement_indices" not in source_truth
 
 
+def test_v9_final_profile_allows_deterministic_source_truth_without_enrichment() -> None:
+    accepted = {
+        "role_purpose": [],
+        "requirements": [
+            {
+                "concept": "Python",
+                "concept_type": "tool",
+                "requirement_type": "required",
+                "depth_signal": "expert",
+                "evidence": "Python (expert)",
+                "confidence": "high",
+            }
+        ],
+        "responsibilities": [],
+    }
+    context = {
+        "analysis_fields": {"description": "Python (expert)"},
+        "evidence_catalog": {"p1:requirements:0": "Python (expert)"},
+        "accepted_extraction": accepted,
+    }
+    draft = CapabilityReasoningDraftV9.model_validate(
+        {
+            "role_interpretation": "The role involves Python-focused technical capability work.",
+            "capabilities": [
+                {
+                    "capability_label": "Python capability",
+                    "summary": "The capability covers Python-focused technical work.",
+                    "source_requirement_indices": [0],
+                    "source_responsibility_indices": [],
+                    "requirement_strength": "unspecified",
+                    "depth_signals": [],
+                    "work_activities": [],
+                    "sub_capabilities": [],
+                    "underlying_knowledge": [],
+                    "operational_practices": [],
+                    "independence_expectation": None,
+                    "operational_context": [],
+                    "unknown_scope": [],
+                    "overall_confidence": "high",
+                }
+            ],
+            "cross_capability_observations": [],
+            "uncertainties": [],
+        },
+        context=context,
+    )
+
+    reconciled = reconcile_capability_intelligence_v9(
+        draft,
+        accepted_extraction=accepted,
+        analysis_fields=context["analysis_fields"],
+        evidence_catalog=context["evidence_catalog"],
+    )
+
+    profile = reconciled.capabilities[0]
+    assert isinstance(profile, CapabilityProfileV9)
+    assert profile.unknown_scope == []
+    assert not profile.sub_capabilities
+    assert profile.requirement_strength == "required"
+    assert len(profile.depth_signals) == 1
+    assert profile.depth_signals[0].evidence_status == "source_explicit"
+    assert reconciled.source_truth is not None
+    assert reconciled.source_truth.unlinked_capability_requirement_indices == []
+
+
 class _StoreDelegate:
     def __init__(self) -> None:
         self.recorded: dict = {}
@@ -222,9 +340,10 @@ class _StoreDelegate:
         return 42
 
 
-def test_v9_store_adapter_records_distinct_contract_and_accounting() -> None:
+def test_v9_store_adapter_records_distinct_contract_without_rewriting_intelligence() -> None:
     delegate = _StoreDelegate()
     adapter = _CapabilityStoreV9Adapter(delegate)  # type: ignore[arg-type]
+    intelligence = build_v9_intelligence(_legacy_intelligence())
     artifact_id = adapter.record_artifact(
         job_detail_version_id=1,
         translation_artifact_id=2,
@@ -232,7 +351,7 @@ def test_v9_store_adapter_records_distinct_contract_and_accounting() -> None:
         model="model",
         prompt_version="job-capability-intelligence-v8",
         schema_version="job-capability-intelligence-v4",
-        intelligence=_legacy_intelligence(),
+        intelligence=intelligence,
         request_body={"architecture": "source-led-group-plan-assignment-profile-v8"},
         raw_response={},
         created_at=datetime(2026, 8, 15, tzinfo=UTC),
@@ -241,9 +360,7 @@ def test_v9_store_adapter_records_distinct_contract_and_accounting() -> None:
     assert delegate.recorded["prompt_version"] == CAPABILITY_PROMPT_VERSION
     assert delegate.recorded["schema_version"] == CAPABILITY_SCHEMA_VERSION
     assert delegate.recorded["request_body"]["architecture"].endswith("-v9")
-    assert delegate.recorded["intelligence"]["source_truth"][
-        "role_level_explicit_depth_requirement_indices"
-    ] == [1]
+    assert delegate.recorded["intelligence"] == intelligence
 
 
 class _InferenceDelegate:
@@ -255,13 +372,14 @@ class _InferenceDelegate:
         return SimpleNamespace(intelligence={})
 
 
-def test_v9_inference_adapter_swaps_profile_model_and_adds_assignment_context() -> None:
+def test_v9_inference_adapter_swaps_profile_model_and_adds_v9_context() -> None:
     delegate = _InferenceDelegate()
     adapter = _CapabilityInferenceV9Adapter(delegate)  # type: ignore[arg-type]
     result = adapter.complete(
         response_model=CapabilityProfileReasoningV8,
         system_prompt="old",
         user_payload={
+            "group": {"summary": "Neutral bounded group summary."},
             "requirements": [{"index": 3}],
             "responsibilities": [{"index": 4}],
         },
@@ -271,3 +389,29 @@ def test_v9_inference_adapter_swaps_profile_model_and_adds_assignment_context() 
     assert delegate.kwargs["response_model"] is CapabilityProfileReasoningV9
     assert delegate.kwargs["validation_context"]["assigned_requirements"] == [{"index": 3}]
     assert delegate.kwargs["validation_context"]["assigned_responsibilities"] == [{"index": 4}]
+    assert delegate.kwargs["validation_context"]["group_summary"] == (
+        "Neutral bounded group summary."
+    )
+
+
+def test_stage_engine_uses_provider_validated_v9_profile_without_v8_revalidation() -> None:
+    context = _profile_context()
+    payload = _profile_payload()
+    payload["sub_capabilities"] = []
+    validated = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+    result = CapabilityV8InferenceResult(
+        model="model",
+        intelligence=validated.model_dump(mode="json"),
+        request_body={},
+        raw_response={},
+        finish_reason="stop",
+        validated_model=validated,
+    )
+
+    resolved = _validated_stage(
+        result,
+        CapabilityProfileReasoningV8,
+        context=context,
+    )
+
+    assert resolved is validated
