@@ -4,8 +4,8 @@
 **Date:** 2026-08-15  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Capability v9 planner-normalized dense live validation  
-**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense `tG9K` artifact 36 and sparse `t4jp` artifact 37 are current through normal public routing. Public Capability remains v7/v4; historical artifact 9 is non-current because it depends on old P1.6 artifact 29. V8 proved source-led staging mechanically (31/31 capability requirements and 8/8 responsibilities on dense `tG9K`) but was semantically rejected for downstream inflation. Three v9 live runs have failed before persistence: (1) optional profile reasoning crossed semantic boundaries, (2) inherited v8 forced-enrichment rules rejected a restrained zero-enrichment profile, and (3) useful five-group planning was rejected only because non-authoritative planner prose used words such as `requires`, `advanced`, `expertise`, `deep`, `proficiency`, `necessary`, and `end-to-end`. The v9 contract now keeps authoritative source truth strict, makes model enrichment optional/fail-closed, and normalizes planner prose instead of retrying correct clustering. CI 855 passed Ruff, all 435 tests, and warnings-as-errors. No v9 artifact exists yet. Next: one isolated dense v9 candidate run on `tG9K`, then mechanical + semantic review before any sparse run or public promotion.
+**Current gate:** Capability v9 source-echo-filtered dense live validation  
+**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense `tG9K` artifact 36 and sparse `t4jp` artifact 37 are current through normal public routing. Public Capability remains v7/v4; historical artifact 9 is non-current because it depends on old P1.6 artifact 29. V8 proved source-led staging mechanically (31/31 capability requirements and 8/8 responsibilities on dense `tG9K`) but was semantically rejected for downstream inflation. Four v9 live runs have failed before persistence: (1) optional profile reasoning crossed semantic boundaries, (2) inherited v8 forced-enrichment rules rejected a restrained zero-enrichment profile, (3) useful five-group planning was rejected only because non-authoritative planner prose was over-policed, and (4) a bounded profile was rejected because the model redundantly returned `source_explicit` depth/context items that JobHunter already owns deterministically. The v9 contract now keeps authoritative source truth strict, makes model enrichment optional/fail-closed, normalizes planner prose, and filters model-emitted source-truth echoes as redundancy. CI 862 passed Ruff, the full test suite, and warnings-as-errors. No v9 artifact exists yet. Next: one isolated dense v9 candidate run on `tG9K`, then mechanical + semantic review before any sparse run or public promotion.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve detailed evidence.
 
@@ -127,7 +127,7 @@ Role-level requirement idx:  [31, 32]
 
 This proved staged source-led reasoning solves v7's dense coverage/linkage failure. V8 is not semantically accepted because model-owned prose inflated depth, ownership/lifecycle scope, and preferred/contextual facts. Its old `5/6` metric was misleading; correct depth accounting is capability 5/5 + role-level 1 = all 6/6.
 
-### v9 — three live failure classes, no artifact
+### v9 — four live failure classes, no artifact
 
 No v9 artifact has persisted.
 
@@ -149,6 +149,14 @@ Live failure 3:
 - this proved planner clustering and downstream semantic authority were being validated at the wrong granularity;
 - no v9 artifact persisted.
 
+Live failure 4:
+- the model reached bounded profile reasoning and returned explicit `Hands-on` / `Solid` depth plus source-backed operational context;
+- those items used `evidence_status="source_explicit"`;
+- v9 rejected the whole profile because model-owned analytical lists allowed only derived statuses;
+- this was redundant source-truth echoing, not source corruption or unsupported inference;
+- no v9 artifact persisted;
+- v9 now filters those echoes and lets deterministic reconciliation re-inject authoritative `source_explicit` truth.
+
 Detailed history:
 
 ```text
@@ -163,6 +171,7 @@ The governing distinction is now:
 ```text
 AUTHORITATIVE SOURCE TRUTH → STRICT
 PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
+MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
 OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 ```
 
@@ -191,8 +200,11 @@ OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 6. **Prerequisite language rule narrowed.** `model_inferred_prerequisite` may use `necessary/prerequisite` language as explicit inference; its statement still cannot masquerade as employer `required/must/mandatory`. Rationale may accurately refer to a required source fact. Preferred/contextual-only grounding remains blocked.
 7. **Derived depth is optional.** Source-explicit depth is already deterministic; no extra model depth is required.
 8. **Planner prose lexical hard-failure removed.** Useful group structure is retained while claim-like planner wording is normalized deterministically. Inflated summaries become `This capability area covers <label>.`; inflated role interpretation becomes a neutral synthesis of the normalized group labels. Genuine terms such as `Deep Learning` are preserved. Structural grouping defects still fail hard.
+9. **Model-emitted `source_explicit` analytical items no longer fail the profile.** They are filtered as redundant/misplaced model output. Deterministic reconciliation remains the only authority that injects accepted source-explicit depth/work/source facts.
 
 Historical v7/v8 behavior is preserved. V9 uses its own final profile/draft contract and version-specific reconciler while reusing deterministic v7 reconciliation internally. Any compatibility bridge used for historical reconciliation is removed before v9 persistence.
+
+The large v9 implementation before source-echo filtering is preserved byte-for-byte in `src/jobhunter/capability_v9_models_core.py`; the public `capability_v9_models.py` is now a thin boundary wrapper that re-exports the v9 contract and overrides only inference-facing redundant/misplaced status handling.
 
 Regression proofs include:
 
@@ -204,7 +216,9 @@ Regression proofs include:
 - typed v9 stage output is not accidentally revalidated as v8;
 - planner prose inflation normalizes instead of retrying;
 - exact five-group structure from live failure 3 survives normalization;
-- `Deep Learning` remains preserved as a legitimate term.
+- `Deep Learning` remains preserved as a legitimate term;
+- source-explicit depth/context echoes from the model are filtered without failing the bounded profile;
+- deterministic reconciliation remains responsible for final accepted source-explicit truth.
 
 Deterministic gates:
 
@@ -217,6 +231,11 @@ warnings-as-errors: PASS
 CI run 855
 Ruff:               PASS
 full pytest:        PASS (435 tests)
+warnings-as-errors: PASS
+
+CI run 862
+Ruff:               PASS
+full pytest:        PASS
 warnings-as-errors: PASS
 ```
 
@@ -235,7 +254,7 @@ Capability v7 artifact 9            HISTORICAL / NON-CURRENT
 Capability v8 dense candidate       PERSISTED / MECHANICAL PASS / SEMANTIC REJECT
 Capability v9 artifact              NONE PERSISTED
 Capability public route             v7/v4
-Capability v9 candidate             PLANNER-NORMALIZED / DETERMINISTIC PASS / LIVE PENDING
+Capability v9 candidate             SOURCE-ECHO-FILTERED / DETERMINISTIC PASS / LIVE PENDING
 Blueprint                           DEFERRED / NON-AUTHORITATIVE
 Heterogeneous role review           BLOCKED UNTIL CAPABILITY ACCEPTANCE
 Phase 2                             BLOCKED
@@ -265,7 +284,8 @@ A successful run is not accepted from counts alone. Review must verify:
 - no unsupported depth/ownership/lifecycle inflation;
 - preferred/contextual facts are not promoted;
 - zero optional enrichment, if present for a profile, is treated as valid rather than failure;
-- any planner normalization appears only as non-authoritative fallback and does not alter source truth.
+- any planner normalization remains non-authoritative and does not alter source truth;
+- any model-emitted source-explicit echoes are absent from accepted model-owned enrichment and represented only through deterministic source truth.
 
 Only after dense semantic acceptance should sparse `t4jp` v9 non-regression run. Public promotion is a separate later decision.
 
