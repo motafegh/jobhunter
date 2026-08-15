@@ -33,7 +33,7 @@ Status vocabulary:
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
-- [x] v17→v20 P1.6 implementation/calibration stack consolidated into `main`.
+- [x] P1.6 v20 implementation/calibration stack consolidated into `main`.
 
 ## B. Semantic-quality gate
 
@@ -45,6 +45,7 @@ Do not jump to corpus-wide Phase 2.
 - [x] current-chain flags are trustworthy.
 - [x] repository-safe exclusions remain intact.
 - [x] public Review Snapshot distinguishes English v20/v5 from original v9/v4.
+- [~] operationally verify Review Snapshot now selects Capability v9/v5 artifacts 11/12 after promotion.
 
 ### B2 — P1.6 factual extraction — PROMOTED / CLOSED
 
@@ -74,199 +75,145 @@ Original: job-analysis-original-v9 / job-analysis-v4
 - [x] normal Review Snapshot selects artifacts 36/37 with matching projection dependencies.
 - [x] operational P1.6 v20 promotion complete.
 
-### B3 — Capability Intelligence — ACTIVE V9 LIVE GATE
+### B3 — Capability Intelligence — V9 PUBLIC PROMOTION OPERATIONAL GATE
 
-#### Historical/public v7 baseline
-
-```text
-historical P1.6 artifact 29
-→ Capability v7 artifact 9
-```
-
-- [x] `job-capability-intelligence-v7` / schema v4 remains the historical/public accepted baseline.
-- [x] artifact 9 is intentionally non-current because current P1.6 is artifact 36.
-- [x] public Capability model-facing P1.6 view strips free-form rationale while preserving authoritative semantic fields.
-
-#### Promoted-chain v7 rebuild — REJECTED DENSE ONE-SHOT PATH
-
-- [!] attempt 1 omitted most source links; retry invented responsibility index 9 outside valid 0..7.
-- [x] invalid output did not persist.
-- [x] narrow deterministic index/evidence repair implemented; CI 811 PASS.
-- [!] attempt 2 collapsed dense evidence into one giant profile and omitted 22 capability-relevant requirements even after retry feedback.
-- [x] classify as stable one-shot architecture failure rather than isolated index noise.
-- [x] do not increase retries.
-- [x] do not weaken whole-artifact coverage validation.
-
-#### Capability v8 source-led candidate — MECHANICAL PASS / SEMANTIC REJECT
-
-- [x] source-led group-plan → bounded assignment → bounded profile architecture implemented.
-- [x] dense `tG9K` completed against P1.6 artifact 36.
-- [x] 31/31 capability requirements linked.
-- [x] 8/8 responsibilities linked.
-- [x] four profiles generated.
-- [x] role-level indices `[31, 32]` remained separate.
-- [x] source-led architecture solved v7 dense linkage/coverage failure mechanically.
-- [!] v8 model prose inflated depth, ownership/lifecycle scope, and contextual/preferred facts.
-- [!] v8 is NOT semantically accepted and MUST NOT be publicly promoted.
-- [x] persisted v8 candidate remains historical evidence; do not overwrite/delete it.
-- [x] correct depth accounting: capability 5/5 + role-level 1 = all 6/6.
-
-#### Capability v9 live failure history — FOUR FAILURES / NO ARTIFACT
-
-- [!] live failure 1: model profile summary/derived items crossed semantic authority boundaries.
-- [x] no v9 artifact persisted.
-- [x] per-item fail-closed filtering implemented; CI 838 PASS.
-- [!] live failure 2: model returned neutral profile with no derived reasoning and inherited v8 forced-enrichment validator rejected it.
-- [x] no v9 artifact persisted.
-- [x] identified direct contradiction: `do not speculate` vs `must add derived reasoning or unknown scope`.
-- [!] live failure 3: useful five-group dense plan was rejected before assignment because non-authoritative planner prose used words such as `requires`, `advanced`, `expertise`, `deep`, `proficiency`, `necessary`, and `end-to-end`.
-- [x] no v9 artifact persisted.
-- [x] classify failure 3 as planner prose over-enforcement, not source-coverage or grouping-structure failure.
-- [!] live failure 4: bounded profile reasoning echoed source-owned `Hands-on` / `Solid` depth and source-backed operational context using `evidence_status="source_explicit"`; v9 rejected the whole profile because model-owned lists allowed only derived statuses.
-- [x] no v9 artifact persisted.
-- [x] classify failure 4 as redundant source-truth echo over-enforcement, not hallucination or source corruption.
-- [x] model-emitted `source_explicit` analytical items are now filtered as redundancy; deterministic reconciliation remains the sole source-explicit authority.
-
-#### Capability v9 strictness audit + simplification — IMPLEMENTED / DETERMINISTIC PASS
-
-Contract remains candidate-only:
+Current public code contract:
 
 ```text
 job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
+#### Historical evidence
+
+- [x] Capability v7 artifact 9 preserved as historical evidence tied to old P1.6 artifact 29.
+- [!] v7 promoted-chain dense rebuild rejected: source-link/index loss then stable one-profile collapse.
+- [x] do not reopen the v7 one-shot architecture.
+- [x] Capability v8 source-led staging mechanically proved 31/31 dense requirement coverage and 8/8 responsibilities.
+- [!] v8 semantic candidate rejected for depth/ownership/lifecycle and optionality inflation.
+- [x] historical v7/v8 modules/artifacts remain preserved.
+
+#### Capability v9 semantic contract — ACCEPTED
+
+Final policy:
+
+```text
+AUTHORITATIVE SOURCE TRUTH → STRICT
+PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
+MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
+OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
+```
+
 Truth-protection rules retained:
 
-- [x] complete capability-relevant requirement coverage remains mandatory.
-- [x] complete responsibility coverage remains mandatory.
-- [x] valid owned indices remain mandatory.
-- [x] evidence grounding remains mandatory.
-- [x] dense multi-group protection remains mandatory.
-- [x] group IDs and normalized labels remain structurally distinct.
-- [x] role-level education / duration-only experience separation remains mandatory.
-- [x] source requirement strength remains deterministic.
-- [x] source-explicit depth remains deterministic.
-- [x] source work activities remain deterministic.
-- [x] preferred/contextual-only facts still cannot independently justify inferred prerequisites.
-- [x] unsupported ownership/lifecycle/autonomy/architecture analytical claims remain blocked.
-- [x] incomplete authoritative source truth still fails before persistence.
+- [x] complete capability-relevant requirement coverage.
+- [x] complete responsibility coverage.
+- [x] valid owned indices.
+- [x] grounded evidence only.
+- [x] dense anti-collapse protection.
+- [x] role-level education / duration-only experience separation.
+- [x] deterministic source requirement strength.
+- [x] deterministic source-explicit depth.
+- [x] deterministic source work activities.
+- [x] preferred/contextual-only facts cannot independently justify inferred prerequisites.
+- [x] unsupported ownership/lifecycle/autonomy/architecture analytical claims are blocked/filtered.
+- [x] incomplete authoritative source truth cannot persist.
 
-Contradictory / unnecessary strictness removed or narrowed:
+Over-enforcement removed/narrowed:
 
-- [x] REMOVE v9 requirement that every profile must add derived reasoning or unknown scope.
-- [x] REMOVE forced `unknown_scope` filler when no genuine unknown claim exists.
-- [x] MAKE model-derived depth/sub-capability/knowledge/practice/context enrichment optional.
-- [x] REPLACE whole-profile failure for one unsafe optional inference with item-level fail-closed filtering.
-- [x] REPLACE inflated profile-summary retry with fallback to normalized group summary.
-- [x] REMOVE duplicate hard-coded v8 revalidation after provider has already validated a v9 stage.
-- [x] preserve historical v8 fallback validation for fake/legacy providers and historical v8 behavior.
-- [x] NARROW prerequisite wording rule: explicit `model_inferred_prerequisite` may use necessity/prerequisite language.
-- [x] KEEP inferred-prerequisite statement from masquerading as employer `required/must/mandatory`.
-- [x] ALLOW inferred-prerequisite rationale to accurately refer to a required source fact.
-- [x] KEEP preferred/contextual-only prerequisite inflation blocked by source-strength evidence logic.
-- [x] v9 final profile/draft contract permits zero optional model enrichment.
-- [x] trusted deterministic reconciliation still injects source strength/depth/work truth.
-- [x] any internal compatibility bridge is removed before v9 persistence.
-- [x] REPLACE planner prose lexical hard-failure with deterministic normalization.
-- [x] preserve useful planner group IDs/boundaries when only planner wording overreaches.
-- [x] remove claim-like strength/depth/scope modifiers from planner labels while preserving legitimate `Deep Learning`.
-- [x] replace inflated planner summaries with `This capability area covers <label>.`.
-- [x] replace inflated role interpretation with neutral synthesis of normalized group labels.
-- [x] record planner normalization as deterministic uncertainty.
-- [x] KEEP duplicate/collapsed normalized labels, invalid IDs/group counts, and dense structural collapse as hard failures.
-- [x] FILTER model-emitted `source_explicit` analytical items as redundant/misplaced rather than failing the bounded profile.
-- [x] KEEP deterministic reconciliation as the only authority that injects accepted source-explicit depth/work/source truth.
-- [x] preserve the pre-filter v9 implementation in `capability_v9_models_core.py`; keep the public v9 model module as a thin inference-boundary wrapper.
+- [x] zero optional model enrichment is valid.
+- [x] forced `unknown_scope` filler removed.
+- [x] one unsafe optional item is filtered instead of killing a profile.
+- [x] inflated profile summary falls back to normalized group summary.
+- [x] planner prose overreach normalizes rather than retrying useful clustering.
+- [x] redundant model `source_explicit` echoes are filtered; deterministic reconciliation remains authoritative.
+- [x] prerequisite wording rules distinguish explicit inference from employer-stated obligation.
 
-Regression proofs:
+#### Dense v9 acceptance — COMPLETE
 
-- [x] zero-enrichment profile succeeds under v9.
-- [x] zero-enrichment profile still fails under historical v8.
-- [x] zero-enrichment final v9 artifact survives deterministic reconciliation.
-- [x] deterministic required strength and source-explicit depth remain present.
-- [x] preferred-only inferred prerequisite is filtered.
-- [x] required-grounded inferred prerequisite can use prerequisite language.
-- [x] typed v9 response is not accidentally revalidated as v8.
-- [x] inflated planner prose normalizes instead of retrying.
-- [x] exact five-group structure from live failure 3 survives planner normalization.
-- [x] legitimate `Deep Learning` terminology survives label normalization.
-- [x] source-explicit depth/context echoes are filtered without failing profile reasoning.
-- [x] accepted source-explicit truth is still injected deterministically downstream.
+- [x] artifact 11 depends on P1.6 artifact 36.
+- [x] 31/31 capability requirements linked.
+- [x] 8/8 responsibilities linked.
+- [x] capability explicit depth 5/5.
+- [x] all explicit depth 6/6.
+- [x] role-level indices `[31, 32]` separate.
+- [x] semantic review PASS.
 
-Deterministic gates:
+#### Sparse v9 acceptance — COMPLETE
 
-- [x] CI 849 Ruff PASS.
-- [x] CI 849 full pytest PASS — 434 tests.
-- [x] CI 849 warnings-as-errors PASS.
-- [x] CI 855 Ruff PASS.
-- [x] CI 855 full pytest PASS — 435 tests.
-- [x] CI 855 warnings-as-errors PASS.
-- [x] CI 862 Ruff PASS.
-- [x] CI 862 full pytest PASS.
-- [x] CI 862 warnings-as-errors PASS.
-- [x] CI 864 final reconciled documentation head PASS.
+- [x] artifact 12 depends on P1.6 artifact 37.
+- [x] 8/8 requirements linked.
+- [x] 0/0 responsibilities.
+- [x] 0/0 explicit depth.
+- [x] no fabricated role purpose, role-level constraints, duties, prerequisites, or depth.
+- [x] semantic disposition PASS WITH ACCEPTABLE DIFFERENCES.
 
-Live acceptance still pending:
+#### Public-promotion implementation — COMPLETE / CI PASS
 
-- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36 after source-echo filtering.
-- [ ] verify new v9 artifact identity/dependency if persisted.
-- [ ] verify 31/31 capability requirements linked.
-- [ ] verify 8/8 responsibilities linked.
-- [ ] verify capability explicit depth 5/5 and all depth 6/6.
-- [ ] verify role-level indices `[31, 32]` remain separate.
-- [ ] full semantic review: no source-strength/depth/ownership/lifecycle inflation.
-- [ ] verify preferred/contextual facts are not promoted.
-- [ ] accept zero optional enrichment as valid when a profile has nothing defensible to add.
-- [ ] verify planner normalization remains non-authoritative and does not alter source truth.
-- [ ] verify model-emitted source-explicit echoes are absent from accepted model-owned enrichment and represented only through deterministic source truth.
-- [ ] only after dense acceptance run sparse `t4jp` v9 non-regression.
-- [ ] only after dense + sparse acceptance decide whether v9 is suitable for public promotion.
+- [x] neutral/current `capability_service.py` promotes v9/v5.
+- [x] CLI/browser/Review Snapshot follow the neutral current facade.
+- [x] current formatter is v9 formatter.
+- [x] current builder uses staged v9 service.
+- [x] neutral facade preserves model/provider inspection surface.
+- [x] current-service tests migrated from obsolete one-shot v7 fake-provider shape to deterministic v9 staged fixture.
+- [x] exact P1.6 dependency/reuse/fail-closed assertions preserved.
+- [x] deferred Blueprint v6 pinned explicitly to historical Capability v7 constants.
+- [x] compare proved Blueprint isolation is only a one-line dependency import change.
+- [x] historical v7/v8/v9 modules remain available.
+- [x] CI 874 Ruff PASS.
+- [x] CI 874 full pytest PASS.
+- [x] CI 874 warnings-as-errors PASS.
 
-**Next exact command:**
+#### Operational promotion verification — CURRENT NEXT GATE
+
+- [ ] pull latest `main` locally.
+- [ ] normal `jobhunter jobs capability tG9K` reuses artifact 11 under v9/v5.
+- [ ] normal `jobhunter jobs capability t4jp` reuses artifact 12 under v9/v5.
+- [ ] normal `jobhunter jobs snapshot tG9K` marks Capability artifact 11 current on P1.6 artifact 36.
+- [ ] normal `jobhunter jobs snapshot t4jp` marks Capability artifact 12 current on P1.6 artifact 37.
+- [ ] verify no new Capability generation occurs for these accepted current dependencies.
+- [ ] verify Blueprint remains deferred/pinned and is not silently rebuilt/rebased on v9.
+- [ ] after proof, mark Capability v9 public promotion operationally CLOSED.
+
+**Next exact commands:**
 
 ```bash
 cd ~/projects/jobhunter
 git pull --ff-only origin main
-python scripts/run_capability_v9_candidate.py --job-id tG9K
+
+jobhunter jobs capability tG9K
+jobhunter jobs capability t4jp
+
+jobhunter jobs snapshot tG9K
+jobhunter jobs snapshot t4jp
 ```
 
-Do not use normal `jobhunter jobs capability`; public routing intentionally remains v7.
-
-Key current record:
+Key current records:
 
 ```text
-docs/working-memory/2026-08-15_CAPABILITY_V9_STRICTNESS_AUDIT_AND_SIMPLIFICATION.md
-```
-
-Supporting history:
-
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
-docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
-docs/working-memory/2026-08-15_CAPABILITY_V8_LIVE_REVIEW_AND_V9_BOUNDARY.md
-docs/working-memory/2026-08-15_CAPABILITY_V9_DERIVED_EXPECTATION_FILTERING.md
-docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_DENSE_ACCEPTANCE.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_SPARSE_ACCEPTANCE.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
 ```
 
 ### B4 — Role Capability Blueprint experiment
 
 **Status: [-] not accepted for Phase-1 use; tuning deferred.**
 
-- [x] deterministic provenance failure class fixed historically.
-- [x] historical v6/12B artifact 7 passed mechanical audit and CI.
-- [!] semantic review still found unsupported assumptions.
-- [x] do not resume Blueprint tuning during the Capability gate.
+- [x] historical v6/12B artifact 7 remains experimental evidence.
+- [!] semantic review found unsupported assumptions.
+- [x] Blueprint v6 is pinned to historical v7 during Capability v9 promotion.
+- [x] do not resume Blueprint tuning during this gate.
 
 ### B5 — Heterogeneous live review
 
-Blocked until Capability candidate acceptance/promotion decision.
+Blocked only until Capability v9 operational-promotion verification closes.
 
 - [ ] Python/software role.
 - [ ] network/security role.
 - [ ] operations/platform/DevOps role.
 - [ ] convert repeatable deterministic defects into fixtures.
 - [ ] record model limitations separately from deterministic defects.
-- [ ] decide whether promoted P1.6 + accepted Capability are good enough to freeze as Phase-2 input.
+- [ ] decide whether promoted P1.6 + promoted Capability are good enough to freeze as Phase-2 input.
 
 ## C. Phase-1 closure after heterogeneous semantic acceptance
 
