@@ -2,20 +2,20 @@
 
 **Date:** 2026-08-15  
 **Branch:** `main`  
-**Status:** implementation complete through planner normalization; deterministic CI PASS; dense live acceptance pending
+**Status:** implementation complete through source-echo filtering; deterministic CI PASS; dense live acceptance pending
 
 ## Why this audit happened
 
-Three dense `tG9K` Capability v9 live runs failed before persistence even though accepted English
+Four dense `tG9K` Capability v9 live runs failed before persistence even though accepted English
 P1.6 artifact 36 remained correct/current.
 
 The failures showed that JobHunter had mixed two very different kinds of strictness:
 
 1. **truth-protection strictness** — rules that protect source coverage, provenance, evidence,
    requirement strength, explicit depth, and fail-closed persistence;
-2. **forced-enrichment / prose-calibration strictness** — rules that require the model to invent
-   additional analytical content or reproduce perfectly calibrated wording even when the model's
-   structural result is otherwise useful.
+2. **forced-enrichment / prose-calibration / model-echo strictness** — rules that require the model
+   to invent additional analytical content, reproduce perfectly calibrated wording, or avoid
+   redundantly restating source truth even when the structural result is otherwise useful.
 
 The second category created direct contradictions with v9's goal of avoiding unsupported semantic
 inflation. This audit removes or narrows that category while preserving the first.
@@ -26,9 +26,11 @@ A validation rule remains hard only when violating it could corrupt or lose auth
 truth, provenance, source-owned strength/depth, or the structural meaning of the accepted job
 evidence.
 
-A model-owned analytical enrichment is optional. A planner's prose is non-authoritative. If either
-is unsupported or unsafe, JobHunter should filter or normalize it rather than regenerate correct
-structure merely to satisfy wording constraints.
+A model-owned analytical enrichment is optional. A planner's prose is non-authoritative. A
+model-emitted `source_explicit` item is also non-authoritative because JobHunter deterministically
+owns source-explicit truth. If optional content is unsupported, badly calibrated, or redundant,
+JobHunter should filter or normalize it rather than regenerate correct structure merely to satisfy
+wording/ownership constraints.
 
 ## Rules retained as hard boundaries
 
@@ -158,6 +160,34 @@ This means JobHunter no longer spends a bounded retry asking a small model to wo
 clustering result. Semantic authority remains downstream in exact assignment, evidence validation,
 deterministic reconciliation, and optional-enrichment filtering.
 
+### 9. Model-emitted `source_explicit` profile items — REPLACED WITH REDUNDANCY FILTERING
+
+The fourth dense v9 live run reached bounded profile reasoning and returned useful source-backed
+content, but it used `evidence_status="source_explicit"` for two explicit depth facts (`Hands-on`,
+`Solid`) and source-backed operational context. V9 previously rejected the entire profile because
+model-owned profile lists were limited to optional derived statuses.
+
+That was another wrong-granularity failure. The model was not corrupting source truth; it was
+**echoing source truth that JobHunter already owns**.
+
+V9 now treats these echoes as redundant input:
+
+- `source_explicit` items emitted in model-owned analytical lists are discarded before optional
+  enrichment validation;
+- misplaced non-derived statuses are likewise filtered rather than forcing a retry;
+- a deterministic uncertainty records how many redundant/misplaced expectations were removed;
+- deterministic reconciliation remains the **only authority** that injects accepted
+  `source_explicit` depth/work/source facts into the final Capability artifact;
+- valid derived statuses (`strongly_implied_by_work`, `model_inferred_prerequisite`) continue through
+  the existing semantic guardrails;
+- `unknown_scope` continues to accept only `unknown_or_unsupported`.
+
+To keep this change auditable without rewriting the large v9 model module in place, the existing
+implementation was preserved byte-for-byte as `capability_v9_models_core.py`. The public
+`capability_v9_models.py` is now a thin boundary wrapper that re-exports the core contract and
+overrides only the inference-facing profile validator. Persisted v9 schema/contract identity is
+unchanged.
+
 ## Compatibility approach
 
 Historical v7/v8 models remain intact.
@@ -173,6 +203,16 @@ The v8 staged engine is version-neutral at two extension points:
 - version-specific reconciler.
 
 Its default values remain the historical v8 classes/functions, so existing v8 behavior is preserved.
+
+The v9 public model boundary now additionally separates:
+
+```text
+preserved v9 core contract
+→ inference-facing redundancy filtering
+→ existing semantic guardrails
+→ deterministic reconciliation
+→ persisted v9 artifact
+```
 
 ## Regression proofs
 
@@ -190,7 +230,9 @@ The v9 tests now prove:
 - typed v9 stage output is not accidentally revalidated as v8;
 - planner prose containing depth/strength/scope inflation is normalized rather than retried;
 - the exact five-group shape from the third dense live failure survives normalization;
-- `Deep Learning` is preserved as a legitimate capability/domain term.
+- `Deep Learning` is preserved as a legitimate capability/domain term;
+- model-emitted `source_explicit` depth/context echoes are discarded without failing the profile;
+- source-explicit authority remains deterministic downstream rather than model-owned.
 
 ## Deterministic gates
 
@@ -209,6 +251,15 @@ Planner-normalization gate:
 CI run 855
 Ruff:               PASS
 full pytest:        PASS (435 tests)
+warnings-as-errors: PASS
+```
+
+Source-echo filtering gate:
+
+```text
+CI run 862
+Ruff:               PASS
+full pytest:        PASS
 warnings-as-errors: PASS
 ```
 
@@ -236,6 +287,10 @@ strongly implied decomposition when defensible
 + work-implied extra depth when defensible
 + explicit unknown scope when genuinely useful
 
+MODEL ECHO OF SOURCE TRUTH
+filter as redundant
++ deterministic reconciliation re-injects authoritative source-explicit truth
+
 If optional enrichment is absent:
   VALID
 
@@ -244,6 +299,9 @@ If optional enrichment overreaches:
 
 If planner prose overreaches but structure is usable:
   NORMALIZE / CONTINUE
+
+If model repeats source-explicit truth in analytical lists:
+  FILTER REDUNDANCY / CONTINUE
 
 If authoritative source truth or structural coverage is incomplete/invalid:
   FAIL CLOSED
