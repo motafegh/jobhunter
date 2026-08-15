@@ -74,7 +74,7 @@ Original: job-analysis-original-v9 / job-analysis-v4
 - [x] normal Review Snapshot selects artifacts 36/37 with matching projection dependencies.
 - [x] operational P1.6 v20 promotion complete.
 
-### B3 — Capability Intelligence — ACTIVE DESIGN GATE / IMPLEMENTATION PAUSED
+### B3 — Capability Intelligence — ACTIVE V9 LIVE GATE
 
 #### Historical/public v7 baseline
 
@@ -96,112 +96,124 @@ historical P1.6 artifact 29
 - [x] classify as stable one-shot architecture failure rather than isolated index noise.
 - [x] do not increase retries.
 - [x] do not weaken whole-artifact coverage validation.
-- [x] stop iterative mutation of public/historical v7 for this dense case.
 
 #### Capability v8 source-led candidate — MECHANICAL PASS / SEMANTIC REJECT
 
-Architecture proof:
-
-```text
-accepted P1.6 source truth
-→ compact semantic group plan
-→ bounded exact source-fact assignment
-→ bounded per-group reasoning
-→ deterministic source-link injection
-→ strict reconciliation/source truth
-```
-
-- [x] group semantics separated from source-index bookkeeping.
-- [x] bounded assignment and exact owned-source coverage enforced.
-- [x] per-group reasoning receives only assigned facts + matching evidence.
-- [x] JobHunter owns final source links, source strength, explicit depth and source work activities.
-- [x] P1.6 rationale excluded from model-facing payloads.
-- [x] CI 821: Ruff PASS / full pytest PASS / warnings-as-errors PASS.
+- [x] source-led group-plan → bounded assignment → bounded profile architecture implemented.
 - [x] dense `tG9K` completed against P1.6 artifact 36.
 - [x] 31/31 capability requirements linked.
 - [x] 8/8 responsibilities linked.
 - [x] four profiles generated.
-- [x] role-level requirement indices remained `[31, 32]`.
+- [x] role-level indices `[31, 32]` remained separate.
 - [x] source-led architecture solved v7 dense linkage/coverage failure mechanically.
-- [!] unsupported depth inflation appeared in model-owned prose.
-- [!] unsupported ownership/lifecycle scope appeared in model-owned prose.
-- [!] contextual/preferred facts were promoted into stronger prerequisite/required interpretations.
-- [!] preferred C/C++ was treated as a technical foundation.
-- [!] preferred industrial/edge deployment was escalated beyond source optionality.
+- [!] v8 model prose inflated depth, ownership/lifecycle scope, and contextual/preferred facts.
 - [!] v8 is NOT semantically accepted and MUST NOT be publicly promoted.
 - [x] persisted v8 candidate remains historical evidence; do not overwrite/delete it.
+- [x] correct depth accounting: capability 5/5 + role-level 1 = all 6/6.
 
-Depth accounting:
+#### Capability v9 initial guarded candidate — TWO LIVE FAILURES / NO ARTIFACT
 
-- [x] five capability-relevant explicit depth facts are linked: 5/5.
-- [x] one additional explicit depth is role-level 3–6 years professional experience.
-- [x] all six explicit depth facts remain in source truth.
+- [!] live failure 1: model summary/derived items crossed semantic authority boundaries.
+- [x] no v9 artifact persisted.
+- [x] per-item fail-closed filtering implemented; CI 838 PASS.
+- [!] live failure 2: model returned neutral profile with no derived reasoning and inherited v8 forced-enrichment validator rejected it.
+- [x] no v9 artifact persisted.
+- [x] identified direct contradiction: `do not speculate` vs `must add derived reasoning or unknown scope`.
 
-#### Capability v9 guarded source-led candidate — TWO LIVE FAILURES / NO ARTIFACT
+#### Capability v9 strictness audit + simplification — IMPLEMENTED / DETERMINISTIC PASS
 
-Contract:
+Contract remains candidate-only:
 
 ```text
 job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
-Implemented boundaries:
+Truth-protection rules retained:
 
-- [x] ordinary model-owned prose cannot restate source obligation.
-- [x] ordinary model-owned prose cannot add unsupported technical depth.
-- [x] ordinary model-owned prose cannot infer unsupported ownership/lifecycle/autonomy/architecture.
-- [x] preferred/contextual-only facts cannot independently justify model-inferred prerequisites.
-- [x] source truth separates capability explicit depth from role-level explicit depth.
-- [x] v9 uses a distinct persistence identity from v8.
-- [x] CI 832 passed initial v9 deterministic gate.
+- [x] complete capability-relevant requirement coverage remains mandatory.
+- [x] complete responsibility coverage remains mandatory.
+- [x] valid owned indices remain mandatory.
+- [x] evidence grounding remains mandatory.
+- [x] dense multi-group protection remains mandatory.
+- [x] role-level education / duration-only experience separation remains mandatory.
+- [x] source requirement strength remains deterministic.
+- [x] source-explicit depth remains deterministic.
+- [x] source work activities remain deterministic.
+- [x] preferred/contextual-only facts still cannot independently justify inferred prerequisites.
+- [x] unsupported ownership/lifecycle/autonomy/architecture remains blocked.
+- [x] incomplete authoritative source truth still fails before persistence.
 
-Live failure 1:
+Contradictory / unnecessary strictness removed or narrowed:
 
-- [!] generation 1 summary added unsupported `expertise` and hard-failed as intended.
-- [!] generation 2 optional derived depth statements used `necessary`, `prerequisite`, `must`, and `necessitates`.
-- [x] no v9 artifact persisted.
-- [x] per-expectation fail-closed filtering correction implemented.
-- [x] CI 838 passed Ruff / full pytest / warnings-as-errors for that correction.
+- [x] REMOVE v9 requirement that every profile must add derived reasoning or unknown scope.
+- [x] REMOVE forced `unknown_scope` filler when no genuine unknown claim exists.
+- [x] MAKE model-derived depth/sub-capability/knowledge/practice/context enrichment optional.
+- [x] REPLACE whole-profile failure for one unsafe optional inference with item-level fail-closed filtering.
+- [x] REPLACE inflated profile-summary retry with fallback to already-validated neutral group summary.
+- [x] REMOVE duplicate hard-coded v8 revalidation after provider has already validated a v9 stage.
+- [x] preserve historical v8 fallback validation for fake/legacy providers and historical v8 behavior.
+- [x] NARROW prerequisite wording rule: explicit `model_inferred_prerequisite` may use necessity/prerequisite language.
+- [x] KEEP inferred-prerequisite statement from masquerading as employer `required/must/mandatory`.
+- [x] ALLOW inferred-prerequisite rationale to accurately refer to a required source fact.
+- [x] KEEP preferred/contextual-only prerequisite inflation blocked by source-strength evidence logic.
+- [x] v9 final profile/draft contract permits zero optional model enrichment.
+- [x] trusted deterministic reconciliation still injects source strength/depth/work truth.
+- [x] any internal compatibility bridge is removed before v9 persistence.
 
-Live failure 2:
+Regression proofs:
 
-- [!] both generations returned a bounded MLOps/production profile with summary + no derived reasoning.
-- [!] inherited v8 validator rejected both with `Capability profile reasoning must add derived reasoning or an explicit unknown boundary`.
-- [x] no v9 artifact persisted.
-- [!] this exposes a design contradiction: v9 aims not to force speculative enrichment, while inherited v8 still requires every profile to add derived reasoning or unknown scope.
-- [!] previous documentation claiming a v9 profile could survive with no safe derived expectations was an intended property but not an effective runtime property; documentation has been corrected explicitly.
-- [~] Capability semantic contract requires design discussion before any further implementation.
+- [x] zero-enrichment profile succeeds under v9.
+- [x] zero-enrichment profile still fails under historical v8.
+- [x] zero-enrichment final v9 artifact survives deterministic reconciliation.
+- [x] deterministic required strength and source-explicit depth remain present.
+- [x] preferred-only inferred prerequisite is filtered.
+- [x] required-grounded inferred prerequisite can use prerequisite language.
+- [x] typed v9 response is not accidentally revalidated as v8.
 
-#### Explicit pause
+Deterministic gate:
 
-Per user instruction:
+- [x] CI 849 Ruff PASS.
+- [x] CI 849 full pytest PASS — 434 tests.
+- [x] CI 849 warnings-as-errors PASS.
 
-- [-] do not patch v9 again yet.
-- [-] do not create v10.
-- [-] do not rerun dense Capability generation.
-- [-] do not run sparse `t4jp` Capability validation.
-- [-] do not change public Capability routing.
-- [~] discuss what Capability should add beyond accepted P1.6 source truth.
-- [~] decide whether a profile may validly contain only neutral grouping + deterministic source facts.
-- [~] decide whether derived reasoning is mandatory, optional, or should become explicit unknown when absent.
-- [~] decide whether model-owned `depth_signals` are valuable now that source-explicit depth is deterministic.
-- [~] decide which Capability outputs are authoritative source-derived facts vs optional model enrichment.
+Live acceptance still pending:
 
-**Current exact next action:** design discussion only. There is intentionally no shell command to run.
+- [~] rerun isolated dense `tG9K` v9 candidate against P1.6 artifact 36.
+- [ ] verify new v9 artifact identity/dependency if persisted.
+- [ ] verify 31/31 capability requirements linked.
+- [ ] verify 8/8 responsibilities linked.
+- [ ] verify capability explicit depth 5/5 and all depth 6/6.
+- [ ] verify role-level indices `[31, 32]` remain separate.
+- [ ] full semantic review: no source-strength/depth/ownership/lifecycle inflation.
+- [ ] verify preferred/contextual facts are not promoted.
+- [ ] accept zero optional enrichment as valid when a profile has nothing defensible to add.
+- [ ] only after dense acceptance run sparse `t4jp` v9 non-regression.
+- [ ] only after dense + sparse acceptance decide whether v9 is suitable for public promotion.
 
-Detailed current record:
+**Next exact command:**
 
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
+```bash
+cd ~/projects/jobhunter
+git pull --ff-only origin main
+python scripts/run_capability_v9_candidate.py --job-id tG9K
 ```
 
-Supporting records:
+Do not use normal `jobhunter jobs capability`; public routing intentionally remains v7.
+
+Key current record:
+
+```text
+docs/working-memory/2026-08-15_CAPABILITY_V9_STRICTNESS_AUDIT_AND_SIMPLIFICATION.md
+```
+
+Supporting history:
 
 ```text
 docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
 docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
 docs/working-memory/2026-08-15_CAPABILITY_V8_LIVE_REVIEW_AND_V9_BOUNDARY.md
 docs/working-memory/2026-08-15_CAPABILITY_V9_DERIVED_EXPECTATION_FILTERING.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
 ```
 
 ### B4 — Role Capability Blueprint experiment
@@ -215,7 +227,7 @@ docs/working-memory/2026-08-15_CAPABILITY_V9_DERIVED_EXPECTATION_FILTERING.md
 
 ### B5 — Heterogeneous live review
 
-Blocked until Capability design/acceptance resumes.
+Blocked until Capability candidate acceptance/promotion decision.
 
 - [ ] Python/software role.
 - [ ] network/security role.
