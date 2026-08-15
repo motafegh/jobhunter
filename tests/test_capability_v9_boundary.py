@@ -56,7 +56,10 @@ def test_v9_group_plan_preserves_deep_learning_and_normalizes_planner_inflation(
         "The role combines Machine Learning and Deep Learning and "
         "MLOps and Production Engineering."
     )
-    assert any("normalized non-authoritative capability-planner prose" in item for item in plan.uncertainties)
+    assert any(
+        "normalized non-authoritative capability-planner prose" in item
+        for item in plan.uncertainties
+    )
 
 
 def test_v9_group_plan_normalizes_exact_live_failure_shape_without_retry() -> None:
