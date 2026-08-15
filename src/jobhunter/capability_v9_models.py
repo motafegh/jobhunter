@@ -43,6 +43,10 @@ _SCOPE_INFLATION_RE = re.compile(
     r"autonomy|autonomous|architecting|architecture)\b",
     re.IGNORECASE,
 )
+_GROUP_LABEL_SCOPE_RE = re.compile(
+    r"\b(?:end[- ]to[- ]end|full lifecycle|ownership|autonomy|autonomous|leadership)\b",
+    re.IGNORECASE,
+)
 _DEEP_RE = re.compile(r"\bdeep\b", re.IGNORECASE)
 _RECONCILIATION_BRIDGE_STATEMENT = (
     "No additional model-derived claim is required for this bounded capability profile."
@@ -86,6 +90,40 @@ def _guard_model_owned_text(
         raise ValueError(
             f"{field_name} may not add technical depth; JobHunter owns source-explicit depth"
         )
+
+
+def _neutralize_group_label(value: str, *, group_id: int) -> str:
+    """Remove claim-like modifiers from a planner label without changing its core topic."""
+
+    marker = "JOBHUNTER_DEEP_LEARNING"
+    normalized = re.sub(r"\bdeep\s+learning\b", marker, value, flags=re.IGNORECASE)
+    for pattern in (
+        _SOURCE_OBLIGATION_RE,
+        _PREREQUISITE_LANGUAGE_RE,
+        _DEPTH_INFLATION_RE,
+        _GROUP_LABEL_SCOPE_RE,
+    ):
+        normalized = pattern.sub(" ", normalized)
+    normalized = _DEEP_RE.sub(" ", normalized)
+    normalized = normalized.replace(marker, "Deep Learning")
+    normalized = re.sub(r"\s+", " ", normalized).strip(" -–—:/|,&")
+    if len(normalized) < 2:
+        return f"Capability area {group_id}"
+    return normalized
+
+
+def _neutral_group_summary(label: str) -> str:
+    return f"This capability area covers {label.strip()}."
+
+
+def _neutral_role_interpretation(labels: list[str]) -> str:
+    if not labels:
+        return "The role contains capability areas derived from accepted P1.6 source facts."
+    if len(labels) == 1:
+        return f"The role centers on {labels[0]}."
+    if len(labels) == 2:
+        return f"The role combines {labels[0]} and {labels[1]}."
+    return f"The role combines {', '.join(labels[:-1])}, and {labels[-1]}."
 
 
 def _requirement_evidence_map(
@@ -183,23 +221,54 @@ def _has_derived_reasoning(profile: dict[str, Any]) -> bool:
 
 
 class CapabilityGroupPlanV9(CapabilityGroupPlanV8):
-    """V8 group shape with v9 separation of semantics from strength/depth/scope."""
+    """V8 group structure with non-authoritative planner prose normalized fail-closed."""
 
     @model_validator(mode="after")
-    def guard_group_prose(self) -> CapabilityGroupPlanV9:
-        _guard_model_owned_text(
-            self.role_interpretation,
-            field_name="role_interpretation",
-        )
+    def normalize_group_prose(self) -> CapabilityGroupPlanV9:
+        """Keep useful clustering while removing planner-only strength/depth/scope inflation."""
+
+        normalized_parts = 0
         for group in self.groups:
-            _guard_model_owned_text(
+            safe_label = _neutralize_group_label(
                 group.capability_label,
-                field_name=f"group[{group.group_id}].capability_label",
+                group_id=group.group_id,
             )
+            if safe_label != group.capability_label:
+                group.capability_label = safe_label
+                normalized_parts += 1
+
+        normalized_labels = [_normalize(group.capability_label) for group in self.groups]
+        if len(normalized_labels) != len(set(normalized_labels)):
+            raise ValueError("Capability group labels collapse to duplicates after normalization")
+
+        for group in self.groups:
+            try:
+                _guard_model_owned_text(
+                    group.summary,
+                    field_name=f"group[{group.group_id}].summary",
+                )
+            except ValueError:
+                group.summary = _neutral_group_summary(group.capability_label)
+                normalized_parts += 1
+
+        try:
             _guard_model_owned_text(
-                group.summary,
-                field_name=f"group[{group.group_id}].summary",
+                self.role_interpretation,
+                field_name="role_interpretation",
             )
+        except ValueError:
+            self.role_interpretation = _neutral_role_interpretation(
+                [group.capability_label for group in self.groups]
+            )
+            normalized_parts += 1
+
+        if normalized_parts:
+            note = (
+                "JobHunter normalized non-authoritative capability-planner prose that expressed "
+                "source strength, technical depth, or ownership/scope beyond the grouping task."
+            )
+            if note not in self.uncertainties:
+                self.uncertainties.append(note)
         return self
 
 
