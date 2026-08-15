@@ -7,6 +7,7 @@ for reproducibility.
 
 from __future__ import annotations
 
+from dataclasses import replace
 from typing import Any
 
 from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
@@ -29,6 +30,20 @@ from jobhunter.capability_store import (
 from jobhunter.config import Settings
 from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_store import TranslationStore
+
+
+def _authoritative_p16_payload(value: Any) -> Any:
+    """Remove explanatory P1.6 rationale while preserving authoritative semantic source truth."""
+
+    if isinstance(value, dict):
+        return {
+            key: _authoritative_p16_payload(item)
+            for key, item in value.items()
+            if key != "rationale"
+        }
+    if isinstance(value, list):
+        return [_authoritative_p16_payload(item) for item in value]
+    return value
 
 
 class CapabilityIntelligenceService(CapabilityIntelligenceServiceV7):
@@ -85,7 +100,16 @@ class CapabilityIntelligenceService(CapabilityIntelligenceServiceV7):
             raise CapabilityIntelligenceError(
                 "English analysis references a historical English projection and requires v2 repair"
             )
-        return source, translation, analysis
+
+        # P1.6 rationale is review/explanatory prose, not authoritative semantic truth. Capability
+        # reasoning receives the same accepted artifact identity and normalized fields/evidence but
+        # cannot treat rationale wording as an additional source claim. The persisted artifact in
+        # AnalysisStore remains unchanged.
+        reasoning_analysis = replace(
+            analysis,
+            analysis=_authoritative_p16_payload(analysis.analysis),
+        )
+        return source, translation, reasoning_analysis
 
 
 def build_capability_intelligence_service(settings: Settings) -> CapabilityIntelligenceService:
