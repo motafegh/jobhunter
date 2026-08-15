@@ -1,119 +1,40 @@
-"""Current Capability Intelligence service entrypoint.
+"""Current public Capability Intelligence service entrypoint.
 
-Capability v7 remains the accepted reasoning contract. The public-current service binds it to the
-promoted English P1.6 v20/v5 dependency while preserving the historical v7 implementation module
-for reproducibility.
+Capability v9/v5 is the accepted public reasoning contract. The neutral facade keeps CLI,
+browser, Review Snapshot, and other current consumers aligned while historical v7/v8/v9 modules
+remain available for reproducibility.
 """
 
 from __future__ import annotations
 
-from dataclasses import replace
 from typing import Any
 
-from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
-from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
-from jobhunter.capability_inference import CapabilityInferenceProvider
-from jobhunter.capability_service_v7 import (
+from jobhunter.analysis_store import AnalysisStore
+from jobhunter.capability_inference_v8 import CapabilityV8InferenceProvider
+from jobhunter.capability_service_v9 import (
     CAPABILITY_PROMPT_VERSION,
     CAPABILITY_SCHEMA_VERSION,
     CapabilityIntelligenceError,
     CapabilityIntelligenceResult,
-    format_capability_intelligence,
+    CapabilityIntelligenceServiceV9,
+    format_capability_v9,
 )
-from jobhunter.capability_service_v7 import (
-    CapabilityIntelligenceService as CapabilityIntelligenceServiceV7,
-)
-from jobhunter.capability_store import (
-    CapabilityIntelligenceStore,
-    CapabilityTranslationDependency,
-)
+from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.config import Settings
-from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_store import TranslationStore
 
 
-def _authoritative_p16_payload(value: Any) -> Any:
-    """Remove explanatory P1.6 rationale while preserving authoritative semantic source truth."""
+class CapabilityIntelligenceService(CapabilityIntelligenceServiceV9):
+    """Current public Capability v9 service above accepted English P1.6 v20/v5."""
 
-    if isinstance(value, dict):
-        return {
-            key: _authoritative_p16_payload(item)
-            for key, item in value.items()
-            if key != "rationale"
-        }
-    if isinstance(value, list):
-        return [_authoritative_p16_payload(item) for item in value]
-    return value
+    def _current_dependencies(self, source_job_id: str) -> tuple[Any, Any, Any]:
+        """Expose the established current-dependency boundary for compatibility and review tests."""
 
-
-class CapabilityIntelligenceService(CapabilityIntelligenceServiceV7):
-    """Capability v7 bound to the current accepted English P1.6 contract."""
-
-    def _current_dependencies(
-        self,
-        source_job_id: str,
-    ) -> tuple[Any, CapabilityTranslationDependency, AnalysisArtifact]:
-        source = self._source_store.latest_source_version(source_job_id)
-        if source is None:
-            raise CapabilityIntelligenceError(
-                "Job has no current successfully parsed source version"
-            )
-        analysis = self._analysis_store.latest_current(
-            source_job_id,
-            model=self._analysis_model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
-        )
-        if analysis is None:
-            raise CapabilityIntelligenceError(
-                "Job has no current accepted English P1.6 analysis; run Analyze English first"
-            )
-        if analysis.job_detail_version_id != source.job_detail_version_id:
-            raise CapabilityIntelligenceError(
-                "English analysis does not belong to the current source semantic version"
-            )
-        if analysis.translation_artifact_id is None:
-            raise CapabilityIntelligenceError(
-                "English analysis has no referenced hardened English projection"
-            )
-
-        translation = self._capability_store.translation_dependency(
-            analysis.translation_artifact_id
-        )
-        if translation is None:
-            raise CapabilityIntelligenceError(
-                "English analysis references a missing English projection artifact"
-            )
-        if translation.source_job_id != source_job_id:
-            raise CapabilityIntelligenceError(
-                "English analysis references a translation artifact from another job"
-            )
-        if translation.job_detail_version_id != source.job_detail_version_id:
-            raise CapabilityIntelligenceError(
-                "English analysis references an English projection from an older source version"
-            )
-        if translation.target_language != "en":
-            raise CapabilityIntelligenceError(
-                "English analysis references a non-English translation artifact"
-            )
-        if translation.translation_schema_version != TRANSLATION_SCHEMA_VERSION:
-            raise CapabilityIntelligenceError(
-                "English analysis references a historical English projection and requires v2 repair"
-            )
-
-        # P1.6 rationale is review/explanatory prose, not authoritative semantic truth. Capability
-        # reasoning receives the same accepted artifact identity and normalized fields/evidence but
-        # cannot treat rationale wording as an additional source claim. The persisted artifact in
-        # AnalysisStore remains unchanged.
-        reasoning_analysis = replace(
-            analysis,
-            analysis=_authoritative_p16_payload(analysis.analysis),
-        )
-        return source, translation, reasoning_analysis
+        return self._delegate._current_dependencies(source_job_id)
 
 
 def build_capability_intelligence_service(settings: Settings) -> CapabilityIntelligenceService:
-    """Build current Capability v7 above promoted English P1.6 v20/v5."""
+    """Build the accepted public Capability v9 service."""
 
     analysis_model = settings.effective_analysis_lm_studio_model()
     if not analysis_model:
@@ -121,12 +42,12 @@ def build_capability_intelligence_service(settings: Settings) -> CapabilityIntel
     capability_model = settings.effective_capability_lm_studio_model()
     if not capability_model:
         raise ValueError("No LM Studio capability-intelligence model is configured")
-    translation_store = TranslationStore(settings.database_path)
+
     return CapabilityIntelligenceService(
-        source_store=translation_store,
+        source_store=TranslationStore(settings.database_path),
         analysis_store=AnalysisStore(settings.database_path),
         capability_store=CapabilityIntelligenceStore(settings.database_path),
-        provider=CapabilityInferenceProvider(
+        provider=CapabilityV8InferenceProvider(
             base_url=settings.lm_studio_base_url,
             configured_model=capability_model,
             api_token=settings.lm_studio_api_token,
@@ -138,6 +59,9 @@ def build_capability_intelligence_service(settings: Settings) -> CapabilityIntel
         capability_model=capability_model,
         max_tokens=settings.analysis_max_tokens,
     )
+
+
+format_capability_intelligence = format_capability_v9
 
 
 __all__ = [
