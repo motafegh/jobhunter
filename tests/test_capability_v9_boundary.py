@@ -22,28 +22,109 @@ from jobhunter.capability_v9_models import (
 )
 
 
-def test_v9_group_plan_allows_deep_learning_but_rejects_added_depth() -> None:
-    accepted = {
+def test_v9_group_plan_preserves_deep_learning_and_normalizes_planner_inflation() -> None:
+    payload = {
         "role_interpretation": (
-            "The role combines machine learning and deep learning with manufacturing analytics."
+            "The role requires applying advanced machine learning to manufacturing analytics."
         ),
         "groups": [
             {
                 "group_id": 0,
-                "capability_label": "Machine learning and modeling",
-                "summary": "Combines model development with manufacturing analytics work.",
-            }
+                "capability_label": "Advanced Machine Learning and Deep Learning",
+                "summary": "Expertise in deep learning and advanced manufacturing analytics.",
+            },
+            {
+                "group_id": 1,
+                "capability_label": "MLOps and Production Engineering",
+                "summary": "Proficiency in the necessary end-to-end production workflow.",
+            },
         ],
         "uncertainties": [],
     }
-    CapabilityGroupPlanV9.model_validate(accepted)
 
-    rejected = dict(accepted)
-    rejected["role_interpretation"] = (
-        "The role combines advanced machine learning with manufacturing analytics."
+    plan = CapabilityGroupPlanV9.model_validate(payload)
+
+    assert plan.groups[0].capability_label == "Machine Learning and Deep Learning"
+    assert plan.groups[1].capability_label == "MLOps and Production Engineering"
+    assert plan.groups[0].summary == (
+        "This capability area covers Machine Learning and Deep Learning."
     )
-    with pytest.raises(ValueError, match="may not add technical depth"):
-        CapabilityGroupPlanV9.model_validate(rejected)
+    assert plan.groups[1].summary == (
+        "This capability area covers MLOps and Production Engineering."
+    )
+    assert plan.role_interpretation == (
+        "The role combines Machine Learning and Deep Learning and "
+        "MLOps and Production Engineering."
+    )
+    assert any("normalized non-authoritative capability-planner prose" in item for item in plan.uncertainties)
+
+
+def test_v9_group_plan_normalizes_exact_live_failure_shape_without_retry() -> None:
+    payload = {
+        "role_interpretation": (
+            "This role centers on leveraging Machine Learning and advanced statistical methods "
+            "to analyze high-dimensional sensor data from semiconductor manufacturing processes."
+        ),
+        "groups": [
+            {
+                "group_id": 1,
+                "capability_label": "Industrial AI/ML Modeling & Analytics",
+                "summary": (
+                    "Applying Machine Learning and Deep Learning techniques to solve complex "
+                    "industrial problems related to process control and fault detection."
+                ),
+            },
+            {
+                "group_id": 2,
+                "capability_label": "Time-Series Data Science & Statistics",
+                "summary": (
+                    "Expertise in handling and modeling high-dimensional time-series sensor data."
+                ),
+            },
+            {
+                "group_id": 3,
+                "capability_label": "MLOps & Production Engineering",
+                "summary": (
+                    "Designing, building, validating, and deploying robust MLOps pipelines."
+                ),
+            },
+            {
+                "group_id": 4,
+                "capability_label": "Semiconductor Data Systems & Domain Knowledge",
+                "summary": (
+                    "Deep understanding of semiconductor manufacturing data and process control."
+                ),
+            },
+            {
+                "group_id": 5,
+                "capability_label": "Data Engineering & Tooling",
+                "summary": (
+                    "Proficiency in the necessary programming and infrastructure tools required "
+                    "for end-to-end ML workflows."
+                ),
+            },
+        ],
+        "uncertainties": [],
+    }
+
+    plan = CapabilityGroupPlanV9.model_validate(payload)
+
+    assert [group.group_id for group in plan.groups] == [1, 2, 3, 4, 5]
+    assert [group.capability_label for group in plan.groups] == [
+        "Industrial AI/ML Modeling & Analytics",
+        "Time-Series Data Science & Statistics",
+        "MLOps & Production Engineering",
+        "Semiconductor Data Systems & Domain Knowledge",
+        "Data Engineering & Tooling",
+    ]
+    assert plan.role_interpretation.startswith("The role combines Industrial AI/ML Modeling")
+    assert plan.groups[1].summary == (
+        "This capability area covers Time-Series Data Science & Statistics."
+    )
+    assert plan.groups[3].summary == (
+        "This capability area covers Semiconductor Data Systems & Domain Knowledge."
+    )
+    assert plan.groups[4].summary == "This capability area covers Data Engineering & Tooling."
 
 
 def _profile_context(*, requirement_type: str = "preferred") -> dict:
