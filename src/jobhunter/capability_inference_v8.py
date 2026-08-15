@@ -25,6 +25,7 @@ class CapabilityV8InferenceResult:
     request_body: dict[str, Any]
     raw_response: dict[str, Any]
     finish_reason: str | None
+    validated_model: BaseModel | None = None
 
 
 class CapabilityV8InferenceProvider:
@@ -169,6 +170,7 @@ class CapabilityV8InferenceProvider:
             request_body=request_body,
             raw_response=completion.model_dump(mode="json"),
             finish_reason=str(finish_reason) if finish_reason is not None else None,
+            validated_model=result,
         )
 
 
