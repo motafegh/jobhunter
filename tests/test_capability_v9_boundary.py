@@ -84,27 +84,64 @@ def _profile_payload() -> dict:
     }
 
 
-def test_v9_profile_rejects_scope_and_obligation_inflation() -> None:
+def test_v9_profile_summary_inflation_remains_hard_failure() -> None:
     context = _profile_context()
     payload = _profile_payload()
     payload["summary"] = "The capability covers end-to-end deployment operations."
     with pytest.raises(ValueError, match="may not infer ownership"):
         CapabilityProfileReasoningV9.model_validate(payload, context=context)
 
+
+def test_v9_discards_one_unsafe_derived_expectation_without_failing_profile() -> None:
+    context = _profile_context()
     payload = _profile_payload()
     payload["sub_capabilities"][0]["rationale"] = (
         "The listed deployment context requires this capability."
     )
-    with pytest.raises(ValueError, match="may not restate requirement obligation"):
-        CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert profile.sub_capabilities == []
+    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
 
 
-def test_v9_prerequisite_cannot_be_grounded_in_preferred_only_fact() -> None:
+def test_v9_discards_preferred_only_prerequisite_instead_of_retrying_profile() -> None:
     context = _profile_context(requirement_type="preferred")
     payload = _profile_payload()
     payload["sub_capabilities"][0]["evidence_status"] = "model_inferred_prerequisite"
-    with pytest.raises(ValueError, match="preferred/contextual-only"):
-        CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert profile.sub_capabilities == []
+    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
+
+
+def test_v9_discards_obligation_in_derived_depth_but_keeps_safe_depth() -> None:
+    context = _profile_context(requirement_type="required")
+    payload = _profile_payload()
+    payload["sub_capabilities"] = []
+    payload["depth_signals"] = [
+        {
+            "statement": "Practical implementation across multiple machine learning approaches.",
+            "evidence_status": "strongly_implied_by_work",
+            "evidence": ["p1:requirements:0"],
+            "rationale": "The bounded evidence supports this implementation-oriented interpretation.",
+            "confidence": "medium",
+        },
+        {
+            "statement": "This is a necessary component of the capability.",
+            "evidence_status": "strongly_implied_by_work",
+            "evidence": ["p1:requirements:0"],
+            "rationale": "It is a prerequisite for the supported work.",
+            "confidence": "medium",
+        },
+    ]
+
+    profile = CapabilityProfileReasoningV9.model_validate(payload, context=context)
+
+    assert len(profile.depth_signals) == 1
+    assert profile.depth_signals[0].statement.startswith("Practical implementation")
+    assert any("discarded 1 optional model-derived expectation" in item for item in profile.uncertainties)
 
 
 def _legacy_intelligence() -> dict:
