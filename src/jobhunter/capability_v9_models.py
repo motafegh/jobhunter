@@ -6,7 +6,7 @@ from copy import deepcopy
 import re
 from typing import Any
 
-from pydantic import ValidationInfo, model_validator
+from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
 
 from jobhunter.capability_models import CapabilityExpectation
 from jobhunter.capability_v7_models import (
@@ -110,7 +110,11 @@ def _validate_prerequisite_optionality(
             strength = requirement.get("requirement_type")
             concept = requirement.get("concept")
             normalized_concept = _normalize(concept) if isinstance(concept, str) else ""
-            if strength in {"preferred", "contextual"} and normalized_concept not in required_concepts:
+            optional_only = (
+                strength in {"preferred", "contextual"}
+                and normalized_concept not in required_concepts
+            )
+            if optional_only:
                 raise ValueError(
                     f"{field_name} may not infer a prerequisite from preferred/contextual-only "
                     f"source fact {concept!r}"
@@ -187,21 +191,13 @@ class CapabilityProfileReasoningV9(CapabilityProfileReasoningV8):
         return self
 
 
-class CapabilitySourceTruthV9(CapabilityReasoningDraft.model_config.__class__):
-    """Placeholder blocked by construction; use build_v9_intelligence for persisted validation."""
-
-
-# Pydantic model inheritance from the existing strict source-truth model would preserve the
-# misleading v7 explicit-depth fields. V9 instead validates the transformed source_truth with a
-# compact dedicated shape below.
-from pydantic import BaseModel, ConfigDict  # noqa: E402
-
-
 class _StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
 
-class CapabilitySourceTruthV9Model(_StrictModel):
+class CapabilitySourceTruthV9(_StrictModel):
+    """Source truth with capability-depth and role-level-depth accounting separated."""
+
     role_purpose: list[CapabilitySourcePurpose]
     requirements: list[CapabilitySourceRequirement]
     responsibilities: list[CapabilitySourceResponsibility]
@@ -219,7 +215,7 @@ class CapabilitySourceTruthV9Model(_StrictModel):
 
 
 class JobCapabilityIntelligenceV9(CapabilityReasoningDraft):
-    source_truth: CapabilitySourceTruthV9Model
+    source_truth: CapabilitySourceTruthV9
 
 
 def build_v9_intelligence(intelligence: dict[str, Any]) -> dict[str, Any]:
@@ -274,7 +270,7 @@ __all__ = [
     "CapabilityGroupPlanV9",
     "CapabilityGroupSeedV8",
     "CapabilityProfileReasoningV9",
-    "CapabilitySourceTruthV9Model",
+    "CapabilitySourceTruthV9",
     "JobCapabilityIntelligenceV9",
     "assignment_partitions",
     "build_v9_intelligence",
