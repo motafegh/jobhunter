@@ -8,11 +8,13 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
 
-from jobhunter.capability_models import CapabilityExpectation
+from jobhunter.capability_models import CapabilityExpectation, CapabilityProfile
 from jobhunter.capability_v7_models import (
+    CapabilityReasoningDraft,
     CapabilitySourcePurpose,
     CapabilitySourceRequirement,
     CapabilitySourceResponsibility,
+    reconcile_capability_intelligence,
 )
 from jobhunter.capability_v8_models import (
     CapabilityAssignmentPartitionV8,
@@ -23,13 +25,17 @@ from jobhunter.capability_v8_models import (
     assignment_partitions,
 )
 
+_DERIVED_STATUSES = {"strongly_implied_by_work", "model_inferred_prerequisite"}
 _DEPTH_INFLATION_RE = re.compile(
     r"\b(?:advanced|expert(?:ise)?|proficien(?:t|cy)|mastery|strong|solid|hands-on)\b",
     re.IGNORECASE,
 )
-_OBLIGATION_RE = re.compile(
-    r"\b(?:requires?|required|must|mandatory|mandates?|mandated|necessar(?:y|ily)|"
-    r"necessitates?|prerequisite)\b",
+_SOURCE_OBLIGATION_RE = re.compile(
+    r"\b(?:requires?|required|must|mandatory|mandates?|mandated)\b",
+    re.IGNORECASE,
+)
+_PREREQUISITE_LANGUAGE_RE = re.compile(
+    r"\b(?:necessar(?:y|ily)|necessitates?|prerequisite)\b",
     re.IGNORECASE,
 )
 _SCOPE_INFLATION_RE = re.compile(
@@ -38,6 +44,9 @@ _SCOPE_INFLATION_RE = re.compile(
     re.IGNORECASE,
 )
 _DEEP_RE = re.compile(r"\bdeep\b", re.IGNORECASE)
+_RECONCILIATION_BRIDGE_STATEMENT = (
+    "No additional model-derived claim is required for this bounded capability profile."
+)
 
 
 def _normalize(value: str) -> str:
@@ -53,10 +62,17 @@ def _guard_model_owned_text(
     *,
     field_name: str,
     allow_depth_language: bool = False,
+    allow_prerequisite_language: bool = False,
 ) -> None:
-    if _OBLIGATION_RE.search(value):
+    if _SOURCE_OBLIGATION_RE.search(value):
         raise ValueError(
-            f"{field_name} may not restate requirement obligation; JobHunter owns strength"
+            f"{field_name} may not restate source requirement obligation; "
+            "JobHunter owns source strength"
+        )
+    if not allow_prerequisite_language and _PREREQUISITE_LANGUAGE_RE.search(value):
+        raise ValueError(
+            f"{field_name} may not introduce necessity/prerequisite language outside an "
+            "explicit model_inferred_prerequisite"
         )
     if _SCOPE_INFLATION_RE.search(value):
         raise ValueError(
@@ -129,21 +145,39 @@ def _safe_derived_expectation(
 ) -> bool:
     """Fail closed on one optional model inference without discarding its whole profile."""
 
+    allow_prerequisite_language = item.evidence_status == "model_inferred_prerequisite"
     try:
         _guard_model_owned_text(
             item.statement,
             field_name=f"{field_name}.statement",
             allow_depth_language=allow_depth_language,
+            allow_prerequisite_language=allow_prerequisite_language,
         )
         _guard_model_owned_text(
             item.rationale,
             field_name=f"{field_name}.rationale",
             allow_depth_language=allow_depth_language,
+            allow_prerequisite_language=allow_prerequisite_language,
         )
         _validate_prerequisite_optionality(item, info, field_name=field_name)
     except ValueError:
         return False
     return True
+
+
+def _has_derived_reasoning(profile: dict[str, Any]) -> bool:
+    for field_name in (
+        "depth_signals",
+        "work_activities",
+        "sub_capabilities",
+        "underlying_knowledge",
+        "operational_practices",
+        "operational_context",
+    ):
+        for item in profile.get(field_name) or []:
+            if isinstance(item, dict) and item.get("evidence_status") in _DERIVED_STATUSES:
+                return True
+    return False
 
 
 class CapabilityGroupPlanV9(CapabilityGroupPlanV8):
@@ -177,13 +211,51 @@ class CapabilityAssignmentPartitionV9(CapabilityAssignmentPartitionV8):
 
 
 class CapabilityProfileReasoningV9(CapabilityProfileReasoningV8):
-    """Bounded profile reasoning that cannot override deterministic source semantics."""
+    """Optional bounded enrichment above deterministic source-owned capability facts."""
+
+    @model_validator(mode="after")
+    def validate_reasoning_boundary(self) -> CapabilityProfileReasoningV9:
+        """Override v8's forced-enrichment invariant while preserving section contracts."""
+
+        for field_name in (
+            "depth_signals",
+            "work_activities",
+            "sub_capabilities",
+            "underlying_knowledge",
+            "operational_practices",
+            "operational_context",
+        ):
+            invalid = {
+                item.evidence_status for item in getattr(self, field_name)
+            } - _DERIVED_STATUSES
+            if invalid:
+                raise ValueError(
+                    f"{field_name} may contain only optional derived reasoning statuses in "
+                    f"Capability v9: {sorted(invalid)}"
+                )
+        if any(item.evidence_status != "unknown_or_unsupported" for item in self.unknown_scope):
+            raise ValueError("unknown_scope items must use unknown_or_unsupported")
+        if self.overall_confidence not in {"high", "medium", "low"}:
+            raise ValueError("overall_confidence must be high, medium, or low")
+        return self
 
     @model_validator(mode="after")
     def guard_profile_semantics(self, info: ValidationInfo) -> CapabilityProfileReasoningV9:
-        # The profile summary defines the capability itself, so semantic inflation here remains
-        # a hard validation failure and may trigger one bounded model repair.
-        _guard_model_owned_text(self.summary, field_name="profile.summary")
+        context = info.context or {}
+        try:
+            _guard_model_owned_text(self.summary, field_name="profile.summary")
+        except ValueError:
+            fallback = context.get("group_summary")
+            if not isinstance(fallback, str) or not fallback.strip():
+                raise
+            _guard_model_owned_text(fallback, field_name="group_summary")
+            self.summary = fallback.strip()
+            note = (
+                "JobHunter replaced model-expanded profile summary with the already-validated "
+                "neutral capability-group summary."
+            )
+            if note not in self.uncertainties:
+                self.uncertainties.append(note)
 
         discarded = 0
         for field_name in (
@@ -226,6 +298,54 @@ class CapabilityProfileReasoningV9(CapabilityProfileReasoningV8):
         return self
 
 
+class CapabilityProfileV9(CapabilityProfile):
+    """Final v9 profile: source linkage is mandatory; extra model enrichment is not."""
+
+    @model_validator(mode="after")
+    def normalize_sections(self) -> CapabilityProfileV9:
+        """Override the historical requirement to invent derived reasoning or unknown scope."""
+
+        if not self.source_requirement_indices and not self.source_responsibility_indices:
+            raise ValueError(
+                "Capability profile must link at least one accepted P1.6 requirement or "
+                "responsibility"
+            )
+
+        for field_name in (
+            "depth_signals",
+            "work_activities",
+            "sub_capabilities",
+            "underlying_knowledge",
+            "operational_practices",
+            "operational_context",
+            "unknown_scope",
+        ):
+            items: list[CapabilityExpectation] = getattr(self, field_name)
+            seen: set[tuple[str, str]] = set()
+            unique: list[CapabilityExpectation] = []
+            for item in items:
+                key = (_normalize(item.statement), item.evidence_status)
+                if key in seen:
+                    continue
+                seen.add(key)
+                unique.append(item)
+            setattr(self, field_name, unique)
+
+        if any(
+            item.evidence_status != "unknown_or_unsupported" for item in self.unknown_scope
+        ):
+            raise ValueError(
+                "unknown_scope items must use evidence_status='unknown_or_unsupported'"
+            )
+        return self
+
+
+class CapabilityReasoningDraftV9(CapabilityReasoningDraft):
+    """V9 draft retaining strict source coverage while allowing zero optional enrichment."""
+
+    capabilities: list[CapabilityProfileV9]
+
+
 class _StrictModel(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -247,6 +367,12 @@ class CapabilitySourceTruthV9(_StrictModel):
     linked_capability_explicit_depth_requirement_indices: list[int]
     unlinked_capability_explicit_depth_requirement_indices: list[int]
     role_level_explicit_depth_requirement_indices: list[int]
+
+
+class JobCapabilityIntelligenceV9(CapabilityReasoningDraftV9):
+    """Persisted v9 artifact with optional enrichment and strict deterministic source truth."""
+
+    source_truth: CapabilitySourceTruthV9 | None = None
 
 
 def build_v9_intelligence(intelligence: dict[str, Any]) -> dict[str, Any]:
@@ -296,13 +422,81 @@ def build_v9_intelligence(intelligence: dict[str, Any]) -> dict[str, Any]:
     return payload
 
 
+def reconcile_capability_intelligence_v9(
+    intelligence: CapabilityReasoningDraftV9,
+    *,
+    accepted_extraction: dict[str, Any],
+    analysis_fields: dict[str, Any],
+    evidence_catalog: dict[str, str] | None = None,
+) -> JobCapabilityIntelligenceV9:
+    """Reuse deterministic v7 reconciliation without inheriting its forced-enrichment contract."""
+
+    bridge_payload = intelligence.model_dump(mode="json")
+    bridged_profile_indices: list[int] = []
+    for index, profile in enumerate(bridge_payload.get("capabilities") or []):
+        if not isinstance(profile, dict):
+            continue
+        if _has_derived_reasoning(profile) or profile.get("unknown_scope"):
+            continue
+        profile["unknown_scope"] = [
+            {
+                "statement": _RECONCILIATION_BRIDGE_STATEMENT,
+                "evidence_status": "unknown_or_unsupported",
+                "evidence": [],
+                "rationale": (
+                    "Internal compatibility bridge for historical reconciliation; removed before "
+                    "Capability v9 persistence."
+                ),
+                "confidence": "high",
+            }
+        ]
+        bridged_profile_indices.append(index)
+
+    legacy_draft = CapabilityReasoningDraft.model_validate(
+        bridge_payload,
+        context={
+            "analysis_fields": analysis_fields,
+            "evidence_catalog": evidence_catalog or {},
+            "accepted_extraction": accepted_extraction,
+        },
+    )
+    legacy_reconciled = reconcile_capability_intelligence(
+        legacy_draft,
+        accepted_extraction=accepted_extraction,
+        analysis_fields=analysis_fields,
+        evidence_catalog=evidence_catalog,
+    )
+    payload = legacy_reconciled.model_dump(mode="json")
+    for index in bridged_profile_indices:
+        profile = payload["capabilities"][index]
+        profile["unknown_scope"] = [
+            item
+            for item in profile.get("unknown_scope") or []
+            if item.get("statement") != _RECONCILIATION_BRIDGE_STATEMENT
+        ]
+
+    payload = build_v9_intelligence(payload)
+    return JobCapabilityIntelligenceV9.model_validate(
+        payload,
+        context={
+            "analysis_fields": analysis_fields,
+            "evidence_catalog": evidence_catalog or {},
+            "accepted_extraction": accepted_extraction,
+        },
+    )
+
+
 __all__ = [
     "CapabilityAssignmentPartitionV9",
     "CapabilityFactAssignmentV9",
     "CapabilityGroupPlanV9",
     "CapabilityGroupSeedV8",
     "CapabilityProfileReasoningV9",
+    "CapabilityProfileV9",
+    "CapabilityReasoningDraftV9",
     "CapabilitySourceTruthV9",
+    "JobCapabilityIntelligenceV9",
     "assignment_partitions",
     "build_v9_intelligence",
+    "reconcile_capability_intelligence_v9",
 ]
