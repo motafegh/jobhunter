@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 from pydantic import BaseModel, ConfigDict, Field, ValidationInfo, model_validator
 
 from jobhunter.capability_models import CapabilityExpectation
@@ -33,7 +31,10 @@ class CapabilityGroupPlanV8(_StrictModel):
         group_ids = [group.group_id for group in self.groups]
         if len(group_ids) != len(set(group_ids)):
             raise ValueError("Capability group IDs must be unique")
-        normalized_labels = [" ".join(group.capability_label.split()).casefold() for group in self.groups]
+        normalized_labels = [
+            " ".join(group.capability_label.split()).casefold()
+            for group in self.groups
+        ]
         if len(normalized_labels) != len(set(normalized_labels)):
             raise ValueError("Capability group labels must be distinct")
 
