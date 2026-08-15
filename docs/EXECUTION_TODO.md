@@ -55,180 +55,159 @@ English:  job-analysis-english-v20 / job-analysis-v5
 Original: job-analysis-original-v9 / job-analysis-v4
 ```
 
-Permanent boundaries:
-
-- [x] exact source evidence/provenance.
-- [x] no unsupported/invented career claims.
-- [x] required/preferred/contextual strength distinct.
-- [x] depth separate from obligation and normalized concept/scope.
+- [x] dense `tG9K` artifact 36: 33 requirements / 8 responsibilities / 0 role purpose.
+- [x] dense mechanical audit PASS.
+- [x] dense semantic review PASS WITH ACCEPTABLE DIFFERENCE.
+- [x] sparse `t4jp` artifact 37: 8 requirements / 0 responsibilities / 0 role purpose.
+- [x] sparse mechanical audit PASS.
+- [x] sparse semantic non-regression PASS.
+- [x] exact source evidence/provenance and complete source accounting.
+- [x] required/preferred/contextual strength distinct from depth.
 - [x] structured skills cannot silently disappear.
-- [x] exact qualification-list evidence.
-- [x] complete residual/decomposed source accounting.
-- [x] qualification-vs-responsibility protection.
+- [x] qualification-vs-duty protection.
 - [x] schedule wording cannot become capability depth.
-- [x] clean reusable concepts and ontology.
 - [x] `experience` requires prior-applied-exposure evidence.
-- [x] fail closed before persistence when complete contract is not satisfied.
-
-Dense `tG9K` v20 artifact 36:
-
-- [x] 33 requirements / 8 responsibilities / 0 role purpose.
-- [x] mechanical audit PASS.
-- [x] semantic review PASS WITH ACCEPTABLE DIFFERENCE.
-- [x] all accepted dense source facts retained.
-- [x] all six structured required skills retained.
-- [x] education + exact 3–6 years professional experience retained.
-- [x] optionality/depth/contextual stack calibrated.
-
-Sparse `t4jp` v20 artifact 37:
-
-- [x] 8 requirements / 0 responsibilities / 0 role purpose.
-- [x] 3/3 structured skills.
-- [x] 4/4 qualification-list items.
-- [x] 4/4 residual decisions.
-- [x] mechanical audit PASS.
-- [x] semantic non-regression PASS.
-
-Promotion closure:
-
-- [x] public English routing aligned across targeted CLI, batch, browser, Market, Review Snapshot and Capability dependency selection.
-- [x] public original-language path preserved on v9/v4.
-- [x] deterministic promotion CI PASS.
+- [x] public English routing aligned across CLI, batch, browser, Market, Review Snapshot, Capability dependency selection.
+- [x] public original-language path remains v9/v4.
 - [x] normal `jobhunter jobs analyze tG9K` reuses artifact 36.
 - [x] normal `jobhunter jobs analyze t4jp` reuses artifact 37.
-- [x] normal Review Snapshot selects artifacts 36 and 37 with matching projection dependencies.
-- [x] old Capability/Blueprint artifacts correctly reported as present-but-non-current.
-- [x] operational P1.6 v20 promotion declared complete.
-
-Key records:
-
-```text
-docs/working-memory/2026-08-15_P16_V20_DENSE_ARTIFACT_36_SEMANTIC_ACCEPTANCE.md
-docs/working-memory/2026-08-15_P16_V20_SPARSE_ARTIFACT_37_ACCEPTANCE.md
-docs/working-memory/2026-08-15_P16_V20_PUBLIC_PROMOTION_ACCEPTANCE.md
-```
+- [x] normal Review Snapshot selects artifacts 36/37 with matching projection dependencies.
+- [x] operational P1.6 v20 promotion complete.
 
 ### B3 — Capability Intelligence — ACTIVE
 
-#### Historical accepted v7 baseline
+#### Historical/public v7 baseline
 
 ```text
 historical P1.6 artifact 29
 → Capability v7 artifact 9
 ```
 
-- [x] `job-capability-intelligence-v7` / schema v4 accepted for the historical bounded `tG9K` chain.
-- [x] historical artifact 9 retained complete source truth for its old P1.6 dependency.
-- [x] artifact 9 is now intentionally non-current because promoted P1.6 is artifact 36.
+- [x] `job-capability-intelligence-v7` / schema v4 remains the historical/public accepted baseline.
+- [x] artifact 9 is intentionally non-current because current P1.6 is artifact 36.
+- [x] public Capability model-facing P1.6 view strips free-form rationale while preserving authoritative semantic fields.
 
-#### P1.6 rationale boundary
+#### Promoted-chain v7 rebuild — REJECTED DENSE ONE-SHOT PATH
 
-- [x] public Capability model-facing P1.6 view strips free-form `rationale` recursively.
-- [x] persisted P1.6 artifact remains unchanged.
-- [x] authoritative concept/type/strength/depth/evidence/confidence remain available.
-- [x] CI 807 passed rationale-boundary regression tests.
-
-#### Promoted-chain v7 rebuild — REJECTED FOR DENSE ONE-SHOT PATH
-
-Attempt 1 against P1.6 artifact 36:
-
-- [!] generation 1 omitted most capability-relevant source links.
-- [!] retry invented responsibility index `9` although only `0..7` exist.
-- [x] no invalid artifact persisted.
-- [x] narrow positive-out-of-range/exact-evidence source-link repair implemented without weakening strict coverage.
-- [x] CI 811 PASS after v7 repair.
-
-Attempt 2:
-
-- [!] both generations collapsed dense `tG9K` into one giant capability profile.
-- [!] retry knew the missing requirement ledger but still failed to restructure.
-- [!] final missing capability-relevant indices remained `[2, 3, 4, 5, 6, 9, 10, 12, 13, 15, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 29, 30]`.
-- [x] no invalid artifact persisted.
-- [x] classify this as stable one-shot architecture failure, not isolated index noise.
+- [!] attempt 1 omitted most source links; retry invented responsibility index 9 outside valid 0..7.
+- [x] invalid output did not persist.
+- [x] narrow deterministic index/evidence repair implemented; CI 811 PASS.
+- [!] attempt 2 still collapsed dense evidence into one giant profile and omitted 22 capability-relevant requirements after retry feedback.
+- [x] classify as stable one-shot architecture failure rather than isolated index noise.
 - [x] do not increase retries.
-- [x] do not loosen final coverage validation.
-- [x] stop iterative mutation of historical/public v7 semantics for this dense input.
+- [x] do not weaken whole-artifact coverage validation.
+- [x] stop iterative mutation of public/historical v7 for this dense case.
 
-Record:
-
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V7_PROMOTED_P16_LINKAGE_FAILURE.md
-```
-
-#### Capability v8 source-led candidate — IMPLEMENTED / LIVE ACCEPTANCE PENDING
+#### Capability v8 source-led candidate — MECHANICAL PASS / SEMANTIC REJECT
 
 Architecture:
 
 ```text
 accepted P1.6 source truth
-→ compact semantic capability-group plan
-→ bounded exact source-fact assignment partitions
+→ compact semantic group plan
+→ bounded exact source-fact assignment
 → bounded per-group reasoning
 → deterministic source-link injection
-→ existing strict v7 reconciliation/source truth
-→ persist only after complete validation
+→ strict v7 reconciliation/source truth
 ```
 
-Implementation:
+Implementation/deterministic proof:
 
-- [x] `CapabilityGroupPlanV8` separates group semantics from source-index bookkeeping.
-- [x] dense group plan requires at least two groups.
-- [x] capability requirements partition in chunks of at most 8.
-- [x] responsibilities distributed into bounded assignment partitions exactly once.
-- [x] every assignment partition must cover exactly its owned requirement/responsibility indices.
-- [x] assignments may use only known group IDs.
-- [x] each source fact may map to at most two groups.
-- [x] dense final assignment must use at least two groups.
-- [x] per-group reasoning receives only assigned facts + matching evidence references.
-- [x] per-group model output owns no source links, source-explicit strength/depth, or source-explicit duties.
-- [x] JobHunter injects validated source links deterministically.
-- [x] existing v7 reconciliation still derives strength, explicit depth, source work activities, role-level constraints and complete source truth.
-- [x] P1.6 rationale remains excluded from model-facing payloads.
-- [x] persisted schema remains v4; candidate prompt identity is `job-capability-intelligence-v8`.
-- [x] isolated candidate runner added: `scripts/run_capability_v8_candidate.py`.
-- [x] model/partition/service tests added.
-- [x] Ruff PASS — CI 821.
-- [x] full pytest PASS — CI 821.
-- [x] warnings-as-errors PASS — CI 821.
-- [~] run dense `tG9K` v8 candidate against promoted P1.6 artifact 36.
-- [ ] if persisted, perform mechanical source-truth/dependency audit.
-- [ ] perform full semantic review of dense capability grouping/reasoning.
-- [ ] verify no contextual/preferred-tool strength inflation.
-- [ ] verify no ownership/autonomy/leadership fabrication.
-- [ ] verify no unsupported architecture or generic curriculum expansion.
-- [ ] run sparse `t4jp` v8 non-regression only after dense acceptance.
-- [ ] consider public Capability v8 promotion only after dense + sparse acceptance.
+- [x] group semantics separated from source-index bookkeeping.
+- [x] capability requirements partitioned in chunks of max 8.
+- [x] exact per-partition ownership and valid group IDs enforced.
+- [x] dense assignment cannot collapse to one group.
+- [x] per-group reasoning receives only assigned facts + matching evidence.
+- [x] JobHunter owns final source links, source strength, explicit depth and source work activities.
+- [x] P1.6 rationale excluded from model-facing payloads.
+- [x] CI 821: Ruff PASS / full pytest PASS / warnings-as-errors PASS.
 
-Detailed v8 record:
+Dense live `tG9K` result:
+
+- [x] v8 completed against English P1.6 artifact 36.
+- [x] 31/31 capability requirements linked.
+- [x] 8/8 responsibilities linked.
+- [x] four capability profiles generated.
+- [x] role-level requirement indices remained `[31, 32]`.
+- [x] first dense source-led Capability architecture proof succeeded mechanically.
+- [!] v8 semantic review found unsupported depth inflation (`advanced`, `expertise`, `proficiency`, `deep`).
+- [!] v8 semantic review found unsupported ownership/scope inflation (`end-to-end`, `full lifecycle`).
+- [!] v8 promoted contextual/preferred source facts into necessary/prerequisite foundations in several places.
+- [!] preferred C/C++ was treated as a technical foundation.
+- [!] preferred industrial/edge deployment was escalated beyond source optionality.
+- [!] therefore v8 is NOT semantically accepted and MUST NOT be publicly promoted.
+- [x] persisted v8 candidate remains historical evidence; do not overwrite/delete it merely to reuse its identity.
+
+Depth-accounting correction discovered during v8 review:
+
+- [x] v8 `5/6 explicit depth represented` is a misleading inherited metric, not a missing technical fact.
+- [x] five capability-relevant explicit depth facts are linked: 5/5.
+- [x] one additional explicit depth is role-level 3–6 years professional experience.
+- [x] all six explicit depth facts remain in source truth.
+
+Records:
 
 ```text
 docs/working-memory/2026-08-15_CAPABILITY_V8_SOURCE_LED_PARTITIONING.md
+docs/working-memory/2026-08-15_CAPABILITY_V8_LIVE_REVIEW_AND_V9_BOUNDARY.md
 ```
+
+#### Capability v9 guarded source-led candidate — IMPLEMENTED / LIVE ACCEPTANCE PENDING
+
+Contract:
+
+```text
+job-capability-intelligence-v9 / job-capability-intelligence-v5
+```
+
+V9 preserves the successful v8 staged architecture and adds semantic authority boundaries:
+
+- [x] ordinary model-owned prose cannot restate source obligation (`required`, `must`, `mandatory`, `necessary`, `prerequisite`, etc.).
+- [x] ordinary model-owned prose cannot add unsupported technical depth (`advanced`, `expertise`, `proficiency`, `mastery`, `strong`, `solid`, `hands-on`, `deep`), while legitimate `deep learning` remains allowed.
+- [x] ordinary model-owned prose cannot infer unsupported `end-to-end`, `full lifecycle`, ownership, autonomy, leadership, or architecture.
+- [x] only `depth_signals` may add bounded work-implied depth reasoning.
+- [x] `model_inferred_prerequisite` cannot be grounded only in preferred/contextual facts unless the same normalized concept has an independent required basis.
+- [x] source-truth schema separates all explicit depth, capability explicit depth and role-level explicit depth.
+- [x] v9 persists under a distinct prompt/schema identity so existing v8 artifact cannot be silently reused.
+- [x] v9 runner prints persisted artifact ID for auditability.
+- [x] regression tests cover depth inflation, obligation inflation, ownership/lifecycle inflation, preferred-only prerequisite inflation, corrected role-level depth accounting, and distinct v9 persistence identity.
+- [x] CI 832: Ruff PASS.
+- [x] CI 832: full pytest PASS.
+- [x] CI 832: warnings-as-errors PASS.
+- [~] run dense `tG9K` v9 candidate against promoted P1.6 artifact 36.
+- [ ] verify new v9 artifact identity and exact dependency on artifact 36.
+- [ ] verify 31/31 capability requirements linked.
+- [ ] verify 8/8 responsibilities linked.
+- [ ] verify capability explicit depth = 5/5.
+- [ ] verify all explicit depth retained = 6/6.
+- [ ] verify role-level explicit depth = 1 and role-level indices `[31, 32]` retain professional experience + Master's degree.
+- [ ] full dense semantic review: no obligation/depth/ownership inflation.
+- [ ] verify preferred/contextual source facts are not promoted into prerequisites.
+- [ ] only after dense acceptance, run sparse `t4jp` v9 non-regression.
+- [ ] only after dense + sparse acceptance, decide whether v9 is suitable for public promotion.
 
 **Next exact command:**
 
 ```bash
 cd ~/projects/jobhunter
 git pull --ff-only origin main
-python scripts/run_capability_v8_candidate.py --job-id tG9K
+python scripts/run_capability_v9_candidate.py --job-id tG9K
 ```
 
-Do not use normal `jobhunter jobs capability` for this candidate gate; the public route intentionally remains v7.
+Do not use normal `jobhunter jobs capability` for this candidate gate; public Capability intentionally remains v7.
 
 ### B4 — Role Capability Blueprint experiment
 
 **Status: [-] not accepted for Phase-1 use; tuning deferred.**
 
 - [x] deterministic provenance failure class fixed historically.
-- [x] v6/12B artifact 7 passed mechanical audit and CI historically.
+- [x] historical v6/12B artifact 7 passed mechanical audit and CI.
 - [!] semantic review still found unsupported assumptions.
 - [x] do not resume Blueprint tuning during the Capability gate.
 
 ### B5 — Heterogeneous live review
 
 Do not begin until Capability candidate acceptance/promotion decision.
-
-Future targets:
 
 - [ ] Python/software role.
 - [ ] network/security role.
