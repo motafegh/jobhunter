@@ -31,7 +31,8 @@ from jobhunter.capability_v9_models import (
     CapabilityAssignmentPartitionV9,
     CapabilityGroupPlanV9,
     CapabilityProfileReasoningV9,
-    build_v9_intelligence,
+    CapabilityReasoningDraftV9,
+    reconcile_capability_intelligence_v9,
 )
 from jobhunter.config import Settings
 from jobhunter.translation_store import TranslationStore
@@ -49,9 +50,8 @@ and must not become capability groups by themselves.
 
 SEPARATION OF AUTHORITY
 JobHunter owns requirement strength, source-explicit technical depth, and source-link accounting.
-Your role interpretation, labels, and summaries must therefore remain neutral on those dimensions.
-Do not say required/mandatory/necessary/must, do not add proficiency/expertise/advanced/deep depth,
-and do not infer end-to-end/full-lifecycle ownership, autonomy, leadership, or architecture.
+Keep role interpretation, labels, and summaries neutral on those dimensions. Do not infer
+end-to-end/full-lifecycle ownership, autonomy, leadership, or architecture.
 """
 
 _ASSIGNMENT_PROMPT_V9 = """You are JobHunter's Capability v9 source-fact assignment engine.
@@ -68,14 +68,20 @@ The group and its accepted P1.6 source facts are already selected. Reason only a
 capability area. JobHunter owns source links, requirement strength, source-explicit depth, and
 source-explicit responsibilities.
 
-MODEL-OWNED REASONING
+OPTIONAL MODEL ENRICHMENT
 You may add strongly implied technical decomposition, defensible prerequisites, operational
-practices/context, bounded work-implied depth, and explicit unknown scope.
+practices/context, bounded work-implied depth, and explicit unknown scope when the supplied evidence
+actually supports them. These are optional enrichments, not required output. It is valid to return
+only a neutral summary with all analytical lists empty when no additional inference is defensible.
+Do not invent an uncertainty merely to fill a field.
 
 CALIBRATION
-- Ordinary summaries and non-depth analytical sections must not restate requirement obligation or
-  add technical depth. Use neutral words such as supports, involves, covers, combines, or applies.
-- Only depth_signals may add a genuinely work-implied depth interpretation.
+- Ordinary summaries and non-depth analytical sections must remain neutral on source obligation and
+  technical depth. Use words such as supports, involves, covers, combines, or applies.
+- depth_signals are optional and should be used only for genuinely work-implied depth beyond the
+  source-explicit depth that JobHunter already owns.
+- A model_inferred_prerequisite may use prerequisite/necessity language because its status already
+  marks it as inference, but it must not be presented as employer-stated required/mandatory/must.
 - Preferred/contextual-only facts are not a basis for a model_inferred_prerequisite unless the same
   concept has an independent required basis.
 - Do not infer end-to-end/full-lifecycle ownership, autonomy, leadership, or architecture.
@@ -86,7 +92,7 @@ CALIBRATION
 
 
 class _CapabilityInferenceV9Adapter:
-    """Swap stricter v9 models/prompts into the proven v8 staged orchestration."""
+    """Swap v9 models/prompts into the version-neutral staged orchestration."""
 
     def __init__(self, delegate: CapabilityV8InferenceProvider) -> None:
         self._delegate = delegate
@@ -113,6 +119,9 @@ class _CapabilityInferenceV9Adapter:
             target_prompt = _PROFILE_PROMPT_V9
             context["assigned_requirements"] = user_payload.get("requirements") or []
             context["assigned_responsibilities"] = user_payload.get("responsibilities") or []
+            group = user_payload.get("group") or {}
+            if isinstance(group, dict):
+                context["group_summary"] = group.get("summary")
         else:
             raise ValueError(f"Unsupported Capability v9 stage model: {response_model!r}")
 
@@ -127,7 +136,7 @@ class _CapabilityInferenceV9Adapter:
 
 
 class _CapabilityStoreV9Adapter:
-    """Give unchanged v8 orchestration a distinct v9 persistence contract."""
+    """Give staged orchestration a distinct v9 persistence contract."""
 
     def __init__(self, delegate: CapabilityIntelligenceStore) -> None:
         self._delegate = delegate
@@ -171,7 +180,9 @@ class _CapabilityStoreV9Adapter:
         v9_request = dict(request_body)
         v9_request["architecture"] = "source-led-group-plan-assignment-profile-v9"
         v9_request["semantic_boundary"] = {
-            "ordinary_model_prose": "no obligation/depth/ownership inflation",
+            "source_truth": "strict deterministic authority",
+            "model_enrichment": "optional and fail-closed",
+            "profile_summary": "fallback to validated neutral group summary on inflation",
             "preferred_contextual_prerequisites": "require independent required concept basis",
             "source_truth_depth_accounting": "capability and role-level depth separated",
         }
@@ -182,7 +193,7 @@ class _CapabilityStoreV9Adapter:
             model=model,
             prompt_version=CAPABILITY_PROMPT_VERSION,
             schema_version=CAPABILITY_SCHEMA_VERSION,
-            intelligence=build_v9_intelligence(intelligence),
+            intelligence=intelligence,
             request_body=v9_request,
             raw_response=raw_response,
             created_at=created_at,
@@ -217,7 +228,7 @@ class _CapabilityStoreV9Adapter:
 
 
 class CapabilityIntelligenceServiceV9:
-    """Corrected v9 contract around the accepted v8 source-led staged engine."""
+    """V9 contract: strict source truth plus optional bounded model enrichment."""
 
     def __init__(
         self,
@@ -238,6 +249,8 @@ class CapabilityIntelligenceServiceV9:
             analysis_model=analysis_model,
             capability_model=capability_model,
             max_tokens=max_tokens,
+            reasoning_draft_model=CapabilityReasoningDraftV9,
+            reconciler=reconcile_capability_intelligence_v9,
         )
 
     def analyze_job(self, source_job_id: str) -> CapabilityIntelligenceResult:
