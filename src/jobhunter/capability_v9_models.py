@@ -10,7 +10,6 @@ from pydantic import BaseModel, ConfigDict, ValidationInfo, model_validator
 
 from jobhunter.capability_models import CapabilityExpectation
 from jobhunter.capability_v7_models import (
-    CapabilityReasoningDraft,
     CapabilitySourcePurpose,
     CapabilitySourceRequirement,
     CapabilitySourceResponsibility,
@@ -214,10 +213,6 @@ class CapabilitySourceTruthV9(_StrictModel):
     role_level_explicit_depth_requirement_indices: list[int]
 
 
-class JobCapabilityIntelligenceV9(CapabilityReasoningDraft):
-    source_truth: CapabilitySourceTruthV9
-
-
 def build_v9_intelligence(intelligence: dict[str, Any]) -> dict[str, Any]:
     """Replace v7 depth-link accounting with capability-vs-role-level accounting."""
 
@@ -260,8 +255,9 @@ def build_v9_intelligence(intelligence: dict[str, Any]) -> dict[str, Any]:
             "role_level_explicit_depth_requirement_indices": role_level_depth,
         }
     )
-    payload["source_truth"] = transformed
-    return JobCapabilityIntelligenceV9.model_validate(payload).model_dump(mode="json")
+    validated = CapabilitySourceTruthV9.model_validate(transformed)
+    payload["source_truth"] = validated.model_dump(mode="json")
+    return payload
 
 
 __all__ = [
@@ -271,7 +267,6 @@ __all__ = [
     "CapabilityGroupSeedV8",
     "CapabilityProfileReasoningV9",
     "CapabilitySourceTruthV9",
-    "JobCapabilityIntelligenceV9",
     "assignment_partitions",
     "build_v9_intelligence",
 ]
