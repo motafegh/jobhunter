@@ -4,8 +4,8 @@
 **Date:** 2026-08-15  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Capability v9 simplified-contract dense live validation  
-**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense `tG9K` artifact 36 and sparse `t4jp` artifact 37 are current through normal public routing. Public Capability remains v7/v4; historical artifact 9 is non-current because it depends on old P1.6 artifact 29. V8 proved source-led staging mechanically (31/31 capability requirements and 8/8 responsibilities on dense `tG9K`) but was semantically rejected for downstream inflation. Two initial v9 live runs failed before persistence and exposed contradictory forced-enrichment rules. The v9 contract has now been audited and simplified: authoritative source truth remains strict, while model-derived enrichment is optional and fail-closed. CI 849 passed Ruff, all 434 tests, and warnings-as-errors. No v9 artifact exists yet. Next: one isolated dense v9 candidate run on `tG9K`, then mechanical + semantic review before any sparse run or public promotion.
+**Current gate:** Capability v9 planner-normalized dense live validation  
+**Exact current point:** English P1.6 v20/v5 is fully promoted and operationally verified. Dense `tG9K` artifact 36 and sparse `t4jp` artifact 37 are current through normal public routing. Public Capability remains v7/v4; historical artifact 9 is non-current because it depends on old P1.6 artifact 29. V8 proved source-led staging mechanically (31/31 capability requirements and 8/8 responsibilities on dense `tG9K`) but was semantically rejected for downstream inflation. Three v9 live runs have failed before persistence: (1) optional profile reasoning crossed semantic boundaries, (2) inherited v8 forced-enrichment rules rejected a restrained zero-enrichment profile, and (3) useful five-group planning was rejected only because non-authoritative planner prose used words such as `requires`, `advanced`, `expertise`, `deep`, `proficiency`, `necessary`, and `end-to-end`. The v9 contract now keeps authoritative source truth strict, makes model enrichment optional/fail-closed, and normalizes planner prose instead of retrying correct clustering. CI 855 passed Ruff, all 435 tests, and warnings-as-errors. No v9 artifact exists yet. Next: one isolated dense v9 candidate run on `tG9K`, then mechanical + semantic review before any sparse run or public promotion.
 
 This file is deliberately concise. Product/domain/source/architecture constraints, roadmap/implementation plans, `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`, and `docs/EXECUTION_TODO.md` win on conflict. Dated working-memory files preserve detailed evidence.
 
@@ -127,12 +127,12 @@ Role-level requirement idx:  [31, 32]
 
 This proved staged source-led reasoning solves v7's dense coverage/linkage failure. V8 is not semantically accepted because model-owned prose inflated depth, ownership/lifecycle scope, and preferred/contextual facts. Its old `5/6` metric was misleading; correct depth accounting is capability 5/5 + role-level 1 = all 6/6.
 
-### v9 — initial failures
+### v9 — three live failure classes, no artifact
 
 No v9 artifact has persisted.
 
 Live failure 1:
-- summary added unsupported depth language;
+- profile summary added unsupported depth language;
 - retry corrected summary but optional derived items used obligation/necessity language;
 - whole-profile failure for one optional bad inference was too coarse;
 - per-item fail-closed filtering passed CI 838.
@@ -140,22 +140,29 @@ Live failure 1:
 Live failure 2:
 - model returned a bounded profile with a neutral summary and no extra derived reasoning;
 - inherited v8 validator rejected it because every profile was required to add derived reasoning or `unknown_scope`;
-- this exposed the direct contradiction between “do not speculate” and “must add enrichment.”
+- this exposed the contradiction between `do not speculate` and `must add enrichment`.
 
-Detailed failure/pause record:
+Live failure 3:
+- failure moved earlier to the group-planning stage;
+- the model produced five useful structural groups for dense `tG9K`;
+- the plan was rejected because non-authoritative planner prose used strength/depth/scope-flavored wording such as `requires`, `advanced`, `expertise`, `deep understanding`, `proficiency`, `necessary`, and `end-to-end`;
+- this proved planner clustering and downstream semantic authority were being validated at the wrong granularity;
+- no v9 artifact persisted.
+
+Detailed history:
 
 ```text
 docs/working-memory/2026-08-15_CAPABILITY_V9_LIVE_FAILURES_AND_DESIGN_PAUSE.md
+docs/working-memory/2026-08-15_CAPABILITY_V9_STRICTNESS_AUDIT_AND_SIMPLIFICATION.md
 ```
 
 ## 6. Capability v9 strictness audit — IMPLEMENTED / CI PASS
-
-The user explicitly resumed implementation and asked to remove/replace unnecessary and contradictory strict rules.
 
 The governing distinction is now:
 
 ```text
 AUTHORITATIVE SOURCE TRUTH → STRICT
+PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
 OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 ```
 
@@ -166,22 +173,24 @@ OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 - valid/owned source indices;
 - grounded evidence only;
 - dense jobs cannot collapse all evidence into one group;
+- group IDs and normalized labels must remain structurally distinct;
 - education / duration-only experience remain role-level constraints;
 - requirement strength is deterministic and source-owned;
 - source-explicit depth is deterministic and source-owned;
 - preferred/contextual-only facts cannot independently become inferred prerequisites;
-- unsupported ownership/lifecycle/autonomy/architecture claims are rejected/filtered;
+- unsupported ownership/lifecycle/autonomy/architecture analytical claims are rejected/filtered;
 - incomplete authoritative source truth cannot persist.
 
 ### Contradictory/unnecessary rules removed or narrowed for v9
 
 1. **Mandatory derived reasoning removed.** A profile may validly contain neutral grouping + deterministic source facts and zero model-derived enrichment.
 2. **Forced `unknown_scope` filler removed.** No fake unknown is required merely to satisfy shape.
-3. **Duplicate hard-coded v8 revalidation removed.** The staged engine now preserves the provider's already-validated version-specific Pydantic model; legacy/fake providers still use fallback validation.
+3. **Duplicate hard-coded v8 revalidation removed.** The staged engine preserves the provider's already-validated version-specific Pydantic model; legacy/fake providers still use fallback validation.
 4. **One bad optional inference no longer kills the whole profile.** Unsafe derived items are filtered individually.
-5. **Inflated profile summary uses safe fallback.** V9 falls back to the already-validated neutral group summary and records the replacement instead of spending a retry.
+5. **Inflated profile summary uses safe fallback.** V9 falls back to the normalized group summary and records the replacement instead of spending a retry.
 6. **Prerequisite language rule narrowed.** `model_inferred_prerequisite` may use `necessary/prerequisite` language as explicit inference; its statement still cannot masquerade as employer `required/must/mandatory`. Rationale may accurately refer to a required source fact. Preferred/contextual-only grounding remains blocked.
 7. **Derived depth is optional.** Source-explicit depth is already deterministic; no extra model depth is required.
+8. **Planner prose lexical hard-failure removed.** Useful group structure is retained while claim-like planner wording is normalized deterministically. Inflated summaries become `This capability area covers <label>.`; inflated role interpretation becomes a neutral synthesis of the normalized group labels. Genuine terms such as `Deep Learning` are preserved. Structural grouping defects still fail hard.
 
 Historical v7/v8 behavior is preserved. V9 uses its own final profile/draft contract and version-specific reconciler while reusing deterministic v7 reconciliation internally. Any compatibility bridge used for historical reconciliation is removed before v9 persistence.
 
@@ -192,14 +201,22 @@ Regression proofs include:
 - final v9 reconciliation succeeds with zero model enrichment and injects deterministic source strength/depth;
 - preferred-only inferred prerequisite remains filtered;
 - required-grounded inferred prerequisite can use prerequisite language;
-- typed v9 stage output is not accidentally revalidated as v8.
+- typed v9 stage output is not accidentally revalidated as v8;
+- planner prose inflation normalizes instead of retrying;
+- exact five-group structure from live failure 3 survives normalization;
+- `Deep Learning` remains preserved as a legitimate term.
 
-Deterministic gate:
+Deterministic gates:
 
 ```text
 CI run 849
 Ruff:               PASS
 full pytest:        PASS (434 tests)
+warnings-as-errors: PASS
+
+CI run 855
+Ruff:               PASS
+full pytest:        PASS (435 tests)
 warnings-as-errors: PASS
 ```
 
@@ -218,7 +235,7 @@ Capability v7 artifact 9            HISTORICAL / NON-CURRENT
 Capability v8 dense candidate       PERSISTED / MECHANICAL PASS / SEMANTIC REJECT
 Capability v9 artifact              NONE PERSISTED
 Capability public route             v7/v4
-Capability v9 simplified candidate  IMPLEMENTED / DETERMINISTIC PASS / LIVE PENDING
+Capability v9 candidate             PLANNER-NORMALIZED / DETERMINISTIC PASS / LIVE PENDING
 Blueprint                           DEFERRED / NON-AUTHORITATIVE
 Heterogeneous role review           BLOCKED UNTIL CAPABILITY ACCEPTANCE
 Phase 2                             BLOCKED
@@ -247,7 +264,8 @@ A successful run is not accepted from counts alone. Review must verify:
 - no source-strength inflation;
 - no unsupported depth/ownership/lifecycle inflation;
 - preferred/contextual facts are not promoted;
-- zero optional enrichment, if present for a profile, is treated as valid rather than failure.
+- zero optional enrichment, if present for a profile, is treated as valid rather than failure;
+- any planner normalization appears only as non-authoritative fallback and does not alter source truth.
 
 Only after dense semantic acceptance should sparse `t4jp` v9 non-regression run. Public promotion is a separate later decision.
 
