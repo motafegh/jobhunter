@@ -120,6 +120,32 @@ def _validate_prerequisite_optionality(
                 )
 
 
+def _safe_derived_expectation(
+    item: CapabilityExpectation,
+    info: ValidationInfo,
+    *,
+    field_name: str,
+    allow_depth_language: bool = False,
+) -> bool:
+    """Fail closed on one optional model inference without discarding its whole profile."""
+
+    try:
+        _guard_model_owned_text(
+            item.statement,
+            field_name=f"{field_name}.statement",
+            allow_depth_language=allow_depth_language,
+        )
+        _guard_model_owned_text(
+            item.rationale,
+            field_name=f"{field_name}.rationale",
+            allow_depth_language=allow_depth_language,
+        )
+        _validate_prerequisite_optionality(item, info, field_name=field_name)
+    except ValueError:
+        return False
+    return True
+
+
 class CapabilityGroupPlanV9(CapabilityGroupPlanV8):
     """V8 group shape with v9 separation of semantics from strength/depth/scope."""
 
@@ -155,8 +181,11 @@ class CapabilityProfileReasoningV9(CapabilityProfileReasoningV8):
 
     @model_validator(mode="after")
     def guard_profile_semantics(self, info: ValidationInfo) -> CapabilityProfileReasoningV9:
+        # The profile summary defines the capability itself, so semantic inflation here remains
+        # a hard validation failure and may trigger one bounded model repair.
         _guard_model_owned_text(self.summary, field_name="profile.summary")
 
+        discarded = 0
         for field_name in (
             "work_activities",
             "sub_capabilities",
@@ -164,29 +193,36 @@ class CapabilityProfileReasoningV9(CapabilityProfileReasoningV8):
             "operational_practices",
             "operational_context",
         ):
-            for item in getattr(self, field_name):
-                _guard_model_owned_text(
-                    item.statement,
-                    field_name=f"{field_name}.statement",
-                )
-                _guard_model_owned_text(
-                    item.rationale,
-                    field_name=f"{field_name}.rationale",
-                )
-                _validate_prerequisite_optionality(item, info, field_name=field_name)
+            items: list[CapabilityExpectation] = getattr(self, field_name)
+            kept = [
+                item
+                for item in items
+                if _safe_derived_expectation(item, info, field_name=field_name)
+            ]
+            discarded += len(items) - len(kept)
+            setattr(self, field_name, kept)
 
-        for item in self.depth_signals:
-            _guard_model_owned_text(
-                item.statement,
-                field_name="depth_signals.statement",
+        depth_kept = [
+            item
+            for item in self.depth_signals
+            if _safe_derived_expectation(
+                item,
+                info,
+                field_name="depth_signals",
                 allow_depth_language=True,
             )
-            _guard_model_owned_text(
-                item.rationale,
-                field_name="depth_signals.rationale",
-                allow_depth_language=True,
+        ]
+        discarded += len(self.depth_signals) - len(depth_kept)
+        self.depth_signals = depth_kept
+
+        if discarded:
+            note = (
+                "JobHunter discarded "
+                f"{discarded} optional model-derived expectation(s) that crossed v9 semantic "
+                "guardrails; deterministic P1.6 source truth remains authoritative."
             )
-            _validate_prerequisite_optionality(item, info, field_name="depth_signals")
+            if note not in self.uncertainties:
+                self.uncertainties.append(note)
         return self
 
 
