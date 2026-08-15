@@ -10,7 +10,7 @@ import httpx
 import instructor
 from openai import APIConnectionError, APITimeoutError, OpenAI
 
-from jobhunter.capability_v7_models import CapabilityReasoningDraft
+from jobhunter.capability_v7_inference_models import CapabilityReasoningDraft
 from jobhunter.inference import InferenceConnectionError, InferenceResponseError
 from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 
