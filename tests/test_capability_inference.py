@@ -2,7 +2,7 @@ from types import SimpleNamespace
 
 import jobhunter.capability_inference as capability_inference
 from jobhunter.capability_inference import CapabilityInferenceProvider
-from jobhunter.capability_v7_models import CapabilityReasoningDraft
+from jobhunter.capability_v7_inference_models import CapabilityReasoningDraft
 
 
 class _Result:
