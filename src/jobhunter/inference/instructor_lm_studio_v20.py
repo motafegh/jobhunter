@@ -15,6 +15,13 @@ was placed in ``depth_signal`` even though it names the deployment scope itself.
 exact source-supported scope in the normalized concept, clears the non-depth signal, and separately
 rejects ``concept_type=experience`` when preferred evidence does not actually state prior applied
 exposure.
+
+Heterogeneous software-role review then exposed a multi-signal evidence edge case: one source
+segment contained ``Mastery``, ``Familiarity``, and ``Sufficient knowledge`` for different subjects.
+The inherited validator validated the model-supplied exact signal but then canonicalized every item
+to the first depth marker in the whole evidence segment. V20 now canonicalizes from the supplied
+exact depth phrase itself and fails closed when a multi-level evidence segment has no explicit
+item-level depth signal.
 """
 
 from __future__ import annotations
@@ -30,6 +37,7 @@ from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.evidence_refs import (
     build_field_evidence_catalog,
+    evidence_mixes_english_optionality,
     evidence_reference_payload,
     has_english_optionality_signal,
     requirement_coverage_payload,
@@ -68,6 +76,77 @@ def _has_accepted_depth(text: str) -> bool:
     return any(pattern.search(text) for pattern in _DEPTH_SIGNAL_PATTERNS.values())
 
 
+def _depth_matches(text: str) -> list[tuple[int, int, str]]:
+    """Return accepted depth markers in textual order, preserving exact source spelling."""
+
+    matches: list[tuple[int, int, str]] = []
+    for pattern in _DEPTH_SIGNAL_PATTERNS.values():
+        for match in pattern.finditer(text):
+            matches.append((match.start(), match.end(), text[match.start() : match.end()]))
+    matches.sort(key=lambda item: (item[0], item[1]))
+    return matches
+
+
+def _validate_depth_fields_v20(
+    concept: str,
+    depth_signal: str | None,
+    evidence: str,
+) -> str | None:
+    """Validate depth without borrowing a different subject's marker from dense evidence."""
+
+    for label, pattern in _DEPTH_SIGNAL_PATTERNS.items():
+        if pattern.search(concept):
+            raise ValueError(
+                f"Requirement concept contains {label} depth wording; keep concept depth-neutral "
+                "and copy the exact source depth phrase into depth_signal."
+            )
+
+    normalized_concept = _normalize(concept)
+    if normalized_concept in {"experience", "skill", "knowledge", "practice"}:
+        raise ValueError(
+            "Requirement concept is too generic for review and aggregation; use a standalone "
+            "depth-neutral noun phrase such as professional experience or experience with the "
+            "source-supported subject."
+        )
+    if re.match(r"^(?:with|in|of|for|to)\b", normalized_concept):
+        raise ValueError(
+            "Requirement concept must be a standalone noun phrase, not a prepositional fragment"
+        )
+
+    source_matches = _depth_matches(evidence)
+    if depth_signal is None:
+        if not source_matches:
+            return None
+        distinct_source_markers = {_normalize(item[2]) for item in source_matches}
+        if len(distinct_source_markers) > 1:
+            raise ValueError(
+                "depth_signal is required when cited evidence contains multiple explicit employer "
+                "depth signals; provide the exact source phrase that applies to this concept"
+            )
+        return source_matches[0][2]
+
+    normalized_signal = depth_signal.strip()
+    if not normalized_signal:
+        raise ValueError("depth_signal must be null or a non-empty exact source phrase")
+    if _equivalent_source_excerpt(normalized_signal, evidence) is None:
+        raise ValueError(
+            "depth_signal must be an exact contiguous excerpt of the cited evidence; include "
+            "the subject in that excerpt when needed to preserve scope."
+        )
+
+    signal_matches = _depth_matches(normalized_signal)
+    if not signal_matches:
+        raise ValueError(
+            "depth_signal must contain an explicit employer depth or experience-extent signal"
+        )
+    distinct_signal_markers = {_normalize(item[2]) for item in signal_matches}
+    if len(distinct_signal_markers) > 1:
+        raise ValueError(
+            "depth_signal must identify one employer depth level for one requirement concept"
+        )
+    return signal_matches[0][2]
+
+
 def _signal_is_scoped_concept(concept: str, signal: str) -> bool:
     """Return whether a non-depth signal is the same concept with source-supported scope added."""
 
@@ -81,7 +160,7 @@ def _signal_is_scoped_concept(concept: str, signal: str) -> bool:
 
 
 class AnalysisRequirementV20(AnalysisRequirementV19):
-    """Keep v19 strictness while canonicalizing proven preferred scope/depth boundary mistakes."""
+    """Keep v19 strictness while canonicalizing proven v20 depth/optionality boundaries."""
 
     @model_validator(mode="before")
     @classmethod
@@ -126,6 +205,34 @@ class AnalysisRequirementV20(AnalysisRequirementV19):
             normalized["concept"] = signal.strip()
             normalized["depth_signal"] = None
         return normalized
+
+    @model_validator(mode="after")
+    def validate_requirement_semantics(self, info: ValidationInfo) -> AnalysisRequirementV20:
+        """Override inherited depth canonicalization with the v20 multi-signal-safe rule."""
+
+        if self.requirement_type == "inferred" and not self.rationale.strip():
+            raise ValueError("Inferred requirements require a concise non-empty rationale")
+
+        if (info.context or {}).get("analysis_mode") == "english":
+            if evidence_mixes_english_optionality(self.evidence):
+                raise ValueError(
+                    "A requirement cannot use mixed-strength evidence; split core and optional "
+                    "clauses into atomic requirements using specific evidence references."
+                )
+            if self.requirement_type == "preferred" and not has_english_optionality_signal(
+                self.evidence
+            ):
+                raise ValueError(
+                    "English preferred requirements require explicit preference/plus/helpful/"
+                    "advantage wording in their cited evidence; otherwise use contextual or "
+                    "preserve the source's actual strength."
+                )
+            self.depth_signal = _validate_depth_fields_v20(
+                self.concept,
+                self.depth_signal,
+                self.evidence,
+            )
+        return self
 
     @model_validator(mode="after")
     def reject_unproven_preferred_experience(self) -> AnalysisRequirementV20:
@@ -300,6 +407,7 @@ def complete_analysis_partition_with_instructor_v20(
             "p16_v20_vague_preference_extent_normalization": True,
             "p16_v20_preferred_scope_depth_normalization": True,
             "p16_v20_preferred_experience_evidence_guard": True,
+            "p16_v20_multi_signal_depth_guard": True,
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
@@ -321,7 +429,9 @@ def complete_analysis_partition_with_instructor_v20(
 __all__ = [
     "AnalysisRequirementV20",
     "JobAnalysisResponseV20",
+    "_depth_matches",
     "_signal_is_scoped_concept",
+    "_validate_depth_fields_v20",
     "_validated_partition_plan",
     "complete_analysis_partition_with_instructor_v20",
 ]
