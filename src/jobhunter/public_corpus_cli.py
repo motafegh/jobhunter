@@ -87,10 +87,27 @@ def _capability_model(settings: Settings) -> str | None:
     return settings.capability_lm_studio_model or settings.lm_studio_model
 
 
+def _fetched_detail_count(manifest: dict[str, object]) -> int:
+    jobs = manifest.get("jobs", [])
+    if not isinstance(jobs, list):
+        return 0
+    return sum(
+        1
+        for item in jobs
+        if isinstance(item, dict) and item.get("job_detail_version_id") is not None
+    )
+
+
+def _load_manifest(output_dir: Path) -> dict[str, object]:
+    manifest_path = output_dir / "manifest.json"
+    return json.loads(manifest_path.read_text(encoding="utf-8"))
+
+
 def _print_export(summary) -> None:
+    manifest = _load_manifest(summary.output_dir)
     print(f"Public corpus: {summary.output_dir.as_posix()}")
-    print(f"Jobs: {summary.jobs}")
-    print(f"Sources: {summary.sources}")
+    print(f"Known/discovered jobs: {summary.jobs}")
+    print(f"Fetched/parsed job details: {_fetched_detail_count(manifest)}")
     print(f"English projections: {summary.english_projections}")
     print(f"English P1.6: {summary.english_analyses}")
     print(f"Original P1.6: {summary.original_analyses}")
@@ -103,13 +120,16 @@ def _status(output_dir: Path) -> int:
         print(f"Public corpus manifest is missing: {manifest_path}", file=sys.stderr)
         return 1
     try:
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        manifest = _load_manifest(output_dir)
     except (OSError, json.JSONDecodeError) as exc:
         print(f"Public corpus manifest is unreadable: {exc}", file=sys.stderr)
         return 1
     counts = manifest.get("counts", {})
+    if not isinstance(counts, dict):
+        counts = {}
     print(f"Schema: {manifest.get('schema_version', 'unknown')}")
-    print(f"Jobs: {counts.get('jobs', 0)}")
+    print(f"Known/discovered jobs: {counts.get('jobs', 0)}")
+    print(f"Fetched/parsed job details: {_fetched_detail_count(manifest)}")
     print(f"English projections: {counts.get('english_projections', 0)}")
     print(f"English P1.6: {counts.get('p16_english', 0)}")
     print(f"Original P1.6: {counts.get('p16_original', 0)}")
@@ -146,7 +166,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if verification.ok:
-        print(f"Public corpus verification PASS ({verification.jobs} jobs)")
+        print(f"Public corpus verification PASS ({verification.jobs} known jobs)")
         return 0
     print(f"Public corpus verification FAIL ({len(verification.errors)} issue(s))", file=sys.stderr)
     for error in verification.errors:
