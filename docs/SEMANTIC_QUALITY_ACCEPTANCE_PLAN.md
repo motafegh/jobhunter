@@ -1,7 +1,7 @@
 # JobHunter Semantic Quality Acceptance Plan
 
 **Status:** Active bounded acceptance plan  
-**Date:** 2026-08-15  
+**Date:** 2026-08-16  
 **Scope:** P1.6 factual extraction, Capability Intelligence, Review Snapshot current-chain verification, heterogeneous semantic review, and the concluded Phase-1 Blueprint experiment  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and product/domain/source/architecture constraints.
 
@@ -31,6 +31,7 @@ Permanent rules:
 6. Optional model enrichment may be absent. Do not force speculation to satisfy schema shape.
 7. Do not polish model reasoning indefinitely when repeated experiments show a layer is not stable enough for the current phase.
 8. Public promotion requires bounded semantic acceptance, deterministic CI, and normal-path operational verification.
+9. Once a promoted layer passes those gates, do not reopen it for harmless non-authoritative wording variation; require a repeatable correctness/provenance or contract-level defect.
 
 Current opposite-end anchors:
 
@@ -49,11 +50,11 @@ English projection:           english-projection-v2
 English P1.6 public:           job-analysis-english-v20 / job-analysis-v5
 Original P1.6 public:          job-analysis-original-v9 / job-analysis-v4
 
-Capability public code route: job-capability-intelligence-v9 / job-capability-intelligence-v5
-Review Snapshot:              job-review-snapshot-v1
+Capability public/current:     job-capability-intelligence-v9 / job-capability-intelligence-v5
+Review Snapshot:               job-review-snapshot-v1
 ```
 
-Capability v9 public-promotion implementation has deterministic CI acceptance. Local normal-path operational verification is still pending before the promotion is called fully closed.
+Capability v9 public promotion is fully closed: bounded dense/sparse semantic acceptance passed, deterministic promotion CI passed, normal public commands reuse accepted artifacts 11/12, and Review Snapshot marks those exact artifacts current on P1.6 artifacts 36/37.
 
 Historical Capability contracts remain reproducible:
 
@@ -68,7 +69,7 @@ Blueprint remains experimental/deferred:
 role-capability-blueprint-v6 / role-capability-blueprint-v5
 ```
 
-Blueprint v6 is explicitly pinned to historical Capability v7 during the Capability v9 promotion. Blueprint is **not** an accepted Phase-1 decision layer.
+Blueprint v6 is explicitly pinned to historical Capability v7 semantics and is not current on either accepted v9 anchor. Blueprint is **not** an accepted Phase-1 decision layer.
 
 ## 3. Layer authority
 
@@ -102,7 +103,7 @@ Blueprint output must not feed Market, personal readiness, automatic recommendat
 
 ## 4. SQ-0 — Review Snapshot correctness
 
-**Status: accepted foundation; Capability v9 operational recheck pending.**
+**Status: ACCEPTED / CURRENT-CHAIN VERIFIED.**
 
 Normal workflow:
 
@@ -112,13 +113,25 @@ jobhunter jobs snapshot <job-id>
 
 The exporter records dependency/model identities and current-chain status while excluding raw model prompts/responses, SQLite, secrets, logs, and future private state.
 
-Current promotion verification must prove:
+Capability v9 promotion verification proved:
 
-- `tG9K` snapshot selects Capability artifact 11 as current on P1.6 artifact 36;
-- `t4jp` snapshot selects Capability artifact 12 as current on P1.6 artifact 37;
-- contract is v9/v5;
-- historical v7/v8 remain non-current;
-- Blueprint is not silently rebased on v9.
+```text
+tG9K
+capability_is_current_chain=True
+Capability artifact=11
+analysis artifact=36
+contract=v9/v5
+blueprint_is_current_chain=False
+
+t4jp
+capability_is_current_chain=True
+Capability artifact=12
+analysis artifact=37
+contract=v9/v5
+blueprint_is_current_chain=False
+```
+
+This closes the Capability-era Review Snapshot recheck.
 
 ## 5. SQ-1 — P1.6 factual coverage / obligation / depth
 
@@ -165,7 +178,7 @@ Normal public P1.6 routing reuses artifacts 36/37.
 
 ## 6. SQ-2 — Capability Intelligence calibration
 
-**Status: v9 bounded semantic acceptance COMPLETE; public code promotion CI PASS; operational verification pending.**
+**Status: PROMOTED / OPERATIONALLY CLOSED.**
 
 Accepted dense anchor:
 
@@ -180,6 +193,7 @@ capability explicit depth:        5/5
 all explicit depth:               6/6
 role-level indices:               [31, 32]
 semantic disposition:             ACCEPTED
+current public chain:             YES
 ```
 
 Accepted sparse anchor:
@@ -194,6 +208,7 @@ responsibilities linked:          0/0
 explicit depth:                   0/0
 role-level indices:               []
 semantic disposition:             ACCEPTED WITH ACCEPTABLE DIFFERENCES
+current public chain:             YES
 ```
 
 V9 acceptance rules:
@@ -216,7 +231,7 @@ Promotion implementation:
 ```text
 neutral/current Capability facade → v9/v5
 CLI/browser/Review Snapshot       → follow neutral facade
-Blueprint v6                      → remains pinned to historical v7
+Blueprint v6                      → pinned to historical v7
 ```
 
 Deterministic promotion gate:
@@ -228,7 +243,15 @@ full pytest:        PASS
 warnings-as-errors: PASS
 ```
 
-Operational close requires normal commands to reuse artifacts 11/12 and snapshots to mark those exact v9 artifacts current.
+Operational proof:
+
+```text
+normal tG9K Capability → reused artifact 11 → P1.6 36
+normal t4jp Capability → reused artifact 12 → P1.6 37
+snapshots → exact artifacts current
+fresh Capability generation → none
+Blueprint current → false on both anchors
+```
 
 Decision records:
 
@@ -238,6 +261,8 @@ docs/working-memory/2026-08-15_CAPABILITY_V9_SPARSE_ACCEPTANCE.md
 docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
 ```
 
+Do not reopen Capability v9 for harmless non-authoritative wording differences. Reopen only if heterogeneous evidence shows a repeatable deterministic/provenance defect, authoritative optionality/depth corruption, fabricated authoritative content, or another contract-level failure.
+
 ## 7. SQ-3 — Blueprint experiment disposition
 
 **Status: concluded for Phase 1 / not accepted / further tuning deferred.**
@@ -246,38 +271,26 @@ The Blueprint experiment demonstrated that even mechanically valid professional 
 
 Phase-1 decision:
 
-- do not create a new Blueprint version during the Capability promotion;
+- do not create a new Blueprint version during the heterogeneous semantic gate;
 - do not weaken Blueprint validators;
 - do not promote Blueprint into Market/personal/recommendation truth;
 - keep historical Blueprint artifacts as experimental evidence;
 - keep Blueprint v6 pinned to historical v7 dependency semantics until a separate explicit reopening decision.
 
-## 8. SQ-4 — Capability v9 operational promotion verification — ACTIVE
+## 8. SQ-4 — Capability v9 operational promotion verification — CLOSED
 
-Run:
-
-```bash
-jobhunter jobs capability tG9K
-jobhunter jobs capability t4jp
-
-jobhunter jobs snapshot tG9K
-jobhunter jobs snapshot t4jp
-```
-
-Acceptance criteria:
+Verified on the normal public path:
 
 ```text
 tG9K capability → artifact 11 → reused → v9/v5 → P1.6 36
 t4jp capability → artifact 12 → reused → v9/v5 → P1.6 37
 ```
 
-Snapshots must mark those exact artifacts current. No fresh Capability generation should occur for unchanged accepted dependencies.
+Review Snapshot verified the exact current chains and `blueprint_current=False` for both anchors. No fresh Capability generation occurred.
 
-After this proof, mark Capability v9 public promotion closed.
+## 9. SQ-5 — Heterogeneous live semantic acceptance — ACTIVE NEXT GATE
 
-## 9. SQ-5 — Heterogeneous live semantic acceptance — NEXT
-
-After operational promotion closes, validate materially different jobs:
+Validate materially different current jobs:
 
 ```text
 Python/software
@@ -287,13 +300,15 @@ operations/platform/DevOps
 
 For each role:
 
-1. verify current P1.6 dependency and source truth;
-2. verify Capability coverage/provenance;
-3. review source optionality and depth calibration;
-4. ensure no fabricated responsibilities, role constraints, ownership, or architecture;
-5. distinguish repeatable deterministic defects from local-model limitations;
-6. convert repeatable deterministic defects into fixtures;
-7. preserve acceptable model variation when authoritative source truth remains correct.
+1. confirm the current source record and accepted/current English P1.6 dependency;
+2. run/reuse Capability v9 through the **normal public path**, not a candidate script;
+3. verify complete requirement/responsibility coverage and source provenance;
+4. review required/preferred/contextual optionality and explicit depth calibration;
+5. ensure no fabricated responsibilities, role constraints, prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength;
+6. distinguish repeatable deterministic defects from local-model limitations or harmless non-authoritative variation;
+7. convert repeatable deterministic defects into regression fixtures;
+8. preserve acceptable model variation when authoritative source truth remains correct;
+9. do not change the v9 contract merely to cosmetically normalize prose.
 
 Only after heterogeneous acceptance should promoted P1.6 + Capability be considered stable Phase-2 input.
 
@@ -303,7 +318,7 @@ Do not begin corpus-wide Phase 2 until:
 
 ```text
 P1.6 promotion closed
-+ Capability v9 operational promotion closed
++ Capability v9 promotion closed
 + heterogeneous semantic review accepted
 + remaining Phase-1 workflow/source/market truthfulness gates closed
 ```
