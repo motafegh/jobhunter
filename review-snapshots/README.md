@@ -1,33 +1,41 @@
 # JobHunter Review Snapshots
 
-`review-snapshots/` contains deliberately exported, repository-safe JSON snapshots of selected public Jobinja jobs. These files are **not** the live SQLite database and are not runtime inputs.
+`review-snapshots/` contains deliberately selected, repository-safe JSON snapshots used for semantic review and acceptance evidence.
 
-A snapshot can make this dependency chain reviewable:
+These files are **not** the live SQLite database, are **not** runtime inputs, and are **not** the complete public job dataset.
+
+The complete version-controlled public dataset now lives in:
 
 ```text
-public Jobinja source
-→ English projection
-→ English P1.6 factual analysis
-→ Capability Intelligence
-→ optional experimental Role Capability Blueprint
+corpus/
 ```
 
-## Create / inspect / publish
+Difference:
+
+```text
+corpus/
+→ every known public Jobinja job
+→ current repository-safe source/translation/P1.6/Capability projection
+→ routine remote dataset
+
+review-snapshots/
+→ selected jobs only
+→ explicit semantic review/acceptance evidence
+→ deliberately curated regression/decision anchors
+```
+
+## Create / inspect a review snapshot
 
 ```bash
 jobhunter jobs snapshot <job-id>
 git diff -- review-snapshots/jobs/<job-id>.json
 ```
 
-The standalone compatibility entry point remains:
+The compatibility entry point remains:
 
 ```bash
 jobhunter-review-snapshot <job-id>
 ```
-
-## Included
-
-A snapshot may include current public source provenance, English projection, P1.6 analysis, dependency-current Capability/Blueprint artifacts, artifact/model/prompt/schema identities, dependency IDs, current-chain flags, and configured effective model roles.
 
 Current snapshot schema:
 
@@ -35,9 +43,31 @@ Current snapshot schema:
 job-review-snapshot-v1
 ```
 
+## Included
+
+A snapshot may include:
+
+- current public source provenance and parsed fields;
+- English projection;
+- current English/original P1.6 artifacts;
+- dependency-current Capability artifact;
+- optional experimental Blueprint artifact when it belongs to the selected dependency chain;
+- artifact/model/prompt/schema identities;
+- dependency IDs;
+- configured effective model roles;
+- current-chain flags.
+
 ## Deliberately excluded
 
-Snapshots do not export SQLite/WAL/SHM, raw HTML contents, raw LM Studio responses, model request bodies/system prompts, API tokens/secrets/local config, operation/debug histories, or future private/personal user data.
+Snapshots do not export:
+
+- SQLite/WAL/SHM;
+- raw HTML contents;
+- raw LM Studio responses;
+- model request bodies/system prompts;
+- API tokens/secrets/local config;
+- operation/debug histories;
+- future private/personal user state.
 
 The repository is public. Commit selected review examples intentionally.
 
@@ -53,75 +83,72 @@ blueprint_is_current_chain
 
 These are **dependency/currentness flags, not semantic-acceptance flags**.
 
-A current-chain Blueprint can still be rejected after semantic review. This distinction is now demonstrated by the selected `tG9K` snapshot.
+A current-chain artifact can still fail semantic review. Conversely, a historical artifact can remain useful experimental evidence without being current.
 
-## Current `tG9K` review state
+## Current accepted Capability anchors
 
-Configured model roles:
-
-```text
-analysis:   gemma-4-e4b-it-ud
-capability: gemma-4-e2b-it
-blueprint:  gemma-4-12b-it-qat   # experimental only
-```
-
-Accepted bounded chain:
+Current public semantic contracts:
 
 ```text
-English projection artifact 33
-→ English P1.6 artifact 29
-→ Capability v7/v4 artifact 9
+English P1.6: job-analysis-english-v20 / job-analysis-v5
+Capability:   job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
-P1.6 artifact 29 and Capability artifact 9 are accepted bounded anchors pending heterogeneous confirmation.
-
-The currently committed snapshot also contains:
+Accepted/current opposite-end anchors:
 
 ```text
-Blueprint artifact 7
-role-capability-blueprint-v6
-schema role-capability-blueprint-v5
-model gemma-4-12b-it-qat
+tG9K
+English P1.6 artifact 36
+→ Capability artifact 11
+
+t4jp
+English P1.6 artifact 37
+→ Capability artifact 12
 ```
 
-Artifact 7 passed the v6 mechanical audit and CI, but **failed complete B4 semantic acceptance**. It remains intentionally committed as the best bounded experimental Blueprint evidence, not an accepted decision layer.
-
-Failure examples included assumption-bearing unknowns/considerations around automated APC/SPC feedback loops, cloud/on-prem model hosting, `raw sensor physics`, and strict versioning/quality-standard implementation expectations not established by the vacancy.
-
-Decision record:
+Operational verification proved:
 
 ```text
-docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
+tG9K capability_is_current_chain=True
+Capability artifact=11
+analysis artifact=36
+blueprint_is_current_chain=False
+
+t4jp capability_is_current_chain=True
+Capability artifact=12
+analysis artifact=37
+blueprint_is_current_chain=False
 ```
+
+Blueprint v6 remains deferred/non-authoritative and pinned to historical Capability v7 dependency semantics. It is not an accepted Phase-1 decision layer.
 
 ## Current semantic review workflow
 
-The active Phase-1 semantic gate is now heterogeneous review of:
+Before heterogeneous live review, the full public corpus is being backfilled/published through `corpus/` so representative jobs can be selected remotely rather than depending on local SQLite access.
+
+After corpus publication, review materially different current roles:
 
 ```text
-source
-→ English projection
-→ P1.6
-→ Capability v7
+Python/software
+network/security
+operations/platform/DevOps
 ```
 
-Blueprint may be present in a snapshot as non-gating research evidence, but it is not part of Phase-1 semantic acceptance.
+For each selected role inspect:
 
-For each selected role, inspect:
-
-- source/English provenance;
+- original source and English provenance;
 - P1.6 factual coverage, strength, optionality, explicit depth and evidence;
 - Capability requirement/responsibility coverage;
 - Capability grouping coherence;
 - role-level source partition;
 - deterministic source truth;
-- absence of unsupported ownership/autonomy or contextual-tool promotion.
+- absence of unsupported ownership/autonomy/lifecycle/architecture or contextual-tool promotion.
 
-Target materially different roles, including `t4jp`, `tG9K`, Python/software, network/security, and operations/platform roles where available.
+Repeatable deterministic defects become fixtures. Harmless non-authoritative wording variation does not justify reopening accepted contracts.
 
 ## Blueprint audit remains available for research
 
-If intentionally generating an experimental v6 Blueprint:
+If intentionally inspecting the experimental v6 Blueprint:
 
 ```bash
 jobhunter jobs blueprint <job-id>
@@ -143,4 +170,4 @@ git status --short
 git diff -- review-snapshots/jobs/<job-id>.json
 ```
 
-Commit only deliberately selected public review evidence. Do not automatically snapshot/commit the whole corpus.
+Commit only deliberately selected public review evidence. The complete routine public dataset belongs in `corpus/`, not here.
