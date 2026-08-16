@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/amozeshi-farhangi/jobs/tm2S/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D9%88%D8%AF%DB%8C%D9%88-%D8%B4%D9%87%D8%AF",
+  "company_slug": "amozeshi-farhangi",
+  "current_detail": {
+    "content_sha256": "d3863901d4fe829fb8423b9757b3d9b2646737ca6f8d41e298e46c3dd27a3834",
+    "fetched_at": "2026-07-31T22:21:39.585826+00:00",
+    "fields": {
+      "company": "استودیو شهد | Shahdstudio",
+      "company_description": "استودیو شهد یک شرکت تولید انیمیشن دانش بنیان هست که با 15 سال سابقه بیش از 2000 دقیقه انیمیشن سریالی تولید کرده و به زبان های انگلیسی، عربی، اردو و فارسی از شبکه های مختلف داخلی و خارجی پخش کرده.",
+      "date_posted": "2026-07-24",
+      "description": "✅موسسه فرهنگی هنری دانش بنیان شهد (تولیدکننده انیمیشن) به دنبال یک نیروی کارشناس هوش مصنوعی آقا برای پروژه سریال انیمیشن داخلی و یک سریال بین الملل به مدت حداقل یک سال می باشد. شرایط استخدام: دارای تجربه در تولید انیمیشن با هوش مصنوعی آشنا با افترافکت و پریمیر حداکثر 30 سال سن معتقد به نابودی اسرائیل نوع همکاری: حضوری / تمام وقت / یکساله حقوق مناسب + بیمه محدوده کار: تهران، میدان انقلاب امکان جذب امریه دانش بنیان نیز وجود دارد",
+      "education": "مهم نیست",
+      "employment_type": "حضوری / تمام وقت / یکساله",
+      "gender": "مرد",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "fa",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۳۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "Photoshop",
+        "Premiere"
+      ],
+      "title": "کارشناس هوش مصنوعی (آقا)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/amozeshi-farhangi/jobs/tm2S/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D9%88%D8%AF%DB%8C%D9%88-%D8%B4%D9%87%D8%AF",
+    "job_detail_version_id": 17,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/amozeshi-farhangi/jobs/tm2S/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D9%88%D8%AF%DB%8C%D9%88-%D8%B4%D9%87%D8%AF",
+    "semantic_sha256": "3dbc36b7a10bdd9ec6b09f001922e0be51ff2fddd1d440ef7e3abc5dc6a8e7e1",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "fa",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tm2S",
+  "stage": "source",
+  "title_observed": "کارشناس هوش مصنوعی (آقا)"
+}

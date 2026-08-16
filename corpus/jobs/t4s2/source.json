@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/lora-1/jobs/t4s2/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+  "company_slug": "lora-1",
+  "current_detail": {
+    "content_sha256": "5bbd3a8e5d1fd25c037ac89aec2236bfac14b157055fa674614139c1242b32d1",
+    "fetched_at": "2026-08-01T19:35:45.892488+00:00",
+    "fields": {
+      "company": "لورا | Lora",
+      "company_description": "برند لورا در حوزه سلامت کودک در این شرایط سخت به همکارانی فعال و پر ذوق داریم همراه کلاس های اموزشی",
+      "date_posted": "2026-08-01",
+      "description": "مهارت تولید محتوا با ai خلاقیت در ساخت محتوای تصویری و ویدیویی طراحی سایت توانایی تولید محتوا تصویری تمام وقت و پاره وقت کار آموزش دادنیه برای ما مهم اخلاق و تعهد کاری شما می باشد. لطفا برای غیر حضوری رزومه نفرستید. (((((( لوکیشن :غرب تهران ))))))))) مزایا بیمه پارکینك فضای استراحت بن تخفیف ماهیانه پورسانت سفر کاری دو هفته در سال به کیش پاداش",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۳۵,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "تولید محتوا",
+        "طراحی سایت"
+      ],
+      "title": "کارشناس هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/lora-1/jobs/t4s2/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+    "job_detail_version_id": 19,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/lora-1/jobs/t4s2/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+    "semantic_sha256": "e775f3100b412b8a8cfdd2651129c9a7854d57f4e4c3556359519b84a48886ad",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:33:56.924634+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:36.995285+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t4s2",
+  "stage": "source",
+  "title_observed": "کارشناس هوش مصنوعی"
+}

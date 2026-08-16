@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/poldesigners/jobs/tI1n/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D9%86%D9%88%DB%8C%D8%B3-%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-python-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA-%D8%A2%D9%BE-%D9%BE%D9%84-%D8%AF%DB%8C%D8%B2%D8%A7%DB%8C%D9%86%D8%B1%D8%B2",
+  "company_slug": "poldesigners",
+  "current_detail": {
+    "content_sha256": "8bf7d236888dac5efd38d1fee7f7428a52743eca0831f98de023f28cbfec7b2d",
+    "fetched_at": "2026-08-06T18:31:32.659677+00:00",
+    "fields": {
+      "company": "استارت آپ پل دیزاینرز | Poldesigners",
+      "company_description": "پل دیزاینرز ، پلت فرم رابط فریلنسر و کارفرما می باشد . صرفه جویی در زمان و هزینه های جانبی و همچنین ایجاد بستر مناسب و امن برای قرارداد با فریلنسرها و کارفرمایان از مزیت های این پلت فرم می باشد . پل دیزاینرز، استارت آپی می باشد که در مدت کمی توانسته رشد خوبی را تجربه کند.",
+      "date_posted": "2026-08-06",
+      "description": "پل دیزاینرز با توجه به گسترش پروژه‌های نرم‌افزاری، اتوماسیون و تحلیل داده، به‌دنبال همکاری با برنامه‌نویس پایتون حرفه‌ای و دقیق است. تمرکز مجموعه بر توسعه راهکارهای هوشمند، ساخت ماژول‌های اختصاصی و پیاده‌سازی ساختارهای مقیاس‌پذیر است. رزومه و پورتفولیوی شما با دقت و بر اساس استانداردهای فنی و ساختاری مجموعه بررسی خواهد شد. الزامات: ارسال رزومه شامل نمونه پروژه‌های پایتون (بدون نمونه‌کار، درخواست بررسی نمی‌شود) پذیرش منشور اخلاقی و قوانین همکاری در پلتفرم Poldesigners مهارت‌ها و توانایی‌ها: تسلط کامل به زبان Python و ساختارهای داده، کلاس‌ها و اصول برنامه‌نویسی شی‌گرا (OOP) تجربه کار با یکی از فریم‌ورک‌های Django، Flask یا FastAPI آشنایی با پایگاه‌داده‌ها (SQL و NoSQL مانند PostgreSQL، MongoDB) توانایی کار با APIها، وب‌سرویس‌ها و ماژول‌های RESTful آشنایی با Pandas، NumPy، Matplotlib برای تحلیل داده مزیت محسوب می‌شود تسلط بر مفاهیم Git و محیط‌های تیمی توسعه توانایی طراحی و مستندسازی ساختار کد دقت بالا در کدنویسی، تست و بهینه‌سازی عملکرد وظایف: توسعه و نگهداری پروژه‌های نرم‌افزاری مبتنی بر پایتون پیاده‌سازی APIها و سرویس‌های بک‌اند برای پروژه‌های وب و اپلیکیشن بهینه‌سازی ساختار کد و رفع باگ‌های موجود مستندسازی کد و همکاری با تیم‌های فرانت‌اند و طراحی محصول مشارکت در توسعه ابزارهای داخلی و سیستم‌های اتوماسیون ارائه راه‌حل‌های فنی برای بهبود کارایی و ساختار پروژه‌ها",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Python",
+        "Git",
+        "Django"
+      ],
+      "title": "برنامه‌نویس پایتون (Python-دورکاری)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/poldesigners/jobs/tI1n/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D9%86%D9%88%DB%8C%D8%B3-%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-python-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA-%D8%A2%D9%BE-%D9%BE%D9%84-%D8%AF%DB%8C%D8%B2%D8%A7%DB%8C%D9%86%D8%B1%D8%B2",
+    "job_detail_version_id": 43,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/poldesigners/jobs/tI1n/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D9%86%D9%88%DB%8C%D8%B3-%D9%BE%D8%A7%DB%8C%D8%AA%D9%88%D9%86-python-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA-%D8%A2%D9%BE-%D9%BE%D9%84-%D8%AF%DB%8C%D8%B2%D8%A7%DB%8C%D9%86%D8%B1%D8%B2",
+    "semantic_sha256": "07fe596cd3b94f2eb44140948e050a8117ebceb841a6ebba16b7f2cba5da17b2",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-06T18:31:28.568034+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:31:28.568034+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tI1n",
+  "stage": "source",
+  "title_observed": "برنامه‌نویس پایتون (Python-دورکاری)"
+}

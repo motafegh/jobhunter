@@ -1,0 +1,48 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/douran-group/jobs/t4qV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-security-engineer-%D8%AF%D8%B1-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%AF%D9%88%D8%B1%D8%A7%D9%86",
+  "company_slug": "douran-group",
+  "current_detail": {
+    "content_sha256": "84d64ec4f9f8fe69d257616452f42183da5d2cf587fc1bc49952e3b572b0c73b",
+    "fetched_at": "2026-08-01T19:48:13.201111+00:00",
+    "fields": {
+      "company": "نوآوران ارتباطات دوران | Douran Group",
+      "company_description": "گروه دوران در زمینه IT شامل: خدمات مختلف شبکه و امنیت شبکه، تولید و فروش انواع نرم افزارها و پورتال و خدمات متنوع دیگر در این حوزه مشغول به فعالیت می باشد. این شرکت با تکیه بر دانش روز و کادری مجرب توانسته در عرصه IT پیشتاز در سطح کشور باشد.",
+      "date_posted": "2026-07-29",
+      "description": "به دنبال Senior Network Security Engineer با تجربه طراحی، پیاده‌سازی و مدیریت زیرساخت‌های امنیت شبکه در مقیاس Enterprise هستیم. این جایگاه مسئول طراحی و اجرای راهکارهای امنیتی، مدیریت فایروال‌های نسل جدید و پیاده‌سازی سیاست‌های امنیتی خواهد بود. طراحی و پیاده‌سازی معماری امنیت شبکه مدیریت تجهیزات NGFW طراحی و پیاده‌سازی VPN طراحی High Availability عیب‌یابی مشکلات امنیتی پیاده‌سازی Zero Trust و Network Segmentation تهیه مستندات فنی تجهیزات امنیتی Cisco Cisco Secure Firewall (FTD) Cisco Firepower Management Center (FMC) Cisco ASA Palo Alto Palo Alto NGFW Panorama GlobalProtect Fortinet FortiGate FortiManager FortiWeb Juniper Juniper SRX Series Firewall Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA) مزیت محسوب می‌شود Cisco ISE Cisco TrustSec Cisco DNA Center مدارک ترجیحی CCNP Security CCIE Security PCNSE Fortinet FCP / FCSS JNCIS-SEC یا JNCIP-SEC",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "بیش از شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Network Security",
+        "Firewalls",
+        "CISCO",
+        "+NETWORK"
+      ],
+      "title": "Senior Network Security Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/douran-group/jobs/t4qV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-security-engineer-%D8%AF%D8%B1-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%AF%D9%88%D8%B1%D8%A7%D9%86",
+    "job_detail_version_id": 30,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/douran-group/jobs/t4qV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-security-engineer-%D8%AF%D8%B1-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%AF%D9%88%D8%B1%D8%A7%D9%86",
+    "semantic_sha256": "60a3829be7813ea820afefb4b50cec5c6ca9adce8ab192cebd3f8c42bd42f3ea",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t4qV",
+  "stage": "source",
+  "title_observed": "Senior Network Security Engineer"
+}

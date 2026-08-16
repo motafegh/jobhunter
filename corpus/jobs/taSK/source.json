@@ -1,0 +1,48 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/raraexchange/jobs/taSK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B4%D8%A8%DA%A9%D9%87-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%B1%D8%A7%D8%A7%DA%A9%D8%B3%DA%86%D9%86%D8%AC",
+  "company_slug": "raraexchange",
+  "current_detail": {
+    "content_sha256": "1e77492142559ee8df4f9b544f162d0b84f8921c09743796e6e1a0292224eccf",
+    "fetched_at": "2026-08-02T11:26:08.143333+00:00",
+    "fields": {
+      "company": "رارااکسچنج | Raraexchange",
+      "company_description": "صرافی RaraExchange یک صرافی پویا و رو به رشد است که قصد دارد با ارائه راهکارهای معتبر و مطمئن، فرآیند ورود به دنیای رمز ارزها را برای کاربران ایرانی آسان، هموار و لذت بخش کند. به همراه تیمی خستگی ناپذیر و متعهد به دنبال افرادی هستیم که با شجاعت و ابتکار، راهکارهای نوینی را در این صنعت ارائه دهیم.",
+      "date_posted": "2026-07-09",
+      "description": "مسئولیت طراحی، پیاده سازی و پایش روزانه امنیت زیرساخت وب سایت، وب اپلیکیشن و API های درون سازمانی و برون سازمانی را برعهده دارد. شناسایی آسیب پذیری ها با استفاده از ابزارهای تست نفوذ، مدیریت لاگ های امنیتی، تنظیم هشدارهای امنیتی، WAF، پاسخ به حملات احتمالی. مهارت های کلیدی مورد نیاز: تسلط بر مفاهیم OWASP Top 10 و راهکارهای مقابله با SQLi، XSS و CSRF پیاده سازی سیستم مدیریت لاگ مانند Splunk یا ELK توانایی آنالیز حملات شبکه و عیب یابی پروتکل های TCP/IP و TLS ارائه گزارش های مدیریتی از ریسک های امنیتی به زبان ساده لطفا در رزومه خود یک آسیب پذیری اخیر سایت های ایرانی را تحلیل کرده و راهکار پیشنهادی خود را بنویسید.",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "امنیت شبکه",
+        "شبکه",
+        "OWASP",
+        "tcp/ip"
+      ],
+      "title": "کارشناس امنیت شبکه (دورکاری)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/raraexchange/jobs/taSK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B4%D8%A8%DA%A9%D9%87-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%B1%D8%A7%D8%A7%DA%A9%D8%B3%DA%86%D9%86%D8%AC",
+    "job_detail_version_id": 33,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/raraexchange/jobs/taSK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B4%D8%A8%DA%A9%D9%87-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%B1%D8%A7%D8%A7%DA%A9%D8%B3%DA%86%D9%86%D8%AC",
+    "semantic_sha256": "2e5b9cacfb1cefc3241dcf4203e275d21fb638b355f1d1ff31bd7bbcaa8695a5",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:04.766891+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "taSK",
+  "stage": "source",
+  "title_observed": "کارشناس امنیت شبکه (دورکاری)"
+}

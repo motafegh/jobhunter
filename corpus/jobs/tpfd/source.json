@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/digikala/jobs/tpfd/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-machine-learning-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+  "company_slug": "digikala",
+  "current_detail": {
+    "content_sha256": "efddce964f72790e63035445e4dce5b4d687899d60eb0af0c79c7ea786a21dea",
+    "fetched_at": "2026-08-01T18:52:14.430608+00:00",
+    "fields": {
+      "company": "دیجی‌‌کالا | Digikala",
+      "company_description": "ما در دیجی‌کالا به عنوان شرکتی که در حوزه تجارت الکترونیک فعالیت می‌کنه، به دنبال تحقق رویای «لبخندی برای همه ایران» هستیم. در همین راستا، با بهره‌گیری از فناوری‌های روز دنیا و توسعه مداوم سرویس‌های مبتنی بر تکنولوژی، ارزش‌های‌ خودمون رو در مشتری‌محوری، اشتیاق برای تعالی، کارگروهی و نتیجه‌گرایی دنبال می‌کنیم. در گروه دیجی‌کالا امکانی فراهم شده تا ما با افراد با تخصص‌های متنوع در یک مجموعه فعالیت کنیم. علاوه بر این، با توجه به سرعت رشد بالا در دیجی‌کالا، امکان رشد و توسعه رو در مواجهه با چالش‌ها و استفاده از برنامه‌های توسعه و آموزش متنوع داریم.",
+      "date_posted": "2026-06-09",
+      "description": "Digikala, the largest e-commerce platform in Iran, is looking for high-caliber senior machine learning engineers to help us improve our products and deliver a world-class experience for our customers. In this position, you are supposed to: Own and lead complex machine learning initiatives from ideation and planning through model design, development, deployment, and monitoring, making key technical decisions independently Partner closely with Product Managers to define requirements, identify opportunities, and integrate machine learning capabilities into new and existing products Discover and prioritize high-impact use cases across the customer journey and business operations where Big Data, AI, and Machine Learning can create measurable value Design, develop, deploy, and maintain scalable, reliable, and efficient machine learning systems and services Collaborate with Data Scientists, Software Engineers, and Product teams to productionize models and continuously improve their performance, scalability, and reliability Build and maintain data pipelines, feature engineering workflows, and model serving infrastructure to support production ML applications Communicate complex machine learning concepts, system designs, and analytical findings clearly and effectively to cross-functional stakeholders Requirements MS/BS in Computer Science, Statistics, Engineering, or a related field 2+ years of experience as a Machine Learning Engineer, preferably in an e-commerce environment Strong proficiency in Python and the broader machine learning ecosystem Solid understanding of software engineering principles, development methodologies, and production-grade coding practices Strong knowledge of machine learning algorithms, model training, evaluation, deployment, and lifecycle management Hands-on experience with MLOps practices, CI/CD pipelines, model monitoring, and experimentation frameworks Deep understanding of relational databases, big data technologies, and NoSQL databases Proven ability to translate business and customer needs into impactful machine learning solutions Excellent communication and collaboration skills, with experience presenting technical concepts, project plans, and outcomes to both technical and non-technical stakeholders Demonstrated ability to independently deliver machine learning projects end-to-end, from problem definition and implementation to testing, deployment, and ongoing monitoring",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "معافیت تحصیلی",
+      "minimum_experience": "بیش از شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "حقوق پایه (وزارت کار)",
+      "skills": [
+        "Python",
+        "Machine learning",
+        "tensorflow"
+      ],
+      "title": "Senior Machine Learning Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/digikala/jobs/tpfd/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-machine-learning-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+    "job_detail_version_id": 18,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/digikala/jobs/tpfd/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-machine-learning-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+    "semantic_sha256": "cd5213bd5b184c71759f67df2984bf71dffde35ed74bfd018658531897ca1256",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T21:23:04.143936+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-07-31T22:20:20.230259+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tpfd",
+  "stage": "source",
+  "title_observed": "Senior Machine Learning Engineer"
+}

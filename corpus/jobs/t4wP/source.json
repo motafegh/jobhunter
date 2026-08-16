@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/digikala/jobs/t4wP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+  "company_slug": "digikala",
+  "current_detail": {
+    "content_sha256": "bfb00a115cd076ba6715b9ba75029f9aa5f5787f2bda90487564834689b47cad",
+    "fetched_at": "2026-08-01T19:50:14.214251+00:00",
+    "fields": {
+      "company": "دیجی‌‌کالا | Digikala",
+      "company_description": "ما در دیجی‌کالا به عنوان شرکتی که در حوزه تجارت الکترونیک فعالیت می‌کنه، به دنبال تحقق رویای «لبخندی برای همه ایران» هستیم. در همین راستا، با بهره‌گیری از فناوری‌های روز دنیا و توسعه مداوم سرویس‌های مبتنی بر تکنولوژی، ارزش‌های‌ خودمون رو در مشتری‌محوری، اشتیاق برای تعالی، کارگروهی و نتیجه‌گرایی دنبال می‌کنیم. در گروه دیجی‌کالا امکانی فراهم شده تا ما با افراد با تخصص‌های متنوع در یک مجموعه فعالیت کنیم. علاوه بر این، با توجه به سرعت رشد بالا در دیجی‌کالا، امکان رشد و توسعه رو در مواجهه با چالش‌ها و استفاده از برنامه‌های توسعه و آموزش متنوع داریم.",
+      "date_posted": "2026-08-01",
+      "description": "Over View: The Senior Security Engineer is part of Digikala’s Offensive Security team and is responsible for identifying and reducing security risks across web applications, APIs, and supporting services. The role exists to detect vulnerabilities before they can be exploited, support secure product delivery, and help development teams remediate security issues effectively. This position works closely with Development, DevOps, Cloud, SOC, Infrastructure, and Product teams. Responsibilities: Perform comprehensive black-box, grey-box, and white-box penetration testing of web applications, APIs, microservices, and internal services. Identify high-impact vulnerabilities, including authentication bypass, authorization issues, IDOR, SSRF, injection flaws, business logic weaknesses, and sensitive data exposure. Complete assigned security assessments within agreed timelines and provide clear, reproducible, and risk-based reports. Validate remediation actions and ensure that critical and high-severity vulnerabilities are properly resolved before production deployment. Support DevSecOps processes by reviewing findings from SAST, DAST, secret scanning, dependency scanning, and container security tools. Conduct threat hunting activities for exposed assets, vulnerable services, leaked credentials, public repositories, and newly published CVEs. Provide practical remediation guidance and work directly with engineering teams to reduce security risks. Improve penetration-testing methodologies, automation scripts, security rules, and internal technical documentation. Requirements: At least five years of professional experience in penetration testing, application security, or offensive security. Advanced knowledge of web application and API security. Strong understanding of OWASP Top 10 and OWASP API Security Top 10. Hands-on experience with REST APIs, GraphQL, authentication, authorization, OAuth 2.0, OpenID Connect, JWT, and session management. Strong experience identifying complex business logic and access-control vulnerabilities. Proficiency with tools such as Burp Suite Professional, Nmap, Nuclei, OWASP ZAP, and Wireshark. Knowledge of Linux, Docker, Kubernetes, cloud environments, and CI/CD pipelines. Familiarity with DevSecOps tools such as Semgrep, Gitleaks, Trivy, DefectDojo, and dependency-scanning solutions. Ability to develop security automation using Bash, Go, or similar languages. Strong analytical thinking, problem-solving, and attention to detail. Ability to assess technical findings based on exploitability and business impact. Strong technical reporting and documentation skills. Effective communication and teamwork across technical and non-technical teams. Ability to work independently, manage multiple assessments, and take ownership of security risks. Ability to mentor junior security engineers and review penetration-testing results. Certifications such as OSCP, OSWE, OSEP, BSCP, or similar are preferred but not mandatory.",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "معافیت تحصیلی",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Network Security",
+        "امنیت شبکه",
+        "Security"
+      ],
+      "title": "Security Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/digikala/jobs/t4wP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+    "job_detail_version_id": 32,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/digikala/jobs/t4wP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+    "semantic_sha256": "04b91cbd4c0319ed76c54773cbeaf4628a6164781bbed52e90c24cc3dca94b23",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t4wP",
+  "stage": "source",
+  "title_observed": "Security Engineer"
+}

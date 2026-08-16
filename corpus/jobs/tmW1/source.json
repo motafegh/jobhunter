@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/rahyab-baryar-sana/jobs/tmW1/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-specialist-%D8%AF%D8%B1-%D8%B1%D9%87%DB%8C%D8%A7%D8%A8-%D8%A8%D8%A7%D8%B1%DB%8C%D8%A7%D8%B1-%D8%B3%D8%A7%D9%86%D8%A7",
+  "company_slug": "rahyab-baryar-sana",
+  "current_detail": {
+    "content_sha256": "bfbe63a77479b0663cc5f850f34cd0bd53a9256393f600bed8842258c00fa036",
+    "fetched_at": "2026-07-31T19:38:00.763641+00:00",
+    "fields": {
+      "company": "رهیاب باریار سانا | RAHYAB BARYAR SANA",
+      "company_description": "شرکت رهیاب باریار سانا با سابقه‌ای درخشان در حوزه حمل و نقل بین‌المللی، ارائه‌دهنده‌ی کامل‌ترین خدمات فورواردری و لجستیکی است. این شرکت با تکیه بر شبکه گسترده‌ی خود، در زمینه حمل و نقل زمینی، هوایی و دریایی، راه‌حل‌هایی مطمئن، سریع و مقرون‌به‌صرفه را برای مشتریان خود در سراسر جهان فراهم می‌کند.",
+      "date_posted": "2026-07-27",
+      "description": "شرح وظایف طراحی و پیاده‌سازی راهکارهای مبتنی بر هوش مصنوعی برای اتوماسیون فرآیندها ساخت Chatbot و دستیار هوشمند برای پاسخگویی به مشتریان استفاده از AI برای پردازش اسناد حمل (Invoice، Packing List، BL و...) اتصال ابزارهای AI به CRM، ایمیل و سیستم‌های داخلی طراحی Agentهای هوشمند برای انجام وظایف تکراری تحلیل داده‌ها و ارائه گزارش‌های هوشمند آموزش و بهینه‌سازی استفاده از AI در واحدهای مختلف شرکت شرایط احراز آشنایی با ChatGPT، Claude، Gemini و سایر مدل‌های زبانی تجربه کار با APIهای هوش مصنوعی آشنایی با Python مزیت محسوب می‌شود آشنایی با Automation Tools مانند n8n، Make یا Zapier توانایی تحلیل فرآیندهای کسب‌وکار و ارائه راهکار روحیه یادگیری و حل مسئله مزایا حقوق توافقی و رقابتی امکان رشد شغلی همکاری در پروژه‌های نوآورانه محیط کاری پویا",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۲۴,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "Python",
+        "API"
+      ],
+      "title": "کارشناس هوش مصنوعی (AI Specialist)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/rahyab-baryar-sana/jobs/tmW1/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-specialist-%D8%AF%D8%B1-%D8%B1%D9%87%DB%8C%D8%A7%D8%A8-%D8%A8%D8%A7%D8%B1%DB%8C%D8%A7%D8%B1-%D8%B3%D8%A7%D9%86%D8%A7",
+    "job_detail_version_id": 4,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/rahyab-baryar-sana/jobs/tmW1/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-specialist-%D8%AF%D8%B1-%D8%B1%D9%87%DB%8C%D8%A7%D8%A8-%D8%A8%D8%A7%D8%B1%DB%8C%D8%A7%D8%B1-%D8%B3%D8%A7%D9%86%D8%A7",
+    "semantic_sha256": "8c2e226a71227d44df2f80432eafe90cd1d5a6371e485e0046c1469012f085e6",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tmW1",
+  "stage": "source",
+  "title_observed": "کارشناس هوش مصنوعی (AI Specialist)"
+}

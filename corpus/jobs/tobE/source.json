@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/radhoosh/jobs/tobE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%B4%DB%8C%D8%B1%D8%A7%D8%B2-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%AF%D9%87%D9%88%D8%B4",
+  "company_slug": "radhoosh",
+  "current_detail": {
+    "content_sha256": "3b0f73ec4c320a87e0105a1d9600cb4675e56c3ab910100ff996f07a973475f0",
+    "fetched_at": "2026-08-01T19:35:50.790912+00:00",
+    "fields": {
+      "company": "رادهوش | Radhoosh",
+      "company_description": "شرکت فن آوری اطلاعات رادهوش داده نگار در سال 1394 توسط جمعی از متخصصین باسابقه ی حوزه IT با هدف تمرکز بر تولید نرم‌افزار‌های کاربر محور و سامانه‌های مدیریت محتوا در شیراز تاسیس شد. رادهوش همواره در تلاش جهت ارتقاء دانش ، آماده‌سازی بستر‌های لازم و جذب و آموزش متخصصین مورد نیاز خود می باشد. شرکت رادهوش هم اکنون دارای یک شعبه درخارج از کشور می باشد که اغلب فعالیت های این شرکت بر روی پروژه های سطح بالای خارجی می باشد. . تمام پروژه ها با مدیریت Agile پیش برده می شود و از تکنیک های اصولی طراحی و پیاده سازی نرم افزار تبعیت می کند. هم اکنون ما در حال جذب متخصصین با استعداد جهت افزایش توان رقابت با شرکت های خارجی هستیم. در صورتی که شما در حوزه تخصصی خود حرفی برای گفتن دارید و علاقه مند به فراگیری شیوه‌های جدید در حوزه طراحی وب سایت و بازی سازی هستید‌، به جمع پر‌انرژی ما بپیوندید.",
+      "date_posted": "2026-06-10",
+      "description": "We’re a forward-thinking team working at the intersection of AI/ML innovation and cloud-scale engineering. As part of our growing Data and AI division, we’re looking for a passionate Machine Learning / AI Developer to help us build intelligent systems using open-source tools and major cloud platforms. What You'll Do: Research, adapt, and customize open-source AI/ML algorithms for real-world applications Build, deploy, and optimize solutions on AWS, Google Cloud (GCP), and Azure using their AI/ML services Design, develop, and maintain robust and scalable ML codebases in Python Contribute to proof-of-concept development, experimentation, and model evaluation Collaborate closely with data engineers and software developers to integrate models into production systems What We're Looking For: Proven experience in Machine Learning and AI development (4+ years preferred) Strong expertise in Python programming, especially for ML workflows (e.g., TensorFlow, PyTorch, Scikit-learn, etc.) Experience working with cloud ML/AI services: SageMaker (AWS), Vertex AI (GCP), Azure ML Studio, etc. Familiarity with open-source ML libraries and ability to fine-tune/customize them Ability to think critically, research independently, and communicate clearly Nice to Have: Contributions to open-source projects Exposure to MLOps practices and tools (e.g., MLFlow, Kubeflow, Airflow) Background in data engineering or DevOps for ML Experience deploying models to production or real-time systems Why Join Us: Competitive salaries and benefits Long-term cooperation with insurance Opportunity to work on cutting-edge AI/ML projects Work with a supportive and technically strong team You will be our guest for lunch",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "فارس",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "Pytorch",
+        "tensorflow"
+      ],
+      "title": "متخصص هوش مصنوعی (شیراز)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/radhoosh/jobs/tobE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%B4%DB%8C%D8%B1%D8%A7%D8%B2-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%AF%D9%87%D9%88%D8%B4",
+    "job_detail_version_id": 21,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/radhoosh/jobs/tobE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%B4%DB%8C%D8%B1%D8%A7%D8%B2-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%AF%D9%87%D9%88%D8%B4",
+    "semantic_sha256": "1d5e058e09e672811ec69b92c989ffbaf0b1e3e3f5fad6572fbb1d33b550662b",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:36.995285+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tobE",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی (شیراز)"
+}

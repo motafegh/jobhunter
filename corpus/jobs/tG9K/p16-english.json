@@ -1,0 +1,562 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "three to six years",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Master's degree",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Comfort with high-dimensional time-series / sensor / metrology data and its noise.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Solid statistics and signal-processing fundamentals.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Discipline around validation, reproducibility, and documentation.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "context_modifier",
+        "evidence": "The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most.",
+        "rationale": "Deterministic section-level obligation modifier."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python (expert)",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "SQL",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "MATLAB a plus",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "some C / C++ helpful",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Data & statistics: pandas, NumPy, SciPy, statsmodels",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "multivariate analysis (PCA / PLS)",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Time-series & signal: signal processing, FFT / wavelets, anomaly detection",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "tsfresh, sktime",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Data platforms: Spark, Kafka",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "time-series stores (InfluxDB / TimescaleDB)",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "PostgreSQL",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "MLOps: MLflow, Docker",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "pipelines with Airflow or Prefect",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "model deployment",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Cloud & edge: AWS, GCP, or Azure",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "industrial / edge deployment a plus",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Microsoft Office",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Machine learning",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Linux",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Git",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Experience with applying AI/ML to semiconductor or comparable industrial / manufacturing data",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "Strong",
+        "evidence": "Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data.",
+        "rationale": "Directly stated requirement for strong experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience with process control, manufacturing analytics, yield optimization, or fault / anomaly detection",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "Hands-on",
+        "evidence": "Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection.",
+        "rationale": "Directly stated requirement for hands-on experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Working with high-dimensional time-series / sensor / metrology data and its noise",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Comfort",
+        "evidence": "Comfort with high-dimensional time-series / sensor / metrology data and its noise.",
+        "rationale": "Directly stated requirement for comfort level.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Knowledge of statistics and signal-processing fundamentals",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Solid",
+        "evidence": "Solid statistics and signal-processing fundamentals.",
+        "rationale": "Directly stated requirement for solid fundamentals.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Practice of validation, reproducibility, and documentation",
+        "concept_type": "practice",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Discipline around validation, reproducibility, and documentation.",
+        "rationale": "Directly stated requirement for discipline/practice.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Working with MATLAB",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "MATLAB a plus",
+        "rationale": "Stated as 'a plus'.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Working with C / C++",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "some C / C++ helpful",
+        "rationale": "Stated as 'helpful'.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Industrial / edge deployment",
+        "concept_type": "domain",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "industrial / edge deployment a plus",
+        "rationale": "Directly listed as a preferred capability.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Python",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Microsoft Office",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Microsoft Office",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Machine learning",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Machine learning",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Linux",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Linux",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Git",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Git",
+        "rationale": "Structured skill listed as required.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "expert",
+        "evidence": "Python (expert)",
+        "rationale": "Directly cited as a required skill with explicit depth.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "SQL",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "SQL",
+        "rationale": "Directly cited as a required skill.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Machine learning and deep learning frameworks",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM",
+        "rationale": "Directly cited list of required frameworks.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Data analysis libraries",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Data & statistics: pandas, NumPy, SciPy, statsmodels",
+        "rationale": "Directly cited list of required libraries.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Multivariate analysis",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "multivariate analysis (PCA / PLS)",
+        "rationale": "Directly cited statistical technique.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Time-series and signal processing",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Time-series & signal: signal processing, FFT / wavelets, anomaly detection",
+        "rationale": "Directly cited technical domain knowledge.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Time-series analysis tools",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "tsfresh, sktime",
+        "rationale": "Directly cited list of required tools.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Industrial statistics",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods",
+        "rationale": "Directly cited domain-specific statistical knowledge.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Semiconductor domain including FDC / APC / SPC, virtual metrology, run-to-run control, and yield analysis",
+        "concept_type": "domain",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Fab data systems including MES, SECS / GEM, equipment / metrology / trace data",
+        "concept_type": "domain",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Data platforms including Spark and Kafka",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Data platforms: Spark, Kafka",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Time-series stores including InfluxDB and TimescaleDB",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "time-series stores (InfluxDB / TimescaleDB)",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "PostgreSQL",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "PostgreSQL",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "MLOps tools including MLflow and Docker",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "MLOps: MLflow, Docker",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Pipelines using Airflow or Prefect",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "pipelines with Airflow or Prefect",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Model deployment",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "model deployment",
+        "rationale": "Directly extracted from requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Cloud and edge technologies (AWS, GCP, or Azure)",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Cloud & edge: AWS, GCP, or Azure",
+        "rationale": "Directly extracted from the required coverage list.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Professional experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "three to six years",
+        "evidence": "three to six years",
+        "rationale": "JobHunter deterministically materialized the structured minimum-experience field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Master's degree",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Master's degree",
+        "rationale": "JobHunter deterministically materialized the structured education field.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data.",
+        "statement": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection.",
+        "statement": "Perform work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Handle high-volume, high-dimensional sensor / trace and metrology data",
+        "statement": "Handle high-volume, high-dimensional sensor / trace and metrology data"
+      },
+      {
+        "confidence": "high",
+        "evidence": "build robust pipelines.",
+        "statement": "Build robust pipelines."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Turn manufacturing problems into well-scoped modeling problems with the technical team.",
+        "statement": "Turn manufacturing problems into well-scoped modeling problems with the technical team."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Design rigorous validation and monitoring for models running in an industrial setting.",
+        "statement": "Design rigorous validation and monitoring for models running in an industrial setting."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Partner with the semiconductor technical lead and engineering to move models toward production.",
+        "statement": "Partner with the semiconductor technical lead and engineering to move models toward production."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Ensure traceability, reproducibility, and governance of models and data.",
+        "statement": "Ensure traceability, reproducibility, and governance of models and data."
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "responsibility",
+        "evidence": "Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Handle high-volume, high-dimensional sensor / trace and metrology data"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "build robust pipelines."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Turn manufacturing problems into well-scoped modeling problems with the technical team."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Design rigorous validation and monitoring for models running in an industrial setting."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Partner with the semiconductor technical lead and engineering to move models toward production."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Ensure traceability, reproducibility, and governance of models and data."
+      }
+    ],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 36,
+  "created_at": "2026-08-14T20:16:20.337224+00:00",
+  "job_detail_version_id": 40,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v20",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source_job_id": "tG9K",
+  "stage": "p16_english",
+  "translation_artifact_id": 33
+}

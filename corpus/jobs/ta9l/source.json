@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/mofid-securities/jobs/ta9l/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-applied-ai-engineer-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%DA%AF%D8%B2%D8%A7%D8%B1%DB%8C-%D9%85%D9%81%DB%8C%D8%AF",
+  "company_slug": "mofid-securities",
+  "current_detail": {
+    "content_sha256": "7ee854192557482a911477248c2b17a3d6a82d5ad58f8164529d083cdb936530",
+    "fetched_at": "2026-08-01T19:36:02.250116+00:00",
+    "fields": {
+      "company": "کارگزاری مفید | Mofid Securities",
+      "company_description": "مفید به عنوان اولین مجموعه خدمات بازار سرمایه و بزرگترین کارگزاری بورس در ایران همواره به دنبال نیروی‌های خلاق و مسئولیت‌پذیر است. اگر علاقه‌مند به فعالیت در محیطی مدرن با فضایی صمیمی در عین حال حرفه‌ای هستید، مفید محل کاری ایده‌آل برای شما خواهد بود.",
+      "date_posted": "2026-06-22",
+      "description": "Description : We're building an AI-powered financial intelligence platform that lets investors and analysts query complex financial data using natural language. Our system combines structured datasets, semantic search, knowledge representation, entity resolution, and agentic AI to deliver insights that traditionally require years of analyst experience. Responsibilities Build semantic layers and knowledge representations over financial databases. Develop AI agents and RAG systems using vector search and retrieval optimization. Design scalable pipelines for embeddings, indexing, retrieval, reranking, and context generation. Create evaluation, testing, and observability frameworks for LLM and agent performance. Implement entity resolution, semantic modeling, and text-to-SQL workflows over complex financial datasets. Required Qualifications Production experience with LLM frameworks, RAG architectures, and vector databases such as Qdrant. Deep understanding of retrieval, embeddings, reranking, and semantic search. Experience with agentic workflows, tool-calling, and AI system reliability. Experience with LangGraph, PydanticAI, or similar agent frameworks. Strong SQL and relational database expertise. Strong Python and software engineering skills.",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "معافیت تحصیلی",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "Rag",
+        "SQL"
+      ],
+      "title": "Senior Applied AI Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/mofid-securities/jobs/ta9l/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-applied-ai-engineer-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%DA%AF%D8%B2%D8%A7%D8%B1%DB%8C-%D9%85%D9%81%DB%8C%D8%AF",
+    "job_detail_version_id": 25,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/mofid-securities/jobs/ta9l/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-applied-ai-engineer-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%DA%AF%D8%B2%D8%A7%D8%B1%DB%8C-%D9%85%D9%81%DB%8C%D8%AF",
+    "semantic_sha256": "cd9dbf6be622113836b951e9042c87798954fc01dea520ba08b090eae2b54fc6",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:33:59.904662+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:33:59.904662+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "ta9l",
+  "stage": "source",
+  "title_observed": "Senior Applied AI Engineer"
+}

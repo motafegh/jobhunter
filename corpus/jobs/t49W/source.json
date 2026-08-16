@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/okala-1/jobs/t49W/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%A7%DA%A9%D8%A7%D9%84%D8%A7-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9-%DA%A9%D9%88%D8%B1%D9%88%D8%B4",
+  "company_slug": "okala-1",
+  "current_detail": {
+    "content_sha256": "c7a2d011f9a3634ce203f1ab7f7ccd125d012133ccc71df2ca2e50f969454f02",
+    "fetched_at": "2026-08-01T19:49:43.543763+00:00",
+    "fields": {
+      "company": "اکالا(توسعه تجارت الکترونیک کوروش) | Okala",
+      "company_description": "اکالا به عنوان یکی از بزرگترین شرکت‌های فروش آنلاین کالاهای تند مصرف در کشور، از ۱۳۹۶ فعالیتش را شروع کرد. از همان ابتدا هدف اکالا تسریع و تسهیل فروش آنلاین برای قشرهای مختلف هموطنان بوده و امروز موفق شده‌ایم نه تنها حیطه فعالیت ما در تمام سطح کل کشور گسترده کنیم بلکه با ارائه قیمت‌های مناسب و رقابتی، حجم بزرگی از کاربران را جذب نماییم.",
+      "date_posted": "2026-08-01",
+      "description": "At Okala , we are looking for a Security Engineer to help build secure, scalable, and resilient products. In this role, you will work closely with Engineering, DevOps, and QA teams to integrate security throughout the software development lifecycle, proactively identify and mitigate security risks, and strengthen the security of our applications and infrastructure. Your Responsibilities Monitor, investigate, and respond to security incidents, including conducting post-incident analysis to identify root causes and improve security controls. Conduct security assessments of applications, APIs, and cloud infrastructure. Identify, prioritize, and remediate security vulnerabilities. Perform threat modeling and secure design reviews. Integrate and maintain security controls within CI/CD pipelines (DevSecOps). Collaborate with engineering teams to promote secure development practices. Develop and maintain security standards, guidelines, and security best practices. What We're Looking For Proficiency in at least one programming language. Solid knowledge of Web Security, API Security, and the OWASP Top 10. Experience with Linux, Docker, Kubernetes, and CI/CD pipelines. Familiarity with authentication and authorization mechanisms. Experience with security testing and vulnerability assessment tools. Strong analytical and problem-solving skills. Excellent communication and collaboration skills with cross-functional engineering teams. You'll Stand Out If You Have experience securing microservices and cloud-native applications. Have hands-on experience with Kubernetes, Docker, and cloud-native security practices. Are familiar with securing platforms such as Kafka, Redis, SQL Server, and Elasticsearch. Have experience with security tools such as Burp Suite, OWASP ZAP, Trivy, Semgrep, SonarQube, Snyk, Checkov, or similar solutions. Understand Web Application Firewalls (WAF), API security, and bot protection strategies. Have experience with SIEM platforms, log analysis, and incident response processes. Are familiar with security standards and frameworks such as OWASP ASVS, ISO 27001, PCI DSS, or CIS Benchmarks. You'll Thrive in This Role If You Think like both an engineer and a security advocate. Enjoy solving complex security challenges before they become production issues. Are passionate about DevSecOps, automation, and secure-by-design principles. Collaborate effectively across Engineering, DevOps, QA, and Product teams. Continuously explore emerging security threats, tools, and best practices.",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Security",
+        "OWASP",
+        "Java"
+      ],
+      "title": "Security Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/okala-1/jobs/t49W/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%A7%DA%A9%D8%A7%D9%84%D8%A7-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9-%DA%A9%D9%88%D8%B1%D9%88%D8%B4",
+    "job_detail_version_id": 31,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/okala-1/jobs/t49W/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%A7%DA%A9%D8%A7%D9%84%D8%A7-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9-%DA%A9%D9%88%D8%B1%D9%88%D8%B4",
+    "semantic_sha256": "5e94a90b1e51f2e76d56b1f9fe06f2e90aa82080159fb5cdd54a3bdc3b026880",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t49W",
+  "stage": "source",
+  "title_observed": "Security Engineer"
+}

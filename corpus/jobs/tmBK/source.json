@@ -1,0 +1,49 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/hummers-group/jobs/tmBK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-python-developer-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D9%85%D8%A7%D9%84%DB%8C-%D9%87%D8%A7%D9%85%D8%B1%D8%B2",
+  "company_slug": "hummers-group",
+  "current_detail": {
+    "content_sha256": "3c9fffe05ee76e81284f4195b6185c7bc974cfb1e3e9d185eda991f48845a7a9",
+    "fetched_at": "2026-08-06T18:31:43.023887+00:00",
+    "fields": {
+      "company": "گروه مالی هامرز | Hummers Group",
+      "company_description": "تجارت هوشمند هامرز با تمرکز بر توسعه زیرساخت‌های فناورانه و پیوند با ابزارهای نوین مالی، به‌دنبال ساده‌سازی و هوشمندسازی تجربه کاربران در حوزه مدیریت ثروت و اعتباردهی است. این مجموعه با اتکا به فناوری، داده و شناخت رفتار مالی مخاطب، راهکارهایی طراحی می‌کند که تصمیم‌های مالی روزمره را سریع‌تر، شفاف‌تر و کاربردی‌تر می‌سازند. در این رویکرد، اعتبار و سرمایه‌گذاری نه به‌عنوان فرآیندهایی پیچیده و دور از دسترس، بلکه به‌عنوان ابزارهایی در خدمت سبک زندگی مالی کاربران تعریف می‌شوند؛ ابزارهایی که می‌توانند دسترسی به منابع مالی، مدیریت نقدینگی و مسیر ثروت‌آفرینی را برای طیف متنوعی از مخاطبان تسهیل کنند.",
+      "date_posted": "2026-08-04",
+      "description": "مهارت‌های موردنیاز: - مسلط به Python/Django - مسلط به DRF, FastAPI - آشنایی با Git - آشنایی با سیستم‌عامل لینوکس - آشنایی با دیتابیس‌های SQL و NoSQL - دانش کافی از مفاهیم شی‌گرایی، طراحی ماژولار - آشنایی با مفاهیم Database Locking، Concurrency و Transaction Management شرایط احراز: - روحیه کار تیمی و یادگیری بالا - توانایی حل مسئله - توانایی استفاده مؤثر از (AI) برای افزایش کیفیت و سرعت توسعه نرم‌افزار سطح فعلی برنامه‌نویسی برای ما اولویت اصلی نیست. آنچه برای ما اهمیت بیشتری دارد، داشتن ذهنیت *Ownership *، مسئولیت‌پذیری، پیگیری مسائل تا رسیدن به نتیجه، توانایی یادگیری مستمر و مشارکت مؤثر در توسعه محصول است. اگر انگیزه رشد دارید و کار را تا رسیدن به نتیجه دنبال می‌کنید، خوشحال می‌شویم با شما آشنا شویم.",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Python",
+        "Django",
+        "Git",
+        "RestFul API",
+        "OOP"
+      ],
+      "title": "Python Developer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/hummers-group/jobs/tmBK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-python-developer-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D9%85%D8%A7%D9%84%DB%8C-%D9%87%D8%A7%D9%85%D8%B1%D8%B2",
+    "job_detail_version_id": 44,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/hummers-group/jobs/tmBK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-python-developer-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D9%85%D8%A7%D9%84%DB%8C-%D9%87%D8%A7%D9%85%D8%B1%D8%B2",
+    "semantic_sha256": "a80bf435557be200fae07894ed016d966e67ae469f6450fc20b2e46eb562cd4b",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:02.205945+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:31:28.568034+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tmBK",
+  "stage": "source",
+  "title_observed": "Python Developer"
+}

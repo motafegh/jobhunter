@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/al-bayan-tech-solutions/jobs/taku/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-web-security-engineer-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D9%84%D8%A8%DB%8C%D8%A7%D9%86",
+  "company_slug": "al-bayan-tech-solutions",
+  "current_detail": {
+    "content_sha256": "2eda39ecae6351693cc212c399a45951dede6b00be0cd9617321b1847ddf113e",
+    "fetched_at": "2026-08-02T11:30:00.615254+00:00",
+    "fields": {
+      "company": "البیان | Al-Bayan Tech Solutions",
+      "company_description": "Al-Bayan Tech Solution is an IT and software development company registered in Oman, working with a distributed team primarily based in Iran, as well as selected locations in Europe and Africa. We work closely with partners in the European Union, delivering end-to-end software projects and long-term engineering support. Who We Are Al-Bayan Tech Solution is a young company built on the experience of partners who have been active in the software industry for many years. We operate as an agile development partner, helping our clients design, build, and evolve software systems that support their business goals. What We Do We cover the full software development lifecycle, from the first idea to production and beyond: Gathering and refining requirements together with our partners Designing scalable and maintainable architectures Implementing back-end, front-end, and integration components Setting up infrastructure, deployment pipelines, and monitoring Maintaining and improving existing systems over time We use a wide range of modern technologies, choosing the stack based on the project’s needs rather than forcing a single “one-size-fits-all” solution.",
+      "date_posted": "2026-07-04",
+      "description": "We are looking for a Mid-level to Senior Web Security Engineer to help us review and improve the security of a website and its related web services/APIs. This is a temporary, project-based position . The selected candidate will be paid based on this project only. Part-time collaboration is possible, as long as the agreed deliverables are completed with the expected quality and within the agreed timeline. This role is suitable for someone with practical experience in web application security who can test a website and web services, identify security issues, explain risks clearly, and provide practical remediation recommendations. Location: Remote Working hours: Flexible Engagement type: Temporary / project-based Payment: Based on this project only Compensation will be paid in USD . (پرداخت دلاری) Part-time: Possible, based on agreed timeline and deliverables Key Responsibilities Perform security testing on a website and related web services/APIs Identify common web application vulnerabilities such as: XSS SQL Injection CSRF IDOR Authentication and authorization issues Insecure file upload Session management problems Security misconfigurations Use manual testing methods and common security tools such as Burp Suite, OWASP ZAP, Nmap, or similar tools Prepare a clear security report including findings, risk level, evidence, impact, and recommended remediation Discuss findings with the technical team and help them understand how to fix the issues Re-test fixed issues when needed to confirm that the vulnerabilities have been properly resolved Requirements Hands-on experience in web application security testing Good understanding of OWASP Top 10 Experience testing websites and APIs Ability to use Burp Suite or similar web security testing tools Good understanding of HTTP, HTTPS, cookies, sessions, authentication, authorization, and basic API security Ability to write clear and practical security reports Ability to explain security issues in a simple and actionable way Responsible, detail-oriented, and able to deliver agreed results on time Nice to Have Experience with secure code review Experience with bug bounty programs or real-world vulnerability reporting Familiarity with basic Linux commands Security certifications such as eWPT, Security+, PNPT, OSCP, or similar are a plus, but not required Seniority Level This position is suitable for Mid-level to Senior candidates. We do not expect the candidate to be an expert in every area of cybersecurity. However, we expect them to be able to independently test a website and web services, provide useful findings, and suggest practical remediation steps. Expected Deliverables Security assessment of the website and related web services/APIs A clear report of identified vulnerabilities Risk level and impact explanation for each finding Recommended remediation steps Re-testing of fixed issues if required",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۲۰۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "OWASP",
+        "امنیت اطلاعات",
+        "HTTP"
+      ],
+      "title": "Web Security Engineer (دورکاری)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/al-bayan-tech-solutions/jobs/taku/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-web-security-engineer-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D9%84%D8%A8%DB%8C%D8%A7%D9%86",
+    "job_detail_version_id": 34,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/al-bayan-tech-solutions/jobs/taku/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-web-security-engineer-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D9%84%D8%A8%DB%8C%D8%A7%D9%86",
+    "semantic_sha256": "0ef654dbcaa714ba6601a74cb01996f6b51180402f2e9a97006287f893cf7621",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "taku",
+  "stage": "source",
+  "title_observed": "Web Security Engineer (دورکاری)"
+}

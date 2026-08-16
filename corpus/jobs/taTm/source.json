@@ -1,0 +1,46 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/fanavari-2/jobs/taTm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D8%A7%DB%8C%D8%AC%D9%86%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AE%D8%A7%D9%86%D9%87-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
+  "company_slug": "fanavari-2",
+  "current_detail": {
+    "content_sha256": "59bec58b9b5fb9784e2b7447e645520715cebe81a3416872ba3d03f5a7203c92",
+    "fetched_at": "2026-08-01T19:35:53.163106+00:00",
+    "fields": {
+      "company": "خانه فناوری تهران | Fanavari",
+      "company_description": "خانه فناوری تهران، برگزار کننده دوره های طراحی سایت و دیجیتال مارکتینگ و برنامه نویسی موبایل در دانشگاه تهران",
+      "date_posted": "2026-07-06",
+      "description": "به یک مدرس اتوماسیون هوش مصنوعی و ساخت ایجنت AI نیازمندیم. تجربه کار کردن با کلاد (Cluade) و N8N مهم هستند. ویژگی های مدرس مورد نظر ما: تسلط به هوش مصنوعی و ایجنت Cluade آشنا با کانکتورهای کلاد و اتصال با هوش مصنوعی های مطرح تسلط به N8N و آشنا با ساخت اتوماسیون های پیشرفته آشنا به ایجنت های هوش مصنوعی آشنا به زبان پایتون و هوش مصنوعی آشنایی با سایر اتوماسیون ها و ایجنت های هوش مصنوعی دیگر مزیت به حساب می آید. همکاری جهت برگزاری کلاس های حضوری در دانشگاه تهران است.",
+      "education": "مهم نیست",
+      "employment_type": "پاره وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۲۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "تدریس و آموزش",
+        "هوش مصنوعی"
+      ],
+      "title": "مدرس ایجنت هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/fanavari-2/jobs/taTm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D8%A7%DB%8C%D8%AC%D9%86%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AE%D8%A7%D9%86%D9%87-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
+    "job_detail_version_id": 22,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/fanavari-2/jobs/taTm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D8%A7%DB%8C%D8%AC%D9%86%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AE%D8%A7%D9%86%D9%87-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86",
+    "semantic_sha256": "de38d433e2babbbd76347f887b2fb869dab2fefffe7b3675ea3446fa2f4fe9bd",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "taTm",
+  "stage": "source",
+  "title_observed": "مدرس ایجنت هوش مصنوعی"
+}

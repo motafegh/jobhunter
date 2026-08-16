@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/hamyaridea/jobs/tahX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%AF%D9%87-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D9%87%D9%85%DB%8C%D8%A7%D8%B1",
+  "company_slug": "hamyaridea",
+  "current_detail": {
+    "content_sha256": "4543b76c998178bca92244fe2469e3f118a1e2ecfd27e9a9eba7ede5868d7f52",
+    "fetched_at": "2026-08-06T19:25:18.448358+00:00",
+    "fields": {
+      "company": "ایده پردازان همیار | Hamyaridea",
+      "company_description": "شرکت در زمینه توسعه نرم افزار صنایع نفتی و پالایشگاهی و کارخانجات صنعتی فعالیت میکند.",
+      "date_posted": "2026-07-08",
+      "description": "یک شرکت معتبر در شهر اصفهان در زمینه هوش مصنوعی برای تکمیل تیم برنامه نویس و R&D استخدام میکند؛ آشنا به مفاهیم یادگیری عمیق توانایی طراحی و آموزش انواع شبکه عصبی مسلط به فریمورک pytorch آشنایی با مفاهیم پردازش تصویر کلاسیک و کتابخانه opencv علاقه مند به کار تیمی و یادگیری مهارت هایی که مزیت به حساب میاد مسلط به زبان برنامه نویسی ++c اشنایی با NLP تست نویسی در پایتون آشنایی با Reinforcement learning Linux سابقه کار مهم نیست محدوده سنی از 18 سال تا 40 سال محل زندگی کارجو فقط اصفهان و شهرستان های اطراف . امکان دورکاری نداریم و کار فقط تمام وقت و در مرکز شهر اصفهان می‌باشد. شامل بیمه و بیمه تکمیلی و مزایا",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مرد",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "اصفهان",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۴۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "Pytorch",
+        "Linux"
+      ],
+      "title": "متخصص هوش مصنوعی (آقا-اصفهان)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/hamyaridea/jobs/tahX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%AF%D9%87-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D9%87%D9%85%DB%8C%D8%A7%D8%B1",
+    "job_detail_version_id": 46,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/hamyaridea/jobs/tahX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%AF%D9%87-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D9%87%D9%85%DB%8C%D8%A7%D8%B1",
+    "semantic_sha256": "47d689f80bd2bd02b2d71516a1e460e632a18478c672cbe8a066f3493e4d4f45",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T21:22:58.828970+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tahX",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی (آقا-اصفهان)"
+}

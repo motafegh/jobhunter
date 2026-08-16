@@ -1,0 +1,241 @@
+{
+  "analysis_artifact_id": 37,
+  "artifact_id": 12,
+  "capability_schema_version": "job-capability-intelligence-v5",
+  "created_at": "2026-08-15T19:59:13.283111+00:00",
+  "intelligence": {
+    "capabilities": [
+      {
+        "capability_label": "Artificial Intelligence & Content Generation",
+        "depth_signals": [],
+        "independence_expectation": null,
+        "operational_context": [],
+        "operational_practices": [],
+        "overall_confidence": "high",
+        "requirement_strength": "required",
+        "source_requirement_indices": [
+          0,
+          3
+        ],
+        "source_responsibility_indices": [],
+        "sub_capabilities": [],
+        "summary": "Core skills related to understanding and applying Artificial Intelligence for content creation.",
+        "underlying_knowledge": [],
+        "unknown_scope": [],
+        "work_activities": []
+      },
+      {
+        "capability_label": "Visual Media Production",
+        "depth_signals": [],
+        "independence_expectation": null,
+        "operational_context": [],
+        "operational_practices": [],
+        "overall_confidence": "high",
+        "requirement_strength": "required",
+        "source_requirement_indices": [
+          1,
+          4,
+          6
+        ],
+        "source_responsibility_indices": [],
+        "sub_capabilities": [],
+        "summary": "The Visual Media Production capability involves skills related to producing and creating visual and video content.",
+        "underlying_knowledge": [],
+        "unknown_scope": [],
+        "work_activities": []
+      },
+      {
+        "capability_label": "Digital Presence & Design",
+        "depth_signals": [],
+        "independence_expectation": null,
+        "operational_context": [],
+        "operational_practices": [],
+        "overall_confidence": "high",
+        "requirement_strength": "required",
+        "source_requirement_indices": [
+          5
+        ],
+        "source_responsibility_indices": [],
+        "sub_capabilities": [],
+        "summary": "Skills related to designing websites and managing online platforms.",
+        "underlying_knowledge": [],
+        "unknown_scope": [],
+        "work_activities": []
+      },
+      {
+        "capability_label": "Content Strategy & Tools",
+        "depth_signals": [],
+        "independence_expectation": null,
+        "operational_context": [],
+        "operational_practices": [],
+        "overall_confidence": "high",
+        "requirement_strength": "required",
+        "source_requirement_indices": [
+          2,
+          3
+        ],
+        "source_responsibility_indices": [],
+        "sub_capabilities": [],
+        "summary": "The capability involves applying skills in content creation with AI within the context of social networks.",
+        "underlying_knowledge": [],
+        "unknown_scope": [],
+        "work_activities": []
+      },
+      {
+        "capability_label": "Professional Conduct",
+        "depth_signals": [],
+        "independence_expectation": null,
+        "operational_context": [],
+        "operational_practices": [],
+        "overall_confidence": "high",
+        "requirement_strength": "required",
+        "source_requirement_indices": [
+          7
+        ],
+        "source_responsibility_indices": [],
+        "sub_capabilities": [],
+        "summary": "The capability area of Professional Conduct involves the importance of work commitment and ethical considerations in professional execution, as stated by the source.",
+        "underlying_knowledge": [],
+        "unknown_scope": [],
+        "work_activities": []
+      }
+    ],
+    "cross_capability_observations": [],
+    "role_interpretation": "The role combines Artificial Intelligence & Content Generation, Visual Media Production, Digital Presence & Design, Content Strategy & Tools, and Professional Conduct.",
+    "source_truth": {
+      "all_explicit_depth_requirement_indices": [],
+      "capability_explicit_depth_requirement_indices": [],
+      "capability_requirement_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "linked_capability_explicit_depth_requirement_indices": [],
+      "linked_requirement_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "linked_responsibility_indices": [],
+      "requirements": [
+        {
+          "concept": "Artificial Intelligence",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "Artificial Intelligence"
+          ],
+          "index": 0,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Video content production",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "Video content production"
+          ],
+          "index": 1,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Social networks",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "social networks"
+          ],
+          "index": 2,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Content creation with AI",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "Skills in content creation with AI"
+          ],
+          "index": 3,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Creativity in creating visual and video content",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "creativity in creating visual and video content"
+          ],
+          "index": 4,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Website design",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "website design"
+          ],
+          "index": 5,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Visual content production",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "ability to produce visual content full-time and part-time"
+          ],
+          "index": 6,
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Ethics and work commitment",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": [
+            "Ethics and your work commitment are important to us."
+          ],
+          "index": 7,
+          "requirement_type": "required"
+        }
+      ],
+      "responsibilities": [],
+      "role_level_explicit_depth_requirement_indices": [],
+      "role_level_requirement_indices": [],
+      "role_purpose": [],
+      "unlinked_capability_explicit_depth_requirement_indices": [],
+      "unlinked_capability_requirement_indices": [],
+      "unlinked_responsibility_indices": []
+    },
+    "uncertainties": [
+      "JobHunter normalized non-authoritative capability-planner prose that expressed source strength, technical depth, or ownership/scope beyond the grouping task.",
+      "JobHunter replaced model-expanded profile summary with the already-validated neutral capability-group summary.",
+      "JobHunter discarded 3 redundant or misplaced model expectation(s) whose evidence status belongs to deterministic source truth or another section."
+    ]
+  },
+  "job_detail_version_id": 41,
+  "model": "gemma-4-e2b-it",
+  "prompt_version": "job-capability-intelligence-v9",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source_job_id": "t4jp",
+  "stage": "capability",
+  "translation_artifact_id": 34
+}

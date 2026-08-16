@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/royal-pardaz-tiam-1/jobs/tmyX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B2%DB%8C%D8%B1%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-%D9%87%D8%A7%DB%8C-%D9%85%D8%A7%DB%8C%DA%A9%D8%B1%D9%88%D8%B3%D8%A7%D9%81%D8%AA-%D8%AF%D8%B1-%D8%B1%D9%88%DB%8C%D8%A7%D9%84-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2-%D8%AA%DB%8C%D8%A7%D9%85",
+  "company_slug": "royal-pardaz-tiam-1",
+  "current_detail": {
+    "content_sha256": "e349732be17dd869cb45de1cfc70f844b7b5e1e153cd6cbd1d4189ebda137c76",
+    "fetched_at": "2026-08-03T18:35:34.395405+00:00",
+    "fields": {
+      "company": "رویال پرداز تیام | Royal Pardaz Tiam",
+      "company_description": "ما در شرکت «رویال‌پرداز تیام» مشتاق شکل‌دهی به آینده‌ای دیجیتالی و امن‌ از طریق ارائه خدمات و راهکارهای نوآورانه در زمینه امنیت سایبری هستیم. امروز، در هجدهمین سالگرد تأسیس شرکت، ما به عنوان یک ارائه‌دهنده‌ی پیشرو در زمینه خدمات امنیت سایبری شناخته می‌شویم و مورد اعتماد بازیگران اصلی صنعت فناوری اطلاعات و ارتباطات (ICT) هستیم. ما این اعتماد را مدیون همکاری با متخصصان جوان مستعد ایرانی هستیم. باعث افتخار ماست اگر شما هم به اعضا تیم‌های مهارتی وتخصصی ما بپیوندید و از تجارب مفیدتان برای حفظ امنیت سایبری کشورتان استفاده کنید.",
+      "date_posted": "2026-07-26",
+      "description": "ما در رویال پرداز تیام، به عنوان نگهبانان فضای سایبری و معماران امنیت فناوری اطلاعات، ماموریتی فراتر از مرزهای معمول امنیت دیجیتال داریم. برای تحقق این هدف، به دنبال یک کارشناس امنیت زیرساخت و سرویس‌های مایکروسافت هستیم که وضعیت امنیتی سرورها و سرویس‌های مایکروسافت را ارزیابی کند و الزامات، Best Practiceها و راهکارهای امن‌سازی را تدوین و ارائه نماید. وظایف محوری: بررسی آسیب‌پذیری‌ها و ضعف‌های پیکربندی و ارائه پیشنهادهای اصلاحی بررسی و پاسخ‌گویی تخصصی به درخواست‌ها و تیکت‌های امنیتی بازبینی تنظیمات امنیتی، دسترسی‌ها و Group Policyها تهیه چک‌لیست‌ها، مستندات فنی و گزارش‌های امنیتی خودکارسازی فرآیندهای ارزیابی و ممیزی با PowerShell شایستگی‌های تخصصی: تسلط بر امن‌سازی Windows Server و سرویس‌هایی مانند Active Directory، ADFS، ADCS، Exchange و SCCM تسلط بر مفاهیم امنیت Active Directory، دسترسی‌های ویژه، Kerberos، NTLM، LDAP و Group Policy آشنایی با Microsoft Security Baseline، CIS Benchmark و سایر استانداردهای Hardening توانایی تحلیل آسیب‌پذیری‌ها، ضعف‌های پیکربندی و ارائه راهکارهای عملیاتی تسلط بر PowerShell برای جمع‌آوری اطلاعات، ممیزی و گزارش‌گیری امنیتی آشنایی با لاگ‌های امنیتی، SIEM و EDR در حد تحلیل و بررسی شواهد مهارت در عیب‌یابی Windows، Active Directory و سرویس‌های مایکروسافت توانایی تهیه مستندات و انتقال الزامات امنیتی به تیم‌های فنی",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "معافیت دائم",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "پیکربندی شبکه",
+        "PowerShell",
+        "زیرساخت شبکه"
+      ],
+      "title": "کارشناس امنیت زیرساخت و سرویس‌های مایکروسافت",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/royal-pardaz-tiam-1/jobs/tmyX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B2%DB%8C%D8%B1%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-%D9%87%D8%A7%DB%8C-%D9%85%D8%A7%DB%8C%DA%A9%D8%B1%D9%88%D8%B3%D8%A7%D9%81%D8%AA-%D8%AF%D8%B1-%D8%B1%D9%88%DB%8C%D8%A7%D9%84-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2-%D8%AA%DB%8C%D8%A7%D9%85",
+    "job_detail_version_id": 35,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/royal-pardaz-tiam-1/jobs/tmyX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B2%DB%8C%D8%B1%D8%B3%D8%A7%D8%AE%D8%AA-%D9%88-%D8%B3%D8%B1%D9%88%DB%8C%D8%B3-%D9%87%D8%A7%DB%8C-%D9%85%D8%A7%DB%8C%DA%A9%D8%B1%D9%88%D8%B3%D8%A7%D9%81%D8%AA-%D8%AF%D8%B1-%D8%B1%D9%88%DB%8C%D8%A7%D9%84-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2-%D8%AA%DB%8C%D8%A7%D9%85",
+    "semantic_sha256": "84188e32ddd0a606f2c4db5393d8266c0e0eeec8dd048ada9abda8f3dfa0cad2",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:35:29.163396+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tmyX",
+  "stage": "source",
+  "title_observed": "کارشناس امنیت زیرساخت و سرویس‌های مایکروسافت"
+}

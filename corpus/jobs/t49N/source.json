@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/fanap/jobs/t49N/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-cloud-security-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%BE",
+  "company_slug": "fanap",
+  "current_detail": {
+    "content_sha256": "001a5e35b97a2cd7f8bedab7c037349e75b873fa3bee059d2e5ae1afa1114f3d",
+    "fetched_at": "2026-08-01T19:45:25.727235+00:00",
+    "fields": {
+      "company": "فناپ | Fanap",
+      "company_description": "شرکت فناپ در سال ۱۳۸۴ با سرمایه‌گذاری گروه مالی پاسارگاد و جمعی از متخصصان و کارآفرینان حوزه فناوری اطلاعات و ارتباطات تاسیس شد. ماموریت اولیه آن، ارائه خدمات نرم‌افزاری و سخت‌افزاری و مدیریت پروژه‌های فناورانه برای اعضای گروه مالی پاسارگاد بود. فناپ در آغاز با تمرکز بر نرم‌افزارهای بانکی فعالیت خود را شروع کرد. اما امروز دامنه خدمات آن فراتر رفته و بانک‌ها، موسسات مالی و اعتباری و شرکت‌های بزرگ کشور را نیز در بر می‌گیرد. این شرکت اکنون در حوزه‌های متنوعی همچون مالی، بانکی و بیمه‌ای، ارتباطات و مخابرات، حمل‌ونقل هوشمند، سلامت هوشمند، مدیریت منابع سازمانی، زیرساخت ابری و مراکز داده، امنیت و هوشمندسازی فرآیندها فعال است. فناپ با ارائه راه‌حل‌های نوآورانه و مطمئن، به یکی از بازیگران اصلی و اثرگذار صنعت فناوری اطلاعات و ارتباطات در کشور تبدیل شده است.",
+      "date_posted": "2026-08-01",
+      "description": "Job Summary We are seeking a Cloud Security Engineer to design, implement, and maintain secure cloud environments. The role combines cloud infrastructure and cybersecurity expertise to ensure secure, reliable, and compliant solutions while working closely with business and technical teams. Key Responsibilities -Design and implement secure cloud infrastructure following security best practices. -Review solution designs and recommend appropriate security controls. -Develop and maintain cloud security standards, hardening guidelines, and documentation. -Implement secure networking, identity and access management, encryption, and connectivity controls. -Support solution architects and business teams by providing security guidance throughout the solution lifecycle. -Integrate security into infrastructure deployment, monitoring, automation, and operational processes. -Enhance security monitoring, incident response, and threat detection capabilities. -Perform vulnerability assessments, risk analysis, and coordinate remediation activities. -Support security incidents, compliance activities, and customer security assessments. -Research emerging threats and recommend continuous security improvements. Required Qualifications -Bachelor's degree in Computer Science, Information Technology or a related field. -5+ years of experience in cybersecurity, and cloud security. -Strong understanding of cloud infrastructure, networking, identity and access management, and infrastructure security. -Experience with vulnerability management, security hardening, and security monitoring. -Knowledge of Linux administration, networking, encryption, and security best practices. -Experience with automation or Infrastructure as Code is a plus. -Strong analytical, troubleshooting, communication, and documentation skills. Preferred Skills -Cloud security architecture -Security operations and incident response -Risk assessment and threat modeling -DevSecOps practices -Compliance frameworks (ISO 27001, NIST, CIS, PCI DSS) -Scripting and automation",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "معافیت دائم",
+      "minimum_experience": "بیش از شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "cloud",
+        "امنیت شبکه",
+        "CIS"
+      ],
+      "title": "Cloud Security Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/fanap/jobs/t49N/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-cloud-security-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%BE",
+    "job_detail_version_id": 29,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/fanap/jobs/t49N/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-cloud-security-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%BE",
+    "semantic_sha256": "ef723544d791a068c663b79f7df0d2f1fa1c6a52d6a5f4075c2d9aed40926419",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t49N",
+  "stage": "source",
+  "title_observed": "Cloud Security Engineer"
+}

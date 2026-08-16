@@ -1,0 +1,48 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/taPR/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D8%A7%D8%B1%D8%B4%D8%AF-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%DB%8C%D8%A7%D8%AF%DA%AF%DB%8C%D8%B1%DB%8C-%D9%85%D8%A7%D8%B4%DB%8C%D9%86-senior-ai-ml-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%A2%D8%B3%D8%A7%DB%8C%D8%B4-%D9%85%D8%AF%D8%B1%D9%86",
+  "company_slug": "goldiran-asayesh",
+  "current_detail": {
+    "content_sha256": "845ac0fe2f497868da14c2289d03b6547ef7a0caa52f72564123959b38ec3177",
+    "fetched_at": "2026-08-04T19:32:15.606948+00:00",
+    "fields": {
+      "company": "گلدیران آسایش مدرن | Goldiran Asayesh",
+      "company_description": "گلدیران آسایش یکی از جوان‌ترین زیرمجموعه‌های هلدینگ گلدیران است که خدمات و راهکارهای بهینه را بر بستر وب و با استفاده از تکنولوژی‌های مدرن ارائه می‌دهد. تیم گلدیران آسایش به سرعت در حال رشد است و برای رسیدن به هدف خود یعنی تأمین زندگی بهتر همه افراد گام برمی‌دارد. محیط کاری در گلدیران آسایش پویا و با نشاط است و امکان یادگیری در آن فراهم شده است.",
+      "date_posted": "2026-07-01",
+      "description": "ما در گلدیران، با رویکردی نوآورانه و AI-First به دنبال یک مهندس ارشد هوش مصنوعی (AI/ML Engineer) هستیم تا هسته هوشمند محصولات نسل جدید ما را طراحی و پیاده‌سازی کند. این نقش، فرصتی استثنایی برای ساخت یک سیستم پیشرفته مبتنی بر Retrieval-Augmented Generation (RAG) از پایه و شکل دادن به آینده تعامل کاربران با داده‌ها است. طراحی و معماری، توسعه و بهینه‌سازی مدل‌های زبانی بزرگ (LLMs) را بر عهده خواهد داشت و تأثیری مستقیم بر کیفیت، دقت و کارایی محصول نهایی خواهد گذاشت. مسئولیت‌ها · طراحی، پیاده‌سازی و استقرار کامل پایپ‌لاین RAG با استفاده از فریمورک‌هایی مانند LangChain یا LlamaIndex. · معماری و مدیریت پایگاه‌داده‌های برداری (Vector Databases) مانند Pinecone، Qdrant یا Milvus. · توسعه و بهینه‌سازی فرآیندهای ایجاد Embeddings از داده‌های متنی و چندوجهی. · یکپارچه‌سازی سیستم با مدل‌های زبانی بزرگ (LLMs) از طریق API (مانند GPT-4o, Claude 3.5) و آماده‌سازی زیرساخت برای استفاده از مدل‌های متن‌باز (Self-hosted). · پیاده‌سازی تکنیک‌های پیشرفته برای بهبود فرآیند بازیابی (Retrieval) و رتبه‌بندی (Re-ranking) نتایج. · تحقیق و پیاده‌سازی راهکارها برای کاهش توهم (Hallucination) و افزایش دقت و ارتباط پاسخ‌های مدل. · همکاری نزدیک با تیم‌های Backend و Data Engineering برای یکپارچه‌سازی مدل در زیرساخت اصلی و تضمین جریان داده با کیفیت. · بهینه‌سازی عملکرد سیستم برای کاهش زمان پاسخ‌دهی (Latency) و پیاده‌سازی منطق Streaming. · ارزیابی مدل‌ها، تعریف متریک‌های موفقیت و ارائه گزارش‌های تحلیلی. · همگام بودن با آخرین دستاوردهای علمی در حوزه NLP و LLMs و به‌کارگیری آن‌ها در محصول. شرایط احراز • حداقل ۵ سال تجربه حرفه‌ای در زمینه یادگیری ماشین و هوش مصنوعی. • تجربه عملی و اثبات‌شده در طراحی و پیاده‌سازی سیستم‌های RAG در محیط Production. • تسلط کامل بر زبان برنامه‌نویسی Python و کتابخانه‌های تخصصی مانند PyTorch, TensorFlow و Hugging Face. • تجربه عمیق در کار با Vector Databases و درک مفاهیم Embeddings و جستجوی معنایی. • مهارت در استفاده از APIهای ارائه‌دهندگان LLM (مانند OpenAI, Anthropic, Google). • درک قوی از معماری Transformer و مفاهیم بنیادین مدل‌های زبانی بزرگ. • توانایی تحلیل مسئله، تفکر ساختاریافته و ارائه راه‌حل‌های نوآورانه. مزیت محسوب می‌شود • تجربه در Fine-tuning مدل‌های زبانی متن‌باز (مانند Llama 3, Mistral). • آشنایی با ابزارهای MLOps و تجربه در استقرار و مانیتورینگ مدل‌ها. • تجربه کار با پلتفرم‌های ابری (AWS, GCP, Azure) و سرویس‌های مرتبط با AI/ML. • مشارکت در پروژه‌های متن‌باز یا مقالات علمی در حوزه AI/NLP.",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "بیش از شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "یادگیری ماشین",
+        "Pytorch",
+        "LLMs"
+      ],
+      "title": "مهندس ارشد هوش مصنوعی و یادگیری ماشین (Senior AI/ML Engineer)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/taPR/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D8%A7%D8%B1%D8%B4%D8%AF-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%DB%8C%D8%A7%D8%AF%DA%AF%DB%8C%D8%B1%DB%8C-%D9%85%D8%A7%D8%B4%DB%8C%D9%86-senior-ai-ml-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%A2%D8%B3%D8%A7%DB%8C%D8%B4-%D9%85%D8%AF%D8%B1%D9%86",
+    "job_detail_version_id": 39,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/taPR/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D8%A7%D8%B1%D8%B4%D8%AF-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%DB%8C%D8%A7%D8%AF%DA%AF%DB%8C%D8%B1%DB%8C-%D9%85%D8%A7%D8%B4%DB%8C%D9%86-senior-ai-ml-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%A2%D8%B3%D8%A7%DB%8C%D8%B4-%D9%85%D8%AF%D8%B1%D9%86",
+    "semantic_sha256": "a6821d61e341dda8e8734d83a77eb0af002a3d124c777961c7420d212acfa3b3",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T21:22:58.828970+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-04T20:06:36.502934+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "taPR",
+  "stage": "source",
+  "title_observed": "مهندس ارشد هوش مصنوعی و یادگیری ماشین (Senior AI/ML Engineer)"
+}

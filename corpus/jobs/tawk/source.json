@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/torang-361/jobs/tawk/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-torang",
+  "company_slug": "torang-361",
+  "current_detail": {
+    "content_sha256": "5f07204aba2ca636eaca7a1c29c587a299011cedc20673395f0e65d4f10a8842",
+    "fetched_at": "2026-07-31T22:21:30.421280+00:00",
+    "fields": {
+      "company": "Torang | Torang",
+      "company_description": "ما یه موسسه فرهنگی رسانه‌ای (محدوده‌ی شریعتی – میرداماد) هستیم که روزمون با ایده‌پردازی، نوشتن، تصویرسازی، تدوین و کلی کار خلاقانه‌ی دیگه می‌گذره. برای اینکه تیم‌مون منسجم‌تر و قوی‌تر بشه، به چند همکار تازه‌نفس نیاز داریم",
+      "date_posted": "2026-07-01",
+      "description": "استخدام کارشناس تولید محتوای هوش مصنوعی و تدوین ما به دنبال فردی خلاق، مسئولیت‌پذیر و علاقه‌مند به یادگیری برای همکاری در حوزه تولید محتوای مبتنی بر هوش مصنوعی هستیم. شرایط و مهارت‌های موردنیاز: تسلط به ابزارهای هوش مصنوعی از جمله Kling، ChatGPT و Gemini برای تولید تصویر، انیمیت و تولید محتوا تسلط به نرم‌افزارهای تدوین و ویرایش ویدئو جهت آماده‌سازی و ارائه خروجی نهایی توانایی کار تیمی، تعامل مؤثر با اعضای تیم و پذیرش مسئولیت علاقه‌مند به یادگیری، رشد حرفه‌ای و به‌روز نگه داشتن دانش تخصصی مزایا: حقوق و مزایا مطابق عرف بازار و بر اساس توانمندی و تجربه بیمه تأمین اجتماعی عیدی و سنوات مطابق قانون کار سیستم پاداش مبتنی بر عملکرد ساعت کاری شناور (شروع کار بین ساعت ۸ تا ۱۰ صبح) زمان کاری: روزهای کاری: شنبه تا چهارشنبه پنجشنبه و جمعه: در صورت نیاز به‌صورت اضافه‌کاری اگر به حوزه هوش مصنوعی، تولید محتوا و خلق پروژه‌های خلاقانه علاقه‌مند هستید، خوشحال می‌شویم رزومه شما را دریافت کنیم.",
+      "education": "دیپلم",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "تولید و مدیریت محتوا",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "کمتر از سه سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "تولید محتوا",
+        "هوش مصنوعی",
+        "تولید محتوای تصویری"
+      ],
+      "title": "متخصص هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/torang-361/jobs/tawk/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-torang",
+    "job_detail_version_id": 13,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/torang-361/jobs/tawk/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-torang",
+    "semantic_sha256": "2991a9479b62d1ad24dc3d97b35a401d6a1086aa0d160f72de21f2788c56e457",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tawk",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی"
+}

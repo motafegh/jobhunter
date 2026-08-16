@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/aseh-tejarat-asia/jobs/tpLF/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-developer-%D8%AF%D8%B1-%D8%A2%D8%B3%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A2%D8%B3%DB%8C%D8%A7",
+  "company_slug": "aseh-tejarat-asia",
+  "current_detail": {
+    "content_sha256": "3f45948458af48a75375f61e0729a5871d8dbe3991fa6f642a86cfc24b2fd66d",
+    "fetched_at": "2026-07-31T19:24:10.587543+00:00",
+    "fields": {
+      "company": "آسه تجارت آسیا | Aseh Tejarat Asia",
+      "company_description": "شرکت آسه تجارت آسیا، با بیش از 20 سال فعالیت بازرگانی در زمینه تامین تجهیزات، قطعات و انواع کمپرسور در صنعت برودت و تهویه مطبوع، همواره سعی بر آن داشته ایم تا از طریق همکاری با برترین برندهای بین المللی از جمله بیتزر، امبراکو، کوپلند، دانفوس و... امکان خرید کالاهای با‌کیفیت را برای مشتریان‌مان فراهم کنیم. در گام های بعدی، در راستای هدف والای خود که حضور موثر و قدرتمند در بازار در عین \"مسئولیت پذیری \" است تصمیم گرفتیم، که با راه اندازی واحد تعمیرات، خدمات و مشاوره مهندسی، حامی و همراه مشتریان باشیم. همچنین در سالهای اخیر نیز تولید انواع تجهیزات سرمایشی شامل درب‌های سردخانه ، کندانسینگ یونیت، اواپراتور وکوئل با به کارگیری آخرین تکنولوژی، تجهیزات پیشرفته و مواد اولیه با کیفیت، در صدر فعالیتهای ما قرار گرفته است. باور ما بر این است تا با پایبندی به تعهدات در برابر مشتریان، توجه به ارزشهای اخلاقی و حفظ اصل صداقت و شفافیت، تجربه متفاوت و ماندگاری را برای مشتریان خود رقم بزنیم و همواره با پویایی در جهت رشد و اعتلای این صنعت گام برداریم.",
+      "date_posted": "2026-06-16",
+      "description": "وظایف تخصصی شاغل - طراحی و توسعه مدل‌های هوش مصنوعی و یادگیری ماشین - توسعه سیستم‌های پردازش زبان طبیعی (NLP) - توسعه چت‌بات‌ها و دستیارهای هوشمند - طراحی و مدیریت فرآیندهای MLOps و استقرار مدل‌ها در محیط عملیاتی -تحقیق و ارزیابی الگوریتم‌ها و فناوری‌های جدید هوش مصنوعی دانش و مهارت‌های تخصصی شاغل - تسلط بر زبان برنامه‌نویسی Python - دانش یادگیری ماشین (Machine Learning) - دانش پردازش زبان طبیعی (NLP) - آشنایی با مدل‌های زبانی بزرگ (LLMs) - آشنایی با سیستم‌های RAG (Retrieval-Augmented Generation) - آشنایی با مدل‌های مولد (Generative AI) - تسلط بر کتابخانه‌های AI مانند TensorFlow و PyTorch - آشنایی با پایگاه‌های داده SQL و NoSQL - آشنایی با MLOps و چرخه عمر مدل‌های یادگیری ماشین - مهارت در مهندسی پرامپت (Prompt Engineering) مسلط به نرم افزارهای: Visual Studio Code / Anaconda / GitHub/ Docker/ Jupyter Lab **نوع همکاری به صورت تمام وقت و حضوری می باشد.**",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "پایان خدمت",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Ai",
+        "NLP",
+        "Python"
+      ],
+      "title": "توسعه دهنده هوش مصنوعی (AI Developer)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/aseh-tejarat-asia/jobs/tpLF/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-developer-%D8%AF%D8%B1-%D8%A2%D8%B3%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A2%D8%B3%DB%8C%D8%A7",
+    "job_detail_version_id": 3,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/aseh-tejarat-asia/jobs/tpLF/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-developer-%D8%AF%D8%B1-%D8%A2%D8%B3%D9%87-%D8%AA%D8%AC%D8%A7%D8%B1%D8%AA-%D8%A2%D8%B3%DB%8C%D8%A7",
+    "semantic_sha256": "449bf19385478b10d63d2f228985800ead9e7188bd7baca4d2b4efc68e2717b6",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:24:21.826921+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tpLF",
+  "stage": "source",
+  "title_observed": "توسعه دهنده هوش مصنوعی (AI Developer)"
+}

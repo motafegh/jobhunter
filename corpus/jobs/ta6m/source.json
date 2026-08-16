@@ -1,0 +1,48 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/inmasir-skill-academy/jobs/ta6m/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A8%DB%8C%D8%B1%D8%AC%D9%86%D8%AF-%D8%AF%D8%B1-%D8%A2%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%D9%85%D9%87%D8%A7%D8%B1%D8%AA-%D8%A7%DB%8C%D9%86-%D9%85%D8%B3%DB%8C%D8%B1",
+  "company_slug": "inmasir-skill-academy",
+  "current_detail": {
+    "content_sha256": "967dce66dc3d0c68adf96015832ac2748d0f43ad9f3f1d5830d0b936bde56474",
+    "fetched_at": "2026-08-01T19:35:56.574790+00:00",
+    "fields": {
+      "company": "آکادمی مهارت این مسیر | Inmasir Skill Academy",
+      "company_description": "به نام خدا آکادمی این مسیر یک مجموعه آموزشی مهارت محور است که در سال ۱۴۰۵ با اخذ مجوز از سازمان آموزش فنی و حرفه ای با مدیریت مهندس سید بهمن خلیلی نژاد افتتاح گردیده است. رسالت این مجموعه توانمندکردن اقشار مختلف به ابزارهای مدرن و روز دنیا جهت پیشرفت شغلی و کسب درآمدهای بالاتر از طریق بکارگیری فناوری و تکنولوژی های مدرن است. این مجموعه بر آنست بتواند نقشی در ساختن آینده افراد، خانواده ها و اقشار مختلف جامعه بر اساس بالابردن سطح آگاهی و مهارت افراد ایفا نماید. با تشکر از توجه شما",
+      "date_posted": "2026-06-30",
+      "description": "ارائه سرفصل و محتوی دوره به مدیریت آکادمی جهت تایید و اجرا برنامه ریزی جهت کاربردی بودن دوره و بالارفتن سطح مهارت های دانشپذیران همکاری و ارائه مشاوره به مدیریت آکادمی جهت برگزاری هرچه مثمرثمر تر دوره ارائه گزارش پیشرفت دانشپذیران مطابق فرم های مربوطه به مدیریت آکادمی ارائه ارزشیابی و آزمون های موردنیاز جهت ارائه گواهینامه پایان دوره توسط آکادمی رعایت الزامات اخلاق حرفه ای مطابق آیین نامه های داخلی آکادمی و آیین نامه های سازمان آموزش فنی و حرفه ای کشور",
+      "education": "مهم نیست",
+      "employment_type": "پاره وقت",
+      "gender": "مهم نیست",
+      "job_category": "آموزش",
+      "language": "fa",
+      "location": "خراسان جنوبی",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "تدریس و آموزش",
+        "مدرس",
+        "آموزش"
+      ],
+      "title": "مدرس هوش مصنوعی (بیرجند)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/inmasir-skill-academy/jobs/ta6m/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A8%DB%8C%D8%B1%D8%AC%D9%86%D8%AF-%D8%AF%D8%B1-%D8%A2%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%D9%85%D9%87%D8%A7%D8%B1%D8%AA-%D8%A7%DB%8C%D9%86-%D9%85%D8%B3%DB%8C%D8%B1",
+    "job_detail_version_id": 23,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/inmasir-skill-academy/jobs/ta6m/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A8%DB%8C%D8%B1%D8%AC%D9%86%D8%AF-%D8%AF%D8%B1-%D8%A2%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%D9%85%D9%87%D8%A7%D8%B1%D8%AA-%D8%A7%DB%8C%D9%86-%D9%85%D8%B3%DB%8C%D8%B1",
+    "semantic_sha256": "a79e898c5ccd24ff546e8b1077a22b36f8b8557d9457d84fda0cb058a8ff72d9",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "fa",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "ta6m",
+  "stage": "source",
+  "title_observed": "مدرس هوش مصنوعی (بیرجند)"
+}

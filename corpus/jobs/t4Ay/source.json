@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/sadra-kala/jobs/t4Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-senior-ai-engineer-llm-rag-ai-agents-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%B5%D8%AF%D8%B1%D8%A7-%DA%A9%D8%A7%D9%84%D8%A7%DB%8C-%D8%B4%D8%B1%D9%82",
+  "company_slug": "sadra-kala",
+  "current_detail": {
+    "content_sha256": "fa52fba1301f2d4c5719c29bc765a58d9eb9dae3ec49bf15f2a35fa522634e22",
+    "fetched_at": "2026-08-01T19:35:59.915059+00:00",
+    "fields": {
+      "company": "صدرا کالای شرق | sadra kala",
+      "company_description": "صدرا با نام تجاری (صنعتگرد)با هدف معرفی ظرفیت‌های صنعتی، توسعه ارتباط میان کارخانه‌ها، مدیران، متخصصان و ارائه‌دهندگان خدمات کسب‌وکار فعالیت می‌کند. فعالیت‌های ما حوزه‌هایی مانند جمع‌آوری و مدیریت اطلاعات صنعتی، تولید محتوای تخصصی، توسعه رسانه‌های دیجیتال، بازاریابی و فروش B2B و طراحی خدمات هوشمند برای صنایع را در بر می‌گیرد. در این مجموعه، یادگیری مستمر، کار تیمی، مسئولیت‌پذیری، خلاقیت و ارائه راه‌حل‌های عملی اهمیت بالایی دارد. ما از همکاری با افرادی استقبال می‌کنیم که به فضای صنعت، رسانه، فناوری و توسعه کسب‌وکار علاقه‌مند هستند و می‌خواهند در کنار یک تیم در حال رشد، تجربه‌های حرفه‌ای و اثرگذاری کسب کنند.",
+      "date_posted": "2026-07-28",
+      "description": "با سلام و احترام شرکت برای توسعه یک اکوسیستم هوش مصنوعی در حوزه صنعت ،به دنبال یک Senior AI Engineer با تجربه در طراحی و پیاده‌سازی سیستم‌های مبتنی بر LLM و AI Agent هستیم. نکته : باتوجه به زیر ساخت پروژه که با دات نت کور و بانک اطلاعاتی اس کیو ال سرور می باشد فرد مورد نظر باید هم راستا با این تیم کار رو پیش ببره و api خروجی رو طبق این استاندارد آماده سازی کند. نکته: با توجه به حساسیت کار ، همکاری مورد نظر به صورت فول تایم و حضور در دفتر مشهد امکان پذیر می باشد. این موقعیت صرفاً مربوط به استفاده از APIهای هوش مصنوعی نیست؛ بلکه شامل طراحی معماری، توسعه Agentهای هوشمند، پردازش زبان طبیعی، تولید محتوا، سیستم‌های پیشنهاددهنده و یکپارچه‌سازی با Backend است. مسئولیت‌ها طراحی و توسعه AI Agentهای مبتنی بر LLM توسعه سیستم‌های RAG طراحی Promptهای حرفه‌ای توسعه Workflowهای Agentic پیاده‌سازی NLP برای: Summarization Rewriting Classification Named Entity Recognition Sentiment Analysis توسعه سیستم تولید محتوای متنی توسعه سیستم تولید تصویر با Stable Diffusion یا FLUX طراحی Recommendation Engine طراحی Data Pipeline و MLOps توسعه REST API جهت اتصال مدل‌ها به Backend بهینه‌سازی هزینه و سرعت پاسخگویی مدل‌ها Fine-tuning و Evaluation مدل‌ها در صورت نیاز آنچه در این پروژه خواهید ساخت AI Content Agent AI Marketing Agent Industrial Knowledge Assistant Smart Recommendation Engine AI-powered Dashboard AI Content Automation Pipeline AI Image Generation Service AI APIs برای وب و موبایل این موارد با نیازهای مطرح‌شده در اسناد شرکت برای اتوماسیون تولید محتوا، ایجنت‌های هوشمند، پردازش زبان طبیعی، تولید تصویر و محصولات اصلی مبتنی بر AI هم‌راستا می باشند. سطح مورد نیاز تجربه در توسعه سیستم‌های AI تجربه عملی در پروژه‌های LLM و Agent توانایی طراحی معماری End-to-End توانایی استقرار مدل‌ها در محیط Production",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "خراسان رضوی",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "مهم نیست",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Ai",
+        "workflow",
+        "NLP"
+      ],
+      "title": "متخصص هوش مصنوعی - Senior AI Engineer (LLM, RAG & AI Agents-مشهد)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/sadra-kala/jobs/t4Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-senior-ai-engineer-llm-rag-ai-agents-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%B5%D8%AF%D8%B1%D8%A7-%DA%A9%D8%A7%D9%84%D8%A7%DB%8C-%D8%B4%D8%B1%D9%82",
+    "job_detail_version_id": 24,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/sadra-kala/jobs/t4Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-senior-ai-engineer-llm-rag-ai-agents-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%B5%D8%AF%D8%B1%D8%A7-%DA%A9%D8%A7%D9%84%D8%A7%DB%8C-%D8%B4%D8%B1%D9%82",
+    "semantic_sha256": "efd706e28133d8c82b3efee86937d3d87c59b0201831b422bd8aac2e9be11d30",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-08-01T19:33:59.904662+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-01T19:33:59.904662+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "t4Ay",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی - Senior AI Engineer (LLM, RAG & AI Agents-مشهد)"
+}

@@ -1,0 +1,50 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/esora/jobs/tG9K/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-semiconductor-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%B2%D9%88%D8%B1%D8%A7",
+  "company_slug": "esora",
+  "current_detail": {
+    "content_sha256": "a4f9288bfd287a36764de9336ee515b6e48f03fe413970af1856435499260b15",
+    "fetched_at": "2026-08-04T21:45:21.651002+00:00",
+    "fields": {
+      "company": "ایزورا | eSora",
+      "company_description": "eSora Labs is for builders, thinkers, designers, engineers, and domain experts who want to work across AI, software, design, healthcare, semiconductor, aerospace, and regulated technology.",
+      "date_posted": "2026-07-15",
+      "description": "What you’ll do ● Build and validate ML/AI models on semiconductor process, equipment, and manufacturing data. ● Work on yield optimization, process control (APC / SPC), fault detection and classification (FDC), and anomaly detection. ● Handle high-volume, high-dimensional sensor / trace and metrology data; build robust pipelines. ● Turn manufacturing problems into well-scoped modeling problems with the technical team. ● Design rigorous validation and monitoring for models running in an industrial setting. ● Partner with the semiconductor technical lead and engineering to move models toward production. ● Ensure traceability, reproducibility, and governance of models and data. What we’re looking for ● Strong experience applying AI/ML to semiconductor or comparable industrial / manufacturing data. ● Hands-on with process control, manufacturing analytics, yield optimization, or fault / anomaly detection. ● Comfort with high-dimensional time-series / sensor / metrology data and its noise. ● Solid statistics and signal-processing fundamentals. ● Discipline around validation, reproducibility, and documentation. Technical skill stack The tools and technologies you should be strong in. We don’t expect every single item — depth in the core stack matters most. ● Programming: Python (expert) and SQL; MATLAB a plus; some C / C++ helpful ● ML & deep learning: scikit-learn, PyTorch, TensorFlow, XGBoost / LightGBM ● Data & statistics: pandas, NumPy, SciPy, statsmodels; multivariate analysis (PCA / PLS) ● Time-series & signal: signal processing, FFT / wavelets, anomaly detection; tsfresh, sktime ● Industrial statistics: SPC, design of experiments (DOE), capability analysis, Bayesian methods ● Semiconductor domain: FDC / APC / SPC, virtual metrology, run-to-run control, yield analysis ● Fab data systems: MES, SECS / GEM, and equipment / metrology / trace data ● Data platforms: Spark, Kafka; time-series stores (InfluxDB / TimescaleDB); PostgreSQL ● MLOps: MLflow, Docker; pipelines with Airflow or Prefect; model deployment ● Cloud & edge: AWS, GCP, or Azure; industrial / edge deployment a plus",
+      "education": "کارشناسی ارشد",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "تحقیق و توسعه",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "Python",
+        "Microsoft Office",
+        "Machine learning",
+        "Linux",
+        "Git"
+      ],
+      "title": "متخصص هوش مصنوعی (Semiconductor)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/esora/jobs/tG9K/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-semiconductor-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%B2%D9%88%D8%B1%D8%A7",
+    "job_detail_version_id": 40,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/esora/jobs/tG9K/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-semiconductor-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%B2%D9%88%D8%B1%D8%A7",
+    "semantic_sha256": "2f3704f3b23ae42a3c57b616fc16a8c0ab7b9e9541a5b2391d21df18c17f435b",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-07-31T17:44:43.337279+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-08-06T18:41:25.979811+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tG9K",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی (Semiconductor)"
+}
