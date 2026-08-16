@@ -56,6 +56,13 @@ _PRIOR_APPLIED_EXPOSURE_RE = re.compile(
     re.I,
 )
 
+# Live heterogeneous review exposed this explicit employer degree phrase. Extend the shared
+# validator registry narrowly for v20; plain ``knowledge`` intentionally remains non-depth.
+_DEPTH_SIGNAL_PATTERNS.setdefault(
+    "sufficient_knowledge",
+    re.compile(r"\bsufficient\s+knowledge\b", re.I),
+)
+
 
 def _has_accepted_depth(text: str) -> bool:
     return any(pattern.search(text) for pattern in _DEPTH_SIGNAL_PATTERNS.values())
