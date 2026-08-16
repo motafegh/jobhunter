@@ -34,6 +34,7 @@ Status vocabulary:
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
 - [x] P1.6 v20 implementation/calibration stack consolidated into `main`.
+- [x] version-controlled public corpus projection `jobhunter-public-corpus-v1`.
 
 ## B. Semantic-quality gate
 
@@ -73,7 +74,6 @@ Original: job-analysis-original-v9 / job-analysis-v4
 - [x] public original-language path remains v9/v4.
 - [x] normal `jobhunter jobs analyze tG9K` reuses artifact 36.
 - [x] normal `jobhunter jobs analyze t4jp` reuses artifact 37.
-- [x] normal Review Snapshot selects artifacts 36/37 with matching projection dependencies.
 - [x] operational P1.6 v20 promotion complete.
 
 ### B3 — Capability Intelligence v9 — PROMOTED / CLOSED
@@ -113,32 +113,13 @@ OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 - [x] zero optional model enrichment is valid.
 - [x] redundant model `source_explicit` echoes are filtered; deterministic reconciliation remains authority.
 - [x] incomplete authoritative source truth cannot persist.
-
-Dense v9 acceptance:
-
-- [x] artifact 11 depends on P1.6 artifact 36.
-- [x] 31/31 capability requirements linked.
-- [x] 8/8 responsibilities linked.
-- [x] capability explicit depth 5/5; all explicit depth 6/6.
-- [x] role-level indices `[31, 32]` separate.
-- [x] semantic review PASS.
-
-Sparse v9 acceptance:
-
-- [x] artifact 12 depends on P1.6 artifact 37.
-- [x] 8/8 requirements linked; 0/0 responsibilities; 0/0 explicit depth.
-- [x] no fabricated role purpose, role-level constraints, duties, prerequisites, or depth.
-- [x] semantic disposition PASS WITH ACCEPTABLE DIFFERENCES.
-
-Promotion/operation:
-
+- [x] dense artifact 11 accepted/current on P1.6 artifact 36.
+- [x] sparse artifact 12 accepted/current on P1.6 artifact 37.
 - [x] neutral/current `capability_service.py` promotes v9/v5.
 - [x] CLI/browser/Review Snapshot follow the neutral current facade.
 - [x] Blueprint v6 pinned to historical Capability v7 constants.
-- [x] CI 874 promotion code gate PASS.
-- [x] governing docs reconciliation PASS.
+- [x] promotion CI and docs gates PASS.
 - [x] normal Capability commands reused artifacts 11/12.
-- [x] no new Capability generation occurred for accepted dependencies.
 - [x] snapshots marked artifacts 11/12 current on analyses 36/37.
 - [x] both snapshots report `blueprint_current=False`.
 - [x] Capability v9 public promotion operationally CLOSED.
@@ -153,7 +134,7 @@ Do not reopen Capability v9 calibration for harmless non-authoritative wording v
 - [x] post-promotion snapshots confirm Blueprint is not current on accepted v9 chains.
 - [-] do not resume Blueprint tuning during current Phase-1 gates.
 
-### B5 — Complete versioned public corpus — IMPLEMENTED / OPERATIONAL BACKFILL ACTIVE
+### B5 — Complete versioned public corpus — OPERATIONALLY CLOSED
 
 Contract:
 
@@ -173,8 +154,9 @@ Implementation:
 
 - [x] deterministic `src/jobhunter/public_corpus.py` exporter.
 - [x] `corpus/manifest.json` whole-corpus index.
-- [x] one UTF-8 job directory per Jobinja identity.
-- [x] `source.json` preserves current public parsed Persian/English vacancy fields.
+- [x] one UTF-8 job directory per known Jobinja identity.
+- [x] `source.json` preserves current public parsed Persian/English vacancy fields when detail exists.
+- [x] discovery-only identities are represented with `current_detail: null`.
 - [x] current `english-projection.json` export.
 - [x] current `p16-english.json` and `p16-original.json` exports.
 - [x] current public `capability.json` export.
@@ -191,61 +173,64 @@ Implementation:
 - [x] browser background operations refresh corpus through shared post-success hook.
 - [x] corpus failure surfaces without rolling back SQLite.
 - [x] no automatic Git commit/push.
-- [x] regression coverage for UTF-8, privacy exclusions, dependencies, stale cleanup, tampering, CLI routing, and browser hook.
-- [x] CI 893 Ruff PASS.
-- [x] CI 893 full pytest PASS.
-- [x] CI 893 warnings-as-errors PASS.
+- [x] deterministic tests cover UTF-8, privacy exclusions, dependencies, stale cleanup, tampering, CLI routing, browser hook, and coverage terminology.
+- [x] implementation CI 893 PASS.
 
-Operational backfill/publish:
+Real backfill/publish acceptance:
 
-- [ ] pull latest `main` locally.
-- [ ] reinstall editable package once so new `jobhunter` wrapper and `jobhunter-corpus` entrypoint are registered.
-- [ ] `jobhunter-corpus export` against real `data/jobhunter.sqlite3`.
-- [ ] `jobhunter-corpus verify` PASS.
-- [ ] inspect `jobhunter-corpus status` counts.
-- [ ] inspect `git diff -- corpus/` for expected public-only data.
-- [ ] commit/push full current corpus.
-- [ ] remotely verify `corpus/manifest.json` and job directories from GitHub.
-- [ ] only then mark public-corpus operational availability CLOSED.
+- [x] pulled latest `main` locally and reinstalled editable package.
+- [x] `jobhunter-corpus export` completed against real `data/jobhunter.sqlite3`.
+- [x] `jobhunter-corpus verify` PASS for all 344 known jobs.
+- [x] exact exported coverage recorded:
 
-Exact local commands:
-
-```bash
-cd ~/projects/jobhunter
-git pull --ff-only origin main
-python -m pip install -e '.[dev]'
-
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-
-git status --short
-git diff -- corpus/
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+Per-job stage files:         381
+Corpus size:                ~3.6 MiB
 ```
 
-If correct:
+- [x] public-data safety scan clean.
+- [x] accepted tG9K dependency chain verified: detail 40 → translation 33 → P1.6 36 → Capability 11.
+- [x] accepted t4jp dependency chain verified: detail 41 → translation 34 → P1.6 37 → Capability 12.
+- [x] full corpus committed/pushed in `15dbfa3636bbf7118de79683beec3e7ac4a6359d`.
+- [x] remote `corpus/manifest.json` and job directories verified from GitHub.
+- [x] remote tG9K/t4jp artifacts verified.
+- [x] publication CI 902 PASS.
+- [x] reporting ambiguity fixed: `Known/discovered jobs` is distinct from `Fetched/parsed job details`.
+- [x] terminology regression test added.
+- [x] reporting hardening head `91f1d7edc1cebd2fd8c1fb01b4e2b04163807153` passed CI 904.
+- [x] public-corpus operational availability CLOSED.
 
-```bash
-git add corpus/
-git commit -m "data: publish JobHunter public corpus"
-git push origin main
+Permanent interpretation:
+
+```text
+344 known/discovered jobs
+!=
+344 fully fetched advertisements
 ```
+
+Only jobs with a non-null current fetched/parsed detail are eligible for downstream semantic-review anchors. Discovery-only entries remain useful for acquisition planning and corpus identity/history.
 
 Record:
 
 ```text
-docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
+docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
 corpus/README.md
 ```
 
-### B6 — Heterogeneous live review — NEXT AFTER PUBLIC-CORPUS PUBLISH PROOF
+### B6 — Heterogeneous live review — ACTIVE NEXT GATE
 
-Use the complete remote corpus to choose materially different current jobs:
+Use the remote corpus to choose materially different **fetched/parsed** jobs:
 
 - [ ] Python/software role.
 - [ ] network/security role.
 - [ ] operations/platform/DevOps role.
-- [ ] for each role, verify current P1.6 dependency/source truth first.
+- [ ] for each role, verify current source detail and P1.6 dependency/source truth first.
 - [ ] verify Capability complete source coverage/provenance.
 - [ ] review required/preferred/contextual optionality and explicit depth calibration.
 - [ ] verify no fabricated responsibilities, role constraints, prerequisites, ownership, lifecycle, architecture, or autonomy.
