@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-15  
+**Date:** 2026-08-16  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Capability v9 public promotion implemented + CI PASS; local operational verification pending
+**Current gate:** Capability v9 public promotion CLOSED; heterogeneous live semantic validation is next
 
 ## 1. Exact current point
 
@@ -15,22 +15,22 @@ tG9K → P1.6 artifact 36 → ACCEPTED / CURRENT
 t4jp → P1.6 artifact 37 → ACCEPTED / CURRENT
 ```
 
-Capability v9 passed both opposite-end bounded semantic anchors:
+Capability v9 passed both opposite-end bounded semantic anchors and is now fully promoted through the normal public path:
 
 ```text
-tG9K → Capability artifact 11 → ACCEPTED
-t4jp → Capability artifact 12 → ACCEPTED WITH ACCEPTABLE DIFFERENCES
+tG9K → Capability artifact 11 → ACCEPTED / CURRENT
+t4jp → Capability artifact 12 → ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
 ```
 
-The public/current Capability facade has now been promoted in code to:
+Public/current Capability contract:
 
 ```text
 job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
-Deterministic promotion CI passed. The remaining gate is local operational verification that normal commands reuse artifacts 11/12 and Review Snapshot marks the v9 chain current.
+Normal `jobhunter jobs capability` commands reuse artifacts 11/12. Review Snapshot marks both artifacts current against P1.6 artifacts 36/37. Blueprint remains `blueprint_current=False`, deferred/non-authoritative, and pinned to historical Capability v7 semantics.
 
-Blueprint remains deferred/non-authoritative and is explicitly pinned to historical Capability v7 so this promotion does not silently rebase Blueprint.
+The next active gate is heterogeneous live semantic validation across materially different role families before treating promoted P1.6 + Capability as stable Phase-2 input.
 
 ## 2. Repository workflow rule
 
@@ -101,9 +101,9 @@ accepted P1.6 source truth
 → strict reconciliation
 ```
 
-Dense `tG9K` mechanically reached 31/31 capability requirements and 8/8 responsibilities, proving the staging architecture solved v7 coverage/linkage. V8 remained semantically rejected because model prose inflated depth, ownership/lifecycle scope, and preferred/contextual facts.
+Dense `tG9K` mechanically reached 31/31 capability requirements and 8/8 responsibilities, proving staging solved v7 coverage/linkage. V8 remained semantically rejected because model prose inflated depth, ownership/lifecycle scope, and preferred/contextual facts.
 
-### v9 — accepted and promoted in code
+### v9 — accepted / promoted / operationally closed
 
 Four pre-persistence live failures exposed over-enforcement and contradictions:
 
@@ -123,7 +123,7 @@ OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 
 Hard boundaries still include complete source coverage, valid indices, grounded evidence, deterministic source strength/depth/work, role-level separation, anti-collapse protection, and no persistence with incomplete authoritative truth.
 
-## 6. Accepted Capability v9 artifacts
+## 6. Accepted/current Capability v9 artifacts
 
 Dense artifact 11:
 
@@ -134,7 +134,7 @@ Responsibilities linked:                8/8
 Capability explicit depth:              5/5
 All explicit depth facts:               6/6
 Role-level indices:                     [31, 32]
-Disposition:                            ACCEPTED
+Disposition:                            ACCEPTED / CURRENT
 ```
 
 Sparse artifact 12:
@@ -146,34 +146,16 @@ Responsibilities linked:                0/0
 Capability explicit depth:              0/0
 All explicit depth facts:               0/0
 Role-level indices:                     []
-Disposition:                            ACCEPTED WITH ACCEPTABLE DIFFERENCES
+Disposition:                            ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
 ```
 
 Sparse restraint passed: no responsibilities, role purpose, depth, experience, education, prerequisites, or model-derived duties were fabricated. Mild broadening in non-authoritative group prose was recorded rather than patched because it did not alter deterministic source truth.
 
-## 7. Capability v9 public promotion implementation
+## 7. Capability v9 public promotion — CLOSED
 
-The neutral/current facade `src/jobhunter/capability_service.py` now exports/builds v9/v5. Existing public consumers already depend on this neutral facade, so the switch aligns:
+The neutral/current facade `src/jobhunter/capability_service.py` exports/builds v9/v5. CLI, browser Capability view, Review Snapshot, and other current Capability consumers follow this neutral facade.
 
-```text
-CLI
-browser Capability view
-Review Snapshot current-chain selection
-other current Capability consumers
-```
-
-Historical versioned modules/artifacts remain intact.
-
-Blueprint v6 is intentionally isolated by importing Capability v7 contract constants directly. A compare against the pre-promotion Blueprint file confirmed that isolation is only a one-line dependency import change; no Blueprint prompt/schema/inference/persistence logic changed.
-
-Promotion regression coverage locks:
-
-- current Capability prompt/schema = v9/v5;
-- current service uses the v9 boundary;
-- current formatter is the v9 formatter;
-- deferred Blueprint v6 remains pinned to v7.
-
-The old current-service tests were migrated from a one-shot v7 fake-provider fixture to deterministic staged v9 responses while preserving the actual invariants: exact P1.6 dependency, deterministic source truth, persistence/reuse, and fail-closed invalid output.
+Historical versioned modules/artifacts remain intact. Blueprint v6 is explicitly isolated by importing historical Capability v7 constants directly.
 
 Deterministic promotion gate:
 
@@ -183,6 +165,32 @@ Ruff:               PASS
 full pytest:        PASS
 warnings-as-errors: PASS
 ```
+
+Final documentation/governance reconciliation also passed CI 878.
+
+Operational verification on 2026-08-16:
+
+```text
+tG9K
+normal Capability outcome: reused
+contract: v9/v5
+analysis artifact: 36
+snapshot current=True
+snapshot Capability artifact=11
+snapshot analysis=36
+blueprint_current=False
+
+t4jp
+normal Capability outcome: reused
+contract: v9/v5
+analysis artifact: 37
+snapshot current=True
+snapshot Capability artifact=12
+snapshot analysis=37
+blueprint_current=False
+```
+
+No fresh Capability generation occurred for either accepted current dependency chain.
 
 Detailed record:
 
@@ -197,39 +205,38 @@ English P1.6 tG9K artifact 36       ACCEPTED / CURRENT
 English P1.6 t4jp artifact 37       ACCEPTED / CURRENT
 Capability v7 artifact 9            HISTORICAL / NON-CURRENT CHAIN
 Capability v8 candidate              HISTORICAL / SEMANTIC REJECT
-Capability v9 artifact 11           DENSE ACCEPTED
-Capability v9 artifact 12           SPARSE ACCEPTED WITH ACCEPTABLE DIFFERENCES
-Capability public code route         v9/v5 / CI PASS
-Capability operational promotion     VERIFICATION PENDING
-Blueprint                            DEFERRED / PINNED TO HISTORICAL v7
-Heterogeneous role review            NEXT AFTER OPERATIONAL VERIFICATION
+Capability v9 artifact 11           DENSE ACCEPTED / CURRENT
+Capability v9 artifact 12           SPARSE ACCEPTED / CURRENT
+Capability public route              v9/v5 / OPERATIONALLY VERIFIED
+Blueprint                            DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
+Heterogeneous role review            ACTIVE NEXT GATE
 Phase 2                              BLOCKED
 ```
 
 ## 9. Exact next action
 
-Do not generate new Capability candidates for `tG9K` or `t4jp`.
+Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation.
 
-Pull `main`, then verify the normal public path:
-
-```bash
-jobhunter jobs capability tG9K
-jobhunter jobs capability t4jp
-
-jobhunter jobs snapshot tG9K
-jobhunter jobs snapshot t4jp
-```
-
-Expected:
+Begin heterogeneous live semantic validation on materially different current jobs, in this order unless evidence suggests a better available anchor:
 
 ```text
-tG9K → reuse Capability artifact 11 → v9/v5 → P1.6 artifact 36
-t4jp → reuse Capability artifact 12 → v9/v5 → P1.6 artifact 37
+1. Python/software role
+2. network/security role
+3. operations/platform/DevOps role
 ```
 
-Review Snapshot must identify those Capability artifacts as current for their dependency chains. Blueprint must remain deferred and must not be silently regenerated/rebased on v9.
+For each role:
 
-Only after this operational proof mark Capability v9 promotion closed and resume heterogeneous Python/software, network/security, and operations/platform/DevOps live review before broader Phase-2 use.
+1. confirm current source + English P1.6 chain;
+2. generate/reuse public Capability v9 through the normal path;
+3. audit complete source coverage/provenance;
+4. inspect required/preferred/contextual strength and explicit depth calibration;
+5. check for fabricated responsibilities, role constraints, prerequisites, ownership, lifecycle, architecture, or autonomy;
+6. distinguish deterministic defects from acceptable model variation/local-model limitations;
+7. convert repeatable deterministic defects into regression fixtures;
+8. avoid v9 contract changes for harmless non-authoritative wording differences.
+
+Only after heterogeneous acceptance should promoted P1.6 + Capability be considered stable Phase-2 input.
 
 ## 10. Relevant records
 
