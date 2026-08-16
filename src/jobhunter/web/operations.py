@@ -49,12 +49,18 @@ class OperationBusyError(RuntimeError):
 class WebOperationManager:
     """Run one mutable JobHunter operation at a time without blocking HTTP responses."""
 
-    def __init__(self, *, history_limit: int = 50) -> None:
+    def __init__(
+        self,
+        *,
+        history_limit: int = 50,
+        after_success: Callable[[], None] | None = None,
+    ) -> None:
         self._executor = ThreadPoolExecutor(max_workers=1, thread_name_prefix="jobhunter-web")
         self._lock = threading.Lock()
         self._operations: dict[str, WebOperation] = {}
         self._history: deque[str] = deque(maxlen=history_limit)
         self._active_id: str | None = None
+        self._after_success = after_success
 
     @staticmethod
     def _now() -> str:
@@ -84,6 +90,15 @@ class WebOperationManager:
             self._executor.submit(self._run, operation.id, action)
             return operation
 
+    def _fail_operation(self, operation_id: str, exc: Exception) -> None:
+        with self._lock:
+            operation = self._operations[operation_id]
+            operation.status = "failed"
+            operation.error = f"{type(exc).__name__}: {exc}"
+            operation.completed_at = self._now()
+            if self._active_id == operation_id:
+                self._active_id = None
+
     def _run(
         self,
         operation_id: str,
@@ -102,14 +117,19 @@ class WebOperationManager:
                 summary = result
                 terminal_status = "completed"
         except Exception as exc:
-            with self._lock:
-                operation = self._operations[operation_id]
-                operation.status = "failed"
-                operation.error = f"{type(exc).__name__}: {exc}"
-                operation.completed_at = self._now()
-                if self._active_id == operation_id:
-                    self._active_id = None
+            self._fail_operation(operation_id, exc)
             return
+
+        if self._after_success is not None:
+            try:
+                self._after_success()
+            except Exception as exc:
+                wrapped = RuntimeError(
+                    "Public corpus synchronization failed after the durable web operation: "
+                    f"{exc}"
+                )
+                self._fail_operation(operation_id, wrapped)
+                return
 
         with self._lock:
             operation = self._operations[operation_id]
