@@ -4,7 +4,7 @@
 **Date:** 2026-08-16  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** public corpus projection implemented + CI PASS; local full-corpus backfill/publish verification pending before heterogeneous live review
+**Current gate:** public corpus OPERATIONALLY CLOSED; heterogeneous live semantic validation is active next
 
 ## 1. Exact current point
 
@@ -30,15 +30,7 @@ job-capability-intelligence-v9 / job-capability-intelligence-v5
 
 Normal `jobhunter jobs capability` commands reuse artifacts 11/12. Review Snapshot marks both artifacts current against P1.6 artifacts 36/37. Blueprint remains `blueprint_current=False`, deferred/non-authoritative, and pinned to historical Capability v7 semantics.
 
-Before heterogeneous review, JobHunter now has a first-class complete repository-safe public-corpus projection:
-
-```text
-local SQLite runtime authority
-→ corpus/ complete current public projection
-→ Git remote accessibility after intentional commit/push
-```
-
-The implementation is deterministic-green. The remaining mini-gate is one local backfill from the owner's real SQLite database, verification, commit/push, and remote inspection.
+The complete repository-safe public-corpus projection is now implemented, populated from the real local database, verified, committed, remotely inspected, and operationally closed.
 
 ## 2. Repository workflow rule
 
@@ -136,25 +128,19 @@ Disposition:                     ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
 
 Capability public promotion is operationally closed. No fresh Capability generation occurred during normal-path verification.
 
-Detailed record:
+## 6. Public corpus — IMPLEMENTED / POPULATED / OPERATIONALLY CLOSED
+
+Architecture:
 
 ```text
-docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
-```
+local SQLite
+→ runtime/history authority
 
-## 6. Public corpus projection — IMPLEMENTED / LOCAL BACKFILL PENDING
+corpus/
+→ complete current repository-safe projection of known public Jobinja state
 
-Problem solved:
-
-```text
-before:
-full fetched/processed public job corpus → local SQLite only
-GitHub → only selected tG9K/t4jp review snapshots
-
-after implementation:
-SQLite → runtime authority
-corpus/ → complete repository-safe current public projection
-review-snapshots/ → curated acceptance evidence
+review-snapshots/
+→ curated semantic-review evidence
 ```
 
 Contract:
@@ -163,51 +149,77 @@ Contract:
 jobhunter-public-corpus-v1
 ```
 
-Layout:
+Real corpus coverage after backfill from `data/jobhunter.sqlite3`:
 
 ```text
-corpus/manifest.json
-corpus/jobs/<job-id>/source.json
-corpus/jobs/<job-id>/english-projection.json
-corpus/jobs/<job-id>/p16-english.json
-corpus/jobs/<job-id>/p16-original.json
-corpus/jobs/<job-id>/capability.json
+Known/discovered Jobinja jobs: 344
+Fetched/parsed job details:     43
+English projections:            33
+English P1.6:                    2
+Original P1.6:                   0
+Capabilities:                    2
+Per-job stage files:           381
+Corpus size:                  ~3.6 MiB
 ```
 
-Behavior:
-
-- every discovered Jobinja job appears in the manifest and gets `source.json`;
-- original Persian/English parsed vacancy fields remain UTF-8;
-- current translation/P1.6/Capability artifact and dependency identities are exported;
-- raw model requests/responses, raw HTML, local evidence paths, secrets/logs/config, and future personal/private state are excluded;
-- source change removes stale downstream stage files until rebuilt;
-- full DB↔corpus verification is deterministic;
-- normal mutating CLI commands synchronize after durable local work;
-- completed browser background operations synchronize through the shared operation manager;
-- projection failure is surfaced but does not roll back SQLite;
-- JobHunter never auto-commits or auto-pushes Git.
-
-Commands:
-
-```bash
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-```
-
-Implementation gate:
+Important interpretation:
 
 ```text
-CI 893
-Ruff:               PASS
-full pytest:        PASS
-warnings-as-errors: PASS
+344 known/discovered jobs
+!=
+344 fully fetched advertisements
 ```
 
-Detailed record:
+A discovery-only job remains a valid corpus identity with `current_detail: null`. Only the 43 entries with fetched/parsed current detail are eligible for downstream semantic-review selection.
+
+Public-safety scan over actual corpus data passed: no raw model request/response protocol, evidence paths, SQLite paths, `/home/` paths, `/mnt/c/` paths, secrets, or future private state were exported.
+
+Accepted anchor dependency proof:
 
 ```text
-docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
+tG9K
+source detail:       40
+translation:         33
+P1.6:                36
+Capability:          11
+Capability → P1.6:   36
+Capability → trans:  33
+
+t4jp
+source detail:       41
+translation:         34
+P1.6:                37
+Capability:          12
+Capability → P1.6:   37
+Capability → trans:  34
+```
+
+Full corpus publication commit:
+
+```text
+15dbfa3636bbf7118de79683beec3e7ac4a6359d
+data: publish complete public job corpus
+```
+
+Remote GitHub inspection confirmed the manifest, job directories, contracts, and accepted anchors. Publication CI 902 passed Ruff, full pytest, and warnings-as-errors.
+
+The CLI was then hardened so corpus coverage reports `Known/discovered jobs` and `Fetched/parsed job details` separately. Hardening head `91f1d7edc1cebd2fd8c1fb01b4e2b04163807153` passed CI 904. This was reporting-only; no corpus data regeneration was required.
+
+Permanent corpus rules:
+
+1. SQLite remains runtime/history authority.
+2. `corpus/` is the version-controlled current public projection.
+3. Discovery-only identities and fetched/parsed details remain explicitly distinguishable.
+4. Mutating JobHunter workflows refresh the local corpus only after durable success.
+5. `jobhunter-corpus verify` is the deterministic DB↔corpus integrity gate.
+6. Git commit/push remains explicit and is never part of runtime correctness.
+7. Future personal/private evidence must never enter the public corpus.
+8. Remote corpus inspection can now drive role selection and later public-data analysis without local SQLite access.
+
+Detailed closure record:
+
+```text
+docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
 ```
 
 ## 7. Exact current state
@@ -221,49 +233,37 @@ Capability v9 artifact 11           DENSE ACCEPTED / CURRENT
 Capability v9 artifact 12           SPARSE ACCEPTED / CURRENT
 Capability public route              v9/v5 / OPERATIONALLY VERIFIED
 Blueprint                            DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
-Public corpus implementation         COMPLETE / CI PASS
-Public corpus real local backfill    PENDING
-Public corpus remote publish proof   PENDING
-Heterogeneous role review            NEXT AFTER CORPUS PUBLISH PROOF
+Public corpus                        OPERATIONALLY CLOSED / REMOTELY AVAILABLE
+Known/discovered jobs                344
+Fetched/parsed detail jobs           43
+English projection jobs              33
+Current P1.6 jobs                      2
+Current Capability jobs                2
+Heterogeneous role review            ACTIVE NEXT GATE
 Phase 2                              BLOCKED
 ```
 
 ## 8. Exact next action
 
-The real corpus cannot be populated remotely because `data/jobhunter.sqlite3` exists only on the repository owner's machine.
-
-Pull and reinstall once so the new console entrypoints are registered, then backfill:
-
-```bash
-cd ~/projects/jobhunter
-git pull --ff-only origin main
-python -m pip install -e '.[dev]'
-
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-
-git status --short
-git diff -- corpus/
-```
-
-Review the printed counts and corpus diff. If correct:
-
-```bash
-git add corpus/
-git commit -m "data: publish JobHunter public corpus"
-git push origin main
-```
-
-Then remotely inspect `corpus/manifest.json` and job directories and mark public-corpus operational availability closed.
-
-After that, choose heterogeneous live roles from the complete remote corpus:
+Use the remote corpus to choose materially different **fetched/parsed** jobs for heterogeneous live semantic validation:
 
 ```text
-1. Python/software
-2. network/security
-3. operations/platform/DevOps
+1. Python/software role
+2. network/security role
+3. operations/platform/DevOps role
 ```
+
+For each role:
+
+1. select a job with non-null current detail from the repository corpus;
+2. inspect original source fields and current English projection state;
+3. generate/reuse current English P1.6 v20 through the normal path;
+4. generate/reuse current Capability v9 through the normal path;
+5. review factual coverage, provenance, strength, depth, role-level constraints, grouping, and source truth;
+6. reject fabricated responsibilities, prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength;
+7. distinguish repeatable deterministic defects from acceptable model variation/local-model limitations;
+8. convert repeatable deterministic defects into tests;
+9. avoid contract changes for harmless non-authoritative wording differences.
 
 Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation.
 
@@ -274,5 +274,6 @@ docs/working-memory/2026-08-15_CAPABILITY_V9_DENSE_ACCEPTANCE.md
 docs/working-memory/2026-08-15_CAPABILITY_V9_SPARSE_ACCEPTANCE.md
 docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
 docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
+docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
 corpus/README.md
 ```
