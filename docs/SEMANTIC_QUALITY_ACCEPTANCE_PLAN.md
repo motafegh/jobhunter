@@ -2,7 +2,7 @@
 
 **Status:** Active bounded acceptance plan  
 **Date:** 2026-08-16  
-**Scope:** P1.6 factual extraction, Capability Intelligence, Review Snapshot current-chain verification, heterogeneous semantic review, and the concluded Phase-1 Blueprint experiment  
+**Scope:** P1.6 factual extraction, Capability Intelligence, Review Snapshot current-chain verification, versioned public-corpus availability, heterogeneous semantic review, and the concluded Phase-1 Blueprint experiment  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and product/domain/source/architecture constraints.
 
 This plan does not authorize corpus-wide Phase-2 taxonomy/Market-v2 work.
@@ -32,6 +32,7 @@ Permanent rules:
 7. Do not polish model reasoning indefinitely when repeated experiments show a layer is not stable enough for the current phase.
 8. Public promotion requires bounded semantic acceptance, deterministic CI, and normal-path operational verification.
 9. Once a promoted layer passes those gates, do not reopen it for harmless non-authoritative wording variation; require a repeatable correctness/provenance or contract-level defect.
+10. Complete public job data may be versioned remotely only through an explicit repository-safe projection boundary; future private/personal state never inherits that public status automatically.
 
 Current opposite-end anchors:
 
@@ -52,6 +53,7 @@ Original P1.6 public:          job-analysis-original-v9 / job-analysis-v4
 
 Capability public/current:     job-capability-intelligence-v9 / job-capability-intelligence-v5
 Review Snapshot:               job-review-snapshot-v1
+Public Corpus:                 jobhunter-public-corpus-v1
 ```
 
 Capability v9 public promotion is fully closed: bounded dense/sparse semantic acceptance passed, deterministic promotion CI passed, normal public commands reuse accepted artifacts 11/12, and Review Snapshot marks those exact artifacts current on P1.6 artifacts 36/37.
@@ -92,6 +94,19 @@ MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
 OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 ```
 
+Storage/projection boundary:
+
+```text
+local SQLite
+→ operational/runtime/history authority
+
+corpus/
+→ deterministic current public repository projection
+
+review-snapshots/
+→ selected semantic acceptance evidence
+```
+
 Experimental only:
 
 ```text
@@ -110,8 +125,6 @@ Normal workflow:
 ```bash
 jobhunter jobs snapshot <job-id>
 ```
-
-The exporter records dependency/model identities and current-chain status while excluding raw model prompts/responses, SQLite, secrets, logs, and future private state.
 
 Capability v9 promotion verification proved:
 
@@ -161,18 +174,7 @@ role purpose:              0
 semantic disposition:      PASS
 ```
 
-Accepted P1.6 invariants include:
-
-- complete deterministic source accounting;
-- required/preferred/contextual optionality preserved;
-- explicit depth separated from obligation strength;
-- Python `expert` remains Python-specific;
-- `Strong`, `Hands-on`, `Comfort`, `Solid`, and experience-duration depth preserved where stated;
-- MATLAB/C++ remain preferred where stated;
-- contextual framework/cloud/tool facts remain contextual;
-- education and experience constraints preserved;
-- qualification wording does not fabricate responsibilities;
-- schedule wording does not become capability depth or prior experience.
+Accepted P1.6 invariants include complete deterministic source accounting; required/preferred/contextual optionality; exact depth attachment; education/experience preservation; structured-skill survival; and qualification-vs-duty protection.
 
 Normal public P1.6 routing reuses artifacts 36/37.
 
@@ -211,37 +213,7 @@ semantic disposition:             ACCEPTED WITH ACCEPTABLE DIFFERENCES
 current public chain:             YES
 ```
 
-V9 acceptance rules:
-
-- complete capability-relevant requirement and responsibility coverage is mandatory;
-- source indices/evidence must be valid and grounded;
-- dense jobs cannot collapse all source truth into one group;
-- requirement strength, source-explicit depth, and source work activities are deterministic;
-- education/duration-only experience remain role-level constraints;
-- preferred/contextual-only facts cannot independently become inferred prerequisites;
-- unsupported ownership/lifecycle/autonomy/architecture claims are rejected/filtered;
-- unsafe optional model items are filtered rather than promoted;
-- planner-only wording may normalize without discarding useful grouping structure;
-- redundant model `source_explicit` echoes are discarded and re-injected only by deterministic reconciliation;
-- zero optional model enrichment is valid;
-- incomplete authoritative source truth cannot persist.
-
-Promotion implementation:
-
-```text
-neutral/current Capability facade → v9/v5
-CLI/browser/Review Snapshot       → follow neutral facade
-Blueprint v6                      → pinned to historical v7
-```
-
-Deterministic promotion gate:
-
-```text
-CI 874
-Ruff:               PASS
-full pytest:        PASS
-warnings-as-errors: PASS
-```
+V9 acceptance rules include complete coverage/provenance, dense anti-collapse, deterministic source strength/depth/work, role-level separation, optionality protection, filtering of unsupported ownership/lifecycle/autonomy/architecture claims, optional model enrichment, and fail-closed incomplete source truth.
 
 Operational proof:
 
@@ -261,13 +233,11 @@ docs/working-memory/2026-08-15_CAPABILITY_V9_SPARSE_ACCEPTANCE.md
 docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
 ```
 
-Do not reopen Capability v9 for harmless non-authoritative wording differences. Reopen only if heterogeneous evidence shows a repeatable deterministic/provenance defect, authoritative optionality/depth corruption, fabricated authoritative content, or another contract-level failure.
+Do not reopen Capability v9 for harmless non-authoritative wording differences.
 
 ## 7. SQ-3 — Blueprint experiment disposition
 
 **Status: concluded for Phase 1 / not accepted / further tuning deferred.**
-
-The Blueprint experiment demonstrated that even mechanically valid professional interpretation could smuggle assumptions about architecture, topology, automation, platforms, or ownership.
 
 Phase-1 decision:
 
@@ -288,9 +258,59 @@ t4jp capability → artifact 12 → reused → v9/v5 → P1.6 37
 
 Review Snapshot verified the exact current chains and `blueprint_current=False` for both anchors. No fresh Capability generation occurred.
 
-## 9. SQ-5 — Heterogeneous live semantic acceptance — ACTIVE NEXT GATE
+## 9. SQ-5 — Versioned public-corpus operational availability — ACTIVE
 
-Validate materially different current jobs:
+Implementation contract:
+
+```text
+jobhunter-public-corpus-v1
+```
+
+Required invariants:
+
+- complete current Jobinja identity set represented in the manifest;
+- original public parsed Persian/English vacancy content preserved as UTF-8 JSON;
+- current translation/P1.6/Capability artifacts use exact current dependencies/contracts;
+- stale downstream files disappear after source changes until rebuilt;
+- raw model protocol/request bodies, raw HTML, machine-local paths, secrets/logs/config, and future private/personal state are excluded;
+- DB↔corpus verification is deterministic;
+- CLI/browser durable operations synchronize locally after success/partial durable work;
+- projection failure is visible and cannot roll back SQLite;
+- publishing to Git remains intentional, not automatic.
+
+Implementation evidence:
+
+```text
+CI 893
+Ruff:               PASS
+full pytest:        PASS
+warnings-as-errors: PASS
+```
+
+Operational acceptance requires:
+
+```text
+real local SQLite
+→ jobhunter-corpus export
+→ jobhunter-corpus verify PASS
+→ status/count review
+→ corpus diff review
+→ Git commit/push
+→ remote manifest/job inspection
+```
+
+Only after this proof call the public corpus operationally available.
+
+Decision record:
+
+```text
+docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
+corpus/README.md
+```
+
+## 10. SQ-6 — Heterogeneous live semantic acceptance — NEXT
+
+After SQ-5 remote-corpus proof, use the complete corpus to select materially different current jobs:
 
 ```text
 Python/software
@@ -312,13 +332,14 @@ For each role:
 
 Only after heterogeneous acceptance should promoted P1.6 + Capability be considered stable Phase-2 input.
 
-## 10. Phase-2 gate
+## 11. Phase-2 gate
 
 Do not begin corpus-wide Phase 2 until:
 
 ```text
 P1.6 promotion closed
 + Capability v9 promotion closed
++ public corpus operationally available
 + heterogeneous semantic review accepted
 + remaining Phase-1 workflow/source/market truthfulness gates closed
 ```
