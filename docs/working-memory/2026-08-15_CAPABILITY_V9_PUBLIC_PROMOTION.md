@@ -1,8 +1,9 @@
 # Capability v9 Public Promotion
 
 **Date:** 2026-08-15  
+**Operational closure verified:** 2026-08-16  
 **Branch:** `main`  
-**Status:** promotion implementation complete; deterministic CI PASS; local operational verification pending
+**Status:** PUBLIC PROMOTION CLOSED / OPERATIONALLY VERIFIED
 
 ## 1. Promotion basis
 
@@ -107,23 +108,9 @@ Promotion tests additionally lock:
 - current formatter is the v9 formatter;
 - deferred Blueprint v6 remains pinned to v7 rather than following current Capability.
 
-## 6. Current status
+## 6. Operational verification — PASS
 
-```text
-Capability v9 public routing code:    IMPLEMENTED
-Deterministic CI:                     PASS
-Dense accepted artifact:              11
-Sparse accepted artifact:             12
-Historical v7/v8:                     PRESERVED
-Blueprint:                            DEFERRED / PINNED TO V7
-Local operational verification:       PENDING
-```
-
-Do not call the promotion operationally closed until normal local commands prove that the promoted public path reuses artifacts 11 and 12 and Review Snapshot reports v9/v5 as current.
-
-## 7. Required local operational verification
-
-Run from the project repository after pulling `main`:
+Normal public commands were run after pulling current `main`:
 
 ```bash
 jobhunter jobs capability tG9K
@@ -133,21 +120,66 @@ jobhunter jobs snapshot tG9K
 jobhunter jobs snapshot t4jp
 ```
 
-Expected Capability behavior:
+Observed Capability results:
 
 ```text
-tG9K → reuse Capability artifact 11 → v9/v5 → P1.6 artifact 36
-t4jp → reuse Capability artifact 12 → v9/v5 → P1.6 artifact 37
+tG9K
+Outcome: reused
+Contract: job-capability-intelligence-v9 / job-capability-intelligence-v5
+English analysis artifact: 36
+31/31 capability requirements
+8/8 responsibilities
+5/5 capability explicit depth
+6/6 all explicit depth
+role-level indices [31, 32]
+
+ t4jp
+Outcome: reused
+Contract: job-capability-intelligence-v9 / job-capability-intelligence-v5
+English analysis artifact: 37
+8/8 capability requirements
+0/0 responsibilities
+0/0 explicit depth
+role-level indices []
 ```
 
-No new model generation should be necessary for those accepted current dependencies.
+No fresh Capability generation occurred for either accepted dependency chain.
 
-Expected Review Snapshot behavior:
+Review Snapshot files were then inspected directly. Observed current-chain evidence:
 
-- Capability contract is `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
-- Capability is current for the current source/P1.6 dependency chain;
-- dense and sparse snapshots select artifacts 11 and 12 respectively;
-- historical v7/v8 artifacts remain historical/non-current;
-- Blueprint remains deferred and is not silently rebuilt/rebased on v9.
+```text
+tG9K current=True artifact=11 analysis=36
+contract=job-capability-intelligence-v9 / job-capability-intelligence-v5
+blueprint_current=False
 
-Only after this local proof should the public Capability v9 promotion be marked operationally complete.
+t4jp current=True artifact=12 analysis=37
+contract=job-capability-intelligence-v9 / job-capability-intelligence-v5
+blueprint_current=False
+```
+
+This proves:
+
+- artifact 11 is the current Capability artifact for `tG9K` on P1.6 artifact 36;
+- artifact 12 is the current Capability artifact for `t4jp` on P1.6 artifact 37;
+- the public contract is v9/v5 through normal routing;
+- accepted artifacts are reused instead of regenerated;
+- Blueprint remains non-current and was not silently rebased on v9.
+
+## 7. Final promotion disposition
+
+```text
+Capability v9 public routing code:    PROMOTED
+Deterministic CI:                     PASS
+Dense accepted artifact:              11 / CURRENT
+Sparse accepted artifact:             12 / CURRENT
+Normal CLI routing:                   VERIFIED
+Review Snapshot current-chain:        VERIFIED
+Fresh generation on accepted chain:   NONE
+Historical v7/v8:                     PRESERVED
+Blueprint:                            DEFERRED / PINNED TO V7 / NON-CURRENT
+Operational promotion:                CLOSED
+```
+
+Capability v9 is now the accepted public/current Capability contract for Phase-1 use.
+
+The next semantic gate is heterogeneous live validation on materially different Python/software, network/security, and operations/platform/DevOps jobs. Do not reopen v9 calibration based only on harmless non-authoritative wording variation; reopen only for a repeatable correctness defect, provenance defect, source-strength/depth corruption, fabricated authoritative content, or another contract-level failure.
