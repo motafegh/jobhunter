@@ -28,9 +28,10 @@ dev = [
 ]
 
 [project.scripts]
-jobhunter = "jobhunter.entrypoint:main"
+jobhunter = "jobhunter.app_entrypoint:main"
 jobhunter-app = "jobhunter.web.launcher:main"
 jobhunter-review-snapshot = "jobhunter.review_snapshot:main"
+jobhunter-corpus = "jobhunter.public_corpus_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
