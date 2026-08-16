@@ -1,0 +1,26 @@
+{
+  "contracts": {
+    "capability": {
+      "prompt_version": "job-capability-intelligence-v9",
+      "schema_version": "job-capability-intelligence-v5"
+    },
+    "p16_english": {
+      "prompt_version": "job-analysis-english-v20",
+      "schema_version": "job-analysis-v5"
+    },
+    "p16_original": {
+      "prompt_version": "job-analysis-original-v9",
+      "schema_version": "job-analysis-v4"
+    }
+  },
+  "counts": {
+    "capabilities": 0,
+    "english_projections": 0,
+    "jobs": 0,
+    "p16_english": 0,
+    "p16_original": 0,
+    "sources": 0
+  },
+  "jobs": [],
+  "schema_version": "jobhunter-public-corpus-v1"
+}
