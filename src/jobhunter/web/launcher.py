@@ -16,9 +16,11 @@ import uvicorn
 from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
+from jobhunter.public_corpus import DEFAULT_PUBLIC_CORPUS_DIR, export_public_corpus
 from jobhunter.web.app import create_app
 from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
+from jobhunter.web.operations import WebOperationManager
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -170,10 +172,20 @@ def _existing_jobhunter(url: str) -> bool:
     return response.status_code == 200 and "JobHunter" in response.text
 
 
+def _synchronize_public_corpus(settings: Settings) -> None:
+    export_public_corpus(
+        settings.database_path,
+        output_dir=DEFAULT_PUBLIC_CORPUS_DIR,
+        analysis_model=(settings.analysis_lm_studio_model or settings.lm_studio_model),
+        capability_model=(settings.capability_lm_studio_model or settings.lm_studio_model),
+    )
+
+
 def build_runtime_app(settings: Settings):
     """Build the normal web app plus reviewed expert-analysis routes."""
 
-    app = create_app(settings)
+    operations = WebOperationManager(after_success=lambda: _synchronize_public_corpus(settings))
+    app = create_app(settings, operations=operations)
     register_capability_routes(app, settings)
     register_blueprint_routes(app, settings)
     return app
