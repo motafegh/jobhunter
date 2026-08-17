@@ -273,6 +273,57 @@ class JobAnalysisResponseV20(JobAnalysisResponseV19):
 
     requirements: list[AnalysisRequirementV20] = Field()
 
+    @model_validator(mode="before")
+    @classmethod
+    def drop_redundant_coverage_exclusions(
+        cls,
+        value: Any,
+        info: ValidationInfo,
+    ) -> Any:
+        """Drop only exclusions that contradict positive extraction of the same coverage ref."""
+
+        if not isinstance(value, dict):
+            return value
+        requirements = value.get("requirements")
+        exclusions = value.get("coverage_exclusions")
+        if not isinstance(requirements, list) or not isinstance(exclusions, list):
+            return value
+
+        plan = (info.context or {}).get("requirement_coverage_plan") or {}
+        if not isinstance(plan, dict):
+            return value
+
+        represented_refs: set[str] = set()
+        for reference, candidate in plan.items():
+            source_text = str(candidate.get("text") or "") if isinstance(candidate, dict) else ""
+            for requirement in requirements:
+                if not isinstance(requirement, dict):
+                    continue
+                raw_evidence = str(requirement.get("evidence") or "").strip()
+                if raw_evidence == reference or (
+                    source_text and _normalize(raw_evidence) == _normalize(source_text)
+                ):
+                    represented_refs.add(str(reference))
+                    break
+
+        if not represented_refs:
+            return value
+
+        filtered = [
+            item
+            for item in exclusions
+            if not (
+                isinstance(item, dict)
+                and str(item.get("evidence_reference") or "").strip() in represented_refs
+            )
+        ]
+        if len(filtered) == len(exclusions):
+            return value
+
+        normalized = dict(value)
+        normalized["coverage_exclusions"] = filtered
+        return normalized
+
 
 def _validated_partition_plan(
     plan: dict[str, dict[str, Any]],
@@ -426,6 +477,7 @@ def complete_analysis_partition_with_instructor_v20(
             "p16_v20_preferred_experience_evidence_guard": True,
             "p16_v20_multi_signal_depth_guard": True,
             "p16_v20_effective_application_depth_normalization": True,
+            "p16_v20_redundant_coverage_exclusion_filter": True,
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
