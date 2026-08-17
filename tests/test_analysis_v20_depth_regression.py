@@ -128,3 +128,51 @@ def test_v20_rejects_depth_guessing_for_multi_level_evidence() -> None:
             },
             context=_context(fields),
         )
+
+
+def test_v20_clears_exact_effective_application_phrase_when_evidence_has_no_depth() -> None:
+    evidence = (
+        "Ability to effectively use (AI) to increase the quality and speed of software "
+        "development."
+    )
+    signal = "effectively use (AI) to increase the quality and speed of software development"
+    fields = {"description": evidence}
+
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": "AI usage in software development",
+            "depth_signal": signal,
+            "requirement_type": "required",
+            "concept_type": "skill",
+            "evidence": evidence,
+            "confidence": "high",
+            "rationale": "Effective application is required, but no proficiency depth is stated.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.depth_signal is None
+    assert result.requirement_type == "required"
+    assert result.evidence == evidence
+
+
+def test_v20_does_not_clear_effective_application_when_evidence_also_has_real_depth() -> None:
+    evidence = (
+        "Mastery of Python and ability to effectively use (AI) to improve software development."
+    )
+    signal = "effectively use (AI) to improve software development"
+    fields = {"description": evidence}
+
+    with pytest.raises(ValidationError, match="explicit employer depth"):
+        AnalysisRequirementV20.model_validate(
+            {
+                "concept": "AI usage in software development",
+                "depth_signal": signal,
+                "requirement_type": "required",
+                "concept_type": "skill",
+                "evidence": evidence,
+                "confidence": "high",
+                "rationale": "A different subject in the same evidence has real depth.",
+            },
+            context=_context(fields),
+        )
