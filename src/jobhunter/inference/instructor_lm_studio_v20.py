@@ -63,6 +63,10 @@ _PRIOR_APPLIED_EXPOSURE_RE = re.compile(
     r"prior background|background|practical exposure|applied exposure)\b",
     re.I,
 )
+_EFFECTIVE_APPLICATION_RE = re.compile(
+    r"\b(?:ability\s+to\s+)?effectively\s+use\b",
+    re.I,
+)
 
 # Live heterogeneous review exposed this explicit employer degree phrase. Extend the shared
 # validator registry narrowly for v20; plain ``knowledge`` intentionally remains non-depth.
@@ -173,18 +177,31 @@ class AnalysisRequirementV20(AnalysisRequirementV19):
             return value
 
         signal = value.get("depth_signal")
-        if (
-            value.get("requirement_type") != "preferred"
-            or not isinstance(signal, str)
-            or not signal.strip()
-        ):
+        if not isinstance(signal, str) or not signal.strip():
             return value
 
         evidence = _raw_evidence_text(value, info)
         normalized = dict(value)
+        signal_text = signal.strip()
+
+        # ``Ability to effectively use X`` expresses an application requirement, not a
+        # proficiency level. Normalize it only when the model copied an exact source phrase and
+        # the cited evidence contains no accepted technical-depth marker. If real depth appears
+        # anywhere in the same evidence span, keep failing closed rather than guessing scope.
+        if (
+            _EFFECTIVE_APPLICATION_RE.search(signal_text) is not None
+            and _equivalent_source_excerpt(signal_text, evidence) is not None
+            and not _has_accepted_depth(signal_text)
+            and not _has_accepted_depth(evidence)
+        ):
+            normalized["depth_signal"] = None
+            return normalized
+
+        if value.get("requirement_type") != "preferred":
+            return normalized
 
         if (
-            _VAGUE_PREFERENCE_EXTENT_RE.fullmatch(signal.strip()) is not None
+            _VAGUE_PREFERENCE_EXTENT_RE.fullmatch(signal_text) is not None
             and has_english_optionality_signal(evidence)
             and re.search(r"\bsome\b", evidence, re.I) is not None
             and not _has_accepted_depth(evidence)
@@ -198,11 +215,11 @@ class AnalysisRequirementV20(AnalysisRequirementV19):
             and concept.strip()
             and has_english_optionality_signal(evidence)
             and not _has_accepted_depth(evidence)
-            and not _has_accepted_depth(signal)
-            and _equivalent_source_excerpt(signal.strip(), evidence) is not None
-            and _signal_is_scoped_concept(concept.strip(), signal.strip())
+            and not _has_accepted_depth(signal_text)
+            and _equivalent_source_excerpt(signal_text, evidence) is not None
+            and _signal_is_scoped_concept(concept.strip(), signal_text)
         ):
-            normalized["concept"] = signal.strip()
+            normalized["concept"] = signal_text
             normalized["depth_signal"] = None
         return normalized
 
@@ -408,6 +425,7 @@ def complete_analysis_partition_with_instructor_v20(
             "p16_v20_preferred_scope_depth_normalization": True,
             "p16_v20_preferred_experience_evidence_guard": True,
             "p16_v20_multi_signal_depth_guard": True,
+            "p16_v20_effective_application_depth_normalization": True,
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
