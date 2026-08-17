@@ -4,7 +4,10 @@ import pytest
 from pydantic import ValidationError
 
 from jobhunter.evidence_refs import build_field_evidence_catalog
-from jobhunter.inference.instructor_lm_studio_v20 import AnalysisRequirementV20
+from jobhunter.inference.instructor_lm_studio_v20 import (
+    AnalysisRequirementV20,
+    JobAnalysisResponseV20,
+)
 
 
 def _context(fields: dict) -> dict:
@@ -176,3 +179,62 @@ def test_v20_does_not_clear_effective_application_when_evidence_also_has_real_de
             },
             context=_context(fields),
         )
+
+
+def test_v20_drops_only_redundant_exclusion_for_already_extracted_reference() -> None:
+    represented_ref = "field:description:segment:1"
+    represented_text = "Ability to effectively use AI for software development."
+    excluded_ref = "field:description:segment:2"
+    excluded_text = "Office location and benefits information."
+    fields = {"description": f"{represented_text} {excluded_text}"}
+    context = _context(fields)
+    context["requirement_coverage_plan"] = {
+        represented_ref: {
+            "text": represented_text,
+            "source_kind": "description",
+            "obligation_hint": "required",
+            "allow_exclusion": True,
+        },
+        excluded_ref: {
+            "text": excluded_text,
+            "source_kind": "description",
+            "obligation_hint": "contextual",
+            "allow_exclusion": True,
+        },
+    }
+    context["evidence_catalog"] = {
+        represented_ref: represented_text,
+        excluded_ref: excluded_text,
+    }
+    context["responsibility_coverage_plan"] = {}
+
+    result = JobAnalysisResponseV20.model_validate(
+        {
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [
+                {
+                    "concept": "AI usage in software development",
+                    "depth_signal": None,
+                    "requirement_type": "required",
+                    "concept_type": "skill",
+                    "evidence": represented_ref,
+                    "confidence": "high",
+                    "rationale": "Explicit source requirement.",
+                }
+            ],
+            "coverage_exclusions": [
+                {
+                    "evidence_reference": represented_ref,
+                    "rationale": "Redundant decomposition bookkeeping entry.",
+                },
+                {
+                    "evidence_reference": excluded_ref,
+                    "rationale": "This source text is contextual rather than a qualification.",
+                },
+            ],
+        },
+        context=context,
+    )
+
+    assert [item.evidence_reference for item in result.coverage_exclusions] == [excluded_ref]
