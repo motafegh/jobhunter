@@ -33,6 +33,9 @@ Status vocabulary:
 - [x] Review Snapshot v1 and current-chain routing.
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
+- [x] durable English P1.6 `pending`/`accepted` review state plus explicit status/accept/reject CLI and browser actions.
+- [x] pending P1.6 excluded from Capability, Market, accepted browser counts, and public corpus; rejected candidates archived locally and rebuildable.
+- [x] v20 depth registry isolated from historical validator modules.
 - [x] P1.6 v20 implementation/calibration stack consolidated into `main`.
 - [x] Capability v9 public/current facade and promotion.
 - [x] version-controlled public corpus projection `jobhunter-public-corpus-v1`.
@@ -162,6 +165,7 @@ Implementation/acceptance:
 - [x] discovery-only identities use `current_detail: null`.
 - [x] current English projection/P1.6/Capability stage exports.
 - [x] exact artifact/dependency/model/prompt/schema identities preserved.
+- [x] only semantically accepted English P1.6 and its exact Capability chain are projected.
 - [x] raw model protocol, raw HTML, machine-local paths, secrets/logs/config/private state excluded.
 - [x] stale downstream files removed after source changes until rebuilt.
 - [x] exact DB↔corpus deterministic verification.
@@ -177,16 +181,17 @@ Implementation/acceptance:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
-Per-job stage files:         381
-Corpus size:                ~3.6 MiB
+Capabilities:                  5
+Per-job stage files:         387
+Corpus size:                ~3.7 MiB
 ```
 
 - [x] public-data safety scan clean.
 - [x] accepted tG9K chain: detail 40 → translation 33 → P1.6 36 → Capability 11.
 - [x] accepted t4jp chain: detail 41 → translation 34 → P1.6 37 → Capability 12.
+- [x] accepted heterogeneous chains published: tmBK P1.6 39 → Capability 13; t4qV 44 → 14; tmyX 46 → 15.
 - [x] full corpus committed/pushed in `15dbfa3636bbf7118de79683beec3e7ac4a6359d`.
 - [x] remote manifest/job directories and accepted anchors verified.
 - [x] publication CI 902 PASS.
@@ -201,14 +206,14 @@ Permanent interpretation:
 
 Only jobs with a non-null current fetched/parsed detail are eligible downstream semantic-review anchors.
 
-### B6 — Heterogeneous live review — ACTIVE
+### B6 — Heterogeneous live review — CLOSED
 
 Order:
 
-- [~] Python/software role — `tmBK` active.
-- [ ] network/security role.
-- [ ] operations/platform/DevOps role.
-- [ ] decide whether promoted P1.6 + Capability are stable enough to freeze as Phase-2 input.
+- [x] Python/software role — `tmBK` accepted on P1.6 39 → Capability 13.
+- [x] network/security role — `t4qV` accepted on P1.6 44 → Capability 14.
+- [x] operations/platform role — `tmyX` accepted on P1.6 46 → Capability 15.
+- [x] promoted P1.6 + Capability heterogeneous gate closed; proceed to remaining Phase-1 acceptance.
 
 #### B6A — Python/software `tmBK`
 
@@ -250,70 +255,62 @@ Artifact/current state:
 - [x] rejected P1.6 artifact 38 must not feed Capability.
 - [x] no Capability artifact was created from rejected artifact 38.
 - [x] failed later rebuild attempt persisted no new P1.6 artifact.
-- [~] local rebuild under current head still required.
+- [x] accepted rebuild persisted as P1.6 artifact 39.
 
 Exact next steps:
 
-- [ ] synchronize local checkout to current `main`.
-- [ ] run `jobhunter jobs analyze tmBK`.
-- [ ] inspect complete rebuilt P1.6 artifact before Capability.
-- [ ] verify Python/Django = `Mastery` where represented by narrative depth.
-- [ ] verify DRF/FastAPI = `Mastery`.
-- [ ] verify Git = `Familiarity` where represented by narrative depth.
-- [ ] verify Linux = `Familiarity`.
-- [ ] verify SQL/NoSQL = `Familiarity`.
-- [ ] verify OOP/modular design = `Sufficient knowledge`.
-- [ ] verify locking/concurrency/transaction management = `Familiarity`.
-- [ ] verify AI usage has no technical depth signal.
-- [ ] verify responsibilities remain empty unless supported by genuine duty evidence.
-- [ ] verify teamwork/learning/problem-solving/ownership/follow-through/product participation remain source-grounded requirements, not fabricated duties.
-- [ ] verify coverage is complete and non-contradictory.
-- [ ] accept/reject rebuilt `tmBK` P1.6 semantically.
-- [ ] only after P1.6 acceptance, run `jobhunter jobs capability tmBK`.
-- [ ] verify Capability complete source coverage/provenance, grouping, source strength/depth/work, and no fabricated prerequisite/ownership/lifecycle/architecture/autonomy claims.
-- [ ] close Python/software anchor.
+- [x] all tmBK depth, AI non-depth, qualification-vs-duty, structured-skill, and coverage checks passed.
+- [x] P1.6 artifact 39 explicitly accepted with durable review note.
+- [x] Capability artifact 13 complete source coverage/provenance and semantic review passed.
+- [x] Python/software anchor closed.
 
-#### B6B — network/security
+#### B6B — network/security `t4qV`
 
-- [ ] select a fetched/parsed candidate from remote corpus after B6A closes.
-- [ ] review source→English quality before P1.6.
-- [ ] review P1.6 then Capability in that order.
-- [ ] stress protocol/tool/certification/incident/monitoring/operational-duty semantics without importing generic security expectations.
+- [x] selected fetched/parsed `t4qV` (detail 30, English projection 20).
+- [x] source→English quality reviewed before P1.6.
+- [x] artifacts 40-43 rejected with durable notes; no Capability run.
+- [x] general evidence-boundary defects converted to regression tests.
+- [!] artifact 43 certification ontology rejected: named credentials persisted as skills and would cross the role-level/Capability boundary.
+- [x] general credential classification guidance added without vendor-specific acronyms.
+- [x] P1.6 artifact 44 accepted; Capability artifact 14 passed 9/9 requirements, 10/10 duties and role-level credential separation.
 
 #### B6C — operations/platform/DevOps
 
-- [ ] select a fetched/parsed candidate after B6B.
-- [ ] review source→English quality before P1.6.
-- [ ] review P1.6 then Capability in that order.
-- [ ] stress CI/CD, Linux/cloud/container/orchestration/monitoring/availability/incident/production/ownership wording while blocking unsupported architecture/lifecycle/autonomy inflation.
+- [x] blocked `t49N` before P1.6 for a material English field-association defect.
+- [x] selected/reviewed `tmyX` (detail 35, English projection 24; IT/DevOps/Server).
+- [x] fixed generic-heading false splits, explicit pre-heading role-duty coverage, and non-depth `Ability to` / `Skill in` wording with regressions.
+- [x] rejected/archived artifact 45 for omitted opening role actions.
+- [x] P1.6 artifact 46 accepted; Capability artifact 15 passed 11/11 requirements, 5/5 duties and 6/6 depth facts.
 
 Per-role permanent checks:
 
-- [ ] P1.6 factual coverage/provenance.
-- [ ] required/preferred/contextual optionality.
-- [ ] concept-specific explicit depth.
-- [ ] role-level constraints.
-- [ ] no fabricated responsibilities.
-- [ ] Capability complete requirement/responsibility coverage and provenance.
-- [ ] no fabricated prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength.
-- [ ] deterministic defect vs acceptable model variation/local-model limitation distinguished.
-- [ ] repeatable deterministic defects converted into fixtures.
-- [ ] no contract change for harmless non-authoritative wording differences.
+- [x] P1.6 factual coverage/provenance.
+- [x] required/preferred/contextual optionality.
+- [x] concept-specific explicit depth.
+- [x] role-level constraints.
+- [x] no fabricated responsibilities.
+- [x] Capability complete requirement/responsibility coverage and provenance.
+- [x] no fabricated prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength.
+- [x] deterministic defect vs acceptable model variation/local-model limitation distinguished.
+- [x] repeatable deterministic defects converted into fixtures.
+- [x] no contract change for harmless non-authoritative wording differences.
 
 ## C. Phase-1 closure after heterogeneous semantic acceptance
 
 ### C1 — Market truthfulness
 
-- [ ] analyzed-current sample size visible.
-- [ ] source/filter/contract scope recoverable.
-- [ ] small-sample/concentration warnings.
-- [ ] coverage metrics separate from semantic certification.
+- [x] analyzed-current sample size visible.
+- [x] source/filter/contract scope recoverable.
+- [x] small-sample/concentration warnings.
+- [x] coverage metrics separate from semantic certification.
+- [x] posting-level strength columns documented as non-exclusive.
+- [x] repost/cross-post near-duplicate adjustment explicitly reported as not implemented.
 
 ### C2 — Source/lifecycle
 
-- [ ] network/429/5xx/challenge/auth failure != expired/removed.
-- [ ] cautious 404/410/repeated-missing lifecycle handling.
-- [ ] last-successful / consecutive-failure summaries accepted.
+- [x] network/429/5xx/challenge/auth failure != expired/removed.
+- [x] cautious 404/410/repeated-missing lifecycle handling.
+- [x] last-successful / consecutive-failure summaries accepted.
 
 ### C3 — Partial-success truthfulness
 

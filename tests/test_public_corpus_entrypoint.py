@@ -89,6 +89,12 @@ def test_global_config_is_removed_when_detecting_mutation() -> None:
     assert app_entrypoint._should_sync(
         ["--config=custom.toml", "jobs", "capability", "tG9K"]
     )
+    assert app_entrypoint._should_sync(
+        ["jobs", "review-analysis", "tmBK", "accept", "--reason", "Reviewed fully"]
+    )
+    assert not app_entrypoint._should_sync(
+        ["jobs", "review-analysis", "tmBK", "status"]
+    )
     assert not app_entrypoint._should_sync(
         ["--config", "custom.toml", "jobs", "show", "tG9K"]
     )

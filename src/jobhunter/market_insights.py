@@ -46,6 +46,9 @@ class MarketSummary:
     analysis_model: str | None
     analysis_prompt_version: str | None
     analysis_schema_version: str | None
+    source_scope: str
+    filter_scope: str
+    duplicate_adjustment: str
     sample_warning: str | None
     concentration_warning: str | None
     requirements: tuple[RequirementDemand, ...]
@@ -191,6 +194,7 @@ class MarketInsights:
             model=self._analysis_model,
             prompt_version=self._analysis_prompt_version,
             schema_version=self._analysis_schema_version,
+            accepted_only=True,
         )
         analyzed_source_job_ids = tuple(artifact.source_job_id for artifact in artifacts)
         (
@@ -276,6 +280,18 @@ class MarketInsights:
             analysis_model=self._analysis_model,
             analysis_prompt_version=self._analysis_prompt_version,
             analysis_schema_version=self._analysis_schema_version,
+            source_scope="Public Jobinja postings in the local discovery corpus",
+            filter_scope=(
+                "Current parsed source versions with an explicitly accepted current English "
+                "P1.6 artifact matching the configured model/prompt/schema; no title, location, "
+                "triage, lifecycle, or user-workflow filter is applied"
+            ),
+            duplicate_adjustment=(
+                "Concept prevalence counts each source_job_id at most once per classification; "
+                "strength columns are non-exclusive when one posting states the same normalized "
+                "concept at multiple strengths; repost and cross-post near-duplicate adjustment "
+                "is not implemented"
+            ),
             sample_warning=sample_warning,
             concentration_warning=concentration_warning,
             requirements=tuple(requirements[:top_requirements]),

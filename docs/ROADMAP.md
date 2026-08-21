@@ -120,9 +120,9 @@ Public corpus publication baseline:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 ### 3.2 Implemented but still under acceptance/closure
@@ -146,9 +146,9 @@ P1.6 v20/v5 and Capability v9/v5 are promoted/current on dense+sparse opposite-e
 Current order:
 
 ```text
-1. Python/software          ← active: tmBK
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← accepted: tmBK P1.6 39 → Capability 13
+2. network/security         ← accepted: t4qV P1.6 44 → Capability 14
+3. operations/platform      ← accepted: tmyX P1.6 46 → Capability 15
 ```
 
 The first Python/software anchor `tmBK` has already exposed useful repeatable deterministic P1.6 edge cases around:
@@ -159,7 +159,9 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 - treating `Ability to effectively use AI ...` as application wording rather than technical depth;
 - filtering only redundant coverage exclusions that contradict positive extraction of the same reference.
 
-The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and is not allowed to feed Capability. The next live action is a clean P1.6 rebuild/review under the corrected current implementation.
+The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
+
+Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation is closed; Market truthfulness and sampling is the next Phase-1 gate.
 
 ### 3.4 Current governance state
 

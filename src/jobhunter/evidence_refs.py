@@ -8,9 +8,17 @@ from typing import Any
 _SEGMENT_SEPARATOR_RE = re.compile(r"(?:\r?\n+|[●•▪◦]+)")
 _SECTION_HEADING_RE = re.compile(
     r"(?i)(?:^|\s+)"
-    r"(?:what\s+you(?:'|’)ll\s+do|what\s+we(?:'|’)re\s+looking\s+for|"
-    r"technical\s+skill\s+stack|key\s+responsibilities|responsibilities|"
-    r"requirements|qualifications|specialized\s+competencies|skills)"
+    r"(?:preferred\s+(?:qualifications|requirements|skills)|nice[ -]to[ -]have|"
+    r"required\s+(?:qualifications|requirements|skills)|"
+    r"you(?:'|’)ll\s+stand\s+out\s+if|"
+    r"(?:this|the)\s+(?:position|role)\s+(?:will\s+be|is)\s+responsible\s+for|"
+    r"you\s+will\s+be\s+responsible\s+for|"
+    r"what\s+you(?:'|’)ll\s+do|what\s+we(?:'|’)re\s+looking\s+for|"
+    r"technical\s+skill\s+stack|key\s+responsibilities|"
+    r"responsibilities(?=\s*(?::|-|include\b))|"
+    r"requirements(?=\s*(?::|-))|"
+    r"qualifications(?=\s*(?::|-|include\b))|"
+    r"specialized\s+competencies|skills(?=\s*(?::|-)|\s+in\b))"
     r"\s*:?(?=\s|$)"
 )
 _CLAUSE_SEPARATOR_RE = re.compile(r";\s+")
@@ -24,6 +32,15 @@ _OPTIONALITY_RE = re.compile(
 _GLOBAL_UNSPECIFIED_RE = re.compile(
     r"\b(?:do\s+not|don['’]t)\s+expect\s+(?:you\s+to\s+have\s+)?every\b|"
     r"\bnot\s+every\s+(?:single\s+)?(?:item|tool|technology|skill)\b",
+    re.I,
+)
+_CANDIDATE_EXPERIENCE_RE = re.compile(
+    r"\bwe\s+(?:are|'re)\s+(?:looking\s+for|seeking)\b"
+    r".*\bwith\s+experience\s+(?:in|with)\b",
+    re.I,
+)
+_CANDIDATE_DUTY_RE = re.compile(
+    r"\bwe\s+(?:are|'re)\s+(?:looking\s+for|seeking)\b.+\bto\s+[a-z]",
     re.I,
 )
 _NON_REQUIREMENT_VALUES = {
@@ -74,12 +91,33 @@ def _heading_kind(heading: str) -> str | None:
         "what you'll do",
         "key responsibilities",
         "responsibilities",
+        "this position will be responsible for",
+        "this position is responsible for",
+        "the position will be responsible for",
+        "the position is responsible for",
+        "this role will be responsible for",
+        "this role is responsible for",
+        "the role will be responsible for",
+        "the role is responsible for",
+        "you will be responsible for",
     }:
         return "responsibilities"
     if normalized == "technical skill stack":
         return "technical_stack"
     if normalized in {
+        "preferred qualifications",
+        "preferred requirements",
+        "preferred skills",
+        "nice to have",
+        "nice-to-have",
+        "you'll stand out if",
+    }:
+        return "preferred_requirements"
+    if normalized in {
         "what we're looking for",
+        "required qualifications",
+        "required requirements",
+        "required skills",
         "requirements",
         "qualifications",
         "specialized competencies",
@@ -114,7 +152,9 @@ def _long_text_segments_with_sections(text: str) -> list[tuple[str, str | None]]
         for piece in _split_segment_text(text[cursor : match.start()]):
             segments.append((piece, section_kind))
         section_kind = _heading_kind(match.group(0).strip())
-        cursor = match.end()
+        # Optionality must remain in the exact evidence span so downstream validators can
+        # independently verify that preferred strength came from the employer source.
+        cursor = match.start() if section_kind == "preferred_requirements" else match.end()
     for piece in _split_segment_text(text[cursor:]):
         segments.append((piece, section_kind))
     return segments[:80]
@@ -218,7 +258,8 @@ def build_requirement_coverage_plan(fields: dict[str, Any]) -> dict[str, dict[st
     requirement_segments = [
         (index, segment, section_kind)
         for index, (segment, section_kind) in enumerate(segments)
-        if section_kind in {"requirements", "technical_stack"}
+        if section_kind in {"requirements", "preferred_requirements", "technical_stack"}
+        or (section_kind is None and _CANDIDATE_EXPERIENCE_RE.search(segment))
     ]
     has_global_unspecified = any(
         _GLOBAL_UNSPECIFIED_RE.search(segment)
@@ -257,7 +298,10 @@ def build_requirement_coverage_plan(fields: dict[str, Any]) -> dict[str, dict[st
                 else [(reference, text)]
             )
             for item_reference, item_text in item_references:
-                if has_english_optionality_signal(item_text):
+                if (
+                    section_kind == "preferred_requirements"
+                    or has_english_optionality_signal(item_text)
+                ):
                     obligation_hint = "preferred"
                 elif section_kind == "technical_stack" and has_global_unspecified:
                     obligation_hint = "contextual"
@@ -265,9 +309,13 @@ def build_requirement_coverage_plan(fields: dict[str, Any]) -> dict[str, dict[st
                     obligation_hint = "required"
                 plan[item_reference] = {
                     "text": item_text,
-                    "source_kind": "requirement_section",
+                    "source_kind": (
+                        "candidate_experience"
+                        if section_kind is None
+                        else "requirement_section"
+                    ),
                     "obligation_hint": obligation_hint,
-                    "allow_exclusion": True,
+                    "allow_exclusion": section_kind is not None,
                 }
     return plan
 
@@ -282,7 +330,9 @@ def build_responsibility_coverage_plan(fields: dict[str, Any]) -> dict[str, str]
     for index, (segment, section_kind) in enumerate(
         _long_text_segments_with_sections(description)
     ):
-        if section_kind != "responsibilities":
+        if section_kind != "responsibilities" and not (
+            section_kind is None and _CANDIDATE_DUTY_RE.search(segment)
+        ):
             continue
         segment_ref = f"field:description:segment:{index}"
         clauses = _segment_clauses(segment)

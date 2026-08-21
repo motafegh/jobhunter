@@ -21,6 +21,7 @@ class _AnalysisStore:
         assert kwargs["model"] == "analysis-model"
         assert kwargs["prompt_version"] == ENGLISH_PROMPT_VERSION
         assert kwargs["schema_version"] == ENGLISH_ANALYSIS_SCHEMA_VERSION
+        assert kwargs["accepted_only"] is True
         return self.artifact
 
 

@@ -4,6 +4,9 @@ import pytest
 from pydantic import ValidationError
 
 from jobhunter.evidence_refs import build_field_evidence_catalog
+from jobhunter.inference.instructor_lm_studio import (
+    AnalysisRequirement as HistoricalAnalysisRequirement,
+)
 from jobhunter.inference.instructor_lm_studio_v20 import (
     AnalysisRequirementV20,
     JobAnalysisResponseV20,
@@ -38,6 +41,25 @@ def test_v20_accepts_sufficient_knowledge_as_explicit_employer_depth() -> None:
     assert result.concept == "Object-Oriented concepts, modular design"
     assert result.depth_signal == "Sufficient knowledge"
     assert result.evidence == evidence
+
+
+def test_v20_depth_extension_does_not_mutate_historical_validator_registry() -> None:
+    evidence = "Sufficient knowledge of Object-Oriented concepts"
+    fields = {"description": evidence}
+
+    with pytest.raises(ValidationError, match="explicit employer depth"):
+        HistoricalAnalysisRequirement.model_validate(
+            {
+                "concept": "Object-Oriented concepts",
+                "depth_signal": "Sufficient knowledge",
+                "requirement_type": "required",
+                "concept_type": "knowledge",
+                "evidence": evidence,
+                "confidence": "high",
+                "rationale": "Historical contracts must not inherit v20 vocabulary by import.",
+            },
+            context=_context(fields),
+        )
 
 
 def test_v20_does_not_treat_plain_knowledge_as_depth() -> None:
@@ -157,6 +179,41 @@ def test_v20_clears_exact_effective_application_phrase_when_evidence_has_no_dept
     assert result.depth_signal is None
     assert result.requirement_type == "required"
     assert result.evidence == evidence
+
+
+@pytest.mark.parametrize(
+    ("evidence", "concept"),
+    [
+        (
+            "Ability to analyze vulnerabilities and provide practical solutions",
+            "Vulnerability analysis and practical solutions",
+        ),
+        (
+            "Skill in troubleshooting Windows and Active Directory",
+            "Windows and Active Directory troubleshooting",
+        ),
+    ],
+)
+def test_v20_clears_ability_and_skill_application_phrases_without_real_depth(
+    evidence: str,
+    concept: str,
+) -> None:
+    fields = {"description": evidence}
+
+    result = AnalysisRequirementV20.model_validate(
+        {
+            "concept": concept,
+            "depth_signal": evidence,
+            "requirement_type": "required",
+            "concept_type": "skill",
+            "evidence": evidence,
+            "confidence": "high",
+            "rationale": "The source requires the capability without stating proficiency depth.",
+        },
+        context=_context(fields),
+    )
+
+    assert result.depth_signal is None
 
 
 def test_v20_does_not_clear_effective_application_when_evidence_also_has_real_depth() -> None:

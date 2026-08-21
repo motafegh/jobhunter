@@ -409,6 +409,9 @@ def _full_workflow_output(
         f"Distinct employers in analyzed sample: {market.distinct_employers}\n"
         f"Responsibility claims: {market.responsibility_claims}\n"
         f"Requirement claims: {market.requirement_claims}\n"
+        f"Source scope: {market.source_scope}\n"
+        f"Filter scope: {market.filter_scope}\n"
+        f"Duplicate adjustment: {market.duplicate_adjustment}\n"
         "Market reads only the normalized English-analysis contract; original-language analyses "
         "remain separate review artifacts."
     )
@@ -674,6 +677,7 @@ def create_app(
                         model=model,
                         prompt_version=ENGLISH_PROMPT_VERSION,
                         schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+                        accepted_only=True,
                     )
                 ),
                 translation_schema=TRANSLATION_SCHEMA_VERSION,
@@ -1169,6 +1173,46 @@ def create_app(
         return _start_operation(
             request,
             f"Analyze Original: {source_job_id}",
+            action,
+            return_to=f"/jobs/{source_job_id}",
+            auto_return=True,
+        )
+
+    @app.post("/jobs/{source_job_id}/review-analysis")
+    def review_job_english_analysis(
+        request: Request,
+        source_job_id: str,
+        csrf_token: Annotated[str, Form()],
+        disposition: Annotated[str, Form()],
+        reason: Annotated[str, Form()],
+    ):
+        _csrf(request, csrf_token)
+        if disposition not in {"accepted", "rejected"}:
+            raise HTTPException(status_code=400, detail="Unsupported review disposition")
+
+        def action() -> WebOperationResult:
+            result = AnalysisStore(settings.database_path).review_current(
+                source_job_id,
+                model=settings.effective_analysis_lm_studio_model(),
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+                disposition=disposition,
+                reviewed_at=datetime.now(UTC),
+                note=reason,
+            )
+            return WebOperationResult(
+                summary=(
+                    f"English P1.6 semantic review: {source_job_id}\n"
+                    f"Outcome: {result.outcome}\n"
+                    f"Artifact: {result.artifact_id}\n"
+                    f"Disposition: {result.disposition}"
+                ),
+                status="completed",
+            )
+
+        return _start_operation(
+            request,
+            f"Review English analysis: {source_job_id}",
             action,
             return_to=f"/jobs/{source_job_id}",
             auto_return=True,

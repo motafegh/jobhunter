@@ -239,6 +239,7 @@ class AnalysisJobResult:
     responsibilities: int
     requirements: int
     analysis_mode: str
+    semantic_review_status: str = "accepted"
 
 
 @dataclass(frozen=True, slots=True)
@@ -785,6 +786,7 @@ def _result(
         responsibilities=len(artifact.analysis.get("responsibilities") or []),
         requirements=len(artifact.analysis.get("requirements") or []),
         analysis_mode=analysis_mode,
+        semantic_review_status=artifact.semantic_review_status,
     )
 
 
@@ -801,7 +803,7 @@ def format_analysis_batch_summary(summary: AnalysisBatchSummary) -> str:
         lines.append(
             f"- {result.source_job_id}: {result.outcome}, artifact {result.artifact_id}, "
             f"responsibilities={result.responsibilities}, requirements={result.requirements}, "
-            f"model={result.model}"
+            f"model={result.model}, semantic_review={result.semantic_review_status}"
         )
     if summary.failures:
         lines.append("Failures:")

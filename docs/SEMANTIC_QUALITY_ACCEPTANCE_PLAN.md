@@ -43,10 +43,12 @@ t4jp  sparse/ambiguous source
 tG9K  rich semiconductor/industrial-ML source
 ```
 
-Current heterogeneous anchor:
+Accepted heterogeneous anchors:
 
 ```text
-tmBK  Python/software — active P1.6 rebuild/review
+tmBK  Python/software — accepted P1.6 39 / Capability 13
+t4qV  network/security — accepted P1.6 44 / Capability 14
+tmyX  operations/platform — accepted P1.6 46 / Capability 15
 ```
 
 ## 2. Current accepted/public contracts
@@ -291,9 +293,9 @@ Real operational proof:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 The real local DB was exported and verified; corpus safety checks passed; accepted tG9K/t4jp dependency chains were verified; the corpus was committed/pushed; remote manifest/job inspection succeeded; publication CI passed; and CLI terminology was hardened so `Known/discovered jobs` cannot be confused with fetched/parsed detail coverage.
@@ -316,17 +318,17 @@ corpus/README.md
 
 ## 10. SQ-6 — Heterogeneous live semantic acceptance
 
-**Status: ACTIVE.**
+**Status: CLOSED.**
 
 Use materially different current fetched/parsed jobs:
 
 ```text
-1. Python/software
-2. network/security
-3. operations/platform/DevOps
+1. Python/software — tmBK 39 → 13 accepted
+2. network/security — t4qV 44 → 14 accepted
+3. operations/platform — tmyX 46 → 15 accepted
 ```
 
-### SQ-6A — Python/software — active anchor `tmBK`
+### SQ-6A — Python/software — ACCEPTED anchor `tmBK`
 
 Current upstream chain:
 
@@ -379,19 +381,13 @@ A separate Python candidate, `tI1n`, was blocked before P1.6 because manual sour
    - genuine exclusions remain untouched;
    - regression coverage added; CI passed.
 
-#### Current exact `tmBK` acceptance sequence
+#### Accepted `tmBK` result
 
 ```text
-synchronize local main to current head
-→ rerun `jobhunter jobs analyze tmBK`
-→ inspect complete persisted P1.6 artifact
-→ verify all depth-sensitive requirements
-→ verify AI usage has depth=null
-→ verify no fabricated responsibilities
-→ verify soft requirements remain requirements rather than duties
-→ verify complete/non-contradictory coverage
-→ accept P1.6 only if source truth is correct
-→ only then run `jobhunter jobs capability tmBK`
+P1.6 artifact 39: accepted, 16 requirements, 0 responsibilities
+explicit source depth: 7/7 correct
+Capability artifact 13: accepted, 16/16 requirements, 0/0 responsibilities, 7/7 depth
+Review Snapshot: exact current chain, semantic_review=accepted, Blueprint non-current
 ```
 
 Expected depth-sensitive semantics from the employer source:
@@ -407,15 +403,17 @@ Database locking/concurrency/tx       Familiarity
 AI usage for software development     no technical depth signal
 ```
 
-Do not run Capability before `tmBK` P1.6 acceptance.
+The accepted chain is `detail 44 → projection 38 → P1.6 39 → Capability 13`.
 
-### SQ-6B — network/security — pending
+### SQ-6B — network/security — ACCEPTED / `t4qV`
 
-Select a materially different fetched/parsed role after Python/software closes. Review protocol/security-tool/incident/monitoring/certification/operational-duty semantics without importing generic security expectations.
+Selected `t4qV` (Senior Network Security Engineer; detail 30; English projection 20) to stress protocol/tool/certification/operational-duty semantics. P1.6 artifacts 40-43 were rejected and archived before a general credential-ontology clarification.
 
-### SQ-6C — operations/platform/DevOps — pending
+General deterministic fixes preserve structured skill tags without model restatement, composite preferred headings, explicit experience lower bounds, explicit role/position responsibility clauses, and pre-heading candidate-experience clauses. General prompt guidance now treats formal certifications/licenses/awards as credentials without encoding vendor names. P1.6 44 passed 15-requirement/10-duty review; Capability 14 passed 9/9 capability requirements, 10/10 duties and kept five certifications plus the degree role-level.
 
-Select a materially different fetched/parsed role after network/security. Stress CI/CD, Linux/cloud/container/orchestration/monitoring/availability/incident/production/ownership language while preventing unsupported architecture/lifecycle/autonomy inflation.
+### SQ-6C — operations/platform — ACCEPTED / `tmyX`
+
+`t49N` was blocked before P1.6 for a material English field-association defect. `tmyX` (detail 35, projection 24) then exercised Windows infrastructure, identity services, hardening, security operations, PowerShell audit automation and explicit depth. Artifact 45 was rejected for omitting opening role actions. General fixes prevent generic heading words inside sentences from splitting evidence, cover explicit pre-heading candidate duties, and keep ordinary `Ability to` / `Skill in` wording non-depth unless genuine depth is present. P1.6 46 and Capability 15 passed complete review (11/11 capability requirements, 5/5 duties, 6/6 depth facts).
 
 ### Per-role acceptance procedure
 
@@ -432,6 +430,8 @@ For each role:
 9. convert repeatable deterministic defects into regression fixtures;
 10. preserve acceptable model variation when authoritative source truth remains correct;
 11. do not change the v9 contract merely to cosmetically normalize prose.
+
+The review decision is durable application state, not an operator-only convention. New English v20 candidates default to `pending`. Capability, Market, accepted dashboard counts, and public-corpus projection query accepted artifacts only. Review Snapshot carries both dependency-current flags and the explicit semantic-review status. Rejection preserves a local archive of the complete candidate while freeing the current contract identity for a clean rebuild.
 
 Only after heterogeneous acceptance should promoted P1.6 + Capability be considered stable/frozen Phase-2 input.
 

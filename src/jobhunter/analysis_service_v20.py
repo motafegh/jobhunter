@@ -21,7 +21,7 @@ from jobhunter.analysis_service_v19 import (
     _ENGLISH_SYSTEM_PROMPT_V19,
     ANALYSIS_SCHEMA_VERSION,
 )
-from jobhunter.analysis_store import AnalysisStore
+from jobhunter.analysis_store import SEMANTIC_REVIEW_PENDING, AnalysisStore
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
 
@@ -49,6 +49,11 @@ P1.6 V20 CANDIDATE — SOURCE-LED BOUNDED SEMANTIC PARTITIONING:
 - concept_type=experience requires explicit prior applied exposure in the cited evidence. A bare
   preferred subject/scope phrase such as "industrial / edge deployment a plus" does not by itself
   prove experience; classify the source-supported capability/domain appropriately instead.
+- Formal certifications, licenses, and named certification awards are credential facts and use
+  concept_type=education, including when their names are abbreviated or appear beside technologies
+  in a broader preferred list. Never classify a credential as skill or tool merely because the
+  employer values it. Do not guess that an unfamiliar name is a credential without semantic or
+  source evidence.
 - Keep every v19/v18/v17 exact-evidence, obligation, depth, deterministic structured-fact,
   structured-skill, ontology, decomposition, responsibility, capacity, and fail-closed rule.
 """
@@ -159,6 +164,7 @@ class JobAnalysisServiceV20:
                 request_body=result.request_body,
                 raw_response=result.raw_response,
                 created_at=attempted_at,
+                semantic_review_status=SEMANTIC_REVIEW_PENDING,
             )
             self._analysis_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,

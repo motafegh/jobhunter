@@ -61,6 +61,7 @@ def test_web_app_exposes_distinct_english_and_original_analysis_routes(tmp_path:
 
     assert "/jobs/{source_job_id}/analyze-english" in paths
     assert "/jobs/{source_job_id}/analyze-original" in paths
+    assert "/jobs/{source_job_id}/review-analysis" in paths
     assert "/jobs/{source_job_id}/analyze" not in paths
 
 
@@ -188,6 +189,11 @@ def test_web_app_explains_sync_controls_quick_add_and_pipeline(tmp_path: Path) -
     assert "Job URL, search URL, or keyword" in jobs.text
     assert "Process fetched jobs fully" in jobs.text
     assert "Market intelligence" in market.text
+    assert "Source scope:" in market.text
+    assert "Filter scope:" in market.text
+    assert "Duplicate adjustment:" in market.text
+    assert "strength columns are non-exclusive" in market.text
+    assert "does not certify that this bounded sample represents the wider market" in market.text
 
 
 def test_full_workflow_rejects_invalid_model_stage_bounds_before_network(tmp_path: Path) -> None:

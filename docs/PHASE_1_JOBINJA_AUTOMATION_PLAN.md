@@ -341,7 +341,7 @@ The first Python/software anchor `tmBK` (detail 44, English projection 38) has e
 
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected because Linux, SQL/NoSQL, OOP/modular design, and locking/concurrency/transactions inherited `Mastery` incorrectly. It must not feed Capability. No downstream Capability artifact was created from it.
 
-The current next live P1.6 action is a clean rebuild of `tmBK` under the corrected v20 implementation followed by complete manual semantic review.
+The heterogeneous gate is closed: Python/software `tmBK` uses P1.6 39 → Capability 13; network/security `t4qV` uses 44 → 14; operations/platform `tmyX` uses 46 → 15. Rejected artifacts remain archived evidence. Fresh v20 output persists as `pending`; explicit accept/reject records the decision, and only accepted output can feed Capability, Market, accepted browser counts, or the public corpus.
 
 P1.6 remains factual. It must not manufacture a technical curriculum merely because a technology is named.
 
@@ -435,9 +435,9 @@ Accepted real publication baseline:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 Important interpretation:
@@ -515,13 +515,13 @@ Browser and CLI must agree on the underlying semantics.
 |---|---|
 | P1.0 repository alignment | Accepted foundation; current docs reconciled with promoted semantic stack |
 | P1.1/P1.2 discovery | Accepted foundation |
-| P1.3 detail acquisition | Core implemented; remaining source/lifecycle acceptance pending |
+| P1.3 detail acquisition | Core implemented; source/lifecycle acceptance closed |
 | P1.4 parser | Accepted foundation |
 | P1.4 translation v2 | Implemented/current; heterogeneous translation quality remains reviewable per anchor |
 | P1.5 semantic versions/observations | Accepted foundation |
-| P1.5 lifecycle/triage/priority | Implemented; remaining acceptance pending |
-| P1.6 English v20/v5 | Promoted/current; dense+sparse accepted; heterogeneous review active |
-| Capability Intelligence v9/v5 | Promoted/current; dense+sparse accepted; heterogeneous review active |
+| P1.5 lifecycle/triage/priority | Implemented; source/lifecycle acceptance closed |
+| P1.6 English v20/v5 | Promoted/current; dense+sparse plus three heterogeneous families accepted |
+| Capability Intelligence v9/v5 | Promoted/current; dense+sparse plus three heterogeneous families accepted |
 | Role Blueprint v6/v5 | Implemented experimental; Phase-1 deferred/non-authoritative |
 | Review Snapshot v1 | Accepted current-chain routing |
 | Public Corpus v1 | Implemented, populated, verified, published, remotely available |
@@ -534,17 +534,13 @@ Browser and CLI must agree on the underlying semantics.
 Do not restart historical semantic-calibration checklists. Continue from the actual repository state:
 
 ```text
-1. rebuild and fully review tmBK P1.6 under current v20
-2. if accepted, run/review Capability v9 for tmBK and close Python/software anchor
-3. select/review network/security anchor
-4. select/review operations/platform/DevOps anchor
-5. if no unresolved repeatable material defect remains, freeze P1.6 v20 + Capability v9 as Phase-2 input
-6. complete Market truthfulness acceptance
-7. complete source/lifecycle acceptance
-8. complete partial-success semantics
-9. complete P1.7 report/run/browser acceptance
-10. close Phase 1
-11. only then begin corpus-wide Phase 2
+1. preserve accepted heterogeneous chains: tmBK 39→13, t4qV 44→14, tmyX 46→15
+2. preserve accepted Market truthfulness/sampling behavior
+3. preserve accepted source/lifecycle behavior
+4. complete partial-success semantics
+5. complete P1.7 report/run/browser acceptance
+6. close Phase 1
+7. only then begin corpus-wide Phase 2
 ```
 
 The operational details live in `docs/EXECUTION_TODO.md`.

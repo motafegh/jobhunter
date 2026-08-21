@@ -230,10 +230,12 @@ class CapabilityIntelligenceServiceV8:
             model=self._analysis_model,
             prompt_version=ENGLISH_PROMPT_VERSION,
             schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            accepted_only=True,
         )
         if analysis is None:
             raise CapabilityIntelligenceError(
-                "Job has no current accepted English P1.6 analysis; run Analyze English first"
+                "Job has no semantically accepted current English P1.6 analysis; run Analyze "
+                "English first, then accept its semantic review"
             )
         if analysis.job_detail_version_id != source.job_detail_version_id:
             raise CapabilityIntelligenceError(

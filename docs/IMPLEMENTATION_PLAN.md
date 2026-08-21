@@ -73,7 +73,7 @@ A bounded per-job semantic slice was intentionally implemented before Phase-1 cl
 - English P1.6 v20/v5: promoted/current and bounded-accepted on opposite-end dense/sparse anchors;
 - Capability Intelligence v9/v5: promoted/current and operationally closed on the same accepted anchors;
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
-- heterogeneous role-family validation: active before the promoted P1.6 + Capability stack may be frozen as Phase-2 input.
+- heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
 
 This does **not** authorize Phase-2 corpus-wide generation, taxonomy growth, Market-v2 aggregation, personal scoring, or authoritative Blueprint use.
 
@@ -296,9 +296,9 @@ Accepted publication baseline:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 Important interpretation:
@@ -311,7 +311,7 @@ The corpus was backfilled from the real local DB, verified, safety-scanned, inte
 
 Git publication remains intentional; runtime correctness never depends on GitHub/network availability.
 
-### P1-A5 — Representative heterogeneous semantic review — active
+### P1-A5 — Representative heterogeneous semantic review — closed
 
 Use materially different fetched/parsed jobs:
 
@@ -320,10 +320,10 @@ accepted baselines:
 t4jp  sparse/ambiguous
 tG9K  rich AI/ML industrial
 
-active/new families:
-1. Python/software
-2. network/security
-3. operations/platform/DevOps
+accepted families:
+1. Python/software — tmBK P1.6 39 → Capability 13
+2. network/security — t4qV P1.6 44 → Capability 14
+3. operations/platform — tmyX P1.6 46 → Capability 15
 ```
 
 The first Python/software anchor is:
@@ -344,18 +344,17 @@ P1.6 public contract:        v20/v5
 
 The first persisted `tmBK` P1.6 artifact 38 is **semantically rejected** and must not feed Capability. It was not published as an accepted corpus artifact and no Capability downstream was created.
 
-Current next live sequence:
+Acceptance is now an enforced state transition: fresh English v20 artifacts persist as `pending`; explicit review acceptance records time/note; rejection archives the complete local artifact and releases the current contract identity for rebuild. Capability, Market, browser accepted counts, and public-corpus export select accepted artifacts only. V20-specific depth phrases are held in a copied registry so current imports cannot alter historical validator behavior.
+
+Current live result:
 
 ```text
-synchronize local main
-→ rebuild tmBK P1.6 under current v20 implementation
-→ inspect all requirements/responsibilities/coverage/depth against source
-→ accept or fix only a repeatable deterministic defect
-→ only if P1.6 is accepted, run Capability v9 on tmBK
-→ audit Capability source truth/grouping/optionality/inference
-→ close Python/software anchor
-→ select network/security anchor
-→ select operations/platform/DevOps anchor
+tmBK P1.6 artifact 39 accepted → Capability 13 accepted → Python/software closed
+→ t4qV artifacts 40-43 rejected; general defects fixed
+→ P1.6 44 accepted → Capability 14 accepted → network/security closed
+→ tmyX artifact 45 rejected; heading/duty/depth defects fixed
+→ P1.6 46 accepted → Capability 15 accepted → operations/platform closed
+→ Market truthfulness and sampling accepted
 ```
 
 For every heterogeneous role review:
@@ -376,7 +375,7 @@ Repeatable deterministic failures become regression tests. Harmless model wordin
 
 ---
 
-## 7. Gate P1-B — Market truthfulness
+## 7. Gate P1-B — Market truthfulness — closed
 
 After P1-A is acceptable:
 
@@ -391,9 +390,11 @@ After P1-A is acceptable:
 
 Capability and Blueprint do not enter current Market aggregation yet.
 
+Accepted live state: five accepted/current English P1.6 jobs across five employers. The surface exposes 5/43/344 analyzed/parsed/discovered coverage, exact model/prompt/schema identity, source and filter scope, posting-level non-exclusive strength semantics, the absence of repost/near-duplicate adjustment, a small-sample warning, and a clear boundary between per-posting semantic acceptance and market representativeness.
+
 ---
 
-## 8. Gate P1-C — Source/lifecycle acceptance
+## 8. Gate P1-C — Source/lifecycle acceptance — closed
 
 Deterministic/live acceptance must protect:
 
@@ -414,6 +415,8 @@ Complete/accept:
 - consecutive-failure summary;
 - lifecycle UI;
 - source truth vs user triage boundary.
+
+Focused deterministic acceptance covers network failures, 429, 5xx, challenge/auth responses, explicit expiry, cautious repeated 404/410 removal, recovery to active, and last-success/consecutive-failure health summaries. Real accepted-anchor health output remains active and inspectable.
 
 ---
 

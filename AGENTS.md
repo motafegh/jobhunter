@@ -74,8 +74,8 @@ The public corpus is also operationally closed and remotely available. The accep
 known/discovered Jobinja jobs: 344
 fetched/parsed detail jobs:      43
 English projections:             33
-accepted/current English P1.6:    2
-accepted/current Capability:      2
+accepted/current English P1.6:    5
+accepted/current Capability:      5
 ```
 
 Do not reopen P1.6 v20 or Capability v9 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
@@ -107,38 +107,43 @@ The public-corpus implementation/backfill/publish gate is **closed**. Heterogene
 Current order:
 
 ```text
-1. Python/software
-2. network/security
-3. operations/platform/DevOps
+1. Python/software             → tmBK P1.6 39 / Capability 13 ACCEPTED
+2. network/security            → t4qV P1.6 44 / Capability 14 ACCEPTED
+3. operations/platform/DevOps  → tmyX P1.6 46 / Capability 15 ACCEPTED
 ```
 
-The first Python/software anchor is:
+The accepted Python/software anchor is:
 
 ```text
 tmBK — Python Developer
 source detail version:       44
 English projection artifact: 38
 P1.6 contract:               job-analysis-english-v20 / job-analysis-v5
+accepted P1.6 artifact:      39
+accepted Capability artifact: 13
 ```
 
-`tmBK` has already exposed repeatable deterministic v20 defects and therefore remains an active validation case rather than an accepted anchor. The rejected first persisted P1.6 artifact 38 must not feed Capability. Current fixes on `main` cover:
+`tmBK` is closed and accepted after complete P1.6 and Capability review. Artifact 39 has 16 requirements, 0 responsibilities, correct 7/7 explicit depth facts, and accepted semantic-review state. Capability 13 covers 16/16 requirements and 7/7 explicit depth facts with no fabricated duties or role-level inflation.
 
-- `Sufficient knowledge` as an explicit employer depth phrase while plain `knowledge` remains non-depth;
-- item-specific depth preservation when one evidence segment contains multiple levels such as `Mastery`, `Familiarity`, and `Sufficient knowledge`;
-- fail-closed behavior when multi-level evidence has no item-specific depth signal;
-- normalization of exact `effectively use ...` application wording to non-depth only when the evidence contains no genuine depth marker;
-- removal of only redundant coverage exclusions that contradict positive extraction of the same coverage reference.
+The network/security anchor `t4qV` (detail 30, English projection 20) is accepted on P1.6 artifact 44 and Capability artifact 14. P1.6 artifacts 40-43 remain rejected/archived evidence. General deterministic fixes from those reviews cover:
 
-Exact next local action after synchronizing `main`:
+- exact structured-skill tags materialized deterministically rather than model-restated;
+- composite preferred headings retain their optionality in exact evidence;
+- explicit experience lower bounds such as `more than six years` remain intact;
+- explicit `position/role ... responsible for` clauses enter responsibility coverage;
+- explicit pre-heading `we are looking/seeking ... with experience in ...` clauses enter requirement coverage.
+
+The operations/platform anchor `tmyX` (detail 35, English projection 24) is accepted on P1.6 artifact 46 and Capability artifact 15. Artifact 45 was rejected for missing the explicit opening role actions. Its reviews additionally fixed:
 
 ```text
-rerun tmBK English P1.6
-→ manually inspect complete source truth and depth calibration
-→ accept or fix only a repeatable deterministic defect
-→ only if accepted, run Capability v9 on tmBK
+generic heading words inside ordinary sentences no longer split evidence
+explicit pre-heading candidate duty clauses enter responsibility coverage
+Ability to / Skill in application wording stays non-depth without real depth markers
 ```
 
-Do **not** run `tmBK` Capability before its rebuilt P1.6 artifact is manually accepted.
+Fresh English v20 artifacts are `pending` by default. Pending artifacts must remain excluded from Capability, Market, accepted dashboard counts, and `corpus/`. Use `jobhunter jobs review-analysis <job-id> status|accept|reject`; acceptance/rejection requires a meaningful review note. Existing promoted artifacts 36/37 migrate as accepted.
+
+Heterogeneous semantic validation, Market truthfulness/sampling, and source/lifecycle acceptance are closed. Do not rerun accepted anchors merely for wording variation. The exact next Phase-1 gate is partial-success semantics, followed by P1.7 report/run/browser acceptance.
 
 For each heterogeneous role review factual coverage, evidence, requirement strength, explicit depth, role-level constraints, Capability coverage/grouping/source truth, and optionality calibration.
 
@@ -300,7 +305,7 @@ corpus/           complete current public dataset
 review-snapshots/ selected semantic acceptance/review evidence
 ```
 
-Snapshots are generated review artifacts, not runtime inputs. Commit selected public review examples intentionally. Current-chain status is dependency currentness, not semantic acceptance.
+Snapshots are generated review artifacts, not runtime inputs. Commit selected public review examples intentionally. Dependency-current flags remain distinct from the explicit P1.6 semantic-review status/time/note.
 
 Never commit SQLite/WAL/SHM, raw model responses/prompts, secrets, logs, raw HTML contents, or future private user state.
 

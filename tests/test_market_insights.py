@@ -183,6 +183,13 @@ def test_market_summary_keeps_requirement_strength_separate(tmp_path: Path) -> N
     assert summary.analysis_model == "model"
     assert summary.analysis_prompt_version == "prompt"
     assert summary.analysis_schema_version == "schema"
+    assert "Public Jobinja postings" in summary.source_scope
+    assert "explicitly accepted current English P1.6" in summary.filter_scope
+    assert "no title, location, triage, lifecycle" in summary.filter_scope
+    assert "repost and cross-post near-duplicate adjustment is not implemented" in (
+        summary.duplicate_adjustment
+    )
+    assert "strength columns are non-exclusive" in summary.duplicate_adjustment
     assert summary.sample_warning is not None
     assert "Only 2 current jobs" in summary.sample_warning
     assert summary.concentration_warning is None

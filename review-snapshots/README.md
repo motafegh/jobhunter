@@ -81,11 +81,11 @@ capability_is_current_chain
 blueprint_is_current_chain
 ```
 
-These are **dependency/currentness flags, not semantic-acceptance flags**.
+These remain **dependency/currentness flags, not semantic-acceptance flags**. Snapshot v1 now additionally includes `english_analysis_semantic_review` and the analysis review status/time/note as a separate explicit decision record.
 
 A current-chain artifact can still fail semantic review. Conversely, a historical artifact can remain useful experimental evidence without being current.
 
-This distinction is active in heterogeneous validation: `tmBK`'s first P1.6 candidate mechanically completed but was semantically rejected, so it is not eligible to feed Capability.
+This distinction is active in heterogeneous validation: rejected candidates for `tmBK`, `t4qV`, and `tmyX` never became eligible for Capability; only explicitly accepted artifacts 39, 44, and 46 fed artifacts 13, 14, and 15.
 
 ## Current accepted Capability anchors
 
@@ -106,6 +106,18 @@ English P1.6 artifact 36
 t4jp
 English P1.6 artifact 37
 → Capability artifact 12
+
+tmBK heterogeneous Python/software
+English P1.6 artifact 39
+→ Capability artifact 13
+
+t4qV heterogeneous network/security
+English P1.6 artifact 44
+→ Capability artifact 14
+
+tmyX heterogeneous operations/platform
+English P1.6 artifact 46
+→ Capability artifact 15
 ```
 
 Operational verification proved:
@@ -119,6 +131,24 @@ blueprint_is_current_chain=False
 t4jp capability_is_current_chain=True
 Capability artifact=12
 analysis artifact=37
+blueprint_is_current_chain=False
+
+tmBK capability_is_current_chain=True
+Capability artifact=13
+analysis artifact=39
+english_analysis_semantic_review=accepted
+blueprint_is_current_chain=False
+
+t4qV capability_is_current_chain=True
+Capability artifact=14
+analysis artifact=44
+english_analysis_semantic_review=accepted
+blueprint_is_current_chain=False
+
+tmyX capability_is_current_chain=True
+Capability artifact=15
+analysis artifact=46
+english_analysis_semantic_review=accepted
 blueprint_is_current_chain=False
 ```
 
@@ -134,9 +164,9 @@ Accepted publication baseline:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 Important interpretation:
@@ -152,16 +182,16 @@ The remote corpus can now be used to select heterogeneous roles without direct l
 Active order:
 
 ```text
-1. Python/software          ← tmBK active
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← tmBK 39 → 13 accepted / closed
+2. network/security         ← t4qV 44 → 14 accepted / closed
+3. operations/platform      ← tmyX 46 → 15 accepted / closed
 ```
 
 For each selected role:
 
 1. inspect original source and English projection quality;
 2. run/reuse current English P1.6;
-3. manually accept P1.6 before Capability;
+3. inspect the complete `pending` candidate and record `accept` or `reject` through `jobhunter jobs review-analysis` (or the browser);
 4. run/reuse current Capability v9 only after accepted P1.6;
 5. inspect P1.6 factual coverage, strength, optionality, explicit depth and evidence;
 6. inspect Capability complete requirement/responsibility coverage and provenance;
@@ -170,15 +200,17 @@ For each selected role:
 9. distinguish deterministic defects from model limitations or harmless non-authoritative variation;
 10. convert repeatable deterministic defects into fixtures.
 
-Current Python/software case:
+Current accepted Python/software case:
 
 ```text
 tmBK
 source detail 44
 English projection 38
-P1.6 rebuild/review required
-Capability must not run until P1.6 acceptance
+P1.6 artifact 39 accepted
+Capability artifact 13 accepted
 ```
+
+Accepted network/security case: `t4qV` (detail 30, projection 20, P1.6 44, Capability 14). Accepted operations/platform case: `tmyX` (detail 35, projection 24, P1.6 46, Capability 15). Their snapshots preserve exact accepted chains and review decisions; rejected candidates remain local archived evidence.
 
 Repeatable deterministic defects become fixtures. Harmless non-authoritative wording variation does not justify reopening accepted contracts.
 

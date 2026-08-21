@@ -1,0 +1,261 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "three to six years",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Bachelor's degree",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Mastery of Windows Server hardening and services such as Active Directory, ADFS, ADCS, Exchange, and SCCM",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Mastery of Active Directory security concepts, special permissions, Kerberos, NTLM, LDAP, and Group Policy",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with Microsoft Security Baseline, CIS Benchmark, and other Hardening standards",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to analyze vulnerabilities, configuration weaknesses, and provide practical solutions",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Mastery of PowerShell for information gathering, auditing, and security reporting",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with security logs, SIEM, and EDR for evidence analysis",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Skill in troubleshooting Windows, Active Directory, and Microsoft services",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to prepare documentation and communicate security requirements to technical teams.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Network configuration",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "PowerShell",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "network infrastructure",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Windows Server hardening and services (Active Directory, ADFS, ADCS, Exchange, SCCM)",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Mastery",
+        "evidence": "Mastery of Windows Server hardening and services such as Active Directory, ADFS, ADCS, Exchange, and SCCM",
+        "rationale": "Directly stated as mastery requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Active Directory security concepts (special permissions, Kerberos, NTLM, LDAP, Group Policy)",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Mastery",
+        "evidence": "Mastery of Active Directory security concepts, special permissions, Kerberos, NTLM, LDAP, and Group Policy",
+        "rationale": "Directly stated as mastery requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Microsoft Security Baseline, CIS Benchmark, and other Hardening standards",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with Microsoft Security Baseline, CIS Benchmark, and other Hardening standards",
+        "rationale": "Directly stated as familiarity requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Vulnerability and configuration weakness analysis and solution provision",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to analyze vulnerabilities, configuration weaknesses, and provide practical solutions",
+        "rationale": "Directly stated as ability requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "PowerShell for information gathering, auditing, and security reporting",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Mastery",
+        "evidence": "Mastery of PowerShell for information gathering, auditing, and security reporting",
+        "rationale": "Directly stated as mastery requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Security logs, SIEM, and EDR for evidence analysis",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with security logs, SIEM, and EDR for evidence analysis",
+        "rationale": "Directly stated as familiarity requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Troubleshooting Windows, Active Directory, and Microsoft services",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Skill in troubleshooting Windows, Active Directory, and Microsoft services",
+        "rationale": "Directly stated as skill requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Documentation preparation and communication of security requirements to technical teams",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to prepare documentation and communicate security requirements to technical teams.",
+        "rationale": "Directly stated as ability requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Professional experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "three to six years",
+        "evidence": "three to six years",
+        "rationale": "JobHunter deterministically materialized the structured minimum-experience field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Bachelor's degree",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Bachelor's degree",
+        "rationale": "JobHunter deterministically materialized the structured education field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Network configuration",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Network configuration",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "PowerShell",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "PowerShell",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "network infrastructure",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "network infrastructure",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "Investigating vulnerabilities and configuration weaknesses and providing corrective suggestions",
+        "statement": "Investigating vulnerabilities and configuration weaknesses and providing corrective suggestions"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Specialized review and response to security requests and tickets",
+        "statement": "Specialized review and response to security requests and tickets"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Reviewing security settings, access controls, and Group Policies",
+        "statement": "Reviewing security settings, access controls, and Group Policies"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Preparing checklists, technical documentation, and security reports",
+        "statement": "Preparing checklists, technical documentation, and security reports"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Automating assessment and audit processes with PowerShell.",
+        "statement": "Automating assessment and audit processes with PowerShell"
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "role_purpose",
+        "evidence": "At Royal Process Team, as guardians of cyberspace and architects of information security, we have a mission that goes beyond the usual boundaries of digital security. To achieve this goal, we are looking for a cybersecurity infrastructure and Microsoft services expert to assess the security posture of servers and Microsoft services and to develop and provide security requirements, Best Practices, and hardening solutions."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Investigating vulnerabilities and configuration weaknesses and providing corrective suggestions"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Specialized review and response to security requests and tickets"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Reviewing security settings, access controls, and Group Policies"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Preparing checklists, technical documentation, and security reports"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Automating assessment and audit processes with PowerShell."
+      }
+    ],
+    "role_purpose": [
+      {
+        "confidence": "high",
+        "evidence": "At Royal Process Team, as guardians of cyberspace and architects of information security, we have a mission that goes beyond the usual boundaries of digital security. To achieve this goal, we are looking for a cybersecurity infrastructure and Microsoft services expert to assess the security posture of servers and Microsoft services and to develop and provide security requirements, Best Practices, and hardening solutions.",
+        "statement": "Assess security posture of servers and Microsoft services and to develop and provide security requirements, Best Practices, and hardening solutions"
+      }
+    ]
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 46,
+  "created_at": "2026-08-21T20:00:23.887599+00:00",
+  "job_detail_version_id": 35,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v20",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tmyX",
+  "stage": "p16_english",
+  "translation_artifact_id": 24
+}

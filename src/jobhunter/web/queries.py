@@ -151,6 +151,7 @@ class WebRepository:
                                 AND a.prompt_version = ?
                                 AND a.schema_version = ?
                                 AND (? IS NULL OR a.model = ?)
+                                AND a.semantic_review_status = 'accepted'
                           )
                     ) AS analyzed_jobs,
                     (SELECT COUNT(*) FROM job_detail_fetch_observations) AS detail_checks,
@@ -246,6 +247,7 @@ class WebRepository:
                           AND aa.prompt_version = ?
                           AND aa.schema_version = ?
                           AND (? IS NULL OR aa.model = ?)
+                          AND aa.semantic_review_status = 'accepted'
                     ) AS analyzed
                 FROM job_postings AS p
                 LEFT JOIN job_user_workflow AS w ON w.job_posting_id = p.id

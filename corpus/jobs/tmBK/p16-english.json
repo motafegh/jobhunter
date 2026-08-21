@@ -1,0 +1,201 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "- Teamwork and high learning aptitude - Problem-solving ability - Ability to effectively use (AI) to increase the quality and speed of software development. Current programming level is not a top priority for us. What is more important to us is having an *Ownership* mindset, responsibility, following issues to the end result, the ability to continuous learning, and effective participation in product development. If you have a drive for growth and pursue work until the end result, we would be happy to get to know you.",
+        "rationale": "A persisted requirement cites this exact coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Django",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Git",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "RestFul API",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "OOP",
+        "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Python/Django",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Mastery",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required mastery skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "DRF, FastAPI",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Mastery",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required mastery skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Git",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required familiarity skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Linux operating system",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required familiarity skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "SQL and NoSQL databases",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required familiarity skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Object-Oriented concepts, modular design",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Sufficient knowledge",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required knowledge requirement.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Database Locking, Concurrency, and Transaction Management",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "- Mastery of Python/Django - Mastery of DRF, FastAPI - Familiarity with Git - Familiarity with Linux operating system - Familiarity with SQL and NoSQL databases - Sufficient knowledge of Object-Oriented concepts, modular design - Familiarity with Database Locking, Concurrency, and Transaction Management.",
+        "rationale": "Directly listed as a required familiarity skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Teamwork and high learning aptitude",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "- Teamwork and high learning aptitude - Problem-solving ability - Ability to effectively use (AI) to increase the quality and speed of software development. Current programming level is not a top priority for us. What is more important to us is having an *Ownership* mindset, responsibility, following issues to the end result, the ability to continuous learning, and effective participation in product development. If you have a drive for growth and pursue work until the end result, we would be happy to get to know you.",
+        "rationale": "Listed as a required trait/ability.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Problem-solving ability",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "- Teamwork and high learning aptitude - Problem-solving ability - Ability to effectively use (AI) to increase the quality and speed of software development. Current programming level is not a top priority for us. What is more important to us is having an *Ownership* mindset, responsibility, following issues to the end result, the ability to continuous learning, and effective participation in product development. If you have a drive for growth and pursue work until the end result, we would be happy to get to know you.",
+        "rationale": "Listed as a required ability.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "AI usage for software development quality and speed increase",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "- Teamwork and high learning aptitude - Problem-solving ability - Ability to effectively use (AI) to increase the quality and speed of software development. Current programming level is not a top priority for us. What is more important to us is having an *Ownership* mindset, responsibility, following issues to the end result, the ability to continuous learning, and effective participation in product development. If you have a drive for growth and pursue work until the end result, we would be happy to get to know you.",
+        "rationale": "Listed as a required ability.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ownership mindset, responsibility, following issues to the end result, continuous learning, and effective participation in product development",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "- Teamwork and high learning aptitude - Problem-solving ability - Ability to effectively use (AI) to increase the quality and speed of software development. Current programming level is not a top priority for us. What is more important to us is having an *Ownership* mindset, responsibility, following issues to the end result, the ability to continuous learning, and effective participation in product development. If you have a drive for growth and pursue work until the end result, we would be happy to get to know you.",
+        "rationale": "Listed as important behavioral expectations.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Python",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Django",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Django",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Git",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Git",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "RestFul API",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "RestFul API",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "OOP",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "OOP",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [],
+    "responsibility_coverage": [],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 39,
+  "created_at": "2026-08-21T19:08:45.974112+00:00",
+  "job_detail_version_id": 44,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v20",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tmBK",
+  "stage": "p16_english",
+  "translation_artifact_id": 38
+}

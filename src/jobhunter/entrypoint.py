@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from collections.abc import Sequence
+from datetime import UTC, datetime
 from pathlib import Path
 
 from pydantic import ValidationError
@@ -17,6 +19,7 @@ from jobhunter.analysis_current import (
     AnalysisValidationError,
     build_job_analysis_service,
 )
+from jobhunter.analysis_store import AnalysisStore
 from jobhunter.capability_service import (
     CAPABILITY_PROMPT_VERSION,
     CAPABILITY_SCHEMA_VERSION,
@@ -164,6 +167,38 @@ def _analysis_parser(*, default_config: Path | None = None) -> argparse.Argument
         choices=("english", "original"),
         default="english",
         help="Evidence representation to analyze (default: english)",
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
+def _analysis_review_parser(
+    *, default_config: Path | None = None
+) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter jobs review-analysis",
+        description=(
+            "Inspect, accept, or reject the current English P1.6 review candidate. "
+            "Only accepted artifacts may feed Capability, Market, or the public corpus."
+        ),
+    )
+    parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "disposition",
+        choices=("status", "accept", "reject"),
+        nargs="?",
+        default="status",
+        help="Review action (default: status)",
+    )
+    parser.add_argument(
+        "--reason",
+        default="",
+        help="Required review note for accept/reject",
     )
     parser.add_argument(
         "--config",
@@ -399,6 +434,67 @@ def _run_job_analysis(
     print(f"Contract: {prompt_version} / {schema_version}")
     print(f"Responsibilities: {result.responsibilities}")
     print(f"Requirements: {result.requirements}")
+    print(f"Semantic review: {result.semantic_review_status}")
+    if parsed.mode == "english" and result.semantic_review_status == "pending":
+        print(
+            "Next: inspect the complete artifact, then run "
+            f"`jobhunter jobs review-analysis {result.source_job_id} accept --reason \"...\"` "
+            "or reject it."
+        )
+    return 0
+
+
+def _review_job_analysis(
+    arguments: list[str],
+    *,
+    default_config: Path | None,
+) -> int:
+    parser = _analysis_review_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        store = AnalysisStore(settings.database_path)
+        artifact = store.latest_current(
+            parsed.job_id,
+            model=settings.effective_analysis_lm_studio_model(),
+            prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+        )
+        if artifact is None:
+            raise LookupError(
+                "No current English P1.6 artifact matches the configured review contract"
+            )
+        if parsed.disposition == "status":
+            print(f"English P1.6 review candidate for {artifact.source_job_id}")
+            print(f"Artifact: {artifact.id}")
+            print(f"Model: {artifact.model}")
+            print(f"Contract: {artifact.prompt_version} / {artifact.schema_version}")
+            print(f"Semantic review: {artifact.semantic_review_status}")
+            if artifact.semantic_reviewed_at:
+                print(f"Reviewed at: {artifact.semantic_reviewed_at}")
+            if artifact.semantic_review_note:
+                print(f"Review note: {artifact.semantic_review_note}")
+            print(json.dumps(artifact.analysis, ensure_ascii=False, indent=2, sort_keys=True))
+            return 0
+        review = store.review_current(
+            parsed.job_id,
+            model=settings.effective_analysis_lm_studio_model(),
+            prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            disposition=("accepted" if parsed.disposition == "accept" else "rejected"),
+            reviewed_at=datetime.now(UTC),
+            note=parsed.reason,
+        )
+    except (LookupError, ValueError) as exc:
+        print(f"P1.6 semantic review failed: {exc}", file=sys.stderr)
+        return 2
+    except OSError as exc:
+        print(f"P1.6 semantic review failed: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"Outcome: {review.outcome}")
+    print(f"Artifact: {review.artifact_id}")
+    print(f"Semantic review: {review.disposition}")
     return 0
 
 
@@ -497,6 +593,7 @@ def _print_combined_help() -> None:
     print("  run --help               Show Phase-1 run limits and options")
     print("  jobs health <id>         Summarize last success/failures and lifecycle state")
     print("  jobs analyze <id>        Build/reuse targeted P1.6 analysis (English by default)")
+    print("  jobs review-analysis <id> Inspect/accept/reject current English P1.6")
     print("")
     print("Capability intelligence commands:")
     print("  jobs capability <id>     Build/reuse per-job capability/depth intelligence")
@@ -527,6 +624,16 @@ def main(argv: Sequence[str] | None = None) -> int:
     if is_analysis:
         return _run_job_analysis(
             analysis_arguments,
+            default_config=default_config,
+        )
+
+    is_review, default_config, review_arguments = _extract_jobs_invocation(
+        arguments,
+        "review-analysis",
+    )
+    if is_review:
+        return _review_job_analysis(
+            review_arguments,
             default_config=default_config,
         )
 

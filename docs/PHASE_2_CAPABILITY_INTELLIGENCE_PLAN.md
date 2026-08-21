@@ -1,6 +1,6 @@
 # JobHunter Capability Intelligence Plan
 
-**Status:** Bounded per-job Capability v9 promoted/current; heterogeneous non-regression active  
+**Status:** Bounded per-job Capability v9 promoted/current; heterogeneous non-regression closed
 **Date:** 2026-08-21  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/ROADMAP.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/PRODUCT_SPECIFICATION.md`, and the current Phase-1 gate  
 **Scope:** Record the accepted bounded Capability Intelligence architecture and the remaining heterogeneous acceptance required before Phase-2 corpus-scale capability-profile work. Despite this file's historical `PHASE_2_...` name, it does **not** authorize corpus-wide Phase-2 rollout before Phase-1 closure.
@@ -238,9 +238,9 @@ Public promotion is closed, but the stack is not yet frozen as Phase-2 input. It
 Current order:
 
 ```text
-1. Python/software          ← tmBK active at P1.6 gate
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
+2. network/security         ← t4qV accepted: P1.6 44 → Capability 14
+3. operations/platform      ← tmyX accepted: P1.6 46 → Capability 15
 ```
 
 For each role:
@@ -256,11 +256,11 @@ For each role:
 9. classify any problem as deterministic defect, model limitation, or harmless non-authoritative variation;
 10. convert repeatable deterministic defects into regression tests.
 
-### Current `tmBK` position
+### Current heterogeneous position
 
-`tmBK` is not yet at the Capability stage. Its first persisted P1.6 artifact 38 was semantically rejected for deterministic multi-signal depth propagation and must not feed Capability. Current v20 fixes the defect and adjacent depth/coverage cases; a clean P1.6 rebuild/review is required first.
+`tmBK` is accepted and closed: rejected artifact 38 never fed Capability; rebuilt P1.6 artifact 39 passed complete manual review; Capability artifact 13 then passed 16/16 requirement and 7/7 explicit-depth coverage without fabricated duties or role-level inflation.
 
-Do **not** run `jobhunter jobs capability tmBK` until its rebuilt P1.6 artifact is manually accepted.
+`t4qV` is accepted on P1.6 44 → Capability 14 after the general credential rule kept certifications role-level; artifacts 40-43 remain rejected/archived evidence. `tmyX` is accepted on P1.6 46 → Capability 15 after general heading, explicit candidate-duty, and non-depth ability/skill fixes. All three heterogeneous families now pass complete P1.6 and Capability review.
 
 ---
 
@@ -268,7 +268,7 @@ Do **not** run `jobhunter jobs capability tmBK` until its rebuilt P1.6 artifact 
 
 Capability v9 is already the **promoted current public contract**. The remaining decision is not whether to return to v7/v8 or invent v10 for cosmetic prose differences.
 
-After Python/software, network/security and operations/platform/DevOps pass without unresolved repeatable material defects:
+Python/software, network/security and operations/platform have passed without unresolved repeatable material defects:
 
 ```text
 P1.6 v20 + Capability v9

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from jobhunter.analysis_runtime import _translation_service
@@ -10,7 +11,6 @@ from jobhunter.analysis_runtime_v15 import _normalize_v15_schedule_concepts
 from jobhunter.analysis_runtime_v18 import (
     _materialize_v18_deterministic_requirements,
     _v18_structured_partition,
-    _v18_structured_skill_coverage_plan,
 )
 from jobhunter.analysis_runtime_v19 import V19CandidateAnalysisProvider
 from jobhunter.analysis_service import AnalysisValidationError
@@ -31,17 +31,72 @@ from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.translation_store import TranslationStore
 
 _PARTITION_SIZE = 8
+_EXPERIENCE_BOUND_PREFIX_RE = re.compile(
+    r"^(?:more\s+than|over|greater\s+than|at\s+least|minimum(?:\s+of)?)\s+",
+    re.I,
+)
 
 
 def _normalize(value: str) -> str:
     return " ".join(value.replace("\u200c", " ").split()).casefold()
 
 
+def _v20_deterministic_structured_skills(
+    model_fields: dict[str, Any],
+) -> tuple[dict[str, Any], list[dict[str, Any]], list[str]]:
+    """Materialize exact source skill tags instead of asking the model to echo them."""
+
+    result_fields = dict(model_fields)
+    values = result_fields.pop("skills", None)
+    if not isinstance(values, list):
+        return result_fields, [], []
+
+    requirements: list[dict[str, Any]] = []
+    references: list[str] = []
+    for index, value in enumerate(values):
+        if not isinstance(value, str) or not value.strip():
+            continue
+        evidence = value.strip()
+        reference = f"field:skills:{index}"
+        requirements.append(
+            {
+                "concept": evidence,
+                "depth_signal": None,
+                "requirement_type": "required",
+                "concept_type": "skill",
+                "evidence": evidence,
+                "confidence": "high",
+                "rationale": (
+                    "JobHunter deterministically materialized the structured source skill tag."
+                ),
+            }
+        )
+        references.append(reference)
+    return result_fields, requirements, references
+
+
+def _v20_preserve_experience_bound(
+    deterministic: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Retain an explicit lower-bound modifier around a deterministic years extent."""
+
+    result: list[dict[str, Any]] = []
+    for item in deterministic:
+        updated = dict(item)
+        if item.get("concept_type") == "experience":
+            evidence = str(item.get("evidence") or "").strip()
+            depth = str(item.get("depth_signal") or "").strip()
+            prefix = evidence[: -len(depth)].strip() if depth and evidence.endswith(depth) else ""
+            if prefix and _EXPERIENCE_BOUND_PREFIX_RE.fullmatch(prefix + " "):
+                updated["depth_signal"] = evidence
+        result.append(updated)
+    return result
+
+
 def _v20_complete_requirement_plan(
     model_fields: dict[str, Any],
     *,
     additional_plan: dict[str, dict[str, Any]],
-    skill_plan: dict[str, dict[str, Any]],
     decomposed_refs: list[str],
 ) -> dict[str, dict[str, Any]]:
     """Build the exact model-owned coverage ledger before partitioning it."""
@@ -60,13 +115,12 @@ def _v20_complete_requirement_plan(
             )
         del plan[reference]
 
-    for source_plan, label in ((additional_plan, "candidate"), (skill_plan, "skill")):
-        for reference, candidate in source_plan.items():
-            if reference in plan:
-                raise AnalysisValidationError(
-                    f"P1.6 v20 {label} coverage collides with existing plan: {reference}"
-                )
-            plan[reference] = dict(candidate)
+    for reference, candidate in additional_plan.items():
+        if reference in plan:
+            raise AnalysisValidationError(
+                f"P1.6 v20 candidate coverage collides with existing plan: {reference}"
+            )
+        plan[reference] = dict(candidate)
     return plan
 
 
@@ -250,11 +304,15 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
             original_fields,
             effective_fields,
         )
-        skill_plan = _v18_structured_skill_coverage_plan(model_fields)
+        deterministic = _v20_preserve_experience_bound(deterministic)
+        model_fields, structured_skills, structured_skill_refs = (
+            _v20_deterministic_structured_skills(model_fields)
+        )
+        deterministic.extend(structured_skills)
+        deterministic_refs.extend(structured_skill_refs)
         complete_plan = _v20_complete_requirement_plan(
             model_fields,
             additional_plan=additional_plan,
-            skill_plan=skill_plan,
             decomposed_refs=decomposed_refs,
         )
         requirement_partitions = _v20_requirement_partitions(complete_plan)
@@ -331,9 +389,9 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
                 "exclusive_llm": True,
                 "p16_v17_source_led_requirement_capacity": True,
                 "p16_v18_deterministic_structured_requirements": deterministic_refs,
-                "p16_v18_structured_skill_coverage": sorted(skill_plan),
                 "p16_v19_depth_optionality_prevalidation": True,
                 "p16_v20_source_led_partitioning": True,
+                "p16_v20_deterministic_structured_skills": structured_skill_refs,
                 "p16_v20_partition_size": _PARTITION_SIZE,
                 "p16_v20_partition_count": total,
                 "p16_v20_partition_refs": [list(partition) for partition in requirement_partitions],

@@ -13,7 +13,7 @@
         <span class="badge {{ 'good' if detail.parse_status == 'parsed' else 'warn' }}">{{ 'Source complete' if detail.parse_status == 'parsed' else detail.parse_status }}</span>
         <span class="badge">{{ detail.fields.language or 'unknown' }}</span>
         {% if translation %}<span class="badge good">English v2 ready</span>{% elif legacy_translation %}<span class="badge warn">English v1 needs repair</span>{% else %}<span class="badge">English missing</span>{% endif %}
-        {% if english_analysis_artifact %}<span class="badge good">English analysis ready</span>{% else %}<span class="badge">English analysis missing</span>{% endif %}
+        {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'accepted' %}<span class="badge good">English analysis accepted</span>{% elif english_analysis_artifact %}<span class="badge warn">English analysis pending review</span>{% else %}<span class="badge">English analysis missing</span>{% endif %}
         {% if original_analysis_artifact %}<span class="badge good">Original analysis ready</span>{% else %}<span class="badge">Original analysis missing</span>{% endif %}
         <span class="badge {% if workflow.triage_state == 'interested' %}good{% elif workflow.triage_state == 'not_relevant' %}bad{% elif workflow.triage_state == 'review_later' %}warn{% endif %}">{{ workflow.triage_state.replace('_', ' ') }}</span>
       </div>
@@ -28,12 +28,15 @@
     <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source' if detail else 'Fetch details' }}</button></form>
     {% if translation_enabled and detail %}<form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Repair English' if legacy_translation and not translation else ('Recheck English' if translation else 'Translate to English') }}</button></form>{% endif %}
     {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-english" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck English analysis' if english_analysis_artifact else 'Analyze English' }}</button></form>{% endif %}
-    {% if english_analysis_artifact %}<a class="button primary" href="/jobs/{{ source_job_id }}/capability-intelligence">Capability Intelligence</a>{% endif %}
+    {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'accepted' %}<a class="button primary" href="/jobs/{{ source_job_id }}/capability-intelligence">Capability Intelligence</a>{% endif %}
     {% if detail %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-original" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button ghost" type="submit">{{ 'Recheck original analysis' if original_analysis_artifact else 'Analyze Original' }}</button></form>{% endif %}
   </div>
 </section>
 
 {% if legacy_translation and not translation %}<div class="notice warn-notice"><strong>English repair required.</strong> A historical {{ legacy_translation.translation_schema_version }} artifact exists, but JobHunter now requires the hardened current schema before English analysis or export. Original-language analysis remains independent and can use the current source directly.</div>{% endif %}
+{% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'pending' %}
+<div class="notice warn-notice"><strong>Human semantic review required.</strong> This candidate is visible for complete inspection, but it is excluded from Capability, Market, and the public corpus until accepted.</div>
+{% endif %}
 
 {% if detail %}
 <div class="language-grid">
@@ -61,12 +64,15 @@
 
 <div class="language-grid">
   <section class="panel analysis-panel">
-    <div class="panel-header"><div><p class="eyebrow">English projection · independent artifact</p><h2>English semantic analysis</h2></div>{% if english_analysis_artifact %}<span class="badge good">{{ english_analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
+    <div class="panel-header"><div><p class="eyebrow">English projection · independent artifact</p><h2>English semantic analysis</h2></div>{% if english_analysis_artifact %}<span class="badge {{ 'good' if english_analysis_artifact.semantic_review_status == 'accepted' else 'warn' }}">{{ english_analysis_artifact.semantic_review_status }} · {{ english_analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
     {% if english_analysis_artifact %}{% set a = english_analysis_artifact.analysis %}
       {% if a.role_purpose %}<div class="analysis-section"><h3>Role purpose</h3>{% for item in a.role_purpose %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote>{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% endfor %}</div>{% endif %}
       <div class="analysis-section"><h3>Responsibilities · {{ a.responsibilities|length }}</h3>{% for item in a.responsibilities %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote>{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% else %}<p class="muted">No supported responsibilities extracted.</p>{% endfor %}</div>
       <div class="analysis-section"><h3>Requirements · {{ a.requirements|length }}</h3>{% for item in a.requirements %}<div class="claim-card"><div class="claim-head"><strong>{{ item.concept }}</strong><span class="badge {% if item.requirement_type == 'required' %}good{% elif item.requirement_type == 'preferred' %}warn{% endif %}">{{ item.requirement_type }}</span></div><div class="job-meta">{{ item.concept_type }} · {{ item.confidence }}{% if item.depth_signal %} · explicit depth: {{ item.depth_signal }}{% endif %}</div><blockquote>{{ item.evidence }}</blockquote>{% if item.rationale %}<p class="muted">{{ item.rationale }}</p>{% endif %}</div>{% else %}<p class="muted">No supported requirements extracted.</p>{% endfor %}</div>
       <div class="artifact-meta"><span>{{ english_analysis_artifact.prompt_version }}</span><span>{{ english_analysis_artifact.schema_version }}</span><span>English artifact {{ english_analysis_artifact.translation_artifact_id }}</span></div>
+      {% if english_analysis_artifact.semantic_review_status == 'pending' %}
+      <div class="analysis-section"><h3>Semantic review decision</h3><p class="muted">Check every source fact, evidence excerpt, obligation strength, explicit depth signal, role-level constraint, and coverage exclusion before deciding.</p><form method="post" action="/jobs/{{ source_job_id }}/review-analysis" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="text" name="reason" minlength="8" required placeholder="Review evidence and decision note" aria-label="Semantic review note"><button class="button primary" type="submit" name="disposition" value="accepted">Accept for downstream use</button><button class="button ghost" type="submit" name="disposition" value="rejected">Reject and archive</button></form></div>
+      {% elif english_analysis_artifact.semantic_review_note %}<div class="analysis-section"><h3>Semantic review record</h3><p class="muted">{{ english_analysis_artifact.semantic_review_note }} · {{ english_analysis_artifact.semantic_reviewed_at }}</p></div>{% endif %}
     {% else %}<div class="empty-state">English analysis reads only the current hardened English projection. Its evidence is English and it is the normalized contract used by Market.</div>{% endif %}
   </section>
 

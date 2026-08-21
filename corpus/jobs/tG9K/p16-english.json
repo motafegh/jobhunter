@@ -556,6 +556,7 @@
   "model": "gemma-4-e4b-it-ud",
   "prompt_version": "job-analysis-english-v20",
   "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
   "source_job_id": "tG9K",
   "stage": "p16_english",
   "translation_artifact_id": 33

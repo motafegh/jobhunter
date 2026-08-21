@@ -225,9 +225,9 @@ source
 Heterogeneous validation order:
 
 ```text
-Python/software          ← tmBK active at P1.6 rebuild/review
-network/security
-operations/platform/DevOps
+Python/software          ← tmBK accepted: P1.6 39 → Capability 13
+network/security         ← t4qV accepted: P1.6 44 → Capability 14
+operations/platform      ← tmyX accepted: P1.6 46 → Capability 15
 ```
 
 Blueprint may be observed only as historical/research evidence. Do not generate or tune Blueprint as part of the current heterogeneous acceptance path.

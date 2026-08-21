@@ -45,7 +45,9 @@ from jobhunter.evidence_refs import (
 )
 from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
 from jobhunter.inference.instructor_lm_studio import (
-    _DEPTH_SIGNAL_PATTERNS,
+    _DEPTH_SIGNAL_PATTERNS as _BASE_DEPTH_SIGNAL_PATTERNS,
+)
+from jobhunter.inference.instructor_lm_studio import (
     _equivalent_source_excerpt,
     _leaf_evidence_catalog,
     _normalize,
@@ -67,13 +69,15 @@ _EFFECTIVE_APPLICATION_RE = re.compile(
     r"\b(?:ability\s+to\s+)?effectively\s+use\b",
     re.I,
 )
+_NON_DEPTH_CAPABILITY_RE = re.compile(r"^(?:ability\s+to|skill\s+in)\b", re.I)
 
-# Live heterogeneous review exposed this explicit employer degree phrase. Extend the shared
-# validator registry narrowly for v20; plain ``knowledge`` intentionally remains non-depth.
-_DEPTH_SIGNAL_PATTERNS.setdefault(
-    "sufficient_knowledge",
-    re.compile(r"\bsufficient\s+knowledge\b", re.I),
-)
+# Live heterogeneous review exposed this explicit employer degree phrase. Keep the extension
+# private to v20 so importing the promoted public runtime cannot silently change historical
+# English validator behavior in the same process. Plain ``knowledge`` remains non-depth.
+_DEPTH_SIGNAL_PATTERNS = {
+    **_BASE_DEPTH_SIGNAL_PATTERNS,
+    "sufficient_knowledge": re.compile(r"\bsufficient\s+knowledge\b", re.I),
+}
 
 
 def _has_accepted_depth(text: str) -> bool:
@@ -184,12 +188,16 @@ class AnalysisRequirementV20(AnalysisRequirementV19):
         normalized = dict(value)
         signal_text = signal.strip()
 
-        # ``Ability to effectively use X`` expresses an application requirement, not a
-        # proficiency level. Normalize it only when the model copied an exact source phrase and
-        # the cited evidence contains no accepted technical-depth marker. If real depth appears
-        # anywhere in the same evidence span, keep failing closed rather than guessing scope.
+        # ``Ability to X`` and ``Skill in X`` express capability requirements, not proficiency
+        # levels. Normalize them only when the model copied an exact source phrase and the cited
+        # evidence contains no accepted technical-depth marker. The effective-use pattern also
+        # catches a model signal that omits an evidence-leading ``Ability to``. If real depth
+        # appears anywhere in the same evidence span, keep failing closed rather than guessing.
         if (
-            _EFFECTIVE_APPLICATION_RE.search(signal_text) is not None
+            (
+                _NON_DEPTH_CAPABILITY_RE.search(signal_text) is not None
+                or _EFFECTIVE_APPLICATION_RE.search(signal_text) is not None
+            )
             and _equivalent_source_excerpt(signal_text, evidence) is not None
             and not _has_accepted_depth(signal_text)
             and not _has_accepted_depth(evidence)

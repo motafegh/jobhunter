@@ -30,6 +30,9 @@ class _Market:
             distinct_employers=3,
             responsibility_claims=12,
             requirement_claims=20,
+            source_scope="Public Jobinja postings",
+            filter_scope="Accepted current English P1.6 only",
+            duplicate_adjustment="No repost adjustment",
             sample_warning="small sample",
             concentration_warning=None,
         )

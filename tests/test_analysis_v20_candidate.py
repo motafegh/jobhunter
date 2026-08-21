@@ -7,6 +7,8 @@ from jobhunter.analysis_runtime_v20 import (
     _PARTITION_SIZE,
     _assert_partition_scope,
     _merge_partition_structured,
+    _v20_deterministic_structured_skills,
+    _v20_preserve_experience_bound,
     _v20_requirement_partitions,
 )
 from jobhunter.analysis_service import AnalysisValidationError
@@ -77,7 +79,67 @@ def test_v20_has_partition_prompt_identity_without_changing_v5_shape() -> None:
     assert '"some"' in _ENGLISH_SYSTEM_PROMPT_V20
     assert "Scope/domain qualifiers" in _ENGLISH_SYSTEM_PROMPT_V20
     assert "prior applied exposure" in _ENGLISH_SYSTEM_PROMPT_V20
+    assert "named certification awards are credential facts" in _ENGLISH_SYSTEM_PROMPT_V20
+    assert "Never classify a credential as skill or tool" in _ENGLISH_SYSTEM_PROMPT_V20
     assert "maxItems" not in _ANALYSIS_SCHEMA_V20["properties"]["requirements"]
+
+
+def test_v20_materializes_structured_skills_without_model_restatement() -> None:
+    fields, requirements, references = _v20_deterministic_structured_skills(
+        {
+            "title": "Python Developer",
+            "skills": ["Python", " OOP ", "", 42],
+        }
+    )
+
+    assert fields == {"title": "Python Developer"}
+    assert references == ["field:skills:0", "field:skills:1"]
+    assert requirements == [
+        {
+            "concept": "Python",
+            "depth_signal": None,
+            "requirement_type": "required",
+            "concept_type": "skill",
+            "evidence": "Python",
+            "confidence": "high",
+            "rationale": (
+                "JobHunter deterministically materialized the structured source skill tag."
+            ),
+        },
+        {
+            "concept": "OOP",
+            "depth_signal": None,
+            "requirement_type": "required",
+            "concept_type": "skill",
+            "evidence": "OOP",
+            "confidence": "high",
+            "rationale": (
+                "JobHunter deterministically materialized the structured source skill tag."
+            ),
+        },
+    ]
+
+
+def test_v20_preserves_explicit_more_than_experience_bound() -> None:
+    result = _v20_preserve_experience_bound(
+        [
+            {
+                "concept": "Professional experience",
+                "concept_type": "experience",
+                "depth_signal": "six years",
+                "evidence": "more than six years",
+            },
+            {
+                "concept": "Professional experience",
+                "concept_type": "experience",
+                "depth_signal": "three to six years",
+                "evidence": "three to six years",
+            },
+        ]
+    )
+
+    assert result[0]["depth_signal"] == "more than six years"
+    assert result[1]["depth_signal"] == "three to six years"
 
 
 def test_v20_dense_coverage_is_partitioned_without_losing_any_reference() -> None:

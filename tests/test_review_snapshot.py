@@ -158,6 +158,8 @@ def test_review_snapshot_contains_current_chain_without_raw_protocol(tmp_path: P
     assert snapshot["status"]["capability_is_current_chain"] is True
     assert snapshot["status"]["blueprint_is_current_chain"] is True
     assert snapshot["english_analysis"]["model"] == "analysis-model"
+    assert snapshot["english_analysis"]["semantic_review_status"] == "accepted"
+    assert snapshot["status"]["english_analysis_semantic_review"] == "accepted"
     assert snapshot["capability_intelligence"]["model"] == "capability-model"
     assert snapshot["role_capability_blueprint"]["model"] == "blueprint-model"
     assert "wire_secret" not in serialized

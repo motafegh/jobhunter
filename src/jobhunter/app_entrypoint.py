@@ -56,6 +56,12 @@ def _command_tokens(arguments: Sequence[str]) -> tuple[str, ...]:
 
 def _should_sync(arguments: Sequence[str]) -> bool:
     tokens = _command_tokens(arguments)
+    if (
+        len(tokens) >= 4
+        and tokens[:2] == ("jobs", "review-analysis")
+        and tokens[3] in {"accept", "reject"}
+    ):
+        return True
     return any(tokens[: len(prefix)] == prefix for prefix in _MUTATING_PREFIXES)
 
 

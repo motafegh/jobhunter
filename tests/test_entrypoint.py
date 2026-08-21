@@ -28,6 +28,7 @@ class _AnalysisService:
             model="analysis-model",
             responsibilities=2,
             requirements=3,
+            semantic_review_status="pending",
         )
 
     def analyze_original_job(self, source_job_id: str):
@@ -39,6 +40,7 @@ class _AnalysisService:
             model="analysis-model",
             responsibilities=1,
             requirements=4,
+            semantic_review_status="accepted",
         )
 
 
@@ -183,6 +185,8 @@ def test_jobs_analyze_defaults_to_english_and_uses_targeted_service(monkeypatch,
     assert "English P1.6 for t4jp" in output
     assert "Artifact: 41" in output
     assert "job-analysis-english-v20 / job-analysis-v5" in output
+    assert "Semantic review: pending" in output
+    assert "review-analysis t4jp accept" in output
 
 
 def test_jobs_analyze_can_target_original_language(monkeypatch, capsys) -> None:
@@ -220,6 +224,77 @@ def test_global_config_can_precede_jobs_analyze(monkeypatch) -> None:
     assert service.calls == [("english", "t4jp")]
 
 
+def test_jobs_review_analysis_status_prints_complete_candidate(monkeypatch, capsys) -> None:
+    settings = Settings(lm_studio_model="analysis-model")
+
+    class Store:
+        def __init__(self, database_path: Path) -> None:
+            assert database_path == settings.database_path
+
+        def latest_current(self, source_job_id: str, **kwargs):
+            assert source_job_id == "tmBK"
+            assert kwargs["model"] == "analysis-model"
+            return SimpleNamespace(
+                id=38,
+                source_job_id=source_job_id,
+                model="analysis-model",
+                prompt_version="job-analysis-english-v20",
+                schema_version="job-analysis-v5",
+                semantic_review_status="pending",
+                semantic_reviewed_at=None,
+                semantic_review_note=None,
+                analysis={"requirements": [{"concept": "Python"}]},
+            )
+
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
+    monkeypatch.setattr(entrypoint, "AnalysisStore", Store)
+
+    assert entrypoint.main(["jobs", "review-analysis", "tmBK"]) == 0
+    output = capsys.readouterr().out
+    assert "Semantic review: pending" in output
+    assert '"concept": "Python"' in output
+
+
+def test_jobs_review_analysis_accepts_with_durable_note(monkeypatch, capsys) -> None:
+    settings = Settings(lm_studio_model="analysis-model")
+    captured = {}
+
+    class Store:
+        def __init__(self, _database_path: Path) -> None:
+            pass
+
+        def latest_current(self, _source_job_id: str, **_kwargs):
+            return SimpleNamespace(id=38)
+
+        def review_current(self, source_job_id: str, **kwargs):
+            captured.update(source_job_id=source_job_id, **kwargs)
+            return SimpleNamespace(
+                outcome="completed",
+                artifact_id=38,
+                disposition="accepted",
+            )
+
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
+    monkeypatch.setattr(entrypoint, "AnalysisStore", Store)
+
+    assert (
+        entrypoint.main(
+            [
+                "jobs",
+                "review-analysis",
+                "tmBK",
+                "accept",
+                "--reason",
+                "Complete source review passed",
+            ]
+        )
+        == 0
+    )
+    assert captured["disposition"] == "accepted"
+    assert captured["note"] == "Complete source review passed"
+    assert "Semantic review: accepted" in capsys.readouterr().out
+
+
 def test_global_help_surfaces_phase1_commands(capsys) -> None:
     assert entrypoint.main(["--help"]) == 0
     output = capsys.readouterr().out
@@ -227,3 +302,4 @@ def test_global_help_surfaces_phase1_commands(capsys) -> None:
     assert "run --help" in output
     assert "jobs health <id>" in output
     assert "jobs analyze <id>" in output
+    assert "jobs review-analysis <id>" in output

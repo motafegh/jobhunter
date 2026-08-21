@@ -1,7 +1,7 @@
 # tmBK P1.6 Heterogeneous Validation Incident Record
 
 Date: 2026-08-21  
-Status: ACTIVE VALIDATION CASE / FIRST ARTIFACT REJECTED / DETERMINISTIC DEFECTS FIXED / CLEAN LOCAL REBUILD REQUIRED
+Status: CLOSED / P1.6 ARTIFACT 39 ACCEPTED / CAPABILITY ARTIFACT 13 ACCEPTED
 
 ## Context
 
@@ -126,9 +126,9 @@ V20 now removes only a coverage exclusion whose exact reference is already posit
 
 Regression coverage was added. CI run `916` passed Ruff, full pytest, and warnings-as-errors.
 
-## Current expected source semantics
+## Acceptance criteria used for the rebuild
 
-The next accepted `tmBK` P1.6 artifact must preserve at minimum:
+The accepted `tmBK` P1.6 rebuild was required to preserve at minimum:
 
 ```text
 Python/Django                         Mastery
@@ -143,9 +143,9 @@ AI usage for software development     no technical depth signal
 
 It must also preserve source-grounded teamwork, learning aptitude, problem-solving, ownership/responsibility/follow-through, continuous-learning, and product-participation requirements without fabricating a duty section.
 
-## Current exact next action
+## Rebuild and review procedure executed
 
-After synchronizing the local checkout to current `main`:
+After synchronizing the local checkout to current `main`, the rebuild command was:
 
 ```bash
 jobhunter jobs analyze tmBK
@@ -169,8 +169,8 @@ jobhunter jobs capability tmBK
 
 Then audit Capability v9 complete source coverage/provenance, grouping, deterministic source strength/depth/work, role-level separation, and absence of fabricated prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength.
 
-## Acceptance gate remains
+## Final accepted result
 
-`tmBK` is **not yet an accepted heterogeneous anchor**.
+The clean rebuild persisted English P1.6 artifact `39` as `pending`. Complete source review verified 16 requirements, 0 responsibilities, all five structured skills, correct 7/7 explicit depth facts, AI application with no depth, and complete/non-contradictory coverage. Artifact 39 was explicitly accepted with a durable review note.
 
-Do not run Capability until its rebuilt P1.6 artifact is manually reviewed and accepted.
+Capability v9 artifact `13` then completed on exact dependencies P1.6 39 / translation 38. Manual review verified 16/16 requirements, 0/0 responsibilities, 7/7 explicit depth facts, coherent bounded multi-group assignment, no role-level inflation, no fabricated duties/prerequisites/ownership/lifecycle/architecture/autonomy, and fail-closed optional enrichment. The Python/software heterogeneous anchor is accepted and closed.

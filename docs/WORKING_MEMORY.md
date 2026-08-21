@@ -4,7 +4,7 @@
 **Date:** 2026-08-21  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** public corpus OPERATIONALLY CLOSED; heterogeneous live semantic validation ACTIVE; Python/software anchor `tmBK` awaiting rebuilt P1.6 review
+**Current gate:** heterogeneous, Market, and source/lifecycle gates CLOSED; partial-success semantics next
 
 ## 1. Exact current point
 
@@ -20,15 +20,18 @@ Capability v9/v5 is promoted/current through the normal public path:
 ```text
 tG9K → Capability artifact 11 → ACCEPTED / CURRENT
 t4jp → Capability artifact 12 → ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
+tmBK → Capability artifact 13 → HETEROGENEOUS PYTHON/SOFTWARE ACCEPTED / CURRENT
+t4qV → Capability artifact 14 → HETEROGENEOUS NETWORK/SECURITY ACCEPTED / CURRENT
+tmyX → Capability artifact 15 → HETEROGENEOUS OPERATIONS/PLATFORM ACCEPTED / CURRENT
 ```
 
 Normal Capability commands reuse artifacts 11/12 on P1.6 artifacts 36/37. Review Snapshot marks both exact chains current. Blueprint remains `blueprint_current=False`, deferred/non-authoritative, and pinned to historical Capability v7 semantics.
 
 The complete repository-safe public corpus is implemented, populated from the real local database, verified, committed, remotely inspected, and operationally closed.
 
-Heterogeneous validation is now active. The first Python/software anchor is `tmBK` (Python Developer, source detail 44, English projection artifact 38). Its first persisted P1.6 artifact 38 was mechanically valid but semantically rejected because a deterministic depth canonicalizer propagated the first `Mastery` marker across unrelated `Familiarity`/`Sufficient knowledge` concepts. The rejected artifact must not feed Capability.
+Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 was explicitly accepted after complete source review, and Capability artifact 13 passed 16/16 requirement, 0/0 responsibility, and 7/7 explicit-depth review.
 
-After that rejection, additional live rebuild attempts exposed two adjacent deterministic boundaries: `effectively use AI` is application wording rather than technical depth, and a positively represented coverage reference must not also remain redundantly excluded. Those cases are now hardened with regression tests on `main`. The next local action is a clean `tmBK` P1.6 rebuild under the current head followed by full semantic review.
+Network/security `t4qV` is closed on P1.6 44 → Capability 14 after general structured-skill, preferred-heading, experience-bound, responsibility, candidate-experience, and credential-ontology fixes. Operations/platform `tmyX` is closed on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty, and non-depth ability/skill fixes. `t49N` was blocked before P1.6 for a material English field-association defect.
 
 ## 2. Repository workflow rule
 
@@ -155,11 +158,11 @@ Accepted publication baseline:
 Known/discovered Jobinja jobs: 344
 Fetched/parsed job details:     43
 English projections:            33
-English P1.6:                    2
+English P1.6:                    5
 Original P1.6:                   0
-Capabilities:                    2
-Per-job stage files:           381
-Corpus size:                  ~3.6 MiB
+Capabilities:                    5
+Per-job stage files:           387
+Corpus size:                  ~3.7 MiB
 ```
 
 Important interpretation:
@@ -212,14 +215,14 @@ Permanent corpus rules:
 7. Future personal/private evidence must never enter the public corpus.
 8. Remote corpus inspection can drive role selection and later public-data analysis without local SQLite access.
 
-## 7. Heterogeneous live review — ACTIVE
+## 7. Heterogeneous live review — CLOSED
 
 Order:
 
 ```text
-1. Python/software          ← active: tmBK
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← accepted: tmBK 39 → 13
+2. network/security         ← accepted: t4qV 44 → 14
+3. operations/platform      ← accepted: tmyX 46 → 15
 ```
 
 ### `tmBK` upstream
@@ -268,76 +271,54 @@ published as accepted corpus: no
 
 The rejected artifact was retired from local current analysis state before the later rebuild attempt. The later failed rebuild persisted no replacement artifact, so the current corpus/database returned to the two accepted P1.6 anchors before the next rebuild.
 
+The acceptance boundary is now enforced in persistence and every authoritative consumer. Fresh English v20 output is stored as `pending`; only explicit review acceptance makes it eligible for Capability, Market, accepted dashboard counts, or `corpus/`. Review rejection archives the full local candidate and clears its current unique identity for a corrected rebuild. Existing accepted anchors 36/37 migrate as accepted. V20 also owns a copied depth-signal registry, so importing it cannot mutate historical validators.
+
 ### Exact next local action
 
-After pulling current `main`:
+Do not rerun accepted heterogeneous anchors merely for wording variation. Market truthfulness/sampling and source/lifecycle acceptance are closed. Continue with partial-success semantics, then P1.7 report/run/browser acceptance.
 
-```bash
-jobhunter jobs analyze tmBK
-```
+Exact heterogeneous records:
 
-Then manually inspect the complete persisted P1.6 artifact before any Capability run.
-
-Expected source-calibrated depth semantics:
-
-```text
-Python/Django                         Mastery
-DRF/FastAPI                           Mastery
-Git                                   Familiarity
-Linux                                 Familiarity
-SQL/NoSQL                             Familiarity
-OOP + modular design                  Sufficient knowledge
-Database locking/concurrency/tx       Familiarity
-AI usage                              no technical depth
-```
-
-Also verify:
-
-- responsibilities remain empty unless supported by genuine duty evidence;
-- soft requirements remain requirements rather than fabricated duties;
-- structured skills remain present;
-- source strength is not inflated;
-- coverage is complete and non-contradictory.
-
-Only after semantic P1.6 acceptance:
-
-```bash
-jobhunter jobs capability tmBK
-```
-
-Then audit complete source coverage/provenance, grouping, deterministic source strength/depth/work, role-level separation, and absence of fabricated prerequisites/ownership/lifecycle/architecture/autonomy.
+- `docs/working-memory/2026-08-21_T4QV_NETWORK_SECURITY_P16_REJECTIONS.md`
+- `docs/working-memory/2026-08-21_TMYX_OPERATIONS_PLATFORM_ACCEPTANCE.md`
 
 ## 8. Exact current state
 
 ```text
 English P1.6 tG9K artifact 36       ACCEPTED / CURRENT
 English P1.6 t4jp artifact 37       ACCEPTED / CURRENT
+English P1.6 tmBK artifact 39       PYTHON/SOFTWARE ACCEPTED / CURRENT
+English P1.6 t4qV artifact 44       NETWORK/SECURITY ACCEPTED / CURRENT
+English P1.6 tmyX artifact 46       OPERATIONS/PLATFORM ACCEPTED / CURRENT
 Capability v7 artifact 9            HISTORICAL / NON-CURRENT CHAIN
 Capability v8 candidate              HISTORICAL / SEMANTIC REJECT
 Capability v9 artifact 11           DENSE ACCEPTED / CURRENT
 Capability v9 artifact 12           SPARSE ACCEPTED / CURRENT
+Capability v9 artifact 13           PYTHON/SOFTWARE ACCEPTED / CURRENT
+Capability v9 artifact 14           NETWORK/SECURITY ACCEPTED / CURRENT
+Capability v9 artifact 15           OPERATIONS/PLATFORM ACCEPTED / CURRENT
 Capability public route             v9/v5 / OPERATIONALLY VERIFIED
 Blueprint                           DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
 Known/discovered jobs               344
 Fetched/parsed detail jobs          43
 Published English projections       33
-Published accepted/current P1.6      2
-Published accepted/current Capability 2
-Heterogeneous Python/software       ACTIVE — tmBK rebuild/review
-Heterogeneous network/security      PENDING
-Heterogeneous operations/DevOps     PENDING
+Current local corpus P1.6             5
+Current local corpus Capability       5
+Heterogeneous Python/software       ACCEPTED — tmBK 39 → 13
+Heterogeneous network/security      ACCEPTED — t4qV 44 → 14
+Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
 Phase 2                             BLOCKED
 ```
 
 ## 9. After heterogeneous acceptance
 
-If Python/software, network/security, and operations/platform/DevOps all pass without unresolved repeatable material defects:
+The three heterogeneous families passed without unresolved repeatable material defects:
 
 ```text
 freeze promoted P1.6 v20 + Capability v9 as Phase-2 input
-→ Market truthfulness/sampling
-→ source/lifecycle acceptance
+→ Market truthfulness/sampling ACCEPTED
+→ source/lifecycle acceptance ACCEPTED
 → partial-success semantics
 → P1.7 report/run/browser acceptance
 → Phase-1 closure

@@ -14,6 +14,9 @@
   <div class="panel-header"><div><p class="eyebrow">Corpus scope</p><h2>What this Market view currently covers</h2></div><span class="badge">N = {{ market.analyzed_jobs }} analyzed jobs</span></div>
   <div class="guide-content">
     <p><strong>Coverage:</strong> {{ market.analyzed_jobs }} analyzed current jobs from {{ market.current_parsed_jobs }} current parsed jobs and {{ market.discovered_jobs }} discovered Jobinja identities.</p>
+    <p><strong>Source scope:</strong> {{ market.source_scope }}.</p>
+    <p><strong>Filter scope:</strong> {{ market.filter_scope }}.</p>
+    <p><strong>Duplicate adjustment:</strong> {{ market.duplicate_adjustment }}.</p>
     <p><strong>Employer diversity:</strong> {{ market.distinct_employers }} employers contribute to the analyzed sample{% if market.largest_employer_jobs %}; the largest single-employer contribution is {{ market.largest_employer_jobs }} jobs{% endif %}.</p>
     {% if market.analysis_model or market.analysis_prompt_version or market.analysis_schema_version %}
       <p><strong>Analysis contract:</strong> model {{ market.analysis_model or "unspecified" }}, prompt {{ market.analysis_prompt_version or "unspecified" }}, schema {{ market.analysis_schema_version or "unspecified" }}.</p>
@@ -28,13 +31,13 @@
   {% if market.analyzed_jobs == 0 %}
     <div class="empty-state tall">No accepted semantic analysis exists yet. Repair English v2 artifacts, analyze a small reviewed batch, then this page will aggregate only those current analysis records.</div>
   {% elif market.requirements %}
-    <p class="muted">Counts are posting-level observations from the current analyzed sample. They are not yet a canonical taxonomy: spelling/alias consolidation belongs to Phase 2.</p>
+    <p class="muted">Counts are posting-level observations from the current analyzed sample. Strength columns are non-exclusive: one posting can state the same normalized concept at more than one strength, so Required + Preferred + Contextual + Inferred need not equal Jobs. This is not yet a canonical taxonomy; spelling/alias consolidation belongs to Phase 2.</p>
     <div class="table-wrap"><table><thead><tr><th>Concept</th><th>Jobs</th><th>Required</th><th>Preferred</th><th>Contextual</th><th>Inferred</th></tr></thead><tbody>{% for item in market.requirements %}<tr><td><strong>{{ item.concept }}</strong></td><td>{{ item.jobs }}</td><td>{{ item.required }}</td><td>{{ item.preferred }}</td><td>{{ item.contextual }}</td><td>{{ item.inferred }}</td></tr>{% endfor %}</tbody></table></div>
   {% else %}<div class="empty-state">Analyzed jobs currently contain no accepted requirement claims.</div>{% endif %}
 </section>
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Interpretation boundary</p><h2>What these numbers mean</h2></div></div>
-  <div class="guide-content"><p>Every contributing semantic claim passed an evidence check against original employer/source text. The English projection can help the model understand Persian content, but it is not accepted as the evidence authority.</p><p>This is the first market layer, not the final Phase 2 taxonomy. Similar concepts such as “PostgreSQL” and “Postgres” may still appear separately until canonicalization is built and reviewed.</p><p>Do not interpret percentages or absence from a small analyzed sample as full-market truth. Sample size, corpus coverage and employer concentration are displayed deliberately.</p></div>
+  <div class="guide-content"><p>Every contributing P1.6 artifact has an explicit accepted semantic-review state. Acceptance certifies the reviewed per-posting factual substrate; it does not certify that this bounded sample represents the wider market.</p><p>This is the first market layer, not the final Phase 2 taxonomy. Similar concepts such as “PostgreSQL” and “Postgres” may still appear separately until canonicalization is built and reviewed.</p><p>Do not interpret percentages or absence from a small analyzed sample as full-market truth. Sample size, corpus coverage, employer concentration, filter scope, and duplicate-adjustment limits are displayed deliberately.</p></div>
 </section>
 {% endblock %}

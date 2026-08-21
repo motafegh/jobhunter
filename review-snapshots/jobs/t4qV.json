@@ -1,0 +1,930 @@
+{
+  "capability_intelligence": {
+    "analysis_artifact_id": 44,
+    "artifact_id": 14,
+    "created_at": "2026-08-21T19:43:48.332389+00:00",
+    "intelligence": {
+      "capabilities": [
+        {
+          "capability_label": "Enterprise Network Security Architecture",
+          "depth_signals": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "more than six years"
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 requirement 9; not model-inferred.",
+              "statement": "Professional experience — employer-stated depth: more than six years"
+            }
+          ],
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
+          "overall_confidence": "high",
+          "requirement_strength": "mixed",
+          "source_requirement_indices": [
+            0,
+            2,
+            9,
+            11,
+            14
+          ],
+          "source_responsibility_indices": [
+            0,
+            2,
+            3,
+            6,
+            7
+          ],
+          "sub_capabilities": [],
+          "summary": "Designing, implementing, and managing large-scale network security infrastructures, including high availability and overall security strategy.",
+          "underlying_knowledge": [],
+          "unknown_scope": [],
+          "work_activities": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 0; not model-inferred.",
+              "statement": "Designing and executing security solutions"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 2; not model-inferred.",
+              "statement": "Implementing security policies"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 3; not model-inferred.",
+              "statement": "Designing and implementing network security architecture"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 6; not model-inferred.",
+              "statement": "Designing High Availability"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 7; not model-inferred.",
+              "statement": "Troubleshooting security issues"
+            }
+          ]
+        },
+        {
+          "capability_label": "Next-Generation Firewall & Segmentation",
+          "depth_signals": [],
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
+          "overall_confidence": "high",
+          "requirement_strength": "required",
+          "source_requirement_indices": [
+            0,
+            11,
+            12,
+            14
+          ],
+          "source_responsibility_indices": [
+            0,
+            1,
+            4,
+            7,
+            8
+          ],
+          "sub_capabilities": [],
+          "summary": "This capability area covers Next-Generation Firewall & Segmentation.",
+          "underlying_knowledge": [],
+          "unknown_scope": [],
+          "work_activities": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 0; not model-inferred.",
+              "statement": "Designing and executing security solutions"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 1; not model-inferred.",
+              "statement": "Managing next-generation firewalls"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 4; not model-inferred.",
+              "statement": "Managing NGFW equipment"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 7; not model-inferred.",
+              "statement": "Troubleshooting security issues"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 8; not model-inferred.",
+              "statement": "Implementing Zero Trust and Network Segmentation"
+            }
+          ]
+        },
+        {
+          "capability_label": "Network Security Protocols & VPNs",
+          "depth_signals": [],
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
+          "overall_confidence": "high",
+          "requirement_strength": "unspecified",
+          "source_requirement_indices": [],
+          "source_responsibility_indices": [
+            5
+          ],
+          "sub_capabilities": [],
+          "summary": "The capability focuses on designing and implementing secure connectivity solutions, encompassing various VPN types (IPsec, SSL VPN, DMVPN) and secure tunneling protocols.",
+          "underlying_knowledge": [],
+          "unknown_scope": [],
+          "work_activities": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 5; not model-inferred.",
+              "statement": "Designing and implementing VPNs"
+            }
+          ]
+        },
+        {
+          "capability_label": "Security Platform",
+          "depth_signals": [],
+          "independence_expectation": null,
+          "operational_context": [],
+          "operational_practices": [],
+          "overall_confidence": "high",
+          "requirement_strength": "mixed",
+          "source_requirement_indices": [
+            1,
+            2,
+            3,
+            13
+          ],
+          "source_responsibility_indices": [
+            2,
+            9
+          ],
+          "sub_capabilities": [],
+          "summary": "This capability area covers Security Platform.",
+          "underlying_knowledge": [],
+          "unknown_scope": [],
+          "work_activities": [
+            {
+              "confidence": "high",
+              "evidence": [
+                "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 2; not model-inferred.",
+              "statement": "Implementing security policies"
+            },
+            {
+              "confidence": "high",
+              "evidence": [
+                "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+              ],
+              "evidence_status": "source_explicit",
+              "rationale": "Deterministically propagated from accepted P1.6 responsibility 9; not model-inferred.",
+              "statement": "Preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)"
+            }
+          ]
+        }
+      ],
+      "cross_capability_observations": [],
+      "role_interpretation": "Senior Network Security Engineer",
+      "source_truth": {
+        "all_explicit_depth_requirement_indices": [
+          9
+        ],
+        "capability_explicit_depth_requirement_indices": [
+          9
+        ],
+        "capability_requirement_indices": [
+          0,
+          1,
+          2,
+          3,
+          9,
+          11,
+          12,
+          13,
+          14
+        ],
+        "linked_capability_explicit_depth_requirement_indices": [
+          9
+        ],
+        "linked_requirement_indices": [
+          0,
+          1,
+          2,
+          3,
+          9,
+          11,
+          12,
+          13,
+          14
+        ],
+        "linked_responsibility_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "requirements": [
+          {
+            "concept": "Experience with designing, implementing, and managing network security infrastructures at the Enterprise scale",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "We are looking for a Senior Network Security Engineer with experience in designing, implementing, and managing network security infrastructures at the Enterprise scale."
+            ],
+            "index": 0,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Cisco ISE",
+            "concept_type": "tool",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 1,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Cisco TrustSec",
+            "concept_type": "tool",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 2,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Cisco DNA Center",
+            "concept_type": "tool",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 3,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "CCNP Security",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 4,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "CCIE Security",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 5,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "PCNSE",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 6,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Fortinet FCP / FCSS",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 7,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "JNCIS-SEC or JNCIP-SEC",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC."
+            ],
+            "index": 8,
+            "requirement_type": "preferred"
+          },
+          {
+            "concept": "Professional experience",
+            "concept_type": "experience",
+            "confidence": "high",
+            "depth_signal": "more than six years",
+            "evidence": [
+              "more than six years"
+            ],
+            "index": 9,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Bachelor's degree",
+            "concept_type": "education",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Bachelor's degree"
+            ],
+            "index": 10,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Network Security",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Network Security"
+            ],
+            "index": 11,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "Firewalls",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "Firewalls"
+            ],
+            "index": 12,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "CISCO",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "CISCO"
+            ],
+            "index": 13,
+            "requirement_type": "required"
+          },
+          {
+            "concept": "+NETWORK",
+            "concept_type": "skill",
+            "confidence": "high",
+            "depth_signal": null,
+            "evidence": [
+              "+NETWORK"
+            ],
+            "index": 14,
+            "requirement_type": "required"
+          }
+        ],
+        "responsibilities": [
+          {
+            "confidence": "high",
+            "evidence": [
+              "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+            ],
+            "index": 0,
+            "statement": "Designing and executing security solutions"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+            ],
+            "index": 1,
+            "statement": "Managing next-generation firewalls"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+            ],
+            "index": 2,
+            "statement": "Implementing security policies"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 3,
+            "statement": "Designing and implementing network security architecture"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 4,
+            "statement": "Managing NGFW equipment"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 5,
+            "statement": "Designing and implementing VPNs"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 6,
+            "statement": "Designing High Availability"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 7,
+            "statement": "Troubleshooting security issues"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 8,
+            "statement": "Implementing Zero Trust and Network Segmentation"
+          },
+          {
+            "confidence": "high",
+            "evidence": [
+              "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+            ],
+            "index": 9,
+            "statement": "Preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)"
+          }
+        ],
+        "role_level_explicit_depth_requirement_indices": [],
+        "role_level_requirement_indices": [
+          4,
+          5,
+          6,
+          7,
+          8,
+          10
+        ],
+        "role_purpose": [],
+        "unlinked_capability_explicit_depth_requirement_indices": [],
+        "unlinked_capability_requirement_indices": [],
+        "unlinked_responsibility_indices": []
+      },
+      "uncertainties": [
+        "JobHunter normalized non-authoritative capability-planner prose that expressed source strength, technical depth, or ownership/scope beyond the grouping task.",
+        "JobHunter replaced model-expanded profile summary with the already-validated neutral capability-group summary.",
+        "JobHunter discarded 1 redundant or misplaced model expectation(s) whose evidence status belongs to deterministic source truth or another section."
+      ]
+    },
+    "job_detail_version_id": 30,
+    "model": "gemma-4-e2b-it",
+    "prompt_version": "job-capability-intelligence-v9",
+    "schema_version": "job-capability-intelligence-v5",
+    "translation_artifact_id": 20
+  },
+  "configured_models": {
+    "analysis": "gemma-4-e4b-it-ud",
+    "blueprint": "gemma-4-12b-it-qat",
+    "capability": "gemma-4-e2b-it"
+  },
+  "english_analysis": {
+    "analysis": {
+      "coverage": [
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "more than six years",
+          "rationale": "A persisted requirement cites this exact coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Bachelor's degree",
+          "rationale": "A persisted requirement cites this exact coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "We are looking for a Senior Network Security Engineer with experience in designing, implementing, and managing network security infrastructures at the Enterprise scale.",
+          "rationale": "A persisted requirement cites this exact coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "A persisted requirement cites this exact coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Network Security",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Firewalls",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "CISCO",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "+NETWORK",
+          "rationale": "P1.6 v10 deterministic structured required-skill coverage."
+        }
+      ],
+      "requirements": [
+        {
+          "concept": "Experience with designing, implementing, and managing network security infrastructures at the Enterprise scale",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "We are looking for a Senior Network Security Engineer with experience in designing, implementing, and managing network security infrastructures at the Enterprise scale.",
+          "rationale": "Directly stated as a requirement for the role.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Cisco ISE",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications'.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Cisco TrustSec",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications'.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Cisco DNA Center",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications'.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "CCNP Security",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications' as a certification.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "CCIE Security",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications' as a certification.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "PCNSE",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications' as a certification.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Fortinet FCP / FCSS",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications' as a certification.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "JNCIS-SEC or JNCIP-SEC",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+          "rationale": "Listed under 'Preferred qualifications' as a certification.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Professional experience",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": "more than six years",
+          "evidence": "more than six years",
+          "rationale": "JobHunter deterministically materialized the structured minimum-experience field.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Bachelor's degree",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Bachelor's degree",
+          "rationale": "JobHunter deterministically materialized the structured education field.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Network Security",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Network Security",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Firewalls",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Firewalls",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "CISCO",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "CISCO",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "+NETWORK",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "+NETWORK",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        }
+      ],
+      "responsibilities": [
+        {
+          "confidence": "high",
+          "evidence": "designing and executing security solutions, managing next-generation firewalls, and implementing security policies.",
+          "statement": "Designing and executing security solutions"
+        },
+        {
+          "confidence": "high",
+          "evidence": "designing and executing security solutions, managing next-generation firewalls, and implementing security policies.",
+          "statement": "Managing next-generation firewalls"
+        },
+        {
+          "confidence": "high",
+          "evidence": "designing and executing security solutions, managing next-generation firewalls, and implementing security policies.",
+          "statement": "Implementing security policies"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Designing and implementing network security architecture"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Managing NGFW equipment"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Designing and implementing VPNs"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Designing High Availability"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Troubleshooting security issues"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Implementing Zero Trust and Network Segmentation"
+        },
+        {
+          "confidence": "high",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA).",
+          "statement": "Preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)"
+        }
+      ],
+      "responsibility_coverage": [
+        {
+          "disposition": "responsibility",
+          "evidence": "designing and executing security solutions, managing next-generation firewalls, and implementing security policies."
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA)."
+        }
+      ],
+      "role_purpose": []
+    },
+    "artifact_id": 44,
+    "created_at": "2026-08-21T19:40:59.928204+00:00",
+    "job_detail_version_id": 30,
+    "model": "gemma-4-e4b-it-ud",
+    "prompt_version": "job-analysis-english-v20",
+    "schema_version": "job-analysis-v5",
+    "semantic_review_note": "Complete source review passed: 15 requirements and 10 responsibilities preserve preferred credentials, tools, experience bounds, exact evidence, and obligation strength",
+    "semantic_review_status": "accepted",
+    "semantic_reviewed_at": "2026-08-21T19:43:39.722029+00:00",
+    "translation_artifact_id": 20
+  },
+  "english_projection": {
+    "artifact_id": 20,
+    "created_at": "2026-08-02T11:26:22.962564+00:00",
+    "fields": {
+      "company": "Communication Innovators of Douran | Douran Group",
+      "company_description": "The group operates in the field of IT, including various network services and network security, the production and sale of various software, portals, and other diverse services in this area. This company has been able to be a leader in the IT arena at the country level by relying on up-to-date knowledge and experienced personnel.",
+      "date_posted": "2026-07-29",
+      "description": "We are looking for a Senior Network Security Engineer with experience in designing, implementing, and managing network security infrastructures at the Enterprise scale. This position will be responsible for designing and executing security solutions, managing next-generation firewalls, and implementing security policies. Responsibilities include designing and implementing network security architecture, managing NGFW equipment, designing and implementing VPNs, designing High Availability, troubleshooting security issues, implementing Zero Trust and Network Segmentation, and preparing technical documentation for security equipment such as Cisco Secure Firewall (FTD), Cisco Firepower Management Center (FMC), Cisco ASA, Palo Alto NGFW Panorama, GlobalProtect, Fortinet FortiGate, FortiManager, FortiWeb, Juniper SRX Series Firewall, Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA). Preferred qualifications include Cisco ISE, Cisco TrustSec, Cisco DNA Center, CCNP Security, CCIE Security, PCNSE, Fortinet FCP / FCSS, or JNCIS-SEC or JNCIP-SEC.",
+      "education": "Bachelor's degree",
+      "employment_type": "Full-time",
+      "gender": "it doesn't matter",
+      "job_category": "IT / DevOps / Server",
+      "location": "Tehran",
+      "military_service": "It doesn't matter",
+      "minimum_experience": "more than six years",
+      "salary": "Agreement",
+      "skills": [
+        "Network Security",
+        "Firewalls",
+        "CISCO",
+        "+NETWORK"
+      ],
+      "title": "Senior Network Security Engineer",
+      "valid_through": null
+    },
+    "job_detail_version_id": 30,
+    "model": "gemma-4-e2b-it",
+    "native_segment_count": 7,
+    "provider": "lm-studio-translation-v2",
+    "schema_version": "english-projection-v2",
+    "segment_provenance": {
+      "company": "translated",
+      "company_description": "translated",
+      "date_posted": "native",
+      "description": "translated",
+      "education": "translated",
+      "employment_type": "translated",
+      "gender": "translated",
+      "job_category": "native",
+      "location": "translated",
+      "military_service": "translated",
+      "minimum_experience": "translated",
+      "salary": "translated",
+      "skills[0]": "native",
+      "skills[1]": "native",
+      "skills[2]": "native",
+      "skills[3]": "native",
+      "title": "native"
+    },
+    "source_language": "mixed",
+    "source_semantic_sha256": "60a3829be7813ea820afefb4b50cec5c6ca9adce8ab192cebd3f8c42bd42f3ea",
+    "target_language": "en",
+    "translated_segment_count": 10,
+    "translation_sha256": "f915c22b3a9e52636bddd7d691cd08c98e00a82b2ebf4959175b2090660d1c21"
+  },
+  "original_analysis": null,
+  "role_capability_blueprint": null,
+  "snapshot_schema_version": "job-review-snapshot-v1",
+  "source": {
+    "canonical_url": "https://jobinja.ir/companies/douran-group/jobs/t4qV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-security-engineer-%D8%AF%D8%B1-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%AF%D9%88%D8%B1%D8%A7%D9%86",
+    "content_sha256": "84d64ec4f9f8fe69d257616452f42183da5d2cf587fc1bc49952e3b572b0c73b",
+    "evidence_path": "data/evidence/jobinja/job-pages/t4qV-72a0c9b086/20260801T194813.201111Z_detail_84d64ec4f9f8.html",
+    "fetched_at": "2026-08-01T19:48:13.201111+00:00",
+    "fields": {
+      "company": "نوآوران ارتباطات دوران | Douran Group",
+      "company_description": "گروه دوران در زمینه IT شامل: خدمات مختلف شبکه و امنیت شبکه، تولید و فروش انواع نرم افزارها و پورتال و خدمات متنوع دیگر در این حوزه مشغول به فعالیت می باشد. این شرکت با تکیه بر دانش روز و کادری مجرب توانسته در عرصه IT پیشتاز در سطح کشور باشد.",
+      "date_posted": "2026-07-29",
+      "description": "به دنبال Senior Network Security Engineer با تجربه طراحی، پیاده‌سازی و مدیریت زیرساخت‌های امنیت شبکه در مقیاس Enterprise هستیم. این جایگاه مسئول طراحی و اجرای راهکارهای امنیتی، مدیریت فایروال‌های نسل جدید و پیاده‌سازی سیاست‌های امنیتی خواهد بود. طراحی و پیاده‌سازی معماری امنیت شبکه مدیریت تجهیزات NGFW طراحی و پیاده‌سازی VPN طراحی High Availability عیب‌یابی مشکلات امنیتی پیاده‌سازی Zero Trust و Network Segmentation تهیه مستندات فنی تجهیزات امنیتی Cisco Cisco Secure Firewall (FTD) Cisco Firepower Management Center (FMC) Cisco ASA Palo Alto Palo Alto NGFW Panorama GlobalProtect Fortinet FortiGate FortiManager FortiWeb Juniper Juniper SRX Series Firewall Security Technologies IPS / IDS WAF SSL Inspection DPI Threat Prevention Application Control URL Filtering NAT ACL Site-to-Site VPN Remote Access VPN IPsec VPN SSL VPN GRE Tunnel DMVPN High Availability (HA) مزیت محسوب می‌شود Cisco ISE Cisco TrustSec Cisco DNA Center مدارک ترجیحی CCNP Security CCIE Security PCNSE Fortinet FCP / FCSS JNCIS-SEC یا JNCIP-SEC",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "IT / DevOps / Server",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "بیش از شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Network Security",
+        "Firewalls",
+        "CISCO",
+        "+NETWORK"
+      ],
+      "title": "Senior Network Security Engineer",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/douran-group/jobs/t4qV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-security-engineer-%D8%AF%D8%B1-%D9%86%D9%88%D8%A2%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%AF%D9%88%D8%B1%D8%A7%D9%86",
+    "first_seen_at": "2026-08-01T19:34:40.925959+00:00",
+    "job_detail_version_id": 30,
+    "last_seen_at": "2026-08-01T19:35:45.654976+00:00",
+    "lifecycle_state": "active",
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "60a3829be7813ea820afefb4b50cec5c6ca9adce8ab192cebd3f8c42bd42f3ea",
+    "source_job_id": "t4qV",
+    "status_code": 200,
+    "title_observed": "Senior Network Security Engineer"
+  },
+  "source_job_id": "t4qV",
+  "status": {
+    "blueprint_is_current_chain": false,
+    "capability_intelligence_present": true,
+    "capability_is_current_chain": true,
+    "english_analysis_present": true,
+    "english_analysis_semantic_review": "accepted",
+    "english_projection_present": true,
+    "original_analysis_present": false,
+    "role_capability_blueprint_present": false,
+    "translation_matches_english_analysis": true
+  }
+}

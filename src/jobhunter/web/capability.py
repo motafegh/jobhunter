@@ -11,7 +11,7 @@ from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from jobhunter.analysis_service import ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
+from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.capability_service import (
     CAPABILITY_PROMPT_VERSION,
@@ -61,7 +61,8 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             source_job_id,
             model=analysis_model,
             prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ANALYSIS_SCHEMA_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            accepted_only=True,
         )
         capability_artifact = CapabilityIntelligenceStore(
             settings.database_path

@@ -180,6 +180,7 @@ def _analysis_payload(
         "prompt_version": artifact.prompt_version,
         "analysis_schema_version": artifact.schema_version,
         "created_at": artifact.created_at,
+        "semantic_review_status": artifact.semantic_review_status,
         "analysis": artifact.analysis,
     }
 
@@ -273,6 +274,7 @@ def _build_jobs(
             model=analysis_model,
             prompt_version=ENGLISH_PROMPT_VERSION,
             schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            accepted_only=True,
         )
         original_analysis = analysis_store.latest_current(
             source_job_id,
@@ -286,6 +288,16 @@ def _build_jobs(
             prompt_version=CAPABILITY_PROMPT_VERSION,
             schema_version=CAPABILITY_SCHEMA_VERSION,
         )
+        if (
+            capability is not None
+            and (
+                english_analysis is None
+                or capability.analysis_artifact_id != english_analysis.id
+                or capability.translation_artifact_id
+                != english_analysis.translation_artifact_id
+            )
+        ):
+            capability = None
 
         translation_payload = _translation_payload(translation)
         english_analysis_payload = _analysis_payload(

@@ -1,6 +1,6 @@
 # Evidence-Backed Semantic Analysis
 
-**Status:** English P1.6 v20/v5 promoted/current; heterogeneous non-regression active  
+**Status:** English P1.6 v20/v5 promoted/current; heterogeneous non-regression closed
 **Date:** 2026-08-21
 
 P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
@@ -450,9 +450,9 @@ t4jp → artifact 37 → accepted/current
 Current heterogeneous non-regression order:
 
 ```text
-1. Python/software          ← tmBK active
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
+2. network/security         ← t4qV accepted: P1.6 44 → Capability 14
+3. operations/platform      ← tmyX accepted: P1.6 46 → Capability 15
 ```
 
 ### `tmBK`
@@ -467,7 +467,9 @@ P1.6 contract:        v20/v5
 
 The first persisted candidate P1.6 artifact 38 was rejected because deterministic depth canonicalization propagated `Mastery` to unrelated concepts. Current v20 fixes that defect and the adjacent `Sufficient knowledge`, effective-AI-application and redundant-coverage-exclusion cases with regressions.
 
-The rejected artifact must not feed Capability. The next action is a clean `tmBK` P1.6 rebuild and complete manual review before any Capability run.
+The rejected artifact did not feed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete manual review; Capability artifact 13 then passed 16/16 requirement coverage and 7/7 explicit-depth review. Python/software is closed.
+
+Network/security `t4qV` (detail 30, English projection 20) is accepted on P1.6 44 → Capability 14; its five named certifications remain role-level. Operations/platform `tmyX` (detail 35, English projection 24) is accepted on P1.6 46 → Capability 15. General fixes cover credential ontology, safe generic-heading boundaries, explicit pre-heading candidate duties, and non-depth ability/skill wording. Heterogeneous validation is closed.
 
 Expected source-calibrated depth semantics include:
 

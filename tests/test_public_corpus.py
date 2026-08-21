@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sqlite3
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -131,6 +132,16 @@ def test_public_corpus_exports_current_public_chain_without_private_protocol(
     database_path = tmp_path / "jobhunter.sqlite3"
     output_dir = tmp_path / "corpus"
     _seed_full_chain(database_path)
+    with sqlite3.connect(database_path) as connection:
+        connection.execute(
+            "UPDATE job_analysis_artifacts SET semantic_reviewed_at = ?, "
+            "semantic_review_note = ? WHERE prompt_version = ?",
+            (
+                "2026-08-16T19:00:00+00:00",
+                "private reviewer note must not export",
+                ENGLISH_PROMPT_VERSION,
+            ),
+        )
 
     summary = export_public_corpus(
         database_path,
@@ -163,6 +174,9 @@ def test_public_corpus_exports_current_public_chain_without_private_protocol(
     assert capability["analysis_artifact_id"] == p16["artifact_id"]
     assert "request_body" not in p16
     assert "raw_response" not in p16
+    assert "semantic_review_note" not in p16
+    assert "semantic_reviewed_at" not in p16
+    assert "private reviewer note" not in json.dumps(p16)
     assert "request_body" not in capability
     assert "raw_response" not in capability
     assert manifest["counts"] == {
@@ -243,6 +257,33 @@ def test_public_corpus_removes_stale_downstream_files_after_source_change(
         "p16_original": False,
         "capability": False,
     }
+
+
+def test_public_corpus_excludes_pending_analysis_and_its_capability(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    output_dir = tmp_path / "corpus"
+    _seed_full_chain(database_path)
+    with sqlite3.connect(database_path) as connection:
+        connection.execute(
+            "UPDATE job_analysis_artifacts SET semantic_review_status = 'pending' "
+            "WHERE prompt_version = ?",
+            (ENGLISH_PROMPT_VERSION,),
+        )
+
+    summary = export_public_corpus(
+        database_path,
+        output_dir=output_dir,
+        analysis_model="analysis-model",
+        capability_model="capability-model",
+    )
+
+    job_dir = output_dir / "jobs" / "fa01"
+    assert summary.english_analyses == 0
+    assert summary.capabilities == 0
+    assert not (job_dir / "p16-english.json").exists()
+    assert not (job_dir / "capability.json").exists()
 
 
 def test_public_corpus_verify_detects_tampering(tmp_path: Path) -> None:

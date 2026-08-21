@@ -88,9 +88,9 @@ Current semantic layers are not all at the same acceptance level:
 
 - English P1.6 v20/v5 is promoted/current and accepted on dense+sparse opposite-end anchors;
 - Capability v9/v5 is promoted/current and operationally closed on those anchors;
-- heterogeneous role-family validation is active before those promoted layers are frozen as Phase-2 input;
+- heterogeneous role-family validation is closed across Python/software, network/security, and operations/platform anchors;
 - Blueprint v6/v5 remains experimental/deferred and non-authoritative;
-- Market/source/lifecycle/partial-success/P1.7 closure gates remain open.
+- Market and source/lifecycle gates are closed; partial-success and P1.7 closure gates remain open.
 
 One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
@@ -252,9 +252,9 @@ Accepted publication baseline:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 The corpus deliberately excludes raw HTML, machine-local evidence paths, SQLite/WAL/SHM, raw model protocol, prompts/secrets/logs/local config, and future personal/private state.
@@ -548,12 +548,14 @@ Blueprint is implemented but deliberately **deferred/non-authoritative**, not me
 Heterogeneous semantic review is active in this order:
 
 ```text
-1. Python/software          ← tmBK active
-2. network/security
-3. operations/platform/DevOps
+1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
+2. network/security         ← t4qV accepted: P1.6 44 → Capability 14
+3. operations/platform      ← tmyX accepted: P1.6 46 → Capability 15
 ```
 
-`tmBK` has already produced useful regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, and contradictory coverage exclusions. Its first persisted candidate artifact was semantically rejected and is not allowed to feed Capability. The next step is a clean P1.6 rebuild/review before any Capability generation.
+`tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
+
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, and source/lifecycle acceptance are closed. Partial-success semantics is the active product gate.
 
 ### 10.4 Planned next product layers
 

@@ -103,7 +103,9 @@ role purpose:      0
 
 The accepted contract preserves structured source skills, optionality, experience/education constraints, qualification-vs-duty separation, and exact source depth without spreading one adjective across neighboring technologies.
 
-Heterogeneous validation is now exercising the same promoted contract against materially different role shapes. The active Python/software anchor is `tmBK` (Python Developer; source detail 44; English projection artifact 38). Its first persisted P1.6 artifact was rejected during manual review because a deterministic validator bug spread the first depth marker in a dense evidence segment to unrelated concepts. The rejected artifact does not feed Capability. Current v20 hardening on `main` also covers `Sufficient knowledge`, multi-level evidence fail-closed behavior, non-depth `effectively use ...` wording, and redundant coverage-exclusion filtering. The next live step is to rebuild and review `tmBK` P1.6 before any Capability run.
+Heterogeneous validation is closed across three materially different role shapes: Python/software `tmBK` uses P1.6 39 → Capability 13; network/security `t4qV` uses 44 → 14; operations/platform `tmyX` uses 46 → 15. Complete reviews verified source coverage, obligation/depth calibration, role-level separation, grouping, and fail-closed enrichment. Market truthfulness now exposes sample/source/filter/contract scope, non-exclusive strength semantics, duplicate limitations, and representativeness warnings; source/lifecycle acceptance also passed. The next Phase-1 gate is partial-success semantics.
+
+Fresh English v20 artifacts now persist as `pending` semantic-review candidates. Pending candidates remain inspectable in the browser, CLI, and Review Snapshot, but are excluded from Capability, Market, dashboard accepted counts, and the public corpus. Explicit acceptance records reviewer time/note; rejection archives the complete local candidate and removes it from current runtime state so the same contract can be rebuilt. Existing promoted artifacts migrate as accepted for compatibility.
 
 ## Capability Intelligence v9
 
@@ -176,9 +178,9 @@ The real published/verified baseline is:
 Known/discovered jobs:       344
 Fetched/parsed job details:   43
 English projections:          33
-English P1.6:                  2
+English P1.6:                  5
 Original P1.6:                 0
-Capabilities:                  2
+Capabilities:                  5
 ```
 
 `344` therefore means known/discovered identities, not 344 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection.
@@ -257,6 +259,9 @@ jobhunter jobs health <job-id>
 jobhunter jobs checks <job-id>
 jobhunter jobs audit
 jobhunter jobs analyze <job-id>
+jobhunter jobs review-analysis <job-id> status
+jobhunter jobs review-analysis <job-id> accept --reason "complete source review passed"
+jobhunter jobs review-analysis <job-id> reject --reason "material source-truth defect"
 jobhunter jobs capability <job-id>
 jobhunter jobs blueprint <job-id>   # experimental
 jobhunter jobs snapshot <job-id>
@@ -279,11 +284,12 @@ Browser and CLI share the same durable application state and service boundaries.
 P1.6 v20/v5 promoted/closed
 → Capability v9/v5 promoted/closed
 → public corpus operationally closed / remotely available
-→ Python/software heterogeneous validation (tmBK active)
-→ network/security review
-→ operations/platform/DevOps review
-→ freeze P1.6 + Capability as Phase-2 input if heterogeneous acceptance passes
-→ Market/source/lifecycle/partial-success/P1.7 closure
+→ Python/software heterogeneous validation accepted (tmBK 39 → 13)
+→ heterogeneous review closed (tmBK 39→13, t4qV 44→14, tmyX 46→15)
+→ Market truthfulness and source/lifecycle acceptance closed
+→ partial-success semantics
+→ preserve accepted P1.6 + Capability as the future Phase-2 input
+→ partial-success/P1.7 closure
 → Phase-1 closure
 → only then corpus-wide Phase 2
 ```

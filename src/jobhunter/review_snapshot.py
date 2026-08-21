@@ -120,6 +120,9 @@ def _analysis_payload(artifact: AnalysisArtifact | None) -> dict[str, Any] | Non
         "prompt_version": artifact.prompt_version,
         "schema_version": artifact.schema_version,
         "created_at": artifact.created_at,
+        "semantic_review_status": artifact.semantic_review_status,
+        "semantic_reviewed_at": artifact.semantic_reviewed_at,
+        "semantic_review_note": artifact.semantic_review_note,
         "analysis": artifact.analysis,
     }
 
@@ -244,6 +247,11 @@ def build_review_snapshot(
         "status": {
             "english_projection_present": translation is not None,
             "english_analysis_present": english_analysis is not None,
+            "english_analysis_semantic_review": (
+                english_analysis.semantic_review_status
+                if english_analysis is not None
+                else None
+            ),
             "original_analysis_present": original_analysis is not None,
             "capability_intelligence_present": capability is not None,
             "role_capability_blueprint_present": blueprint is not None,
