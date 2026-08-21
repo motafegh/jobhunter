@@ -4,7 +4,7 @@
 
 These files are **not** the live SQLite database, are **not** runtime inputs, and are **not** the complete public job dataset.
 
-The complete version-controlled public dataset now lives in:
+The complete version-controlled public dataset lives in:
 
 ```text
 corpus/
@@ -31,7 +31,7 @@ jobhunter jobs snapshot <job-id>
 git diff -- review-snapshots/jobs/<job-id>.json
 ```
 
-The compatibility entry point remains:
+Compatibility entry point:
 
 ```bash
 jobhunter-review-snapshot <job-id>
@@ -51,7 +51,7 @@ A snapshot may include:
 - English projection;
 - current English/original P1.6 artifacts;
 - dependency-current Capability artifact;
-- optional experimental Blueprint artifact when it belongs to the selected dependency chain;
+- optional experimental Blueprint artifact when it belongs to the selected historical-compatible dependency chain;
 - artifact/model/prompt/schema identities;
 - dependency IDs;
 - configured effective model roles;
@@ -73,7 +73,7 @@ The repository is public. Commit selected review examples intentionally.
 
 ## Dependency status vs semantic acceptance
 
-The `status` object records whether a downstream artifact belongs to the selected dependency chain:
+The `status` object records whether a downstream artifact belongs to the selected dependency chain, for example:
 
 ```text
 translation_matches_english_analysis
@@ -84,6 +84,8 @@ blueprint_is_current_chain
 These are **dependency/currentness flags, not semantic-acceptance flags**.
 
 A current-chain artifact can still fail semantic review. Conversely, a historical artifact can remain useful experimental evidence without being current.
+
+This distinction is active in heterogeneous validation: `tmBK`'s first P1.6 candidate mechanically completed but was semantically rejected, so it is not eligible to feed Capability.
 
 ## Current accepted Capability anchors
 
@@ -120,29 +122,63 @@ analysis artifact=37
 blueprint_is_current_chain=False
 ```
 
-Blueprint v6 remains deferred/non-authoritative and pinned to historical Capability v7 dependency semantics. It is not an accepted Phase-1 decision layer.
+Blueprint v6 remains deferred/non-authoritative and pinned to historical Capability v7 dependency semantics. It is not an accepted Phase-1 decision layer and must not be silently rebased onto current Capability v9.
+
+## Public corpus gate — closed
+
+The complete public corpus has already been backfilled from the real local database, deterministically verified, intentionally committed/pushed, and remotely inspected.
+
+Accepted publication baseline:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+Important interpretation:
+
+```text
+344 known/discovered jobs != 344 complete advertisements
+```
+
+The remote corpus can now be used to select heterogeneous roles without direct local SQLite access.
 
 ## Current semantic review workflow
 
-Before heterogeneous live review, the full public corpus is being backfilled/published through `corpus/` so representative jobs can be selected remotely rather than depending on local SQLite access.
-
-After corpus publication, review materially different current roles:
+Active order:
 
 ```text
-Python/software
-network/security
-operations/platform/DevOps
+1. Python/software          ← tmBK active
+2. network/security
+3. operations/platform/DevOps
 ```
 
-For each selected role inspect:
+For each selected role:
 
-- original source and English provenance;
-- P1.6 factual coverage, strength, optionality, explicit depth and evidence;
-- Capability requirement/responsibility coverage;
-- Capability grouping coherence;
-- role-level source partition;
-- deterministic source truth;
-- absence of unsupported ownership/autonomy/lifecycle/architecture or contextual-tool promotion.
+1. inspect original source and English projection quality;
+2. run/reuse current English P1.6;
+3. manually accept P1.6 before Capability;
+4. run/reuse current Capability v9 only after accepted P1.6;
+5. inspect P1.6 factual coverage, strength, optionality, explicit depth and evidence;
+6. inspect Capability complete requirement/responsibility coverage and provenance;
+7. inspect grouping coherence and role-level source partition;
+8. verify deterministic source truth and absence of unsupported ownership/autonomy/lifecycle/architecture or contextual-tool promotion;
+9. distinguish deterministic defects from model limitations or harmless non-authoritative variation;
+10. convert repeatable deterministic defects into fixtures.
+
+Current Python/software case:
+
+```text
+tmBK
+source detail 44
+English projection 38
+P1.6 rebuild/review required
+Capability must not run until P1.6 acceptance
+```
 
 Repeatable deterministic defects become fixtures. Harmless non-authoritative wording variation does not justify reopening accepted contracts.
 
@@ -158,7 +194,7 @@ python scripts/audit_blueprint_v6_snapshot.py review-snapshots/jobs/<job-id>.jso
 
 The audit checks mechanical provenance/shape only. A PASS never means semantic acceptance.
 
-Do not create Blueprint v7, weaken validators, add vacancy-specific prompt patches, or continue nearby model shopping during Phase 1 merely to obtain a passing artifact.
+Do not create Blueprint v7, weaken validators, add vacancy-specific prompt patches, rebase v6 onto Capability v9, or continue nearby model shopping during Phase 1 merely to obtain a passing artifact.
 
 ## Publishing selected snapshots
 
