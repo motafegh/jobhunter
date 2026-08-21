@@ -1,7 +1,7 @@
 # JobHunter Roadmap
 
 **Status:** Current strategic roadmap  
-**Date:** 2026-08-03  
+**Date:** 2026-08-21  
 **Scope:** Product delivery from the current Phase-1 state through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and active phase plans control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution plans.
 
@@ -84,47 +84,88 @@ Rules:
 
 ## 3. Current baseline
 
-### 3.1 Accepted foundation
+### 3.1 Accepted/current foundation
 
-Current accepted foundations include:
+Current accepted/current foundations include:
 
 - local Python modular-monolith application;
-- SQLite system of record plus immutable raw evidence files;
+- SQLite runtime/history authority plus immutable raw evidence files;
 - local browser UI and supported CLI over the same services/data;
 - data-driven Persian/English Jobinja search catalog;
 - bounded, repeat-safe acquisition;
 - immutable search and detail evidence;
 - stable logical JobPosting identity;
 - semantic source versions distinct from fetch observations;
-- deterministic Jobinja parser v2;
-- parser structural audit;
-- local-first translation boundary;
-- historical translation-v1 preservation;
+- deterministic `jobinja-detail-v2` parser and parser structural audit;
+- `lm-studio-translation-v2` / `english-projection-v2` current translation boundary;
 - browser Quick Add within the approved Jobinja source boundary;
-- real acquisition against a corpus substantially larger than the original 79-job proof.
+- promoted/current English P1.6 `job-analysis-english-v20 / job-analysis-v5`;
+- independent original-language P1.6 `job-analysis-original-v9 / job-analysis-v4`;
+- promoted/current Capability Intelligence `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
+- Review Snapshot v1 current-chain routing;
+- complete repository-safe public corpus `jobhunter-public-corpus-v1`;
+- real public-corpus backfill, verification, intentional Git publication and remote inspection;
+- real acquisition corpus substantially larger than the original early proof.
 
-### 3.2 Implemented but still under acceptance/hardening
+Accepted opposite-end semantic anchors:
 
-The repository already contains, but must not over-claim before current acceptance gates pass:
+```text
+tG9K → P1.6 artifact 36 → Capability artifact 11
+t4jp → P1.6 artifact 37 → Capability artifact 12
+```
+
+Public corpus publication baseline:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+### 3.2 Implemented but still under acceptance/closure
+
+The repository already contains, but must not over-claim before the remaining gates pass:
 
 - classified source response/failure states;
 - cautious lifecycle transitions;
 - user triage and deterministic acquisition priority;
-- hardened `english-projection-v2` / translation-v2;
-- deterministic translation-integrity rejection;
-- P1.6 evidence-backed semantic analysis;
-- source-excerpt validation for material model claims;
-- required/preferred/contextual/inferred requirement distinction;
-- versioned analysis identity by source version, model, prompt and schema;
-- first per-job analysis surfaces;
-- first Market aggregation over current accepted analysis artifacts;
-- expanded bounded browser workflow actions.
+- first Market aggregation over accepted/current English P1.6;
+- expanded bounded browser workflow actions;
+- final partial-success/run/reporting pieces;
+- heterogeneous role-family non-regression for promoted P1.6 + Capability.
 
-### 3.3 Current governance state
+Blueprint v6/v5 is implemented for research/inspection but is **deferred and non-authoritative**, not merely acceptance-pending.
+
+### 3.3 Current semantic-quality position
+
+P1.6 v20/v5 and Capability v9/v5 are promoted/current on dense+sparse opposite-end anchors. Heterogeneous role-family validation is active before those promoted contracts are frozen as Phase-2 input.
+
+Current order:
+
+```text
+1. Python/software          ← active: tmBK
+2. network/security
+3. operations/platform/DevOps
+```
+
+The first Python/software anchor `tmBK` has already exposed useful repeatable deterministic P1.6 edge cases around:
+
+- recognizing `Sufficient knowledge` as explicit employer depth while plain `knowledge` remains non-depth;
+- preserving item-specific depth inside a single multi-level evidence segment;
+- failing closed rather than borrowing depth when multi-level evidence lacks item-specific scope;
+- treating `Ability to effectively use AI ...` as application wording rather than technical depth;
+- filtering only redundant coverage exclusions that contradict positive extraction of the same reference.
+
+The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and is not allowed to feed Capability. The next live action is a clean P1.6 rebuild/review under the corrected current implementation.
+
+### 3.4 Current governance state
 
 The repository has a 200-item candidate proposal library organized into fourteen families. These proposals are deliberately non-controlling and must be promoted only through explicit product/implementation decisions.
 
-### 3.4 External reference lesson: career-ops
+### 3.5 External reference lesson: career-ops
 
 The career-ops project was reviewed as an external design reference. It does not become a dependency or architectural template for JobHunter. The main lessons incorporated into this roadmap are:
 
@@ -166,6 +207,7 @@ These rules apply across every roadmap stage.
 17. Do not interpret roadmap/proposal breadth as permission to implement everything.
 18. Every new capability must have bounded acceptance criteria and explicit non-goals.
 19. Do not replace vague employer wording with fake technical precision. Job-specific capability depth may only be as detailed as source/work evidence supports, and unknown scope remains explicit.
+20. Once a semantic layer is promoted, reopen it only for repeatable material correctness/provenance/contract defects or changed dependencies, not harmless model prose variation.
 
 ---
 
@@ -179,33 +221,42 @@ These rules apply across every roadmap stage.
 
 ### 5.1 Documentation/state reconciliation
 
-Before additional capability work:
-
-- align `PRODUCT_SPECIFICATION.md`, `ARCHITECTURE.md`, README/current-status text, master plan and Phase-1 plan around the same four states: `accepted`, `implemented / acceptance pending`, `planned`, `proposed`;
-- ensure P1.6 and the first Market layer are described as implemented but not over-claimed;
-- ensure proposal files remain explicitly non-controlling;
-- add this roadmap and the current execution checklist without replacing existing acceptance gates.
-
-### 5.2 Complete the existing stabilization gate
-
-The current `IMPLEMENTATION_PLAN.md` sequence remains controlling:
+Current-state documents must agree on:
 
 ```text
-legacy DB migration ordering
-→ authoritative P1.6 evidence boundary
-→ Ruff / pytest / warnings-as-errors
-→ real DB migration
-→ translation-v2 repair
-→ first reviewed real P1.6 analysis
-→ small reviewed batch
-→ Market validation
-→ remaining lifecycle/source acceptance
-→ P1.7 final run/reporting
+P1.6 English public:        v20/v5
+Capability public/current:  v9/v5
+Blueprint:                  deferred / non-authoritative / historical-v7-pinned
+Public corpus:              operationally closed / remotely available
+Heterogeneous review:       active
+Phase 2:                    blocked
+```
+
+Historical experiment/incident files remain historical and must not be rewritten as though they were current contracts.
+
+### 5.2 Current controlling Phase-1 sequence
+
+The exact execution order is controlled by `docs/IMPLEMENTATION_PLAN.md`, `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`, and `docs/EXECUTION_TODO.md`.
+
+Current high-level sequence:
+
+```text
+rebuild/review tmBK P1.6
+→ if accepted, review tmBK Capability v9
+→ close Python/software heterogeneous anchor
+→ network/security heterogeneous anchor
+→ operations/platform/DevOps heterogeneous anchor
+→ freeze promoted P1.6 + Capability as Phase-2 input if stable
+→ Market truthfulness acceptance
+→ source/lifecycle acceptance
+→ partial-success acceptance
+→ P1.7 final run/report/browser acceptance
+→ Phase-1 closure
 ```
 
 ### 5.3 Promote selected proposal safeguards into current acceptance
 
-These proposals are useful **now as engineering/acceptance requirements**, not as large new product subsystems:
+These proposals remain useful **now as engineering/acceptance requirements**, not as large new product subsystems:
 
 - **B087 — Corpus health summary**: expose layer-specific coverage where operationally useful;
 - **B102 — Rich operation results**: show requested/attempted/completed/reused/failed/remaining work;
@@ -214,12 +265,12 @@ These proposals are useful **now as engineering/acceptance requirements**, not a
 - **B120 — Fault simulation**: test 429/5xx/timeout/challenge/provider/model failure boundaries;
 - **B121 — Model chaos testing**: test structurally plausible but dangerous model output;
 - **B178/B179 — untrusted-content / evidence-poisoning tests**: source text never receives instruction authority;
-- **B187 — Representative review sampling**: the first reviewed batch after the one-job proof must intentionally vary across role/company/language/length/requirement density where the corpus permits;
+- **B187 — Representative review sampling**: the reviewed sample intentionally varies across role/company/language/length/requirement density where the corpus permits;
 - **B190 — Sampling warnings**: the Market UI must qualify small or concentrated analyzed subsets.
 
 ### 5.4 External failure classes to encode as JobHunter regression scenarios
 
-Inspired by real failures observed in other systems, JobHunter should explicitly protect these invariants:
+JobHunter must explicitly protect these invariants:
 
 ```text
 source/provider failure != legitimate empty result
@@ -230,6 +281,8 @@ Unicode normalization must not collapse distinct identities
 partial persistence != operation success
 new lower/worse analysis must not be silently ignored merely because an older result looked better
 prompt wording alone must not be the only enforcement of a critical invariant
+one source depth marker must not spread to neighboring concepts
+non-depth application/scope wording must not become technical depth
 ```
 
 ### 5.5 Phase-1 definition of done
@@ -237,17 +290,17 @@ prompt wording alone must not be the only enforcement of a critical invariant
 R0/Phase 1 is complete only when:
 
 - deterministic checks are green;
-- real DB migration is proven non-destructive;
-- current translation-v2 corpus is repaired/validated sufficiently for the accepted scope;
-- P1.6 has a reviewed representative acceptance sample;
+- current source/translation/migration behavior is explainable and non-destructive;
+- promoted P1.6 + Capability pass the bounded heterogeneous representative sample;
 - unsupported model evidence is rejected reliably;
 - lifecycle failure classes do not create destructive conclusions;
 - Market outputs show exact sample scope and warning state;
 - browser and CLI expose the same underlying result semantics;
 - the final bounded Phase-1 run/report path exists and is live-accepted;
-- documentation reflects actual accepted and non-accepted state.
+- documentation reflects actual accepted and non-accepted state;
+- the accepted P1.6 + Capability starting contract for Phase 2 is explicitly frozen.
 
-**Gate:** No Phase-2 semantic/taxonomy or multi-source expansion becomes controlling work until this stage passes.
+**Gate:** No corpus-wide Phase-2 semantic/taxonomy or multi-source expansion becomes controlling work until this stage passes.
 
 ---
 
@@ -353,7 +406,8 @@ Use the complete accepted evidence set available for the job, including:
 - deterministic job context;
 - canonical concept mappings;
 - responsibility/deliverable-to-capability relations;
-- supported company/product/team context when available.
+- supported company/product/team context when available;
+- bounded lessons from accepted Capability v9 grouping/source-truth behavior where they remain evidence-qualified.
 
 Company context is supporting evidence only. Do not manufacture requirements from stereotypes such as `startup means broad ownership` or `enterprise means narrow specialization`.
 
@@ -1280,6 +1334,10 @@ Stop and repair rather than continuing when any of these occur:
 - a job capability profile expands a broad technology into unsupported sub-capabilities or presents model knowledge as vacancy evidence;
 - a vague employer adjective is being converted into fake exact depth without responsibility/deliverable/context support;
 - explicit, work-implied, inferred and unknown capability expectations are being collapsed together;
+- one depth adjective is being spread across neighboring concepts;
+- non-depth scope/application wording is being persisted as technical depth;
+- a mechanically completed artifact is being treated as semantically accepted without review where the active gate requires review;
+- a rejected upstream artifact is allowed to feed a downstream authority layer;
 - a new contract silently reuses incompatible historical artifacts;
 - browser and CLI mutate different durable state;
 - personal evidence is being inferred without user-reviewed provenance;
