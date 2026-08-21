@@ -1,58 +1,49 @@
 # JobHunter Acquisition and Translation Operations
 
+**Status:** Current operational runbook  
+**Date:** 2026-08-21
+
 ## 1. Purpose
 
-This runbook defines safe operation for JobHunter source acquisition and the
-optional derived English corpus. It covers search planning, discovery, detail
-checks, refresh scheduling, parser audit, local translation, export, and expected
-failure recovery.
+This runbook defines safe operation for JobHunter source acquisition and the derived English corpus. It covers search planning, discovery, detail checks, refresh scheduling, parser audit, local translation, current-public-corpus synchronization, and failure recovery.
 
-Source acquisition is independent from translation. LM Studio is the normal
-local-first translation provider; Google Cloud is an optional external provider.
+Source acquisition remains useful independently from translation or semantic inference. LM Studio is the normal local-first translation provider; Google Cloud is an optional external provider.
 
 ## 2. Record boundaries
 
 JobHunter separates records by responsibility:
 
 ```text
-JobPosting
-  logical Jobinja identity
-
-SearchPageSnapshot
-  exact search-page response
-
-JobPostingVersion
-  one semantic source-content version
-
-JobDetailFetchObservation
-  one operational detail-page check
-
-JobTranslationArtifact
-  one English projection of one exact source semantic version
-
-JobTranslationAttempt
-  one completed / failed / reused translation operation
+JobPosting                 logical Jobinja identity
+SearchPageSnapshot         exact search-page acquisition evidence
+JobPostingVersion          one semantic source-content version
+JobDetailFetchObservation  one operational detail-page check
+JobTranslationArtifact     one English projection of one exact source version
+JobTranslationAttempt      completed / failed / reused translation operation
 ```
 
-Raw Jobinja evidence remains authoritative.
+Downstream P1.6/Capability records remain separate from source/translation state.
+
+Raw Jobinja evidence and parsed source truth remain authoritative upstream inputs.
 
 ## 3. Preflight
 
 ```bash
 source .venv/bin/activate
 ruff check .
-pytest
+python -m pytest
 ```
 
-Inspect configuration without invoking Jobinja or translation generation:
+Inspect configuration without invoking Jobinja or generation:
 
 ```bash
 jobhunter jobinja catalog --show-terms
 jobhunter jobinja plan
 jobhunter translations status
+jobhunter-corpus status
 ```
 
-When LM Studio translation will be used, also inspect the local server:
+When LM Studio translation will be used:
 
 ```bash
 jobhunter translations models
@@ -64,7 +55,7 @@ jobhunter translations models
 jobhunter jobinja discover
 ```
 
-Broad explicit example:
+Bounded example:
 
 ```bash
 jobhunter jobinja discover \
@@ -74,20 +65,14 @@ jobhunter jobinja discover \
   --request-budget 40
 ```
 
-Controlled stop states:
+Controlled stop states include page limits, empty pages, repeated result sets and request-budget exhaustion. Source/network failure remains distinct from a legitimate empty result.
+
+Discovery creates/updates known job identities and provenance; it does not imply that every discovered job has a fetched detail page.
+
+Current public-corpus terminology preserves this distinction:
 
 ```text
-page_limit_reached
-empty_page
-repeated_result_set
-request_budget_reached
-```
-
-Failure stop states:
-
-```text
-page_failed
-invalid_search
+known/discovered jobs != fetched/parsed detail jobs
 ```
 
 ## 5. Acquisition sync
@@ -107,61 +92,40 @@ configured search plan
 → immutable evidence
 → deterministic parsing
 → semantic versioning
-→ fetch observations
-→ structural parser audit
+→ fetch observations/lifecycle evidence
 ```
 
-Defaults:
+Default bounds remain configuration-controlled. Combined missing + refresh detail work remains bounded.
 
-```toml
-jobinja_sync_missing_limit = 10
-jobinja_sync_refresh_limit = 5
-jobinja_refresh_after_hours = 24.0
-```
-
-Combined missing + refresh detail checks may not exceed 50.
+After durable CLI mutation completes, the installed public command path refreshes the local repository-safe `corpus/` projection. Corpus-projection failure never rolls back SQLite/source success but is surfaced so divergence is visible.
 
 ## 6. Targeted detail acquisition
 
 ```bash
-jobhunter jobinja fetch tpLF tmW1 tmkE
+jobhunter jobinja fetch <job-id>
 jobhunter jobinja fetch --missing --limit 10
 jobhunter jobinja fetch --refresh-due --older-than-hours 24 --limit 5
 ```
 
-Each successful check reports its semantic source version and fetch-observation ID.
+Each successful check records its semantic source version and fetch observation.
+
+Do not interpret transient network/429/5xx/challenge/auth failure as vacancy removal.
 
 ## 7. Parser inspection
 
 ```bash
 jobhunter jobs list --limit 100
-jobhunter jobs show tpLF
-jobhunter jobs checks tpLF
+jobhunter jobs show <job-id>
+jobhunter jobs checks <job-id>
 jobhunter jobs audit
 jobhunter jobs audit --only-issues
 ```
 
-A clean structural audit does not mean semantic interpretation or translation has
-been reviewed.
+A clean structural parser audit is not translation-quality or semantic-analysis certification.
 
-## 8. Local LM Studio translation preflight
+## 8. LM Studio translation preflight
 
-Translation is disabled by default so first use is deliberate, but the normal
-provider requires no cloud credentials.
-
-Recommended local configuration:
-
-```toml
-translation_enabled = true
-translation_auto_after_sync = false
-translation_provider = "lm-studio"
-translation_target_language = "en"
-translation_batch_limit = 20
-translation_timeout_seconds = 30.0
-translation_max_retries = 1
-translation_lm_studio_max_tokens = 4096
-translation_lm_studio_character_target = 6000
-```
+Normal local configuration uses `translation_provider = "lm-studio"` and explicit bounded batch/retry/token settings.
 
 Model-selection priority:
 
@@ -177,84 +141,56 @@ List exact model IDs:
 jobhunter translations models
 ```
 
-When multiple models are visible, configure one explicitly:
+Keep automatic translation after sync disabled during first quality validation of a new translation contract/model.
 
-```toml
-translation_lm_studio_model = "exact-model-id"
-```
+## 9. First live translation acceptance
 
-Keep `translation_auto_after_sync = false` during first live quality validation.
-
-## 9. First live LM Studio translation acceptance
-
-Choose one already-parsed Persian/mixed advertisement, such as `tpLF`.
-
-Check status:
+Choose one already-parsed Persian/mixed advertisement.
 
 ```bash
 jobhunter translations status
-```
-
-Translate one job:
-
-```bash
-jobhunter translations run tpLF
-```
-
-Inspect the result:
-
-```bash
-jobhunter translations show tpLF
+jobhunter translations run <job-id>
+jobhunter translations show <job-id>
 ```
 
 Manually compare at least:
 
-- title;
-- location;
+- title/company/location;
 - employment type;
 - education/experience wording;
 - skill tags;
 - complete job description;
-- technical names such as Python, RAG, LLM, Docker, MLOps;
-- negation and uncertainty;
-- strength words such as familiarity, knowledge, proficiency, mastery, required,
-  and preferred when present.
+- technical names;
+- negation/modality;
+- strength/depth words such as required, preferred, familiarity, knowledge, proficiency and mastery.
 
 Structured-output success alone is not translation-quality acceptance.
 
-## 10. Translation idempotency acceptance
+A current heterogeneous example, `tI1n`, was deliberately blocked before P1.6 because its English projection materially changed a portfolio/work-sample application condition. Downstream analysis must not hide that upstream problem.
 
-Immediately run the same translation again:
+## 10. Translation idempotency
+
+Immediately repeating unchanged translation work should reuse the same artifact identity rather than invoke the model again.
 
 ```bash
-jobhunter translations run tpLF
+jobhunter translations run <job-id>
 ```
 
-Expected outcome:
+Expected outcome for unchanged source/provider/model/schema:
 
 ```text
 reused
 ```
 
-The same source version/provider-contract/model/schema must reference the same artifact
-rather than invoking the model again.
+## 11. Native-English behavior
 
-## 11. Native-English acceptance
+A parsed advertisement with no Persian text creates a current English identity projection without an LM Studio/cloud translation call.
 
-For a parsed advertisement containing no Persian text:
-
-```bash
-jobhunter translations run <english-job-id>
-jobhunter translations show <english-job-id>
-```
-
-Expected provider identity:
+Expected identity:
 
 ```text
 source-identity / native-english
 ```
-
-No LM Studio or cloud translation request is required.
 
 ## 12. Bounded missing translation queue
 
@@ -264,8 +200,7 @@ After individual validation:
 jobhunter translations run --missing --limit 5
 ```
 
-One job's translation failure does not discard successful artifacts from the same
-batch.
+One job's translation failure does not discard successful artifacts from the same bounded operation.
 
 ## 13. English corpus export
 
@@ -273,70 +208,33 @@ batch.
 jobhunter translations export
 ```
 
-Default:
+This dedicated export contains current English-projection-v2 artifacts under its export contract. Historical translations remain stored but are not exposed as current.
 
-```text
-data/exports/job_english_corpus.jsonl
+The complete repository-safe public job projection is separate:
+
+```bash
+jobhunter-corpus export
+jobhunter-corpus verify
+jobhunter-corpus status
 ```
-
-Inspect several JSONL records before using them in ML/LLM experiments.
-
-Only artifacts tied to each job's latest successfully parsed semantic source version
-are exported. Historical translations are retained but not exposed as current data.
 
 ## 14. Automatic translation after sync
 
-Enable only after manual quality acceptance:
+Enable only after manual quality acceptance of the chosen translation path. Source acquisition runs first; translation operates afterward within its own bounds.
 
-```toml
-translation_enabled = true
-translation_auto_after_sync = true
-translation_provider = "lm-studio"
-translation_batch_limit = 20
-```
-
-Then:
-
-```bash
-jobhunter jobinja sync \
-  --profile ai-security-python \
-  --search-limit 12 \
-  --request-budget 12 \
-  --missing-limit 4 \
-  --refresh-limit 2
-```
-
-Source acquisition runs first. The translation queue then prioritizes jobs checked
-during that sync and fills remaining capacity from current parsed versions missing an
-English artifact.
-
-Translation failure may make the command return attention-required status but does not
-roll back successful acquisition, evidence, parsing, or semantic versions.
+Translation failure may make the overall operation attention-required but does not roll back acquisition, evidence, parsing or semantic source versions.
 
 ## 15. Optional Google Cloud provider
 
-Google Cloud Translation remains available when deliberately desired:
+Google Cloud Translation remains available only when deliberately selected.
 
-```toml
-translation_provider = "google-cloud"
-google_translation_model = "nmt"
-```
-
-Provide its credential outside Git:
-
-```bash
-export JOBHUNTER_GOOGLE_TRANSLATION_API_KEY='...'
-```
-
-This path intentionally sends parsed job text to Google. It is not required for normal
-JobHunter operation.
+Credentials stay outside Git. This path sends parsed public job text to an external provider and is not required for normal JobHunter operation.
 
 ## 16. Failure handling
 
 ### Search/detail failure
 
-Inspect source summaries and `jobs checks`. Retry explicitly only after the underlying
-condition is understood.
+Inspect source summaries and `jobs checks`. Retry explicitly only after the failure class is understood.
 
 ### Parser finding
 
@@ -349,73 +247,85 @@ Preserve a regression fixture/test before generalizing a parser fix.
 
 ### LM Studio translation failure
 
-Source data remains valid. Check:
-
-```bash
-jobhunter translations models
-jobhunter translations status
-```
-
-Then verify the configured model is loaded and supports the required structured output.
-A failed translation attempt remains inspectable; rerunning later can create a valid
-artifact without changing source history.
-
-### Google translation failure
-
-When the optional Google provider is selected, fix credentials/quota/network/provider
-configuration and rerun the affected job. Source data remains valid.
+Source data remains valid. Check visible models/status and provider configuration. Failed attempts remain inspectable and can be retried without changing source history.
 
 ### Translation quality concern
 
-Do not edit original Jobinja fields to compensate for a translation problem. Preserve
-the example for the reviewed translation corpus and compare model/provider versions.
+Do not edit original Jobinja fields or silently alter P1.6 evidence to compensate for a translation problem. Preserve the example as translation-quality evidence and compare/fix the correct upstream boundary.
+
+### Public-corpus projection failure
+
+Durable SQLite/source/derived work remains committed locally. Run:
+
+```bash
+jobhunter-corpus export
+jobhunter-corpus verify
+```
+
+and inspect the divergence. Projection recovery must not rewrite source history.
 
 ## 17. Daily/weekly patterns
 
 ### Source-only daily sync
 
-Keep translation disabled or `translation_auto_after_sync = false`, then run:
+Keep automatic translation disabled and run bounded Jobinja sync.
 
-```bash
-jobhunter jobinja sync
-```
+### Source + local translation sync
 
-### Source + local translation daily sync
+After acceptance, enable automatic local translation while keeping acquisition and model-call bounds conservative.
 
-After acceptance, enable automatic LM Studio translation and keep both acquisition and
-translation/model request bounds conservative.
-
-### Weekly quality check
+### Periodic quality check
 
 ```bash
 ruff check .
-pytest
+python -m pytest
 jobhunter jobs audit
 jobhunter translations status
+jobhunter-corpus verify
 ```
 
-Periodically inspect both original and English representations rather than only
-aggregate counts.
+Periodically inspect original and English representations, not only aggregate counts.
 
 ## 18. Safety and privacy rules
 
-- Use public Jobinja pages only.
-- Keep source acquisition bounded/rate-limited.
-- Do not bypass access controls or CAPTCHA.
-- Treat acquired text as untrusted data.
-- Keep runtime data and secrets outside Git.
-- Prefer LM Studio on loopback for local translation.
+- Use approved public Jobinja pages only.
+- Keep acquisition bounded/rate-limited.
+- Do not bypass access controls/CAPTCHA.
+- Treat acquired content as untrusted data.
+- Keep local runtime data and secrets outside Git.
+- Prefer LM Studio on loopback for normal local translation/inference.
 - Treat a non-loopback LM Studio deployment as an explicit network boundary.
-- When Google is selected, do not send personal capability/profile data through the
-  translation pipeline; current translation scope is parsed job-advertisement content.
-- Treat English translations as derived data, never stronger evidence than original
-  employer text.
+- When an external translation provider is selected, do not send future personal/private state through the public-job translation path.
+- Treat English projection as derived convenience, never stronger authority than original employer text.
+- Do not auto-commit/push the public corpus; Git publication remains intentional.
 
 ## 19. Current stop line
 
-The system may discover, preserve, parse, version, refresh, audit, translate locally,
-and export current English derived documents.
+JobHunter may currently:
 
-It must not yet claim responsibility classification, required/preferred semantic
-interpretation, personal relevance, readiness, skill gaps, recommendations, or
-combined market conclusions. Those require P1.6/P1.7 evidence-backed analysis.
+```text
+discover/fetch/preserve/version public Jobinja evidence
+→ parse deterministically
+→ translate into hardened English projection v2
+→ run promoted/current English P1.6 v20/v5
+→ run promoted/current bounded Capability v9/v5 above accepted P1.6
+→ expose first Market views over accepted/current English P1.6
+→ project repository-safe public state into corpus/
+```
+
+But Phase 1 is **not closed**.
+
+Current active semantic work is heterogeneous non-regression (`tmBK` Python/software first), followed by network/security and operations/platform/DevOps. Capability must not run for an anchor until that anchor's P1.6 is manually accepted during this gate.
+
+JobHunter must not yet claim:
+
+- semantic stability across all role families;
+- mature/canonical market intelligence;
+- complete source/lifecycle acceptance;
+- final partial-success/run/report browser acceptance;
+- personal capability/readiness/gap truth;
+- learning/application recommendations;
+- autonomous applications;
+- corpus-wide Phase-2 canonical capability profiles.
+
+The exact next-work state lives in `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`.
