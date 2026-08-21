@@ -68,6 +68,16 @@ t4jp English P1.6 artifact 37 → Capability v9 artifact 12
 
 Capability v9 public promotion is closed and operationally verified. Normal public commands reuse artifacts 11/12 on P1.6 artifacts 36/37, Review Snapshot marks those chains current, and Blueprint remains non-current.
 
+The public corpus is also operationally closed and remotely available. The accepted publication baseline is:
+
+```text
+known/discovered Jobinja jobs: 344
+fetched/parsed detail jobs:      43
+English projections:             33
+accepted/current English P1.6:    2
+accepted/current Capability:      2
+```
+
 Do not reopen P1.6 v20 or Capability v9 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ## 4. Blueprint disposition
@@ -92,19 +102,9 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 
 ## 5. Current exact next-work rule
 
-A repository public-corpus projection has been implemented before heterogeneous validation so the complete public job corpus can be inspected locally and remotely.
+The public-corpus implementation/backfill/publish gate is **closed**. Heterogeneous live semantic validation is the active gate.
 
-Current mini-gate:
-
-```text
-local SQLite public state
-→ deterministic corpus backfill
-→ corpus verification
-→ intentional Git commit/push
-→ remote corpus availability proof
-```
-
-After that operational backfill/publish proof, resume heterogeneous live semantic validation in this order unless the available corpus supports a better representative anchor:
+Current order:
 
 ```text
 1. Python/software
@@ -112,7 +112,35 @@ After that operational backfill/publish proof, resume heterogeneous live semanti
 3. operations/platform/DevOps
 ```
 
-For each role review factual coverage, evidence, requirement strength, explicit depth, role-level constraints, Capability coverage/grouping/source truth, and optionality calibration.
+The first Python/software anchor is:
+
+```text
+tmBK — Python Developer
+source detail version:       44
+English projection artifact: 38
+P1.6 contract:               job-analysis-english-v20 / job-analysis-v5
+```
+
+`tmBK` has already exposed repeatable deterministic v20 defects and therefore remains an active validation case rather than an accepted anchor. The rejected first persisted P1.6 artifact 38 must not feed Capability. Current fixes on `main` cover:
+
+- `Sufficient knowledge` as an explicit employer depth phrase while plain `knowledge` remains non-depth;
+- item-specific depth preservation when one evidence segment contains multiple levels such as `Mastery`, `Familiarity`, and `Sufficient knowledge`;
+- fail-closed behavior when multi-level evidence has no item-specific depth signal;
+- normalization of exact `effectively use ...` application wording to non-depth only when the evidence contains no genuine depth marker;
+- removal of only redundant coverage exclusions that contradict positive extraction of the same coverage reference.
+
+Exact next local action after synchronizing `main`:
+
+```text
+rerun tmBK English P1.6
+→ manually inspect complete source truth and depth calibration
+→ accept or fix only a repeatable deterministic defect
+→ only if accepted, run Capability v9 on tmBK
+```
+
+Do **not** run `tmBK` Capability before its rebuilt P1.6 artifact is manually accepted.
+
+For each heterogeneous role review factual coverage, evidence, requirement strength, explicit depth, role-level constraints, Capability coverage/grouping/source truth, and optionality calibration.
 
 Convert repeatable deterministic defects into tests. Record model limitations separately. Do not patch one vacancy at a time.
 
