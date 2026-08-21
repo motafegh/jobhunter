@@ -1,227 +1,221 @@
-# JobHunter Capability Intelligence Implementation Plan
+# JobHunter Capability Intelligence Plan
 
-**Status:** CI-1/CI-2 implemented; CI-3 semantic-quality acceptance active  
-**Date:** 2026-08-08  
+**Status:** Bounded per-job Capability v9 promoted/current; heterogeneous non-regression active  
+**Date:** 2026-08-21  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/ROADMAP.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/PRODUCT_SPECIFICATION.md`, and the current Phase-1 gate  
-**Scope:** Bounded per-job capability/depth reasoning above accepted P1.6 English extraction. This plan does **not** authorize corpus-wide Phase-2 taxonomy/Market-v2 rollout before Phase-1 closure.
+**Scope:** Record the accepted bounded Capability Intelligence architecture and the remaining heterogeneous acceptance required before Phase-2 corpus-scale capability-profile work. Despite this file's historical `PHASE_2_...` name, it does **not** authorize corpus-wide Phase-2 rollout before Phase-1 closure.
 
-The detailed current quality sequence is defined in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
-
----
-
-## 1. Current contract and implementation state
-
-Active identities:
-
-```text
-P1.6 English prompt/runtime:  job-analysis-english-v9
-P1.6 schema:                  job-analysis-v4
-
-Capability prompt/runtime:    job-capability-intelligence-v4
-Capability schema:            job-capability-intelligence-v2
-```
-
-Current flow:
-
-```text
-current Jobinja source version
-        ↓
-exact English projection referenced by accepted P1.6
-        ↓
-accepted English P1.6 factual extraction
-        ↓
-JobHunter deterministic evidence catalog
-  ├─ field references
-  ├─ heading-aware long-description segments
-  ├─ clause-level references where useful
-  └─ P1.6 claim references
-        ↓
-Capability Intelligence v4 model reasoning
-        ↓
-Pydantic/Instructor validation
-        ↓
-reference resolution back to exact English source text
-        ↓
-independent final service validation
-        ↓
-versioned capability artifact + attempt history
-        ↓
-CLI / browser / Review Snapshot
-```
-
-Current CLI:
-
-```bash
-jobhunter jobs capability <job-id>
-```
-
-Current browser surface: **Capability Intelligence** on a job with current accepted English analysis.
-
-Historical Capability prompt/runtime versions remain preserved and are not silently reused as v4 artifacts.
+The exact active quality sequence is defined in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
 
 ---
 
-## 2. Why the layer exists
+## 1. Current public identities
+
+```text
+P1.6 English prompt/runtime:  job-analysis-english-v20
+P1.6 English schema:          job-analysis-v5
+
+Capability prompt/runtime:    job-capability-intelligence-v9
+Capability schema:            job-capability-intelligence-v5
+```
+
+Historical Capability v7/v8 implementations/artifacts remain reproducible but are not current public contracts.
+
+Current accepted/current anchors:
+
+```text
+tG9K → P1.6 artifact 36 → Capability artifact 11
+t4jp → P1.6 artifact 37 → Capability artifact 12
+```
+
+---
+
+## 2. Why Capability exists
 
 P1.6 and Capability Intelligence have different uncertainty contracts.
 
 ### P1.6
 
-Answers what the employer/source actually supports:
+P1.6 is the strict factual substrate:
 
-- role purpose;
+- role purpose when stated;
 - responsibilities;
 - requirements;
-- strength/optionality;
+- requirement strength/optionality;
 - concept type;
-- exact evidence;
-- confidence/rationale where applicable.
+- explicit source depth/extent;
+- exact evidence/provenance.
 
-### Capability Intelligence
+### Capability v9
 
-Answers what the work likely requires in practice:
+Capability organizes accepted P1.6 facts into meaningful capability areas and may add bounded technical reasoning where defensible.
 
-- role interpretation;
-- work activities;
-- depth signals;
-- technical sub-capabilities;
-- underlying knowledge/prerequisites;
-- operational practices;
-- independence/ownership;
-- operational context;
-- unknown/unsupported scope;
-- whole-role cross-capability observations.
+The accepted architecture deliberately separates model reasoning from authoritative source bookkeeping:
 
-Permanent rule:
+```text
+accepted P1.6 source truth
+→ compact semantic group plan
+→ bounded exact source-fact assignment
+→ bounded optional per-group reasoning
+→ deterministic source-link injection
+→ deterministic reconciliation
+→ persisted Capability v9
+```
 
-> Strict extraction establishes what the employer said; Capability Intelligence reasons about what the work likely requires; deterministic JobHunter code owns provenance/bookkeeping.
+Permanent authority split:
 
-Do not collapse the two layers into one prompt/artifact.
+```text
+AUTHORITATIVE SOURCE TRUTH → STRICT
+PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
+MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
+OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
+```
+
+Do not collapse P1.6 and Capability into one prompt/artifact.
 
 ---
 
-## 3. Activation boundary
+## 3. What v9 changed from historical v7/v8
 
-Allowed before Phase-1 closure:
+### Historical v7
 
-- define/version the per-job capability contract;
-- persist independent capability artifacts/attempts;
-- run manually on reviewed real jobs;
-- compare semantic quality across heterogeneous cases;
-- configure a dedicated capability model;
-- generate Review Snapshots for quality review;
-- add deterministic regression fixtures from real incidents.
+The earlier one-shot architecture produced useful bounded evidence on an older P1.6 chain, but promoted-chain dense rebuilds exposed source-link/index loss and then a stable one-profile collapse that omitted many capability requirements.
 
-Still gated:
+Disposition:
 
-- corpus-wide automatic capability inference;
-- automatic canonical-taxonomy population;
-- Market-v2 aggregation over inferred profiles;
-- role-archetype generation from these profiles;
-- personal readiness/gap scoring;
-- automated learning/project recommendations.
+```text
+historical / reproducible / not current
+```
+
+### Historical v8
+
+V8 introduced staged grouping/assignment/reasoning and mechanically achieved complete dense source coverage, but semantic review still found model-owned depth, ownership/lifecycle and optionality inflation.
+
+Disposition:
+
+```text
+historical staged proof / semantic reject / not current
+```
+
+### Accepted v9
+
+V9 keeps staged reasoning but removes model authority over facts that JobHunter can own deterministically.
+
+Source requirement strength, source-explicit depth, source work and source links are deterministic. Model-generated source-truth echoes are redundant and filtered. Optional enrichment may be completely empty.
 
 ---
 
-## 4. Artifact contract
+## 4. Current v9 guarantees
 
-`JobCapabilityIntelligence` contains:
+A persistable/current Capability v9 artifact must satisfy:
 
-```text
-role_interpretation
-capabilities[]
-cross_capability_observations[]
-uncertainties[]
-```
+- every capability-relevant accepted P1.6 requirement is represented;
+- every accepted responsibility is represented;
+- all owned indices/evidence references are valid;
+- dense sources do not collapse into one catch-all group;
+- source requirement strength is deterministic;
+- source-explicit technical depth is deterministic and concept-specific;
+- source-explicit work is deterministic;
+- role-level education and duration-only experience constraints remain role-level rather than becoming capability groups;
+- preferred/contextual-only facts cannot independently justify an inferred prerequisite;
+- unsupported ownership/lifecycle/autonomy/architecture claims are blocked or filtered;
+- optional model enrichment may be absent;
+- redundant model `source_explicit` echoes are discarded;
+- incomplete authoritative source truth cannot persist.
 
-Each capability profile contains:
-
-```text
-capability_label
-summary
-requirement_strength
-depth_signals[]
-work_activities[]
-sub_capabilities[]
-underlying_knowledge[]
-operational_practices[]
-independence_expectation
-operational_context[]
-unknown_scope[]
-overall_confidence
-```
-
-Each expectation contains:
-
-```text
-statement
-evidence_status
-evidence[]
-rationale
-confidence
-```
-
-Evidence status:
-
-```text
-source_explicit
-strongly_implied_by_work
-model_inferred_prerequisite
-unknown_or_unsupported
-```
-
-Requirement strength remains separate from evidence status and depth:
-
-```text
-required
-preferred
-contextual
-inferred
-mixed
-unspecified
-```
+The public service facade in `src/jobhunter/capability_service.py` routes to v9/v5.
 
 ---
 
-## 5. Evidence-reference contract
+## 5. Evidence and dependency identity
 
-The model cites only evidence reference IDs supplied by JobHunter.
-
-Examples:
+Capability v9 depends on the exact current accepted English P1.6 chain:
 
 ```text
-p1:requirements:0
-p1:responsibilities:2
-field:description:segment:4
-field:description:segment:4:clause:1
-field:company_description
+source detail version
++ exact English projection artifact
++ exact English P1.6 artifact
++ capability model
++ Capability prompt/runtime version
++ Capability schema version
 ```
 
-JobHunter resolves references back to exact English source text before persistence.
+A newer source/translation/P1.6 dependency makes an older downstream Capability non-current.
 
-### Deterministic resilience rules
-
-1. Supported claim + valid evidence + invalid extra reference:
-   - keep the proven evidence;
-   - discard the invalid extra.
-
-2. Supported claim + invalid-only evidence:
-   - fail closed.
-
-3. `unknown_or_unsupported` + invalid-only evidence:
-   - normalize evidence to `[]`;
-   - preserve the uncertainty statement;
-   - do not spend another full generation fixing meaningless bookkeeping.
-
-4. Historical exact-text evidence remains supported as a mechanical compatibility fallback.
-
-The `tG9K` failure that invented `p1:requirements:19` established rule 3. The model's uncertainty conclusion was usable; only the reference was invalid, and unknown scope is explicitly allowed to have no evidence.
+Capability never guesses a newer translation independently from the P1.6 artifact it consumes.
 
 ---
 
-## 6. Runtime policy
+## 6. Model-owned surface
 
-Capability inference uses Instructor + Pydantic over the local LM Studio OpenAI-compatible endpoint.
+The group planner proposes a small coherent capability grouping. Planner prose is non-authoritative and may be normalized.
+
+The assignment stage performs bounded group assignment of JobHunter-owned source facts. It is provenance bookkeeping, not new source extraction.
+
+Per-group reasoning may optionally add evidence-qualified items such as:
+
+- strongly work-implied technical decomposition;
+- defensible prerequisites;
+- operational practices/context;
+- work-implied depth beyond already-owned source-explicit depth;
+- explicit unknown scope.
+
+These are subordinate and fail closed. Zero optional enrichment is valid.
+
+Do not expand a group into a generic technology curriculum.
+
+---
+
+## 7. Accepted anchor evidence
+
+### Dense `tG9K`
+
+```text
+P1.6 artifact:                    36
+Capability artifact:              11
+Capability requirements linked:   31/31
+Responsibilities linked:          8/8
+Capability explicit depth:        5/5
+All explicit depth:               6/6
+Role-level requirement indices:   [31, 32]
+Disposition:                      ACCEPTED / CURRENT
+```
+
+### Sparse `t4jp`
+
+```text
+P1.6 artifact:                    37
+Capability artifact:              12
+Capability requirements linked:   8/8
+Responsibilities linked:          0/0
+Explicit depth:                   0/0
+Role-level requirement indices:   []
+Disposition:                      ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
+```
+
+Normal public commands reuse artifacts 11/12 on their exact dependencies. Review Snapshot confirms both Capability chains current and Blueprint non-current.
+
+---
+
+## 8. Product surfaces
+
+Current surfaces include:
+
+```bash
+jobhunter jobs capability <job-id>
+```
+
+and the browser **Capability Intelligence** view.
+
+Review Snapshots can export selected current-chain Capability evidence. The complete routine public current dataset is separately projected through `corpus/`.
+
+Capability remains bounded per-job intelligence during Phase 1 and is **not** currently aggregated into Market.
+
+---
+
+## 9. Runtime policy
+
+Capability inference uses local LM Studio through Instructor/Pydantic and the configured dedicated capability model when present.
 
 Runtime policy:
 
@@ -230,195 +224,88 @@ connection establishment: bounded
 read timeout after connection: none
 transport replay: disabled
 max output tokens: bounded
-Instructor validation retry: one bounded retry
+validation retry: bounded
 ```
 
-This intentionally avoids killing legitimate long local reasoning after an arbitrary 30/120-second read deadline.
+A legitimate local generation is not killed by an arbitrary read deadline after connection.
 
 ---
 
-## 7. Independent model role
+## 10. Heterogeneous non-regression — active
 
-Configuration supports:
+Public promotion is closed, but the stack is not yet frozen as Phase-2 input. It must survive materially different role families.
 
-```toml
-capability_lm_studio_model = "..."
-```
-
-Effective model resolution:
+Current order:
 
 ```text
-dedicated capability model
-→ effective analysis model
+1. Python/software          ← tmBK active at P1.6 gate
+2. network/security
+3. operations/platform/DevOps
 ```
 
-The best strict factual extractor is not assumed to be the best capability-reasoning model.
+For each role:
 
-Model comparison must keep source, translation, accepted P1.6 artifact, prompt/schema contract, and review criteria fixed while changing the model.
+1. inspect source and English projection quality;
+2. run/reuse public English P1.6;
+3. manually accept P1.6 before Capability;
+4. run/reuse public Capability v9;
+5. verify complete requirement/responsibility coverage and provenance;
+6. verify source strength/depth/work remain correct;
+7. inspect grouping coherence;
+8. reject fabricated prerequisites, ownership, lifecycle, architecture, autonomy or mandatory strength;
+9. classify any problem as deterministic defect, model limitation, or harmless non-authoritative variation;
+10. convert repeatable deterministic defects into regression tests.
 
----
+### Current `tmBK` position
 
-## 8. CI-1 — Contract, persistence and inference core
+`tmBK` is not yet at the Capability stage. Its first persisted P1.6 artifact 38 was semantically rejected for deterministic multi-signal depth propagation and must not feed Capability. Current v20 fixes the defect and adjacent depth/coverage cases; a clean P1.6 rebuild/review is required first.
 
-**Status: implemented.**
-
-Implemented:
-
-- typed Capability contract;
-- versioned prompt/schema identity;
-- deterministic evidence catalog;
-- heading/clause evidence references for dense postings;
-- exact evidence resolution before persistence;
-- `depth_signals` model;
-- explicit/implied/inferred/unknown statuses;
-- mechanical unknown-scope normalization;
-- exact duplicate normalization;
-- bounded Instructor validation retry;
-- no arbitrary read deadline for long local generation;
-- dependency-aware persistence/reuse;
-- independent final service validation;
-- completed/failed/reused attempt history;
-- regression coverage for important evidence-reference failure classes.
+Do **not** run `jobhunter jobs capability tmBK` until its rebuilt P1.6 artifact is manually accepted.
 
 ---
 
-## 9. CI-2 — Product surfaces
+## 11. Promotion/freeze decision
 
-**Status: implemented.**
+Capability v9 is already the **promoted current public contract**. The remaining decision is not whether to return to v7/v8 or invent v10 for cosmetic prose differences.
 
-Implemented:
-
-- `jobhunter jobs capability <job-id>`;
-- browser Capability Intelligence page;
-- operation-manager integration;
-- resolved evidence display;
-- provenance/model/prompt/schema display;
-- dedicated capability model routing;
-- Review Snapshot export of the current capability chain.
-
----
-
-## 10. CI-3 — Representative semantic-quality acceptance
-
-**Status: active; not passed.**
-
-Current live cases:
-
-### `t4jp` — sparse/ambiguous posting
-
-Use to test conservative inference. The posting has limited technical evidence, so correct behavior is modest depth and explicit unknowns rather than a sophisticated invented architecture.
-
-### `tG9K` — rich semiconductor/industrial-ML posting
-
-The current v4 chain completes successfully and is reviewable in:
+After Python/software, network/security and operations/platform/DevOps pass without unresolved repeatable material defects:
 
 ```text
-review-snapshots/jobs/tG9K.json
+P1.6 v20 + Capability v9
+→ freeze as accepted Phase-2 starting input
 ```
 
-Positive evidence:
-
-- full long-posting runtime succeeds;
-- evidence references resolve correctly;
-- useful role/capability decomposition is produced;
-- unknown-scope invalid references no longer cause wasteful full retries;
-- capability artifacts are dependency-correct and reusable.
-
-Remaining quality findings:
-
-- `depth_signals` are underused despite explicit depth/experience evidence;
-- upstream P1.6 coverage/strength errors can be amplified downstream;
-- broad technical-stack membership can still become too strongly `required`;
-- optional edge/cloud wording can become overly strong operational context;
-- capability-area grouping can leak unrelated uncertainty/context into another capability;
-- some statements are useful but more certain than their evidence justifies.
-
-### CI-3 required sample
-
-Review at least five materially different jobs where possible:
-
-1. sparse/ambiguous (`t4jp` currently serves this role);
-2. rich AI/ML (`tG9K` currently serves this role);
-3. Python/software;
-4. network/security;
-5. operations/platform/DevOps.
-
-For each:
-
-- inspect P1.6 substrate first;
-- inspect useful synthesis beyond restatement;
-- inspect evidence status calibration;
-- inspect requirement-strength/depth preservation;
-- inspect decomposition and unknown boundaries;
-- inspect omissions/false inferences;
-- inspect company-context stereotypes;
-- inspect domain/tool correctness;
-- create/update a repository Review Snapshot;
-- turn repeatable deterministic failures into regression fixtures.
-
-Do not accept Capability quality when the upstream P1.6 factual artifact is known to be materially wrong.
+If heterogeneous evidence reveals a repeatable material correctness/provenance defect, fix the smallest correct deterministic/contract boundary and regression-test it. Do not vacancy-patch model prose.
 
 ---
 
-## 11. CI-4 — Model/promotion decision
+## 12. Phase-2 boundary
 
-**Status: open.**
+Only after full Phase-1 closure may JobHunter scale into canonical market intelligence:
 
-After the deterministic semantic-quality tranches and representative CI-3 sample:
+```text
+canonical concept registry
+→ reviewed aliases/mappings
+→ responsibility/deliverable families
+→ evidence-derived role archetypes
+→ corpus-scale JobCapabilityRequirementProfile
+→ Market v2
+```
 
-- decide whether the current Gemma capability reasoning is adequate;
-- if not, compare one stronger dedicated local model under the same evidence/prompt/schema;
-- select the model based on reviewed technical correctness and calibration, not eloquence;
-- freeze/revise the bounded Capability contract only after evidence;
-- document model-quality limitations that cannot be solved deterministically;
-- then return to Phase-1 closure work.
+Capability v9 grouping and deterministic source truth may inform that design. Model-owned explanatory prose is not automatically canonical Phase-2 authority.
 
-CI-4 does **not** authorize corpus-wide Phase-2 aggregation.
-
----
-
-## 12. Current acceptance criteria
-
-The bounded Capability slice is acceptable when:
-
-1. P1.6 remains the strict factual source.
-2. Capability artifacts are independently versioned/persisted.
-3. The exact English projection and P1.6 artifact dependencies are retained.
-4. Model evidence uses only JobHunter references during generation.
-5. Persisted evidence resolves to exact source text.
-6. Unsupported supported-claim evidence fails closed.
-7. Unknown scope can remain evidence-empty without wasteful retry.
-8. Explicit/implied/inferred/unknown remain distinct.
-9. Requirement strength is not systematically inflated.
-10. Depth signals are used when evidence supports them.
-11. Capability decomposition adds useful reasoning without generic curricula.
-12. Re-running unchanged dependencies reuses the artifact.
-13. At least five materially different reviewed examples support bounded promotion.
-14. Important live failure classes are regression-tested or documented as model limitations.
-15. Ruff, pytest, and warnings-as-errors are observed green on the user's environment for the accepted head.
+Blueprint output is not automatically promoted into the canonical layer.
 
 ---
 
-## 13. Known technical debt kept explicit
+## 13. Known technical debt / explicit limits
 
-The current `job_analysis_artifacts` table identity does not include `translation_artifact_id` directly in its uniqueness key. Capability Intelligence therefore follows the exact translation artifact already referenced by the accepted P1.6 artifact rather than guessing from the latest translation row.
+- The promoted bounded Capability layer is not a universal technology curriculum generator.
+- It is not yet corpus-wide canonical taxonomy.
+- It is not personal readiness/gap scoring.
+- It is not application ranking or learning-plan generation.
+- It does not make Blueprint authoritative.
+- Current Market still aggregates accepted/current English P1.6, not Capability.
+- Heterogeneous semantic stability is still under active review.
 
-Any future P1.6 identity migration must be designed/tested explicitly. Do not hide it inside semantic-quality tuning.
-
----
-
-## 14. Non-goals
-
-Do not build yet:
-
-- universal technology curricula;
-- auto-growing taxonomy;
-- corpus-wide capability aggregation;
-- personal skill/readiness scoring;
-- application ranking;
-- learning-plan generation;
-- vector/RAG infrastructure;
-- agent orchestration;
-- multi-model voting;
-- arbitrary repeated LLM repair loops;
-- domain-specific prompt-patch collections.
+Do not add vector/RAG infrastructure, agent orchestration, multi-model voting or corpus-wide generative profiles merely because Capability exists.
