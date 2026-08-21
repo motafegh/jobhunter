@@ -1,9 +1,9 @@
 # JobHunter Role Capability Blueprint Plan
 
-**Status:** Phase-1 calibration experiment concluded; implementation retained as experimental/non-authoritative  
-**Date:** 2026-08-12  
+**Status:** Phase-1 experiment concluded; retained experimental/non-authoritative; pinned to historical Capability v7 semantics  
+**Date:** 2026-08-21  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md` and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`  
-**Scope:** Record the Blueprint design boundary, experiment results, and conditions for any future reopening. Corpus-wide generation is not authorized.
+**Scope:** Record the Blueprint design boundary, experiment results, and conditions for any future reopening. Corpus-wide generation and authoritative use are not authorized.
 
 ## 1. Purpose
 
@@ -14,24 +14,22 @@ P1.6
 → strict factual extraction / evidence boundary
 
 Capability Intelligence
-→ auditable grouping/reasoning above P1.6
+→ auditable grouping/reasoning above accepted P1.6
 
 Role Capability Blueprint
 → experimental human-facing professional interpretation
 ```
 
-The intended Blueprint value is useful practitioner context beyond rereading the vacancy while keeping two categories unmistakably separate:
+The intended Blueprint value was practitioner context beyond rereading the vacancy while keeping two categories unmistakably separate:
 
 ```text
 employer/source truth
 professional inference
 ```
 
-The Phase-1 experiment shows that the current generative approach is not reliable enough to make Blueprint an accepted decision layer.
+The Phase-1 experiment showed that the current generative approach is not reliable enough to make Blueprint an accepted decision layer.
 
-## 2. Current implementation identity
-
-Retained experimental implementation:
+## 2. Retained experimental identity
 
 ```text
 prompt/runtime: role-capability-blueprint-v6
@@ -39,115 +37,82 @@ schema:         role-capability-blueprint-v5
 best bounded model tested: gemma-4-12b-it-qat
 ```
 
-Persistence identity remains:
+Blueprint v6 is intentionally **not rebased onto current Capability v9**. It remains pinned to the historical Capability v7 dependency semantics used by the experiment.
+
+Persistence identity preserves:
 
 ```text
 job detail version
 + exact English projection artifact
 + exact English P1.6 artifact
-+ exact Capability Intelligence artifact
++ exact historical Blueprint-compatible Capability artifact
 + exact Blueprint model
 + Blueprint prompt version
 + Blueprint schema version
 ```
 
-Historical identities remain immutable evidence and must not be reused for material redesigns.
+Historical identities remain immutable evidence and must not be silently reused for a material redesign.
 
 ## 3. Authority boundary
+
+Current accepted public chain:
 
 ```text
 source
 → English projection
-→ accepted P1.6 facts
-→ accepted Capability grouping/source truth
-→ experimental Blueprint professional context
+→ accepted/current P1.6 v20 facts
+→ accepted/current Capability v9 grouping/source truth
 ```
 
-No downstream layer overwrites upstream truth.
+Blueprint sits **outside** that current accepted authority chain during Phase 1:
 
-A mechanically current Blueprint artifact is not automatically semantically accepted. The `tG9K` experiment repeatedly demonstrated this distinction.
+```text
+historical Blueprint-compatible P1.6/Capability chain
+→ experimental Blueprint v6 professional context
+```
+
+No downstream layer overwrites upstream truth. A mechanically current/dependency-matching Blueprint artifact is not automatically semantically accepted.
 
 ## 4. Experiment history
 
 ### V3/v2 — structural + semantic failure
 
-E2B and E4B both confused P1.6 requirement indices with Capability-profile indices. The contract also retained streaming/cloud/edge/MLOps architecture overreach.
+E2B and E4B confused P1.6 requirement indices with Capability-profile indices. The contract also retained streaming/cloud/edge/MLOps architecture overreach.
 
 Lesson:
 
-> **The model must not own provenance bookkeeping that JobHunter can derive deterministically.**
+> The model must not own provenance bookkeeping that JobHunter can derive deterministically.
 
 ### V4/v3 — provenance success + semantic failure
 
-V4 moved Capability/P1.6 provenance into JobHunter and passed the mechanical live audit. Generated prose still invented or strengthened real-time/low-latency control, employer topology, process physics, edge placement, specific governance implementation and end-to-end lifecycle ownership.
+V4 moved Capability/P1.6 provenance into JobHunter and passed mechanical live audit. Generated prose still invented or strengthened real-time/low-latency control, employer topology, process physics, edge placement, specific governance implementation and end-to-end lifecycle ownership.
 
 Lesson:
 
-> **Correct provenance does not certify generated interpretation.**
+> Correct provenance does not certify generated interpretation.
 
 ### V5/v4 — narrower input + remaining summary failure
 
-V5 stopped feeding Capability-derived explanatory prose downstream and removed role shape, hidden requirements, tool suggestions, work products, scenarios and bottom-line generation.
-
-Live artifact 6 still described Area 2 as end-to-end infrastructure work, assumed telemetry streams, introduced automated training workflows and deployment-lifecycle scope while its uncertainty admitted ownership boundaries were unknown.
+V5 stopped feeding Capability-derived explanatory prose downstream and removed several high-risk generated surfaces. Live artifact 6 still described end-to-end infrastructure work, assumed telemetry streams, introduced automated training workflows and deployment-lifecycle scope while its own uncertainty admitted ownership boundaries were unknown.
 
 Lesson:
 
-> **A single free-form positive role-summary surface can still amplify scope beyond source evidence.**
+> A free-form positive role-summary surface can amplify scope beyond source evidence.
 
 ### V6/v5 + E4B — narrow contract but model failure
 
-V6 removed free-form role-summary generation and allowed only explicitly uncertain professional considerations and unknowns.
+V6 removed free-form role-summary generation and allowed only explicitly uncertain professional considerations and unknowns. E4B still failed bounded validation and produced assumption-bearing wording.
 
-The E4B run failed bounded Instructor validation and still introduced assumption-bearing wording.
+### V6/v5 + 12B — mechanically valid, semantically rejected
 
-### V6/v5 + 12B — mechanically valid, semantically still not acceptable
+The controlled comparison held the historical source/English/P1.6/Capability chain, Blueprint contract and review rubric fixed while changing only the Blueprint model to `gemma-4-12b-it-qat`.
 
-The controlled comparison held fixed:
-
-```text
-English projection artifact 33
-P1.6 artifact 29
-Capability artifact 9
-Blueprint v6/v5 contract
-review rubric
-```
-
-Only the Blueprint model changed to:
-
-```text
-gemma-4-12b-it-qat
-```
-
-Resulting Blueprint artifact **7** passed:
-
-```text
-scripts/audit_blueprint_v6_snapshot.py
-CI
-```
-
-Mechanical result:
-
-```text
-2 Capability areas
-25 deterministic source requirements
-7 deterministic source responsibilities
-4 professional considerations
-4 important unknowns
-2 role-level constraints
-1 role-purpose item
-```
-
-The stronger model was materially better than E4B. It avoided the rejected v5 end-to-end/lifecycle summary behavior and produced several useful grounded considerations.
-
-Complete semantic review still rejected the artifact because generated unknowns/considerations included assumption-bearing framing such as:
+Artifact 7 passed mechanical audit/CI and was materially better than the smaller model, but complete semantic review still rejected assumption-bearing framing such as:
 
 - automated APC/SPC feedback loops not established by source;
-- an assumed cloud-provider/on-prem model-hosting choice;
+- assumed cloud-provider/on-prem model-hosting choice;
 - `raw sensor physics` as role context not stated by source;
 - strict versioning of data lineage/model weights tied to unspecified quality standards.
-
-These are milder than earlier failures but still contradict the explicit semantic boundary.
 
 Decision record:
 
@@ -159,8 +124,6 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 
 Blueprint is **not accepted for Phase-1 authoritative use**.
 
-The implementation remains available because it is useful evidence and may support future research, but Phase 1 must not keep iterating on it.
-
 During Phase 1:
 
 - do not create Blueprint v7;
@@ -170,81 +133,22 @@ During Phase 1:
 - do not use Blueprint output in Market aggregation;
 - do not use Blueprint output as personal readiness evidence;
 - do not use Blueprint output as automatic recommendation/application truth;
-- do not treat current-chain status as semantic acceptance.
+- do not treat current-chain/dependency status as semantic acceptance;
+- do not rebase Blueprint v6 onto Capability v9 merely because v9 is current.
 
-Blueprint may be inspected as **non-gating experimental evidence** only.
+Blueprint may be inspected only as non-gating experimental evidence.
 
 ## 6. V6 deterministic boundary worth preserving
 
-Although v6 is not accepted as an authoritative product layer, its deterministic architecture remains the strongest Blueprint design achieved in the experiment.
+Although v6 is not an authoritative product layer, its strongest engineering lesson is the deterministic separation between source anchors and generated interpretation.
 
-### Model input
+V6 model input was narrowed to neutral role context plus exact source-grounded facts associated with the historical accepted Capability chain.
 
-V6 sends only:
+JobHunter-owned source anchors included source role purpose, capability coverage, role constraints, source requirements and source responsibilities.
 
-```text
-selected neutral role context
-source-stated role purpose
-role-level source constraints
-accepted Capability labels
-exact P1.6 requirements linked to each Capability
-exact P1.6 responsibilities linked to each Capability
-```
+The model-owned surface was reduced to bounded professional considerations and important unknowns.
 
-V6 intentionally does **not** send:
-
-```text
-Capability summary
-Capability sub-capabilities
-Capability underlying knowledge
-Capability operational prose
-long duplicated vacancy description
-company-description prose
-```
-
-### JobHunter-owned persisted source anchors
-
-```text
-source_role_purpose[]
-source_capability_coverage[]
-source_role_constraints[]
-capability_areas[].source_requirements[]
-capability_areas[].source_responsibilities[]
-```
-
-Requirement strength, explicit depth, evidence, Capability identity and source coverage remain deterministic.
-
-### Model-owned v6 surface
-
-```text
-capability_interpretations[]
-  professional_considerations[]
-    statement
-    interpretation_strength: plausible | speculative
-    uncertainty
-  important_unknowns[]
-
-overall_unknowns[]
-```
-
-There is no model-generated:
-
-```text
-practical_interpretation
-role shape
-likely depth
-hidden requirements
-tool recommendations
-work-product lists
-failure-mode lists
-end-to-end scenarios
-runtime topology
-probably-not-required list
-bottom line
-source provenance IDs
-```
-
-This boundary should be preserved as historical engineering knowledge even if a future Blueprint redesign uses a different representation.
+This architecture remains useful historical engineering knowledge even if a future Blueprint redesign uses a different representation.
 
 ## 7. Permanent inference lessons
 
@@ -270,20 +174,15 @@ Model deployment, traceability, reproducibility and governance do not prove one 
 
 ### Unknowns can smuggle assumptions
 
-Questions can overreach too. An unknown is not automatically safe merely because it is phrased as uncertainty.
-
-For example, asking for *the* cloud provider presumes cloud deployment; asking about *the* feedback-loop latency presumes a feedback loop. The safe representation must preserve the possibility that the system/choice does not exist at all.
+Questions/unknowns can overreach too. Asking for *the* cloud provider presumes cloud deployment; asking about *the* feedback-loop latency presumes a feedback loop. Safe uncertainty must preserve the possibility that the assumed system/choice does not exist.
 
 ### Optionality/depth remain exact
 
-- contextual stays contextual;
-- preferred stays preferred;
-- Python `expert` applies only to Python;
-- explicit depth does not spread to neighboring tools.
+Contextual stays contextual; preferred stays preferred; explicit depth stays scoped to the exact concept.
 
 ## 8. Runtime / implementation retained
 
-Current implementation:
+Current retained implementation includes:
 
 ```text
 src/jobhunter/role_blueprint_service.py
@@ -294,55 +193,41 @@ src/jobhunter/inference/lm_studio_runtime.py
 scripts/audit_blueprint_v6_snapshot.py
 ```
 
-Regression coverage:
-
-```text
-tests/test_role_blueprint_v6_models.py
-tests/test_role_blueprint_inference_v6.py
-tests/test_role_blueprint_service_v6.py
-tests/test_role_blueprint_service.py
-tests/test_role_blueprint_web.py
-```
-
-Current experimental Blueprint model:
-
-```text
-gemma-4-12b-it-qat
-```
-
-Runtime automatically prepares the model at an 8,192-token context and uses exclusive LLM loading so other loaded LLM instances are unloaded before the Blueprint model is prepared; embedding models are left alone.
-
-V6 completion budget remains bounded to 4,096 tokens.
-
-The browser explicitly marks Blueprint as experimental/non-authoritative.
+Regression coverage for Blueprint remains preserved. The browser must label Blueprint experimental/non-authoritative.
 
 ## 9. Reopen criteria
 
 Do not reopen Blueprint merely because another prompt wording or nearby local model is available.
 
-A future reopening requires at least one material change to the problem, for example:
+A future reopening requires a material change, for example:
 
 - heterogeneous evidence reveals a concrete user-value question P1.6 + Capability cannot answer;
-- a materially stronger/different inference approach is available;
-- deterministic or retrieval-backed professional knowledge can bound interpretation better;
-- a reviewed human-in-the-loop representation can separate source facts, professional examples and employer-specific claims safely;
+- a materially stronger/different inference approach becomes available;
+- deterministic/retrieval-backed professional knowledge can bound interpretation better;
+- a reviewed human-in-the-loop representation can safely separate source facts, professional examples and employer-specific claims;
 - later canonical Phase-2 structures provide stronger grounding than single-job generation.
 
 A reopened design must use a new prompt/schema identity and must not silently mutate v6/v5.
 
 ## 10. Current next work
 
-Blueprint calibration is no longer the active gate.
+Blueprint is **not** the active gate.
 
-Proceed with heterogeneous validation of:
+Current accepted/public semantic work proceeds through:
 
 ```text
 source
 → English projection
-→ P1.6
-→ Capability v7
+→ P1.6 v20/v5
+→ Capability v9/v5
 ```
 
-Blueprint may be observed only as research evidence during that review.
+Heterogeneous validation order:
 
-The current selected `tG9K` snapshot intentionally preserves artifact 7 as rejected experimental evidence while P1.6 artifact 29 and Capability artifact 9 remain accepted bounded anchors.
+```text
+Python/software          ← tmBK active at P1.6 rebuild/review
+network/security
+operations/platform/DevOps
+```
+
+Blueprint may be observed only as historical/research evidence. Do not generate or tune Blueprint as part of the current heterogeneous acceptance path.
