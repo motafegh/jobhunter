@@ -1,10 +1,10 @@
 # Phase 1 — Jobinja Workflow Automation Plan
 
 **Status:** Active implementation/acceptance plan  
-**Date:** 2026-08-08  
+**Date:** 2026-08-21  
 **Scope:** Phase 1  
 **Primary source:** Jobinja (`https://jobinja.ir/`)  
-**Branch policy:** Work directly on `main` unless a concrete isolation need appears.
+**Branch policy:** Work directly on `main` unless the repository owner explicitly changes this rule or a concrete isolation need is agreed first.
 
 This document is subordinate to:
 
@@ -12,7 +12,7 @@ This document is subordinate to:
 2. `docs/ROADMAP.md` for strategic sequencing;
 3. `docs/IMPLEMENTATION_PLAN.md` for product-level delivery order.
 
-`docs/EXECUTION_TODO.md` is the current working checklist. `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` is the focused sub-plan for the currently active semantic-quality acceptance tranche.
+`docs/EXECUTION_TODO.md` is the current working checklist. `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` is the focused sub-plan for the active semantic-quality acceptance tranche.
 
 ---
 
@@ -37,7 +37,7 @@ configured bilingual Jobinja coverage
 → deterministic source structure/version/check history
 → hardened English projection
 → strict factual semantic extraction
-→ bounded per-job reasoning review
+→ bounded per-job Capability Intelligence
 → truthful individual/aggregate outputs
 ```
 
@@ -60,14 +60,15 @@ A complete Phase-1 run should:
 9. retain source-check/lifecycle observations;
 10. create/reuse current English projection v2;
 11. select current analysis-ready jobs;
-12. run bounded current P1.6 English analysis;
-13. validate evidence/semantics;
-14. persist derived artifacts/attempts;
+12. run bounded current English P1.6 v20 analysis;
+13. validate evidence/semantics and persist current artifacts/attempts;
+14. allow bounded current Capability v9 generation only above accepted/current English P1.6;
 15. update per-job and first Market outputs;
-16. expose equivalent browser/CLI behavior;
-17. report requested/attempted/completed/reused/skipped/failed/remaining work honestly.
+16. refresh the repository-safe local `corpus/` projection after durable mutating work;
+17. expose equivalent browser/CLI behavior;
+18. report requested/attempted/completed/reused/skipped/failed/remaining work honestly.
 
-Capability Intelligence, Blueprint, and Review Snapshots are bounded review/acceptance layers around P1.6. They are not yet automatic corpus-wide Phase-1 stages.
+Capability Intelligence is an accepted bounded per-job Phase-1 reasoning layer but is not yet an automatic corpus-wide Market stage. Blueprint remains experimental/deferred. Review Snapshots and the public corpus are repository projections, not runtime authorities.
 
 ---
 
@@ -88,23 +89,28 @@ missing / refresh-due selection
         ↓
 detail response classification
         ↓
-Jobinja parser v2
+jobinja-detail-v2
         ↓
 semantic source version
         ↓
 fetch observation + lifecycle evidence
         ↓
-current English projection v2
+english-projection-v2
+provider: lm-studio-translation-v2
         ↓
-P1.6 English v4 factual extraction
+English P1.6 v20/v5 factual extraction
         ↓
-first Market aggregation
+Capability Intelligence v9/v5 (bounded per-job accepted layer)
+        ↓
+first Market aggregation still reads accepted/current English P1.6 only
 
-reviewed per-job branch:
-P1.6
-→ Capability Intelligence v4
-→ Role Capability Blueprint v2
-→ Review Snapshot v1
+repository-safe projections:
+current public state → jobhunter-public-corpus-v1
+selected review evidence → job-review-snapshot-v1
+
+experimental/deferred:
+historical Blueprint-compatible accepted chain
+→ Role Capability Blueprint v6/v5
 ```
 
 Google Cloud Translation remains optional external processing, not a normal dependency.
@@ -118,17 +124,20 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-P1.6 English prompt/runtime:  job-analysis-english-v9
+P1.6 English prompt/runtime:  job-analysis-english-v20
+P1.6 English schema:          job-analysis-v5
 P1.6 Original prompt/runtime: job-analysis-original-v9
-P1.6 schema:                  job-analysis-v4
+P1.6 Original schema:         job-analysis-v4
 
-Capability prompt/runtime:    job-capability-intelligence-v4
-Capability schema:            job-capability-intelligence-v2
+Capability prompt/runtime:    job-capability-intelligence-v9
+Capability schema:            job-capability-intelligence-v5
 
-Blueprint prompt/runtime:     role-capability-blueprint-v2
-Blueprint schema:             role-capability-blueprint-v1
+Blueprint prompt/runtime:     role-capability-blueprint-v6
+Blueprint schema:             role-capability-blueprint-v5
+Blueprint disposition:        deferred / non-authoritative / historical-v7-pinned
 
 Review Snapshot:              job-review-snapshot-v1
+Public Corpus:                jobhunter-public-corpus-v1
 ```
 
 Historical contracts remain preserved and non-current under changed prompt/runtime identity.
@@ -162,7 +171,7 @@ valid empty result
 
 ---
 
-## 6. Durable record boundaries
+## 6. Durable record and projection boundaries
 
 Keep separate:
 
@@ -178,10 +187,27 @@ Capability Intelligence Artifact / Attempt
 Role Blueprint Artifact / Attempt
 JobUserWorkflow
 Browser WebOperation
+Market aggregate
+Public Corpus projection
 Review Snapshot export
+Raw evidence
 ```
 
-Review Snapshots are generated repository-review artifacts. They are **not** runtime inputs and do not replace SQLite/raw evidence.
+Runtime/history authority:
+
+```text
+data/jobhunter.sqlite3
++ local raw evidence
+```
+
+Repository projections:
+
+```text
+corpus/            complete current repository-safe public dataset
+review-snapshots/  selected semantic-review evidence
+```
+
+Neither repository projection replaces SQLite or becomes a runtime write authority.
 
 ---
 
@@ -253,18 +279,21 @@ Rules:
 - native English passes through without model translation;
 - Persian-containing units translate through isolated provider calls;
 - v1 is never silently relabeled;
-- corrupt/malformed output fails rather than becoming current.
+- corrupt/malformed output fails rather than becoming current;
+- translation is derived convenience data and may block downstream analysis when materially mistranslated during review.
+
+The first heterogeneous candidate `tI1n` is a concrete example of a source whose English projection was manually blocked from P1.6 because a material source phrase was mistranslated. That evidence is a translation-quality issue, not permission for P1.6 to compensate for bad upstream meaning.
 
 ---
 
 ## 10. P1.6 factual semantic boundary
 
-Current P1.6 is prompt/runtime v9 with persisted schema v4.
+Current public English P1.6 is:
 
 ```text
 English projection
-→ job-analysis-english-v9
-→ job-analysis-v4 persisted facts
+→ job-analysis-english-v20
+→ job-analysis-v5 persisted facts
 ```
 
 Original-language analysis remains independent:
@@ -275,61 +304,102 @@ original source
 → job-analysis-v4
 ```
 
-Current v9/v4 protections include:
+Current v20/v5 protections include:
 
-- evidence-reference IDs in production;
-- heading-aware long-description segmentation;
-- clause-level evidence references;
-- exact source-text resolution before persistence;
-- rich-source empty-analysis rejection;
+- evidence-reference IDs and exact source-text resolution before persistence;
+- source-led bounded partitions so one repair cannot silently replace another valid partition;
+- rich-source complete requirement/responsibility accounting;
+- structured source-skill survival;
 - mixed-strength atomicity rules;
 - source preference wording required for `preferred` claims;
 - obligation strength separated from technical depth;
-- deterministic requirement and duty coverage ledgers;
-- exact concept-scoped `depth_signal` persistence;
-- no arbitrary read deadline for long local generation after connection;
-- bounded Instructor retry and fail-closed final validation.
+- concept-specific explicit depth and experience-extent handling;
+- qualification-vs-duty separation;
+- fail-closed evidence/ontology/decomposition rules;
+- no arbitrary read deadline for valid long local generation after connection;
+- bounded validation retries;
+- deterministic final reconciliation.
+
+Accepted opposite-end anchors:
+
+```text
+tG9K artifact 36 — 33 requirements / 8 responsibilities / 0 role purpose
+t4jp artifact 37 —  8 requirements / 0 responsibilities / 0 role purpose
+```
+
+Both are accepted/current under v20/v5.
+
+### Heterogeneous hardening already learned from `tmBK`
+
+The first Python/software anchor `tmBK` (detail 44, English projection 38) has exposed real repeatable v20 edge cases:
+
+- `Sufficient knowledge` is a valid explicit employer depth phrase; plain `knowledge` remains non-depth.
+- Multi-level evidence cannot canonicalize every concept to the first marker; supplied item-specific depth is preserved.
+- If multi-level evidence has no item-specific depth signal, validation fails closed rather than borrowing another concept's marker.
+- `Ability to effectively use AI ...` expresses application/manner, not technical depth; the exact signal is cleared only when its evidence contains no genuine depth marker.
+- A coverage reference already positively extracted cannot also remain as a redundant exclusion for the exact same reference.
+
+The first persisted `tmBK` P1.6 artifact 38 was semantically rejected because Linux, SQL/NoSQL, OOP/modular design, and locking/concurrency/transactions inherited `Mastery` incorrectly. It must not feed Capability. No downstream Capability artifact was created from it.
+
+The current next live P1.6 action is a clean rebuild of `tmBK` under the corrected v20 implementation followed by complete manual semantic review.
 
 P1.6 remains factual. It must not manufacture a technical curriculum merely because a technology is named.
-
-### Current acceptance state
-
-`tG9K` artifact 29 is the accepted P1.6 substrate: 7 responsibilities, 27 requirements, all 28 requirement inputs accounted for, and all 8 duty inputs accounted for. The next gate is downstream Capability calibration against this artifact.
 
 See `docs/SEMANTIC_ANALYSIS.md` and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
 
 ---
 
-## 11. Bounded Capability/Blueprint acceptance branch
+## 11. Capability Intelligence v9 boundary
 
-These layers exist because strict factual extraction and useful career interpretation have different uncertainty contracts.
+Capability v9 is the accepted/current bounded per-job reasoning layer above accepted English P1.6.
 
-```text
-accepted English P1.6
-→ Capability Intelligence v4
-→ Role Capability Blueprint v2
-```
-
-They are manually reviewed per job and excluded from current automatic Market aggregation.
-
-Current live examples:
+Architecture:
 
 ```text
-t4jp  sparse/ambiguous source case
-tG9K  rich semiconductor/industrial-ML case
+accepted P1.6 source truth
+→ compact semantic capability-group plan
+→ bounded exact source-fact assignment
+→ bounded optional per-group reasoning
+→ deterministic source-link injection
+→ deterministic reconciliation
+→ persisted Capability v9/v5
 ```
 
-`tG9K` is committed as a repository review artifact:
+Authority split:
 
 ```text
-review-snapshots/jobs/tG9K.json
+AUTHORITATIVE SOURCE TRUTH → STRICT
+PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
+MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
+OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 ```
 
-CI-3 remains open. Review materially different Python/software, network/security, and operations/platform jobs before promotion.
+Accepted/current artifacts:
+
+```text
+tG9K → P1.6 36 → Capability 11
+t4jp → P1.6 37 → Capability 12
+```
+
+Permanent rules include complete capability-relevant requirement/responsibility coverage, deterministic source strength/depth/work, role-level education/duration-only experience separation, anti-collapse protection on dense sources, optionality protection, and blocking/filtering of unsupported ownership/lifecycle/autonomy/architecture claims.
+
+Capability v9 promotion is operationally closed, but heterogeneous review must still prove that the promoted behavior generalizes across materially different role families before the stack is frozen as Phase-2 input.
+
+Do not run Capability for a heterogeneous anchor until that anchor's current P1.6 artifact has been manually accepted.
 
 ---
 
-## 12. Review Snapshot workflow
+## 12. Blueprint and Review Snapshot boundaries
+
+### Blueprint
+
+Blueprint v6/v5 is implemented for research/inspection but is **deferred and non-authoritative** during Phase 1.
+
+It remains pinned to historical Capability v7 semantics and must not feed Market, personal readiness, recommendations, or other authoritative decisions.
+
+Do not create Blueprint v7 or resume nearby tuning during the current heterogeneous gate.
+
+### Review Snapshot
 
 Normal command:
 
@@ -343,19 +413,46 @@ Default output:
 review-snapshots/jobs/<job-id>.json
 ```
 
-The live SQLite database remains local/ignored.
+Snapshots intentionally include public source + current review-relevant derived chain and exclude raw model protocol, HTML contents, secrets, SQLite internals, and future private user state.
 
-Snapshots intentionally include public source + current review-relevant derived artifact chain and exclude raw model protocol, HTML contents, secrets, SQLite internals, and future private user state.
-
-### Integrated model routing accepted
-
-The integrated `jobhunter jobs snapshot` CLI and standalone exporter both pass effective model-role arguments into the exporter.
-
-The regenerated `tG9K` snapshot records explicit configured models, accepted E4B P1.6 artifact 29, and dependency-current Capability artifact 7. Artifact 7 is retained for negative B3 review but is not semantically accepted. Blueprint is omitted because the existing artifact belongs to the older chain.
+Current-chain status proves dependency currentness, not semantic acceptance.
 
 ---
 
-## 13. User triage and acquisition priority
+## 13. Complete public corpus
+
+The public-corpus gate is **operationally closed**.
+
+Contract:
+
+```text
+jobhunter-public-corpus-v1
+```
+
+Accepted real publication baseline:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+Important interpretation:
+
+```text
+344 known/discovered jobs != 344 fully fetched advertisements
+```
+
+Discovery-only identities remain useful with `current_detail: null`; only fetched/parsed jobs are eligible heterogeneous anchors.
+
+Normal mutating CLI and completed browser operations refresh local `corpus/` after durable SQLite work. Projection failure surfaces but never rolls back SQLite. Git commit/push remains explicit.
+
+---
+
+## 14. User triage and acquisition priority
 
 User workflow remains separate from source truth:
 
@@ -373,16 +470,16 @@ Acquisition priority is not fit/readiness/recommendation.
 
 ---
 
-## 14. First Market layer
+## 15. First Market layer
 
-Current Market aggregates accepted/current **English P1.6** artifacts under the selected contract.
+Current Market aggregates accepted/current **English P1.6** artifacts under the selected current contract.
 
 It does not aggregate Capability or Blueprint yet.
 
 Before Phase-1 Market acceptance:
 
 - expose exact analyzed-current sample size;
-- preserve source/filter scope;
+- preserve source/filter/contract scope;
 - keep requirement-strength semantics honest;
 - warn on small/concentrated samples;
 - avoid duplicate claim inflation when metric semantics are per-job;
@@ -390,7 +487,7 @@ Before Phase-1 Market acceptance:
 
 ---
 
-## 15. Partial-success semantics
+## 16. Partial-success semantics
 
 For multi-stage workflows expose where applicable:
 
@@ -412,48 +509,49 @@ Browser and CLI must agree on the underlying semantics.
 
 ---
 
-## 16. Current delivery state
+## 17. Current delivery state
 
 | Increment | State |
 |---|---|
-| P1.0 repository alignment | Accepted foundation; current docs being reconciled again after semantic v4 work |
-| P1.1 discovery | Accepted foundation |
-| P1.2 bounded repeat-safe discovery | Accepted foundation |
-| P1.3 detail acquisition | Core implemented; remaining failure/lifecycle acceptance pending |
+| P1.0 repository alignment | Accepted foundation; current docs reconciled with promoted semantic stack |
+| P1.1/P1.2 discovery | Accepted foundation |
+| P1.3 detail acquisition | Core implemented; remaining source/lifecycle acceptance pending |
 | P1.4 parser | Accepted foundation |
-| P1.4 translation v2 | Implemented and actively used; broader corpus/model quality still bounded by acceptance scope |
+| P1.4 translation v2 | Implemented/current; heterogeneous translation quality remains reviewable per anchor |
 | P1.5 semantic versions/observations | Accepted foundation |
 | P1.5 lifecycle/triage/priority | Implemented; remaining acceptance pending |
-| P1.6 factual analysis prompt v9 / schema v4 | Implemented; tG9K SQ-1 accepted |
-| Capability Intelligence v4 | Implemented bounded per-job slice; CI-3 open |
-| Role Blueprint v2 | Implemented bounded per-job slice; semantic-quality acceptance open |
-| Review Snapshot v1 | Implemented; integrated model routing and selected `tG9K` live export accepted |
+| P1.6 English v20/v5 | Promoted/current; dense+sparse accepted; heterogeneous review active |
+| Capability Intelligence v9/v5 | Promoted/current; dense+sparse accepted; heterogeneous review active |
+| Role Blueprint v6/v5 | Implemented experimental; Phase-1 deferred/non-authoritative |
+| Review Snapshot v1 | Accepted current-chain routing |
+| Public Corpus v1 | Implemented, populated, verified, published, remotely available |
 | P1.7 Market/run/reporting | Partial implementation / closure acceptance pending |
 
 ---
 
-## 17. Current exact execution order
+## 18. Current exact execution order
 
-Do not restart the old August-3 checklist from the beginning. Continue from the current repository state:
+Do not restart historical semantic-calibration checklists. Continue from the actual repository state:
 
 ```text
-1. harden P1.6 coverage / obligation / depth on tG9K
-2. rebuild/review tG9K P1.6
-3. calibrate/rebuild Capability
-4. calibrate/rebuild Blueprint
-5. compare a stronger dedicated reasoning model if Gemma remains inadequate
-6. complete CI-3 representative review using snapshots
-7. stop expanding the semantic slice once accepted
-8. return to Market/source/lifecycle/partial-success/P1.7 closure
-9. close Phase 1
-10. only then begin corpus-wide Phase 2
+1. rebuild and fully review tmBK P1.6 under current v20
+2. if accepted, run/review Capability v9 for tmBK and close Python/software anchor
+3. select/review network/security anchor
+4. select/review operations/platform/DevOps anchor
+5. if no unresolved repeatable material defect remains, freeze P1.6 v20 + Capability v9 as Phase-2 input
+6. complete Market truthfulness acceptance
+7. complete source/lifecycle acceptance
+8. complete partial-success semantics
+9. complete P1.7 report/run/browser acceptance
+10. close Phase 1
+11. only then begin corpus-wide Phase 2
 ```
 
 The operational details live in `docs/EXECUTION_TODO.md`.
 
 ---
 
-## 18. Phase-1 closure after semantic acceptance
+## 19. Phase-1 closure after semantic acceptance
 
 Remaining closure areas include:
 
@@ -470,21 +568,21 @@ Remaining closure areas include:
 
 ---
 
-## 19. Explicit non-claims
+## 20. Explicit non-claims
 
 Phase 1 is not complete.
 
 JobHunter does not yet claim:
 
 - complete lifecycle/repost resolution;
-- production-quality semantic extraction across all roles;
-- production-quality Capability/Blueprint reasoning across all roles;
+- semantic acceptance across all target role families;
 - canonical Phase-2 taxonomy;
-- corpus-wide inferred capability aggregation;
+- corpus-wide job capability requirement profiles;
 - full-market truth from a bounded Jobinja sample;
 - reviewed personal evidence/gaps/readiness;
 - career/application recommendations;
 - arbitrary-web ingestion;
 - generic source-plugin platform;
 - autonomous applications;
-- evaluated RAG/agent authority.
+- evaluated RAG/agent authority;
+- authoritative Blueprint reasoning.
