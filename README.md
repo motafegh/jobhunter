@@ -103,6 +103,8 @@ role purpose:      0
 
 The accepted contract preserves structured source skills, optionality, experience/education constraints, qualification-vs-duty separation, and exact source depth without spreading one adjective across neighboring technologies.
 
+Heterogeneous validation is now exercising the same promoted contract against materially different role shapes. The active Python/software anchor is `tmBK` (Python Developer; source detail 44; English projection artifact 38). Its first persisted P1.6 artifact was rejected during manual review because a deterministic validator bug spread the first depth marker in a dense evidence segment to unrelated concepts. The rejected artifact does not feed Capability. Current v20 hardening on `main` also covers `Sufficient knowledge`, multi-level evidence fail-closed behavior, non-depth `effectively use ...` wording, and redundant coverage-exclusion filtering. The next live step is to rebuild and review `tmBK` P1.6 before any Capability run.
+
 ## Capability Intelligence v9
 
 Capability v9 separates semantic grouping from authoritative source bookkeeping:
@@ -167,6 +169,19 @@ corpus/
 The corpus preserves current public Jobinja source fields—including original Persian/English text—and current successful translation/P1.6/Capability outputs with exact artifact/dependency/model/contract identities.
 
 It deliberately excludes SQLite files, raw HTML evidence, machine-local evidence paths, model request/raw protocol responses, prompts, secrets, logs/configuration, and future private/personal state.
+
+The real published/verified baseline is:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+`344` therefore means known/discovered identities, not 344 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection.
 
 Commands:
 
@@ -263,11 +278,11 @@ Browser and CLI share the same durable application state and service boundaries.
 ```text
 P1.6 v20/v5 promoted/closed
 → Capability v9/v5 promoted/closed
-→ complete public-corpus projection implemented
-→ real local corpus backfill + verify + Git publish
-→ heterogeneous Python/software review
+→ public corpus operationally closed / remotely available
+→ Python/software heterogeneous validation (tmBK active)
 → network/security review
 → operations/platform/DevOps review
+→ freeze P1.6 + Capability as Phase-2 input if heterogeneous acceptance passes
 → Market/source/lifecycle/partial-success/P1.7 closure
 → Phase-1 closure
 → only then corpus-wide Phase 2
