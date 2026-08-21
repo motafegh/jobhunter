@@ -1,6 +1,7 @@
 # JobHunter Product Specification
 
 **Status:** Current product definition  
+**Date:** 2026-08-21  
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
@@ -60,9 +61,9 @@ implementation / tests / live acceptance
 
 ## 4. Current operating experience
 
-The browser application can currently support the Jobinja-centered repeated workflow through implemented Phase-1 surfaces:
+The browser application and CLI currently support a substantial Jobinja-centered repeated workflow through shared Phase-1 services:
 
-1. inspect current corpus and pipeline coverage;
+1. inspect current local corpus and pipeline coverage;
 2. inspect the configured bilingual search catalog and generated bounded plan;
 3. start bounded Jobinja discovery/sync operations;
 4. browse/filter local jobs using human-readable source/workflow states;
@@ -72,16 +73,26 @@ The browser application can currently support the Jobinja-centered repeated work
 8. refresh/fetch missing or due job details;
 9. translate/repair one job or a bounded eligible queue using current translation-v2 rules;
 10. run the deterministic parser audit;
-11. run bounded evidence-backed P1.6 semantic analysis for eligible jobs;
-12. inspect per-job responsibilities/requirements and their exact source evidence;
-13. inspect the first Market aggregation over current analysis artifacts;
-14. inspect search-effectiveness/provenance information;
-15. inspect long-running browser-operation state/results;
-16. use the same underlying services through CLI paths for advanced operation/debugging.
+11. run/reuse promoted evidence-backed English P1.6 v20 analysis for eligible jobs;
+12. inspect per-job responsibilities/requirements, exact evidence, requirement strength and explicit depth;
+13. run/reuse promoted bounded Capability Intelligence v9 above accepted/current English P1.6;
+14. inspect Capability source truth, grouping, source coverage/provenance and bounded reasoning;
+15. inspect the first Market aggregation over accepted/current English P1.6 artifacts;
+16. inspect search-effectiveness/provenance information;
+17. inspect long-running browser-operation state/results;
+18. generate selected Review Snapshots for semantic-review evidence;
+19. export/verify/status the complete repository-safe public corpus;
+20. use the repository public corpus for remote inspection and heterogeneous role selection without direct local SQLite access.
 
-Several newer Phase-1 capabilities are **implemented but remain acceptance-pending**. The master and Phase-1 plans define the exact live acceptance sequence.
+Current semantic layers are not all at the same acceptance level:
 
-One failed search, posting, parser, translation, semantic-analysis or UI operation must not invalidate successful durable work from the rest of a bounded run.
+- English P1.6 v20/v5 is promoted/current and accepted on dense+sparse opposite-end anchors;
+- Capability v9/v5 is promoted/current and operationally closed on those anchors;
+- heterogeneous role-family validation is active before those promoted layers are frozen as Phase-2 input;
+- Blueprint v6/v5 remains experimental/deferred and non-authoritative;
+- Market/source/lifecycle/partial-success/P1.7 closure gates remain open.
+
+One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
 ## 5. Current inputs
 
@@ -139,29 +150,83 @@ Only after explicit design/policy promotion:
 
 The English corpus is derived convenience data and never replaces original employer text.
 
-### 6.3 Semantic-analysis outputs — implemented, acceptance pending
+### 6.3 P1.6 factual semantic outputs — promoted/current
 
-P1.6 can produce versioned model-derived artifacts containing:
+Current public English contract:
 
-- role purpose;
+```text
+job-analysis-english-v20 / job-analysis-v5
+```
+
+Current public original-language contract:
+
+```text
+job-analysis-original-v9 / job-analysis-v4
+```
+
+P1.6 produces versioned model-derived but strictly evidence-validated artifacts containing:
+
+- role purpose when actually stated;
 - responsibilities;
 - requirements;
 - requirement strength: required / preferred / contextual / inferred;
 - concept type;
+- explicit concept-scoped depth/experience-extent signal when supported;
 - confidence;
-- exact original-source evidence excerpt;
+- exact source evidence/provenance;
 - rationale for inferred concepts;
-- exact model/prompt/schema identity;
-- retained structured request and raw provider response;
+- exact model/prompt/schema/dependency identity;
+- retained structured request/raw provider response in local runtime history where required by the contract;
 - completed/failed/reused operational attempt state.
 
 A material claim whose evidence cannot be validated against authoritative employer fields must not become an accepted analysis artifact.
 
-P1.6 is intentionally not yet the fine-grained job capability/depth model. It supplies the accepted responsibilities, requirements and evidence that Phase 2 will use to build that model.
+Accepted opposite-end anchors currently prove dense and sparse behavior:
 
-### 6.4 Market outputs — first implementation, not yet Phase-2 canonical market intelligence
+```text
+tG9K → P1.6 artifact 36 → accepted/current
+t4jp → P1.6 artifact 37 → accepted/current
+```
 
-The current Market surface can aggregate accepted/current P1.6 artifacts for bounded sample inspection. It may show:
+Heterogeneous non-regression is active on materially different roles. Repeatable deterministic implementation defects are converted into regression tests; harmless model wording variation does not justify endless contract churn.
+
+P1.6 is intentionally not the final Phase-2 fine-grained job capability requirement profile. It supplies accepted factual responsibilities/requirements/evidence that later canonical market intelligence can build on.
+
+### 6.4 Capability Intelligence v9 — promoted/current bounded per-job reasoning
+
+Current public contract:
+
+```text
+job-capability-intelligence-v9 / job-capability-intelligence-v5
+```
+
+Capability v9 groups accepted P1.6 source truth into coherent capability areas while keeping source survival deterministic.
+
+It preserves:
+
+- complete capability-relevant requirement coverage;
+- complete responsibility coverage;
+- exact source indices/evidence;
+- deterministic source requirement strength;
+- deterministic source-explicit depth;
+- deterministic source work activities;
+- role-level education/duration-only experience separation;
+- bounded optional model enrichment;
+- filtering/blocking of unsupported ownership/lifecycle/autonomy/architecture or optionality inflation;
+- exact P1.6/translation/model/prompt/schema dependency identity.
+
+Accepted current anchors:
+
+```text
+tG9K → P1.6 36 → Capability 11
+t4jp → P1.6 37 → Capability 12
+```
+
+Capability is not yet used by current Market aggregation and is not yet authorized for corpus-wide Phase-2 profile generation.
+
+### 6.5 Market outputs — first implementation, not yet Phase-2 canonical market intelligence
+
+The current Market surface can aggregate accepted/current English P1.6 artifacts for bounded sample inspection. It may show:
 
 - analyzed sample size;
 - responsibility-claim counts;
@@ -171,13 +236,46 @@ The current Market surface can aggregate accepted/current P1.6 artifacts for bou
 
 This layer is **not yet** a reviewed canonical taxonomy, duplicate-adjusted market model or complete-labor-market claim.
 
-### 6.5 Browser outputs
+### 6.6 Repository-safe public corpus and selected review exports
+
+Runtime/history authority remains local SQLite and raw evidence.
+
+The complete current repository-safe public projection is:
+
+```text
+corpus/  → jobhunter-public-corpus-v1
+```
+
+Accepted publication baseline:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+The corpus deliberately excludes raw HTML, machine-local evidence paths, SQLite/WAL/SHM, raw model protocol, prompts/secrets/logs/local config, and future personal/private state.
+
+Selected semantic-review evidence is separately exported as:
+
+```text
+review-snapshots/ → job-review-snapshot-v1
+```
+
+Neither projection becomes runtime authority.
+
+### 6.7 Browser outputs
 
 - dashboard/coverage metrics;
 - guided bounded operations;
 - Quick Add intake for approved Jobinja inputs;
 - filtered job catalog;
-- source/English/analysis job detail views;
+- source/English/P1.6 job detail views;
+- Capability Intelligence views;
+- experimental Blueprint review views clearly separated from authority;
 - source-check/lifecycle state;
 - search-catalog/profile/pack views;
 - first Market view;
@@ -192,8 +290,10 @@ Never conflate:
 original employer/source text      authoritative market evidence
 deterministic parsed source fields source-derived
 English projection                 translation-derived convenience
-semantic analysis                  model-derived interpretation
-job capability requirement profile future evidence-qualified job interpretation
+P1.6 semantic analysis             strict model-derived factual interpretation
+Capability v9 source truth         deterministic accepted-fact survival/group linkage
+Capability model enrichment        bounded subordinate reasoning
+job capability requirement profile future evidence-qualified Phase-2 interpretation
 canonical taxonomy                 reviewed/derived mapping
 market aggregate                   deterministic aggregate of accepted derived claims
 user triage                         local workflow state
@@ -284,7 +384,7 @@ Durable semantic analysis must:
 - use versioned prompt/schema/provider/model identity;
 - retain raw structured request/response evidence where required by the contract;
 - separate analysis from translation/source truth;
-- require exact original-source evidence for material claims;
+- require exact source evidence for material claims;
 - validate evidence locally;
 - reject unsupported/hallucinated evidence;
 - keep uncertain claims omitted/reviewable rather than guessed;
@@ -294,7 +394,7 @@ Durable semantic analysis must:
 
 Semantic analysis must preserve required, preferred, contextual and inferred distinctions. Inferred concepts require an explicit rationale plus source evidence.
 
-Future refinements such as requirement depth/criticality must not weaken the current strength distinction.
+Requirement strength and technical depth must remain distinct dimensions.
 
 ### FR-11A: Job capability requirement and depth intelligence
 
@@ -414,25 +514,48 @@ Structured/keyword queries remain preferred while sufficient. Embeddings/RAG, mu
 
 ## 10. Current capability state
 
-### 10.1 Accepted foundation
+### 10.1 Accepted/current foundation
 
-Live-accepted foundations include the local app, repeat-safe bounded Jobinja discovery, raw evidence preservation, parser-v2/semantic source version foundations, fetch observations/refresh selection, browser operation foundations and historically proven local translation architecture.
+Current accepted/current foundations include:
 
-Exact current acceptance details are maintained in `IMPLEMENTATION_PLAN.md` and the Phase-1 plan.
+- local Python modular monolith;
+- SQLite runtime/history state + immutable raw evidence;
+- repeat-safe bounded Jobinja discovery;
+- `jobinja-detail-v2` and semantic source-version/check separation;
+- browser + CLI shared services;
+- current translation-v2 / English projection architecture;
+- promoted English P1.6 v20/v5 and original P1.6 v9/v4 routing;
+- promoted Capability Intelligence v9/v5;
+- Review Snapshot v1 current-chain routing;
+- deterministic repository-safe public corpus v1 and remote publication;
+- deterministic CI gates.
 
-### 10.2 Implemented / acceptance pending
+### 10.2 Implemented but acceptance/closure still pending
 
-Current implementation includes but must not over-claim until the controlling gates pass:
+Current implementation includes but must not over-claim until the remaining controlling gates pass:
 
 - source-response classification and cautious lifecycle logic;
-- translation-v2 and migration/repair path;
 - user triage/acquisition priority;
-- P1.6 evidence-backed analysis;
-- first per-job semantic analysis views;
 - first Market aggregation;
-- expanded bounded browser workflow actions.
+- expanded bounded browser workflow actions;
+- heterogeneous P1.6/Capability generalization beyond dense+sparse accepted anchors;
+- final partial-success semantics and P1.7 run/report/browser closure.
 
-### 10.3 Planned next product layers
+Blueprint is implemented but deliberately **deferred/non-authoritative**, not merely pending acceptance.
+
+### 10.3 Current active gate
+
+Heterogeneous semantic review is active in this order:
+
+```text
+1. Python/software          ← tmBK active
+2. network/security
+3. operations/platform/DevOps
+```
+
+`tmBK` has already produced useful regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, and contradictory coverage exclusions. Its first persisted candidate artifact was semantically rejected and is not allowed to feed Capability. The next step is a clean P1.6 rebuild/review before any Capability generation.
+
+### 10.4 Planned next product layers
 
 After Phase 1 acceptance:
 
@@ -452,9 +575,9 @@ Until their respective acceptance gates pass, JobHunter must not claim:
 
 - complete lifecycle/repost/duplicate resolution;
 - production-quality translation-v2 across all future source/language cases;
-- production-quality semantic extraction across all role types;
+- semantic acceptance across all role types;
 - reviewed canonical market taxonomy;
-- reliable fine-grained job capability/sub-capability/depth profiles;
+- reliable corpus-scale fine-grained job capability/sub-capability/depth profiles;
 - exact technical scope from vague employer adjectives or isolated technology mentions;
 - full-market conclusions from a bounded/source-biased corpus;
 - duplicate-adjusted mature market statistics;
@@ -466,7 +589,8 @@ Until their respective acceptance gates pass, JobHunter must not claim:
 - mature longitudinal trend conclusions;
 - arbitrary-web ingestion;
 - generic third-party source plugin support;
-- evaluated RAG/career assistant as an authority layer.
+- evaluated RAG/career assistant as an authority layer;
+- authoritative Role Capability Blueprint output.
 
 ## 12. Explicit exclusions
 
