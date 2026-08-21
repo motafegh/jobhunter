@@ -1,7 +1,7 @@
 # JobHunter Master Implementation Plan
 
 **Status:** Controlling product-level implementation plan  
-**Date:** 2026-08-12
+**Date:** 2026-08-21
 
 ## 1. Purpose and authority
 
@@ -53,6 +53,7 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 - Do not build future infrastructure before demonstrated need.
 - Do not infer personal capability/readiness before reviewed personal evidence exists.
 - Do not keep shrinking or prompt-patching a model-derived layer indefinitely when repeated bounded evidence shows it is not reliable enough for the current phase; preserve the evidence, defer the layer, and continue with accepted upstream contracts.
+- Once a public semantic layer has passed bounded acceptance and promotion, reopen it only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency, not cosmetic model wording variation.
 
 ---
 
@@ -67,12 +68,14 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 | Phase 4 | Explainable decisions/action/application readiness | Planned |
 | Phase 5 | Sustained operation, trends, recovery, quality | Planned |
 
-A bounded per-job Capability/Blueprint slice was implemented before Phase-1 closure to evaluate whether P1.6 is a useful substrate and to establish later capability/interpretation boundaries. That experiment has now produced two different dispositions:
+A bounded per-job semantic slice was intentionally implemented before Phase-1 closure to prove safe authority boundaries above P1.6. Its current dispositions are:
 
-- Capability v7 is bounded-accepted and proceeds to heterogeneous review;
-- Blueprint is implemented but not Phase-1 accepted and is deferred from the Phase-1 critical path after repeated v3→v6/model evidence.
+- English P1.6 v20/v5: promoted/current and bounded-accepted on opposite-end dense/sparse anchors;
+- Capability Intelligence v9/v5: promoted/current and operationally closed on the same accepted anchors;
+- Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
+- heterogeneous role-family validation: active before the promoted P1.6 + Capability stack may be frozen as Phase-2 input.
 
-This does **not** authorize Phase-2 corpus-wide generation, taxonomy growth, Market-v2 aggregation, or personal scoring.
+This does **not** authorize Phase-2 corpus-wide generation, taxonomy growth, Market-v2 aggregation, personal scoring, or authoritative Blueprint use.
 
 ---
 
@@ -81,7 +84,7 @@ This does **not** authorize Phase-2 corpus-wide generation, taxonomy growth, Mar
 Current strong foundations include:
 
 - local Python modular monolith;
-- SQLite structured state + immutable raw evidence;
+- SQLite structured runtime/history authority + immutable raw evidence;
 - browser + CLI shared services/state;
 - bounded repeat-safe bilingual Jobinja discovery;
 - stable logical job identity and discovery provenance;
@@ -89,16 +92,19 @@ Current strong foundations include:
 - semantic source versions separate from source checks;
 - classified source outcomes and cautious lifecycle logic;
 - user triage separate from source truth;
-- hardened `english-projection-v2` architecture;
+- hardened `english-projection-v2` architecture using `lm-studio-translation-v2`;
 - local LM Studio structured inference boundary;
-- P1.6 Instructor/Pydantic factual extraction infrastructure;
+- promoted P1.6 v20/v5 factual extraction infrastructure;
+- promoted Capability Intelligence v9/v5 with deterministic source truth and bounded model reasoning;
+- deferred/non-authoritative Blueprint v6/v5 experimental evidence;
 - first Market aggregation over accepted/current English P1.6;
-- bounded per-job Capability Intelligence persistence/surface;
-- bounded experimental Role Capability Blueprint persistence/surface;
 - independent analysis/capability/blueprint model roles;
-- repository Review Snapshot export.
+- Review Snapshot v1 current-chain export;
+- deterministic repository-safe public corpus `jobhunter-public-corpus-v1`;
+- real public-corpus backfill/publish/remote verification;
+- deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 
-Historical translation-v1 remains preserved but non-current.
+Historical translation-v1, P1.6 contracts, Capability v7/v8, and Blueprint experiment artifacts remain preserved for reproducibility but are not current public contracts.
 
 Phase 1 is not closed until the remaining acceptance gates below pass.
 
@@ -106,21 +112,23 @@ Phase 1 is not closed until the remaining acceptance gates below pass.
 
 ## 5. Current contract identities
 
-Accepted/current Phase-1 semantic contracts:
+Accepted/current Phase-1 contracts:
 
 ```text
 parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6 prompt/runtime:  job-analysis-english-v9
+English P1.6 prompt/runtime:  job-analysis-english-v20
+English P1.6 schema:          job-analysis-v5
 Original P1.6 prompt/runtime: job-analysis-original-v9
-P1.6 schema:                  job-analysis-v4
+Original P1.6 schema:         job-analysis-v4
 
-Capability prompt/runtime:    job-capability-intelligence-v7
-Capability schema:            job-capability-intelligence-v4
+Capability prompt/runtime:    job-capability-intelligence-v9
+Capability schema:            job-capability-intelligence-v5
 
 Review Snapshot:              job-review-snapshot-v1
+Public Corpus:                jobhunter-public-corpus-v1
 ```
 
 Experimental/non-authoritative Blueprint contract:
@@ -128,7 +136,15 @@ Experimental/non-authoritative Blueprint contract:
 ```text
 Blueprint prompt/runtime:     role-capability-blueprint-v6
 Blueprint schema:             role-capability-blueprint-v5
-best bounded model tested:    gemma-4-12b-it-qat
+```
+
+Blueprint remains pinned to historical Capability v7 dependency semantics and is not current on accepted Capability v9 chains.
+
+Accepted/current opposite-end anchors:
+
+```text
+tG9K: P1.6 artifact 36 → Capability artifact 11
+t4jp: P1.6 artifact 37 → Capability artifact 12
 ```
 
 Historical prompt/runtime identities remain historical and must not be reused for material redesigns.
@@ -155,73 +171,110 @@ docs/EXECUTION_TODO.md
 
 Accepted behavior:
 
-- integrated `jobhunter jobs snapshot` passes effective analysis/capability/blueprint model roles into the exporter;
-- deterministic routing tests cover all three roles;
+- integrated `jobhunter jobs snapshot` preserves effective model/dependency identities;
+- deterministic routing tests cover analysis/capability/blueprint roles;
 - dependency-current status is represented explicitly;
-- current-chain status is not treated as semantic acceptance.
+- current-chain status is not treated as semantic acceptance;
+- accepted dense/sparse anchors resolve Capability artifacts 11/12 against P1.6 artifacts 36/37;
+- Blueprint remains non-current on those accepted v9 chains.
 
-### P1-A1 — P1.6 factual coverage / optionality / depth — bounded accepted on `tG9K`
+### P1-A1 — P1.6 factual coverage / optionality / depth — promoted / closed
 
-P1.6 is the factual substrate.
+P1.6 is the strict factual substrate.
 
-Bounded acceptance requires and `tG9K` demonstrates:
+Accepted public contract:
+
+```text
+English:  job-analysis-english-v20 / job-analysis-v5
+Original: job-analysis-original-v9 / job-analysis-v4
+```
+
+Bounded acceptance anchors:
+
+```text
+tG9K — dense
+P1.6 artifact 36
+33 requirements
+8 responsibilities
+0 role purpose
+semantic disposition: PASS WITH ACCEPTABLE DIFFERENCE
+
+t4jp — sparse
+P1.6 artifact 37
+8 requirements
+0 responsibilities
+0 role purpose
+semantic disposition: PASS
+```
+
+Permanent P1.6 invariants include:
 
 - responsibilities are not confused with candidate qualifications;
 - meaningful explicit requirements on dense postings are not silently omitted;
-- evidence is exact selected-representation source text;
+- sparse postings remain restrained;
+- evidence/provenance is exact and source-grounded;
 - employer optionality is preserved;
-- explicit technical depth is preserved separately from obligation strength;
-- one depth adjective does not spread to neighboring technologies;
-- structured experience/education signals are retained;
-- unsupported facts remain omitted/rejected.
+- obligation strength remains separate from technical depth;
+- one depth adjective cannot spread to neighboring concepts;
+- structured skills cannot silently disappear;
+- structured experience/education constraints are retained;
+- unsupported facts remain omitted/rejected;
+- deterministic coverage/reconciliation may correct bookkeeping, but must not invent source semantics.
 
-Current dense anchor:
+The public contract remains promoted while heterogeneous validation probes for repeatable material defects. A defect found during heterogeneous review is fixed in the current v20 implementation with regression coverage; this does not automatically imply a new public prompt/schema version when the public semantic contract itself is unchanged.
 
-```text
-English P1.6 artifact 29
-27 requirements
-7 responsibilities
-```
+### P1-A2 — Capability Intelligence v9 — promoted / operationally closed
 
-The four-way P1.6 requirement enum (`required`, `preferred`, `contextual`, `inferred`) may be revised only if heterogeneous reviewed evidence demonstrates that mixed/unspecified employer wording cannot be represented truthfully.
-
-### P1-A2 — Capability Intelligence calibration — bounded accepted on `tG9K`
-
-Accepted baseline:
+Accepted public contract:
 
 ```text
-job-capability-intelligence-v7
-schema job-capability-intelligence-v4
-Capability artifact 9
+job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 
-Bounded acceptance evidence:
+Authority split:
 
-- deterministic source partition and complete `source_truth`;
-- 25/25 capability-relevant requirements linked;
-- 7/7 responsibilities linked;
-- all 27 requirements and six explicit depth facts retained in source truth;
-- role-level education/experience-duration constraints remain role-level;
-- coherent multi-profile grouping rather than one catch-all profile;
-- JobHunter-owned requirement strength, source depth, and source work;
-- no positive ownership/independence synthesis;
-- no cross-capability synthesis.
+```text
+AUTHORITATIVE SOURCE TRUTH → STRICT
+PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
+MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
+OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
+```
 
-Freeze v7 unless heterogeneous evidence reveals a repeatable material correctness defect.
+Accepted dense anchor (`tG9K`, artifact 11 on P1.6 36):
 
-### P1-A3 — Role Capability Blueprint calibration — experiment concluded / Phase-1 deferred
+- 31/31 capability-relevant requirements linked;
+- 8/8 responsibilities linked;
+- 5/5 capability-explicit depth represented;
+- 6/6 all explicit depth represented;
+- role-level indices `[31, 32]` retained separately;
+- semantic disposition accepted/current.
+
+Accepted sparse anchor (`t4jp`, artifact 12 on P1.6 37):
+
+- 8/8 capability-relevant requirements linked;
+- 0/0 responsibilities;
+- no fabricated explicit depth;
+- role-level indices empty;
+- semantic disposition accepted with acceptable differences/current.
+
+Historical v7 remains reproducible but its promoted-chain rebuild was rejected. Historical v8 staging proved better coverage mechanics but was semantically rejected for depth/ownership/lifecycle/optionality inflation. Do not reopen either architecture as the current public path.
+
+Capability v9 remains promoted while heterogeneous role-family review checks that the same source-truth and reasoning boundaries hold outside the original two anchors.
+
+### P1-A3 — Role Capability Blueprint — experiment concluded / Phase-1 deferred
 
 Blueprint must not be accepted merely because provenance or JSON validation succeeds.
 
-The bounded experiment tested v3→v6 across E2B, E4B and 12B local models. Deterministic provenance was successfully moved outside model control, and later contracts progressively reduced generated surface area. The best bounded candidate, v6/v5 artifact 7 with `gemma-4-12b-it-qat`, passed its mechanical audit and CI but still produced assumption-bearing unknowns/considerations that violated the explicit semantic boundary.
+The bounded v3→v6/model experiment demonstrated that deterministic provenance can be made safe, but the remaining professional interpretation still introduced unsupported assumptions beyond vacancy authority.
 
 Therefore:
 
 - Blueprint is **not accepted as a Phase-1 decision layer**;
-- its implementation and artifacts remain inspectable experimental evidence;
+- its implementation and historical artifacts remain inspectable experimental evidence;
 - no Blueprint v7, nearby model shopping, validator weakening, or vacancy-specific prompt patching is authorized during Phase 1;
 - Blueprint does not feed Market, personal readiness, recommendations, or other authoritative Phase-1 outputs;
-- it may be revisited later only when a materially different grounding/inference approach or demonstrated product-value gap changes the problem.
+- Blueprint v6 remains pinned to historical Capability v7 dependency semantics;
+- it may be revisited only after a materially different grounding approach or demonstrated product-value gap changes the problem.
 
 Decision record:
 
@@ -229,42 +282,97 @@ Decision record:
 docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 ```
 
-This disposition satisfies the original Phase-1 purpose of the bounded Blueprint slice: the project has learned the safe deterministic boundary and has evidence that current single-job generative professional interpretation is not reliable enough to block Phase-1 closure.
+### P1-A4 — Public corpus — operationally closed
 
-### P1-A4 — Controlled model-role comparison — completed for current Blueprint question
-
-Controlled comparisons held source semantic version, English projection, accepted P1.6, accepted Capability, Blueprint contract, and review rubric fixed while changing only the relevant Blueprint model.
-
-The v6 E4B→12B comparison showed a real quality improvement but did not remove the remaining semantic-boundary failure. Do not build multi-model voting and do not continue adjacent model shopping during Phase 1.
-
-### P1-A5 — Representative CI-3 heterogeneous sample — active next gate
-
-Use materially different jobs where possible:
+Runtime/history authority remains local SQLite. The repository-safe current public projection is:
 
 ```text
+jobhunter-public-corpus-v1
+```
+
+Accepted publication baseline:
+
+```text
+Known/discovered jobs:       344
+Fetched/parsed job details:   43
+English projections:          33
+English P1.6:                  2
+Original P1.6:                 0
+Capabilities:                  2
+```
+
+Important interpretation:
+
+```text
+344 known/discovered jobs != 344 complete advertisements
+```
+
+The corpus was backfilled from the real local DB, verified, safety-scanned, intentionally committed/pushed, remotely inspected, and its coverage terminology was hardened to distinguish known/discovered jobs from fetched/parsed details. The public corpus is now available for remote heterogeneous anchor selection and later public-data analysis.
+
+Git publication remains intentional; runtime correctness never depends on GitHub/network availability.
+
+### P1-A5 — Representative heterogeneous semantic review — active
+
+Use materially different fetched/parsed jobs:
+
+```text
+accepted baselines:
 t4jp  sparse/ambiguous
-tG9K  rich AI/ML industrial baseline
-+ Python/software
-+ network/security
-+ operations/platform
+tG9K  rich AI/ML industrial
+
+active/new families:
+1. Python/software
+2. network/security
+3. operations/platform/DevOps
 ```
 
-Review the accepted chain:
+The first Python/software anchor is:
 
 ```text
-source
-→ English projection
-→ P1.6
-→ Capability v7
+tmBK — Python Developer
+source detail version:       44
+English projection artifact: 38
+P1.6 public contract:        v20/v5
 ```
 
-Blueprint may be observed only as non-gating research evidence.
+`tmBK` has already exposed several repeatable deterministic P1.6 edge cases:
 
-For each role review factual coverage, strength/depth/evidence calibration, Capability source truth, requirement/responsibility coverage, grouping coherence, role-level partition, and optionality preservation.
+1. `Sufficient knowledge` was initially missing from accepted explicit employer depth vocabulary while plain `knowledge` correctly remains non-depth.
+2. A multi-level evidence segment (`Mastery`, `Familiarity`, `Sufficient knowledge`) was incorrectly canonicalized to the first marker; v20 now preserves the item-specific supplied source depth and fails closed if multi-level evidence lacks item-specific depth.
+3. `Ability to effectively use AI ...` was model-supplied as depth even though it expresses application/manner rather than proficiency; v20 now clears that exact non-depth signal only when the evidence contains no real depth marker.
+4. The model could positively extract a coverage reference while also redundantly excluding the same reference; v20 now removes only that contradictory redundant exclusion.
 
-Repeatable deterministic failures become tests. Model limitations are documented separately.
+The first persisted `tmBK` P1.6 artifact 38 is **semantically rejected** and must not feed Capability. It was not published as an accepted corpus artifact and no Capability downstream was created.
 
-**P1-A is done when:** P1.6 + Capability v7 are accepted across the bounded heterogeneous sample with no unresolved repeatable material correctness defect. Blueprint is explicitly excluded from this Phase-1 acceptance requirement by the P1-A3 defer decision above.
+Current next live sequence:
+
+```text
+synchronize local main
+→ rebuild tmBK P1.6 under current v20 implementation
+→ inspect all requirements/responsibilities/coverage/depth against source
+→ accept or fix only a repeatable deterministic defect
+→ only if P1.6 is accepted, run Capability v9 on tmBK
+→ audit Capability source truth/grouping/optionality/inference
+→ close Python/software anchor
+→ select network/security anchor
+→ select operations/platform/DevOps anchor
+```
+
+For every heterogeneous role review:
+
+- factual coverage and exact evidence;
+- required/preferred/contextual strength;
+- concept-specific explicit depth;
+- role-level constraints;
+- qualification-vs-duty separation;
+- Capability complete requirement/responsibility coverage and provenance;
+- grouping coherence without catch-all collapse;
+- no fabricated prerequisites, responsibilities, ownership, lifecycle, architecture, autonomy, or mandatory strength;
+- deterministic defect vs local-model limitation vs harmless non-authoritative variation.
+
+Repeatable deterministic failures become regression tests. Harmless model wording variation does not justify a contract change.
+
+**P1-A is done when:** promoted P1.6 v20 + Capability v9 remain semantically acceptable across the bounded heterogeneous sample with no unresolved repeatable material correctness defect. Blueprint is explicitly excluded from this Phase-1 acceptance requirement.
 
 ---
 
@@ -281,7 +389,7 @@ After P1-A is acceptable:
 - employer/role concentration warning where appropriate;
 - coverage and semantic quality remain separate concepts.
 
-Capability and Blueprint do not enter Market yet.
+Capability and Blueprint do not enter current Market aggregation yet.
 
 ---
 
@@ -363,7 +471,7 @@ Phase 1 closes only when:
 - partial-success semantics are honest;
 - final run/report/browser paths are accepted;
 - current documentation matches actual accepted state;
-- accepted P1.6 + Capability contract is explicitly identified as Phase-2 input.
+- accepted P1.6 + Capability contract is explicitly identified/frozen as Phase-2 input.
 
 No corpus-wide Phase-2 work before closure.
 
@@ -416,7 +524,7 @@ Do not force titles into a predeclared role taxonomy.
 
 ## 14. P2.3 Corpus-scale capability requirement profiles
 
-Promote the bounded per-job Capability contract into reviewed canonical market relationships.
+Promote the accepted factual substrate and bounded Capability grouping/source-truth lessons into reviewed canonical market relationships.
 
 For material capabilities preserve where supported:
 
@@ -437,7 +545,7 @@ For material capabilities preserve where supported:
 
 Do not reduce this to one beginner/intermediate/advanced number.
 
-Blueprint-generated interpretation is not automatically promoted into this canonical layer. Any later professional interpretation must have its own reviewed grounding contract.
+Capability v9 grouping and deterministic source truth may inform Phase-2 design, but model-owned explanatory prose is not automatically canonical authority. Blueprint-generated interpretation is not automatically promoted into this layer. Any later professional interpretation requires its own reviewed grounding contract.
 
 ---
 
@@ -538,7 +646,7 @@ PHASE_1_JOBINJA_AUTOMATION_PLAN.md
 → active Phase-1 detail
 
 SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
-→ current heterogeneous semantic-quality sub-gate
+→ active heterogeneous semantic-quality sub-gate
 
 EXECUTION_TODO.md
 → exact current operational checklist
