@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-16  
+**Date:** 2026-08-21  
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
 **Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
@@ -34,6 +34,7 @@ Status vocabulary:
 - [x] deterministic CI gate: Ruff + full pytest + warnings-as-errors.
 - [x] targeted `jobhunter jobs analyze <id>` command.
 - [x] P1.6 v20 implementation/calibration stack consolidated into `main`.
+- [x] Capability v9 public/current facade and promotion.
 - [x] version-controlled public corpus projection `jobhunter-public-corpus-v1`.
 
 ## B. Semantic-quality gate
@@ -75,6 +76,8 @@ Original: job-analysis-original-v9 / job-analysis-v4
 - [x] normal `jobhunter jobs analyze tG9K` reuses artifact 36.
 - [x] normal `jobhunter jobs analyze t4jp` reuses artifact 37.
 - [x] operational P1.6 v20 promotion complete.
+
+Promoted does not mean unchangeable implementation code: heterogeneous review may still expose repeatable deterministic defects. Fix those with regression tests without inventing a new public contract unless the contract itself changes materially.
 
 ### B3 — Capability Intelligence v9 — PROMOTED / CLOSED
 
@@ -150,38 +153,25 @@ corpus/                      complete current public Git projection
 review-snapshots/            curated semantic-review evidence
 ```
 
-Implementation:
+Implementation/acceptance:
 
 - [x] deterministic `src/jobhunter/public_corpus.py` exporter.
 - [x] `corpus/manifest.json` whole-corpus index.
 - [x] one UTF-8 job directory per known Jobinja identity.
 - [x] `source.json` preserves current public parsed Persian/English vacancy fields when detail exists.
-- [x] discovery-only identities are represented with `current_detail: null`.
-- [x] current `english-projection.json` export.
-- [x] current `p16-english.json` and `p16-original.json` exports.
-- [x] current public `capability.json` export.
-- [x] artifact/dependency/model/prompt/schema identities preserved.
-- [x] raw model request/response protocol excluded.
-- [x] raw HTML/local evidence paths/secrets/logs/config/private state excluded.
-- [x] stale downstream files removed after a source-version change until rebuilt.
-- [x] stale job directories prunable on full export.
+- [x] discovery-only identities use `current_detail: null`.
+- [x] current English projection/P1.6/Capability stage exports.
+- [x] exact artifact/dependency/model/prompt/schema identities preserved.
+- [x] raw model protocol, raw HTML, machine-local paths, secrets/logs/config/private state excluded.
+- [x] stale downstream files removed after source changes until rebuilt.
 - [x] exact DB↔corpus deterministic verification.
-- [x] `jobhunter-corpus export` command.
-- [x] `jobhunter-corpus verify` command.
-- [x] `jobhunter-corpus status` command.
-- [x] normal mutating CLI commands refresh corpus after durable local work.
-- [x] browser background operations refresh corpus through shared post-success hook.
+- [x] `jobhunter-corpus export`, `verify`, and `status` commands.
+- [x] normal mutating CLI and completed browser operations refresh local corpus after durable work.
 - [x] corpus failure surfaces without rolling back SQLite.
 - [x] no automatic Git commit/push.
-- [x] deterministic tests cover UTF-8, privacy exclusions, dependencies, stale cleanup, tampering, CLI routing, browser hook, and coverage terminology.
-- [x] implementation CI 893 PASS.
-
-Real backfill/publish acceptance:
-
-- [x] pulled latest `main` locally and reinstalled editable package.
-- [x] `jobhunter-corpus export` completed against real `data/jobhunter.sqlite3`.
-- [x] `jobhunter-corpus verify` PASS for all 344 known jobs.
-- [x] exact exported coverage recorded:
+- [x] deterministic tests cover Unicode, privacy, dependencies, stale cleanup, tampering, routing, browser hook, and coverage terminology.
+- [x] real DB backfill completed and `jobhunter-corpus verify` passed for 344 known jobs.
+- [x] exact publication baseline recorded:
 
 ```text
 Known/discovered jobs:       344
@@ -195,49 +185,120 @@ Corpus size:                ~3.6 MiB
 ```
 
 - [x] public-data safety scan clean.
-- [x] accepted tG9K dependency chain verified: detail 40 → translation 33 → P1.6 36 → Capability 11.
-- [x] accepted t4jp dependency chain verified: detail 41 → translation 34 → P1.6 37 → Capability 12.
+- [x] accepted tG9K chain: detail 40 → translation 33 → P1.6 36 → Capability 11.
+- [x] accepted t4jp chain: detail 41 → translation 34 → P1.6 37 → Capability 12.
 - [x] full corpus committed/pushed in `15dbfa3636bbf7118de79683beec3e7ac4a6359d`.
-- [x] remote `corpus/manifest.json` and job directories verified from GitHub.
-- [x] remote tG9K/t4jp artifacts verified.
+- [x] remote manifest/job directories and accepted anchors verified.
 - [x] publication CI 902 PASS.
-- [x] reporting ambiguity fixed: `Known/discovered jobs` is distinct from `Fetched/parsed job details`.
-- [x] terminology regression test added.
-- [x] reporting hardening head `91f1d7edc1cebd2fd8c1fb01b4e2b04163807153` passed CI 904.
+- [x] coverage terminology hardened: known/discovered jobs distinguished from fetched/parsed details.
 - [x] public-corpus operational availability CLOSED.
 
 Permanent interpretation:
 
 ```text
-344 known/discovered jobs
-!=
-344 fully fetched advertisements
+344 known/discovered jobs != 344 fully fetched advertisements
 ```
 
-Only jobs with a non-null current fetched/parsed detail are eligible for downstream semantic-review anchors. Discovery-only entries remain useful for acquisition planning and corpus identity/history.
+Only jobs with a non-null current fetched/parsed detail are eligible downstream semantic-review anchors.
 
-Record:
+### B6 — Heterogeneous live review — ACTIVE
 
-```text
-docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
-corpus/README.md
-```
+Order:
 
-### B6 — Heterogeneous live review — ACTIVE NEXT GATE
-
-Use the remote corpus to choose materially different **fetched/parsed** jobs:
-
-- [ ] Python/software role.
+- [~] Python/software role — `tmBK` active.
 - [ ] network/security role.
 - [ ] operations/platform/DevOps role.
-- [ ] for each role, verify current source detail and P1.6 dependency/source truth first.
-- [ ] verify Capability complete source coverage/provenance.
-- [ ] review required/preferred/contextual optionality and explicit depth calibration.
-- [ ] verify no fabricated responsibilities, role constraints, prerequisites, ownership, lifecycle, architecture, or autonomy.
-- [ ] distinguish deterministic defects from acceptable model variation/local-model limitations.
-- [ ] convert repeatable deterministic defects into fixtures.
-- [ ] avoid contract changes for harmless non-authoritative wording differences.
 - [ ] decide whether promoted P1.6 + Capability are stable enough to freeze as Phase-2 input.
+
+#### B6A — Python/software `tmBK`
+
+Current upstream:
+
+```text
+job:                       tmBK — Python Developer
+source detail:             44
+English projection:        38
+P1.6 contract:             job-analysis-english-v20 / job-analysis-v5
+analysis model:            gemma-4-e4b-it-ud
+```
+
+Selection/source checks:
+
+- [x] selected from fetched/parsed corpus rather than discovery-only titles.
+- [x] materially different from dense industrial-ML and sparse content anchors.
+- [x] source contains real backend/software skills and multiple explicit depth levels.
+- [x] source contains no genuine explicit responsibility section; qualification-vs-duty restraint is therefore a key test.
+- [x] separate candidate `tI1n` blocked before P1.6 because its English projection materially mistranslated source meaning.
+
+Deterministic defects already found/fixed:
+
+- [x] accept exact `Sufficient knowledge` as employer depth while plain `knowledge` remains non-depth.
+- [x] regression test for the boundary above.
+- [!] first persisted `tmBK` P1.6 artifact 38 semantically rejected: multi-signal evidence incorrectly propagated `Mastery` to `Familiarity`/`Sufficient knowledge` concepts.
+- [x] v20 now preserves item-specific supplied depth rather than the first marker in the evidence block.
+- [x] v20 fails closed when multi-level evidence has no item-specific depth signal.
+- [x] exact tmBK-style multi-signal regression coverage added; CI 911 PASS.
+- [x] `Ability to effectively use AI ...` recognized as application wording, not technical depth, when evidence contains no genuine depth marker.
+- [x] fail-closed behavior retained if real depth appears in the same evidence.
+- [x] regression coverage added; CI 914 PASS.
+- [x] redundant coverage exclusion removed only when the same reference is positively represented.
+- [x] genuine exclusions preserved.
+- [x] regression coverage added; CI 916 PASS.
+
+Artifact/current state:
+
+- [x] rejected P1.6 artifact 38 must not feed Capability.
+- [x] no Capability artifact was created from rejected artifact 38.
+- [x] failed later rebuild attempt persisted no new P1.6 artifact.
+- [~] local rebuild under current head still required.
+
+Exact next steps:
+
+- [ ] synchronize local checkout to current `main`.
+- [ ] run `jobhunter jobs analyze tmBK`.
+- [ ] inspect complete rebuilt P1.6 artifact before Capability.
+- [ ] verify Python/Django = `Mastery` where represented by narrative depth.
+- [ ] verify DRF/FastAPI = `Mastery`.
+- [ ] verify Git = `Familiarity` where represented by narrative depth.
+- [ ] verify Linux = `Familiarity`.
+- [ ] verify SQL/NoSQL = `Familiarity`.
+- [ ] verify OOP/modular design = `Sufficient knowledge`.
+- [ ] verify locking/concurrency/transaction management = `Familiarity`.
+- [ ] verify AI usage has no technical depth signal.
+- [ ] verify responsibilities remain empty unless supported by genuine duty evidence.
+- [ ] verify teamwork/learning/problem-solving/ownership/follow-through/product participation remain source-grounded requirements, not fabricated duties.
+- [ ] verify coverage is complete and non-contradictory.
+- [ ] accept/reject rebuilt `tmBK` P1.6 semantically.
+- [ ] only after P1.6 acceptance, run `jobhunter jobs capability tmBK`.
+- [ ] verify Capability complete source coverage/provenance, grouping, source strength/depth/work, and no fabricated prerequisite/ownership/lifecycle/architecture/autonomy claims.
+- [ ] close Python/software anchor.
+
+#### B6B — network/security
+
+- [ ] select a fetched/parsed candidate from remote corpus after B6A closes.
+- [ ] review source→English quality before P1.6.
+- [ ] review P1.6 then Capability in that order.
+- [ ] stress protocol/tool/certification/incident/monitoring/operational-duty semantics without importing generic security expectations.
+
+#### B6C — operations/platform/DevOps
+
+- [ ] select a fetched/parsed candidate after B6B.
+- [ ] review source→English quality before P1.6.
+- [ ] review P1.6 then Capability in that order.
+- [ ] stress CI/CD, Linux/cloud/container/orchestration/monitoring/availability/incident/production/ownership wording while blocking unsupported architecture/lifecycle/autonomy inflation.
+
+Per-role permanent checks:
+
+- [ ] P1.6 factual coverage/provenance.
+- [ ] required/preferred/contextual optionality.
+- [ ] concept-specific explicit depth.
+- [ ] role-level constraints.
+- [ ] no fabricated responsibilities.
+- [ ] Capability complete requirement/responsibility coverage and provenance.
+- [ ] no fabricated prerequisites, ownership, lifecycle, architecture, autonomy, or mandatory strength.
+- [ ] deterministic defect vs acceptable model variation/local-model limitation distinguished.
+- [ ] repeatable deterministic defects converted into fixtures.
+- [ ] no contract change for harmless non-authoritative wording differences.
 
 ## C. Phase-1 closure after heterogeneous semantic acceptance
 
