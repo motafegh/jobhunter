@@ -4,7 +4,7 @@
 **Date:** 2026-08-23
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
-**Current focused plan:** `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
+**Current focused plan:** `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
 
 Repository workflow rule:
 
@@ -357,7 +357,7 @@ canonical concept registry
 
 Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, personal readiness scoring, learning-plan generation, application ranking, autonomous applications, vector/RAG infrastructure, generic plugin framework, and multi-model voting.
 
-### D1 — P2.1A registry foundation
+### D1 — P2.1A registry foundation — ACCEPTED
 
 - [x] versioned typed concept/category/status contract.
 - [x] SQLite concepts, aliases, and job-claim mappings.
@@ -366,10 +366,30 @@ Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, per
 - [x] current accepted P1.6 dependency boundary.
 - [x] deterministic offline tests and migration proof.
 
-### D2 — P2.1B manual CLI workflow
+### D2 — P2.1B manual CLI workflow — ACCEPTED
 
-- [ ] list/show/add/deprecate concepts.
-- [ ] add reviewed aliases with provenance.
-- [ ] list accepted-current P1.6 claims and mapping state.
-- [ ] record mapped/unmapped/rejected decisions with meaningful review notes.
-- [ ] preserve idempotency and immutable prior decisions.
+- [x] list/show/add/deprecate concepts.
+- [x] add reviewed aliases with provenance.
+- [x] list accepted-current P1.6 claims and mapping state.
+- [x] record mapped/unmapped/rejected decisions with meaningful review notes.
+- [x] preserve idempotency and immutable prior decisions.
+- [x] complete local `ruff check .`, `pytest`, and `pytest -W error` acceptance gate passed on 2026-08-23.
+
+### D3 — P2.1C read-only and review browser surfaces — ACTIVE NEXT
+
+- [ ] registry overview and filters.
+- [ ] concept detail with aliases and source-backed job mappings.
+- [ ] accepted-current pending/unmapped review queue.
+- [ ] CSRF-protected bounded manual concept/alias/mapping decisions.
+- [ ] structured links from existing operations where useful.
+- [ ] CLI/browser review mutations share the same canonical-registry service contract.
+- [ ] deterministic browser/service tests plus Ruff/full-pytest/warnings-as-errors acceptance.
+
+### D4 — P2.1D small seed and P2.1 acceptance — BLOCKED ON D3
+
+- [ ] deliberately small cross-role seed from the five accepted chains.
+- [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one education/credential or experience signal.
+- [ ] inspect every seed decision against exact accepted P1.6 evidence.
+- [ ] verify rerun/idempotency and stale-dependency behavior on the accepted seed.
+- [ ] decide separately whether any repository-safe registry projection is warranted after privacy/source review.
+- [ ] close P2.1 only when every focused-plan acceptance criterion is satisfied.
