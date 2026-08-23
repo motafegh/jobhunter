@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ concept.preferred_label }} · Registry · JobHunter{% endblock %}
+{% block heading %}{{ concept.preferred_label }}{% endblock %}
+{% block eyebrow %}Canonical concept · {{ concept.concept_id }}{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/registry">Back to registry</a><a class="button primary" href="/registry/claims?state=pending">Review claims</a>{% endblock %}
+
+{% block content %}
+{% if notice %}<section class="panel compact-panel"><p class="muted">{{ notice }}</p></section>{% endif %}
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Reviewed identity</p><h2>{{ concept.concept_id }}</h2></div><span class="badge {% if concept.status == 'active' %}good{% else %}warn{% endif %}">{{ concept.status }}</span></div>
+  <div class="detail-grid">
+    <div><span class="detail-label">Category</span><strong>{{ concept.category.replace('_', ' ') }}</strong></div>
+    <div><span class="detail-label">Preferred label</span><strong>{{ concept.preferred_label }}</strong></div>
+    <div><span class="detail-label">Created</span><strong class="mono-small">{{ concept.created_at }}</strong></div>
+    <div><span class="detail-label">Updated</span><strong class="mono-small">{{ concept.updated_at }}</strong></div>
+  </div>
+  {% if concept.description %}<p>{{ concept.description }}</p>{% endif %}
+  <p class="muted">Review note: {{ concept.review_note }}</p>
+  {% if concept.successor_concept_id %}<p>Successor: <a href="/registry/concepts/{{ concept.successor_concept_id }}">{{ concept.successor_concept_id }}</a></p>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Reviewed wording</p><h2>Aliases</h2></div></div>
+  {% if aliases %}
+  <div class="table-wrap"><table class="job-table"><thead><tr><th>Alias</th><th>Status</th><th>Provenance</th><th>Review</th></tr></thead><tbody>
+    {% for alias in aliases %}<tr><td>{{ alias.alias_text }}<div class="technical-ref">{{ alias.normalized_alias }}</div></td><td><span class="badge {% if alias.status == 'active' %}good{% else %}warn{% endif %}">{{ alias.status }}</span></td><td>{{ alias.provenance_kind }}<div class="technical-ref">{{ alias.provenance_reference }}</div></td><td>{{ alias.review_note }}</td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No reviewed aliases.</div>{% endif %}
+
+  {% if concept.status == 'active' %}
+  <form class="quick-add-form" method="post" action="/registry/concepts/{{ concept.concept_id }}/aliases">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label><span>Alias wording</span><input name="alias_text" required maxlength="240" placeholder="Exact reviewed wording"></label>
+    <label><span>Provenance</span><select name="provenance" required>{% for item in provenance_kinds %}<option value="{{ item }}">{{ item.replace('_', ' ') }}</option>{% endfor %}</select></label>
+    <label><span>Reference</span><input name="reference" required maxlength="500" placeholder="review:... or exact accepted claim reference"></label>
+    <label class="quick-add-input"><span>Review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this alias is accepted"></label>
+    <div class="form-action"><button class="button primary" type="submit">Add reviewed alias</button></div>
+  </form>
+  {% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Source-backed correspondence</p><h2>Job claim mappings</h2></div></div>
+  {% if review_error %}<p class="muted">Currentness unavailable: {{ review_error }}</p>{% endif %}
+  {% if mappings %}
+  <div class="table-wrap"><table class="job-table"><thead><tr><th>Job / claim</th><th>Source wording</th><th>Current</th><th>Review</th></tr></thead><tbody>
+    {% for item in mappings %}
+    <tr>
+      <td><a href="/jobs/{{ item.mapping.source_job_id }}">{{ item.mapping.source_job_id }}</a><div class="technical-ref">artifact {{ item.mapping.analysis_artifact_id }} · {{ item.mapping.claim_kind }}[{{ item.mapping.claim_index }}]</div></td>
+      <td>{{ item.mapping.source_text }}</td>
+      <td><span class="badge {% if item.current %}good{% else %}warn{% endif %}">{% if item.current %}current{% else %}historical{% endif %}</span></td>
+      <td>{{ item.mapping.review_note }}<div class="technical-ref">{{ item.mapping.reviewed_at }}</div></td>
+    </tr>
+    {% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="empty-state">No reviewed job claims map to this concept.</div>{% endif %}
+</section>
+
+{% if concept.status == 'active' %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Historical state</p><h2>Deprecate concept</h2></div><span class="badge warn">Immutable history</span></div>
+  <p class="muted">Deprecation preserves prior mappings. A successor is optional and must belong to the same category.</p>
+  <form class="quick-add-form" method="post" action="/registry/concepts/{{ concept.concept_id }}/deprecate">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label><span>Successor</span><select name="successor_concept_id"><option value="">No successor</option>{% for item in successors %}<option value="{{ item.concept_id }}">{{ item.preferred_label }} · {{ item.concept_id }}</option>{% endfor %}</select></label>
+    <label class="quick-add-input"><span>Review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this concept is being deprecated"></label>
+    <div class="form-action"><button class="button ghost" type="submit">Deprecate concept</button></div>
+  </form>
+</section>
+{% endif %}
+{% endblock %}
