@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Claim review · Registry · JobHunter{% endblock %}
+{% block heading %}Registry claim review{% endblock %}
+{% block eyebrow %}Accepted/current P1.6 facts awaiting explicit canonical decisions{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/registry">Registry overview</a>{% endblock %}
+
+{% block content %}
+{% if notice %}<section class="panel compact-panel"><p class="muted">{{ notice }}</p></section>{% endif %}
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Review boundary</p><h2>Exact source-backed claims</h2></div><span class="badge">Immutable decisions</span></div>
+  <p class="muted">Only accepted/current English P1.6 claims appear here. A mapping records reviewed correspondence to a canonical concept; it never changes the original employer wording or claim evidence.</p>
+</section>
+
+<section class="panel compact-panel">
+  <form class="filter-bar extended-filter" method="get" action="/registry/claims">
+    <label class="search-field"><span class="sr-only">Job ID</span><input type="search" name="job_id" value="{{ job_id }}" placeholder="Jobinja reference…"></label>
+    <label><span class="sr-only">Claim kind</span><select name="kind"><option value="">All claim kinds</option>{% for item in claim_kinds %}<option value="{{ item }}" {% if kind == item %}selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+    <label><span class="sr-only">Mapping state</span><select name="state">{% for item in mapping_states %}<option value="{{ item }}" {% if state == item %}selected{% endif %}>{{ item.replace('_', ' ') }}</option>{% endfor %}</select></label>
+    <button class="button primary" type="submit">Filter</button><a class="button ghost" href="/registry/claims?state=pending">Pending queue</a>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Current review queue</p><h2>{{ items|length }} claims</h2></div></div>
+  {% if items %}
+    {% for item in items %}
+    <article class="panel compact-panel">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow"><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · artifact {{ item.analysis_artifact_id }}</p>
+          <h3>{{ item.claim_kind }}[{{ item.claim_index }}] · {{ item.source_text }}</h3>
+        </div>
+        <span class="badge {% if item.mapping_state == 'mapped' %}good{% elif item.mapping_state == 'rejected' %}bad{% elif item.mapping_state == 'unmapped' %}warn{% endif %}">{{ item.mapping_state }}</span>
+      </div>
+      <div class="detail-grid">
+        {% if item.concept_type %}<div><span class="detail-label">P1.6 concept type</span><strong>{{ item.concept_type }}</strong></div>{% endif %}
+        {% if item.strength %}<div><span class="detail-label">Requirement strength</span><strong>{{ item.strength }}</strong></div>{% endif %}
+        {% if item.depth_signal %}<div><span class="detail-label">Explicit depth</span><strong>{{ item.depth_signal }}</strong></div>{% endif %}
+        <div><span class="detail-label">Translation artifact</span><strong>{{ item.translation_artifact_id }}</strong></div>
+      </div>
+      {% if item.evidence %}<p><strong>Evidence:</strong> {{ item.evidence }}</p>{% endif %}
+
+      {% if item.mapping %}
+        <p><strong>Reviewed disposition:</strong> {{ item.mapping.disposition }}{% if item.mapping.canonical_concept_id %} → <a href="/registry/concepts/{{ item.mapping.canonical_concept_id }}">{{ item.mapping.canonical_concept_id }}</a>{% endif %}</p>
+        <p class="muted">{{ item.mapping.review_note }} · {{ item.mapping.reviewed_at }}</p>
+      {% else %}
+        {% set concepts = responsibility_concepts if item.claim_kind == 'responsibility' else active_concepts %}
+        {% if concepts %}
+        <form class="quick-add-form" method="post" action="/registry/claims/decide">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="job_id" value="{{ item.source_job_id }}">
+          <input type="hidden" name="kind" value="{{ item.claim_kind }}">
+          <input type="hidden" name="claim_index" value="{{ item.claim_index }}">
+          <input type="hidden" name="disposition" value="mapped">
+          <label><span>Canonical concept</span><select name="canonical_concept_id" required>{% for concept in concepts %}<option value="{{ concept.concept_id }}">{{ concept.preferred_label }} · {{ concept.concept_id }}</option>{% endfor %}</select></label>
+          <label class="quick-add-input"><span>Mapping review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this exact source claim corresponds to the selected concept"></label>
+          <div class="form-action"><button class="button primary" type="submit">Map claim</button></div>
+        </form>
+        {% else %}<p class="muted">No eligible active canonical concepts exist for this claim kind. Create and review a concept first.</p>{% endif %}
+
+        <form class="quick-add-form" method="post" action="/registry/claims/decide">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="job_id" value="{{ item.source_job_id }}">
+          <input type="hidden" name="kind" value="{{ item.claim_kind }}">
+          <input type="hidden" name="claim_index" value="{{ item.claim_index }}">
+          <input type="hidden" name="disposition" value="unmapped">
+          <label class="quick-add-input"><span>Unmapped review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this accepted claim intentionally remains without a canonical concept"></label>
+          <div class="form-action"><button class="button ghost" type="submit">Mark unmapped</button></div>
+        </form>
+
+        <form class="quick-add-form" method="post" action="/registry/claims/decide">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="job_id" value="{{ item.source_job_id }}">
+          <input type="hidden" name="kind" value="{{ item.claim_kind }}">
+          <input type="hidden" name="claim_index" value="{{ item.claim_index }}">
+          <input type="hidden" name="disposition" value="rejected">
+          <label class="quick-add-input"><span>Rejection review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this claim is unsuitable for canonical mapping"></label>
+          <div class="form-action"><button class="button ghost" type="submit">Reject mapping claim</button></div>
+        </form>
+      {% endif %}
+    </article>
+    {% endfor %}
+  {% else %}<div class="empty-state">No accepted/current P1.6 claims match the selected review filters.</div>{% endif %}
+</section>
+{% endblock %}
