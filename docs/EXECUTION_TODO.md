@@ -4,7 +4,7 @@
 **Date:** 2026-08-23
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
-**Current focused plan:** `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
+**Current focused plan:** `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md` — CLOSED / ACCEPTED; next focused Phase-2 plan not yet selected
 
 Repository workflow rule:
 
@@ -339,20 +339,20 @@ Per-role permanent checks:
 
 ## D. Phase 2 — gated
 
-Phase-1 closure passed on 2026-08-23. Begin only through the focused P2.1 plan:
+Phase-1 closure passed on 2026-08-23. P2.1 Canonical Concept Registry is now accepted and closed:
 
 ```text
 docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md
 ```
 
 ```text
-canonical concept registry
-→ reviewed aliases/mappings
-→ responsibilities/deliverables
-→ corpus-scale capability requirement profiles
-→ role archetypes
-→ Market v2
-→ later personal evidence/gap intelligence
+canonical concept registry                         ACCEPTED / CLOSED
+→ reviewed aliases/mappings                        ACCEPTED / CLOSED FOR P2.1 SEED
+→ responsibilities/deliverables                    LATER FOCUSED INCREMENT
+→ corpus-scale capability requirement profiles     LATER FOCUSED INCREMENT
+→ role archetypes                                  LATER FOCUSED INCREMENT
+→ Market v2                                        LATER FOCUSED INCREMENT
+→ later personal evidence/gap intelligence         DEFERRED
 ```
 
 Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, personal readiness scoring, learning-plan generation, application ranking, autonomous applications, vector/RAG infrastructure, generic plugin framework, and multi-model voting.
@@ -386,11 +386,22 @@ Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, per
 - [x] registry review writes do not trigger public-corpus refresh side effects.
 - [x] deterministic browser/service tests plus local `ruff check .`, `pytest`, and `pytest -W error` acceptance passed on 2026-08-23.
 
-### D4 — P2.1D small seed and P2.1 acceptance — ACTIVE NEXT
+### D4 — P2.1D small seed and P2.1 acceptance — ACCEPTED / CLOSED
 
-- [ ] deliberately small cross-role seed from the five accepted chains.
-- [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one education/credential or experience signal.
-- [ ] inspect every seed decision against exact accepted P1.6 evidence.
-- [ ] verify rerun/idempotency and stale-dependency behavior on the accepted seed.
-- [ ] decide separately whether any repository-safe registry projection is warranted after privacy/source review.
-- [ ] close P2.1 only when every focused-plan acceptance criterion is satisfied.
+- [x] deliberately small cross-role seed from the five accepted chains.
+- [x] include at least one alias, one ambiguous/unmapped case, one responsibility, and one education/credential or experience signal.
+- [x] inspect every seed decision against exact accepted P1.6 evidence.
+- [x] verify rerun/idempotency and stale-dependency behavior on the accepted seed.
+- [x] real-local CLI/browser state shows exactly four concepts, one reviewed alias, five mapped decisions, and one unmapped decision.
+- [x] focused disposable stale-dependency regression passed.
+- [x] final Ruff, full pytest, and warnings-as-errors acceptance gates passed.
+- [x] registry publication explicitly remained unauthorized.
+- [x] P2.1 final acceptance recorded in `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`.
+
+### D5 — Next focused Phase-2 increment — NOT YET SELECTED
+
+- [ ] inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md` after P2.1 closure.
+- [ ] define the next bounded focused Phase-2 plan before implementation.
+- [ ] preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 source-truth boundaries.
+- [ ] keep registry publication as a separate privacy/source decision.
+- [ ] do not bulk-map remaining accepted claims, broaden the ontology, start Market v2, or add personal intelligence until the next focused plan explicitly authorizes that work.
