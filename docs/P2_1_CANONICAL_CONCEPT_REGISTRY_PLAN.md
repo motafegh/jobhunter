@@ -1,6 +1,6 @@
 # P2.1 Canonical Concept Registry Plan
 
-**Status:** Active focused Phase-2 plan
+**Status:** CLOSED / ACCEPTED
 **Date:** 2026-08-23
 **Scope:** P2.1 registry and reviewed mappings only
 **Authority:** Subordinate to product/domain/source/architecture, `docs/ROADMAP.md`, and `docs/IMPLEMENTATION_PLAN.md`
@@ -122,14 +122,33 @@ Rebuilding or changing P1.6 never rewrites historical mappings. Stale mappings b
 - [x] registry review writes remain outside public-corpus refresh side effects;
 - [x] complete local Ruff + pytest + warnings-as-errors gate passed on 2026-08-23.
 
-### P2.1D — Seed and acceptance — ACTIVE NEXT INCREMENT
+### P2.1D — Seed and acceptance — ACCEPTED
 
-- [ ] seed a deliberately small cross-role set from the five accepted chains;
-- [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one
+- [x] seed a deliberately small cross-role set from the five accepted chains;
+- [x] include at least one alias, one ambiguous/unmapped case, one responsibility, and one
   education/credential or experience signal;
-- [ ] inspect every seed decision against exact accepted P1.6 evidence;
-- [ ] verify rerun/idempotency and stale-dependency behavior;
-- [ ] publish only repository-safe registry projection if a separate privacy/source review accepts it.
+- [x] inspect every seed decision against exact accepted P1.6 evidence;
+- [x] verify rerun/idempotency and stale-dependency behavior;
+- [x] complete real-local CLI/browser inspection and standard Ruff/full-pytest/warnings-as-errors
+  acceptance;
+- [x] keep registry publication separate; no repository projection was authorized for P2.1D.
+
+Accepted seed shape:
+
+```text
+canonical concepts: 4
+reviewed aliases:   1
+claim decisions:    6
+  mapped:           5
+  unmapped:         1
+accepted chains:    5
+```
+
+Final acceptance record:
+
+```text
+docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
+```
 
 ## 5. Non-goals
 
@@ -138,34 +157,53 @@ Rebuilding or changing P1.6 never rewrites historical mappings. Stale mappings b
 - no forced title-to-role taxonomy;
 - no similarity embeddings, vector database, graph database, or RAG;
 - no Capability/Blueprint prose promotion;
-- no Market v2 aggregation until reviewed registry mappings exist;
+- no Market v2 aggregation until a later focused increment explicitly starts it;
 - no second source, personal evidence, scoring, recommendations, or applications.
 
 ## 6. Acceptance
 
-P2.1 closes only when:
+P2.1 closure criteria are satisfied:
 
-- stable IDs, categories, aliases, mappings, supersession, and unmapped state are durable;
-- every accepted mapping retains exact P1.6 artifact/claim provenance;
-- stale P1.6 dependencies cannot count as current mappings;
-- no automated path can silently accept a concept or alias;
-- CLI/browser review paths share the same service contract;
-- deterministic tests and warning gates pass;
-- the small seed is completely human/semantic reviewed;
-- docs distinguish canonical correspondence from employer wording and market prevalence.
+- [x] stable IDs, categories, aliases, mappings, supersession, and unmapped state are durable;
+- [x] every accepted mapping retains exact P1.6 artifact/claim provenance;
+- [x] stale P1.6 dependencies cannot count as current mappings;
+- [x] no automated path can silently accept a concept or alias;
+- [x] CLI/browser review paths share the same service contract;
+- [x] deterministic tests and warning gates pass;
+- [x] the small seed is completely human/semantic reviewed;
+- [x] docs distinguish canonical correspondence from employer wording and market prevalence.
 
-## 7. Exact next implementation step
+Observed final quality evidence includes:
 
-P2.1A, P2.1B, and P2.1C are accepted. Execute **P2.1D only**: create and semantically review the deliberately small cross-role seed needed to prove the registry on real accepted evidence and close P2.1.
+```text
+ruff check .          PASS
+pytest                PASS — 510 passed in 14.89s
+pytest -W error       PASS — explicitly confirmed by repository owner
+focused P2.1D test    PASS — 2 passed in 2.47s
+```
 
-Required scope:
+The repository connection did not mutate the owner's machine-local SQLite. Actual local seed
+application, rerun/idempotency, CLI state, and browser state were executed and reported by the owner
+against `data/jobhunter.sqlite3`; deterministic disposable regression evidence remains separate.
 
-1. inspect exact accepted/current P1.6 claims from all five accepted chains before choosing seed identities;
-2. keep the seed deliberately small rather than mapping the available claim corpus;
-3. include at least one reviewed alias, one explicit ambiguous/unmapped decision, one responsibility mapping, and one education/credential or experience-signal mapping;
-4. preserve exact artifact/claim provenance and meaningful review notes for every decision;
-5. prove rerun/idempotency and stale-dependency behavior on the accepted seed;
-6. run the standard Ruff/full-pytest/warnings-as-errors gate;
-7. make any repository-safe registry projection a separate privacy/source decision rather than an implicit consequence of P2.1D.
+## 7. Closure and next-work boundary
 
-Do not bulk-map the accepted claim corpus, start Market v2, add personal intelligence, or publish registry state during P2.1D unless the separate publication decision is explicitly made. P2.1 remains open until the seed and every focused-plan acceptance criterion pass.
+P2.1A, P2.1B, P2.1C, and P2.1D are accepted. **P2.1 is closed.**
+
+The accepted registry remains deliberately bounded. Closure does not authorize additional mappings,
+ontology expansion, registry publication, Market v2, or personal intelligence.
+
+Next action:
+
+1. inspect the controlling roadmap and implementation-plan sequence after P2.1;
+2. define the next bounded focused Phase-2 increment before implementation;
+3. preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries;
+4. make any registry publication path a separate privacy/source decision.
+
+Until that next focused plan is explicitly selected:
+
+- do not bulk-map the remaining accepted claim corpus;
+- do not broaden the ontology merely to eliminate unmapped cases;
+- do not publish registry state;
+- do not start Market v2;
+- do not add personal readiness/scoring/recommendations.
