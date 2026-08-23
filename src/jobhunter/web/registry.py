@@ -65,6 +65,7 @@ def _review_reader(settings: Settings):
 
 
 def _filtered_concepts(
+    database_path: Path,
     store: CanonicalRegistryStore,
     *,
     category: str,
@@ -91,7 +92,7 @@ def _filtered_concepts(
     filtered = []
     for concept in concepts:
         aliases = list_concept_aliases(
-            store._database_path,  # noqa: SLF001 - same bounded store instance, read-only helper
+            database_path,
             store,
             concept.concept_id,
             include_deprecated=True,
@@ -121,6 +122,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
     ):
         store = CanonicalRegistryStore(settings.database_path)
         concepts = _filtered_concepts(
+            settings.database_path,
             store,
             category=category,
             status=status,
