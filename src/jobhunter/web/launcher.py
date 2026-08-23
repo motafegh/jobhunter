@@ -21,6 +21,7 @@ from jobhunter.web.app import create_app
 from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
 from jobhunter.web.operations import WebOperationManager
+from jobhunter.web.registry import register_registry_routes
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -182,12 +183,13 @@ def _synchronize_public_corpus(settings: Settings) -> None:
 
 
 def build_runtime_app(settings: Settings):
-    """Build the normal web app plus reviewed expert-analysis routes."""
+    """Build the normal web app plus reviewed expert-analysis and registry routes."""
 
     operations = WebOperationManager(after_success=lambda: _synchronize_public_corpus(settings))
     app = create_app(settings, operations=operations)
     register_capability_routes(app, settings)
     register_blueprint_routes(app, settings)
+    register_registry_routes(app, settings)
     return app
 
 
