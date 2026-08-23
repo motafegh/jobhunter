@@ -92,7 +92,7 @@ Rebuilding or changing P1.6 never rewrites historical mappings. Stale mappings b
 
 ## 4. Delivery increments
 
-### P2.1A — Deterministic contract and persistence
+### P2.1A — Deterministic contract and persistence — ACCEPTED
 
 - [x] typed concept/category/status/mapping records;
 - [x] SQLite schema and migrations;
@@ -102,30 +102,32 @@ Rebuilding or changing P1.6 never rewrites historical mappings. Stale mappings b
 - [x] mapped/unmapped/rejected claim records with immutable P1.6 provenance;
 - [x] deterministic offline tests.
 
-### P2.1B — Manual CLI workflow
+### P2.1B — Manual CLI workflow — ACCEPTED
 
-- list/show/add/update/deprecate concepts;
-- add/review aliases;
-- list accepted-current P1.6 claims needing mapping;
-- record mapped/unmapped/rejected decisions with meaningful notes;
-- no automatic acceptance.
+- [x] list/show/add/deprecate concepts;
+- [x] add reviewed aliases with explicit provenance;
+- [x] list accepted-current P1.6 claims and mapping state;
+- [x] record mapped/unmapped/rejected decisions with meaningful notes;
+- [x] preserve idempotency and immutable prior decisions;
+- [x] complete local Ruff + pytest + warnings-as-errors gate passed on 2026-08-23.
 
-### P2.1C — Read-only and review browser surfaces
+### P2.1C — Read-only and review browser surfaces — ACTIVE NEXT INCREMENT
 
-- registry overview and filters;
-- concept detail with aliases and source-backed job mappings;
-- unmapped review queue;
-- CSRF-protected bounded manual decisions;
-- structured links from operations where relevant.
+- [ ] registry overview and filters;
+- [ ] concept detail with aliases and source-backed job mappings;
+- [ ] unmapped review queue;
+- [ ] CSRF-protected bounded manual decisions;
+- [ ] structured links from operations where relevant;
+- [ ] browser and CLI review mutations share the same canonical-registry service contract.
 
-### P2.1D — Seed and acceptance
+### P2.1D — Seed and acceptance — BLOCKED ON P2.1C
 
-- seed a deliberately small cross-role set from the five accepted chains;
-- include at least one alias, one ambiguous/unmapped case, one responsibility, and one
+- [ ] seed a deliberately small cross-role set from the five accepted chains;
+- [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one
   education/credential or experience signal;
-- inspect every seed decision against exact accepted P1.6 evidence;
-- verify rerun/idempotency and stale-dependency behavior;
-- publish only repository-safe registry projection if a separate privacy/source review accepts it.
+- [ ] inspect every seed decision against exact accepted P1.6 evidence;
+- [ ] verify rerun/idempotency and stale-dependency behavior;
+- [ ] publish only repository-safe registry projection if a separate privacy/source review accepts it.
 
 ## 5. Non-goals
 
@@ -152,6 +154,15 @@ P2.1 closes only when:
 
 ## 7. Exact next implementation step
 
-P2.1A is accepted. Implement P2.1B only: manual CLI list/show/add/deprecate concept operations,
-reviewed alias operations, accepted-current claim queue inspection, and explicit mapping decisions
-through the shared service. Do not seed concepts or expose mutating browser UI yet.
+P2.1A and P2.1B are accepted. Implement **P2.1C only**: the bounded browser review surface over the existing canonical-registry store/service and current accepted-P1.6 review reader.
+
+Required scope:
+
+1. registry overview with useful filters and no taxonomy inference;
+2. concept detail with reviewed aliases and source-backed claim mappings;
+3. accepted-current unmapped/pending review queue;
+4. CSRF-protected bounded concept/alias/mapping decisions through the same service contract used by the CLI;
+5. structured links from existing operations pages only where they improve review navigation;
+6. deterministic browser/service tests plus the standard Ruff/full-pytest/warnings-as-errors gate.
+
+Do not seed concepts, perform corpus-wide mapping, publish registry data, start Market v2, or add personal intelligence during P2.1C. P2.1D remains blocked until P2.1C is accepted.
