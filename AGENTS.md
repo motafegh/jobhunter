@@ -79,9 +79,11 @@ accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
 
-Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. P2.1 remains open until the bounded P2.1D real-data seed and acceptance gate are complete.
+Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small real-data seed are all accepted. **P2.1 is closed.** The accepted P2.1D seed remains deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across the five accepted P1.6 chains. Registry publication remains unauthorized.
 
-Do not reopen P1.6 v20 or Capability v9 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
+The next focused Phase-2 increment has not yet been selected. Before new implementation, inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md`, define a bounded focused plan, and preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries.
+
+Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ## 4. Blueprint disposition
 
@@ -105,13 +107,36 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 
 ## 5. Current exact next-work rule
 
-Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. The active gate is **P2.1D only**: inspect exact accepted/current P1.6 evidence from the five accepted chains, build a deliberately small human/semantic-reviewed seed, and prove idempotency plus stale-dependency behavior before closing P2.1.
+Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small reviewed seed are accepted. **P2.1 is closed.**
 
-P2.1D must include at least one reviewed alias, one explicit ambiguous/unmapped decision, one responsibility mapping, and one education/credential or experience-signal mapping. Every seed decision must preserve exact P1.6 artifact/claim provenance and a meaningful review note.
+Accepted P2.1D seed:
 
-Do not bulk-map the accepted claim corpus, start Market v2, add personal evidence/readiness/scoring, or publish canonical-registry state merely because the review surfaces exist. Registry publication remains a separate privacy/source decision.
+```text
+canonical concepts: 4
+reviewed aliases:   1
+claim decisions:    6
+  mapped:           5
+  unmapped:         1
+accepted chains:    5
+```
 
-Current order:
+The exact acceptance record is:
+
+```text
+docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
+```
+
+The next implementation increment is not authorized merely because P2.1 is closed. The next action is to inspect the controlling roadmap and implementation plan after P2.1, select the next bounded Phase-2 objective, and write/approve its focused plan before implementation.
+
+Until that next focused plan is selected:
+
+- do not bulk-map the remaining accepted P1.6 claim corpus;
+- do not broaden the canonical ontology merely to eliminate unmapped cases;
+- do not publish canonical-registry state;
+- do not start Market v2;
+- do not add personal evidence/readiness/scoring/recommendations.
+
+Current accepted heterogeneous order remains:
 
 ```text
 1. Python/software             → tmBK P1.6 39 / Capability 13 ACCEPTED
@@ -156,7 +181,7 @@ For each heterogeneous role review factual coverage, evidence, requirement stren
 
 Convert repeatable deterministic defects into tests. Record model limitations separately. Do not patch one vacancy at a time.
 
-After heterogeneous semantic acceptance:
+Accepted progression to the current closure point:
 
 ```text
 Market truthfulness/sampling
@@ -164,7 +189,8 @@ Market truthfulness/sampling
 → partial-success semantics accepted
 → P1.7 report/run/browser accepted
 → Phase-1 closure accepted
-→ focused Phase-2 canonical concept registry
+→ P2.1 canonical concept registry accepted / closed
+→ next focused Phase-2 increment must be explicitly selected
 ```
 
 ## 6. Permanent semantic boundaries
@@ -309,7 +335,7 @@ jobhunter jobs snapshot <job-id>
 
 ```text
 corpus/           complete current public dataset
-review-snapshots/ selected semantic acceptance/review evidence
+review-snapshots/ selected semantic-review evidence
 ```
 
 Snapshots are generated review artifacts, not runtime inputs. Commit selected public review examples intentionally. Dependency-current flags remain distinct from the explicit P1.6 semantic-review status/time/note.
