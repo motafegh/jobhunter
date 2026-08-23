@@ -111,16 +111,18 @@ Rebuilding or changing P1.6 never rewrites historical mappings. Stale mappings b
 - [x] preserve idempotency and immutable prior decisions;
 - [x] complete local Ruff + pytest + warnings-as-errors gate passed on 2026-08-23.
 
-### P2.1C — Read-only and review browser surfaces — ACTIVE NEXT INCREMENT
+### P2.1C — Read-only and review browser surfaces — ACCEPTED
 
-- [ ] registry overview and filters;
-- [ ] concept detail with aliases and source-backed job mappings;
-- [ ] unmapped review queue;
-- [ ] CSRF-protected bounded manual decisions;
-- [ ] structured links from operations where relevant;
-- [ ] browser and CLI review mutations share the same canonical-registry service contract.
+- [x] registry overview and filters;
+- [x] concept detail with aliases and source-backed job mappings;
+- [x] accepted-current pending/unmapped review queue;
+- [x] CSRF-protected bounded manual decisions;
+- [x] structured links for registry review navigation where useful;
+- [x] browser and CLI review mutations share the same canonical-registry service contract;
+- [x] registry review writes remain outside public-corpus refresh side effects;
+- [x] complete local Ruff + pytest + warnings-as-errors gate passed on 2026-08-23.
 
-### P2.1D — Seed and acceptance — BLOCKED ON P2.1C
+### P2.1D — Seed and acceptance — ACTIVE NEXT INCREMENT
 
 - [ ] seed a deliberately small cross-role set from the five accepted chains;
 - [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one
@@ -154,15 +156,16 @@ P2.1 closes only when:
 
 ## 7. Exact next implementation step
 
-P2.1A and P2.1B are accepted. Implement **P2.1C only**: the bounded browser review surface over the existing canonical-registry store/service and current accepted-P1.6 review reader.
+P2.1A, P2.1B, and P2.1C are accepted. Execute **P2.1D only**: create and semantically review the deliberately small cross-role seed needed to prove the registry on real accepted evidence and close P2.1.
 
 Required scope:
 
-1. registry overview with useful filters and no taxonomy inference;
-2. concept detail with reviewed aliases and source-backed claim mappings;
-3. accepted-current unmapped/pending review queue;
-4. CSRF-protected bounded concept/alias/mapping decisions through the same service contract used by the CLI;
-5. structured links from existing operations pages only where they improve review navigation;
-6. deterministic browser/service tests plus the standard Ruff/full-pytest/warnings-as-errors gate.
+1. inspect exact accepted/current P1.6 claims from all five accepted chains before choosing seed identities;
+2. keep the seed deliberately small rather than mapping the available claim corpus;
+3. include at least one reviewed alias, one explicit ambiguous/unmapped decision, one responsibility mapping, and one education/credential or experience-signal mapping;
+4. preserve exact artifact/claim provenance and meaningful review notes for every decision;
+5. prove rerun/idempotency and stale-dependency behavior on the accepted seed;
+6. run the standard Ruff/full-pytest/warnings-as-errors gate;
+7. make any repository-safe registry projection a separate privacy/source decision rather than an implicit consequence of P2.1D.
 
-Do not seed concepts, perform corpus-wide mapping, publish registry data, start Market v2, or add personal intelligence during P2.1C. P2.1D remains blocked until P2.1C is accepted.
+Do not bulk-map the accepted claim corpus, start Market v2, add personal intelligence, or publish registry state during P2.1D unless the separate publication decision is explicitly made. P2.1 remains open until the seed and every focused-plan acceptance criterion pass.

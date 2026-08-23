@@ -4,7 +4,7 @@
 **Date:** 2026-08-23
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1A registry foundation ACCEPTED; P2.1B manual CLI next
+**Current gate:** Phase 1 CLOSED; P2.1A/B/C ACCEPTED; P2.1D small reviewed seed next
 
 ## 1. Exact current point
 
@@ -33,6 +33,8 @@ Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 w
 
 Network/security `t4qV` is closed on P1.6 44 → Capability 14 after general structured-skill, preferred-heading, experience-bound, responsibility, candidate-experience, and credential-ontology fixes. Operations/platform `tmyX` is closed on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty, and non-depth ability/skill fixes. `t49N` was blocked before P1.6 for a material English field-association defect.
 
+Phase 2 is active only through `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`. P2.1A deterministic persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. The next bounded increment is P2.1D: a deliberately small, human/semantic-reviewed seed from the five accepted P1.6 chains, followed by idempotency/stale-dependency acceptance. P2.1 is not closed yet.
+
 ## 2. Repository workflow rule
 
 JobHunter uses **main-only development** by default:
@@ -56,6 +58,7 @@ Capability public/current:  job-capability-intelligence-v9 / job-capability-inte
 Capability v7 historical:   job-capability-intelligence-v7 / job-capability-intelligence-v4
 Capability v8 historical:   job-capability-intelligence-v8 / job-capability-intelligence-v4
 Blueprint deferred:         role-capability-blueprint-v6 / role-capability-blueprint-v5
+Canonical Registry:         jobhunter-canonical-concept-registry-v1
 Review Snapshot:            job-review-snapshot-v1
 Public Corpus:              jobhunter-public-corpus-v1
 ```
@@ -129,7 +132,7 @@ Role-level indices:              []
 Disposition:                     ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
 ```
 
-Capability public promotion is operationally closed. Heterogeneous validation remains necessary before the promoted P1.6 + Capability stack is frozen as Phase-2 input.
+Capability public promotion is operationally closed and the accepted P1.6 v20/v5 + Capability v9/v5 stack is frozen as the Phase-2 source-truth input unless a repeatable material defect or dependency change explicitly reopens it.
 
 ## 6. Public corpus — IMPLEMENTED / POPULATED / OPERATIONALLY CLOSED
 
@@ -214,6 +217,7 @@ Permanent corpus rules:
 6. Git commit/push remains explicit and is never part of runtime correctness.
 7. Future personal/private evidence must never enter the public corpus.
 8. Remote corpus inspection can drive role selection and later public-data analysis without local SQLite access.
+9. Canonical-registry review state is not part of the public corpus unless a later explicit privacy/source review authorizes a repository-safe projection.
 
 ## 7. Heterogeneous live review — CLOSED
 
@@ -275,7 +279,7 @@ The acceptance boundary is now enforced in persistence and every authoritative c
 
 ### Exact next local action
 
-Do not rerun accepted heterogeneous anchors merely for wording variation. Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, P1.7, and Phase 1 are closed. Continue with the focused P2.1 canonical concept registry plan while preserving frozen P1.6 v20/v5 and Capability v9/v5 inputs.
+P2.1A, P2.1B, and P2.1C are accepted. Do not rerun accepted heterogeneous anchors merely for wording variation. Execute P2.1D only: inspect exact accepted/current P1.6 claims from all five accepted chains, choose a deliberately small cross-role seed, human/semantic-review every concept/alias/mapping decision, include the required alias + ambiguous/unmapped + responsibility + education/credential-or-experience case, then prove rerun/idempotency and stale-dependency behavior. Do not bulk-map the accepted corpus or begin Market v2.
 
 Exact heterogeneous records:
 
@@ -288,10 +292,12 @@ Closed Phase-1 plan and evidence:
 - `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
 - `docs/working-memory/2026-08-23_P1_7_AND_PHASE_1_CLOSURE.md`
 
-Active focused Phase-2 plan:
+Active focused Phase-2 plan and acceptance records:
 
 - `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
 - `docs/working-memory/2026-08-23_P2_1A_REGISTRY_FOUNDATION.md`
+- `docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md`
+- `docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md`
 
 ## 8. Exact current state
 
@@ -310,6 +316,12 @@ Capability v9 artifact 14           NETWORK/SECURITY ACCEPTED / CURRENT
 Capability v9 artifact 15           OPERATIONS/PLATFORM ACCEPTED / CURRENT
 Capability public route             v9/v5 / OPERATIONALLY VERIFIED
 Blueprint                           DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
+Canonical registry contract         v1 / ACCEPTED FOUNDATION
+P2.1A deterministic persistence     ACCEPTED
+P2.1B manual CLI                    ACCEPTED
+P2.1C browser review                ACCEPTED
+P2.1D small reviewed seed           ACTIVE NEXT / NOT YET ACCEPTED
+P2.1 overall                        OPEN
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
 Known/discovered jobs               353
 Fetched/parsed detail jobs          43
@@ -319,21 +331,19 @@ Current local corpus Capability       5
 Heterogeneous Python/software       ACCEPTED — tmBK 39 → 13
 Heterogeneous network/security      ACCEPTED — t4qV 44 → 14
 Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
-Phase 2                             P2.1 UNBLOCKED / FOCUSED PLAN REQUIRED
 ```
 
-## 9. After heterogeneous acceptance
+## 9. Phase-2 progression
 
-The three heterogeneous families passed without unresolved repeatable material defects:
+The accepted Phase-1 stack now feeds the bounded registry path:
 
 ```text
 freeze promoted P1.6 v20 + Capability v9 as Phase-2 input
-→ Market truthfulness/sampling ACCEPTED
-→ source/lifecycle acceptance ACCEPTED
-→ partial-success semantics ACCEPTED
-→ P1.7 report/run/browser ACCEPTED
-→ Phase-1 closure ACCEPTED
-→ focused P2.1 canonical concept registry
+→ P2.1A registry persistence ACCEPTED
+→ P2.1B manual CLI review ACCEPTED
+→ P2.1C browser review ACCEPTED
+→ P2.1D small cross-role seed + acceptance ACTIVE
+→ only after P2.1 closure: later focused Phase-2 aggregation work
 ```
 
 Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation.
@@ -347,5 +357,7 @@ docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
 docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
 docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
 docs/working-memory/2026-08-17_TMBK_P16_MULTI_SIGNAL_DEPTH_REJECTION.md
+docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md
+docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md
 corpus/README.md
 ```

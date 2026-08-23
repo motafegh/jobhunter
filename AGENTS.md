@@ -55,6 +55,7 @@ Capability v7:              historical
 Capability v8:              historical / semantic reject
 
 Blueprint experimental:     role-capability-blueprint-v6 / role-capability-blueprint-v5
+Canonical Registry:         jobhunter-canonical-concept-registry-v1
 Review Snapshot:            job-review-snapshot-v1
 Public Corpus:              jobhunter-public-corpus-v1
 ```
@@ -77,6 +78,8 @@ current English projections:     20
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
+
+Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. P2.1 remains open until the bounded P2.1D real-data seed and acceptance gate are complete.
 
 Do not reopen P1.6 v20 or Capability v9 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
@@ -102,7 +105,11 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 
 ## 5. Current exact next-work rule
 
-Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence is accepted. The active gate is P2.1B manual CLI review workflow; do not broaden it into corpus-wide generation, browser mutation, or personal intelligence.
+Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. The active gate is **P2.1D only**: inspect exact accepted/current P1.6 evidence from the five accepted chains, build a deliberately small human/semantic-reviewed seed, and prove idempotency plus stale-dependency behavior before closing P2.1.
+
+P2.1D must include at least one reviewed alias, one explicit ambiguous/unmapped decision, one responsibility mapping, and one education/credential or experience-signal mapping. Every seed decision must preserve exact P1.6 artifact/claim provenance and a meaningful review note.
+
+Do not bulk-map the accepted claim corpus, start Market v2, add personal evidence/readiness/scoring, or publish canonical-registry state merely because the review surfaces exist. Registry publication remains a separate privacy/source decision.
 
 Current order:
 
@@ -327,6 +334,7 @@ Capability artifact
 Role Blueprint artifact
 JobUserWorkflow
 Market aggregate
+Canonical Concept Registry
 Public Corpus projection
 Review Snapshot
 Raw evidence

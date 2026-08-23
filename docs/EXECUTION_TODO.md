@@ -375,17 +375,18 @@ Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, per
 - [x] preserve idempotency and immutable prior decisions.
 - [x] complete local `ruff check .`, `pytest`, and `pytest -W error` acceptance gate passed on 2026-08-23.
 
-### D3 — P2.1C read-only and review browser surfaces — ACTIVE NEXT
+### D3 — P2.1C read-only and review browser surfaces — ACCEPTED
 
-- [ ] registry overview and filters.
-- [ ] concept detail with aliases and source-backed job mappings.
-- [ ] accepted-current pending/unmapped review queue.
-- [ ] CSRF-protected bounded manual concept/alias/mapping decisions.
-- [ ] structured links from existing operations where useful.
-- [ ] CLI/browser review mutations share the same canonical-registry service contract.
-- [ ] deterministic browser/service tests plus Ruff/full-pytest/warnings-as-errors acceptance.
+- [x] registry overview and filters.
+- [x] concept detail with aliases and source-backed job mappings.
+- [x] accepted-current pending/unmapped review queue.
+- [x] CSRF-protected bounded manual concept/alias/mapping decisions.
+- [x] structured links for registry review navigation where useful.
+- [x] CLI/browser review mutations share the same canonical-registry service contract.
+- [x] registry review writes do not trigger public-corpus refresh side effects.
+- [x] deterministic browser/service tests plus local `ruff check .`, `pytest`, and `pytest -W error` acceptance passed on 2026-08-23.
 
-### D4 — P2.1D small seed and P2.1 acceptance — BLOCKED ON D3
+### D4 — P2.1D small seed and P2.1 acceptance — ACTIVE NEXT
 
 - [ ] deliberately small cross-role seed from the five accepted chains.
 - [ ] include at least one alias, one ambiguous/unmapped case, one responsibility, and one education/credential or experience signal.
