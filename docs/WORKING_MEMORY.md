@@ -4,7 +4,7 @@
 **Date:** 2026-08-23
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1A/B/C ACCEPTED; P2.1D small reviewed seed next
+**Current gate:** Phase 1 CLOSED; P2.1A/B/C/D ACCEPTED; P2.1 CLOSED; next focused Phase-2 increment not yet selected
 
 ## 1. Exact current point
 
@@ -33,7 +33,9 @@ Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 w
 
 Network/security `t4qV` is closed on P1.6 44 → Capability 14 after general structured-skill, preferred-heading, experience-bound, responsibility, candidate-experience, and credential-ontology fixes. Operations/platform `tmyX` is closed on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty, and non-depth ability/skill fixes. `t49N` was blocked before P1.6 for a material English field-association defect.
 
-Phase 2 is active only through `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`. P2.1A deterministic persistence, P2.1B manual CLI review, and P2.1C browser review are accepted. The next bounded increment is P2.1D: a deliberately small, human/semantic-reviewed seed from the five accepted P1.6 chains, followed by idempotency/stale-dependency acceptance. P2.1 is not closed yet.
+P2.1 Canonical Concept Registry is now **closed and accepted**. The accepted seed is deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across all five accepted P1.6 chains. Real-local application, rerun/idempotency, CLI/browser inspection, stale-dependency behavior, Ruff, full pytest, and warnings-as-errors all passed. Registry publication remains unauthorized.
+
+The next Phase-2 increment is **not yet selected**. Before implementation, inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md`, define the next bounded focused plan, and preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries. Do not automatically start Market v2, bulk-map remaining claims, broaden the ontology, publish registry state, or add personal intelligence.
 
 ## 2. Repository workflow rule
 
@@ -279,7 +281,16 @@ The acceptance boundary is now enforced in persistence and every authoritative c
 
 ### Exact next local action
 
-P2.1A, P2.1B, and P2.1C are accepted. Do not rerun accepted heterogeneous anchors merely for wording variation. Execute P2.1D only: inspect exact accepted/current P1.6 claims from all five accepted chains, choose a deliberately small cross-role seed, human/semantic-review every concept/alias/mapping decision, include the required alias + ambiguous/unmapped + responsibility + education/credential-or-experience case, then prove rerun/idempotency and stale-dependency behavior. Do not bulk-map the accepted corpus or begin Market v2.
+P2.1 is closed and accepted. Do not rerun accepted heterogeneous anchors or the P2.1 seed merely for wording variation or duplicate evidence.
+
+Next:
+
+1. inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md` after the P2.1 closure point;
+2. select and define the next bounded focused Phase-2 increment before implementation;
+3. preserve accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries;
+4. keep registry publication as a separate privacy/source decision.
+
+Until the next focused plan is selected, do not bulk-map remaining accepted claims, broaden the ontology, start Market v2, or add personal intelligence.
 
 Exact heterogeneous records:
 
@@ -292,12 +303,14 @@ Closed Phase-1 plan and evidence:
 - `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
 - `docs/working-memory/2026-08-23_P1_7_AND_PHASE_1_CLOSURE.md`
 
-Active focused Phase-2 plan and acceptance records:
+Closed P2.1 plan and acceptance records:
 
 - `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
 - `docs/working-memory/2026-08-23_P2_1A_REGISTRY_FOUNDATION.md`
 - `docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md`
 - `docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md`
+- `docs/working-memory/2026-08-23_P2_1D_SMALL_SEED_REVIEW_CANDIDATE.md`
+- `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
 
 ## 8. Exact current state
 
@@ -316,12 +329,18 @@ Capability v9 artifact 14           NETWORK/SECURITY ACCEPTED / CURRENT
 Capability v9 artifact 15           OPERATIONS/PLATFORM ACCEPTED / CURRENT
 Capability public route             v9/v5 / OPERATIONALLY VERIFIED
 Blueprint                           DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
-Canonical registry contract         v1 / ACCEPTED FOUNDATION
+Canonical registry contract         v1 / ACCEPTED
 P2.1A deterministic persistence     ACCEPTED
 P2.1B manual CLI                    ACCEPTED
 P2.1C browser review                ACCEPTED
-P2.1D small reviewed seed           ACTIVE NEXT / NOT YET ACCEPTED
-P2.1 overall                        OPEN
+P2.1D small reviewed seed           ACCEPTED
+P2.1 overall                        CLOSED
+Registry seed concepts              4
+Registry reviewed aliases           1
+Registry mapped decisions           5
+Registry unmapped decisions         1
+Registry publication                NOT AUTHORIZED
+Next focused Phase-2 increment      NOT YET SELECTED
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
 Known/discovered jobs               353
 Fetched/parsed detail jobs          43
@@ -335,18 +354,20 @@ Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
 
 ## 9. Phase-2 progression
 
-The accepted Phase-1 stack now feeds the bounded registry path:
+The accepted Phase-1 stack and closed P2.1 registry now establish:
 
 ```text
 freeze promoted P1.6 v20 + Capability v9 as Phase-2 input
 → P2.1A registry persistence ACCEPTED
 → P2.1B manual CLI review ACCEPTED
 → P2.1C browser review ACCEPTED
-→ P2.1D small cross-role seed + acceptance ACTIVE
-→ only after P2.1 closure: later focused Phase-2 aggregation work
+→ P2.1D small cross-role seed + acceptance ACCEPTED
+→ P2.1 CLOSED
+→ inspect roadmap/implementation plan
+→ define next focused Phase-2 increment before implementation
 ```
 
-Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation.
+Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure authorizes Market v2 or bulk registry expansion.
 
 ## 10. Relevant records
 
@@ -359,5 +380,9 @@ docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
 docs/working-memory/2026-08-17_TMBK_P16_MULTI_SIGNAL_DEPTH_REJECTION.md
 docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md
 docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md
+docs/working-memory/2026-08-23_P2_1D_LOCAL_SEED_APPLIED_VALIDATION_PENDING.md
+docs/working-memory/2026-08-23_P2_1D_POPULATED_REGISTRY_BROWSER_500_BLOCKER.md
+docs/working-memory/2026-08-23_P2_1D_BROWSER_AND_FULL_PYTEST_PASS_WARNINGS_PENDING.md
+docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
 corpus/README.md
 ```
