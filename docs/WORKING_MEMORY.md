@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-21  
+**Date:** 2026-08-23
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** heterogeneous, Market, and source/lifecycle gates CLOSED; partial-success semantics next
+**Current gate:** Phase 1 CLOSED; P2.1A registry foundation ACCEPTED; P2.1B manual CLI next
 
 ## 1. Exact current point
 
@@ -27,7 +27,7 @@ tmyX → Capability artifact 15 → HETEROGENEOUS OPERATIONS/PLATFORM ACCEPTED /
 
 Normal Capability commands reuse artifacts 11/12 on P1.6 artifacts 36/37. Review Snapshot marks both exact chains current. Blueprint remains `blueprint_current=False`, deferred/non-authoritative, and pinned to historical Capability v7 semantics.
 
-The complete repository-safe public corpus is implemented, populated from the real local database, verified, committed, remotely inspected, and operationally closed.
+The complete repository-safe public corpus is implemented, populated from the real local database, verified, remotely inspected, and operationally closed. Current projection export excludes preserved historical English v1 artifacts.
 
 Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 was explicitly accepted after complete source review, and Capability artifact 13 passed 16/16 requirement, 0/0 responsibility, and 7/7 explicit-depth review.
 
@@ -155,20 +155,20 @@ jobhunter-public-corpus-v1
 Accepted publication baseline:
 
 ```text
-Known/discovered Jobinja jobs: 344
+Known/discovered Jobinja jobs: 353
 Fetched/parsed job details:     43
-English projections:            33
+Current English projections:    20
 English P1.6:                    5
 Original P1.6:                   0
 Capabilities:                    5
-Per-job stage files:           387
+Per-job stage files:           383
 Corpus size:                  ~3.7 MiB
 ```
 
 Important interpretation:
 
 ```text
-344 known/discovered jobs != 344 fully fetched advertisements
+353 known/discovered jobs != 353 fully fetched advertisements
 ```
 
 A discovery-only job remains a valid corpus identity with `current_detail: null`. Only the 43 entries with fetched/parsed current detail are eligible for downstream semantic-review selection.
@@ -275,12 +275,23 @@ The acceptance boundary is now enforced in persistence and every authoritative c
 
 ### Exact next local action
 
-Do not rerun accepted heterogeneous anchors merely for wording variation. Market truthfulness/sampling and source/lifecycle acceptance are closed. Continue with partial-success semantics, then P1.7 report/run/browser acceptance.
+Do not rerun accepted heterogeneous anchors merely for wording variation. Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, P1.7, and Phase 1 are closed. Continue with the focused P2.1 canonical concept registry plan while preserving frozen P1.6 v20/v5 and Capability v9/v5 inputs.
 
 Exact heterogeneous records:
 
 - `docs/working-memory/2026-08-21_T4QV_NETWORK_SECURITY_P16_REJECTIONS.md`
 - `docs/working-memory/2026-08-21_TMYX_OPERATIONS_PLATFORM_ACCEPTANCE.md`
+- `docs/working-memory/2026-08-23_PARTIAL_SUCCESS_SEMANTICS_ACCEPTANCE.md`
+
+Closed Phase-1 plan and evidence:
+
+- `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
+- `docs/working-memory/2026-08-23_P1_7_AND_PHASE_1_CLOSURE.md`
+
+Active focused Phase-2 plan:
+
+- `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
+- `docs/working-memory/2026-08-23_P2_1A_REGISTRY_FOUNDATION.md`
 
 ## 8. Exact current state
 
@@ -300,15 +311,15 @@ Capability v9 artifact 15           OPERATIONS/PLATFORM ACCEPTED / CURRENT
 Capability public route             v9/v5 / OPERATIONALLY VERIFIED
 Blueprint                           DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
-Known/discovered jobs               344
+Known/discovered jobs               353
 Fetched/parsed detail jobs          43
-Published English projections       33
+Current English projections         20
 Current local corpus P1.6             5
 Current local corpus Capability       5
 Heterogeneous Python/software       ACCEPTED — tmBK 39 → 13
 Heterogeneous network/security      ACCEPTED — t4qV 44 → 14
 Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
-Phase 2                             BLOCKED
+Phase 2                             P2.1 UNBLOCKED / FOCUSED PLAN REQUIRED
 ```
 
 ## 9. After heterogeneous acceptance
@@ -319,10 +330,10 @@ The three heterogeneous families passed without unresolved repeatable material d
 freeze promoted P1.6 v20 + Capability v9 as Phase-2 input
 → Market truthfulness/sampling ACCEPTED
 → source/lifecycle acceptance ACCEPTED
-→ partial-success semantics
-→ P1.7 report/run/browser acceptance
-→ Phase-1 closure
-→ only then corpus-wide Phase 2
+→ partial-success semantics ACCEPTED
+→ P1.7 report/run/browser ACCEPTED
+→ Phase-1 closure ACCEPTED
+→ focused P2.1 canonical concept registry
 ```
 
 Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation.

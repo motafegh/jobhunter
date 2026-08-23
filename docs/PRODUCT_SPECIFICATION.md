@@ -1,7 +1,7 @@
 # JobHunter Product Specification
 
 **Status:** Current product definition  
-**Date:** 2026-08-21  
+**Date:** 2026-08-23
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
@@ -90,7 +90,7 @@ Current semantic layers are not all at the same acceptance level:
 - Capability v9/v5 is promoted/current and operationally closed on those anchors;
 - heterogeneous role-family validation is closed across Python/software, network/security, and operations/platform anchors;
 - Blueprint v6/v5 remains experimental/deferred and non-authoritative;
-- Market and source/lifecycle gates are closed; partial-success and P1.7 closure gates remain open.
+- Market, source/lifecycle, partial-success, and P1.7 gates are closed; Phase 1 is accepted.
 
 One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
@@ -249,9 +249,9 @@ corpus/  → jobhunter-public-corpus-v1
 Accepted publication baseline:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -530,22 +530,22 @@ Current accepted/current foundations include:
 - deterministic repository-safe public corpus v1 and remote publication;
 - deterministic CI gates.
 
-### 10.2 Implemented but acceptance/closure still pending
+### 10.2 Implemented Phase-1 surfaces
 
-Current implementation includes but must not over-claim until the remaining controlling gates pass:
+Accepted Phase-1 implementation includes:
 
 - source-response classification and cautious lifecycle logic;
 - user triage/acquisition priority;
 - first Market aggregation;
 - expanded bounded browser workflow actions;
 - heterogeneous P1.6/Capability generalization beyond dense+sparse accepted anchors;
-- final partial-success semantics and P1.7 run/report/browser closure.
+- final P1.7 run/report/browser closure with exact current queues and lineage.
 
 Blueprint is implemented but deliberately **deferred/non-authoritative**, not merely pending acceptance.
 
-### 10.3 Current active gate
+### 10.3 Closed Phase-1 gate
 
-Heterogeneous semantic review is active in this order:
+The accepted heterogeneous reference order is:
 
 ```text
 1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
@@ -555,7 +555,7 @@ Heterogeneous semantic review is active in this order:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, and source/lifecycle acceptance are closed. Partial-success semantics is the active product gate.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 is accepted; the active product gate is the focused Phase-2 canonical concept registry.
 
 ### 10.4 Planned next product layers
 

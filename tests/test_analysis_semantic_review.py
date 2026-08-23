@@ -167,3 +167,65 @@ def test_rejection_is_blocked_after_capability_consumes_analysis(tmp_path: Path)
             reviewed_at=datetime(2026, 8, 21, 3, tzinfo=UTC),
             note="Attempted review reversal after downstream use",
         )
+
+
+def test_english_artifact_identity_includes_exact_translation_dependency(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    detail_id, first_translation_id = _seed_dependencies(database_path)
+    store = AnalysisStore(database_path)
+    first_analysis_id = _record_pending(
+        database_path,
+        detail_id,
+        first_translation_id,
+    )
+    source = TranslationStore(database_path).latest_source_version("review1")
+    assert source is not None
+    second_translation_id = TranslationStore(database_path).record_artifact(
+        source=source,
+        target_language="en",
+        provider_name="alternate-provider",
+        provider_model="alternate-model",
+        translation_schema_version="english-projection-v2",
+        fields={"title": "Python Developer"},
+        english_document="Python Developer",
+        segment_provenance={"title": "translated"},
+        translated_segment_count=1,
+        native_segment_count=0,
+        translation_sha256="alternate-translation",
+        created_at=datetime(2026, 8, 21, 2, tzinfo=UTC),
+    )
+
+    second_analysis_id = store.record_artifact(
+        job_detail_version_id=detail_id,
+        translation_artifact_id=second_translation_id,
+        model="analysis-model",
+        prompt_version="job-analysis-english-v20",
+        schema_version="job-analysis-v5",
+        analysis={"requirements": [{"concept": "Python"}]},
+        request_body={"local": "second request"},
+        raw_response={"local": "second response"},
+        created_at=datetime(2026, 8, 21, 3, tzinfo=UTC),
+        semantic_review_status=SEMANTIC_REVIEW_PENDING,
+    )
+
+    assert second_analysis_id > first_analysis_id
+    first = store.find_artifact(
+        job_detail_version_id=detail_id,
+        translation_artifact_id=first_translation_id,
+        require_translation_dependency=True,
+        model="analysis-model",
+        prompt_version="job-analysis-english-v20",
+        schema_version="job-analysis-v5",
+    )
+    second = store.find_artifact(
+        job_detail_version_id=detail_id,
+        translation_artifact_id=second_translation_id,
+        require_translation_dependency=True,
+        model="analysis-model",
+        prompt_version="job-analysis-english-v20",
+        schema_version="job-analysis-v5",
+    )
+    assert first is not None and first.id == first_analysis_id
+    assert second is not None and second.id == second_analysis_id

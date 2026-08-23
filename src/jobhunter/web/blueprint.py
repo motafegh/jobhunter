@@ -23,7 +23,7 @@ from jobhunter.role_blueprint_service import (
 )
 from jobhunter.role_blueprint_store import RoleBlueprintStore
 from jobhunter.storage import JobHunterStore
-from jobhunter.web.operations import OperationBusyError, WebOperationResult
+from jobhunter.web.operations import OperationBusyError, WebOperationLink, WebOperationResult
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
@@ -127,7 +127,17 @@ def register_blueprint_routes(app: FastAPI, settings: Settings) -> None:
                 f"Capability areas: {result.capability_areas}\n\n"
                 f"{format_role_blueprint(artifact)}"
             )
-            return WebOperationResult(summary=summary, status="completed")
+            return WebOperationResult(
+                summary=summary,
+                status="completed",
+                links=(
+                    WebOperationLink(
+                        label="Open experimental Blueprint",
+                        url=f"/jobs/{source_job_id}/role-blueprint",
+                    ),
+                    WebOperationLink(label="Open Phase-1 report", url="/report"),
+                ),
+            )
 
         try:
             operation = request.app.state.operations.start(

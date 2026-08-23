@@ -113,6 +113,7 @@ def test_translates_persian_and_reuses_same_artifact(tmp_path: Path) -> None:
     assert artifact.fields["title"] == "Artificial Intelligence Engineer"
     assert artifact.fields["skills"] == ["Python"]
     assert artifact.segment_provenance["skills[0]"] == "native"
+    assert service.missing_source_version_count() == 0
 
 
 def test_native_english_creates_identity_artifact_without_provider(tmp_path: Path) -> None:
@@ -177,6 +178,7 @@ def test_new_semantic_version_requires_new_translation_artifact(tmp_path: Path) 
         fetched_at=base_time + timedelta(hours=1),
     )
     assert TranslationStore(database_path).latest_artifact("abc1") is None
+    assert service.missing_source_version_count() == 1
 
     second = service.translate_job("abc1")
 

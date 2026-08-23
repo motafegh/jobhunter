@@ -71,9 +71,9 @@ Capability v9 public promotion is closed and operationally verified. Normal publ
 The public corpus is also operationally closed and remotely available. The accepted publication baseline is:
 
 ```text
-known/discovered Jobinja jobs: 344
+known/discovered Jobinja jobs: 353
 fetched/parsed detail jobs:      43
-English projections:             33
+current English projections:     20
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
@@ -102,7 +102,7 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 
 ## 5. Current exact next-work rule
 
-The public-corpus implementation/backfill/publish gate is **closed**. Heterogeneous live semantic validation is the active gate.
+Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence is accepted. The active gate is P2.1B manual CLI review workflow; do not broaden it into corpus-wide generation, browser mutation, or personal intelligence.
 
 Current order:
 
@@ -143,7 +143,7 @@ Ability to / Skill in application wording stays non-depth without real depth mar
 
 Fresh English v20 artifacts are `pending` by default. Pending artifacts must remain excluded from Capability, Market, accepted dashboard counts, and `corpus/`. Use `jobhunter jobs review-analysis <job-id> status|accept|reject`; acceptance/rejection requires a meaningful review note. Existing promoted artifacts 36/37 migrate as accepted.
 
-Heterogeneous semantic validation, Market truthfulness/sampling, and source/lifecycle acceptance are closed. Do not rerun accepted anchors merely for wording variation. The exact next Phase-1 gate is partial-success semantics, followed by P1.7 report/run/browser acceptance.
+Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 are closed. Do not rerun accepted anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
 
 For each heterogeneous role review factual coverage, evidence, requirement strength, explicit depth, role-level constraints, Capability coverage/grouping/source truth, and optionality calibration.
 
@@ -154,10 +154,10 @@ After heterogeneous semantic acceptance:
 ```text
 Market truthfulness/sampling
 → source/lifecycle acceptance
-→ partial-success semantics
-→ P1.7 report/run/browser acceptance
-→ Phase-1 closure
-→ only then corpus-wide Phase 2
+→ partial-success semantics accepted
+→ P1.7 report/run/browser accepted
+→ Phase-1 closure accepted
+→ focused Phase-2 canonical concept registry
 ```
 
 ## 6. Permanent semantic boundaries

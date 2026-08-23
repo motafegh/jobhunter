@@ -81,8 +81,7 @@ class AnalysisStore:
                     semantic_reviewed_at TEXT,
                     semantic_review_note TEXT,
                     FOREIGN KEY(job_detail_version_id) REFERENCES job_detail_versions(id),
-                    FOREIGN KEY(translation_artifact_id) REFERENCES job_translation_artifacts(id),
-                    UNIQUE(job_detail_version_id, model, prompt_version, schema_version)
+                    FOREIGN KEY(translation_artifact_id) REFERENCES job_translation_artifacts(id)
                 );
 
                 CREATE TABLE IF NOT EXISTS job_analysis_attempts (
@@ -143,11 +142,101 @@ class AnalysisStore:
                 connection.execute(
                     "ALTER TABLE job_analysis_artifacts ADD COLUMN semantic_review_note TEXT"
                 )
+        self._migrate_translation_dependency_identity()
+
+    def _migrate_translation_dependency_identity(self) -> None:
+        """Make an English projection artifact part of P1.6 artifact identity.
+
+        The original table-level uniqueness omitted ``translation_artifact_id``. That
+        made a new projection for an unchanged source version silently reuse analysis
+        derived from the previous projection. Partial unique indexes retain one
+        original-language artifact per contract while preserving separately versioned
+        English dependencies.
+        """
+
+        with self._connect() as connection:
+            table_sql_row = connection.execute(
+                "SELECT sql FROM sqlite_master "
+                "WHERE type = 'table' AND name = 'job_analysis_artifacts'"
+            ).fetchone()
+            table_sql = str(table_sql_row["sql"] or "") if table_sql_row else ""
+            normalized_sql = "".join(table_sql.split()).casefold()
+            legacy_unique = (
+                "unique(job_detail_version_id,model,prompt_version,schema_version)"
+                in normalized_sql
+            )
+
+        if legacy_unique:
+            with self._connect() as connection:
+                connection.execute("PRAGMA foreign_keys=OFF")
+                connection.executescript(
+                    """
+                    BEGIN IMMEDIATE;
+                    CREATE TABLE job_analysis_artifacts_dependency_v2 (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        job_detail_version_id INTEGER NOT NULL,
+                        translation_artifact_id INTEGER,
+                        model TEXT NOT NULL,
+                        prompt_version TEXT NOT NULL,
+                        schema_version TEXT NOT NULL,
+                        analysis_json TEXT NOT NULL,
+                        request_json TEXT NOT NULL,
+                        raw_response_json TEXT NOT NULL,
+                        created_at TEXT NOT NULL,
+                        semantic_review_status TEXT NOT NULL DEFAULT 'accepted'
+                            CHECK(semantic_review_status IN ('pending', 'accepted')),
+                        semantic_reviewed_at TEXT,
+                        semantic_review_note TEXT,
+                        FOREIGN KEY(job_detail_version_id) REFERENCES job_detail_versions(id),
+                        FOREIGN KEY(translation_artifact_id)
+                            REFERENCES job_translation_artifacts(id)
+                    );
+                    INSERT INTO job_analysis_artifacts_dependency_v2(
+                        id, job_detail_version_id, translation_artifact_id, model,
+                        prompt_version, schema_version, analysis_json, request_json,
+                        raw_response_json, created_at, semantic_review_status,
+                        semantic_reviewed_at, semantic_review_note
+                    )
+                    SELECT
+                        id, job_detail_version_id, translation_artifact_id, model,
+                        prompt_version, schema_version, analysis_json, request_json,
+                        raw_response_json, created_at, semantic_review_status,
+                        semantic_reviewed_at, semantic_review_note
+                    FROM job_analysis_artifacts;
+                    DROP TABLE job_analysis_artifacts;
+                    ALTER TABLE job_analysis_artifacts_dependency_v2
+                        RENAME TO job_analysis_artifacts;
+                    COMMIT;
+                    """
+                )
+
+        with self._connect() as connection:
+            connection.executescript(
+                """
+                CREATE UNIQUE INDEX IF NOT EXISTS uq_analysis_original_contract
+                ON job_analysis_artifacts(
+                    job_detail_version_id, model, prompt_version, schema_version
+                )
+                WHERE translation_artifact_id IS NULL;
+
+                CREATE UNIQUE INDEX IF NOT EXISTS uq_analysis_english_dependency_contract
+                ON job_analysis_artifacts(
+                    job_detail_version_id, translation_artifact_id,
+                    model, prompt_version, schema_version
+                )
+                WHERE translation_artifact_id IS NOT NULL;
+
+                CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_version
+                ON job_analysis_artifacts(job_detail_version_id, id DESC);
+                """
+            )
 
     def find_artifact(
         self,
         *,
         job_detail_version_id: int,
+        translation_artifact_id: int | None = None,
+        require_translation_dependency: bool = False,
         model: str,
         prompt_version: str,
         schema_version: str,
@@ -162,9 +251,38 @@ class AnalysisStore:
                 JOIN job_postings AS p ON p.id = v.job_posting_id
                 WHERE a.job_detail_version_id = ? AND a.model = ?
                   AND a.prompt_version = ? AND a.schema_version = ?
+                  AND (? = 0 OR a.translation_artifact_id = ?)
+                ORDER BY a.id DESC
                 LIMIT 1
                 """,
-                (job_detail_version_id, model, prompt_version, schema_version),
+                (
+                    job_detail_version_id,
+                    model,
+                    prompt_version,
+                    schema_version,
+                    int(require_translation_dependency),
+                    translation_artifact_id,
+                ),
+            ).fetchone()
+        return _artifact(row) if row is not None else None
+
+    def artifact_by_id(self, artifact_id: int) -> AnalysisArtifact | None:
+        """Return one immutable analysis artifact by ID."""
+
+        if artifact_id <= 0:
+            raise ValueError("artifact_id must be greater than zero")
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT a.*, p.source_job_id
+                FROM job_analysis_artifacts AS a
+                JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
+                JOIN job_postings AS p ON p.id = v.job_posting_id
+                WHERE a.id = ?
+                LIMIT 1
+                """,
+                (artifact_id,),
             ).fetchone()
         return _artifact(row) if row is not None else None
 
@@ -254,6 +372,8 @@ class AnalysisStore:
         prompt_version: str | None = None,
         schema_version: str | None = None,
         accepted_only: bool = False,
+        translation_artifact_id: int | None = None,
+        require_translation_dependency: bool = False,
     ) -> AnalysisArtifact | None:
         """Return current-source analysis matching the requested analysis contract."""
 
@@ -274,6 +394,7 @@ class AnalysisStore:
                   AND (? IS NULL OR a.prompt_version = ?)
                   AND (? IS NULL OR a.schema_version = ?)
                   AND (? = 0 OR a.semantic_review_status = 'accepted')
+                  AND (? = 0 OR a.translation_artifact_id = ?)
                 ORDER BY a.id DESC
                 LIMIT 1
                 """,
@@ -286,6 +407,8 @@ class AnalysisStore:
                     schema_version,
                     schema_version,
                     int(accepted_only),
+                    int(require_translation_dependency),
+                    translation_artifact_id,
                 ),
             ).fetchone()
         return _artifact(row) if row is not None else None
@@ -361,6 +484,8 @@ class AnalysisStore:
         disposition: str,
         reviewed_at: datetime,
         note: str,
+        translation_artifact_id: int | None = None,
+        require_translation_dependency: bool = False,
     ) -> AnalysisReviewResult:
         """Accept or archive/reject one current-contract analysis after human review."""
 
@@ -375,6 +500,8 @@ class AnalysisStore:
             model=model,
             prompt_version=prompt_version,
             schema_version=schema_version,
+            translation_artifact_id=translation_artifact_id,
+            require_translation_dependency=require_translation_dependency,
         )
         if artifact is None:
             raise LookupError("Job has no current analysis artifact matching the review contract")

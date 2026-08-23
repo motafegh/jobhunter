@@ -23,7 +23,8 @@ from jobhunter.capability_service import (
 from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.config import Settings
 from jobhunter.storage import JobHunterStore
-from jobhunter.web.operations import OperationBusyError, WebOperationResult
+from jobhunter.translation_service import build_translation_service
+from jobhunter.web.operations import OperationBusyError, WebOperationLink, WebOperationResult
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
@@ -57,13 +58,22 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
         detail = source_store.get_latest_job_detail(source_job_id)
         analysis_model = settings.effective_analysis_lm_studio_model()
         capability_model = settings.effective_capability_lm_studio_model()
-        english_analysis = AnalysisStore(settings.database_path).latest_current(
-            source_job_id,
-            model=analysis_model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
-            accepted_only=True,
-        )
+        translation = build_translation_service(settings).current_artifact(source_job_id)
+        english_analysis = None
+        if translation is not None and analysis_model is not None:
+            english_analysis = AnalysisStore(settings.database_path).find_artifact(
+                job_detail_version_id=translation.job_detail_version_id,
+                translation_artifact_id=translation.id,
+                require_translation_dependency=True,
+                model=analysis_model,
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            )
+            if (
+                english_analysis is not None
+                and english_analysis.semantic_review_status != "accepted"
+            ):
+                english_analysis = None
         capability_artifact = CapabilityIntelligenceStore(
             settings.database_path
         ).latest_current(
@@ -128,7 +138,17 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
                 f"Capabilities: {result.capabilities}\n\n"
                 f"{format_capability_intelligence(artifact)}"
             )
-            return WebOperationResult(summary=summary, status="completed")
+            return WebOperationResult(
+                summary=summary,
+                status="completed",
+                links=(
+                    WebOperationLink(
+                        label="Open capability",
+                        url=f"/jobs/{source_job_id}/capability-intelligence",
+                    ),
+                    WebOperationLink(label="Open Phase-1 report", url="/report"),
+                ),
+            )
 
         try:
             operation = request.app.state.operations.start(

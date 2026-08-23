@@ -1,7 +1,7 @@
 # Phase 1 — Jobinja Workflow Automation Plan
 
 **Status:** Active implementation/acceptance plan  
-**Date:** 2026-08-21  
+**Date:** 2026-08-23
 **Scope:** Phase 1  
 **Primary source:** Jobinja (`https://jobinja.ir/`)  
 **Branch policy:** Work directly on `main` unless the repository owner explicitly changes this rule or a concrete isolation need is agreed first.
@@ -432,9 +432,9 @@ jobhunter-public-corpus-v1
 Accepted real publication baseline:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -443,7 +443,7 @@ Capabilities:                  5
 Important interpretation:
 
 ```text
-344 known/discovered jobs != 344 fully fetched advertisements
+353 known/discovered jobs != 353 fully fetched advertisements
 ```
 
 Discovery-only identities remain useful with `current_detail: null`; only fetched/parsed jobs are eligible heterogeneous anchors.
@@ -487,7 +487,7 @@ Before Phase-1 Market acceptance:
 
 ---
 
-## 16. Partial-success semantics
+## 16. Partial-success semantics — accepted
 
 For multi-stage workflows expose where applicable:
 
@@ -507,6 +507,8 @@ Valid earlier durable work remains even if a later stage fails.
 
 Browser and CLI must agree on the underlying semantics.
 
+The complete browser workflow now invokes the same `Phase1RunService` and formatter as `jobhunter run`. The shared ledger exposes exact requested limits/selections, attempted, completed, reused/unchanged, failed, intentionally skipped, and remaining-eligible counts. Translation backlog counting is independent from its bounded batch selection. Quick Add preserves mixed detail/translation/analysis outcomes, and the browser operation manager projects durable successes even when the terminal result requires attention.
+
 ---
 
 ## 17. Current delivery state
@@ -525,7 +527,7 @@ Browser and CLI must agree on the underlying semantics.
 | Role Blueprint v6/v5 | Implemented experimental; Phase-1 deferred/non-authoritative |
 | Review Snapshot v1 | Accepted current-chain routing |
 | Public Corpus v1 | Implemented, populated, verified, published, remotely available |
-| P1.7 Market/run/reporting | Partial implementation / closure acceptance pending |
+| P1.7 Market/run/reporting | Accepted / closed |
 
 ---
 
@@ -537,24 +539,23 @@ Do not restart historical semantic-calibration checklists. Continue from the act
 1. preserve accepted heterogeneous chains: tmBK 39→13, t4qV 44→14, tmyX 46→15
 2. preserve accepted Market truthfulness/sampling behavior
 3. preserve accepted source/lifecycle behavior
-4. complete partial-success semantics
-5. complete P1.7 report/run/browser acceptance
-6. close Phase 1
-7. only then begin corpus-wide Phase 2
+4. preserve accepted partial-success semantics
+5. preserve accepted P1.7 report/run/browser behavior
+6. preserve the closed Phase-1 contract boundary
+7. begin focused P2.1 canonical concept registry work
 ```
 
 The operational details live in `docs/EXECUTION_TODO.md`.
 
 ---
 
-## 19. Phase-1 closure after semantic acceptance
+## 19. Phase-1 closure — accepted
 
-Remaining closure areas include:
+Accepted closure evidence includes:
 
 - Market sampling/concentration truthfulness;
 - source failure/lifecycle regression/live acceptance;
 - last-successful/consecutive-failure visibility;
-- explicit partial-success result semantics;
 - final per-job/report links;
 - current-corpus report;
 - final bounded `jobhunter run` acceptance;
@@ -566,7 +567,7 @@ Remaining closure areas include:
 
 ## 20. Explicit non-claims
 
-Phase 1 is not complete.
+Phase 1 is complete on the documented bounded contracts and representative semantic anchors.
 
 JobHunter does not yet claim:
 

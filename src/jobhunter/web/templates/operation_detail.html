@@ -15,6 +15,9 @@
     <span></span>
   </div>
   <pre class="operation-output" data-operation-output>{% if operation.error %}{{ operation.error }}{% elif operation.summary %}{{ operation.summary }}{% else %}Operation is {{ operation.status }}. This page updates automatically.{% endif %}</pre>
+  <div class="topbar-actions" data-operation-links{% if not operation.links %} hidden{% endif %}>
+    {% for link in operation.links %}<a class="button ghost" href="{{ link.url }}">{{ link.label }}</a>{% endfor %}
+  </div>
   {% if return_to %}<p class="operation-return muted" data-operation-return>{% if operation.status == 'completed' and auto_return %}Returning to the previous screen…{% elif operation.status in ['completed_with_failures', 'failed'] %}Operation finished with attention required. Review the result before continuing.{% else %}When this operation finishes, use “{{ return_label }}” above to continue.{% endif %}</p>{% endif %}
 </section>
 {% endblock %}

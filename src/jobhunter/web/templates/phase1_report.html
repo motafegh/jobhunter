@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Phase-1 report · JobHunter{% endblock %}
+{% block heading %}Phase-1 report{% endblock %}
+{% block eyebrow %}Exact current corpus state and dependency queues{% endblock %}
+
+{% block content %}
+<section class="metric-grid three">
+  <article class="metric-card"><span class="metric-label">Discovered</span><strong class="metric-value">{{ report.discovered_jobs }}</strong><span class="metric-help">Known Jobinja identities</span></article>
+  <article class="metric-card"><span class="metric-label">Parsed</span><strong class="metric-value">{{ report.current_parsed_jobs }}</strong><span class="metric-help">Current successfully parsed details</span></article>
+  <article class="metric-card"><span class="metric-label">English projections</span><strong class="metric-value">{{ report.current_english_projections }}</strong><span class="metric-help">Configured provider/model/schema identity</span></article>
+  <article class="metric-card"><span class="metric-label">Pending P1.6</span><strong class="metric-value">{{ report.pending_english_analyses }}</strong><span class="metric-help">Exact dependency, awaiting semantic review</span></article>
+  <article class="metric-card accent"><span class="metric-label">Accepted P1.6</span><strong class="metric-value">{{ report.accepted_english_analyses }}</strong><span class="metric-help">Exact current English dependency</span></article>
+  <article class="metric-card"><span class="metric-label">Capability chains</span><strong class="metric-value">{{ report.current_capabilities }}</strong><span class="metric-help">Exact accepted P1.6 dependency</span></article>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Next work</p><h2>Deterministic action queues</h2></div><span class="badge">Read-only</span></div>
+  <div class="guide-content">
+    <p><strong>Translation missing ({{ report.translation_missing|length }}):</strong> {{ report.translation_missing|join(', ') or 'none' }}</p>
+    <p><strong>Analysis ready ({{ report.analysis_ready|length }}):</strong> {{ report.analysis_ready|join(', ') or 'none' }}</p>
+    <p><strong>Analysis pending review ({{ report.analysis_pending_review|length }}):</strong> {{ report.analysis_pending_review|join(', ') or 'none' }}</p>
+    <p><strong>Capability ready ({{ report.capability_ready|length }}):</strong> {{ report.capability_ready|join(', ') or 'none' }}</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Artifact lineage</p><h2>Current parsed jobs</h2></div><span class="badge good">{{ report.current_chains|length }} complete chains</span></div>
+  <p class="muted">An artifact is current here only when its configured contract and every immutable upstream artifact ID match. Pending analysis is never counted as accepted or Capability-ready.</p>
+  {% if report.rows %}
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Job</th><th>Source</th><th>English</th><th>P1.6</th><th>Capability</th><th>State</th></tr></thead>
+      <tbody>
+      {% for row in report.rows %}
+        <tr>
+          <td><a href="/jobs/{{ row.source_job_id }}"><strong>{{ row.title }}</strong></a><small>{{ row.source_job_id }} · {{ row.triage_state }}</small></td>
+          <td>detail {{ row.job_detail_version_id }}<small>{{ row.source_language }} · {{ row.parser_version }}</small></td>
+          <td>{% if row.translation_artifact_id %}artifact {{ row.translation_artifact_id }}<small>{{ row.translation_identity }}</small>{% else %}—{% endif %}</td>
+          <td>{% if row.analysis_artifact_id %}artifact {{ row.analysis_artifact_id }}<small>{{ row.analysis_review_status }}</small>{% else %}—{% endif %}</td>
+          <td>{% if row.capability_artifact_id %}<a href="/jobs/{{ row.source_job_id }}/capability-intelligence">artifact {{ row.capability_artifact_id }}</a>{% else %}—{% endif %}</td>
+          <td><span class="badge {{ 'good' if row.chain_status == 'current' else ('warn' if row.chain_status in ['analysis_pending_review', 'analysis_ready', 'capability_ready'] else '') }}">{{ row.chain_status }}</span></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}<div class="empty-state tall">No current parsed Jobinja detail versions exist yet.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Market boundary</p><h2>Current accepted sample</h2></div><span class="badge">N = {{ report.market.analyzed_jobs }}</span></div>
+  <div class="guide-content">
+    <p><strong>Source scope:</strong> {{ report.market.source_scope }}.</p>
+    <p><strong>Filter scope:</strong> {{ report.market.filter_scope }}.</p>
+    <p><strong>Duplicate adjustment:</strong> {{ report.market.duplicate_adjustment }}.</p>
+    {% if report.market.sample_warning %}<p><strong>Sampling warning:</strong> {{ report.market.sample_warning }}</p>{% endif %}
+    {% if report.market.concentration_warning %}<p><strong>Concentration warning:</strong> {{ report.market.concentration_warning }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Contract boundary</p><h2>Configured public-current identities</h2></div></div>
+  <div class="guide-content">
+    <p><strong>Parser versions:</strong> {{ report.parser_versions|join(', ') or 'none' }}.</p>
+    <p><strong>English projection:</strong> {{ report.translation_schema_version }}.</p>
+    <p><strong>Analysis model:</strong> {{ report.analysis_model or 'not configured' }}.</p>
+    <p><strong>Capability model:</strong> {{ report.capability_model or 'not configured' }}.</p>
+    <p>This report does not run acquisition or inference and does not treat Blueprint as a Phase-1 decision layer.</p>
+  </div>
+</section>
+{% endblock %}

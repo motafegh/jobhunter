@@ -39,15 +39,25 @@ from jobhunter.jobinja_discovery import (
 from jobhunter.jobinja_sync import JobinjaSyncService, JobinjaSyncSummary
 from jobhunter.lifecycle import LifecycleStore
 from jobhunter.market_insights import MarketInsights
+from jobhunter.phase1_report import build_phase1_report_service
+from jobhunter.phase1_run import (
+    build_phase1_run_service,
+    format_phase1_run_summary,
+)
+from jobhunter.phase1_run import configured_searches as configured_phase1_searches
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
-from jobhunter.translation import GoogleCloudTranslationProvider, LMStudioTranslationProvider
 from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_export import export_english_corpus
-from jobhunter.translation_service import TranslationService, format_translation_batch_summary
+from jobhunter.translation_service import (
+    TranslationService,
+    build_translation_service,
+    format_translation_batch_summary,
+)
 from jobhunter.translation_store import TranslationStore
 from jobhunter.web.operations import (
     OperationBusyError,
+    WebOperationLink,
     WebOperationManager,
     WebOperationResult,
 )
@@ -99,38 +109,7 @@ def _discovery_service(settings: Settings, *, request_budget: int) -> JobinjaDis
 
 
 def _translation_service(settings: Settings) -> TranslationService:
-    provider = None
-    if (
-        settings.translation_enabled
-        and settings.translation_provider == "google-cloud"
-        and not settings.google_translation_api_key
-    ):
-        raise ValueError(
-            "Google translation is enabled but "
-            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
-        )
-    if settings.translation_enabled and settings.translation_provider == "lm-studio":
-        provider = LMStudioTranslationProvider(
-            base_url=settings.lm_studio_base_url,
-            configured_model=settings.effective_translation_lm_studio_model(),
-            api_token=settings.lm_studio_api_token,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-            max_tokens=settings.translation_lm_studio_max_tokens,
-            request_character_target=settings.translation_lm_studio_character_target,
-        )
-    elif settings.translation_enabled and settings.translation_provider == "google-cloud":
-        provider = GoogleCloudTranslationProvider(
-            api_key=settings.google_translation_api_key or "",
-            model=settings.google_translation_model,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-        )
-    return TranslationService(
-        store=TranslationStore(settings.database_path),
-        provider=provider,
-        target_language=settings.translation_target_language,
-    )
+    return build_translation_service(settings)
 
 
 def _analysis_service(settings: Settings) -> JobAnalysisService:
@@ -143,6 +122,7 @@ def _market_insights(settings: Settings) -> MarketInsights:
         analysis_model=settings.effective_analysis_lm_studio_model(),
         analysis_prompt_version=ENGLISH_PROMPT_VERSION,
         analysis_schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+        translation_service=_translation_service(settings),
     )
 
 
@@ -221,10 +201,23 @@ def _start_operation(
     )
 
 
-def _operation_result(summary: str, *, has_failures: bool) -> WebOperationResult:
+def _operation_result(
+    summary: str,
+    *,
+    has_failures: bool,
+    links: tuple[WebOperationLink, ...] = (),
+) -> WebOperationResult:
     return WebOperationResult(
         summary=summary,
         status="completed_with_failures" if has_failures else "completed",
+        links=links,
+    )
+
+
+def _job_links(job_ids: tuple[str, ...]) -> tuple[WebOperationLink, ...]:
+    return tuple(
+        WebOperationLink(label=f"Open job {job_id}", url=f"/jobs/{job_id}")
+        for job_id in dict.fromkeys(job_ids)
     )
 
 
@@ -297,30 +290,59 @@ def _translation_output(
     return "\n\n" + format_translation_batch_summary(summary)
 
 
-def _complete_processing_output(
+def _complete_processing_result(
     settings: Settings,
     job_ids: tuple[str, ...],
     *,
     requested: bool,
-) -> str:
-    if not requested or not job_ids:
-        return ""
+) -> WebOperationResult:
+    if not requested:
+        return WebOperationResult(
+            summary=(
+                "Complete processing\n"
+                "Skipped intentionally: English projection and analysis were not requested."
+            )
+        )
+    if not job_ids:
+        return WebOperationResult(
+            summary=(
+                "Complete processing\n"
+                "Skipped intentionally: no successfully fetched jobs were eligible."
+            )
+        )
     if not settings.translation_enabled:
-        return "\n\nComplete processing skipped: translation is disabled."
+        return WebOperationResult(
+            summary=(
+                "Complete processing\n"
+                "Skipped intentionally: translation is disabled in configuration."
+            ),
+            status="completed_with_failures",
+        )
 
     translation = _translation_service(settings).run(source_job_ids=job_ids)
-    output = "\n\n" + format_translation_batch_summary(translation)
+    sections = [format_translation_batch_summary(translation)]
+    has_failures = bool(translation.failures)
     ready_ids = tuple(result.source_job_id for result in translation.results)
     if not ready_ids:
-        return output + "\n\nEnglish analysis skipped: no fetched jobs have current English v2."
+        sections.append(
+            "English analysis\n"
+            "Skipped intentionally: no requested jobs produced a current English projection."
+        )
+        return _operation_result("\n\n".join(sections), has_failures=has_failures)
     if not settings.effective_analysis_lm_studio_model():
-        return output + "\n\nEnglish analysis skipped: no analysis model is configured."
+        sections.append(
+            "English analysis\n"
+            "Skipped intentionally: no analysis model is configured."
+        )
+        return _operation_result("\n\n".join(sections), has_failures=True)
 
     analysis = _analysis_service(settings).run_english(
         ready_ids,
         limit=min(len(ready_ids), settings.analysis_batch_limit, 20),
     )
-    return output + "\n\n" + format_analysis_batch_summary(analysis)
+    sections.append(format_analysis_batch_summary(analysis))
+    has_failures = has_failures or bool(analysis.failures)
+    return _operation_result("\n\n".join(sections), has_failures=has_failures)
 
 
 def _full_workflow_output(
@@ -334,92 +356,28 @@ def _full_workflow_output(
     translation_limit: int,
     analysis_limit: int,
 ) -> WebOperationResult:
-    sync = _run_sync(
+    searches = configured_phase1_searches(settings, limit=search_limit)
+    if not searches:
+        raise ValueError("No enabled Jobinja searches are configured for the complete run")
+    summary = build_phase1_run_service(
         settings,
-        search_limit=search_limit,
         request_budget=request_budget,
+    ).run(
+        searches,
         missing_limit=missing_limit,
         refresh_limit=refresh_limit,
         refresh_after_hours=refresh_after_hours,
+        translation_limit=translation_limit,
+        analysis_limit=analysis_limit,
     )
-    has_failures = not sync.succeeded
-    sections = ["Complete JobHunter market update", format_web_sync_summary(sync)]
-    preferred_ids = _successful_detail_ids(sync)
-
-    if settings.translation_enabled:
-        translated = _translation_service(settings).run(
-            missing=True,
-            limit=translation_limit,
-            preferred_ids=preferred_ids,
-        )
-        has_failures = has_failures or bool(translated.failures)
-        sections.append(format_translation_batch_summary(translated))
-    else:
-        has_failures = True
-        sections.append(
-            "English v2 stage\nSkipped because translation is disabled in configuration."
-        )
-
-    model = settings.effective_analysis_lm_studio_model()
-    if model:
-        repository = WebRepository(settings.database_path, analysis_model=model)
-        ready_rows = repository.list_jobs(
-            detail="available",
-            translation="available",
-            analysis="missing",
-            limit=500,
-        )
-        ready_set = {
-            row.source_job_id
-            for row in ready_rows
-            if row.triage_state != "not_relevant"
-        }
-        ordered_ids = tuple(
-            job_id
-            for job_id in dict.fromkeys(
-                (*preferred_ids, *(row.source_job_id for row in ready_rows))
-            )
-            if job_id in ready_set
-        )
-        if ordered_ids:
-            analyzed = _analysis_service(settings).run_english(
-                ordered_ids,
-                limit=analysis_limit,
-            )
-            has_failures = has_failures or bool(analyzed.failures)
-            sections.append(format_analysis_batch_summary(analyzed))
-        else:
-            sections.append(
-                "English-projection evidence-backed job analysis\n"
-                "No eligible current jobs need English analysis."
-            )
-    else:
-        has_failures = True
-        sections.append(
-            "English-projection evidence-backed job analysis\n"
-            "Skipped because no analysis model is configured."
-        )
-
-    market = _market_insights(settings).market_summary()
-    sections.append(
-        "Market view\n"
-        f"Discovered Jobinja identities: {market.discovered_jobs}\n"
-        f"Current parsed jobs: {market.current_parsed_jobs}\n"
-        f"Current accepted English analyses: {market.analyzed_jobs}\n"
-        f"Distinct employers in analyzed sample: {market.distinct_employers}\n"
-        f"Responsibility claims: {market.responsibility_claims}\n"
-        f"Requirement claims: {market.requirement_claims}\n"
-        f"Source scope: {market.source_scope}\n"
-        f"Filter scope: {market.filter_scope}\n"
-        f"Duplicate adjustment: {market.duplicate_adjustment}\n"
-        "Market reads only the normalized English-analysis contract; original-language analyses "
-        "remain separate review artifacts."
+    return WebOperationResult(
+        summary=format_phase1_run_summary(summary),
+        status=summary.status,
+        links=(
+            WebOperationLink(label="Open Phase-1 report", url="/report"),
+            WebOperationLink(label="Open Market", url="/market"),
+        ),
     )
-    if market.sample_warning:
-        sections.append(f"Market sampling warning\n{market.sample_warning}")
-    if market.concentration_warning:
-        sections.append(f"Market concentration warning\n{market.concentration_warning}")
-    return _operation_result("\n\n".join(sections), has_failures=has_failures)
 
 
 def create_app(
@@ -515,6 +473,19 @@ def create_app(
             ),
         )
 
+    @app.get("/report", response_class=HTMLResponse)
+    def phase1_report(request: Request):
+        report = build_phase1_report_service(settings).build()
+        return _TEMPLATES.TemplateResponse(
+            request=request,
+            name="phase1_report.html",
+            context=_template_context(
+                request,
+                page="report",
+                report=report,
+            ),
+        )
+
     @app.get("/jobs/{source_job_id}", response_class=HTMLResponse)
     def job_detail(request: Request, source_job_id: str):
         store = JobHunterStore(settings.database_path)
@@ -536,12 +507,16 @@ def create_app(
         )
         model = settings.effective_analysis_lm_studio_model()
         analysis_store = AnalysisStore(settings.database_path)
-        english_analysis_artifact = analysis_store.latest_current(
-            source_job_id,
-            model=model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
-        )
+        english_analysis_artifact = None
+        if translation is not None and model is not None:
+            english_analysis_artifact = analysis_store.find_artifact(
+                job_detail_version_id=translation.job_detail_version_id,
+                translation_artifact_id=translation.id,
+                require_translation_dependency=True,
+                model=model,
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            )
         original_analysis_artifact = analysis_store.latest_current(
             source_job_id,
             model=model,
@@ -655,13 +630,7 @@ def create_app(
 
     @app.get("/system", response_class=HTMLResponse)
     def system_page(request: Request):
-        source_store = TranslationStore(settings.database_path)
-        sources = source_store.latest_source_versions(limit=5000)
-        current_english = sum(
-            _translation_service(settings).current_artifact(source.source_job_id) is not None
-            for source in sources
-        )
-        model = settings.effective_analysis_lm_studio_model()
+        report = build_phase1_report_service(settings).build()
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="system.html",
@@ -669,17 +638,9 @@ def create_app(
                 request,
                 page="system",
                 settings=settings,
-                parsed_versions=len(sources),
-                english_artifacts=current_english,
-                analysis_artifacts=len(
-                    AnalysisStore(settings.database_path).list_current(
-                        limit=5000,
-                        model=model,
-                        prompt_version=ENGLISH_PROMPT_VERSION,
-                        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
-                        accepted_only=True,
-                    )
-                ),
+                parsed_versions=report.current_parsed_jobs,
+                english_artifacts=report.current_english_projections,
+                analysis_artifacts=report.accepted_english_analyses,
                 translation_schema=TRANSLATION_SCHEMA_VERSION,
             ),
         )
@@ -832,7 +793,7 @@ def create_app(
         except ValueError as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-        def action() -> str:
+        def action() -> WebOperationResult:
             if target.kind == "job":
                 assert target.job is not None
                 store = JobHunterStore(settings.database_path)
@@ -850,10 +811,21 @@ def create_app(
                         format_batch_fetch_summary(detail_summary),
                     ]
                 )
-                return output + _complete_processing_output(
+                processing = _complete_processing_result(
                     settings,
                     successful_ids,
                     requested=translate_after,
+                )
+                return _operation_result(
+                    output + "\n\n" + processing.summary,
+                    has_failures=(
+                        bool(detail_summary.failures)
+                        or processing.status == "completed_with_failures"
+                    ),
+                    links=(
+                        WebOperationLink(label="Open Phase-1 report", url="/report"),
+                        *_job_links((target.job.source_job_id,)),
+                    ),
                 )
 
             assert target.search_url is not None
@@ -876,14 +848,37 @@ def create_app(
                 ]
             )
             if not selected_ids:
-                return output + "\n\nNo detail pages selected."
+                processing = _complete_processing_result(
+                    settings,
+                    (),
+                    requested=translate_after,
+                )
+                return _operation_result(
+                    output + "\n\nNo detail pages selected.\n\n" + processing.summary,
+                    has_failures=bool(discovery.failures),
+                    links=(
+                        WebOperationLink(label="Open Phase-1 report", url="/report"),
+                    ),
+                )
             detail_summary = _batch_service(settings).run(selected_ids)
             successful_ids = tuple(item.source_job_id for item in detail_summary.results)
             output += "\n\n" + format_batch_fetch_summary(detail_summary)
-            return output + _complete_processing_output(
+            processing = _complete_processing_result(
                 settings,
                 successful_ids,
                 requested=translate_after,
+            )
+            return _operation_result(
+                output + "\n\n" + processing.summary,
+                has_failures=(
+                    bool(discovery.failures)
+                    or bool(detail_summary.failures)
+                    or processing.status == "completed_with_failures"
+                ),
+                links=(
+                    WebOperationLink(label="Open Phase-1 report", url="/report"),
+                    *_job_links(successful_ids),
+                ),
             )
 
         label = (
@@ -1191,6 +1186,9 @@ def create_app(
             raise HTTPException(status_code=400, detail="Unsupported review disposition")
 
         def action() -> WebOperationResult:
+            translation = _translation_service(settings).current_artifact(source_job_id)
+            if translation is None:
+                raise ValueError("No configured current English projection exists")
             result = AnalysisStore(settings.database_path).review_current(
                 source_job_id,
                 model=settings.effective_analysis_lm_studio_model(),
@@ -1199,6 +1197,8 @@ def create_app(
                 disposition=disposition,
                 reviewed_at=datetime.now(UTC),
                 note=reason,
+                translation_artifact_id=translation.id,
+                require_translation_dependency=True,
             )
             return WebOperationResult(
                 summary=(
@@ -1208,6 +1208,10 @@ def create_app(
                     f"Disposition: {result.disposition}"
                 ),
                 status="completed",
+                links=(
+                    WebOperationLink(label="Open Phase-1 report", url="/report"),
+                    *_job_links((source_job_id,)),
+                ),
             )
 
         return _start_operation(

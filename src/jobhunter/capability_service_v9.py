@@ -35,6 +35,7 @@ from jobhunter.capability_v9_models import (
     reconcile_capability_intelligence_v9,
 )
 from jobhunter.config import Settings
+from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
 CAPABILITY_PROMPT_VERSION = "job-capability-intelligence-v9"
@@ -239,6 +240,7 @@ class CapabilityIntelligenceServiceV9:
         provider: CapabilityV8InferenceProvider,
         analysis_model: str,
         capability_model: str,
+        translation_service: TranslationService | None = None,
         max_tokens: int = 8192,
     ) -> None:
         self._delegate = CapabilityIntelligenceServiceV8(
@@ -248,6 +250,7 @@ class CapabilityIntelligenceServiceV9:
             provider=_CapabilityInferenceV9Adapter(provider),
             analysis_model=analysis_model,
             capability_model=capability_model,
+            translation_service=translation_service,
             max_tokens=max_tokens,
             reasoning_draft_model=CapabilityReasoningDraftV9,
             reconciler=reconcile_capability_intelligence_v9,

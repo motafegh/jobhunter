@@ -32,6 +32,7 @@ from jobhunter.cli import build_parser as build_legacy_parser
 from jobhunter.cli import main as legacy_main
 from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.inference import InferenceProviderError
+from jobhunter.phase1_report import build_phase1_report_service, format_phase1_report
 from jobhunter.phase1_run import (
     build_phase1_run_service,
     configured_searches,
@@ -47,6 +48,7 @@ from jobhunter.role_blueprint_service import (
 )
 from jobhunter.role_blueprint_store import RoleBlueprintStore
 from jobhunter.source_health import SourceHealthReader, format_source_health
+from jobhunter.translation_service import build_translation_service
 
 
 def _bounded_int(name: str, *, minimum: int, maximum: int):
@@ -144,6 +146,23 @@ def _health_parser(*, default_config: Path | None = None) -> argparse.ArgumentPa
         ),
     )
     parser.add_argument("job_id", help="Stable Jobinja job ID")
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=default_config,
+        help="TOML configuration path (default: ./jobhunter.toml)",
+    )
+    return parser
+
+
+def _report_parser(*, default_config: Path | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        prog="jobhunter report",
+        description=(
+            "Show exact current Phase-1 corpus counts, action queues, and accepted "
+            "artifact lineages without mutating local state."
+        ),
+    )
     parser.add_argument(
         "--config",
         type=Path,
@@ -284,6 +303,23 @@ def _extract_run_invocation(
     return False, None, arguments
 
 
+def _extract_top_level_invocation(
+    arguments: list[str],
+    command: str,
+) -> tuple[bool, Path | None, list[str]]:
+    if arguments and arguments[0] == command:
+        return True, None, arguments[1:]
+    if len(arguments) >= 3 and arguments[0] == "--config" and arguments[2] == command:
+        return True, Path(arguments[1]), arguments[3:]
+    if (
+        len(arguments) >= 2
+        and arguments[0].startswith("--config=")
+        and arguments[1] == command
+    ):
+        return True, Path(arguments[0].split("=", 1)[1]), arguments[2:]
+    return False, None, arguments
+
+
 def _extract_jobs_invocation(
     arguments: list[str],
     command: str,
@@ -397,6 +433,19 @@ def _show_source_health(arguments: list[str], *, default_config: Path | None) ->
     return 0
 
 
+def _show_phase1_report(arguments: list[str], *, default_config: Path | None) -> int:
+    parser = _report_parser(default_config=default_config)
+    parsed = parser.parse_args(arguments)
+    try:
+        settings = _load_settings(parsed.config)
+        report = build_phase1_report_service(settings).build()
+    except (OSError, RuntimeError, ValueError) as exc:
+        print(f"Phase-1 report failed: {exc}", file=sys.stderr)
+        return 1
+    print(format_phase1_report(report))
+    return 0
+
+
 def _run_job_analysis(
     arguments: list[str],
     *,
@@ -454,11 +503,16 @@ def _review_job_analysis(
     try:
         settings = _load_settings(parsed.config)
         store = AnalysisStore(settings.database_path)
+        translation = build_translation_service(settings).current_artifact(parsed.job_id)
+        if translation is None:
+            raise LookupError("No configured current English projection exists")
         artifact = store.latest_current(
             parsed.job_id,
             model=settings.effective_analysis_lm_studio_model(),
             prompt_version=ENGLISH_PROMPT_VERSION,
             schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            translation_artifact_id=translation.id,
+            require_translation_dependency=True,
         )
         if artifact is None:
             raise LookupError(
@@ -484,6 +538,8 @@ def _review_job_analysis(
             disposition=("accepted" if parsed.disposition == "accept" else "rejected"),
             reviewed_at=datetime.now(UTC),
             note=parsed.reason,
+            translation_artifact_id=translation.id,
+            require_translation_dependency=True,
         )
     except (LookupError, ValueError) as exc:
         print(f"P1.6 semantic review failed: {exc}", file=sys.stderr)
@@ -591,6 +647,7 @@ def _print_combined_help() -> None:
     print("Additional Phase-1 commands:")
     print("  run                      Run bounded source -> English -> analysis -> Market pipeline")
     print("  run --help               Show Phase-1 run limits and options")
+    print("  report                   Show current counts, queues, and artifact lineages")
     print("  jobs health <id>         Summarize last success/failures and lifecycle state")
     print("  jobs analyze <id>        Build/reuse targeted P1.6 analysis (English by default)")
     print("  jobs review-analysis <id> Inspect/accept/reject current English P1.6")
@@ -612,6 +669,13 @@ def main(argv: Sequence[str] | None = None) -> int:
     is_run, default_config, run_arguments = _extract_run_invocation(arguments)
     if is_run:
         return _run_phase1(run_arguments, default_config=default_config)
+
+    is_report, default_config, report_arguments = _extract_top_level_invocation(
+        arguments,
+        "report",
+    )
+    if is_report:
+        return _show_phase1_report(report_arguments, default_config=default_config)
 
     is_health, default_config, health_arguments = _extract_jobs_invocation(arguments, "health")
     if is_health:

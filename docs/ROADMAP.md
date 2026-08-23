@@ -1,7 +1,7 @@
 # JobHunter Roadmap
 
 **Status:** Current strategic roadmap  
-**Date:** 2026-08-21  
+**Date:** 2026-08-23
 **Scope:** Product delivery from the current Phase-1 state through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and active phase plans control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution plans.
 
@@ -117,15 +117,15 @@ t4jp → P1.6 artifact 37 → Capability artifact 12
 Public corpus publication baseline:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
 ```
 
-### 3.2 Implemented but still under acceptance/closure
+### 3.2 Accepted Phase-1 implementation
 
 The repository already contains, but must not over-claim before the remaining gates pass:
 
@@ -134,7 +134,7 @@ The repository already contains, but must not over-claim before the remaining ga
 - user triage and deterministic acquisition priority;
 - first Market aggregation over accepted/current English P1.6;
 - expanded bounded browser workflow actions;
-- final partial-success/run/reporting pieces;
+- final run/reporting pieces;
 - heterogeneous role-family non-regression for promoted P1.6 + Capability.
 
 Blueprint v6/v5 is implemented for research/inspection but is **deferred and non-authoritative**, not merely acceptance-pending.
@@ -161,7 +161,7 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
 
-Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation is closed; Market truthfulness and sampling is the next Phase-1 gate.
+Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 is accepted; P2.1 canonical concept registry is next.
 
 ### 3.4 Current governance state
 
@@ -251,9 +251,10 @@ rebuild/review tmBK P1.6
 → freeze promoted P1.6 + Capability as Phase-2 input if stable
 → Market truthfulness acceptance
 → source/lifecycle acceptance
-→ partial-success acceptance
-→ P1.7 final run/report/browser acceptance
-→ Phase-1 closure
+→ partial-success acceptance closed
+→ P1.7 final run/report/browser acceptance closed
+→ Phase-1 closure accepted
+→ P2.1 canonical concept registry
 ```
 
 ### 5.3 Promote selected proposal safeguards into current acceptance

@@ -1,41 +1,20 @@
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+
 import jobhunter.web.app as web_app
 from jobhunter.config import Settings
 
 
-class _TranslationService:
-    def __init__(self, *, failures=()) -> None:
-        self._failures = failures
+class _RunService:
+    def __init__(self, *, status: str) -> None:
+        self.summary = SimpleNamespace(status=status)
+        self.calls = []
 
-    def run(self, **_kwargs):
-        return SimpleNamespace(failures=self._failures, results=())
-
-
-class _Repository:
-    def __init__(self, *_args, **_kwargs) -> None:
-        pass
-
-    def list_jobs(self, **_kwargs):
-        return ()
-
-
-class _Market:
-    def market_summary(self):
-        return SimpleNamespace(
-            discovered_jobs=10,
-            current_parsed_jobs=8,
-            analyzed_jobs=4,
-            distinct_employers=3,
-            responsibility_claims=12,
-            requirement_claims=20,
-            source_scope="Public Jobinja postings",
-            filter_scope="Accepted current English P1.6 only",
-            duplicate_adjustment="No repost adjustment",
-            sample_warning="small sample",
-            concentration_warning=None,
-        )
+    def run(self, searches, **kwargs):
+        self.calls.append((tuple(searches), kwargs))
+        return self.summary
 
 
 def _settings(tmp_path: Path) -> Settings:
@@ -48,62 +27,73 @@ def _settings(tmp_path: Path) -> Settings:
     )
 
 
-def _patch_common(monkeypatch, *, sync_succeeded: bool, translation_failures=()) -> None:
+def _patch_shared_run(monkeypatch, *, status: str) -> _RunService:
+    service = _RunService(status=status)
     monkeypatch.setattr(
         web_app,
-        "_run_sync",
-        lambda *_args, **_kwargs: SimpleNamespace(succeeded=sync_succeeded),
-    )
-    monkeypatch.setattr(web_app, "_successful_detail_ids", lambda _summary: ())
-    monkeypatch.setattr(web_app, "format_web_sync_summary", lambda _summary: "sync")
-    monkeypatch.setattr(
-        web_app,
-        "_translation_service",
-        lambda _settings: _TranslationService(failures=translation_failures),
+        "configured_phase1_searches",
+        lambda _settings, *, limit: (SimpleNamespace(name=f"search-{limit}"),),
     )
     monkeypatch.setattr(
         web_app,
-        "format_translation_batch_summary",
-        lambda _summary: "translation",
+        "build_phase1_run_service",
+        lambda _settings, *, request_budget: (
+            service if request_budget == 3 else None
+        ),
     )
-    monkeypatch.setattr(web_app, "WebRepository", _Repository)
-    monkeypatch.setattr(web_app, "_market_insights", lambda _settings: _Market())
+    monkeypatch.setattr(
+        web_app,
+        "format_phase1_run_summary",
+        lambda summary: f"shared summary: {summary.status}",
+    )
+    return service
 
 
-def test_full_workflow_returns_completed_when_all_executed_stages_are_clean(
+def test_full_workflow_uses_shared_phase1_service_and_summary(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
     settings = _settings(tmp_path)
-    _patch_common(monkeypatch, sync_succeeded=True)
+    service = _patch_shared_run(monkeypatch, status="completed")
 
     result = web_app._full_workflow_output(
         settings,
-        search_limit=1,
-        request_budget=1,
-        missing_limit=0,
-        refresh_limit=0,
+        search_limit=2,
+        request_budget=3,
+        missing_limit=4,
+        refresh_limit=5,
         refresh_after_hours=24,
-        translation_limit=1,
-        analysis_limit=1,
+        translation_limit=6,
+        analysis_limit=7,
     )
 
     assert result.status == "completed"
-    assert "Current accepted English analyses: 4" in result.summary
-    assert "Market sampling warning" in result.summary
+    assert result.summary == "shared summary: completed"
+    assert service.calls == [
+        (
+            (SimpleNamespace(name="search-2"),),
+            {
+                "missing_limit": 4,
+                "refresh_limit": 5,
+                "refresh_after_hours": 24,
+                "translation_limit": 6,
+                "analysis_limit": 7,
+            },
+        )
+    ]
 
 
-def test_full_workflow_returns_partial_success_when_sync_has_attention_state(
+def test_full_workflow_preserves_shared_partial_success_status(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
     settings = _settings(tmp_path)
-    _patch_common(monkeypatch, sync_succeeded=False)
+    _patch_shared_run(monkeypatch, status="completed_with_failures")
 
     result = web_app._full_workflow_output(
         settings,
-        search_limit=1,
-        request_budget=1,
+        search_limit=2,
+        request_budget=3,
         missing_limit=0,
         refresh_limit=0,
         refresh_after_hours=24,
@@ -112,63 +102,115 @@ def test_full_workflow_returns_partial_success_when_sync_has_attention_state(
     )
 
     assert result.status == "completed_with_failures"
+    assert result.summary == "shared summary: completed_with_failures"
 
 
-def test_full_workflow_returns_partial_success_when_translation_batch_has_failures(
+def test_full_workflow_rejects_empty_configured_search_plan(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
     settings = _settings(tmp_path)
-    _patch_common(
-        monkeypatch,
-        sync_succeeded=True,
-        translation_failures=(SimpleNamespace(error="bad translation"),),
+    monkeypatch.setattr(
+        web_app,
+        "configured_phase1_searches",
+        lambda _settings, *, limit: (),
     )
 
-    result = web_app._full_workflow_output(
-        settings,
-        search_limit=1,
-        request_budget=1,
-        missing_limit=0,
-        refresh_limit=0,
-        refresh_after_hours=24,
-        translation_limit=1,
-        analysis_limit=1,
+    with pytest.raises(ValueError, match="No enabled Jobinja searches"):
+        web_app._full_workflow_output(
+            settings,
+            search_limit=2,
+            request_budget=3,
+            missing_limit=0,
+            refresh_limit=0,
+            refresh_after_hours=24,
+            translation_limit=1,
+            analysis_limit=1,
+        )
+
+
+def test_complete_processing_distinguishes_intentional_not_requested(
+    tmp_path: Path,
+) -> None:
+    result = web_app._complete_processing_result(
+        _settings(tmp_path),
+        ("job-1",),
+        requested=False,
     )
 
-    assert result.status == "completed_with_failures"
+    assert result.status == "completed"
+    assert "Skipped intentionally" in result.summary
+    assert "not requested" in result.summary
 
 
-def test_full_workflow_marks_disabled_semantic_pipeline_as_incomplete(
+def test_complete_processing_preserves_translation_failure_as_partial_success(
     tmp_path: Path,
     monkeypatch,
 ) -> None:
-    settings = Settings(
-        data_dir=tmp_path,
-        database_path=tmp_path / "jobhunter.sqlite3",
-        evidence_dir=tmp_path / "evidence",
-        translation_enabled=False,
+    class Translation:
+        def run(self, **_kwargs):
+            return SimpleNamespace(
+                results=(),
+                failures=(SimpleNamespace(source_job_id="bad", error="provider failed"),),
+            )
+
+    monkeypatch.setattr(web_app, "_translation_service", lambda _settings: Translation())
+    monkeypatch.setattr(
+        web_app,
+        "format_translation_batch_summary",
+        lambda _summary: "translation: attempted=1, completed=0, failed=1",
+    )
+
+    result = web_app._complete_processing_result(
+        _settings(tmp_path),
+        ("bad",),
+        requested=True,
+    )
+
+    assert result.status == "completed_with_failures"
+    assert "translation: attempted=1, completed=0, failed=1" in result.summary
+    assert "no requested jobs produced a current English projection" in result.summary
+
+
+def test_complete_processing_keeps_completed_translation_when_analysis_fails(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    class Translation:
+        def run(self, **_kwargs):
+            return SimpleNamespace(
+                results=(SimpleNamespace(source_job_id="good"),),
+                failures=(),
+            )
+
+    class Analysis:
+        def run_english(self, job_ids, *, limit):
+            assert job_ids == ("good",)
+            assert limit == 1
+            return SimpleNamespace(
+                results=(),
+                failures=(SimpleNamespace(source_job_id="good", error="model failed"),),
+            )
+
+    monkeypatch.setattr(web_app, "_translation_service", lambda _settings: Translation())
+    monkeypatch.setattr(web_app, "_analysis_service", lambda _settings: Analysis())
+    monkeypatch.setattr(
+        web_app,
+        "format_translation_batch_summary",
+        lambda _summary: "translation completed",
     )
     monkeypatch.setattr(
         web_app,
-        "_run_sync",
-        lambda *_args, **_kwargs: SimpleNamespace(succeeded=True),
+        "format_analysis_batch_summary",
+        lambda _summary: "analysis failed",
     )
-    monkeypatch.setattr(web_app, "_successful_detail_ids", lambda _summary: ())
-    monkeypatch.setattr(web_app, "format_web_sync_summary", lambda _summary: "sync")
-    monkeypatch.setattr(web_app, "_market_insights", lambda _settings: _Market())
 
-    result = web_app._full_workflow_output(
-        settings,
-        search_limit=1,
-        request_budget=1,
-        missing_limit=0,
-        refresh_limit=0,
-        refresh_after_hours=24,
-        translation_limit=1,
-        analysis_limit=1,
+    result = web_app._complete_processing_result(
+        _settings(tmp_path),
+        ("good",),
+        requested=True,
     )
 
     assert result.status == "completed_with_failures"
-    assert "translation is disabled" in result.summary
-    assert "no analysis model is configured" in result.summary
+    assert "translation completed" in result.summary
+    assert "analysis failed" in result.summary

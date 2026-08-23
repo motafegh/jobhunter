@@ -7,10 +7,24 @@ import uuid
 from collections import deque
 from collections.abc import Callable
 from concurrent.futures import ThreadPoolExecutor
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 from datetime import UTC, datetime
 
 _TERMINAL_SUCCESS_STATUSES = {"completed", "completed_with_failures"}
+
+
+@dataclass(frozen=True, slots=True)
+class WebOperationLink:
+    """One safe local navigation target attached to an operation result."""
+
+    label: str
+    url: str
+
+    def __post_init__(self) -> None:
+        if not self.label.strip():
+            raise ValueError("Web operation link label must not be empty")
+        if not self.url.startswith("/") or self.url.startswith("//"):
+            raise ValueError("Web operation links must use a local absolute path")
 
 
 @dataclass(frozen=True, slots=True)
@@ -19,6 +33,7 @@ class WebOperationResult:
 
     summary: str
     status: str = "completed"
+    links: tuple[WebOperationLink, ...] = ()
 
     def __post_init__(self) -> None:
         if self.status not in _TERMINAL_SUCCESS_STATUSES:
@@ -37,8 +52,9 @@ class WebOperation:
     completed_at: str | None = None
     summary: str = ""
     error: str | None = None
+    links: tuple[WebOperationLink, ...] = ()
 
-    def to_dict(self) -> dict[str, str | None]:
+    def to_dict(self) -> dict[str, object]:
         return asdict(self)
 
 
@@ -113,9 +129,11 @@ class WebOperationManager:
             if isinstance(result, WebOperationResult):
                 summary = result.summary
                 terminal_status = result.status
+                links = result.links
             else:
                 summary = result
                 terminal_status = "completed"
+                links = ()
         except Exception as exc:
             self._fail_operation(operation_id, exc)
             return
@@ -135,6 +153,7 @@ class WebOperationManager:
             operation = self._operations[operation_id]
             operation.status = terminal_status
             operation.summary = summary
+            operation.links = links
             operation.completed_at = self._now()
             if self._active_id == operation_id:
                 self._active_id = None
@@ -144,12 +163,12 @@ class WebOperationManager:
             operation = self._operations.get(operation_id)
             if operation is None:
                 return None
-            return WebOperation(**operation.to_dict())
+            return replace(operation)
 
     def recent(self) -> tuple[WebOperation, ...]:
         with self._lock:
             return tuple(
-                WebOperation(**self._operations[operation_id].to_dict())
+                replace(self._operations[operation_id])
                 for operation_id in self._history
                 if operation_id in self._operations
             )
@@ -161,4 +180,4 @@ class WebOperationManager:
             operation = self._operations.get(self._active_id)
             if operation is None:
                 return None
-            return WebOperation(**operation.to_dict())
+            return replace(operation)

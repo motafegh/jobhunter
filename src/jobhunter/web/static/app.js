@@ -61,6 +61,7 @@
   const completed = container.querySelector("[data-operation-completed]");
   const output = container.querySelector("[data-operation-output]");
   const progress = container.querySelector("[data-operation-progress]");
+  const links = container.querySelector("[data-operation-links]");
   const returnMessage = container.querySelector("[data-operation-return]");
 
   const isTerminal = (value) =>
@@ -88,6 +89,19 @@
       if (operation.error) output.textContent = operation.error;
       else if (operation.summary) output.textContent = operation.summary;
       else output.textContent = `Operation is ${operation.status}. This page updates automatically.`;
+      if (links && Array.isArray(operation.links)) {
+        links.replaceChildren();
+        operation.links.forEach((item) => {
+          if (!item || typeof item.label !== "string" || typeof item.url !== "string") return;
+          if (!item.url.startsWith("/") || item.url.startsWith("//")) return;
+          const anchor = document.createElement("a");
+          anchor.className = "button ghost";
+          anchor.href = item.url;
+          anchor.textContent = item.label;
+          links.appendChild(anchor);
+        });
+        links.hidden = links.childElementCount === 0;
+      }
 
       if (isTerminal(operation.status)) {
         progress.classList.add("finished");

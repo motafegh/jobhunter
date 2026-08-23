@@ -29,6 +29,7 @@ from jobhunter.capability_store import (
     CapabilityIntelligenceStore,
 )
 from jobhunter.storage import JobHunterStore
+from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_store import TranslationArtifact, TranslationStore
 
 PUBLIC_CORPUS_SCHEMA_VERSION = "jobhunter-public-corpus-v1"
@@ -269,6 +270,11 @@ def _build_jobs(
 
         source_payload, language = _build_source_payload(row)
         translation = translation_store.latest_artifact(source_job_id, target_language="en")
+        if (
+            translation is not None
+            and translation.translation_schema_version != TRANSLATION_SCHEMA_VERSION
+        ):
+            translation = None
         english_analysis = analysis_store.latest_current(
             source_job_id,
             model=analysis_model,
@@ -276,6 +282,14 @@ def _build_jobs(
             schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
             accepted_only=True,
         )
+        if (
+            english_analysis is not None
+            and (
+                translation is None
+                or english_analysis.translation_artifact_id != translation.id
+            )
+        ):
+            english_analysis = None
         original_analysis = analysis_store.latest_current(
             source_job_id,
             model=analysis_model,

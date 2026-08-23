@@ -5,7 +5,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 
-from jobhunter.translation import TranslationError, TranslationProvider
+from jobhunter.config import Settings
+from jobhunter.translation import (
+    GoogleCloudTranslationProvider,
+    LMStudioTranslationProvider,
+    TranslationError,
+    TranslationProvider,
+)
 from jobhunter.translation.integrity import require_translation_integrity
 from jobhunter.translation.projection import (
     TRANSLATION_SCHEMA_VERSION,
@@ -254,6 +260,22 @@ class TranslationService:
 
         if not 1 <= limit <= 50:
             raise ValueError("translation limit must be between 1 and 50")
+        return self._missing_source_versions(
+            limit=limit,
+            preferred_ids=preferred_ids,
+        )
+
+    def missing_source_version_count(self) -> int:
+        """Return the complete effective English-projection backlog size."""
+
+        return len(self._missing_source_versions(limit=None, preferred_ids=()))
+
+    def _missing_source_versions(
+        self,
+        *,
+        limit: int | None,
+        preferred_ids: tuple[str, ...],
+    ) -> tuple[TranslationSourceVersion, ...]:
         sources = list(self._store.latest_source_versions(limit=5000))
         preferred_rank = {job_id: index for index, job_id in enumerate(preferred_ids)}
         sources.sort(
@@ -280,7 +302,7 @@ class TranslationService:
             if artifact is not None:
                 continue
             selected.append(source)
-            if len(selected) >= limit:
+            if limit is not None and len(selected) >= limit:
                 break
         return tuple(selected)
 
@@ -326,6 +348,43 @@ class TranslationService:
             results=tuple(results),
             failures=tuple(failures),
         )
+
+
+def build_translation_service(settings: Settings) -> TranslationService:
+    """Build the configured public-current English projection service."""
+
+    provider = None
+    if (
+        settings.translation_enabled
+        and settings.translation_provider == "google-cloud"
+        and not settings.google_translation_api_key
+    ):
+        raise ValueError(
+            "Google translation is enabled but "
+            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
+        )
+    if settings.translation_enabled and settings.translation_provider == "lm-studio":
+        provider = LMStudioTranslationProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=settings.effective_translation_lm_studio_model(),
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+            max_tokens=settings.translation_lm_studio_max_tokens,
+            request_character_target=settings.translation_lm_studio_character_target,
+        )
+    elif settings.translation_enabled and settings.translation_provider == "google-cloud":
+        provider = GoogleCloudTranslationProvider(
+            api_key=settings.google_translation_api_key or "",
+            model=settings.google_translation_model,
+            timeout_seconds=settings.translation_timeout_seconds,
+            max_retries=settings.translation_max_retries,
+        )
+    return TranslationService(
+        store=TranslationStore(settings.database_path),
+        provider=provider,
+        target_language=settings.translation_target_language,
+    )
 
 
 def format_translation_batch_summary(summary: TranslationBatchSummary) -> str:

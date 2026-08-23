@@ -32,10 +32,10 @@ from jobhunter.lifecycle import LifecycleStore
 from jobhunter.market_insights import MarketInsights, MarketSummary
 from jobhunter.sources import JobinjaClient
 from jobhunter.storage import JobHunterStore
-from jobhunter.translation import GoogleCloudTranslationProvider, LMStudioTranslationProvider
 from jobhunter.translation_service import (
     TranslationBatchSummary,
     TranslationService,
+    build_translation_service,
     format_translation_batch_summary,
 )
 from jobhunter.translation_store import TranslationStore
@@ -46,9 +46,15 @@ class Phase1RunSummary:
     """One complete bounded source-to-Market orchestration result."""
 
     status: str
+    searches_requested: int
+    detail_requested: int
     sync: JobinjaSyncSummary
+    translation_requested_limit: int
+    translation_eligible_before: int
     translation: TranslationBatchSummary | None
     translation_skipped_reason: str | None
+    translation_remaining: int
+    analysis_requested_limit: int
     analysis: AnalysisBatchSummary | None
     analysis_skipped_reason: str | None
     analysis_selected: tuple[str, ...]
@@ -112,7 +118,8 @@ class Phase1RunService:
             workflow = self._workflow_store.get_state(source.source_job_id)
             if workflow.triage_state == "not_relevant":
                 continue
-            if self._translation_service.current_artifact(source.source_job_id) is None:
+            translation = self._translation_service.current_artifact(source.source_job_id)
+            if translation is None:
                 continue
             current = self._analysis_store.latest_current(
                 source.source_job_id,
@@ -120,7 +127,10 @@ class Phase1RunService:
                 prompt_version=ENGLISH_PROMPT_VERSION,
                 schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
             )
-            if current is not None:
+            if (
+                current is not None
+                and current.translation_artifact_id == translation.id
+            ):
                 continue
             eligible += 1
             if len(selected) < limit:
@@ -160,9 +170,14 @@ class Phase1RunService:
         )
         attention_required = not sync.succeeded
         preferred_ids = _successful_detail_ids(sync)
+        detail_requested = len(sync.missing_selected) + len(sync.refresh_selected)
 
         translation: TranslationBatchSummary | None = None
         translation_skipped_reason: str | None = None
+        translation_eligible_before = (
+            self._translation_service.missing_source_version_count()
+        )
+        translation_remaining = translation_eligible_before
         if self._translation_enabled:
             translation = self._translation_service.run(
                 missing=True,
@@ -170,6 +185,14 @@ class Phase1RunService:
                 preferred_ids=preferred_ids,
             )
             attention_required = attention_required or bool(translation.failures)
+            translation_remaining = max(
+                translation_eligible_before - len(translation.results),
+                0,
+            )
+            if translation.attempted == 0:
+                translation_skipped_reason = (
+                    "no eligible current jobs need English projection"
+                )
         else:
             translation_skipped_reason = "translation is disabled in configuration"
             attention_required = True
@@ -207,9 +230,15 @@ class Phase1RunService:
             status=(
                 "completed_with_failures" if attention_required else "completed"
             ),
+            searches_requested=len(searches),
+            detail_requested=detail_requested,
             sync=sync,
+            translation_requested_limit=translation_limit,
+            translation_eligible_before=translation_eligible_before,
             translation=translation,
             translation_skipped_reason=translation_skipped_reason,
+            translation_remaining=translation_remaining,
+            analysis_requested_limit=analysis_limit,
             analysis=analysis,
             analysis_skipped_reason=analysis_skipped_reason,
             analysis_selected=analysis_selected,
@@ -237,41 +266,6 @@ def configured_searches(settings: Settings, *, limit: int) -> tuple[DiscoverySea
     for search in searches:
         unique_by_url.setdefault(search.url, search)
     return tuple(unique_by_url.values())[:limit]
-
-
-def _translation_service(settings: Settings) -> TranslationService:
-    provider = None
-    if (
-        settings.translation_enabled
-        and settings.translation_provider == "google-cloud"
-        and not settings.google_translation_api_key
-    ):
-        raise ValueError(
-            "Google translation is enabled but "
-            "JOBHUNTER_GOOGLE_TRANSLATION_API_KEY is not configured"
-        )
-    if settings.translation_enabled and settings.translation_provider == "lm-studio":
-        provider = LMStudioTranslationProvider(
-            base_url=settings.lm_studio_base_url,
-            configured_model=settings.effective_translation_lm_studio_model(),
-            api_token=settings.lm_studio_api_token,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-            max_tokens=settings.translation_lm_studio_max_tokens,
-            request_character_target=settings.translation_lm_studio_character_target,
-        )
-    elif settings.translation_enabled and settings.translation_provider == "google-cloud":
-        provider = GoogleCloudTranslationProvider(
-            api_key=settings.google_translation_api_key or "",
-            model=settings.google_translation_model,
-            timeout_seconds=settings.translation_timeout_seconds,
-            max_retries=settings.translation_max_retries,
-        )
-    return TranslationService(
-        store=TranslationStore(settings.database_path),
-        provider=provider,
-        target_language=settings.translation_target_language,
-    )
 
 
 def build_phase1_run_service(
@@ -319,7 +313,7 @@ def build_phase1_run_service(
     )
 
     translation_store = TranslationStore(settings.database_path)
-    translation_service = _translation_service(settings)
+    translation_service = build_translation_service(settings)
     analysis_store = AnalysisStore(settings.database_path)
     model = settings.effective_analysis_lm_studio_model()
     analysis_service = build_job_analysis_service(settings) if model else None
@@ -336,6 +330,7 @@ def build_phase1_run_service(
             analysis_model=model,
             analysis_prompt_version=ENGLISH_PROMPT_VERSION,
             analysis_schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            translation_service=translation_service,
         ),
         translation_enabled=settings.translation_enabled,
         analysis_model=model,
@@ -355,11 +350,26 @@ def format_phase1_run_summary(summary: Phase1RunSummary) -> str:
         "Complete JobHunter Phase-1 run",
         f"Run status: {summary.status}",
         "",
+        "Partial-success ledger",
+        (
+            "Discovery: "
+            f"requested={summary.searches_requested}, "
+            f"attempted={summary.sync.discovery.searches_attempted}, "
+            f"failed={len(summary.sync.discovery.failures)}"
+        ),
+        _format_detail_ledger(summary),
+        _format_translation_ledger(summary),
+        _format_analysis_ledger(summary),
+        "",
         format_sync_summary(summary.sync),
     ]
 
     if summary.translation is not None:
         sections.extend(["", format_translation_batch_summary(summary.translation)])
+        if summary.translation_skipped_reason:
+            sections.append(
+                f"Skipped intentionally: {summary.translation_skipped_reason}"
+            )
     else:
         sections.extend(
             [
@@ -404,3 +414,66 @@ def format_phase1_run_summary(summary: Phase1RunSummary) -> str:
     if market.concentration_warning:
         sections.extend(["", f"Market concentration warning: {market.concentration_warning}"])
     return "\n".join(sections)
+
+
+def _format_detail_ledger(summary: Phase1RunSummary) -> str:
+    detail = summary.sync.detail_fetch
+    if detail is None:
+        return (
+            "Detail acquisition: "
+            f"requested={summary.detail_requested}, attempted=0, completed=0, "
+            "unchanged=0, failed=0, remaining_selected=0, "
+            "skipped_intentionally=no eligible detail checks selected"
+        )
+    return (
+        "Detail acquisition: "
+        f"requested={summary.detail_requested}, attempted={detail.attempted}, "
+        f"completed={detail.succeeded}, unchanged={detail.unchanged}, "
+        f"failed={len(detail.failures)}, remaining_selected=0"
+    )
+
+
+def _format_translation_ledger(summary: Phase1RunSummary) -> str:
+    stage = summary.translation
+    attempted = stage.attempted if stage is not None else 0
+    completed = stage.completed if stage is not None else 0
+    reused = stage.reused if stage is not None else 0
+    failed = len(stage.failures) if stage is not None else 0
+    line = (
+        "English projection: "
+        f"requested_limit={summary.translation_requested_limit}, "
+        f"eligible_before={summary.translation_eligible_before}, "
+        f"attempted={attempted}, completed={completed}, reused={reused}, "
+        f"failed={failed}, remaining_eligible={summary.translation_remaining}"
+    )
+    if summary.translation_skipped_reason:
+        line += f", skipped_intentionally={summary.translation_skipped_reason}"
+    return line
+
+
+def _format_analysis_ledger(summary: Phase1RunSummary) -> str:
+    stage = summary.analysis
+    attempted = stage.attempted if stage is not None else 0
+    completed = stage.completed if stage is not None else 0
+    reused = stage.reused if stage is not None else 0
+    failed = len(stage.failures) if stage is not None else 0
+    eligible_before = (
+        str(summary.analysis_eligible_before)
+        if summary.analysis_eligible_before is not None
+        else "not_evaluated"
+    )
+    remaining = (
+        str(summary.analysis_remaining)
+        if summary.analysis_remaining is not None
+        else "not_evaluated"
+    )
+    line = (
+        "English P1.6: "
+        f"requested_limit={summary.analysis_requested_limit}, "
+        f"eligible_before={eligible_before}, "
+        f"attempted={attempted}, completed={completed}, reused={reused}, "
+        f"failed={failed}, remaining_eligible={remaining}"
+    )
+    if summary.analysis_skipped_reason:
+        line += f", skipped_intentionally={summary.analysis_skipped_reason}"
+    return line

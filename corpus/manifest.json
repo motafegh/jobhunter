@@ -15,11 +15,11 @@
   },
   "counts": {
     "capabilities": 5,
-    "english_projections": 33,
-    "jobs": 344,
+    "english_projections": 20,
+    "jobs": 353,
     "p16_english": 5,
     "p16_original": 0,
-    "sources": 344
+    "sources": 353
   },
   "jobs": [
     {
@@ -361,7 +361,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 17,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -375,7 +375,7 @@
       "source_job_id": "t49N",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -385,7 +385,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 19,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -399,7 +399,7 @@
       "source_job_id": "t49W",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -937,7 +937,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 9,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -951,7 +951,7 @@
       "source_job_id": "t4YI",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -1485,6 +1485,78 @@
         "source": true
       },
       "title": "توسعه‌دهنده وردپرس (WordPress Developer-دورکاری)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/karno-11/jobs/t7Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%D9%86%D9%88",
+      "company_slug": "karno-11",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7Ay",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "متخصص هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
+      "company_slug": "manzoumeh-hooshmand-pars",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7ck",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مهندس هوش مصنوعی گفتار (Speech AI Engineer)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/payampardaz/jobs/t7oE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A7%D8%B5%D9%81%D9%87%D8%A7%D9%86-%D8%AF%D8%B1-%D8%AF%D8%A7%D9%86%D8%B4-%D8%A8%D9%86%DB%8C%D8%A7%D9%86-%D9%85%D9%87%D9%86%D8%AF%D8%B3%DB%8C-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%DB%8C-%D9%BE%DB%8C%D8%A7%D9%85-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2",
+      "company_slug": "payampardaz",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7oE",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مهندس هوش مصنوعی(اصفهان)"
     },
     {
       "artifact_ids": {
@@ -3337,7 +3409,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 11,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -3351,7 +3423,7 @@
       "source_job_id": "tZxe",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -3741,6 +3813,30 @@
         "source": true
       },
       "title": "توسعه دهنده Android"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/kashani-academy/jobs/taOX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A2%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%DA%A9%D8%A7%D8%B4%D8%A7%D9%86%DB%8C",
+      "company_slug": "kashani-academy",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "taOX",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارشناس هوش مصنوعی"
     },
     {
       "artifact_ids": {
@@ -4489,7 +4585,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 13,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -4503,7 +4599,7 @@
       "source_job_id": "tar3",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -4657,7 +4753,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 10,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -4671,7 +4767,7 @@
       "source_job_id": "tawk",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -4681,11 +4777,11 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 7,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
-      "canonical_url": "https://jobinja.ir/companies/omran-sanat-akam-1/jobs/tazP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%B9%D9%85%D8%B1%D8%A7%D9%86-%D8%B5%D9%86%D8%B9%D8%AA-%D8%A2%DA%A9%D8%A7%D9%85",
+      "canonical_url": "https://jobinja.ir/companies/omran-sanat-akam-1/jobs/tazP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%A2%D9%82%D8%A7-%D8%AF%D8%B1-%D8%B9%D9%85%D8%B1%D8%A7%D9%86-%D8%B5%D9%86%D8%B9%D8%AA-%D8%A2%DA%A9%D8%A7%D9%85",
       "company_slug": "omran-sanat-akam-1",
       "job_detail_version_id": 9,
       "language": "mixed",
@@ -4695,7 +4791,7 @@
       "source_job_id": "tazP",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -4897,7 +4993,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 14,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -4911,7 +5007,7 @@
       "source_job_id": "tm2S",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -5761,7 +5857,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 4,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -5775,7 +5871,7 @@
       "source_job_id": "tmNr",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -6581,6 +6677,30 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/hozeh-elmieh-xorasan-xorasan-seminary/jobs/tmnh/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D9%85%D8%B1%DA%A9%D8%B2-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D8%AD%D9%88%D8%B2%D9%87-%D8%B9%D9%84%D9%85%DB%8C%D9%87-%D8%AE%D8%B1%D8%A7%D8%B3%D8%A7%D9%86",
+      "company_slug": "hozeh-elmieh-xorasan-xorasan-seminary",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tmnh",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارشناس هوش مصنوعی (مشهد)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/nobka/jobs/tmnv/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-full-stack-developer-python-next-js-%D8%A2%D9%82%D8%A7-%D8%A7%D9%85%D8%B1%DB%8C%D9%87-%D8%AF%D8%B1-%D9%86%D8%A8%DA%A9%D8%A7",
       "company_slug": "nobka",
       "job_detail_version_id": null,
@@ -6889,7 +7009,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 16,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -6903,7 +7023,7 @@
       "source_job_id": "tobE",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -7081,7 +7201,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 5,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -7095,7 +7215,7 @@
       "source_job_id": "tpBO",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -7225,7 +7345,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 8,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -7239,7 +7359,7 @@
       "source_job_id": "tpGY",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -8113,7 +8233,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": 15,
+        "english_projection": null,
         "p16_english": null,
         "p16_original": null
       },
@@ -8127,7 +8247,7 @@
       "source_job_id": "tpwa",
       "stages": {
         "capability": false,
-        "english_projection": true,
+        "english_projection": false,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -8277,6 +8397,102 @@
         "source": true
       },
       "title": "Application Security Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vimond/jobs/tv2t/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%88%DB%8C%D9%85%D9%88%D9%86%D8%AF",
+      "company_slug": "vimond",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tv2t",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/rashatech/jobs/tvLm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%D8%B1%D8%A8%D8%A7%D8%AA%DB%8C%DA%A9-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%B4%D8%A7%D8%AA%DA%A9",
+      "company_slug": "rashatech",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvLm",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی و رباتیک"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/lora-1/jobs/tvqr/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%84%D9%88%D8%B1%D8%A7",
+      "company_slug": "lora-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvqr",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارشناس هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/hesab-rayan/jobs/tvzw/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-engineer-%D8%AF%D8%B1-%D8%AD%D8%B3%D8%A7%D8%A8-%D8%B1%D8%A7%DB%8C%D8%A7%D9%86-%D9%BE%D8%A7%D8%B1%D8%B3",
+      "company_slug": "hesab-rayan",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvzw",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "متخصص هوش مصنوعی (AI Engineer)"
     }
   ],
   "schema_version": "jobhunter-public-corpus-v1"

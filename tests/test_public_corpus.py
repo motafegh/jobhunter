@@ -17,6 +17,7 @@ from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.public_corpus import export_public_corpus, verify_public_corpus
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
+from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
 
 
@@ -73,7 +74,7 @@ def _seed_full_chain(database_path: Path) -> None:
         target_language="en",
         provider_name="lm-studio",
         provider_model="translation-model",
-        translation_schema_version="lm-studio-translation-v2",
+        translation_schema_version=TRANSLATION_SCHEMA_VERSION,
         fields={
             "language": "en",
             "title": "Python Engineer",
@@ -282,6 +283,34 @@ def test_public_corpus_excludes_pending_analysis_and_its_capability(
     job_dir = output_dir / "jobs" / "fa01"
     assert summary.english_analyses == 0
     assert summary.capabilities == 0
+    assert not (job_dir / "p16-english.json").exists()
+    assert not (job_dir / "capability.json").exists()
+
+
+def test_public_corpus_excludes_historical_translation_contract_and_downstream(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    output_dir = tmp_path / "corpus"
+    _seed_full_chain(database_path)
+    with sqlite3.connect(database_path) as connection:
+        connection.execute(
+            "UPDATE job_translation_artifacts "
+            "SET translation_schema_version = 'english-projection-v1'"
+        )
+
+    summary = export_public_corpus(
+        database_path,
+        output_dir=output_dir,
+        analysis_model="analysis-model",
+        capability_model="capability-model",
+    )
+
+    job_dir = output_dir / "jobs" / "fa01"
+    assert summary.english_projections == 0
+    assert summary.english_analyses == 0
+    assert summary.capabilities == 0
+    assert not (job_dir / "english-projection.json").exists()
     assert not (job_dir / "p16-english.json").exists()
     assert not (job_dir / "capability.json").exists()
 

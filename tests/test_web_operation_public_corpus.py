@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 
-from jobhunter.web.operations import WebOperationManager
+from jobhunter.web.operations import WebOperationManager, WebOperationResult
 
 
 def _wait_for_terminal(manager: WebOperationManager, operation_id: str):
@@ -25,6 +25,24 @@ def test_web_operation_runs_public_corpus_hook_after_success() -> None:
 
     assert completed.status == "completed"
     assert completed.summary == "done"
+    assert calls == ["synced"]
+
+
+def test_partial_success_still_projects_completed_durable_work() -> None:
+    calls: list[str] = []
+    manager = WebOperationManager(after_success=lambda: calls.append("synced"))
+
+    started = manager.start(
+        "partial",
+        lambda: WebOperationResult(
+            summary="one completed, one failed",
+            status="completed_with_failures",
+        ),
+    )
+    completed = _wait_for_terminal(manager, started.id)
+
+    assert completed.status == "completed_with_failures"
+    assert completed.summary == "one completed, one failed"
     assert calls == ["synced"]
 
 

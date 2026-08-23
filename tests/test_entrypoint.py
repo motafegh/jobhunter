@@ -171,6 +171,25 @@ def test_global_config_can_precede_jobs_health(monkeypatch) -> None:
     assert captured["config"] == Path("custom.toml")
 
 
+def test_report_command_uses_shared_read_only_report(monkeypatch, capsys) -> None:
+    settings = Settings()
+    report = SimpleNamespace(current_parsed_jobs=43)
+    monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
+    monkeypatch.setattr(
+        entrypoint,
+        "build_phase1_report_service",
+        lambda _settings: SimpleNamespace(build=lambda: report),
+    )
+    monkeypatch.setattr(
+        entrypoint,
+        "format_phase1_report",
+        lambda value: f"parsed={value.current_parsed_jobs}",
+    )
+
+    assert entrypoint.main(["report"]) == 0
+    assert capsys.readouterr().out.strip() == "parsed=43"
+
+
 def test_jobs_analyze_defaults_to_english_and_uses_targeted_service(monkeypatch, capsys) -> None:
     settings = Settings()
     service = _AnalysisService()
@@ -248,6 +267,13 @@ def test_jobs_review_analysis_status_prints_complete_candidate(monkeypatch, caps
 
     monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
     monkeypatch.setattr(entrypoint, "AnalysisStore", Store)
+    monkeypatch.setattr(
+        entrypoint,
+        "build_translation_service",
+        lambda _settings: SimpleNamespace(
+            current_artifact=lambda _job_id: SimpleNamespace(id=20)
+        ),
+    )
 
     assert entrypoint.main(["jobs", "review-analysis", "tmBK"]) == 0
     output = capsys.readouterr().out
@@ -276,6 +302,13 @@ def test_jobs_review_analysis_accepts_with_durable_note(monkeypatch, capsys) -> 
 
     monkeypatch.setattr(entrypoint, "_load_settings", lambda _path: settings)
     monkeypatch.setattr(entrypoint, "AnalysisStore", Store)
+    monkeypatch.setattr(
+        entrypoint,
+        "build_translation_service",
+        lambda _settings: SimpleNamespace(
+            current_artifact=lambda _job_id: SimpleNamespace(id=20)
+        ),
+    )
 
     assert (
         entrypoint.main(

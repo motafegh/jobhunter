@@ -117,6 +117,8 @@ class JobAnalysisServiceV20:
 
         existing = self._analysis_store.find_artifact(
             job_detail_version_id=source.job_detail_version_id,
+            translation_artifact_id=translation.id,
+            require_translation_dependency=True,
             model=self._model,
             prompt_version=ENGLISH_PROMPT_VERSION,
             schema_version=ANALYSIS_SCHEMA_VERSION,
@@ -177,6 +179,8 @@ class JobAnalysisServiceV20:
             )
             artifact = self._analysis_store.find_artifact(
                 job_detail_version_id=source.job_detail_version_id,
+                translation_artifact_id=translation.id,
+                require_translation_dependency=True,
                 model=self._model,
                 prompt_version=ENGLISH_PROMPT_VERSION,
                 schema_version=ANALYSIS_SCHEMA_VERSION,

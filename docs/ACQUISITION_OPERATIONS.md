@@ -1,7 +1,7 @@
 # JobHunter Acquisition and Translation Operations
 
 **Status:** Current operational runbook  
-**Date:** 2026-08-21
+**Date:** 2026-08-23
 
 ## 1. Purpose
 
@@ -313,16 +313,14 @@ discover/fetch/preserve/version public Jobinja evidence
 → project repository-safe public state into corpus/
 ```
 
-But Phase 1 is **not closed**.
+Phase 1 is **closed** on the documented contracts and acceptance evidence.
 
-Current active semantic work is heterogeneous non-regression (`tmBK` Python/software first), followed by network/security and operations/platform/DevOps. Capability must not run for an anchor until that anchor's P1.6 is manually accepted during this gate.
+Heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser gates are accepted. Capability still requires an accepted/current P1.6 dependency.
 
-JobHunter must not yet claim:
+JobHunter must not claim:
 
-- semantic stability across all role families;
+- semantic stability across every possible role family;
 - mature/canonical market intelligence;
-- complete source/lifecycle acceptance;
-- final partial-success/run/report browser acceptance;
 - personal capability/readiness/gap truth;
 - learning/application recommendations;
 - autonomous applications;

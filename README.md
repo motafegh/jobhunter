@@ -103,7 +103,7 @@ role purpose:      0
 
 The accepted contract preserves structured source skills, optionality, experience/education constraints, qualification-vs-duty separation, and exact source depth without spreading one adjective across neighboring technologies.
 
-Heterogeneous validation is closed across three materially different role shapes: Python/software `tmBK` uses P1.6 39 → Capability 13; network/security `t4qV` uses 44 → 14; operations/platform `tmyX` uses 46 → 15. Complete reviews verified source coverage, obligation/depth calibration, role-level separation, grouping, and fail-closed enrichment. Market truthfulness now exposes sample/source/filter/contract scope, non-exclusive strength semantics, duplicate limitations, and representativeness warnings; source/lifecycle acceptance also passed. The next Phase-1 gate is partial-success semantics.
+Heterogeneous validation is closed across three materially different role shapes: Python/software `tmBK` uses P1.6 39 → Capability 13; network/security `t4qV` uses 44 → 14; operations/platform `tmyX` uses 46 → 15. Complete reviews verified source coverage, obligation/depth calibration, role-level separation, grouping, and fail-closed enrichment. Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are accepted. `jobhunter report` and `/report` share exact current counts, queues, and artifact lineage. Phase 1 is closed.
 
 Fresh English v20 artifacts now persist as `pending` semantic-review candidates. Pending candidates remain inspectable in the browser, CLI, and Review Snapshot, but are excluded from Capability, Market, dashboard accepted counts, and the public corpus. Explicit acceptance records reviewer time/note; rejection archives the complete local candidate and removes it from current runtime state so the same contract can be rebuilt. Existing promoted artifacts migrate as accepted for compatibility.
 
@@ -175,15 +175,15 @@ It deliberately excludes SQLite files, raw HTML evidence, machine-local evidence
 The real published/verified baseline is:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
 ```
 
-`344` therefore means known/discovered identities, not 344 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection.
+`353` therefore means known/discovered identities, not 353 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection. Historical English v1 artifacts remain in SQLite but are excluded from the current public corpus.
 
 Commands:
 
@@ -287,14 +287,14 @@ P1.6 v20/v5 promoted/closed
 → Python/software heterogeneous validation accepted (tmBK 39 → 13)
 → heterogeneous review closed (tmBK 39→13, t4qV 44→14, tmyX 46→15)
 → Market truthfulness and source/lifecycle acceptance closed
-→ partial-success semantics
-→ preserve accepted P1.6 + Capability as the future Phase-2 input
-→ partial-success/P1.7 closure
-→ Phase-1 closure
-→ only then corpus-wide Phase 2
+→ partial-success semantics accepted
+→ P1.7 report/run/browser accepted
+→ Phase-1 closure accepted
+→ preserve accepted P1.6 + Capability as Phase-2 input
+→ focused canonical concept registry
 ```
 
-JobHunter does not yet claim Phase 1 is closed, semantic acceptance across all role families, canonical Phase-2 taxonomy, reviewed personal readiness/gap state, arbitrary-web ingestion, autonomous applications, or an evaluated RAG/agent platform.
+JobHunter now claims bounded Phase-1 closure on the documented contracts and accepted representative anchors. It does not claim semantic acceptance across every role family, a canonical Phase-2 taxonomy, reviewed personal readiness/gap state, arbitrary-web ingestion, autonomous applications, or an evaluated RAG/agent platform.
 
 ## Development validation
 

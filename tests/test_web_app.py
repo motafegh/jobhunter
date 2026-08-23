@@ -23,7 +23,15 @@ def _settings(tmp_path: Path) -> Settings:
 def test_web_app_renders_primary_local_pages(tmp_path: Path) -> None:
     app = create_app(_settings(tmp_path))
     with TestClient(app) as client:
-        for path in ("/", "/jobs", "/market", "/searches", "/operations", "/system"):
+        for path in (
+            "/",
+            "/jobs",
+            "/report",
+            "/market",
+            "/searches",
+            "/operations",
+            "/system",
+        ):
             response = client.get(path)
             assert response.status_code == 200
             assert "JobHunter" in response.text
@@ -174,6 +182,7 @@ def test_web_app_explains_sync_controls_quick_add_and_pipeline(tmp_path: Path) -
         overview = client.get("/")
         jobs = client.get("/jobs")
         market = client.get("/market")
+        report = client.get("/report")
 
     assert "Search terms to try" in overview.text
     assert "What the full workflow does" in overview.text
@@ -194,6 +203,8 @@ def test_web_app_explains_sync_controls_quick_add_and_pipeline(tmp_path: Path) -
     assert "Duplicate adjustment:" in market.text
     assert "strength columns are non-exclusive" in market.text
     assert "does not certify that this bounded sample represents the wider market" in market.text
+    assert "Deterministic action queues" in report.text
+    assert "Exact current corpus state" in report.text
 
 
 def test_full_workflow_rejects_invalid_model_stage_bounds_before_network(tmp_path: Path) -> None:

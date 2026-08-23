@@ -1,10 +1,10 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-21  
+**Date:** 2026-08-23
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
-**Current focused plan:** `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
+**Current focused plan:** `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
 
 Repository workflow rule:
 
@@ -174,17 +174,17 @@ Implementation/acceptance:
 - [x] corpus failure surfaces without rolling back SQLite.
 - [x] no automatic Git commit/push.
 - [x] deterministic tests cover Unicode, privacy, dependencies, stale cleanup, tampering, routing, browser hook, and coverage terminology.
-- [x] real DB backfill completed and `jobhunter-corpus verify` passed for 344 known jobs.
+- [x] real DB backfill completed and current `jobhunter-corpus verify` passed for 353 known jobs.
 - [x] exact publication baseline recorded:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
-Per-job stage files:         387
+Per-job stage files:         383
 Corpus size:                ~3.7 MiB
 ```
 
@@ -201,7 +201,7 @@ Corpus size:                ~3.7 MiB
 Permanent interpretation:
 
 ```text
-344 known/discovered jobs != 344 fully fetched advertisements
+353 known/discovered jobs != 353 fully fetched advertisements
 ```
 
 Only jobs with a non-null current fetched/parsed detail are eligible downstream semantic-review anchors.
@@ -314,31 +314,36 @@ Per-role permanent checks:
 
 ### C3 — Partial-success truthfulness
 
-- [ ] expose requested / attempted / completed / reused / skipped / failed / remaining eligible.
-- [ ] browser/CLI summaries agree.
-- [ ] earlier durable success survives later failure.
-- [ ] no-eligible-work != attempted-and-failed.
+- [x] expose requested / attempted / completed / reused / skipped / failed / remaining eligible.
+- [x] browser/CLI complete-workflow summaries use the same service and formatter.
+- [x] earlier durable success survives later failure and still refreshes the public projection.
+- [x] no-eligible-work != attempted-and-failed.
+- [x] Quick Add propagates mixed detail/translation/analysis outcomes as partial success.
 
 ### C4 — P1.7 final workflow
 
-- [ ] final per-job report/provenance.
-- [ ] ready-job queue.
-- [ ] combined current-corpus report.
-- [ ] `jobhunter run` deterministic acceptance.
-- [ ] browser equivalent acceptance.
-- [ ] rerun/idempotency proof.
-- [ ] bounded live end-to-end Phase-1 acceptance.
+- [x] final per-job report/provenance.
+- [x] ready-job queue.
+- [x] combined current-corpus report.
+- [x] `jobhunter run` deterministic acceptance.
+- [x] browser equivalent acceptance.
+- [x] rerun/idempotency proof.
+- [x] bounded live end-to-end Phase-1 acceptance.
 
 ### C5 — Phase-1 closure
 
-- [ ] acceptance summary with exact corpus/sample/contracts/bounds.
-- [ ] reconcile final accepted docs.
-- [ ] freeze accepted P1.6 + Capability starting contract for Phase 2.
-- [ ] keep Blueprint deferred/non-authoritative unless later evidence reopens it.
+- [x] acceptance summary with exact corpus/sample/contracts/bounds.
+- [x] reconcile final accepted docs.
+- [x] freeze accepted P1.6 + Capability starting contract for Phase 2.
+- [x] keep Blueprint deferred/non-authoritative unless later evidence reopens it.
 
 ## D. Phase 2 — gated
 
-Do not begin until Phase-1 closure.
+Phase-1 closure passed on 2026-08-23. Begin only through the focused P2.1 plan:
+
+```text
+docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md
+```
 
 ```text
 canonical concept registry
@@ -351,3 +356,20 @@ canonical concept registry
 ```
 
 Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, personal readiness scoring, learning-plan generation, application ranking, autonomous applications, vector/RAG infrastructure, generic plugin framework, and multi-model voting.
+
+### D1 — P2.1A registry foundation
+
+- [x] versioned typed concept/category/status contract.
+- [x] SQLite concepts, aliases, and job-claim mappings.
+- [x] stable-ID, normalization, collision, supersession, and provenance invariants.
+- [x] explicit mapped/unmapped/rejected decisions.
+- [x] current accepted P1.6 dependency boundary.
+- [x] deterministic offline tests and migration proof.
+
+### D2 — P2.1B manual CLI workflow
+
+- [ ] list/show/add/deprecate concepts.
+- [ ] add reviewed aliases with provenance.
+- [ ] list accepted-current P1.6 claims and mapping state.
+- [ ] record mapped/unmapped/rejected decisions with meaningful review notes.
+- [ ] preserve idempotency and immutable prior decisions.

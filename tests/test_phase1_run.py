@@ -1,5 +1,6 @@
 from types import SimpleNamespace
 
+import jobhunter.phase1_run as phase1_run
 from jobhunter.analysis_service import AnalysisBatchSummary
 from jobhunter.config import JobinjaSearchDefinition, Settings
 from jobhunter.market_insights import MarketSummary
@@ -20,15 +21,35 @@ class _SyncService:
             detail_fetch = SimpleNamespace(
                 results=tuple(
                     SimpleNamespace(source_job_id=job_id) for job_id in self.preferred_ids
-                )
+                ),
+                attempted=len(self.preferred_ids),
+                succeeded=len(self.preferred_ids),
+                unchanged=0,
+                failures=(),
             )
-        return SimpleNamespace(succeeded=self.succeeded, detail_fetch=detail_fetch)
+        return SimpleNamespace(
+            succeeded=self.succeeded,
+            discovery=SimpleNamespace(
+                searches_attempted=len(tuple(searches)),
+                failures=(() if self.succeeded else (SimpleNamespace(error="search"),)),
+            ),
+            missing_selected=self.preferred_ids,
+            refresh_selected=(),
+            detail_fetch=detail_fetch,
+        )
 
 
 class _TranslationService:
-    def __init__(self, *, summary: TranslationBatchSummary, current_ids=()) -> None:
+    def __init__(
+        self,
+        *,
+        summary: TranslationBatchSummary,
+        current_ids=(),
+        eligible_count: int = 0,
+    ) -> None:
         self.summary = summary
         self.current_ids = set(current_ids)
+        self.eligible_count = eligible_count
         self.calls = []
 
     def run(self, **kwargs):
@@ -39,6 +60,9 @@ class _TranslationService:
         if source_job_id in self.current_ids:
             return SimpleNamespace(id=1)
         return None
+
+    def missing_source_version_count(self) -> int:
+        return self.eligible_count
 
 
 class _SourceStore:
@@ -58,7 +82,7 @@ class _AnalysisStore:
 
     def latest_current(self, source_job_id: str, **_kwargs):
         if source_job_id in self.current_ids:
-            return SimpleNamespace(id=1)
+            return SimpleNamespace(id=1, translation_artifact_id=1)
         return None
 
 
@@ -107,10 +131,11 @@ class _Market:
 
 
 def _translation_summary(*, failures=()) -> TranslationBatchSummary:
+    failures = tuple(failures)
     return TranslationBatchSummary(
-        attempted=0,
+        attempted=len(failures),
         results=(),
-        failures=tuple(failures),
+        failures=failures,
     )
 
 
@@ -155,6 +180,10 @@ def test_phase1_run_selects_only_current_relevant_missing_analyses() -> None:
     assert summary.analysis_selected == ("new",)
     assert summary.analysis_eligible_before == 2
     assert summary.analysis_remaining == 1
+    assert summary.searches_requested == 1
+    assert summary.detail_requested == 1
+    assert summary.translation_eligible_before == 0
+    assert summary.translation_remaining == 0
     assert analysis.calls == [(('new',), 1)]
     assert translation.calls[0]["preferred_ids"] == ("new",)
 
@@ -166,6 +195,7 @@ def test_phase1_run_preserves_partial_success_when_translation_has_failures() ->
         translation_service=_TranslationService(
             summary=_translation_summary(failures=(failure,)),
             current_ids=(),
+            eligible_count=1,
         ),
         analysis_service=_AnalysisService(_analysis_summary()),
         source_store=_SourceStore(()),
@@ -188,13 +218,17 @@ def test_phase1_run_preserves_partial_success_when_translation_has_failures() ->
     assert summary.status == "completed_with_failures"
     assert summary.translation is not None
     assert len(summary.translation.failures) == 1
+    assert summary.translation_remaining == 1
     assert summary.analysis_skipped_reason == "no eligible current jobs need analysis"
 
 
 def test_phase1_run_marks_disabled_model_stages_as_attention_required() -> None:
     service = Phase1RunService(
         sync_service=_SyncService(),
-        translation_service=_TranslationService(summary=_translation_summary()),
+        translation_service=_TranslationService(
+            summary=_translation_summary(),
+            eligible_count=3,
+        ),
         analysis_service=None,
         source_store=_SourceStore(()),
         analysis_store=_AnalysisStore(),
@@ -215,7 +249,95 @@ def test_phase1_run_marks_disabled_model_stages_as_attention_required() -> None:
 
     assert summary.status == "completed_with_failures"
     assert summary.translation_skipped_reason == "translation is disabled in configuration"
+    assert summary.translation_remaining == 3
     assert summary.analysis_skipped_reason == "no analysis model is configured"
+
+
+def test_phase1_run_keeps_no_eligible_work_distinct_from_failure() -> None:
+    service = Phase1RunService(
+        sync_service=_SyncService(),
+        translation_service=_TranslationService(
+            summary=_translation_summary(),
+            eligible_count=0,
+        ),
+        analysis_service=_AnalysisService(_analysis_summary()),
+        source_store=_SourceStore(()),
+        analysis_store=_AnalysisStore(),
+        workflow_store=_WorkflowStore(),
+        market_insights=_Market(),
+        translation_enabled=True,
+        analysis_model="analysis-model",
+    )
+
+    summary = service.run(
+        (SimpleNamespace(name="search"),),
+        missing_limit=0,
+        refresh_limit=0,
+        refresh_after_hours=24,
+        translation_limit=5,
+        analysis_limit=2,
+    )
+
+    assert summary.status == "completed"
+    assert summary.translation is not None
+    assert summary.translation.attempted == 0
+    assert summary.translation_skipped_reason == (
+        "no eligible current jobs need English projection"
+    )
+    assert summary.translation_remaining == 0
+    assert summary.analysis_skipped_reason == "no eligible current jobs need analysis"
+    assert summary.analysis_remaining == 0
+
+
+def test_phase1_summary_exposes_complete_partial_success_ledger(monkeypatch) -> None:
+    translation_failure = TranslationFailure(source_job_id="bad", error="failed")
+    analysis_result = SimpleNamespace(source_job_id="good", outcome="completed")
+    service = Phase1RunService(
+        sync_service=_SyncService(preferred_ids=("good",)),
+        translation_service=_TranslationService(
+            summary=_translation_summary(failures=(translation_failure,)),
+            current_ids=("good", "remaining"),
+            eligible_count=2,
+        ),
+        analysis_service=_AnalysisService(
+            _analysis_summary(results=(analysis_result,))
+        ),
+        source_store=_SourceStore(("good", "remaining")),
+        analysis_store=_AnalysisStore(),
+        workflow_store=_WorkflowStore(),
+        market_insights=_Market(),
+        translation_enabled=True,
+        analysis_model="analysis-model",
+    )
+    summary = service.run(
+        (SimpleNamespace(name="search"),),
+        missing_limit=1,
+        refresh_limit=0,
+        refresh_after_hours=24,
+        translation_limit=1,
+        analysis_limit=1,
+    )
+    monkeypatch.setattr(phase1_run, "format_sync_summary", lambda _summary: "sync")
+    monkeypatch.setattr(
+        phase1_run,
+        "format_translation_batch_summary",
+        lambda _summary: "translation",
+    )
+    monkeypatch.setattr(
+        phase1_run,
+        "format_analysis_batch_summary",
+        lambda _summary: "analysis",
+    )
+
+    rendered = phase1_run.format_phase1_run_summary(summary)
+
+    assert "Run status: completed_with_failures" in rendered
+    assert "Discovery: requested=1, attempted=1, failed=0" in rendered
+    assert "Detail acquisition: requested=1, attempted=1, completed=1" in rendered
+    assert "eligible_before=2, attempted=1, completed=0, reused=0, failed=1" in rendered
+    assert "remaining_eligible=2" in rendered
+    assert "English P1.6: requested_limit=1, eligible_before=2" in rendered
+    assert "attempted=1, completed=1, reused=0, failed=0, remaining_eligible=1" in rendered
 
 
 def test_configured_searches_deduplicates_canonical_urls() -> None:

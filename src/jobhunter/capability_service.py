@@ -21,6 +21,7 @@ from jobhunter.capability_service_v9 import (
 )
 from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.config import Settings
+from jobhunter.translation_service import build_translation_service
 from jobhunter.translation_store import TranslationStore
 
 
@@ -76,6 +77,7 @@ def build_capability_intelligence_service(settings: Settings) -> CapabilityIntel
         ),
         analysis_model=analysis_model,
         capability_model=capability_model,
+        translation_service=build_translation_service(settings),
         max_tokens=settings.analysis_max_tokens,
     )
 

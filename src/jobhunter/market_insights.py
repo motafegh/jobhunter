@@ -9,6 +9,7 @@ from pathlib import Path
 
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.storage import JobHunterStore
+from jobhunter.translation_service import TranslationService
 
 _SMALL_ANALYZED_SAMPLE = 20
 _CONCENTRATION_MIN_SAMPLE = 5
@@ -64,11 +65,13 @@ class MarketInsights:
         analysis_model: str | None = None,
         analysis_prompt_version: str | None = None,
         analysis_schema_version: str | None = None,
+        translation_service: TranslationService | None = None,
     ) -> None:
         self._database_path = database_path
         self._analysis_model = analysis_model
         self._analysis_prompt_version = analysis_prompt_version
         self._analysis_schema_version = analysis_schema_version
+        self._translation_service = translation_service
 
     def _connect(self) -> sqlite3.Connection:
         connection = sqlite3.connect(self._database_path)
@@ -196,6 +199,18 @@ class MarketInsights:
             schema_version=self._analysis_schema_version,
             accepted_only=True,
         )
+        if self._translation_service is not None:
+            artifacts = tuple(
+                artifact
+                for artifact in artifacts
+                if (
+                    (translation := self._translation_service.current_artifact(
+                        artifact.source_job_id
+                    ))
+                    is not None
+                    and artifact.translation_artifact_id == translation.id
+                )
+            )
         analyzed_source_job_ids = tuple(artifact.source_job_id for artifact in artifacts)
         (
             discovered_jobs,

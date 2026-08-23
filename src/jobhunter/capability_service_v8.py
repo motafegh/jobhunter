@@ -39,6 +39,7 @@ from jobhunter.capability_v8_models import (
 from jobhunter.config import Settings
 from jobhunter.evidence_refs import evidence_reference_payload
 from jobhunter.translation.projection import TRANSLATION_SCHEMA_VERSION
+from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
 CAPABILITY_PROMPT_VERSION = "job-capability-intelligence-v8"
@@ -194,6 +195,7 @@ class CapabilityIntelligenceServiceV8:
         provider: CapabilityV8InferenceProvider,
         analysis_model: str,
         capability_model: str,
+        translation_service: TranslationService | None = None,
         max_tokens: int = 8192,
         clock=lambda: datetime.now(UTC),
         reasoning_draft_model: type[CapabilityReasoningDraft] = CapabilityReasoningDraft,
@@ -211,6 +213,7 @@ class CapabilityIntelligenceServiceV8:
         self._provider = provider
         self._analysis_model = analysis_model.strip()
         self._capability_model = capability_model.strip()
+        self._translation_service = translation_service
         self._max_tokens = max_tokens
         self._clock = clock
         self._reasoning_draft_model = reasoning_draft_model
@@ -225,13 +228,34 @@ class CapabilityIntelligenceServiceV8:
             raise CapabilityIntelligenceError(
                 "Job has no current successfully parsed source version"
             )
-        analysis = self._analysis_store.latest_current(
-            source_job_id,
-            model=self._analysis_model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
-            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
-            accepted_only=True,
+        current_translation = (
+            self._translation_service.current_artifact(source_job_id)
+            if self._translation_service is not None
+            else None
         )
+        if self._translation_service is not None and current_translation is None:
+            raise CapabilityIntelligenceError(
+                "Job has no configured current English projection; translate/repair it first"
+            )
+        if current_translation is not None:
+            analysis = self._analysis_store.find_artifact(
+                job_detail_version_id=source.job_detail_version_id,
+                translation_artifact_id=current_translation.id,
+                require_translation_dependency=True,
+                model=self._analysis_model,
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+            )
+            if analysis is not None and analysis.semantic_review_status != "accepted":
+                analysis = None
+        else:
+            analysis = self._analysis_store.latest_current(
+                source_job_id,
+                model=self._analysis_model,
+                prompt_version=ENGLISH_PROMPT_VERSION,
+                schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+                accepted_only=True,
+            )
         if analysis is None:
             raise CapabilityIntelligenceError(
                 "Job has no semantically accepted current English P1.6 analysis; run Analyze "

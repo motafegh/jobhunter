@@ -1,7 +1,7 @@
 # JobHunter Master Implementation Plan
 
 **Status:** Controlling product-level implementation plan  
-**Date:** 2026-08-21
+**Date:** 2026-08-23
 
 ## 1. Purpose and authority
 
@@ -106,7 +106,7 @@ Current strong foundations include:
 
 Historical translation-v1, P1.6 contracts, Capability v7/v8, and Blueprint experiment artifacts remain preserved for reproducibility but are not current public contracts.
 
-Phase 1 is not closed until the remaining acceptance gates below pass.
+Phase 1 closed on 2026-08-23 after all acceptance gates below passed. Historical artifacts remain reproducible but non-current.
 
 ---
 
@@ -293,9 +293,9 @@ jobhunter-public-corpus-v1
 Accepted publication baseline:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -304,7 +304,7 @@ Capabilities:                  5
 Important interpretation:
 
 ```text
-344 known/discovered jobs != 344 complete advertisements
+353 known/discovered jobs != 353 complete advertisements
 ```
 
 The corpus was backfilled from the real local DB, verified, safety-scanned, intentionally committed/pushed, remotely inspected, and its coverage terminology was hardened to distinguish known/discovered jobs from fetched/parsed details. The public corpus is now available for remote heterogeneous anchor selection and later public-data analysis.
@@ -390,7 +390,7 @@ After P1-A is acceptable:
 
 Capability and Blueprint do not enter current Market aggregation yet.
 
-Accepted live state: five accepted/current English P1.6 jobs across five employers. The surface exposes 5/43/344 analyzed/parsed/discovered coverage, exact model/prompt/schema identity, source and filter scope, posting-level non-exclusive strength semantics, the absence of repost/near-duplicate adjustment, a small-sample warning, and a clear boundary between per-posting semantic acceptance and market representativeness.
+Accepted live state: five accepted/current English P1.6 jobs across five employers. The surface exposes 5/43/353 analyzed/parsed/discovered coverage, exact model/prompt/schema identity, source and filter scope, posting-level non-exclusive strength semantics, the absence of repost/near-duplicate adjustment, a small-sample warning, and a clear boundary between per-posting semantic acceptance and market representativeness.
 
 ---
 
@@ -420,7 +420,7 @@ Focused deterministic acceptance covers network failures, 429, 5xx, challenge/au
 
 ---
 
-## 9. Gate P1-D — Partial-success operation semantics
+## 9. Gate P1-D — Partial-success operation semantics — closed
 
 Multi-stage workflows expose where applicable:
 
@@ -442,11 +442,13 @@ Requirements:
 - browser and CLI semantics agree;
 - affected/failed jobs are inspectable where practical.
 
+Accepted implementation uses one `Phase1RunService` and one formatter for CLI and browser full workflows. Its outcome ledger reports requested limits/selections, attempted, completed, reused/unchanged, failed, intentionally skipped, and remaining eligible work. Translation backlog size is calculated independently of the batch limit. Quick Add propagates detail/translation/analysis failures as `completed_with_failures`; clean no-work and operator-not-requested paths remain successful intentional skips. Completed durable work still triggers the public-corpus projection hook even when a later stage fails.
+
 ---
 
-## 10. Gate P1-E — Finish P1.7 run/reporting
+## 10. Gate P1-E — P1.7 run/reporting — closed
 
-Complete/accept:
+Accepted:
 
 - per-job analysis/report provenance surface;
 - operation result links;
@@ -461,7 +463,7 @@ Complete/accept:
 
 ---
 
-## 11. Phase-1 closure
+## 11. Phase-1 closure — accepted
 
 Phase 1 closes only when:
 
@@ -476,7 +478,7 @@ Phase 1 closes only when:
 - current documentation matches actual accepted state;
 - accepted P1.6 + Capability contract is explicitly identified/frozen as Phase-2 input.
 
-No corpus-wide Phase-2 work before closure.
+All listed conditions passed on 2026-08-23. The accepted evidence is recorded in `docs/working-memory/2026-08-23_P1_7_AND_PHASE_1_CLOSURE.md`. Phase 2 may proceed through focused, reviewed increments; corpus-wide generation remains gated by the P2.1 registry contract.
 
 ---
 

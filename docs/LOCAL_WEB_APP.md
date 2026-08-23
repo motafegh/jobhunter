@@ -1,7 +1,7 @@
 # JobHunter Local Web Application
 
 **Status:** Current browser architecture/surface guide  
-**Date:** 2026-08-21
+**Date:** 2026-08-23
 
 ## 1. Purpose
 
@@ -104,7 +104,7 @@ Important coverage terminology must remain honest:
 known/discovered jobs != fetched/parsed detail jobs
 ```
 
-The repository public corpus currently has an accepted publication baseline of 344 known/discovered jobs and 43 fetched/parsed detail jobs. Those numbers are not interchangeable.
+The repository public corpus currently has an accepted projection baseline of 353 known/discovered jobs, 43 fetched/parsed detail jobs, and 20 current English v2 projections. Those numbers are not interchangeable; preserved historical English v1 artifacts are not current.
 
 ### Sync controls
 
@@ -253,7 +253,7 @@ Market must retain/expose enough context to understand:
 - requirement-strength semantics;
 - concentration/small-sample warning state.
 
-Coverage is not semantic-quality certification. Market truthfulness remains a Phase-1 closure gate after heterogeneous semantic acceptance.
+Coverage is not semantic-quality certification. Market truthfulness is accepted; current P1.7 work preserves that scope and warning contract.
 
 ---
 
@@ -408,17 +408,18 @@ Browser architecture is established and actively used. A separate browser rewrit
 Current project sequence:
 
 ```text
-rebuild/review tmBK P1.6
-→ only if accepted, run/review tmBK Capability v9
-→ network/security heterogeneous review
-→ operations/platform/DevOps heterogeneous review
-→ Market/source/lifecycle/partial-success/P1.7 closure
+heterogeneous P1.6/Capability review accepted
+→ Market/source/lifecycle accepted
+→ partial-success semantics accepted
+→ P1.7 report/run/browser accepted
+→ Phase-1 closure accepted
+→ P2.1 canonical concept registry
 ```
 
 The focused state lives in:
 
 ```text
-docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
+docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md
 docs/EXECUTION_TODO.md
 docs/WORKING_MEMORY.md
 ```

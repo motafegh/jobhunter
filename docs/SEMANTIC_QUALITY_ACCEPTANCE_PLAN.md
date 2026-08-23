@@ -290,9 +290,9 @@ Accepted invariants:
 Real operational proof:
 
 ```text
-Known/discovered jobs:       344
+Known/discovered jobs:       353
 Fetched/parsed job details:   43
-English projections:          33
+Current English projections:  20
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -303,7 +303,7 @@ The real local DB was exported and verified; corpus safety checks passed; accept
 Important interpretation:
 
 ```text
-344 known/discovered jobs != 344 complete advertisements
+353 known/discovered jobs != 353 complete advertisements
 ```
 
 Only jobs with a current fetched/parsed detail are eligible for heterogeneous semantic-review selection.
