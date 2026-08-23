@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Registry · JobHunter{% endblock %}
+{% block heading %}Canonical registry{% endblock %}
+{% block eyebrow %}Human-reviewed correspondence above accepted/current P1.6 facts{% endblock %}
+{% block topbar_actions %}<a class="button primary" href="/registry/claims?state=pending">Review pending claims</a>{% endblock %}
+
+{% block content %}
+{% if notice %}<section class="panel compact-panel"><p class="muted">{{ notice }}</p></section>{% endif %}
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">P2.1 boundary</p><h2>Reviewed concepts only</h2></div><span class="badge">No automatic taxonomy growth</span></div>
+  <p class="muted">Canonical labels record reviewed correspondence. They do not replace employer wording, prove market prevalence, or authorize model-generated taxonomy growth.</p>
+  {% if review_error %}<p class="muted">Current P1.6 review queue unavailable: {{ review_error }}</p>{% else %}
+  <div class="detail-grid">
+    <div><span class="detail-label">Pending claims</span><strong>{{ claim_counts.get('pending', 0) }}</strong></div>
+    <div><span class="detail-label">Mapped</span><strong>{{ claim_counts.get('mapped', 0) }}</strong></div>
+    <div><span class="detail-label">Explicitly unmapped</span><strong>{{ claim_counts.get('unmapped', 0) }}</strong></div>
+    <div><span class="detail-label">Rejected</span><strong>{{ claim_counts.get('rejected', 0) }}</strong></div>
+  </div>
+  {% endif %}
+</section>
+
+<section class="panel compact-panel">
+  <form class="filter-bar extended-filter" method="get" action="/registry">
+    <label class="search-field"><span class="sr-only">Search registry</span><input type="search" name="q" value="{{ q }}" placeholder="Concept ID, preferred label, or reviewed alias…"></label>
+    <label><span class="sr-only">Category</span><select name="category"><option value="">All categories</option>{% for item in categories %}<option value="{{ item }}" {% if category == item %}selected{% endif %}>{{ item.replace('_', ' ') }}</option>{% endfor %}</select></label>
+    <label><span class="sr-only">Status</span><select name="status"><option value="active" {% if status == 'active' %}selected{% endif %}>Active concepts</option><option value="deprecated" {% if status == 'deprecated' %}selected{% endif %}>Deprecated concepts</option><option value="all" {% if status == 'all' %}selected{% endif %}>All statuses</option></select></label>
+    <button class="button primary" type="submit">Filter</button><a class="button ghost" href="/registry">Reset</a>
+  </form>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Reviewed registry</p><h2>{{ concepts|length }} concepts</h2></div></div>
+  {% if concepts %}
+  <div class="table-wrap">
+    <table class="job-table">
+      <thead><tr><th>Concept</th><th>Category</th><th>Status</th><th>Review note</th></tr></thead>
+      <tbody>
+      {% for concept in concepts %}
+        <tr>
+          <td><a class="job-title" href="/registry/concepts/{{ concept.concept_id }}">{{ concept.preferred_label }}</a><div class="technical-ref">{{ concept.concept_id }}</div></td>
+          <td>{{ concept.category.replace('_', ' ') }}</td>
+          <td><span class="badge {% if concept.status == 'active' %}good{% else %}warn{% endif %}">{{ concept.status }}</span></td>
+          <td>{{ concept.review_note }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}<div class="empty-state">No reviewed canonical concepts match these filters.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Manual decision</p><h2>Add reviewed concept</h2></div></div>
+  <p class="muted">This form creates one human-reviewed registry concept. It does not infer or seed concepts from model output.</p>
+  <form class="quick-add-form" method="post" action="/registry/concepts">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label><span>Stable concept ID</span><input name="concept_id" required maxlength="160" placeholder="language:python"><small class="field-help">Must match the selected category prefix plus a lowercase kebab slug.</small></label>
+    <label><span>Category</span><select name="category" required>{% for item in categories %}<option value="{{ item }}">{{ item.replace('_', ' ') }}</option>{% endfor %}</select></label>
+    <label><span>Preferred label</span><input name="preferred_label" required maxlength="120" placeholder="Python"></label>
+    <label><span>Description</span><input name="description" maxlength="1000" placeholder="Optional bounded definition"></label>
+    <label class="quick-add-input"><span>Review note</span><input name="reason" required minlength="8" maxlength="1000" placeholder="Why this canonical concept is accepted"></label>
+    <div class="form-action"><button class="button primary" type="submit">Add reviewed concept</button></div>
+  </form>
+</section>
+{% endblock %}
