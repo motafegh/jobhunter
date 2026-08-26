@@ -5,6 +5,17 @@
 **Scope:** All current and future derived intelligence, semantic interpretation, canonicalization, aggregation, recommendations, and assistant behavior  
 **Authority:** Subordinate to `PRODUCT_SPECIFICATION.md`, `DOMAIN_AND_ANALYSIS_MODEL.md`, `SOURCE_POLICY.md`, and `ARCHITECTURE.md`; controlling for how their evidence/uncertainty principles are operationalized when roadmap, implementation, plans, proposals, tests, or assistant behavior are ambiguous.
 
+Current companion amendments implementing this policy:
+
+```text
+docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md
+docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md
+docs/EXECUTION_TODO_AMENDMENT_2026-08-26_UTILITY_REASONING.md
+docs/proposals/05A_FAST_INTERPRETATION_PROMOTION_AND_ROLE_INTELLIGENCE_REFINEMENT.md
+```
+
+These amendments refine current Phase-2 interpretation/execution. Closed Phase-1/P2.1 records remain historical evidence and are not rewritten to simulate retroactive policy.
+
 ---
 
 ## 1. Why this policy exists
