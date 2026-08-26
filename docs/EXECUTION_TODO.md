@@ -4,7 +4,7 @@
 **Date:** 2026-08-26
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
-**Current focused plan:** P2.1 CLOSED / ACCEPTED; utility/epistemic governance reorientation ACCEPTED; focused P2.2 responsibility/role-intelligence plan is next and not yet written
+**Current focused plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md` — APPROVED; P2.2A Job Work Intelligence v1 is next / implementation not started
 
 Repository workflow rule:
 
@@ -347,6 +347,7 @@ Current Phase-2 governance additionally includes:
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md
 docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 ```
 
 Updated Phase-2 interpretation:
@@ -354,7 +355,11 @@ Updated Phase-2 interpretation:
 ```text
 canonical concept registry                         ACCEPTED / CLOSED
 → utility/epistemic governance correction          ACCEPTED
-→ responsibilities/deliverables/role intelligence NEXT DESIGN
+→ P2.2 responsibility/work/role plan               APPROVED
+→ P2.2A Job Work Intelligence v1                   NEXT IMPLEMENTATION
+→ P2.2B selective responsibility/deliverable       LATER
+→ P2.2C responsibility families                    LATER
+→ P2.2D role-archetype intelligence                LATER
 → corpus-scale capability requirement profiles     LATER FOCUSED INCREMENT
 → Market v2                                        LATER FOCUSED INCREMENT
 → later personal evidence/gap intelligence         DEFERRED
@@ -429,20 +434,62 @@ Do not require every responsibility/family/archetype interpretation to be promot
 - [x] reconcile `AGENTS.md` and rolling working memory.
 - [x] add roadmap/implementation/proposal/execution amendments.
 
-### D6 — P2.2 responsibilities/deliverables/role intelligence — DESIGN NEXT
+### D6 — P2.2 focused design — APPROVED
 
-- [ ] write the focused P2.2 plan before implementation.
-- [ ] define exact accepted/current P1.6 responsibility/work input boundary.
-- [ ] define fast job-level work-composition intelligence.
-- [ ] define candidate canonical responsibility/family/archetype states.
-- [ ] define promoted reusable responsibility/family/archetype states.
-- [ ] define confidence, alternatives, ambiguity, and unknown behavior.
-- [ ] define selective canonical mapping driven by downstream value rather than completion percentage.
-- [ ] define when extra accepted jobs are needed for a specific promotion/market claim rather than imposing one universal sample-size quota.
-- [ ] define user-facing distinction between employer facts and JobHunter interpretation.
-- [ ] define Tier A/B/C acceptance for the focused P2.2 increments.
-- [ ] prove the planned workflow should materially reduce manual job-reading effort.
+- [x] write `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`.
+- [x] define exact accepted/current P1.6 responsibility/work input boundary.
+- [x] define fast job-level work-composition intelligence.
+- [x] define candidate versus promoted responsibility/family/archetype semantics.
+- [x] define confidence, alternatives, ambiguity, and unknown behavior.
+- [x] define selective canonical mapping driven by downstream value rather than completion percentage.
+- [x] define when extra accepted jobs are needed for a specific promotion/market claim rather than imposing one universal sample-size quota.
+- [x] define user-facing distinction between employer facts and JobHunter interpretation.
+- [x] define Tier A/B/C acceptance for P2.2.
+- [x] choose persisted generated/candidate `JobWorkIntelligenceArtifact` for repeated-use UX without implying promotion.
+- [x] choose `tG9K`, `t4qV`, `tmyX` as responsibility-rich positive anchors and `tmBK` as limited-work-evidence anchor.
+- [x] record plan approval in `docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md`.
 
-Do not implement P2.2 code until the focused plan is reviewed.
+### D7 — P2.2A Job Work Intelligence v1 — NEXT / NOT STARTED
 
-Do not bulk-map remaining accepted claims merely for completeness, broaden ontology merely to eliminate unresolved cases, start Market v2, publish registry state, or add personal intelligence during P2.2 design unless a separate explicit decision authorizes it.
+Working contract:
+
+```text
+job-work-intelligence-v1
+```
+
+Implementation order:
+
+- [ ] define typed Work Intelligence domain/schema contract.
+- [ ] define `JobWorkIntelligenceArtifact` persistence and migration.
+- [ ] define deterministic artifact identity/currentness/reuse from exact accepted P1.6 dependency.
+- [ ] define compact deterministic P1.6 factual input builder.
+- [ ] implement bounded local-model Work Intelligence reasoning service.
+- [ ] validate all responsibility/role-purpose/requirement references deterministically.
+- [ ] require every work theme to own at least one direct work reference.
+- [ ] prevent requirement-only qualification data from becoming fabricated duties.
+- [ ] implement deliverable candidate states `source_explicit` / `strongly_implied_by_work`.
+- [ ] implement qualitative emphasis `primary` / `supporting` / `uncertain`.
+- [ ] implement qualitative confidence and ambiguity/unknown handling.
+- [ ] implement candidate role interpretation without canonical promotion.
+- [ ] implement successful limited-work-evidence result for `tmBK` rather than fabricating work or failing the operation.
+- [ ] add one-job CLI generate/show/reuse inspection path.
+- [ ] add smallest browser-visible Work Intelligence surface on job detail.
+- [ ] ensure browser default view optimizes comprehension while evidence remains inspectable on demand.
+- [ ] keep P2.2 artifacts local; do not trigger public-corpus publication/synchronization.
+- [ ] add Tier A deterministic tests for migration, dependencies, currentness, reuse, references, provider failure, and publication boundary.
+- [ ] add Tier C representative semantic/regression checks without brittle exact-prose assertions.
+- [ ] perform first live/product review on one responsibility-rich accepted job before broadening.
+- [ ] review `tG9K`, `t4qV`, `tmyX`, and `tmBK` bounded acceptance behavior.
+- [ ] explicitly judge whether Work Intelligence reduces manual responsibility-reading/synthesis effort.
+- [ ] progressively document implementation findings and any material plan corrections.
+- [ ] run applicable Ruff/full-pytest/warnings-as-errors closure gates when the bounded increment is ready.
+
+P2.2A stop lines:
+
+- do not bulk-map remaining accepted claims merely for completeness;
+- do not create global responsibility families/archetypes merely to finish P2.2A;
+- do not broaden ontology merely to eliminate unresolved cases;
+- do not start P2.3 or Market v2;
+- do not publish registry/P2.2 state;
+- do not add personal intelligence;
+- do not force deterministic wording on model-owned semantic interpretation.
