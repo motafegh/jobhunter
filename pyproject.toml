@@ -33,6 +33,7 @@ jobhunter-app = "jobhunter.web.launcher:main"
 jobhunter-review-snapshot = "jobhunter.review_snapshot:main"
 jobhunter-corpus = "jobhunter.public_corpus_cli:main"
 jobhunter-registry = "jobhunter.canonical_registry_cli:main"
+jobhunter-work = "jobhunter.work_intelligence_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
