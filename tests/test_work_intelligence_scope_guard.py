@@ -35,7 +35,8 @@ def _document(summary: str) -> JobWorkIntelligence:
 
 def test_scope_guard_rejects_unsupported_end_to_end_language() -> None:
     document = _document(
-        "This role provides end-to-end network security design and implementation across the estate."
+        "This role provides end-to-end network security design and implementation "
+        "across the estate."
     )
 
     with pytest.raises(WorkIntelligenceError, match="unsupported lifecycle/scope intensifier"):
