@@ -1,11 +1,11 @@
 # P2.2 Responsibility, Work, and Role Intelligence Plan
 
-**Status:** APPROVED / CONTROLLING FOCUSED PLAN — IMPLEMENTATION NOT STARTED  
+**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A IMPLEMENTED / REAL-LOCAL SEMANTIC ACCEPTANCE OPEN  
 **Date:** 2026-08-26  
 **Scope:** P2.2 responsibility/work interpretation, selective responsibility/deliverable promotion, responsibility families, and role-archetype intelligence  
 **Authority:** Subordinate to `docs/PRODUCT_SPECIFICATION.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/SOURCE_POLICY.md`, `docs/ARCHITECTURE.md`, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
 **Previous gate:** P2.1 Canonical Concept Registry — CLOSED / ACCEPTED  
-**Next implementation increment:** P2.2A Job Work Intelligence v1
+**Current gate:** P2.2A Job Work Intelligence v1 — IMPLEMENTED / CI GREEN / REAL-LOCAL SEMANTIC-PRODUCT ACCEPTANCE NEXT
 
 ---
 
@@ -112,6 +112,8 @@ Reason:
 - this avoids unnecessary coupling to Capability grouping/prose;
 - Capability v9 may later be displayed or compared as supporting context where useful;
 - Capability model-owned explanatory prose never becomes P2.2 authority automatically.
+
+P2.2A initially reuses the existing configured Capability reasoning-model fallback chain to avoid creating a new configuration surface before real usage demonstrates a need. This is model-runtime reuse only: Work Intelligence has its own prompt/schema/artifact identity and does not consume Capability artifacts as authority.
 
 ### 3.3 Existing canonical registry relationship
 
@@ -264,15 +266,15 @@ This is a successful bounded outcome, not an operation error.
 
 ### 5.1 Decision
 
-P2.2A will persist a versioned **candidate analytical artifact** rather than regenerate the same local-model interpretation every time the browser opens.
+P2.2A persists a versioned **candidate analytical artifact** rather than regenerating the same local-model interpretation every time the browser opens.
 
-Working contract name:
+Contract name:
 
 ```text
 job-work-intelligence-v1
 ```
 
-Working durable entity:
+Durable entity:
 
 ```text
 JobWorkIntelligenceArtifact
@@ -297,7 +299,7 @@ Persistence does **not** mean:
 
 ### 5.3 Artifact identity
 
-Artifact identity must include at minimum:
+Artifact identity includes:
 
 ```text
 source job identity
@@ -316,7 +318,7 @@ Changing the work-intelligence prompt/model/schema may produce a distinct candid
 
 P2.2A artifacts do **not** default to `pending human acceptance` merely because a model generated them.
 
-Recommended semantic state:
+Semantic state:
 
 ```text
 generated / candidate
@@ -329,8 +331,6 @@ A later promoted responsibility family or stable archetype uses its own explicit
 ---
 
 ## 6. P2.2A v1 domain shape
-
-The exact Python/Pydantic names may be refined during implementation, but the semantic contract must preserve the following distinctions.
 
 ### 6.1 WorkTheme
 
@@ -400,7 +400,7 @@ source-reference coverage metadata
 
 ## 7. P2.2A reasoning architecture
 
-Recommended v1 flow:
+Implemented v1 flow:
 
 ```text
 accepted/current P1.6
@@ -420,14 +420,13 @@ browser-first work-intelligence view
 
 ### 7.1 Deterministic pre-processing
 
-Code should prepare compact factual input with exact indices rather than asking the model to rediscover source identity.
+Code prepares compact factual input with exact indices rather than asking the model to rediscover source identity.
 
 The model receives:
 
 - role purpose;
 - responsibilities;
 - selected requirements/context useful for interpretation;
-- job title/company/context where already accepted source-derived;
 - explicit instructions distinguishing facts from inference.
 
 ### 7.2 Model responsibilities
@@ -442,11 +441,13 @@ The model may:
 
 ### 7.3 Deterministic post-validation
 
-Code must reject or repair structurally invalid candidate output when:
+Code rejects structurally invalid candidate output when:
 
-- referenced responsibility/role-purpose indices do not exist;
+- referenced responsibility/role-purpose/requirement indices do not exist;
 - a work theme owns no direct work reference;
-- a claimed `source_explicit` deliverable has no allowed work/source reference;
+- accepted responsibilities or role-purpose items are omitted from all themes;
+- a deliverable owns no direct work reference;
+- candidate role interpretation references unknown theme IDs;
 - required fields/schema are invalid;
 - dependency identity is inconsistent.
 
@@ -463,7 +464,7 @@ Model/provider failure:
 
 Earlier durable work remains valid.
 
-Failed generation should record bounded operational failure if attempts are persisted, without manufacturing a successful artifact.
+Failed generation records bounded operational failure without manufacturing a successful artifact.
 
 ---
 
@@ -471,23 +472,19 @@ Failed generation should record bounded operational failure if attempts are pers
 
 ### 8.1 Browser-first
 
-The normal user surface is the existing local browser job detail flow.
-
-Preferred placement:
+Normal route:
 
 ```text
-job detail
-→ factual source / English / P1.6 information remains available
-→ Work Intelligence section/tab/card
+/jobs/<job-id>/work-intelligence
 ```
 
-The browser should optimize for fast comprehension first, with evidence inspectable on demand.
+Accepted English-analysis job-detail pages link directly to Work Intelligence.
 
-The user should not need to read raw indices/provenance unless opening the supporting evidence/detail.
+The view optimizes for fast comprehension first, with exact P1.6 reference indices inspectable.
 
 ### 8.2 Required visual distinction
 
-The view must make these categories recoverable:
+The view makes these categories recoverable:
 
 ```text
 Employer/P1.6 factual work
@@ -499,13 +496,20 @@ Avoid provenance-heavy clutter in the default view, but do not hide the basis of
 
 ### 8.3 CLI
 
-CLI is secondary and supports:
+CLI entrypoint:
 
-- generate/reuse one job's Work Intelligence;
-- inspect artifact identity/currentness;
-- print a concise human-readable result for debugging/advanced use.
+```text
+jobhunter-work generate <job-id>
+jobhunter-work show <job-id>
+```
 
-Do not create a large CLI review workflow for candidate P2.2A output.
+CLI remains secondary for generation/inspection/debugging rather than becoming a manual review system for candidate output.
+
+### 8.4 Publication side effect
+
+P2.2A browser generation intentionally stays outside the existing `WebOperationManager` because successful operation-manager mutations refresh the public corpus.
+
+Work Intelligence publication is not authorized in P2.2A.
 
 ---
 
@@ -581,32 +585,41 @@ Add a new accepted job only when a concrete P2.2 question needs evidence, such a
 
 ### Tier A — integrity/persistence
 
-Must prove:
+Repository implementation currently proves:
 
-- migration/persistence correctness;
-- exact P1.6 dependency identity;
-- only accepted/current P1.6 can produce current Work Intelligence;
-- stale upstream dependency makes candidate artifact non-current without rewriting history;
-- rerun/reuse behavior is idempotent for the same identity;
-- invalid source references cannot persist;
-- model failure cannot fabricate a successful artifact;
-- privacy/public-corpus boundary is unchanged unless separately authorized.
+- [x] migration/persistence correctness through focused tests;
+- [x] exact P1.6 dependency identity;
+- [x] only accepted/current P1.6 can produce current Work Intelligence;
+- [x] stale upstream dependency makes candidate artifact non-current without rewriting history;
+- [x] rerun/reuse behavior is idempotent for the same identity;
+- [x] invalid source references cannot persist;
+- [x] omitted accepted work evidence cannot persist as successful sufficient Work Intelligence;
+- [x] browser mutation does not publish Work Intelligence into `corpus/`;
+- [x] model failure path cannot manufacture a successful artifact by contract.
 
-These are deterministic tests/invariants.
+CI implementation head `c77635c63ec3140146315980fb0c80522b03d0cf`, run `32996495178`:
 
-### Tier C — bounded analytical usefulness
+```text
+Ruff                       PASS
+full pytest                PASS
+pytest warnings-as-errors  PASS
+```
 
-Must prove on real heterogeneous jobs:
+The retrieved CI evidence did not include an exact test count; do not invent one.
 
-- work themes are useful and materially reduce manual synthesis effort;
-- employer facts and JobHunter interpretation remain distinguishable;
-- dense work does not collapse into an unhelpful generic theme;
-- multiple plausible work areas may coexist;
-- ambiguous cases can lower confidence/show alternatives;
-- likely deliverables are properly labeled explicit versus work-implied;
-- limited-work jobs do not fabricate responsibilities;
-- no exact wording match is required from semantic reasoning;
-- harmless phrasing variation is not a contract failure.
+### Tier C — bounded analytical usefulness — OPEN
+
+Must still prove on real heterogeneous jobs:
+
+- [ ] work themes are useful and materially reduce manual synthesis effort;
+- [ ] employer facts and JobHunter interpretation remain distinguishable;
+- [ ] dense work does not collapse into an unhelpful generic theme;
+- [ ] multiple plausible work areas may coexist;
+- [ ] ambiguous cases can lower confidence/show alternatives;
+- [ ] likely deliverables are properly labeled explicit versus work-implied;
+- [ ] limited-work jobs do not fabricate responsibilities;
+- [ ] no exact wording match is required from semantic reasoning;
+- [ ] harmless phrasing variation is not treated as a contract failure.
 
 P2.2A does **not** require Tier B promotion-grade human acceptance for every generated artifact.
 
@@ -617,6 +630,8 @@ For at least `tG9K`, `t4qV`, and `tmyX`, manual review must answer yes to:
 > Is the Work Intelligence view a faster and clearer way to understand the job's actual work than reading and mentally grouping the full vacancy responsibilities oneself?
 
 This is a product-quality judgment, not a deterministic text assertion.
+
+`tmBK` must additionally prove the limited-work boundary without invented duties.
 
 ---
 
@@ -798,6 +813,7 @@ Focus deterministic tests on:
 - migrations;
 - dependency/currentness;
 - reference validity;
+- complete direct-work coverage;
 - artifact identity/reuse;
 - review/promotion invariants;
 - invalid-state rejection;
@@ -816,7 +832,7 @@ For model-owned interpretation:
 
 ### 16.3 Regression rule
 
-Convert repeatable material defects into regression tests.
+Convert repeatable material integrity defects into regression tests.
 
 Record harmless model wording variation or non-repeatable low-impact differences as model behavior, not automatic reasons for contract churn.
 
@@ -824,20 +840,30 @@ Record harmless model wording variation or non-repeatable low-impact differences
 
 ## 17. P2.2 delivery increments and stop lines
 
-### P2.2A — Job Work Intelligence v1 — NEXT / AUTHORIZED AFTER THIS PLAN
+### P2.2A — Job Work Intelligence v1 — IMPLEMENTED / REAL-LOCAL ACCEPTANCE NEXT
 
-Implementation scope:
+Implemented scope:
 
-1. typed candidate Work Intelligence contract;
-2. deterministic persistence/currentness identity;
-3. bounded reasoning service over accepted/current P1.6;
-4. evidence-reference validation;
-5. one-job CLI generate/show path;
-6. browser-first job Work Intelligence surface;
-7. targeted deterministic tests;
-8. live semantic/product review on `tG9K`, `t4qV`, `tmyX`, plus `tmBK` limited-evidence behavior;
-9. progressive working-memory documentation;
-10. normal Ruff/full-pytest/warnings gates at the appropriate closure point.
+- [x] typed candidate Work Intelligence contract;
+- [x] deterministic persistence/currentness identity;
+- [x] bounded reasoning service over accepted/current P1.6;
+- [x] evidence-reference validation;
+- [x] complete accepted direct-work coverage validation;
+- [x] one-job CLI generate/show path;
+- [x] browser-first job Work Intelligence surface;
+- [x] targeted deterministic/browser tests;
+- [x] progressive implementation working-memory documentation;
+- [x] repository Ruff/full-pytest/warnings CI gates.
+
+Acceptance still open:
+
+- [ ] live semantic/product review on `tG9K`;
+- [ ] live semantic/product review on `t4qV`;
+- [ ] live semantic/product review on `tmyX`;
+- [ ] live limited-evidence review on `tmBK`;
+- [ ] unchanged rerun/reuse proof on at least one real job;
+- [ ] browser usability/authority-boundary review on real artifacts;
+- [ ] final P2.2A acceptance decision and documentation.
 
 Stop line:
 
@@ -904,14 +930,23 @@ P2.2 does not authorize:
 
 ## 20. Exact next action
 
-The plan is approved from the 2026-08-26 governance/product discussion. No further architecture brainstorming is required before the first bounded increment.
+P2.2A implementation and repository mechanical quality are complete.
 
-Next implementation work is:
+Do **not** start P2.2B yet.
+
+Next:
 
 ```text
-P2.2A Job Work Intelligence v1
+pull current main locally
+→ run Work Intelligence on tG9K, t4qV, tmyX, tmBK
+→ inspect candidate output and browser UX against the Tier-C/product utility criteria
+→ confirm unchanged rerun reuse
+→ fix only evidence-backed material defects if found
+→ record P2.2A acceptance or remaining blocker
 ```
 
-Begin with the typed/persistence/service boundary, then produce the smallest browser-visible vertical slice on one responsibility-rich accepted job before broadening across the acceptance set.
+The current implementation record is:
+
+`docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
 
 Progressively document real findings and revise this plan only when implementation evidence exposes a material design defect or a better bounded approach consistent with controlling governance.
