@@ -409,7 +409,11 @@ def build_work_intelligence_service(settings: Settings) -> WorkIntelligenceServi
     analysis_model = settings.effective_analysis_lm_studio_model()
     if not analysis_model:
         raise ValueError("No analysis model is configured for accepted English P1.6")
-    work_model = settings.effective_work_intelligence_lm_studio_model()
+
+    # P2.2A deliberately reuses the existing local reasoning-model fallback chain rather than
+    # adding a new configuration surface before real usage demonstrates that a dedicated model is
+    # useful. The Work Intelligence prompt/schema/artifact identities remain fully separate.
+    work_model = settings.effective_capability_lm_studio_model()
     provider = None
     if work_model:
         provider = WorkIntelligenceInferenceProvider(
