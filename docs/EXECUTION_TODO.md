@@ -1,10 +1,10 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-23
+**Date:** 2026-08-26
 **Active working branch:** `main`  
-**Authority:** Subordinate to product/domain/source/architecture constraints, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`  
-**Current focused plan:** `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md` — CLOSED / ACCEPTED; next focused Phase-2 plan not yet selected
+**Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
+**Current focused plan:** P2.1 CLOSED / ACCEPTED; utility/epistemic governance reorientation ACCEPTED; focused P2.2 responsibility/role-intelligence plan is next and not yet written
 
 Repository workflow rule:
 
@@ -339,23 +339,40 @@ Per-role permanent checks:
 
 ## D. Phase 2 — gated
 
-Phase-1 closure passed on 2026-08-23. P2.1 Canonical Concept Registry is now accepted and closed:
+Phase-1 closure passed on 2026-08-23. P2.1 Canonical Concept Registry is accepted and closed.
+
+Current Phase-2 governance additionally includes:
 
 ```text
-docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md
+docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
+docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md
+docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md
 ```
+
+Updated Phase-2 interpretation:
 
 ```text
 canonical concept registry                         ACCEPTED / CLOSED
-→ reviewed aliases/mappings                        ACCEPTED / CLOSED FOR P2.1 SEED
-→ responsibilities/deliverables                    LATER FOCUSED INCREMENT
+→ utility/epistemic governance correction          ACCEPTED
+→ responsibilities/deliverables/role intelligence NEXT DESIGN
 → corpus-scale capability requirement profiles     LATER FOCUSED INCREMENT
-→ role archetypes                                  LATER FOCUSED INCREMENT
 → Market v2                                        LATER FOCUSED INCREMENT
 → later personal evidence/gap intelligence         DEFERRED
 ```
 
 Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, personal readiness scoring, learning-plan generation, application ranking, autonomous applications, vector/RAG infrastructure, generic plugin framework, and multi-model voting.
+
+Permanent Phase-2 rule:
+
+```text
+strict factual substrate
+→ fast transparent analytical interpretation may be useful immediately
+→ candidate reusable semantics
+→ selective reviewed/promotion boundary
+→ stable canonical aggregation only where promotion is required
+```
+
+Do not require every responsibility/family/archetype interpretation to be promoted before it can be displayed as an inferred/candidate job-level insight.
 
 ### D1 — P2.1A registry foundation — ACCEPTED
 
@@ -398,10 +415,34 @@ Still deferred: automatic taxonomy growth, corpus-wide Blueprint generation, per
 - [x] registry publication explicitly remained unauthorized.
 - [x] P2.1 final acceptance recorded in `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`.
 
-### D5 — Next focused Phase-2 increment — NOT YET SELECTED
+### D5 — Utility/epistemic governance reorientation — ACCEPTED
 
-- [ ] inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md` after P2.1 closure.
-- [ ] define the next bounded focused Phase-2 plan before implementation.
-- [ ] preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 source-truth boundaries.
-- [ ] keep registry publication as a separate privacy/source decision.
-- [ ] do not bulk-map remaining accepted claims, broaden the ontology, start Market v2, or add personal intelligence until the next focused plan explicitly authorizes that work.
+- [x] identify the over-gating risk after P2.1 closure.
+- [x] preserve strict source/state/provenance/privacy contracts.
+- [x] make user-time saved / useful career intelligence an explicit product optimization target.
+- [x] distinguish deterministic integrity from semantic reasoning.
+- [x] define source fact / normalized correspondence / analytical interpretation / recommendation levels.
+- [x] define generated/candidate versus reviewed/promoted intelligence.
+- [x] define hard integrity failure versus soft interpretive uncertainty.
+- [x] make human review primarily a promotion boundary.
+- [x] define Tier A integrity, Tier B promoted semantic, and Tier C bounded analytical acceptance.
+- [x] reconcile `AGENTS.md` and rolling working memory.
+- [x] add roadmap/implementation/proposal/execution amendments.
+
+### D6 — P2.2 responsibilities/deliverables/role intelligence — DESIGN NEXT
+
+- [ ] write the focused P2.2 plan before implementation.
+- [ ] define exact accepted/current P1.6 responsibility/work input boundary.
+- [ ] define fast job-level work-composition intelligence.
+- [ ] define candidate canonical responsibility/family/archetype states.
+- [ ] define promoted reusable responsibility/family/archetype states.
+- [ ] define confidence, alternatives, ambiguity, and unknown behavior.
+- [ ] define selective canonical mapping driven by downstream value rather than completion percentage.
+- [ ] define when extra accepted jobs are needed for a specific promotion/market claim rather than imposing one universal sample-size quota.
+- [ ] define user-facing distinction between employer facts and JobHunter interpretation.
+- [ ] define Tier A/B/C acceptance for the focused P2.2 increments.
+- [ ] prove the planned workflow should materially reduce manual job-reading effort.
+
+Do not implement P2.2 code until the focused plan is reviewed.
+
+Do not bulk-map remaining accepted claims merely for completeness, broaden ontology merely to eliminate unresolved cases, start Market v2, publish registry state, or add personal intelligence during P2.2 design unless a separate explicit decision authorizes it.
