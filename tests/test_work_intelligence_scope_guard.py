@@ -49,7 +49,7 @@ def test_scope_guard_rejects_unsupported_end_to_end_language() -> None:
         )
 
 
-def test_scope_guard_allows_explicit_source_scope_language() -> None:
+def test_scope_guard_allows_explicit_source_scope_language_across_hyphenation() -> None:
     document = _document(
         "This role provides end-to-end network security implementation for the stated platform."
     )
@@ -57,7 +57,7 @@ def test_scope_guard_allows_explicit_source_scope_language() -> None:
     _validate_scope_language(
         document,
         responsibilities=[
-            {"statement": "Providing end-to-end network security implementation"}
+            {"statement": "Providing end to end network security implementation"}
         ],
         role_purpose=[],
     )
