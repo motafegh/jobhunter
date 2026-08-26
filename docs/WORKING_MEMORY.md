@@ -4,7 +4,7 @@
 **Date:** 2026-08-26
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; focused P2.2 responsibility/role-intelligence plan next
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; focused P2.2 plan APPROVED; P2.2A Job Work Intelligence v1 NEXT
 
 ## 1. Exact current point
 
@@ -59,7 +59,33 @@ PROMOTED REUSABLE AUTHORITY
 
 Human review is primarily a promotion boundary, not a prerequisite for every useful job-level insight. Interpretive uncertainty should normally reduce confidence or expose alternatives rather than block the feature.
 
-The next bounded product step is now selected at the stage level: **P2.2 responsibilities/deliverables/role intelligence**. Implementation code is not yet authorized. First write the focused P2.2 plan under the new policy and its roadmap/implementation amendments.
+The focused P2.2 plan is now approved:
+
+```text
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
+```
+
+Approved sequence:
+
+```text
+P2.2A Job Work Intelligence v1
+→ P2.2B selective responsibility/deliverable promotion
+→ P2.2C responsibility-family intelligence
+→ P2.2D role-archetype intelligence
+```
+
+The exact next implementation increment is **P2.2A Job Work Intelligence v1** under working contract `job-work-intelligence-v1`.
+
+P2.2A will persist generated/candidate `JobWorkIntelligenceArtifact` records for repeatable local UX without treating persistence as review/promotion. Primary input is accepted/current English P1.6 v20/v5; Capability v9 is not an authoritative P2.2A dependency; existing registry mappings may enrich but cannot gate generation.
+
+Initial semantic/product anchors:
+
+```text
+tG9K  responsibility-rich industrial ML / manufacturing AI
+t4qV  responsibility-rich network/security
+tmyX  responsibility-rich security infrastructure / Microsoft services
+tmBK  accepted requirements but no direct work evidence — deliberate limited-work boundary
+```
 
 ## 2. Repository workflow rule
 
@@ -85,6 +111,7 @@ Capability v7 historical:   job-capability-intelligence-v7 / job-capability-inte
 Capability v8 historical:   job-capability-intelligence-v8 / job-capability-intelligence-v4
 Blueprint deferred:         role-capability-blueprint-v6 / role-capability-blueprint-v5
 Canonical Registry:         jobhunter-canonical-concept-registry-v1
+P2.2A working contract:     job-work-intelligence-v1
 Review Snapshot:            job-review-snapshot-v1
 Public Corpus:              jobhunter-public-corpus-v1
 ```
@@ -243,7 +270,7 @@ Permanent corpus rules:
 6. Git commit/push remains explicit and is never part of runtime correctness.
 7. Future personal/private evidence must never enter the public corpus.
 8. Remote corpus inspection can drive role selection and later public-data analysis without local SQLite access.
-9. Canonical-registry review state is not part of the public corpus unless a later explicit privacy/source review authorizes a repository-safe projection.
+9. Canonical-registry/P2.2 review or candidate state is not part of the public corpus unless a later explicit privacy/source review authorizes a repository-safe projection.
 
 ## 7. Heterogeneous live review — CLOSED
 
@@ -307,18 +334,28 @@ The 2026-08-26 policy clarifies that this strict factual promotion boundary **mu
 
 ### Exact next local action
 
-P2.1 is closed and accepted. The roadmap/implementation decision after P2.1 has now selected **P2.2 responsibilities/deliverables/role intelligence** as the next stage, but implementation remains gated on a focused plan.
+P2.1 is closed and accepted. P2.2 planning is complete and approved.
 
-Before code:
+Next implementation sequence:
 
-1. read `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`;
-2. read the 2026-08-26 roadmap and implementation amendments;
-3. write the focused P2.2 plan;
-4. define candidate versus promoted responsibility/family/archetype semantics;
-5. define fast job-level work-composition intelligence and uncertainty behavior;
-6. preserve P1.6/Capability/registry accepted boundaries.
+1. read `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`;
+2. start P2.2A with the typed Work Intelligence contract;
+3. add candidate-artifact persistence/currentness identity;
+4. add compact accepted-P1.6 factual input and bounded reasoning service;
+5. add deterministic source-reference validation;
+6. reach one-job CLI/browser vertical slice before broadening;
+7. progressively document findings;
+8. broaden to `tG9K`, `t4qV`, `tmyX`, and `tmBK` bounded acceptance.
 
-Do not bulk-map remaining accepted claims merely for completeness. Do not broaden ontology merely to eliminate unmapped states. Do not start Market v2, registry publication, or personal intelligence.
+P2.2A stop lines:
+
+- do not bulk-map remaining accepted claims merely for completeness;
+- do not broaden ontology merely to eliminate unmapped states;
+- do not create global families/archetypes merely to complete P2.2A;
+- do not start P2.3 or Market v2;
+- do not publish registry/P2.2 state;
+- do not add personal intelligence;
+- do not force exact deterministic wording on semantic/model interpretation.
 
 Exact heterogeneous records:
 
@@ -340,14 +377,15 @@ Closed P2.1 plan and acceptance records:
 - `docs/working-memory/2026-08-23_P2_1D_SMALL_SEED_REVIEW_CANDIDATE.md`
 - `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
 
-Current governance records:
+Current governance/P2.2 records:
 
 - `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 - `docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md`
 - `docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md`
-- `docs/EXECUTION_TODO_AMENDMENT_2026-08-26_UTILITY_REASONING.md`
 - `docs/proposals/05A_FAST_INTERPRETATION_PROMOTION_AND_ROLE_INTELLIGENCE_REFINEMENT.md`
+- `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 - `docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md`
+- `docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md`
 
 ## 8. Exact current state
 
@@ -381,8 +419,10 @@ Utility/epistemic reasoning policy  ACCEPTED / CONTROLLING COMPANION
 Roadmap reasoning amendment         ACCEPTED
 Implementation reasoning amendment  ACCEPTED
 Next Phase-2 stage                  P2.2 RESPONSIBILITY/ROLE INTELLIGENCE
-P2.2 focused plan                   NOT YET WRITTEN / NEXT
-P2.2 implementation                 NOT YET AUTHORIZED
+P2.2 focused plan                   APPROVED
+P2.2A working contract              job-work-intelligence-v1
+P2.2A implementation                NOT STARTED / NEXT
+P2.2 public-corpus publication      NOT AUTHORIZED
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
 Known/discovered jobs               353
 Fetched/parsed detail jobs          43
@@ -402,14 +442,15 @@ The accepted Phase-1 stack and closed P2.1 registry now establish:
 freeze promoted P1.6 v20 + Capability v9 as strict factual Phase-2 input
 → P2.1 canonical registry ACCEPTED / CLOSED
 → utility/epistemic governance reorientation ACCEPTED
-→ P2.2 focused responsibility/work/role-intelligence design NEXT
-→ fast candidate job-level interpretation may be first-class
+→ P2.2 focused responsibility/work/role-intelligence plan APPROVED
+→ P2.2A Job Work Intelligence v1 NEXT
+→ fast candidate job-level interpretation becomes first-class
 → selective promoted responsibility/family/archetype knowledge where reuse needs it
 → P2.3 capability requirement profiles
 → P2.4 Market v2
 ```
 
-Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure or the new reasoning policy authorizes automatic canonical promotion, Market v2, personal scoring, or fabricated source facts.
+Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure or the reasoning policy authorizes automatic canonical promotion, Market v2, personal scoring, or fabricated source facts.
 
 ## 10. Relevant records
 
@@ -427,6 +468,8 @@ docs/working-memory/2026-08-23_P2_1D_POPULATED_REGISTRY_BROWSER_500_BLOCKER.md
 docs/working-memory/2026-08-23_P2_1D_BROWSER_AND_FULL_PYTEST_PASS_WARNINGS_PENDING.md
 docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
 docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md
+docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 corpus/README.md
 ```
