@@ -1,49 +1,52 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-26
+**Date:** 2026-08-26  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; focused P2.2 plan APPROVED; P2.2A Job Work Intelligence v1 NEXT
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; P2.2 plan APPROVED; P2.2A IMPLEMENTED / CI GREEN / REAL-LOCAL SEMANTIC ACCEPTANCE NEXT
 
 ## 1. Exact current point
 
-English P1.6 v20/v5 is promoted/current and operationally verified on the accepted opposite-end anchors:
+The accepted factual Phase-2 substrate remains frozen:
 
 ```text
-tG9K → P1.6 artifact 36 → ACCEPTED / CURRENT
-t4jp → P1.6 artifact 37 → ACCEPTED / CURRENT
+English P1.6 public/current:  job-analysis-english-v20 / job-analysis-v5
+Capability public/current:    job-capability-intelligence-v9 / job-capability-intelligence-v5
+Blueprint:                    deferred / non-current / historical
+Canonical Registry:           jobhunter-canonical-concept-registry-v1 / P2.1 CLOSED
+Public Corpus:                jobhunter-public-corpus-v1 / operationally closed
 ```
 
-Capability v9/v5 is promoted/current through the normal public path:
+Accepted/current real chains:
 
 ```text
-tG9K → Capability artifact 11 → ACCEPTED / CURRENT
-t4jp → Capability artifact 12 → ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
-tmBK → Capability artifact 13 → HETEROGENEOUS PYTHON/SOFTWARE ACCEPTED / CURRENT
-t4qV → Capability artifact 14 → HETEROGENEOUS NETWORK/SECURITY ACCEPTED / CURRENT
-tmyX → Capability artifact 15 → HETEROGENEOUS OPERATIONS/PLATFORM ACCEPTED / CURRENT
+tG9K → P1.6 36 → Capability 11
+t4jp → P1.6 37 → Capability 12
+tmBK → P1.6 39 → Capability 13
+t4qV → P1.6 44 → Capability 14
+tmyX → P1.6 46 → Capability 15
 ```
 
-Normal Capability commands reuse artifacts 11/12 on P1.6 artifacts 36/37. Review Snapshot marks both exact chains current. Blueprint remains `blueprint_current=False`, deferred/non-authoritative, and pinned to historical Capability v7 semantics.
+Public-corpus baseline remains:
 
-The complete repository-safe public corpus is implemented, populated from the real local database, verified, remotely inspected, and operationally closed. Current projection export excludes preserved historical English v1 artifacts.
+```text
+known/discovered Jobinja jobs: 353
+fetched/parsed detail jobs:      43
+current English projections:     20
+accepted/current English P1.6:    5
+accepted/current Capability:      5
+```
 
-Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 was explicitly accepted after complete source review, and Capability artifact 13 passed 16/16 requirement, 0/0 responsibility, and 7/7 explicit-depth review.
+Registry publication remains unauthorized.
 
-Network/security `t4qV` is closed on P1.6 44 → Capability 14 after general structured-skill, preferred-heading, experience-bound, responsibility, candidate-experience, and credential-ontology fixes. Operations/platform `tmyX` is closed on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty, and non-depth ability/skill fixes. `t49N` was blocked before P1.6 for a material English field-association defect.
-
-P2.1 Canonical Concept Registry is **closed and accepted**. The accepted seed is deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across all five accepted P1.6 chains. Real-local application, rerun/idempotency, CLI/browser inspection, stale-dependency behavior, Ruff, full pytest, and warnings-as-errors all passed. Registry publication remains unauthorized.
-
-On 2026-08-26, project governance was deliberately reoriented to prevent the strict Phase-1/P2.1 evidence culture from becoming a blanket rule that every useful future interpretation must be deterministic, manually accepted, or canonically promoted first.
+## 2. Permanent governance correction
 
 The controlling companion policy is:
 
-```text
-docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
-```
+`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 
-Permanent operational distinction:
+Operational model:
 
 ```text
 SOURCE / STATE INTEGRITY
@@ -51,19 +54,53 @@ SOURCE / STATE INTEGRITY
 
 ANALYTICAL INTERPRETATION
 → semantic/model reasoning allowed and expected
-→ confidence/evidence/uncertainty communicated
+→ traceable, confidence/uncertainty aware
 
 PROMOTED REUSABLE AUTHORITY
 → stronger review proportional to downstream reuse/blast radius
 ```
 
-Human review is primarily a promotion boundary, not a prerequisite for every useful job-level insight. Interpretive uncertainty should normally reduce confidence or expose alternatives rather than block the feature.
-
-The focused P2.2 plan is now approved:
+Permanent distinctions:
 
 ```text
-docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
+source fact
+≠ normalized correspondence
+≠ analytical interpretation
+≠ recommendation
+
+candidate/generated
+≠ reviewed/promoted
 ```
+
+Human review is mainly a promotion boundary. Interpretive uncertainty should normally reduce confidence, show alternatives, or preserve unknowns rather than block useful job-level intelligence.
+
+Do not demand market-scale evidence for a one-job interpretation and do not present a one-job interpretation as market truth.
+
+## 3. P2.1 closure
+
+P2.1 Canonical Concept Registry is accepted and closed.
+
+Accepted seed:
+
+```text
+concepts:          4
+reviewed aliases:  1
+claim decisions:   6
+  mapped:          5
+  unmapped:        1
+```
+
+Final record:
+
+`docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
+
+Do not reopen P2.1 merely because P2.2 needs analytical interpretation. Candidate Work Intelligence is deliberately separate from promoted registry authority.
+
+## 4. P2.2 focused plan
+
+Controlling plan:
+
+`docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
 Approved sequence:
 
@@ -74,402 +111,191 @@ P2.2A Job Work Intelligence v1
 → P2.2D role-archetype intelligence
 ```
 
-The exact next implementation increment is **P2.2A Job Work Intelligence v1** under working contract `job-work-intelligence-v1`.
+P2.2 asks:
 
-P2.2A will persist generated/candidate `JobWorkIntelligenceArtifact` records for repeatable local UX without treating persistence as review/promotion. Primary input is accepted/current English P1.6 v20/v5; Capability v9 is not an authoritative P2.2A dependency; existing registry mappings may enrich but cannot gate generation.
+> What does this job actually involve, and what kind of work/role does it appear to be?
 
-Initial semantic/product anchors:
+Useful candidate interpretation must not wait for exhaustive canonical mapping.
+
+## 5. P2.2A implementation — COMPLETE / ACCEPTANCE OPEN
+
+Working contract:
+
+`job-work-intelligence-v1`
+
+Implementation record:
+
+`docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
+
+Implemented vertical slice:
 
 ```text
-tG9K  responsibility-rich industrial ML / manufacturing AI
-t4qV  responsibility-rich network/security
-tmyX  responsibility-rich security infrastructure / Microsoft services
-tmBK  accepted requirements but no direct work evidence — deliberate limited-work boundary
+accepted/current English P1.6
+→ compact indexed work payload
+→ bounded typed LM Studio reasoning when direct work exists
+→ deterministic source-reference + full-work-coverage validation
+→ immutable candidate artifact
+→ CLI/browser inspection
 ```
 
-## 2. Repository workflow rule
-
-JobHunter uses **main-only development** by default:
+Core files:
 
 ```text
-current work → main
-next work    → main
+src/jobhunter/work_intelligence_models.py
+src/jobhunter/work_intelligence_store.py
+src/jobhunter/work_intelligence_inference.py
+src/jobhunter/work_intelligence_service.py
+src/jobhunter/work_intelligence_cli.py
+src/jobhunter/web/work_intelligence.py
+src/jobhunter/web/templates/work_intelligence.html
+tests/test_work_intelligence.py
 ```
 
-Do not create a new working branch unless the user explicitly changes this rule.
-
-## 3. Current contracts
+Integration:
 
 ```text
-parser:                     jobinja-detail-v2
-translation:                lm-studio-translation-v2
-English projection:         english-projection-v2
-English P1.6 public:        job-analysis-english-v20 / job-analysis-v5
-Original P1.6 public:       job-analysis-original-v9 / job-analysis-v4
-Capability public/current:  job-capability-intelligence-v9 / job-capability-intelligence-v5
-Capability v7 historical:   job-capability-intelligence-v7 / job-capability-intelligence-v4
-Capability v8 historical:   job-capability-intelligence-v8 / job-capability-intelligence-v4
-Blueprint deferred:         role-capability-blueprint-v6 / role-capability-blueprint-v5
-Canonical Registry:         jobhunter-canonical-concept-registry-v1
-P2.2A working contract:     job-work-intelligence-v1
-Review Snapshot:            job-review-snapshot-v1
-Public Corpus:              jobhunter-public-corpus-v1
+jobhunter-work generate <job-id>
+jobhunter-work show <job-id>
+/jobs/<job-id>/work-intelligence
 ```
 
-## 4. P1.6 v20 — PROMOTED / PUBLIC CONTRACT CLOSED
+Accepted job-detail pages now link to Work Intelligence.
 
-Dense accepted `tG9K` artifact 36:
+### Authority boundary
+
+P2.2A depends directly on accepted/current English P1.6 v20/v5.
+
+Capability v9 is **not** an authoritative input dependency. The initial Work Intelligence runtime merely reuses the existing configured capability-model fallback chain to avoid premature configuration expansion; Work Intelligence has its own prompt/schema/artifact identity.
+
+Existing canonical registry mappings may later enrich P2.2 but missing mappings cannot block P2.2A.
+
+### Candidate persistence
+
+`JobWorkIntelligenceArtifact` is persisted for reproducibility and repeated local UX.
+
+Persistence means:
 
 ```text
-Requirements:      33
-Responsibilities:  8
-Role purpose:      0
-Mechanical audit:  PASS
-Semantic review:   PASS WITH ACCEPTABLE DIFFERENCE
+generated candidate analytical state
 ```
 
-Sparse accepted `t4jp` artifact 37:
+It does not mean:
 
 ```text
-Requirements:            8
-Responsibilities:        0
-Role purpose:            0
-Mechanical audit:        PASS
-Semantic non-regression: PASS
+human accepted
+canonical responsibility family
+promoted role archetype
+market truth
 ```
 
-Normal P1.6 commands reuse artifacts 36/37.
+### No-direct-work boundary
 
-The promoted contract may still receive deterministic implementation hardening when heterogeneous live evidence exposes a repeatable material defect. Do not create a new version for harmless model wording variation.
-
-## 5. Capability history and current state
-
-### v7 — historical baseline / promoted-chain rebuild rejected
-
-Historical accepted artifact 9 depends on old P1.6 artifact 29. Dense promoted-chain rebuilds exposed source-link/index loss and then one-profile collapse with many capability requirements omitted. Do not reopen the v7 one-shot architecture.
-
-### v8 — staged architecture proof / semantic reject
-
-V8 staging mechanically reached complete dense requirement/responsibility coverage but remained semantically rejected because model prose inflated depth, ownership/lifecycle scope, and preferred/contextual facts.
-
-### v9 — accepted / promoted / operationally closed
-
-Final policy:
+If accepted P1.6 has requirements but no responsibilities/role purpose:
 
 ```text
-AUTHORITATIVE SOURCE TRUTH → STRICT
-PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
-MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
-OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
+evidence_status = limited
+work_themes = []
+deliverables = []
+role_interpretation = null
 ```
 
-Accepted/current artifacts:
+No model call is required and qualifications are not converted into duties.
+
+`tmBK` is the real acceptance anchor for this boundary.
+
+### Deterministic integrity after reasoning
+
+JobHunter validates:
+
+- every referenced responsibility/role-purpose/requirement index exists;
+- every accepted responsibility appears in at least one work theme;
+- every accepted role-purpose item appears in at least one work theme;
+- candidate role interpretation references only generated themes.
+
+Semantic grouping remains model-owned; JobHunter does not demand deterministic wording/group identity.
+
+### Browser/publication boundary
+
+The P2.2A browser POST is CSRF protected but intentionally outside `WebOperationManager` because that manager synchronizes the public corpus after successful mutations.
+
+Therefore:
 
 ```text
-tG9K artifact 11
-P1.6 dependency:                 36
-Capability requirements:         31/31
-Responsibilities:                8/8
-Capability explicit depth:       5/5
-All explicit depth:              6/6
-Role-level indices:              [31, 32]
-Disposition:                     ACCEPTED / CURRENT
-
-t4jp artifact 12
-P1.6 dependency:                 37
-Capability requirements:         8/8
-Responsibilities:                0/0
-Capability explicit depth:       0/0
-All explicit depth:              0/0
-Role-level indices:              []
-Disposition:                     ACCEPTED WITH ACCEPTABLE DIFFERENCES / CURRENT
+local Work Intelligence persistence  AUTHORIZED
+browser/CLI local use                AUTHORIZED
+public-corpus Work Intelligence      NOT AUTHORIZED
 ```
 
-Capability public promotion is operationally closed and the accepted P1.6 v20/v5 + Capability v9/v5 stack is frozen as the Phase-2 source-truth input unless a repeatable material defect or dependency change explicitly reopens it.
+## 6. Repository quality evidence
 
-## 6. Public corpus — IMPLEMENTED / POPULATED / OPERATIONALLY CLOSED
-
-Architecture:
+CI run:
 
 ```text
-local SQLite
-→ runtime/history authority
-
-corpus/
-→ complete current repository-safe projection of known public Jobinja state
-
-review-snapshots/
-→ curated semantic-review evidence
+32996495178
+head c77635c63ec3140146315980fb0c80522b03d0cf
 ```
 
-Contract:
+Observed:
 
 ```text
-jobhunter-public-corpus-v1
+Ruff                         PASS
+full pytest                  PASS
+pytest warnings-as-errors    PASS
+overall quality job          PASS
 ```
 
-Accepted publication baseline:
+No exact test count was retrieved from the CI response; do not invent one.
+
+## 7. Exact next action — real-local semantic/product acceptance
+
+The repository implementation is mechanically green. The next work is **not more architecture or P2.2B**.
+
+Use the owner's real local database/model on:
 
 ```text
-Known/discovered Jobinja jobs: 353
-Fetched/parsed job details:     43
-Current English projections:    20
-English P1.6:                    5
-Original P1.6:                   0
-Capabilities:                    5
-Per-job stage files:           383
-Corpus size:                  ~3.7 MiB
+tG9K  industrial ML / manufacturing AI, 8 responsibilities
+t4qV  network/security, 10 responsibilities
+tmyX  security infrastructure / Microsoft services, 5 responsibilities
+tmBK  accepted requirements, no direct responsibilities
 ```
 
-Important interpretation:
+Review each against the actual product goal:
+
+1. Is the Work Intelligence view materially faster/easier to understand than manually reading the vacancy responsibilities?
+2. Are all accepted work facts represented without one-item-per-theme mechanical output?
+3. Are theme labels/summaries useful, restrained, and clearly JobHunter interpretation?
+4. Are deliverables actually source-explicit or strongly work-implied?
+5. Is candidate role interpretation helpful without pretending to be promoted taxonomy?
+6. Are confidence/alternatives/limitations calibrated rather than blocker-like?
+7. Does `tmBK` remain explicitly limited without invented duties?
+8. Does an unchanged rerun reuse the same artifact?
+9. Does the browser make employer/P1.6 facts versus JobHunter interpretation clear?
+
+If a model output is imperfect but bounded/candidate, record the limitation rather than automatically treating wording variation as an integrity defect. Fix deterministic code only for repeatable contract/integrity problems.
+
+## 8. Do not start yet
+
+Until P2.2A real-local semantic/product acceptance is decided:
+
+- do not start P2.2B;
+- do not promote responsibility families/archetypes;
+- do not bulk-map remaining claims for completeness;
+- do not broaden ontology merely to eliminate unresolved cases;
+- do not publish Work Intelligence or registry state;
+- do not start Market v2;
+- do not add personal readiness/gap/scoring/recommendations;
+- do not revive Blueprint as authority.
+
+## 9. Key current records
 
 ```text
-353 known/discovered jobs != 353 fully fetched advertisements
-```
-
-A discovery-only job remains a valid corpus identity with `current_detail: null`. Only the 43 entries with fetched/parsed current detail are eligible for downstream semantic-review selection.
-
-Public-safety scan over actual corpus data passed: no raw model request/response protocol, evidence paths, SQLite paths, machine-local paths, secrets, or future private state were exported.
-
-Accepted anchor dependency proof:
-
-```text
-tG9K
-source detail:       40
-translation:         33
-P1.6:                36
-Capability:          11
-Capability → P1.6:   36
-Capability → trans:  33
-
-t4jp
-source detail:       41
-translation:         34
-P1.6:                37
-Capability:          12
-Capability → P1.6:   37
-Capability → trans:  34
-```
-
-Full corpus publication commit:
-
-```text
-15dbfa3636bbf7118de79683beec3e7ac4a6359d
-data: publish complete public job corpus
-```
-
-Remote GitHub inspection confirmed the manifest, job directories, contracts, and accepted anchors. Coverage reporting was subsequently hardened so `Known/discovered jobs` and `Fetched/parsed job details` are separate.
-
-Permanent corpus rules:
-
-1. SQLite remains runtime/history authority.
-2. `corpus/` is the version-controlled current public projection.
-3. Discovery-only identities and fetched/parsed details remain explicitly distinguishable.
-4. Mutating JobHunter workflows refresh the local corpus only after durable success.
-5. `jobhunter-corpus verify` is the deterministic DB↔corpus integrity gate.
-6. Git commit/push remains explicit and is never part of runtime correctness.
-7. Future personal/private evidence must never enter the public corpus.
-8. Remote corpus inspection can drive role selection and later public-data analysis without local SQLite access.
-9. Canonical-registry/P2.2 review or candidate state is not part of the public corpus unless a later explicit privacy/source review authorizes a repository-safe projection.
-
-## 7. Heterogeneous live review — CLOSED
-
-Order:
-
-```text
-1. Python/software          ← accepted: tmBK 39 → 13
-2. network/security         ← accepted: t4qV 44 → 14
-3. operations/platform      ← accepted: tmyX 46 → 15
-```
-
-### `tmBK` upstream
-
-```text
-job:                       tmBK — Python Developer
-source detail version:     44
-English projection:        artifact 38
-translation contract:      lm-studio-translation-v2 / english-projection-v2
-P1.6 contract:             job-analysis-english-v20 / job-analysis-v5
-analysis model:            gemma-4-e4b-it-ud
-```
-
-The source contains multiple different explicit depth levels in one dense requirement segment:
-
-```text
-Mastery of Python/Django
-Mastery of DRF/FastAPI
-Familiarity with Git
-Familiarity with Linux
-Familiarity with SQL/NoSQL
-Sufficient knowledge of OOP/modular design
-Familiarity with locking/concurrency/transaction management
-```
-
-It also contains soft/behavioral requirements and no genuine explicit responsibility section, making it a useful qualification-vs-duty test.
-
-A separate Python candidate, `tI1n`, was blocked before P1.6 because its English projection materially mistranslated an application requirement. Upstream translation defects are not repaired by downstream factual extraction.
-
-### `tmBK` deterministic incidents and fixes
-
-1. **Sufficient-knowledge vocabulary** — fixed; plain `knowledge` remains non-depth.
-2. **Multi-signal canonicalization** — first persisted P1.6 artifact 38 rejected because `Mastery` spread to Linux/SQL/OOP/locking concepts; fixed by item-specific depth canonicalization + fail-closed missing-item-depth behavior; regression coverage added; CI 911 passed.
-3. **Effective-application wording** — later rebuild output used `Ability to effectively use AI ...` as depth; fixed by clearing that exact non-depth phrase only when its evidence contains no real depth; fail-closed preserved otherwise; regression coverage added; CI 914 passed.
-4. **Redundant coverage exclusion** — model output could extract and exclude the same coverage reference; fixed by removing only contradictory duplicate exclusions for already represented references; regression coverage added; CI 916 passed.
-
-Rejected P1.6 artifact 38:
-
-```text
-mechanically generated:       yes
-semantically accepted:        no
-allowed for Capability:       no
-Capability downstream:        none
-published as accepted corpus: no
-```
-
-The rejected artifact was retired from local current analysis state before the later rebuild attempt. The later failed rebuild persisted no replacement artifact, so the current corpus/database returned to the two accepted P1.6 anchors before the next rebuild.
-
-The acceptance boundary is now enforced in persistence and every authoritative consumer. Fresh English v20 output is stored as `pending`; only explicit review acceptance makes it eligible for authoritative Capability/Market/accepted dashboard/public-corpus flows under the accepted Phase-1 contract. Review rejection archives the full local candidate and clears its current unique identity for a corrected rebuild. Existing accepted anchors 36/37 migrate as accepted. V20 also owns a copied depth-signal registry, so importing it cannot mutate historical validators.
-
-The 2026-08-26 policy clarifies that this strict factual promotion boundary **must not be generalized** into a requirement that every later low-blast-radius analytical interpretation needs human acceptance before display.
-
-### Exact next local action
-
-P2.1 is closed and accepted. P2.2 planning is complete and approved.
-
-Next implementation sequence:
-
-1. read `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`;
-2. start P2.2A with the typed Work Intelligence contract;
-3. add candidate-artifact persistence/currentness identity;
-4. add compact accepted-P1.6 factual input and bounded reasoning service;
-5. add deterministic source-reference validation;
-6. reach one-job CLI/browser vertical slice before broadening;
-7. progressively document findings;
-8. broaden to `tG9K`, `t4qV`, `tmyX`, and `tmBK` bounded acceptance.
-
-P2.2A stop lines:
-
-- do not bulk-map remaining accepted claims merely for completeness;
-- do not broaden ontology merely to eliminate unmapped states;
-- do not create global families/archetypes merely to complete P2.2A;
-- do not start P2.3 or Market v2;
-- do not publish registry/P2.2 state;
-- do not add personal intelligence;
-- do not force exact deterministic wording on semantic/model interpretation.
-
-Exact heterogeneous records:
-
-- `docs/working-memory/2026-08-21_T4QV_NETWORK_SECURITY_P16_REJECTIONS.md`
-- `docs/working-memory/2026-08-21_TMYX_OPERATIONS_PLATFORM_ACCEPTANCE.md`
-- `docs/working-memory/2026-08-23_PARTIAL_SUCCESS_SEMANTICS_ACCEPTANCE.md`
-
-Closed Phase-1 plan and evidence:
-
-- `docs/P1_7_REPORT_RUN_BROWSER_ACCEPTANCE_PLAN.md`
-- `docs/working-memory/2026-08-23_P1_7_AND_PHASE_1_CLOSURE.md`
-
-Closed P2.1 plan and acceptance records:
-
-- `docs/P2_1_CANONICAL_CONCEPT_REGISTRY_PLAN.md`
-- `docs/working-memory/2026-08-23_P2_1A_REGISTRY_FOUNDATION.md`
-- `docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md`
-- `docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md`
-- `docs/working-memory/2026-08-23_P2_1D_SMALL_SEED_REVIEW_CANDIDATE.md`
-- `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
-
-Current governance/P2.2 records:
-
-- `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
-- `docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md`
-- `docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md`
-- `docs/proposals/05A_FAST_INTERPRETATION_PROMOTION_AND_ROLE_INTELLIGENCE_REFINEMENT.md`
-- `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
-- `docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md`
-- `docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md`
-
-## 8. Exact current state
-
-```text
-English P1.6 tG9K artifact 36       ACCEPTED / CURRENT
-English P1.6 t4jp artifact 37       ACCEPTED / CURRENT
-English P1.6 tmBK artifact 39       PYTHON/SOFTWARE ACCEPTED / CURRENT
-English P1.6 t4qV artifact 44       NETWORK/SECURITY ACCEPTED / CURRENT
-English P1.6 tmyX artifact 46       OPERATIONS/PLATFORM ACCEPTED / CURRENT
-Capability v7 artifact 9            HISTORICAL / NON-CURRENT CHAIN
-Capability v8 candidate              HISTORICAL / SEMANTIC REJECT
-Capability v9 artifact 11           DENSE ACCEPTED / CURRENT
-Capability v9 artifact 12           SPARSE ACCEPTED / CURRENT
-Capability v9 artifact 13           PYTHON/SOFTWARE ACCEPTED / CURRENT
-Capability v9 artifact 14           NETWORK/SECURITY ACCEPTED / CURRENT
-Capability v9 artifact 15           OPERATIONS/PLATFORM ACCEPTED / CURRENT
-Capability public route             v9/v5 / OPERATIONALLY VERIFIED
-Blueprint                           DEFERRED / PINNED TO HISTORICAL v7 / NON-CURRENT
-Canonical registry contract         v1 / ACCEPTED
-P2.1A deterministic persistence     ACCEPTED
-P2.1B manual CLI                    ACCEPTED
-P2.1C browser review                ACCEPTED
-P2.1D small reviewed seed           ACCEPTED
-P2.1 overall                        CLOSED
-Registry seed concepts              4
-Registry reviewed aliases           1
-Registry mapped decisions           5
-Registry unmapped decisions         1
-Registry publication                NOT AUTHORIZED
-Utility/epistemic reasoning policy  ACCEPTED / CONTROLLING COMPANION
-Roadmap reasoning amendment         ACCEPTED
-Implementation reasoning amendment  ACCEPTED
-Next Phase-2 stage                  P2.2 RESPONSIBILITY/ROLE INTELLIGENCE
-P2.2 focused plan                   APPROVED
-P2.2A working contract              job-work-intelligence-v1
-P2.2A implementation                NOT STARTED / NEXT
-P2.2 public-corpus publication      NOT AUTHORIZED
-Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
-Known/discovered jobs               353
-Fetched/parsed detail jobs          43
-Current English projections         20
-Current local corpus P1.6             5
-Current local corpus Capability       5
-Heterogeneous Python/software       ACCEPTED — tmBK 39 → 13
-Heterogeneous network/security      ACCEPTED — t4qV 44 → 14
-Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
-```
-
-## 9. Phase-2 progression
-
-The accepted Phase-1 stack and closed P2.1 registry now establish:
-
-```text
-freeze promoted P1.6 v20 + Capability v9 as strict factual Phase-2 input
-→ P2.1 canonical registry ACCEPTED / CLOSED
-→ utility/epistemic governance reorientation ACCEPTED
-→ P2.2 focused responsibility/work/role-intelligence plan APPROVED
-→ P2.2A Job Work Intelligence v1 NEXT
-→ fast candidate job-level interpretation becomes first-class
-→ selective promoted responsibility/family/archetype knowledge where reuse needs it
-→ P2.3 capability requirement profiles
-→ P2.4 Market v2
-```
-
-Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure or the reasoning policy authorizes automatic canonical promotion, Market v2, personal scoring, or fabricated source facts.
-
-## 10. Relevant records
-
-```text
-docs/working-memory/2026-08-15_CAPABILITY_V9_DENSE_ACCEPTANCE.md
-docs/working-memory/2026-08-15_CAPABILITY_V9_SPARSE_ACCEPTANCE.md
-docs/working-memory/2026-08-15_CAPABILITY_V9_PUBLIC_PROMOTION.md
-docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md
-docs/working-memory/2026-08-16_PUBLIC_CORPUS_OPERATIONAL_CLOSURE.md
-docs/working-memory/2026-08-17_TMBK_P16_MULTI_SIGNAL_DEPTH_REJECTION.md
-docs/working-memory/2026-08-23_P2_1B_MANUAL_CLI_ACCEPTANCE.md
-docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md
-docs/working-memory/2026-08-23_P2_1D_LOCAL_SEED_APPLIED_VALIDATION_PENDING.md
-docs/working-memory/2026-08-23_P2_1D_POPULATED_REGISTRY_BROWSER_500_BLOCKER.md
-docs/working-memory/2026-08-23_P2_1D_BROWSER_AND_FULL_PYTEST_PASS_WARNINGS_PENDING.md
-docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
-docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md
-docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
+docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md
+docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md
+docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md
+docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md
+docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md
+docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
 corpus/README.md
 ```
