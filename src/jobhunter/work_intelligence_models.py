@@ -45,8 +45,11 @@ class WorkTheme(_StrictModel):
     summary: str
     emphasis: RelativeEmphasis
     confidence: Confidence
-    responsibility_indices: list[int] = Field(default_factory=list, max_length=24)
-    role_purpose_indices: list[int] = Field(default_factory=list, max_length=8)
+    # These arrays are deliberately required in the generated JSON schema.  They may be empty
+    # individually, but omitting them would let a model mention indices only in prose while the
+    # deterministic validator sees no structured provenance.  P2.2A requires explicit references.
+    responsibility_indices: list[int] = Field(max_length=24)
+    role_purpose_indices: list[int] = Field(max_length=8)
     supporting_requirement_indices: list[int] = Field(default_factory=list, max_length=24)
     rationale: str
 
@@ -91,8 +94,11 @@ class DeliverableCandidate(_StrictModel):
     summary: str
     status: DeliverableStatus
     confidence: Confidence
-    responsibility_indices: list[int] = Field(default_factory=list, max_length=16)
-    role_purpose_indices: list[int] = Field(default_factory=list, max_length=8)
+    # Deliverables use the same explicit structured-provenance rule as work themes.  Empty arrays
+    # are allowed individually, but both fields must be emitted so prose cannot masquerade as a
+    # validated source link.
+    responsibility_indices: list[int] = Field(max_length=16)
+    role_purpose_indices: list[int] = Field(max_length=8)
     rationale: str
 
     @field_validator("label")
