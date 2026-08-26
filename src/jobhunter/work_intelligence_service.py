@@ -21,9 +21,20 @@ from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
 
 WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v1"
-WORK_INTELLIGENCE_PROMPT_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
+WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.1"
 WORK_INTELLIGENCE_SCHEMA_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
 DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v1"
+
+_SCOPE_INTENSIFIERS = (
+    "end-to-end",
+    "end to end",
+    "full lifecycle",
+    "whole lifecycle",
+    "entire lifecycle",
+    "complete lifecycle",
+    "entire security stack",
+    "whole security stack",
+)
 
 _WORK_INTELLIGENCE_PROMPT = """You are JobHunter's Job Work Intelligence interpreter.
 
@@ -32,6 +43,10 @@ reading and mentally synthesizing every responsibility.
 
 AUTHORITY
 - The supplied P1.6 responsibilities and role_purpose items are accepted factual substrate.
+- A responsibility/role_purpose `statement` defines the accepted work claim. Its `evidence` may be
+  a larger shared source sentence containing neighboring clauses, examples, or equipment names.
+  Do not transfer details from one neighboring clause into a different responsibility unless the
+  accepted statement itself supports that scope.
 - Requirements are supporting context only. A requirement must NEVER become a duty by itself.
 - Your output is JobHunter interpretation, not employer wording and not promoted taxonomy.
 
@@ -41,6 +56,8 @@ WORK THEMES
 - A work item may belong to two themes when genuinely hybrid; avoid gratuitous duplication.
 - Use theme IDs theme-1, theme-2, ... and relative emphasis primary/supporting/uncertain.
 - Do not invent percentages, time allocation, ownership, leadership, autonomy, or lifecycle scope.
+- Do not use scope intensifiers such as `end-to-end`, `full lifecycle`, or `entire security stack`
+  unless that scope is explicit in a supplied responsibility or role-purpose statement.
 
 DELIVERABLES
 - Include only outputs that are source-explicit or strongly implied by the supplied work itself.
@@ -129,6 +146,58 @@ def _limited_intelligence() -> JobWorkIntelligence:
             "can describe candidate expectations but are not treated as job duties."
         ],
     )
+
+
+def _normalized_semantic_text(value: str) -> str:
+    return " ".join(value.casefold().replace("–", "-").replace("—", "-").split())
+
+
+def _direct_work_statement_text(responsibilities: list[Any], role_purpose: list[Any]) -> str:
+    statements: list[str] = []
+    for item in [*responsibilities, *role_purpose]:
+        if isinstance(item, dict):
+            statement = item.get("statement")
+            if isinstance(statement, str) and statement.strip():
+                statements.append(statement)
+    return _normalized_semantic_text(" ".join(statements))
+
+
+def _candidate_scope_text(intelligence: JobWorkIntelligence) -> str:
+    values = [intelligence.work_summary]
+    for theme in intelligence.work_themes:
+        values.extend([theme.label, theme.summary])
+    for deliverable in intelligence.deliverables:
+        values.extend([deliverable.label, deliverable.summary])
+    if intelligence.role_interpretation is not None:
+        values.extend(
+            [
+                intelligence.role_interpretation.label,
+                intelligence.role_interpretation.summary,
+            ]
+        )
+    return _normalized_semantic_text(" ".join(values))
+
+
+def _validate_scope_language(
+    intelligence: JobWorkIntelligence,
+    *,
+    responsibilities: list[Any],
+    role_purpose: list[Any],
+) -> None:
+    """Reject unsupported lifecycle/scope amplification without constraining normal semantics."""
+
+    source_text = _direct_work_statement_text(responsibilities, role_purpose)
+    candidate_text = _candidate_scope_text(intelligence)
+    unsupported = [
+        phrase
+        for phrase in _SCOPE_INTENSIFIERS
+        if phrase in candidate_text and phrase not in source_text
+    ]
+    if unsupported:
+        raise WorkIntelligenceError(
+            "Work Intelligence introduced unsupported lifecycle/scope intensifier(s): "
+            + ", ".join(sorted(set(unsupported)))
+        )
 
 
 class WorkIntelligenceService:
@@ -361,6 +430,11 @@ class WorkIntelligenceService:
                 responsibility_count=len(responsibilities),
                 role_purpose_count=len(role_purpose),
                 requirement_count=len(requirements),
+            )
+            _validate_scope_language(
+                document,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
             )
             artifact_id = self._work_store.record_artifact(
                 analysis_artifact_id=analysis.id,
