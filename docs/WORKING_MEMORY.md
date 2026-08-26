@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-23
+**Date:** 2026-08-26
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1A/B/C/D ACCEPTED; P2.1 CLOSED; next focused Phase-2 increment not yet selected
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; focused P2.2 responsibility/role-intelligence plan next
 
 ## 1. Exact current point
 
@@ -33,9 +33,33 @@ Heterogeneous Python/software validation is closed on `tmBK`: P1.6 artifact 39 w
 
 Network/security `t4qV` is closed on P1.6 44 → Capability 14 after general structured-skill, preferred-heading, experience-bound, responsibility, candidate-experience, and credential-ontology fixes. Operations/platform `tmyX` is closed on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty, and non-depth ability/skill fixes. `t49N` was blocked before P1.6 for a material English field-association defect.
 
-P2.1 Canonical Concept Registry is now **closed and accepted**. The accepted seed is deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across all five accepted P1.6 chains. Real-local application, rerun/idempotency, CLI/browser inspection, stale-dependency behavior, Ruff, full pytest, and warnings-as-errors all passed. Registry publication remains unauthorized.
+P2.1 Canonical Concept Registry is **closed and accepted**. The accepted seed is deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across all five accepted P1.6 chains. Real-local application, rerun/idempotency, CLI/browser inspection, stale-dependency behavior, Ruff, full pytest, and warnings-as-errors all passed. Registry publication remains unauthorized.
 
-The next Phase-2 increment is **not yet selected**. Before implementation, inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md`, define the next bounded focused plan, and preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries. Do not automatically start Market v2, bulk-map remaining claims, broaden the ontology, publish registry state, or add personal intelligence.
+On 2026-08-26, project governance was deliberately reoriented to prevent the strict Phase-1/P2.1 evidence culture from becoming a blanket rule that every useful future interpretation must be deterministic, manually accepted, or canonically promoted first.
+
+The controlling companion policy is:
+
+```text
+docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
+```
+
+Permanent operational distinction:
+
+```text
+SOURCE / STATE INTEGRITY
+→ strict, provenance-preserving, deterministic where appropriate
+
+ANALYTICAL INTERPRETATION
+→ semantic/model reasoning allowed and expected
+→ confidence/evidence/uncertainty communicated
+
+PROMOTED REUSABLE AUTHORITY
+→ stronger review proportional to downstream reuse/blast radius
+```
+
+Human review is primarily a promotion boundary, not a prerequisite for every useful job-level insight. Interpretive uncertainty should normally reduce confidence or expose alternatives rather than block the feature.
+
+The next bounded product step is now selected at the stage level: **P2.2 responsibilities/deliverables/role intelligence**. Implementation code is not yet authorized. First write the focused P2.2 plan under the new policy and its roadmap/implementation amendments.
 
 ## 2. Repository workflow rule
 
@@ -277,20 +301,24 @@ published as accepted corpus: no
 
 The rejected artifact was retired from local current analysis state before the later rebuild attempt. The later failed rebuild persisted no replacement artifact, so the current corpus/database returned to the two accepted P1.6 anchors before the next rebuild.
 
-The acceptance boundary is now enforced in persistence and every authoritative consumer. Fresh English v20 output is stored as `pending`; only explicit review acceptance makes it eligible for Capability, Market, accepted dashboard counts, or `corpus/`. Review rejection archives the full local candidate and clears its current unique identity for a corrected rebuild. Existing accepted anchors 36/37 migrate as accepted. V20 also owns a copied depth-signal registry, so importing it cannot mutate historical validators.
+The acceptance boundary is now enforced in persistence and every authoritative consumer. Fresh English v20 output is stored as `pending`; only explicit review acceptance makes it eligible for authoritative Capability/Market/accepted dashboard/public-corpus flows under the accepted Phase-1 contract. Review rejection archives the full local candidate and clears its current unique identity for a corrected rebuild. Existing accepted anchors 36/37 migrate as accepted. V20 also owns a copied depth-signal registry, so importing it cannot mutate historical validators.
+
+The 2026-08-26 policy clarifies that this strict factual promotion boundary **must not be generalized** into a requirement that every later low-blast-radius analytical interpretation needs human acceptance before display.
 
 ### Exact next local action
 
-P2.1 is closed and accepted. Do not rerun accepted heterogeneous anchors or the P2.1 seed merely for wording variation or duplicate evidence.
+P2.1 is closed and accepted. The roadmap/implementation decision after P2.1 has now selected **P2.2 responsibilities/deliverables/role intelligence** as the next stage, but implementation remains gated on a focused plan.
 
-Next:
+Before code:
 
-1. inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md` after the P2.1 closure point;
-2. select and define the next bounded focused Phase-2 increment before implementation;
-3. preserve accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries;
-4. keep registry publication as a separate privacy/source decision.
+1. read `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`;
+2. read the 2026-08-26 roadmap and implementation amendments;
+3. write the focused P2.2 plan;
+4. define candidate versus promoted responsibility/family/archetype semantics;
+5. define fast job-level work-composition intelligence and uncertainty behavior;
+6. preserve P1.6/Capability/registry accepted boundaries.
 
-Until the next focused plan is selected, do not bulk-map remaining accepted claims, broaden the ontology, start Market v2, or add personal intelligence.
+Do not bulk-map remaining accepted claims merely for completeness. Do not broaden ontology merely to eliminate unmapped states. Do not start Market v2, registry publication, or personal intelligence.
 
 Exact heterogeneous records:
 
@@ -311,6 +339,15 @@ Closed P2.1 plan and acceptance records:
 - `docs/working-memory/2026-08-23_P2_1C_REGISTRY_BROWSER_ACCEPTANCE.md`
 - `docs/working-memory/2026-08-23_P2_1D_SMALL_SEED_REVIEW_CANDIDATE.md`
 - `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
+
+Current governance records:
+
+- `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
+- `docs/ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md`
+- `docs/IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md`
+- `docs/EXECUTION_TODO_AMENDMENT_2026-08-26_UTILITY_REASONING.md`
+- `docs/proposals/05A_FAST_INTERPRETATION_PROMOTION_AND_ROLE_INTELLIGENCE_REFINEMENT.md`
+- `docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md`
 
 ## 8. Exact current state
 
@@ -340,7 +377,12 @@ Registry reviewed aliases           1
 Registry mapped decisions           5
 Registry unmapped decisions         1
 Registry publication                NOT AUTHORIZED
-Next focused Phase-2 increment      NOT YET SELECTED
+Utility/epistemic reasoning policy  ACCEPTED / CONTROLLING COMPANION
+Roadmap reasoning amendment         ACCEPTED
+Implementation reasoning amendment  ACCEPTED
+Next Phase-2 stage                  P2.2 RESPONSIBILITY/ROLE INTELLIGENCE
+P2.2 focused plan                   NOT YET WRITTEN / NEXT
+P2.2 implementation                 NOT YET AUTHORIZED
 Public corpus                       OPERATIONALLY CLOSED / REMOTELY AVAILABLE
 Known/discovered jobs               353
 Fetched/parsed detail jobs          43
@@ -357,17 +399,17 @@ Heterogeneous operations/platform  ACCEPTED — tmyX 46 → 15
 The accepted Phase-1 stack and closed P2.1 registry now establish:
 
 ```text
-freeze promoted P1.6 v20 + Capability v9 as Phase-2 input
-→ P2.1A registry persistence ACCEPTED
-→ P2.1B manual CLI review ACCEPTED
-→ P2.1C browser review ACCEPTED
-→ P2.1D small cross-role seed + acceptance ACCEPTED
-→ P2.1 CLOSED
-→ inspect roadmap/implementation plan
-→ define next focused Phase-2 increment before implementation
+freeze promoted P1.6 v20 + Capability v9 as strict factual Phase-2 input
+→ P2.1 canonical registry ACCEPTED / CLOSED
+→ utility/epistemic governance reorientation ACCEPTED
+→ P2.2 focused responsibility/work/role-intelligence design NEXT
+→ fast candidate job-level interpretation may be first-class
+→ selective promoted responsibility/family/archetype knowledge where reuse needs it
+→ P2.3 capability requirement profiles
+→ P2.4 Market v2
 ```
 
-Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure authorizes Market v2 or bulk registry expansion.
+Do not rerun `tG9K` or `t4jp` Capability unless a dependency changes or a repeatable correctness defect requires explicit re-evaluation. Do not infer that P2.1 closure or the new reasoning policy authorizes automatic canonical promotion, Market v2, personal scoring, or fabricated source facts.
 
 ## 10. Relevant records
 
@@ -384,5 +426,7 @@ docs/working-memory/2026-08-23_P2_1D_LOCAL_SEED_APPLIED_VALIDATION_PENDING.md
 docs/working-memory/2026-08-23_P2_1D_POPULATED_REGISTRY_BROWSER_500_BLOCKER.md
 docs/working-memory/2026-08-23_P2_1D_BROWSER_AND_FULL_PYTEST_PASS_WARNINGS_PENDING.md
 docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
+docs/working-memory/2026-08-26_UTILITY_EPISTEMIC_GOVERNANCE_REORIENTATION.md
+docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 corpus/README.md
 ```
