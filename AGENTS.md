@@ -4,9 +4,13 @@ These instructions apply to AI assistants and human contributors.
 
 ## 1. Product and engineering priority
 
-JobHunter is a repeated-use **local-first personal career-intelligence application**. Prefer dependable, inspectable, evidence-grounded behavior over impressive complexity. Speed means coherent useful increments, not bypassing tests, provenance, bounds, source policy, acceptance, or state.
+JobHunter is a repeated-use **local-first personal career-intelligence application**. Its primary product objective is to help the user understand jobs, the market, career requirements, gaps, and actions **faster and better than manual vacancy-by-vacancy reading** while preserving trustworthy source/state boundaries.
 
-The mature product is not merely a scraper, generic matcher, resume generator, or autonomous application bot.
+Optimize for **useful, decision-relevant intelligence per unit of user time**, subject to source integrity, provenance, privacy, and honest uncertainty.
+
+Do not confuse trustworthiness with maximal determinism. Deterministic machinery protects state, provenance, bookkeeping, and reusable authority; semantic/model reasoning is an expected product capability for interpretation, synthesis, comparison, and recommendations when correctly labeled and traceable.
+
+The mature product is not merely a scraper, generic matcher, semantic-audit laboratory, resume generator, or autonomous application bot.
 
 ## 2. Required reading order and authority
 
@@ -17,20 +21,23 @@ Before material changes, read:
 3. `docs/ARCHITECTURE.md`
 4. `docs/DOMAIN_AND_ANALYSIS_MODEL.md`
 5. `docs/SOURCE_POLICY.md`
-6. `docs/ROADMAP.md`
-7. `docs/IMPLEMENTATION_PLAN.md`
-8. `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
-9. `docs/EXECUTION_TODO.md`
-10. `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` while the semantic gate is active
+6. `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
+7. `docs/ROADMAP.md`
+8. `docs/IMPLEMENTATION_PLAN.md`
+9. the current active phase/focused plan
+10. `docs/EXECUTION_TODO.md`
 11. `docs/WORKING_MEMORY.md`
 12. task-specific experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
 
-Proposal/experiment/working-memory files do not override controlling product, architecture, roadmap, implementation, or source-policy documents.
+Historical Phase-1 plans remain evidence/history, not automatic current execution gates after their scope is closed.
+
+Proposal/experiment/working-memory files do not override controlling product, domain, source, architecture, reasoning-policy, roadmap, or implementation documents.
 
 Authority:
 
 ```text
 product/domain/source/architecture
+→ utility/epistemic reasoning policy
 → roadmap
 → implementation plan
 → active phase/focused plan
@@ -38,7 +45,55 @@ product/domain/source/architecture
 → implementation/tests/live acceptance
 ```
 
-If artifacts conflict, reconcile them rather than choosing the convenient instruction.
+The reasoning policy operationalizes existing product/domain/architecture principles; it does not authorize violations of higher source/privacy/meaning constraints. If artifacts conflict, reconcile them rather than choosing the convenient instruction.
+
+### 2.1 Permanent epistemic/promotion rule
+
+Always distinguish:
+
+```text
+SOURCE FACT
+strict source/provenance integrity
+
+NORMALIZED CORRESPONDENCE
+reviewed/deterministic mapping while preserving source wording
+
+ANALYTICAL INTERPRETATION
+model/semantic reasoning allowed; confidence/evidence/uncertainty as appropriate
+
+RECOMMENDATION / DECISION SYNTHESIS
+explainable reasoning over qualified inputs
+```
+
+Also distinguish:
+
+```text
+GENERATED / CANDIDATE
+useful immediately when transparently inferred and bounded
+
+REVIEWED / PROMOTED
+reusable durable authority with stronger validation
+```
+
+Human review is primarily a **promotion boundary**, not a prerequisite for every useful interpretation.
+
+Strictness must scale with authority and blast radius. Do not demand market-scale proof for a job-level interpretation, and do not present one-job interpretation as market truth.
+
+### 2.2 Hard-failure versus soft-uncertainty rule
+
+Fail hard for integrity defects such as wrong/stale dependency identity, corrupt persistence, fabricated employer facts, unsupported source evidence, unsafe lifecycle transitions, privacy violations, or invalid canonical mutations.
+
+Fail soft for interpretive uncertainty such as ambiguous role family, multiple plausible archetypes, incomplete technical scope, small analytical samples, or uncertain responsibility grouping.
+
+Preferred interpretive behavior:
+
+```text
+uncertain
+→ lower confidence / show alternatives / preserve unknowns / warn
+→ still provide useful bounded interpretation when possible
+```
+
+Do not convert interpretive uncertainty into a blocker merely because deterministic proof is unavailable.
 
 ## 3. Current implementation and acceptance state
 
@@ -81,7 +136,7 @@ accepted/current Capability:      5
 
 Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small real-data seed are all accepted. **P2.1 is closed.** The accepted P2.1D seed remains deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across the five accepted P1.6 chains. Registry publication remains unauthorized.
 
-The next focused Phase-2 increment has not yet been selected. Before new implementation, inspect `docs/ROADMAP.md` and `docs/IMPLEMENTATION_PLAN.md`, define a bounded focused plan, and preserve the accepted P1.6 v20/v5, Capability v9/v5, and canonical-registry v1 boundaries.
+The 2026-08-26 governance reorientation is accepted through `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`. It preserves the strict Phase-1/P2.1 substrate while preventing future work from requiring promotion-grade proof for every low-blast-radius interpretation.
 
 Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
@@ -105,9 +160,33 @@ Decision record:
 docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 ```
 
+This does **not** mean Phase-2 interpretation in general is prohibited. New bounded analytical interpretation may be designed under the reasoning policy without promoting Blueprint or treating model prose as employer truth.
+
 ## 5. Current exact next-work rule
 
-Phase 1 is **closed**, including public-corpus, heterogeneous semantic, Market, source/lifecycle, partial-success, and P1.7 report/run/browser acceptance. P2.1A deterministic registry persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small reviewed seed are accepted. **P2.1 is closed.**
+Phase 1 and P2.1 are closed. The immediate governance correction after P2.1 is complete. The next bounded product step is to **design P2.2 responsibilities/deliverables/role intelligence under the utility/epistemic reasoning policy before implementation**.
+
+P2.2 planning must explicitly separate:
+
+```text
+accepted source/P1.6 responsibility evidence
+→ fast job-level work interpretation (allowed)
+→ candidate canonical responsibilities/families/archetypes (allowed)
+→ reviewed/promoted reusable responsibility/family/archetype knowledge
+→ later canonical aggregation
+```
+
+P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
+
+Until a focused P2.2 plan is written/approved:
+
+- do not bulk-map the remaining accepted P1.6 claim corpus;
+- do not broaden the canonical ontology merely to eliminate unmapped cases;
+- do not publish canonical-registry state;
+- do not start Market v2;
+- do not add personal evidence/readiness/scoring/recommendations;
+- do not create a fixed title-first role taxonomy;
+- do not make stable market-archetype claims from insufficient cross-job/employer evidence.
 
 Accepted P2.1D seed:
 
@@ -120,21 +199,11 @@ claim decisions:    6
 accepted chains:    5
 ```
 
-The exact acceptance record is:
+P2.1 acceptance record:
 
 ```text
 docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
 ```
-
-The next implementation increment is not authorized merely because P2.1 is closed. The next action is to inspect the controlling roadmap and implementation plan after P2.1, select the next bounded Phase-2 objective, and write/approve its focused plan before implementation.
-
-Until that next focused plan is selected:
-
-- do not bulk-map the remaining accepted P1.6 claim corpus;
-- do not broaden the canonical ontology merely to eliminate unmapped cases;
-- do not publish canonical-registry state;
-- do not start Market v2;
-- do not add personal evidence/readiness/scoring/recommendations.
 
 Current accepted heterogeneous order remains:
 
@@ -173,24 +242,19 @@ explicit pre-heading candidate duty clauses enter responsibility coverage
 Ability to / Skill in application wording stays non-depth without real depth markers
 ```
 
-Fresh English v20 artifacts are `pending` by default. Pending artifacts must remain excluded from Capability, Market, accepted dashboard counts, and `corpus/`. Use `jobhunter jobs review-analysis <job-id> status|accept|reject`; acceptance/rejection requires a meaningful review note. Existing promoted artifacts 36/37 migrate as accepted.
+Fresh English v20 artifacts are `pending` by default. Pending artifacts remain excluded from authoritative Capability/Market/accepted dashboard/public-corpus flows under the accepted Phase-1 contract. That strict promotion rule protects the reusable factual substrate; it must not be generalized into a rule that every future analytical view requires human acceptance first.
 
-Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 are closed. Do not rerun accepted anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
-
-For each heterogeneous role review factual coverage, evidence, requirement strength, explicit depth, role-level constraints, Capability coverage/grouping/source truth, and optionality calibration.
+Do not rerun accepted anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
 
 Convert repeatable deterministic defects into tests. Record model limitations separately. Do not patch one vacancy at a time.
 
-Accepted progression to the current closure point:
+Accepted progression to the current point:
 
 ```text
-Market truthfulness/sampling
-→ source/lifecycle acceptance
-→ partial-success semantics accepted
-→ P1.7 report/run/browser accepted
-→ Phase-1 closure accepted
+Phase-1 closure accepted
 → P2.1 canonical concept registry accepted / closed
-→ next focused Phase-2 increment must be explicitly selected
+→ utility/epistemic reasoning governance corrected
+→ P2.2 focused responsibility/role-intelligence design next
 ```
 
 ## 6. Permanent semantic boundaries
@@ -208,6 +272,8 @@ P1.6 is the strict factual substrate:
 - uncertain source claims remain contextual/unknown rather than forced;
 - structured source skills cannot silently disappear;
 - qualification wording must not fabricate job duties.
+
+These strict rules protect factual substrate authority. They do not prohibit later analytical interpretation from making explicitly inferred, confidence-qualified conclusions above that substrate.
 
 ### Capability Intelligence v9
 
@@ -246,13 +312,33 @@ Permanent v9 rules:
 - redundant model `source_explicit` echoes are discarded; deterministic reconciliation remains authority;
 - incomplete authoritative source truth cannot persist.
 
-Important downstream lesson: **Capability grouping and deterministic source truth may flow downstream; model-owned explanatory prose is not automatically authoritative.**
+Important downstream lesson: **Capability grouping and deterministic source truth may flow downstream; model-owned explanatory prose is not automatically authoritative.** It may still be used as candidate/analytical reasoning when a later contract explicitly labels and bounds it rather than promoting it as source truth.
 
 ### Blueprint
 
 Blueprint is experimental professional interpretation above historical accepted source truth. Its generated prose is not Phase-1 authority.
 
 No downstream layer replaces upstream authority. Mechanical linkage never certifies semantic truth.
+
+### Analytical interpretation above the strict substrate
+
+For Phase 2 and later, analytical interpretation is a first-class product capability.
+
+Permitted examples include:
+
+- job work-composition summaries;
+- candidate responsibility-family assignments;
+- candidate role archetypes;
+- cross-job semantic comparisons;
+- strongly work-implied capability expectations;
+- explainable recommendations when their prerequisite personal-evidence policy exists.
+
+Requirements:
+
+- never present inference as employer wording;
+- retain traceability to supporting facts where consequential;
+- communicate material uncertainty/confidence;
+- promote to reusable canonical authority only through the applicable stronger review boundary.
 
 ## 7. Versioned public-corpus rules
 
@@ -361,6 +447,8 @@ Role Blueprint artifact
 JobUserWorkflow
 Market aggregate
 Canonical Concept Registry
+candidate analytical interpretation
+promoted reusable semantic knowledge
 Public Corpus projection
 Review Snapshot
 Raw evidence
@@ -414,9 +502,13 @@ Independent model roles are supported. The current experimental Blueprint model 
 
 Use controlled same-job comparison when model adequacy is genuinely the variable. Do not change evidence, contract, and model simultaneously. No multi-model voting unless future measured evidence justifies it.
 
+Models may reason, synthesize, compare, classify, and recommend within the applicable contract. They must not manufacture source truth. Do not require deterministic equivalence for intrinsically semantic output solely to simplify testing.
+
 ## 12. Market and personal-evidence boundaries
 
 Current Market aggregates accepted/current English P1.6 only. Preserve sample size, source/filter scope, requirement-strength semantics, contract identity, and concentration/small-sample warnings.
+
+Small samples may support bounded hypotheses or job-level interpretations with warnings. They do not support unqualified broad-market claims.
 
 Do not implement durable personal readiness/gap/recommendation claims until a reviewed personal-evidence schema exists with depth, confidence, recency, evidence references, limitations, and AI-assistance/independence context.
 
@@ -440,8 +532,23 @@ Personal/private state must never be added to the public corpus merely because i
 - preserve historical artifacts;
 - reconcile current-state docs when behavior materially changes;
 - normal tests never contact Jobinja/Google/LM Studio;
-- convert repeatable deterministic incidents into fixtures when possible.
+- convert repeatable deterministic incidents into fixtures when possible;
+- test high-blast-radius authority/persistence invariants strongly;
+- do not overfit tests by forcing semantic/model outputs to become deterministic when the product question is inherently interpretive;
+- avoid duplicate/manual validation that does not materially increase confidence in a consequential boundary.
 
-An increment is done only when the intended workflow works, Ruff/tests/warnings gates pass, live behavior is reviewed when required, failures remain bounded/inspectable, provenance is preserved, docs match behavior, and no unrelated future scope is claimed.
+An increment is done only when:
+
+1. the intended workflow works;
+2. applicable engineering quality gates pass;
+3. source/state/privacy/provenance invariants hold;
+4. analytical outputs communicate authority/uncertainty honestly;
+5. live behavior is reviewed when the scope/impact justifies it;
+6. failures remain bounded/inspectable;
+7. docs match behavior;
+8. no unrelated future scope is claimed; and
+9. **the increment materially reduces user effort or improves the speed/quality of a real career-intelligence task.**
+
+Do not ask the repository owner to rerun a completed gate merely because a transcript excerpt is incomplete when the owner has explicitly and credibly confirmed that gate passed. Record the evidence boundary accurately and continue.
 
 Work directly on `main` unless the repository owner explicitly requests isolation or a concrete isolation need is agreed first.
