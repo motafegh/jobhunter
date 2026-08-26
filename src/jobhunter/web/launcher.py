@@ -22,6 +22,7 @@ from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
 from jobhunter.web.operations import WebOperationManager
 from jobhunter.web.registry import register_registry_routes
+from jobhunter.web.work_intelligence import register_work_intelligence_routes
 
 
 def _parser() -> argparse.ArgumentParser:
@@ -190,6 +191,7 @@ def build_runtime_app(settings: Settings):
     register_capability_routes(app, settings)
     register_blueprint_routes(app, settings)
     register_registry_routes(app, settings)
+    register_work_intelligence_routes(app, settings)
     return app
 
 
