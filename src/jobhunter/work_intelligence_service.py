@@ -1,0 +1,479 @@
+"""P2.2A Job Work Intelligence v1 service.
+
+Strict authority stops at the accepted/current English P1.6 artifact. Above that boundary this
+service produces transparent candidate interpretation, validates exact source references, and
+persists the result for repeatable local UX without promoting it into canonical taxonomy.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import UTC, datetime
+from typing import Any
+
+from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
+from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
+from jobhunter.config import Settings
+from jobhunter.translation_service import TranslationService, build_translation_service
+from jobhunter.translation_store import TranslationStore
+from jobhunter.work_intelligence_inference import WorkIntelligenceInferenceProvider
+from jobhunter.work_intelligence_models import JobWorkIntelligence
+from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
+
+WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v1"
+WORK_INTELLIGENCE_PROMPT_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
+WORK_INTELLIGENCE_SCHEMA_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
+DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v1"
+
+_WORK_INTELLIGENCE_PROMPT = """You are JobHunter's Job Work Intelligence interpreter.
+
+Your job is to help a user understand what the supplied vacancy actually involves faster than
+reading and mentally synthesizing every responsibility.
+
+AUTHORITY
+- The supplied P1.6 responsibilities and role_purpose items are accepted factual substrate.
+- Requirements are supporting context only. A requirement must NEVER become a duty by itself.
+- Your output is JobHunter interpretation, not employer wording and not promoted taxonomy.
+
+WORK THEMES
+- Group the direct work into a small useful set of themes, normally 2-6.
+- Every supplied responsibility index and role-purpose index must appear in at least one theme.
+- A work item may belong to two themes when genuinely hybrid; avoid gratuitous duplication.
+- Use theme IDs theme-1, theme-2, ... and relative emphasis primary/supporting/uncertain.
+- Do not invent percentages, time allocation, ownership, leadership, autonomy, or lifecycle scope.
+
+DELIVERABLES
+- Include only outputs that are source-explicit or strongly implied by the supplied work itself.
+- Do not infer deliverables from generic knowledge of a tool, title, or profession.
+
+ROLE INTERPRETATION
+- A candidate role label/summary is allowed when it clarifies the work composition.
+- It is tentative analytical interpretation, not a canonical role archetype.
+- Expose alternatives/limitations when the evidence supports more than one reading.
+
+UNCERTAINTY
+- Ambiguity should lower confidence or create alternatives/limitations, not force false certainty.
+- Do not manufacture uncertainty merely to fill fields.
+
+Use only the supplied zero-based indices as references. Do not cite or invent any other source.
+"""
+
+
+class WorkIntelligenceError(ValueError):
+    """Raised when P2.2A cannot safely produce or persist Work Intelligence."""
+
+
+@dataclass(frozen=True, slots=True)
+class WorkIntelligenceResult:
+    source_job_id: str
+    artifact_id: int
+    outcome: str
+    model: str
+    evidence_status: str
+    work_theme_count: int
+
+
+def _source_evidence(item: dict[str, Any]) -> list[str]:
+    raw = item.get("evidence")
+    values = raw if isinstance(raw, list) else [raw]
+    return [value.strip() for value in values if isinstance(value, str) and value.strip()]
+
+
+def _work_fact(index: int, item: Any, *, section: str) -> dict[str, Any]:
+    if not isinstance(item, dict):
+        raise WorkIntelligenceError(f"Accepted P1.6 {section}[{index}] is not an object")
+    statement = item.get("statement")
+    if not isinstance(statement, str) or not statement.strip():
+        raise WorkIntelligenceError(
+            f"Accepted P1.6 {section}[{index}] has no usable statement"
+        )
+    return {
+        "index": index,
+        "statement": statement.strip(),
+        "evidence": _source_evidence(item),
+        "confidence": item.get("confidence"),
+    }
+
+
+def _requirement_fact(index: int, item: Any) -> dict[str, Any]:
+    if not isinstance(item, dict):
+        raise WorkIntelligenceError(f"Accepted P1.6 requirement[{index}] is not an object")
+    concept = item.get("concept")
+    if not isinstance(concept, str) or not concept.strip():
+        raise WorkIntelligenceError(
+            f"Accepted P1.6 requirement[{index}] has no usable concept"
+        )
+    return {
+        "index": index,
+        "concept": concept.strip(),
+        "concept_type": item.get("concept_type"),
+        "requirement_type": item.get("requirement_type"),
+        "depth_signal": item.get("depth_signal"),
+        "evidence": _source_evidence(item),
+        "confidence": item.get("confidence"),
+    }
+
+
+def _limited_intelligence() -> JobWorkIntelligence:
+    return JobWorkIntelligence(
+        evidence_status="limited",
+        work_summary=(
+            "The accepted job analysis contains no direct responsibility or role-purpose evidence, "
+            "so JobHunter will not invent duties from qualifications alone."
+        ),
+        work_themes=[],
+        deliverables=[],
+        role_interpretation=None,
+        limitations=[
+            "Direct work structure is unavailable from the accepted vacancy evidence; requirements "
+            "can describe candidate expectations but are not treated as job duties."
+        ],
+    )
+
+
+class WorkIntelligenceService:
+    """Build or reuse one candidate Work Intelligence artifact above accepted English P1.6."""
+
+    def __init__(
+        self,
+        *,
+        source_store: TranslationStore,
+        analysis_store: AnalysisStore,
+        work_store: WorkIntelligenceStore,
+        translation_service: TranslationService,
+        analysis_model: str,
+        work_model: str | None,
+        provider: WorkIntelligenceInferenceProvider | None,
+        max_tokens: int = 8192,
+        clock=lambda: datetime.now(UTC),
+    ) -> None:
+        if not analysis_model.strip():
+            raise ValueError("A concrete accepted English P1.6 analysis model is required")
+        if not 1 <= max_tokens <= 32768:
+            raise ValueError("max_tokens must be between 1 and 32768")
+        self._source_store = source_store
+        self._analysis_store = analysis_store
+        self._work_store = work_store
+        self._translation_service = translation_service
+        self._analysis_model = analysis_model.strip()
+        self._work_model = work_model.strip() if work_model else None
+        self._provider = provider
+        self._max_tokens = max_tokens
+        self._clock = clock
+
+    def _current_p16(self, source_job_id: str) -> AnalysisArtifact:
+        source = self._source_store.latest_source_version(source_job_id)
+        if source is None:
+            raise WorkIntelligenceError("Job has no current successfully parsed source version")
+        translation = self._translation_service.current_artifact(source_job_id)
+        if translation is None:
+            raise WorkIntelligenceError(
+                "Job has no configured current English projection; translate/repair it first"
+            )
+        analysis = self._analysis_store.find_artifact(
+            job_detail_version_id=source.job_detail_version_id,
+            translation_artifact_id=translation.id,
+            require_translation_dependency=True,
+            model=self._analysis_model,
+            prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+        )
+        if analysis is None or analysis.semantic_review_status != "accepted":
+            raise WorkIntelligenceError(
+                "Job has no semantically accepted current English P1.6 analysis"
+            )
+        if analysis.job_detail_version_id != source.job_detail_version_id:
+            raise WorkIntelligenceError("Accepted English P1.6 is stale for the current source")
+        if analysis.translation_artifact_id != translation.id:
+            raise WorkIntelligenceError(
+                "Accepted English P1.6 does not depend on the current English projection"
+            )
+        return analysis
+
+    @staticmethod
+    def _sections(analysis: AnalysisArtifact) -> tuple[list[Any], list[Any], list[Any]]:
+        value = analysis.analysis
+        responsibilities = value.get("responsibilities") or []
+        role_purpose = value.get("role_purpose") or []
+        requirements = value.get("requirements") or []
+        if not isinstance(responsibilities, list):
+            raise WorkIntelligenceError("Accepted P1.6 responsibilities are not a list")
+        if not isinstance(role_purpose, list):
+            raise WorkIntelligenceError("Accepted P1.6 role_purpose is not a list")
+        if not isinstance(requirements, list):
+            raise WorkIntelligenceError("Accepted P1.6 requirements are not a list")
+        return responsibilities, role_purpose, requirements
+
+    @staticmethod
+    def _validate_references(
+        intelligence: JobWorkIntelligence,
+        *,
+        responsibility_count: int,
+        role_purpose_count: int,
+        requirement_count: int,
+    ) -> None:
+        def validate(values: list[int], count: int, label: str) -> None:
+            invalid = [value for value in values if value >= count]
+            if invalid:
+                raise WorkIntelligenceError(
+                    f"Work Intelligence references missing {label} indices: {invalid}"
+                )
+
+        covered_responsibilities: set[int] = set()
+        covered_purpose: set[int] = set()
+        for theme in intelligence.work_themes:
+            validate(theme.responsibility_indices, responsibility_count, "responsibility")
+            validate(theme.role_purpose_indices, role_purpose_count, "role-purpose")
+            validate(theme.supporting_requirement_indices, requirement_count, "requirement")
+            covered_responsibilities.update(theme.responsibility_indices)
+            covered_purpose.update(theme.role_purpose_indices)
+        for deliverable in intelligence.deliverables:
+            validate(deliverable.responsibility_indices, responsibility_count, "responsibility")
+            validate(deliverable.role_purpose_indices, role_purpose_count, "role-purpose")
+
+        if intelligence.evidence_status == "sufficient":
+            expected_responsibilities = set(range(responsibility_count))
+            expected_purpose = set(range(role_purpose_count))
+            missing_responsibilities = sorted(
+                expected_responsibilities - covered_responsibilities
+            )
+            missing_purpose = sorted(expected_purpose - covered_purpose)
+            if missing_responsibilities or missing_purpose:
+                raise WorkIntelligenceError(
+                    "Work themes omitted accepted direct work evidence: "
+                    f"responsibilities={missing_responsibilities}, "
+                    f"role_purpose={missing_purpose}"
+                )
+
+    def _identity_for(self, analysis: AnalysisArtifact) -> tuple[str, bool]:
+        responsibilities, role_purpose, _ = self._sections(analysis)
+        has_direct_work = bool(responsibilities or role_purpose)
+        if not has_direct_work:
+            return DETERMINISTIC_LIMITED_MODEL, False
+        if not self._work_model or self._provider is None:
+            raise WorkIntelligenceError(
+                "Direct work evidence exists but no Work Intelligence LM Studio model is configured"
+            )
+        return self._work_model, True
+
+    def current_artifact(self, source_job_id: str) -> JobWorkIntelligenceArtifact | None:
+        """Return an artifact only when it depends on the exact current accepted P1.6 artifact."""
+
+        try:
+            analysis = self._current_p16(source_job_id)
+            model, _ = self._identity_for(analysis)
+        except WorkIntelligenceError:
+            return None
+        return self._work_store.find_artifact(
+            analysis_artifact_id=analysis.id,
+            model=model,
+            prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+            schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+        )
+
+    def analyze_job(self, source_job_id: str) -> WorkIntelligenceResult:
+        source_job_id = source_job_id.strip()
+        if not source_job_id:
+            raise WorkIntelligenceError("source_job_id must not be empty")
+        analysis = self._current_p16(source_job_id)
+        responsibilities, role_purpose, requirements = self._sections(analysis)
+        model, use_model = self._identity_for(analysis)
+        attempted_at = self._clock()
+
+        existing = self._work_store.find_artifact(
+            analysis_artifact_id=analysis.id,
+            model=model,
+            prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+            schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+        )
+        if existing is not None:
+            self._work_store.record_attempt(
+                analysis_artifact_id=analysis.id,
+                attempted_at=attempted_at,
+                model=model,
+                prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+                schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+                outcome="reused",
+                artifact_id=existing.id,
+            )
+            document = JobWorkIntelligence.model_validate(existing.intelligence)
+            return WorkIntelligenceResult(
+                source_job_id=source_job_id,
+                artifact_id=existing.id,
+                outcome="reused",
+                model=existing.model,
+                evidence_status=document.evidence_status,
+                work_theme_count=len(document.work_themes),
+            )
+
+        try:
+            if not use_model:
+                document = _limited_intelligence()
+                request_body = {
+                    "contract": WORK_INTELLIGENCE_CONTRACT_VERSION,
+                    "mode": "deterministic-limited-work-boundary",
+                    "analysis_artifact_id": analysis.id,
+                }
+                raw_response = {"deterministic": True, "reason": "no_direct_work_evidence"}
+            else:
+                if self._provider is None:
+                    raise WorkIntelligenceError("Work Intelligence provider is unavailable")
+                user_payload = {
+                    "source_job_id": source_job_id,
+                    "analysis_artifact_id": analysis.id,
+                    "responsibilities": [
+                        _work_fact(index, item, section="responsibility")
+                        for index, item in enumerate(responsibilities)
+                    ],
+                    "role_purpose": [
+                        _work_fact(index, item, section="role_purpose")
+                        for index, item in enumerate(role_purpose)
+                    ],
+                    "supporting_requirements": [
+                        _requirement_fact(index, item)
+                        for index, item in enumerate(requirements)
+                    ],
+                }
+                inference = self._provider.complete(
+                    response_model=JobWorkIntelligence,
+                    system_prompt=_WORK_INTELLIGENCE_PROMPT,
+                    user_payload=user_payload,
+                    max_tokens=min(self._max_tokens, 4096),
+                    seed=0,
+                )
+                if inference.validated_model is not None:
+                    if not isinstance(inference.validated_model, JobWorkIntelligence):
+                        raise WorkIntelligenceError(
+                            "Work Intelligence provider returned an incompatible validated model"
+                        )
+                    document = inference.validated_model
+                else:
+                    document = JobWorkIntelligence.model_validate(inference.intelligence)
+                if document.evidence_status != "sufficient":
+                    raise WorkIntelligenceError(
+                        "Direct accepted work evidence requires evidence_status='sufficient'"
+                    )
+                request_body = inference.request_body
+                raw_response = inference.raw_response
+
+            self._validate_references(
+                document,
+                responsibility_count=len(responsibilities),
+                role_purpose_count=len(role_purpose),
+                requirement_count=len(requirements),
+            )
+            artifact_id = self._work_store.record_artifact(
+                analysis_artifact_id=analysis.id,
+                model=model,
+                prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+                schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+                intelligence=document.model_dump(mode="json"),
+                request_body=request_body,
+                raw_response=raw_response,
+                created_at=attempted_at,
+            )
+            self._work_store.record_attempt(
+                analysis_artifact_id=analysis.id,
+                attempted_at=attempted_at,
+                model=model,
+                prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+                schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+                outcome="completed",
+                artifact_id=artifact_id,
+            )
+        except Exception as exc:
+            self._work_store.record_attempt(
+                analysis_artifact_id=analysis.id,
+                attempted_at=attempted_at,
+                model=model,
+                prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+                schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+                outcome="failed",
+                error=exc,
+            )
+            raise
+
+        return WorkIntelligenceResult(
+            source_job_id=source_job_id,
+            artifact_id=artifact_id,
+            outcome="completed",
+            model=model,
+            evidence_status=document.evidence_status,
+            work_theme_count=len(document.work_themes),
+        )
+
+
+def build_work_intelligence_service(settings: Settings) -> WorkIntelligenceService:
+    """Build the current P2.2A service without making Work Intelligence canonical authority."""
+
+    analysis_model = settings.effective_analysis_lm_studio_model()
+    if not analysis_model:
+        raise ValueError("No analysis model is configured for accepted English P1.6")
+    work_model = settings.effective_work_intelligence_lm_studio_model()
+    provider = None
+    if work_model:
+        provider = WorkIntelligenceInferenceProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=work_model,
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.inference_timeout_seconds,
+            network_retries=settings.inference_max_retries,
+            validation_retries=1,
+        )
+    return WorkIntelligenceService(
+        source_store=TranslationStore(settings.database_path),
+        analysis_store=AnalysisStore(settings.database_path),
+        work_store=WorkIntelligenceStore(settings.database_path),
+        translation_service=build_translation_service(settings),
+        analysis_model=analysis_model,
+        work_model=work_model,
+        provider=provider,
+        max_tokens=settings.analysis_max_tokens,
+    )
+
+
+def format_work_intelligence(artifact: JobWorkIntelligenceArtifact) -> str:
+    document = JobWorkIntelligence.model_validate(artifact.intelligence)
+    lines = [
+        f"Job Work Intelligence: {artifact.source_job_id}",
+        f"State: {artifact.semantic_state} / {document.evidence_status}",
+        f"Model: {artifact.model}",
+        f"P1.6 dependency: artifact {artifact.analysis_artifact_id}",
+        "",
+        document.work_summary,
+    ]
+    if document.work_themes:
+        lines.append("\nWork themes:")
+        for theme in document.work_themes:
+            lines.append(
+                f"- {theme.label} [{theme.emphasis}, {theme.confidence}] — {theme.summary}"
+            )
+    if document.deliverables:
+        lines.append("\nLikely deliverables:")
+        for item in document.deliverables:
+            lines.append(f"- {item.label} [{item.status}, {item.confidence}] — {item.summary}")
+    if document.role_interpretation is not None:
+        role = document.role_interpretation
+        lines.extend(
+            [
+                "\nCandidate role interpretation:",
+                f"- {role.label} [{role.confidence}] — {role.summary}",
+            ]
+        )
+    if document.limitations:
+        lines.append("\nLimitations:")
+        lines.extend(f"- {item}" for item in document.limitations)
+    return "\n".join(lines)
+
+
+__all__ = [
+    "DETERMINISTIC_LIMITED_MODEL",
+    "WORK_INTELLIGENCE_CONTRACT_VERSION",
+    "WORK_INTELLIGENCE_PROMPT_VERSION",
+    "WORK_INTELLIGENCE_SCHEMA_VERSION",
+    "WorkIntelligenceError",
+    "WorkIntelligenceResult",
+    "WorkIntelligenceService",
+    "build_work_intelligence_service",
+    "format_work_intelligence",
+]
