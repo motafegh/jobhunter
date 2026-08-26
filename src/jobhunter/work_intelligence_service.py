@@ -149,7 +149,9 @@ def _limited_intelligence() -> JobWorkIntelligence:
 
 
 def _normalized_semantic_text(value: str) -> str:
-    return " ".join(value.casefold().replace("–", "-").replace("—", "-").split())
+    return " ".join(
+        value.casefold().replace("–", " ").replace("—", " ").replace("-", " ").split()
+    )
 
 
 def _direct_work_statement_text(responsibilities: list[Any], role_purpose: list[Any]) -> str:
@@ -191,7 +193,8 @@ def _validate_scope_language(
     unsupported = [
         phrase
         for phrase in _SCOPE_INTENSIFIERS
-        if phrase in candidate_text and phrase not in source_text
+        if _normalized_semantic_text(phrase) in candidate_text
+        and _normalized_semantic_text(phrase) not in source_text
     ]
     if unsupported:
         raise WorkIntelligenceError(
