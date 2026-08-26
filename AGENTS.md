@@ -138,6 +138,14 @@ Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.
 
 The 2026-08-26 governance reorientation is accepted through `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`. It preserves the strict Phase-1/P2.1 substrate while preventing future work from requiring promotion-grade proof for every low-blast-radius interpretation.
 
+The focused P2.2 plan is now approved:
+
+```text
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
+```
+
+Its first implementation increment is **P2.2A Job Work Intelligence v1** under working contract `job-work-intelligence-v1`.
+
 Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ## 4. Blueprint disposition
@@ -164,28 +172,58 @@ This does **not** mean Phase-2 interpretation in general is prohibited. New boun
 
 ## 5. Current exact next-work rule
 
-Phase 1 and P2.1 are closed. The immediate governance correction after P2.1 is complete. The next bounded product step is to **design P2.2 responsibilities/deliverables/role intelligence under the utility/epistemic reasoning policy before implementation**.
+Phase 1 and P2.1 are closed. The governance correction is complete and the focused P2.2 plan is approved.
 
-P2.2 planning must explicitly separate:
+Current controlling focused plan:
 
 ```text
-accepted source/P1.6 responsibility evidence
-→ fast job-level work interpretation (allowed)
-→ candidate canonical responsibilities/families/archetypes (allowed)
-→ reviewed/promoted reusable responsibility/family/archetype knowledge
-→ later canonical aggregation
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 ```
+
+The next implementation increment is:
+
+```text
+P2.2A Job Work Intelligence v1
+```
+
+P2.2A must preserve this flow:
+
+```text
+accepted/current English P1.6 factual work substrate
+→ fast job-level Work Intelligence
+→ generated/candidate interpretation
+→ deterministic dependency/reference validation
+→ persisted candidate artifact for repeated-use UX
+```
+
+Core P2.2A decisions:
+
+- accepted/current English P1.6 v20/v5 is the primary authoritative input;
+- Capability v9 is not an authoritative dependency for P2.2A;
+- existing registry mappings may enrich but never gate generation;
+- every work theme must own at least one accepted responsibility or role-purpose reference;
+- requirements may support a theme but may not independently manufacture duties;
+- candidate artifacts persist for reproducibility/reuse but persistence does not mean promotion;
+- candidate output does not require human approval merely because a model generated it;
+- relative emphasis is `primary` / `supporting` / `uncertain`, not fake percentages;
+- confidence is qualitative and does not claim calibrated probability;
+- deliverables may be `source_explicit` or `strongly_implied_by_work` with required work evidence;
+- candidate role/archetype interpretation is allowed at job level without becoming stable market taxonomy;
+- `tG9K`, `t4qV`, and `tmyX` are initial positive semantic/product anchors;
+- `tmBK` is the deliberate limited-work-evidence anchor and must not gain fabricated duties;
+- browser is the normal user surface; CLI is secondary generation/inspection/debugging;
+- P2.2 state remains local unless a separate publication decision authorizes otherwise.
 
 P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
 
-Until a focused P2.2 plan is written/approved:
+During P2.2A:
 
 - do not bulk-map the remaining accepted P1.6 claim corpus;
 - do not broaden the canonical ontology merely to eliminate unmapped cases;
-- do not publish canonical-registry state;
+- do not publish canonical-registry or P2.2 state;
 - do not start Market v2;
 - do not add personal evidence/readiness/scoring/recommendations;
-- do not create a fixed title-first role taxonomy;
+- do not create global responsibility families/archetypes merely to complete P2.2A;
 - do not make stable market-archetype claims from insufficient cross-job/employer evidence.
 
 Accepted P2.1D seed:
@@ -203,6 +241,12 @@ P2.1 acceptance record:
 
 ```text
 docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
+```
+
+P2.2 planning/approval record:
+
+```text
+docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md
 ```
 
 Current accepted heterogeneous order remains:
@@ -254,7 +298,8 @@ Accepted progression to the current point:
 Phase-1 closure accepted
 → P2.1 canonical concept registry accepted / closed
 → utility/epistemic reasoning governance corrected
-→ P2.2 focused responsibility/role-intelligence design next
+→ P2.2 focused responsibility/work/role-intelligence plan approved
+→ P2.2A Job Work Intelligence v1 implementation next
 ```
 
 ## 6. Permanent semantic boundaries
@@ -447,6 +492,7 @@ Role Blueprint artifact
 JobUserWorkflow
 Market aggregate
 Canonical Concept Registry
+JobWorkIntelligenceArtifact
 candidate analytical interpretation
 promoted reusable semantic knowledge
 Public Corpus projection
