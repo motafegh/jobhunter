@@ -1,11 +1,11 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-26  
+**Date:** 2026-08-27  
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment, and the current focused plan  
 **Current focused plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md` — APPROVED  
-**Current gate:** P2.2A Job Work Intelligence v1 IMPLEMENTED / CI GREEN / REAL-LOCAL SEMANTIC ACCEPTANCE NEXT
+**Current gate:** P2.2A Job Work Intelligence v1 IMPLEMENTED / LIVE SEMANTIC-PRODUCT ACCEPTANCE IN PROGRESS / `tG9K` NEXT
 
 Repository workflow:
 
@@ -52,8 +52,6 @@ tmyX P1.6 46 → Capability 15
 
 Do not reopen P1.6/Capability merely for harmless non-authoritative wording variation.
 
-Historical detail remains in `docs/WORKING_MEMORY.md`, focused plans, and `docs/working-memory/` records.
-
 ---
 
 ## B. P2.1 Canonical Concept Registry — CLOSED / ACCEPTED
@@ -76,34 +74,28 @@ claim decisions:     6
 registry publication NOT AUTHORIZED
 ```
 
-Final record:
-
-`docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
+Final record: `docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
 
 ---
 
 ## C. Utility / epistemic governance reorientation — ACCEPTED
 
-- [x] make useful career intelligence per unit user time an explicit optimization target.
-- [x] distinguish source fact / normalized correspondence / analytical interpretation / recommendation.
-- [x] distinguish generated/candidate from reviewed/promoted authority.
+- [x] useful career intelligence per unit user time is an explicit optimization target.
+- [x] source fact / normalized correspondence / analytical interpretation / recommendation are distinct.
+- [x] generated/candidate is distinct from reviewed/promoted authority.
 - [x] fail hard for integrity; fail soft for interpretive uncertainty.
-- [x] make human review primarily a promotion boundary.
-- [x] define Tier A integrity, Tier B promoted semantic, Tier C bounded analytical acceptance.
-- [x] preserve strict source/provenance/privacy/currentness rules.
-- [x] prevent exhaustive canonicalization from becoming a prerequisite for useful job-level reasoning.
+- [x] human review is mainly a promotion boundary.
+- [x] Tier A integrity, Tier B promoted semantic, Tier C bounded analytical acceptance are explicit.
+- [x] strict source/provenance/privacy/currentness rules remain intact.
+- [x] exhaustive canonicalization is not a prerequisite for useful job-level reasoning.
 
-Controlling companion:
-
-`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
+Controlling companion: `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 
 ---
 
 ## D. P2.2 Responsibility, Work, and Role Intelligence
 
-Focused plan:
-
-`docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
+Focused plan: `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
 Approved order:
 
@@ -116,9 +108,17 @@ P2.2A Job Work Intelligence v1
 
 ### D1 — P2.2A Job Work Intelligence v1 — IMPLEMENTED / ACCEPTANCE OPEN
 
-Working contract:
+Working contract/schema:
 
-`job-work-intelligence-v1`
+```text
+job-work-intelligence-v1
+```
+
+Current prompt identity:
+
+```text
+job-work-intelligence-v1.1
+```
 
 #### Implementation — COMPLETE
 
@@ -131,57 +131,81 @@ Working contract:
 - [x] supporting requirements cannot create duties by themselves.
 - [x] exact accepted/current English P1.6 dependency resolution.
 - [x] immutable candidate artifact persistence plus attempt history.
-- [x] historical artifact preservation and currentness invalidation when P1.6 changes.
+- [x] historical artifact preservation and currentness invalidation when accepted dependencies or prompt identity change.
 - [x] deterministic source-index bounds validation.
 - [x] deterministic complete accepted responsibility/role-purpose coverage across themes.
 - [x] deterministic no-direct-work path that does not call the model or fabricate duties.
 - [x] dedicated bounded LM Studio/Instructor reasoning adapter.
-- [x] Work Intelligence keeps separate prompt/schema/artifact identity from Capability.
-- [x] initial implementation reuses the existing configured capability-model fallback chain rather than adding premature configuration.
-- [x] CLI: `jobhunter-work generate|show`.
+- [x] CLI: `jobhunter-work generate|show` and module-equivalent command.
 - [x] browser route: `/jobs/<job-id>/work-intelligence`.
-- [x] accepted job-detail pages link to Work Intelligence.
-- [x] browser clearly distinguishes accepted facts from JobHunter candidate interpretation.
-- [x] browser mutation does not use `WebOperationManager` and therefore does not publish/refresh Work Intelligence into `corpus/`.
-- [x] focused deterministic/browser regression coverage.
+- [x] browser mutation remains local and does not publish Work Intelligence into `corpus/`.
+- [x] repository quality gates passed for the implementation and subsequent structured-reference/scope-boundary repairs.
 
-Implementation record:
+Implementation record: `docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
 
-`docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
+#### Live defect history — UNDERSTOOD / REPAIRED
 
-#### Repository quality — PASS
+- [x] first real `t4qV` generation exposed optional structured-reference arrays in the generation schema.
+- [x] structured reference arrays became required; provenance validator was not weakened.
+- [x] regression proves indices mentioned only in rationale prose do not count as structured provenance.
+- [x] first valid `t4qV` artifact 1 exposed repeatable unsupported `end-to-end` / `entire security stack` inflation.
+- [x] prompt identity bumped to `job-work-intelligence-v1.1` and shared-evidence/action-scope instructions strengthened.
+- [x] bounded scope-intensifier guard added without constraining ordinary semantic grouping.
+- [x] phrase normalization treats `end-to-end` and `end to end` equivalently.
+- [x] historical artifact 1 remains preserved under the previous prompt identity.
 
-CI run `32996495178`, implementation head `c77635c63ec3140146315980fb0c80522b03d0cf`:
-
-- [x] Ruff PASS.
-- [x] full pytest PASS.
-- [x] warnings-as-errors pytest PASS.
-
-Do not invent a test count; the retrieved CI evidence established successful steps, not their console count.
-
-#### Real-local semantic/product acceptance — NEXT
-
-Use the real current local database and configured local model:
+Records:
 
 ```text
-tG9K  responsibility-rich industrial ML / manufacturing AI
-t4qV  responsibility-rich network/security
-tmyX  responsibility-rich security infrastructure / Microsoft services
-tmBK  requirements-only / no direct work evidence boundary
+docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_LIVE_GENERATION_STRUCTURED_REFERENCE_FAILURE.md
+docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_VALID_CANDIDATE_AND_SCOPE_REPAIR.md
 ```
 
-- [ ] pull the current `main` implementation locally.
-- [ ] ensure editable install exposes the new `jobhunter-work` entrypoint if needed.
-- [ ] generate `tG9K` Work Intelligence and review usefulness/coverage/restraint.
-- [ ] generate `t4qV` Work Intelligence and review usefulness/coverage/restraint.
-- [ ] generate `tmyX` Work Intelligence and review usefulness/coverage/restraint.
+#### Real-local semantic/product acceptance — IN PROGRESS
+
+Acceptance anchors:
+
+```text
+t4qV  network/security                                  artifact 2  ACCEPTED candidate anchor
+tmyX  security infrastructure / Microsoft services      artifact 3  ACCEPTED candidate anchor with recorded limitation
+tG9K  industrial ML / manufacturing AI                  NEXT
+tmBK  requirements-only / no direct work evidence       PENDING
+```
+
+- [x] pull and exercise the real local P2.2A path.
+- [x] generate/review `t4qV` under v1.1 after repairs.
+- [x] accept `t4qV` artifact 2 as useful, bounded candidate product intelligence.
+- [x] generate/review `tmyX` artifact 3.
+- [x] accept `tmyX` artifact 3 as useful bounded candidate intelligence with a recorded non-promoted action-verb limitation (`develop/provide` → summary `implementing`).
+- [~] all generated themes were `primary` on both `t4qV` and `tmyX`; this is a product-quality watch item, not yet a deterministic defect. Use `tG9K` as the next independent check.
+- [ ] generate `tG9K` Work Intelligence and review usefulness/coverage/restraint plus the emphasis pattern.
 - [ ] generate `tmBK` and confirm deterministic `limited` behavior with no invented duties.
-- [ ] rerun at least one unchanged job and confirm artifact reuse.
+- [ ] rerun at least one unchanged current job and confirm artifact reuse.
 - [ ] inspect the browser Work Intelligence page on the same real artifacts.
 - [ ] verify employer/P1.6 facts and JobHunter interpretation remain visually/semantically distinct.
-- [ ] record any model limitation as analytical limitation unless it violates an integrity contract.
-- [ ] convert only repeatable integrity defects into deterministic fixes/tests.
-- [ ] decide P2.2A semantic/product acceptance based on whether the view materially reduces manual reading/synthesis effort.
+- [ ] decide P2.2A semantic/product acceptance based on whether the view materially reduces manual reading/synthesis effort across the heterogeneous anchors.
+
+Accepted/live records:
+
+```text
+docs/working-memory/2026-08-27_P2_2A_T4QV_V11_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED.md
+docs/working-memory/2026-08-27_P2_2A_TMYX_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED_WITH_LIMITATION.md
+```
+
+Interpretive policy during acceptance:
+
+```text
+bounded imperfection / harmless paraphrase
+→ record or tolerate as candidate interpretation
+
+repeatable material authority/integrity defect
+→ smallest general repair + regression
+
+repeated product-quality weakness
+→ gather cross-job evidence, then refine semantics if justified
+```
+
+Do not introduce a deterministic action-verb equivalence system or a fixed primary-theme quota from the current evidence.
 
 ### D2 — P2.2B selective responsibility/deliverable promotion — BLOCKED ON D1 ACCEPTANCE
 
@@ -221,9 +245,12 @@ tmBK  requirements-only / no direct work evidence boundary
 ## Exact next action
 
 ```text
-P2.2A implementation is complete and repository CI is green.
-→ perform real-local semantic/product acceptance on tG9K, t4qV, tmyX, tmBK
-→ fix only evidence-backed defects if found
+P2.2A implementation is complete.
+t4qV artifact 2 and tmyX artifact 3 are accepted candidate product anchors.
+→ generate/review tG9K next
+→ use it to test heterogeneous ML grouping and whether the all-primary emphasis pattern repeats
+→ then test tmBK limited-work behavior
+→ then artifact reuse + browser UX
 → close P2.2A only after usefulness + authority-boundary review
-→ then decide P2.2B from what P2.2A actually taught us
+→ only then decide P2.2B
 ```
