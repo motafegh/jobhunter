@@ -6,7 +6,11 @@ from jobhunter.work_intelligence_models import JobWorkIntelligence, WorkTheme
 from jobhunter.work_intelligence_service import WorkIntelligenceError, WorkIntelligenceService
 
 
-def _document(*, responsibility_indices: list[int], role_purpose_indices: list[int]) -> JobWorkIntelligence:
+def _document(
+    *,
+    responsibility_indices: list[int],
+    role_purpose_indices: list[int],
+) -> JobWorkIntelligence:
     return JobWorkIntelligence(
         evidence_status="sufficient",
         work_summary="The role groups accepted direct work into one bounded candidate theme.",
@@ -14,7 +18,9 @@ def _document(*, responsibility_indices: list[int], role_purpose_indices: list[i
             WorkTheme(
                 theme_id="theme-1",
                 label="Candidate work theme",
-                summary="Group the accepted direct work without inventing additional source claims.",
+                summary=(
+                    "Group the accepted direct work without inventing additional source claims."
+                ),
                 emphasis="primary",
                 confidence="high",
                 responsibility_indices=responsibility_indices,
