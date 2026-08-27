@@ -111,11 +111,12 @@ Capability v8:              historical / semantic reject
 
 Blueprint experimental:     role-capability-blueprint-v6 / role-capability-blueprint-v5
 Canonical Registry:         jobhunter-canonical-concept-registry-v1
+Job Work Intelligence:      job-work-intelligence-v1 / prompt job-work-intelligence-v1.1
 Review Snapshot:            job-review-snapshot-v1
 Public Corpus:              jobhunter-public-corpus-v1
 ```
 
-Accepted/current opposite-end anchors:
+Accepted/current opposite-end factual anchors:
 
 ```text
 tG9K English P1.6 artifact 36 → Capability v9 artifact 11
@@ -138,13 +139,22 @@ Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.
 
 The 2026-08-26 governance reorientation is accepted through `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`. It preserves the strict Phase-1/P2.1 substrate while preventing future work from requiring promotion-grade proof for every low-blast-radius interpretation.
 
-The focused P2.2 plan is now approved:
+The focused P2.2 plan is approved:
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 ```
 
-Its first implementation increment is **P2.2A Job Work Intelligence v1** under working contract `job-work-intelligence-v1`.
+P2.2A Job Work Intelligence v1 is **implemented**. Repository deterministic quality gates are green. Real-local semantic/product acceptance is in progress under prompt identity `job-work-intelligence-v1.1`.
+
+Current real P2.2A acceptance state:
+
+```text
+t4qV artifact 2  ACCEPTED bounded candidate product anchor
+tmyX artifact 3  ACCEPTED bounded candidate product anchor with recorded limitation
+tG9K             NEXT heterogeneous positive anchor
+tmBK             PENDING limited-work boundary
+```
 
 Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
@@ -154,7 +164,7 @@ Blueprint is implemented and inspectable but **is not an accepted Phase-1 decisi
 
 Historical v6/12B artifact 7 remains experimental evidence. Complete semantic review found assumption-bearing interpretation beyond vacancy authority even after mechanical provenance passed.
 
-During Phase 1:
+During Phase 1 and current P2.2A acceptance:
 
 - do not create Blueprint v7;
 - do not weaken Blueprint validators;
@@ -172,7 +182,7 @@ This does **not** mean Phase-2 interpretation in general is prohibited. New boun
 
 ## 5. Current exact next-work rule
 
-Phase 1 and P2.1 are closed. The governance correction is complete and the focused P2.2 plan is approved.
+Phase 1 and P2.1 are closed. The governance correction and P2.2 focused planning are complete. **Do not reimplement P2.2A.**
 
 Current controlling focused plan:
 
@@ -180,13 +190,15 @@ Current controlling focused plan:
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 ```
 
-The next implementation increment is:
+Current active gate:
 
 ```text
 P2.2A Job Work Intelligence v1
+→ implementation COMPLETE
+→ live heterogeneous semantic/product acceptance IN PROGRESS
 ```
 
-P2.2A must preserve this flow:
+P2.2A preserves this flow:
 
 ```text
 accepted/current English P1.6 factual work substrate
@@ -209,14 +221,48 @@ Core P2.2A decisions:
 - confidence is qualitative and does not claim calibrated probability;
 - deliverables may be `source_explicit` or `strongly_implied_by_work` with required work evidence;
 - candidate role/archetype interpretation is allowed at job level without becoming stable market taxonomy;
-- `tG9K`, `t4qV`, and `tmyX` are initial positive semantic/product anchors;
-- `tmBK` is the deliberate limited-work-evidence anchor and must not gain fabricated duties;
 - browser is the normal user surface; CLI is secondary generation/inspection/debugging;
 - P2.2 state remains local unless a separate publication decision authorizes otherwise.
 
+Current live findings:
+
+```text
+t4qV artifact 2
+→ v1.1 candidate grouping accepted as useful and bounded
+
+tmyX artifact 3
+→ grouping accepted as useful and bounded
+→ candidate summary strengthened `develop/provide hardening solutions` to `implementing`
+→ record as non-promoted semantic limitation; no new deterministic rule from one example
+
+t4qV + tmyX
+→ every theme marked `primary`
+→ repeated product-quality watch item across two jobs
+→ use tG9K as third independent check before refining emphasis semantics
+```
+
+Current exact next action:
+
+```bash
+git pull --ff-only origin main
+python -m jobhunter.work_intelligence_cli generate tG9K
+```
+
+Review `tG9K` for useful work compression, bounded action/lifecycle scope, and whether the all-primary emphasis behavior repeats.
+
+Then continue to:
+
+```text
+tmBK limited-work boundary
+→ unchanged artifact reuse
+→ browser real-artifact UX
+→ P2.2A close/acceptance decision
+→ only then P2.2B decision
+```
+
 P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
 
-During P2.2A:
+During P2.2A acceptance:
 
 - do not bulk-map the remaining accepted P1.6 claim corpus;
 - do not broaden the canonical ontology merely to eliminate unmapped cases;
@@ -224,7 +270,10 @@ During P2.2A:
 - do not start Market v2;
 - do not add personal evidence/readiness/scoring/recommendations;
 - do not create global responsibility families/archetypes merely to complete P2.2A;
-- do not make stable market-archetype claims from insufficient cross-job/employer evidence.
+- do not make stable market-archetype claims from insufficient cross-job/employer evidence;
+- do not add a deterministic action-verb equivalence system from the single `tmyX` limitation;
+- do not impose a fixed quota of primary themes;
+- do not ask the owner to rerun already-proven repository quality gates without new evidence requiring them.
 
 Accepted P2.1D seed:
 
@@ -243,13 +292,18 @@ P2.1 acceptance record:
 docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
 ```
 
-P2.2 planning/approval record:
+P2.2 planning/approval and live records:
 
 ```text
 docs/working-memory/2026-08-26_P2_2_FOCUSED_PLAN_APPROVED.md
+docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md
+docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_LIVE_GENERATION_STRUCTURED_REFERENCE_FAILURE.md
+docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_VALID_CANDIDATE_AND_SCOPE_REPAIR.md
+docs/working-memory/2026-08-27_P2_2A_T4QV_V11_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED.md
+docs/working-memory/2026-08-27_P2_2A_TMYX_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED_WITH_LIMITATION.md
 ```
 
-Current accepted heterogeneous order remains:
+Current accepted heterogeneous factual order remains:
 
 ```text
 1. Python/software             → tmBK P1.6 39 / Capability 13 ACCEPTED
@@ -288,9 +342,9 @@ Ability to / Skill in application wording stays non-depth without real depth mar
 
 Fresh English v20 artifacts are `pending` by default. Pending artifacts remain excluded from authoritative Capability/Market/accepted dashboard/public-corpus flows under the accepted Phase-1 contract. That strict promotion rule protects the reusable factual substrate; it must not be generalized into a rule that every future analytical view requires human acceptance first.
 
-Do not rerun accepted anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
+Do not rerun accepted factual anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
 
-Convert repeatable deterministic defects into tests. Record model limitations separately. Do not patch one vacancy at a time.
+Convert repeatable deterministic defects into tests. Record bounded model limitations separately. Do not patch one vacancy at a time.
 
 Accepted progression to the current point:
 
@@ -299,7 +353,11 @@ Phase-1 closure accepted
 → P2.1 canonical concept registry accepted / closed
 → utility/epistemic reasoning governance corrected
 → P2.2 focused responsibility/work/role-intelligence plan approved
-→ P2.2A Job Work Intelligence v1 implementation next
+→ P2.2A Job Work Intelligence v1 implemented
+→ structured-reference defect repaired
+→ t4qV v1.1 candidate anchor accepted
+→ tmyX candidate anchor accepted with recorded limitation
+→ tG9K live semantic/product acceptance NEXT
 ```
 
 ## 6. Permanent semantic boundaries
