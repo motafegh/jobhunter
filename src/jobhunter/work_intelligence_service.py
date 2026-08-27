@@ -705,10 +705,12 @@ def build_work_intelligence_service(settings: Settings) -> WorkIntelligenceServi
     if not analysis_model:
         raise ValueError("No analysis model is configured for accepted English P1.6")
 
-    # P2.2A deliberately reuses the existing local reasoning-model fallback chain rather than
-    # adding a new configuration surface before real usage demonstrates that a dedicated model is
-    # useful. The Work Intelligence prompt/schema/artifact identities remain fully separate.
-    work_model = settings.effective_capability_lm_studio_model()
+    # P2.2A currently uses the stronger accepted analysis reasoning role for both generation and
+    # its final semantic authority review. Real-local evidence showed that the smaller Capability
+    # model produced useful grouping but repeatedly preserved action-authority inflation even after
+    # an explicit review pass. Model identity is already part of artifact currentness, so existing
+    # 2B artifacts remain immutable history and are not reused as current 4B results.
+    work_model = analysis_model
     provider = None
     if work_model:
         provider = WorkIntelligenceInferenceProvider(
