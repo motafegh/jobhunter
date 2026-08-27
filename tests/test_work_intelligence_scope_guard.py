@@ -63,5 +63,5 @@ def test_scope_guard_allows_explicit_source_scope_language_across_hyphenation() 
     )
 
 
-def test_semantic_repairs_bump_prompt_identity_without_schema_churn() -> None:
-    assert WORK_INTELLIGENCE_PROMPT_VERSION == "job-work-intelligence-v1.2"
+def test_semantic_authority_review_bumps_prompt_identity_without_schema_churn() -> None:
+    assert WORK_INTELLIGENCE_PROMPT_VERSION == "job-work-intelligence-v1.3"
