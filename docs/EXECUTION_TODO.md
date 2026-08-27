@@ -5,7 +5,7 @@
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment, and the current focused plan  
 **Current focused plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md` — APPROVED  
-**Current gate:** P2.2A Job Work Intelligence v1 IMPLEMENTED / LIVE SEMANTIC-PRODUCT ACCEPTANCE IN PROGRESS / `tG9K` NEXT
+**Current gate:** P2.2A Job Work Intelligence v1 IMPLEMENTED / LIVE SEMANTIC-PRODUCT ACCEPTANCE IN PROGRESS / fresh `tG9K` v1.3 generation NEXT
 
 Repository workflow:
 
@@ -114,10 +114,10 @@ Working contract/schema:
 job-work-intelligence-v1
 ```
 
-Current prompt identity:
+Current prompt/pipeline identity:
 
 ```text
-job-work-intelligence-v1.1
+job-work-intelligence-v1.3
 ```
 
 #### Implementation — COMPLETE
@@ -135,62 +135,80 @@ job-work-intelligence-v1.1
 - [x] deterministic source-index bounds validation.
 - [x] deterministic complete accepted responsibility/role-purpose coverage across themes.
 - [x] deterministic no-direct-work path that does not call the model or fabricate duties.
+- [x] impossible references into structurally empty source sections are normalized away without remapping references into non-empty sections.
 - [x] dedicated bounded LM Studio/Instructor reasoning adapter.
+- [x] one bounded service-level regeneration after a post-generation validation failure.
+- [x] one final semantic authority-review pass for direct-work candidates before persistence.
+- [x] authority review is model-semantic rather than a deterministic action-verb equivalence table.
+- [x] authority-review output is rechecked by the same deterministic reference/coverage/scope guards.
+- [x] request/raw-response provenance preserves generation, repair metadata when applicable, and authority review separately.
 - [x] CLI: `jobhunter-work generate|show` and module-equivalent command.
 - [x] browser route: `/jobs/<job-id>/work-intelligence`.
 - [x] browser mutation remains local and does not publish Work Intelligence into `corpus/`.
-- [x] repository quality gates passed for the implementation and subsequent structured-reference/scope-boundary repairs.
+- [x] final repository quality gates green on v1.3 pipeline: Ruff + 530 tests + warnings-as-errors.
 
 Implementation record: `docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
 
-#### Live defect history — UNDERSTOOD / REPAIRED
+#### Live defect / refinement history — UNDERSTOOD
 
 - [x] first real `t4qV` generation exposed optional structured-reference arrays in the generation schema.
 - [x] structured reference arrays became required; provenance validator was not weakened.
 - [x] regression proves indices mentioned only in rationale prose do not count as structured provenance.
 - [x] first valid `t4qV` artifact 1 exposed repeatable unsupported `end-to-end` / `entire security stack` inflation.
-- [x] prompt identity bumped to `job-work-intelligence-v1.1` and shared-evidence/action-scope instructions strengthened.
-- [x] bounded scope-intensifier guard added without constraining ordinary semantic grouping.
+- [x] v1.1 strengthened shared-evidence/scope instructions and added bounded scope-intensifier validation.
 - [x] phrase normalization treats `end-to-end` and `end to end` equivalently.
-- [x] historical artifact 1 remains preserved under the previous prompt identity.
+- [x] first `tG9K` generation exposed a model reference to nonexistent `role_purpose[1]` while role_purpose was structurally empty.
+- [x] empty-section impossible-reference normalization fixed that without weakening normal bounds validation.
+- [x] `tmyX` and `tG9K` then showed repeated action-strengthening (`develop/provide → implementing`; `move toward production → deploying`).
+- [x] v1.2 strengthened prompt-level action authority while rejecting deterministic verb-equivalence machinery.
+- [x] v1.2 also added one bounded service-level semantic repair retry after deterministic post-generation validation rejects a draft.
+- [x] real `tG9K` v1.2 artifact 5 still said direct `deploying` despite the weaker collaborative source relationship, proving prompt-only refinement insufficient.
+- [x] v1.3 adds a dedicated semantic authority-review stage before persistence.
+- [x] all historical artifacts remain immutable under their original prompt identities.
 
-Records:
+Key records:
 
 ```text
 docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_LIVE_GENERATION_STRUCTURED_REFERENCE_FAILURE.md
 docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_VALID_CANDIDATE_AND_SCOPE_REPAIR.md
+docs/working-memory/2026-08-27_P2_2A_TG9K_EMPTY_ROLE_PURPOSE_REFERENCE_FAILURE_AND_REPAIR.md
+docs/working-memory/2026-08-27_P2_2A_TG9K_USEFUL_CANDIDATE_AND_ACTION_AUTHORITY_V12_REFINEMENT.md
+docs/working-memory/2026-08-27_P2_2A_V12_SCOPE_FAILURE_AND_BOUNDED_SEMANTIC_REPAIR_RETRY.md
+docs/working-memory/2026-08-27_P2_2A_TG9K_V12_PERSISTED_ACTION_INFLATION_AND_V13_AUTHORITY_REVIEW.md
 ```
 
 #### Real-local semantic/product acceptance — IN PROGRESS
 
-Acceptance anchors:
+Historical/live evidence so far:
 
 ```text
-t4qV  network/security                                  artifact 2  ACCEPTED candidate anchor
-tmyX  security infrastructure / Microsoft services      artifact 3  ACCEPTED candidate anchor with recorded limitation
+t4qV  artifact 2  v1.1  useful accepted candidate anchor; historical under current v1.3
+tmyX  artifact 3  v1.1  useful candidate with recorded action-strengthening limitation; historical
+tG9K  artifact 4  v1.1  useful grouping; showed supporting emphasis + action strengthening; historical
+tG9K  artifact 5  v1.2  useful grouping; still direct deployment wording; historical
+```
+
+Current acceptance targets under v1.3:
+
+```text
 tG9K  industrial ML / manufacturing AI                  NEXT
+tmyX  security infrastructure / Microsoft services      AFTER tG9K
+t4qV  network/security                                   regenerate for current identity after tmyX
 tmBK  requirements-only / no direct work evidence       PENDING
 ```
 
-- [x] pull and exercise the real local P2.2A path.
-- [x] generate/review `t4qV` under v1.1 after repairs.
-- [x] accept `t4qV` artifact 2 as useful, bounded candidate product intelligence.
-- [x] generate/review `tmyX` artifact 3.
-- [x] accept `tmyX` artifact 3 as useful bounded candidate intelligence with a recorded non-promoted action-verb limitation (`develop/provide` → summary `implementing`).
-- [~] all generated themes were `primary` on both `t4qV` and `tmyX`; this is a product-quality watch item, not yet a deterministic defect. Use `tG9K` as the next independent check.
-- [ ] generate `tG9K` Work Intelligence and review usefulness/coverage/restraint plus the emphasis pattern.
+- [x] live `t4qV` and `tmyX` demonstrated that Work Intelligence materially reduces manual synthesis effort.
+- [x] `tG9K` demonstrated useful heterogeneous industrial-ML grouping.
+- [x] `tG9K` v1.1 produced `3 primary + 1 supporting`, resolving the concern that emphasis always collapses to all-primary. Do not add a fixed quota.
+- [x] repeated action-strengthening justified a semantic authority-review stage rather than deterministic verb mappings.
+- [ ] regenerate/review `tG9K` under v1.3 and verify production-readiness relationship is preserved without direct deployment ownership inflation.
+- [ ] regenerate/review `tmyX` under v1.3 against the earlier `develop/provide → implementing` case.
+- [ ] regenerate/review `t4qV` under v1.3 for current identity without reopening already-resolved scope issues.
 - [ ] generate `tmBK` and confirm deterministic `limited` behavior with no invented duties.
-- [ ] rerun at least one unchanged current job and confirm artifact reuse.
+- [ ] rerun at least one unchanged current v1.3 job and confirm artifact reuse.
 - [ ] inspect the browser Work Intelligence page on the same real artifacts.
 - [ ] verify employer/P1.6 facts and JobHunter interpretation remain visually/semantically distinct.
-- [ ] decide P2.2A semantic/product acceptance based on whether the view materially reduces manual reading/synthesis effort across the heterogeneous anchors.
-
-Accepted/live records:
-
-```text
-docs/working-memory/2026-08-27_P2_2A_T4QV_V11_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED.md
-docs/working-memory/2026-08-27_P2_2A_TMYX_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED_WITH_LIMITATION.md
-```
+- [ ] decide P2.2A semantic/product acceptance based on whether the view materially reduces manual reading/synthesis effort across heterogeneous anchors while preserving authority boundaries.
 
 Interpretive policy during acceptance:
 
@@ -201,11 +219,14 @@ bounded imperfection / harmless paraphrase
 repeatable material authority/integrity defect
 → smallest general repair + regression
 
+semantic relationship problem
+→ prefer semantic review/reasoning over brittle deterministic vocabularies
+
 repeated product-quality weakness
-→ gather cross-job evidence, then refine semantics if justified
+→ gather cross-job evidence first, then refine semantics if justified
 ```
 
-Do not introduce a deterministic action-verb equivalence system or a fixed primary-theme quota from the current evidence.
+Do not introduce a deterministic action-verb equivalence system or a fixed primary-theme quota.
 
 ### D2 — P2.2B selective responsibility/deliverable promotion — BLOCKED ON D1 ACCEPTANCE
 
@@ -245,10 +266,12 @@ Do not introduce a deterministic action-verb equivalence system or a fixed prima
 ## Exact next action
 
 ```text
-P2.2A implementation is complete.
-t4qV artifact 2 and tmyX artifact 3 are accepted candidate product anchors.
-→ generate/review tG9K next
-→ use it to test heterogeneous ML grouping and whether the all-primary emphasis pattern repeats
+P2.2A implementation is complete; live acceptance remains open.
+Current prompt/pipeline identity = job-work-intelligence-v1.3.
+Historical artifacts 2-5 remain preserved but are not current under v1.3.
+→ regenerate/review tG9K under v1.3 next
+→ then validate the same authority-review behavior on tmyX
+→ regenerate t4qV for current v1.3 identity
 → then test tmBK limited-work behavior
 → then artifact reuse + browser UX
 → close P2.2A only after usefulness + authority-boundary review
