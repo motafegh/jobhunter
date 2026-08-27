@@ -24,7 +24,7 @@ from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
 
 WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v1"
-WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.2"
+WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.3"
 WORK_INTELLIGENCE_SCHEMA_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
 DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v1"
 
@@ -97,6 +97,35 @@ Generate one fresh candidate from the same supplied evidence. Correct the cited 
 preserving useful supported grouping. Do not weaken, guess, clamp, or omit structured source
 references. Do not invent new duties, stronger action ownership, lifecycle scope, or unsupported
 source details. This is the only post-validation semantic repair attempt.
+"""
+
+_AUTHORITY_REVIEW_PROMPT = """You are JobHunter's final semantic authority reviewer for one
+candidate Job Work Intelligence document.
+
+The draft has already been generated from accepted P1.6 work evidence and has passed structural
+reference checks. Your task is NOT to redesign the grouping. Audit the draft specifically for
+semantic authority inflation, then return the full corrected JobWorkIntelligence document.
+
+REVIEW BOUNDARY
+- Accepted responsibility and role-purpose `statement` values are the direct-work authority.
+- Supporting requirements are context only and cannot create a duty or strengthen an action.
+- Preserve the draft's useful theme boundaries, theme IDs, emphasis, confidence, and structured
+  references unless a wording correction itself requires a minimal adjustment.
+- Prefer minimal prose rewrites over regrouping.
+- Do not add new duties, deliverables, role interpretations, lifecycle stages, ownership, or scope.
+- Do not turn advisory, collaborative, transitional, or solution-provision wording into stronger
+  execution claims.
+- `develop/provide` must not silently become `implement`.
+- `partner/collaborate to move models toward production` must not silently become direct
+  `deploying models` or ownership of production deployment.
+- Requirements such as `model deployment` may clarify the domain but cannot override the weaker
+  direct-work relationship.
+- Remove or soften unsupported words such as ownership/lifecycle intensifiers when direct work
+  does not establish them.
+- If the draft is already bounded, preserve it rather than rewriting for style.
+
+Return only the corrected full structured JobWorkIntelligence document using the supplied
+zero-based references.
 """
 
 
@@ -403,6 +432,56 @@ class WorkIntelligenceService:
             role_purpose=role_purpose,
         )
 
+    def _authority_review_candidate(
+        self,
+        *,
+        document: JobWorkIntelligence,
+        user_payload: dict[str, Any],
+        responsibilities: list[Any],
+        role_purpose: list[Any],
+        requirements: list[Any],
+        generation_request_body: dict[str, Any],
+        generation_raw_response: dict[str, Any],
+    ) -> tuple[JobWorkIntelligence, dict[str, Any], dict[str, Any]]:
+        """Run one semantic authority audit before persisting a direct-work candidate."""
+
+        if self._provider is None:
+            raise WorkIntelligenceError("Work Intelligence provider is unavailable")
+
+        review_payload = {
+            "source_job_id": user_payload.get("source_job_id"),
+            "analysis_artifact_id": user_payload.get("analysis_artifact_id"),
+            "responsibilities": user_payload.get("responsibilities", []),
+            "role_purpose": user_payload.get("role_purpose", []),
+            "supporting_requirements": user_payload.get("supporting_requirements", []),
+            "candidate": document.model_dump(mode="json"),
+        }
+        inference = self._provider.complete(
+            response_model=JobWorkIntelligence,
+            system_prompt=_AUTHORITY_REVIEW_PROMPT,
+            user_payload=review_payload,
+            max_tokens=min(self._max_tokens, 4096),
+            seed=1,
+        )
+        reviewed = self._document_from_inference(inference)
+        self._validate_generated_document(
+            reviewed,
+            responsibilities=responsibilities,
+            role_purpose=role_purpose,
+            requirements=requirements,
+        )
+        return (
+            reviewed,
+            {
+                "generation": generation_request_body,
+                "authority_review": inference.request_body,
+            },
+            {
+                "generation": generation_raw_response,
+                "authority_review": inference.raw_response,
+            },
+        )
+
     def _generate_with_semantic_repair(
         self,
         *,
@@ -411,7 +490,7 @@ class WorkIntelligenceService:
         role_purpose: list[Any],
         requirements: list[Any],
     ) -> tuple[JobWorkIntelligence, dict[str, Any], dict[str, Any]]:
-        """Generate once, then allow one bounded repair after service-level validation failure."""
+        """Generate, repair one validation failure, then run one semantic authority review."""
 
         if self._provider is None:
             raise WorkIntelligenceError("Work Intelligence provider is unavailable")
@@ -448,24 +527,33 @@ class WorkIntelligenceService:
                 )
                 continue
 
-            if first_error is None:
-                return document, inference.request_body, inference.raw_response
-
-            request_body = dict(inference.request_body)
-            request_body["semantic_repair"] = {
-                "attempts": 1,
-                "trigger": str(first_error),
-                "initial_request_body": first_request_body,
-            }
-            raw_response = {
-                "semantic_repair": {
+            generation_request_body = inference.request_body
+            generation_raw_response = inference.raw_response
+            if first_error is not None:
+                generation_request_body = dict(inference.request_body)
+                generation_request_body["semantic_repair"] = {
                     "attempts": 1,
                     "trigger": str(first_error),
-                    "initial_raw_response": first_raw_response,
-                    "final_raw_response": inference.raw_response,
+                    "initial_request_body": first_request_body,
                 }
-            }
-            return document, request_body, raw_response
+                generation_raw_response = {
+                    "semantic_repair": {
+                        "attempts": 1,
+                        "trigger": str(first_error),
+                        "initial_raw_response": first_raw_response,
+                        "final_raw_response": inference.raw_response,
+                    }
+                }
+
+            return self._authority_review_candidate(
+                document=document,
+                user_payload=user_payload,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+                requirements=requirements,
+                generation_request_body=generation_request_body,
+                generation_raw_response=generation_raw_response,
+            )
 
         raise WorkIntelligenceError("Bounded semantic repair exhausted without a candidate")
 
