@@ -291,15 +291,39 @@ class WorkIntelligenceService:
                     f"Work Intelligence references missing {label} indices: {invalid}"
                 )
 
+        # When a source section is structurally empty, there is no possible semantic target for a
+        # model-emitted reference into that section. Removing only those impossible references is a
+        # deterministic normalization, not a semantic remap. References into non-empty sections
+        # are never clamped, guessed, or reassigned; ordinary bounds validation still rejects them.
         covered_responsibilities: set[int] = set()
         covered_purpose: set[int] = set()
         for theme in intelligence.work_themes:
+            if responsibility_count == 0:
+                theme.responsibility_indices.clear()
+            if role_purpose_count == 0:
+                theme.role_purpose_indices.clear()
+            if requirement_count == 0:
+                theme.supporting_requirement_indices.clear()
+            if not theme.responsibility_indices and not theme.role_purpose_indices:
+                raise WorkIntelligenceError(
+                    "Work theme has no valid direct work references after removing references to "
+                    "absent source sections"
+                )
             validate(theme.responsibility_indices, responsibility_count, "responsibility")
             validate(theme.role_purpose_indices, role_purpose_count, "role-purpose")
             validate(theme.supporting_requirement_indices, requirement_count, "requirement")
             covered_responsibilities.update(theme.responsibility_indices)
             covered_purpose.update(theme.role_purpose_indices)
         for deliverable in intelligence.deliverables:
+            if responsibility_count == 0:
+                deliverable.responsibility_indices.clear()
+            if role_purpose_count == 0:
+                deliverable.role_purpose_indices.clear()
+            if not deliverable.responsibility_indices and not deliverable.role_purpose_indices:
+                raise WorkIntelligenceError(
+                    "Deliverable has no valid direct work references after removing references to "
+                    "absent source sections"
+                )
             validate(deliverable.responsibility_indices, responsibility_count, "responsibility")
             validate(deliverable.role_purpose_indices, role_purpose_count, "role-purpose")
 
