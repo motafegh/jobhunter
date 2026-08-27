@@ -16,7 +16,10 @@ from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.translation_service import TranslationService, build_translation_service
 from jobhunter.translation_store import TranslationStore
-from jobhunter.work_intelligence_inference import WorkIntelligenceInferenceProvider
+from jobhunter.work_intelligence_inference import (
+    WorkIntelligenceInferenceProvider,
+    WorkIntelligenceInferenceResult,
+)
 from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
 
@@ -80,6 +83,20 @@ UNCERTAINTY
 - Do not manufacture uncertainty merely to fill fields.
 
 Use only the supplied zero-based indices as references. Do not cite or invent any other source.
+"""
+
+_SEMANTIC_REPAIR_PROMPT = """
+
+BOUNDED SEMANTIC REPAIR
+JobHunter rejected the previous candidate after structured generation because of this exact
+post-generation validation error:
+
+{error}
+
+Generate one fresh candidate from the same supplied evidence. Correct the cited boundary while
+preserving useful supported grouping. Do not weaken, guess, clamp, or omit structured source
+references. Do not invent new duties, stronger action ownership, lifecycle scope, or unsupported
+source details. This is the only post-validation semantic repair attempt.
 """
 
 
@@ -348,6 +365,110 @@ class WorkIntelligenceService:
                     f"role_purpose={missing_purpose}"
                 )
 
+    @staticmethod
+    def _document_from_inference(
+        inference: WorkIntelligenceInferenceResult,
+    ) -> JobWorkIntelligence:
+        if inference.validated_model is not None:
+            if not isinstance(inference.validated_model, JobWorkIntelligence):
+                raise WorkIntelligenceError(
+                    "Work Intelligence provider returned an incompatible validated model"
+                )
+            document = inference.validated_model
+        else:
+            document = JobWorkIntelligence.model_validate(inference.intelligence)
+        if document.evidence_status != "sufficient":
+            raise WorkIntelligenceError(
+                "Direct accepted work evidence requires evidence_status='sufficient'"
+            )
+        return document
+
+    def _validate_generated_document(
+        self,
+        document: JobWorkIntelligence,
+        *,
+        responsibilities: list[Any],
+        role_purpose: list[Any],
+        requirements: list[Any],
+    ) -> None:
+        self._validate_references(
+            document,
+            responsibility_count=len(responsibilities),
+            role_purpose_count=len(role_purpose),
+            requirement_count=len(requirements),
+        )
+        _validate_scope_language(
+            document,
+            responsibilities=responsibilities,
+            role_purpose=role_purpose,
+        )
+
+    def _generate_with_semantic_repair(
+        self,
+        *,
+        user_payload: dict[str, Any],
+        responsibilities: list[Any],
+        role_purpose: list[Any],
+        requirements: list[Any],
+    ) -> tuple[JobWorkIntelligence, dict[str, Any], dict[str, Any]]:
+        """Generate once, then allow one bounded repair after service-level validation failure."""
+
+        if self._provider is None:
+            raise WorkIntelligenceError("Work Intelligence provider is unavailable")
+
+        first_error: WorkIntelligenceError | None = None
+        first_request_body: dict[str, Any] | None = None
+        first_raw_response: dict[str, Any] | None = None
+        system_prompt = _WORK_INTELLIGENCE_PROMPT
+
+        for repair_attempt in range(2):
+            inference = self._provider.complete(
+                response_model=JobWorkIntelligence,
+                system_prompt=system_prompt,
+                user_payload=user_payload,
+                max_tokens=min(self._max_tokens, 4096),
+                seed=0,
+            )
+            document = self._document_from_inference(inference)
+            try:
+                self._validate_generated_document(
+                    document,
+                    responsibilities=responsibilities,
+                    role_purpose=role_purpose,
+                    requirements=requirements,
+                )
+            except WorkIntelligenceError as exc:
+                if repair_attempt == 1:
+                    raise
+                first_error = exc
+                first_request_body = inference.request_body
+                first_raw_response = inference.raw_response
+                system_prompt = _WORK_INTELLIGENCE_PROMPT + _SEMANTIC_REPAIR_PROMPT.format(
+                    error=str(exc)
+                )
+                continue
+
+            if first_error is None:
+                return document, inference.request_body, inference.raw_response
+
+            request_body = dict(inference.request_body)
+            request_body["semantic_repair"] = {
+                "attempts": 1,
+                "trigger": str(first_error),
+                "initial_request_body": first_request_body,
+            }
+            raw_response = {
+                "semantic_repair": {
+                    "attempts": 1,
+                    "trigger": str(first_error),
+                    "initial_raw_response": first_raw_response,
+                    "final_raw_response": inference.raw_response,
+                }
+            }
+            return document, request_body, raw_response
+
+        raise WorkIntelligenceError("Bounded semantic repair exhausted without a candidate")
+
     def _identity_for(self, analysis: AnalysisArtifact) -> tuple[str, bool]:
         responsibilities, role_purpose, _ = self._sections(analysis)
         has_direct_work = bool(responsibilities or role_purpose)
@@ -418,9 +539,13 @@ class WorkIntelligenceService:
                     "analysis_artifact_id": analysis.id,
                 }
                 raw_response = {"deterministic": True, "reason": "no_direct_work_evidence"}
+                self._validate_generated_document(
+                    document,
+                    responsibilities=responsibilities,
+                    role_purpose=role_purpose,
+                    requirements=requirements,
+                )
             else:
-                if self._provider is None:
-                    raise WorkIntelligenceError("Work Intelligence provider is unavailable")
                 user_payload = {
                     "source_job_id": source_job_id,
                     "analysis_artifact_id": analysis.id,
@@ -437,39 +562,13 @@ class WorkIntelligenceService:
                         for index, item in enumerate(requirements)
                     ],
                 }
-                inference = self._provider.complete(
-                    response_model=JobWorkIntelligence,
-                    system_prompt=_WORK_INTELLIGENCE_PROMPT,
+                document, request_body, raw_response = self._generate_with_semantic_repair(
                     user_payload=user_payload,
-                    max_tokens=min(self._max_tokens, 4096),
-                    seed=0,
+                    responsibilities=responsibilities,
+                    role_purpose=role_purpose,
+                    requirements=requirements,
                 )
-                if inference.validated_model is not None:
-                    if not isinstance(inference.validated_model, JobWorkIntelligence):
-                        raise WorkIntelligenceError(
-                            "Work Intelligence provider returned an incompatible validated model"
-                        )
-                    document = inference.validated_model
-                else:
-                    document = JobWorkIntelligence.model_validate(inference.intelligence)
-                if document.evidence_status != "sufficient":
-                    raise WorkIntelligenceError(
-                        "Direct accepted work evidence requires evidence_status='sufficient'"
-                    )
-                request_body = inference.request_body
-                raw_response = inference.raw_response
 
-            self._validate_references(
-                document,
-                responsibility_count=len(responsibilities),
-                role_purpose_count=len(role_purpose),
-                requirement_count=len(requirements),
-            )
-            _validate_scope_language(
-                document,
-                responsibilities=responsibilities,
-                role_purpose=role_purpose,
-            )
             artifact_id = self._work_store.record_artifact(
                 analysis_artifact_id=analysis.id,
                 model=model,
