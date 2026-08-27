@@ -21,7 +21,7 @@ from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
 
 WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v1"
-WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.1"
+WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.2"
 WORK_INTELLIGENCE_SCHEMA_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
 DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v1"
 
@@ -47,7 +47,14 @@ AUTHORITY
   a larger shared source sentence containing neighboring clauses, examples, or equipment names.
   Do not transfer details from one neighboring clause into a different responsibility unless the
   accepted statement itself supports that scope.
-- Requirements are supporting context only. A requirement must NEVER become a duty by itself.
+- Preserve action strength and responsibility relationship from the accepted direct-work
+  statements. Do not upgrade advisory, collaborative, transitional, or solution-provision wording
+  into stronger execution or ownership claims. For example, `develop/provide` is not automatically
+  `implement`, and `partner to move toward production` is not automatically `deploy` or own
+  production deployment.
+- Requirements are supporting context only. A requirement must NEVER become a duty by itself or
+  supply a stronger action verb, ownership claim, or lifecycle stage than the direct-work
+  statements establish.
 - Your output is JobHunter interpretation, not employer wording and not promoted taxonomy.
 
 WORK THEMES
