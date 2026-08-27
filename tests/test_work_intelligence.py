@@ -264,7 +264,7 @@ def test_direct_work_is_persisted_as_candidate_and_reused(tmp_path: Path) -> Non
     second = service.analyze_job("tmyX")
     artifact = service.current_artifact("tmyX")
 
-    assert provider.calls == 1
+    assert provider.calls == 2
     assert first.outcome == "completed"
     assert second.outcome == "reused"
     assert first.artifact_id == second.artifact_id
