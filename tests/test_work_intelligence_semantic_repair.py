@@ -67,7 +67,20 @@ def _service(provider: _SequenceProvider) -> WorkIntelligenceService:
 
 def _generate(service: WorkIntelligenceService):
     return service._generate_with_semantic_repair(
-        user_payload={"source_job_id": "tG9K"},
+        user_payload={
+            "source_job_id": "tG9K",
+            "analysis_artifact_id": 36,
+            "responsibilities": [
+                {
+                    "index": 0,
+                    "statement": (
+                        "Partner with engineering to move validated models toward production"
+                    ),
+                }
+            ],
+            "role_purpose": [],
+            "supporting_requirements": [],
+        },
         responsibilities=[
             {
                 "statement": (
@@ -80,10 +93,14 @@ def _generate(service: WorkIntelligenceService):
     )
 
 
-def test_service_repairs_one_post_validation_scope_failure() -> None:
+def test_service_repairs_one_post_validation_scope_failure_then_reviews_authority() -> None:
     provider = _SequenceProvider(
         [
             _document("The role owns the entire lifecycle of industrial ML models."),
+            _document(
+                "The role builds and validates industrial ML models and partners to move them "
+                "toward production."
+            ),
             _document(
                 "The role builds and validates industrial ML models and partners to move them "
                 "toward production."
@@ -94,18 +111,48 @@ def test_service_repairs_one_post_validation_scope_failure() -> None:
 
     document, request_body, raw_response = _generate(service)
 
-    assert provider.calls == 2
+    assert provider.calls == 3
     assert "BOUNDED SEMANTIC REPAIR" in provider.prompts[1]
     assert "entire lifecycle" in provider.prompts[1]
+    assert "final semantic authority reviewer" in provider.prompts[2]
     assert "entire lifecycle" not in document.work_summary
-    assert request_body["semantic_repair"]["attempts"] == 1
-    assert "entire lifecycle" in request_body["semantic_repair"]["trigger"]
-    assert raw_response["semantic_repair"]["initial_raw_response"] == {
+    assert request_body["generation"]["semantic_repair"]["attempts"] == 1
+    assert "entire lifecycle" in request_body["generation"]["semantic_repair"]["trigger"]
+    assert raw_response["generation"]["semantic_repair"]["initial_raw_response"] == {
         "candidate_call": 1
     }
-    assert raw_response["semantic_repair"]["final_raw_response"] == {
+    assert raw_response["generation"]["semantic_repair"]["final_raw_response"] == {
         "candidate_call": 2
     }
+    assert raw_response["authority_review"] == {"candidate_call": 3}
+
+
+def test_service_authority_review_can_soften_action_strength_without_regrouping() -> None:
+    provider = _SequenceProvider(
+        [
+            _document(
+                "The role builds, validates, and deploys industrial ML models in production."
+            ),
+            _document(
+                "The role builds and validates industrial ML models and collaborates with "
+                "engineering to move them toward production."
+            ),
+        ]
+    )
+    service = _service(provider)
+
+    document, request_body, raw_response = _generate(service)
+
+    assert provider.calls == 2
+    assert "final semantic authority reviewer" in provider.prompts[1]
+    assert "deploys" not in document.work_summary
+    assert "move them toward production" in document.work_summary
+    assert document.work_themes[0].theme_id == "theme-1"
+    assert document.work_themes[0].emphasis == "primary"
+    assert request_body["generation"] == {"candidate_call": 1}
+    assert request_body["authority_review"] == {"candidate_call": 2}
+    assert raw_response["generation"] == {"candidate_call": 1}
+    assert raw_response["authority_review"] == {"candidate_call": 2}
 
 
 def test_service_still_fails_after_single_semantic_repair_attempt() -> None:
