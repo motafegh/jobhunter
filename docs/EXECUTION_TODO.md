@@ -5,7 +5,7 @@
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
 **Current focused plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
-**Current gate:** P2.2B-B1 AUTHORIZED / EVIDENCE SELECTION / NO PROMOTION YET
+**Current gate:** P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET
 
 Repository workflow:
 
@@ -118,11 +118,15 @@ Acceptance record:
 
 `docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
 
-### D2 — P2.2B-B1 selective responsibility promotion — IN PROGRESS / EVIDENCE SELECTION
+### D2 — P2.2B-B1 selective responsibility promotion — IN PROGRESS / `ta9l` P1.6 GATE
 
 Controlling focused plan:
 
 `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`
+
+Repository evidence record:
+
+`docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md`
 
 #### Decision and boundaries
 
@@ -134,21 +138,35 @@ Controlling focused plan:
 - [x] defer deliverable promotion/schema from B1.
 - [x] allow an explicit no-promotion result if evidence is insufficient.
 
-#### Rejected first candidate
+#### Rejected candidates
 
-- [x] reject direct promotion of `t4qV` responsibility[9] + `tmyX` responsibility[3].
-- [x] reason: equipment-specific technical documentation versus compound checklists + documentation + reports; one-concept mapping would risk semantic loss.
+- [x] reject `t4qV` responsibility[9] + `tmyX` responsibility[3]: equipment-specific documentation versus compound checklists/documentation/reports.
+- [x] reject `t49W` vulnerability work + `tmyX`: remediation/priority/engineering scope differs from investigation/configuration weakness + corrective suggestions.
+- [x] reject `t49N` vulnerability work + `tmyX`: vulnerability assessment + risk analysis + remediation coordination is materially compound/different.
+- [x] reject `tGM0` backend/AI-integration duties + `tG9K`: different responsibility identity.
+- [x] keep `tG9K` pipeline duty + `ta9l` RAG pipeline duty as a weaker alternative, not the selected candidate.
 
-#### Bounded evidence selection — NEXT
+#### Bounded evidence selection — REPO SIDE COMPLETE
 
-- [ ] inspect the machine-local current English-projection / job evidence pool for one clean repeated responsibility.
-- [ ] prefer already-available evidence; do not bulk-run jobs merely to reach a quota.
-- [ ] if a concrete candidate requires it, accept at most one additional P1.6 job for this recurrence question.
-- [ ] present the exact two accepted/current responsibility statements and proposed `responsibility:<slug>` before mutation.
-- [ ] verify correspondence is non-lossy: no extra material action/object/ownership/lifecycle/compound duty disappears.
-- [ ] state the concrete downstream reuse hypothesis.
+- [x] inspect committed current projection / fetched-job evidence for one strong recurrence.
+- [x] stop the bounded scan once a stronger candidate was identified rather than scan all 353 discovered jobs.
+- [x] select `ta9l` (Senior Applied AI Engineer, parsed source detail 25) as the single additional evidence-bearing P1.6 candidate.
+- [x] accepted anchor: `tG9K` P1.6 36 responsibility[5] = `Design rigorous validation and monitoring for models running in an industrial setting.`
+- [x] `ta9l` employer duty candidate = `Create evaluation, testing, and observability frameworks for LLM and agent performance.`
+- [x] tentative identity: `responsibility:design-ai-evaluation-monitoring` / `Design AI evaluation and monitoring`.
+- [x] downstream hypothesis: reusable AI/ML reliability, evaluation, and monitoring work across industrial ML and LLM/agent roles.
+- [x] verify repo-side semantic shape has no unrelated ownership/lifecycle action; source-specific setting/model/testing/observability details remain source detail.
 
-#### Promotion pilot — ONLY AFTER SEMANTIC REVIEW
+#### `ta9l` P1.6 authority gate — NEXT / LOCAL RUNTIME REQUIRED
+
+- [ ] create/reuse current English projection for `ta9l`.
+- [ ] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`.
+- [ ] semantically review the `ta9l` P1.6 artifact for acceptance.
+- [ ] report exact accepted artifact ID, responsibility index, statement, evidence, and semantic-review state for the evaluation/testing/observability duty.
+- [ ] if the P1.6 claim materially changes/splits the responsibility shape, re-evaluate correspondence before mutation.
+- [ ] if it remains aligned, perform final two-P1.6-claim correspondence review before canonical mutation.
+
+#### Promotion pilot — ONLY AFTER `ta9l` P1.6 ACCEPTANCE + FINAL REVIEW
 
 - [ ] create/reuse exactly one reviewed responsibility concept.
 - [ ] map exactly the two approved accepted/current P1.6 responsibility claims.
@@ -193,12 +211,11 @@ Controlling focused plan:
 ## Exact next action
 
 ```text
-bounded local scan for one clean repeated accepted responsibility
-→ if needed, accept at most one additional evidence-bearing P1.6 job
-→ present exact pair + proposed canonical identity
-→ semantic review
-→ only then one-concept/two-mapping pilot
-→ B1 decision
+local runtime: ta9l English projection
+→ ta9l P1.6 v20 generation + semantic acceptance review
+→ report exact accepted responsibility shape
+→ final correspondence review against tG9K P1.6 36 responsibility[5]
+→ only then canonical mutation
 ```
 
-Do not manufacture a promotion if the bounded evidence does not support one.
+Do not accept a second new job or manufacture a promotion if `ta9l` does not preserve the selected responsibility shape.
