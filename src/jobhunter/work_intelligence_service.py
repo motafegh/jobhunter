@@ -1,8 +1,8 @@
-"""P2.2A Job Work Intelligence v1 service.
+"""P2.2A Job Work Intelligence v2 service.
 
-Strict authority stops at the accepted/current English P1.6 artifact. Above that boundary this
-service produces transparent candidate interpretation, validates exact source references, and
-persists the result for repeatable local UX without promoting it into canonical taxonomy.
+Accepted/current English P1.6 remains the factual authority. The model proposes bounded job-level
+grouping and interpretation; application code validates those references and deterministically
+injects the exact accepted P1.6 work statements before persistence.
 """
 
 from __future__ import annotations
@@ -20,13 +20,19 @@ from jobhunter.work_intelligence_inference import (
     WorkIntelligenceInferenceProvider,
     WorkIntelligenceInferenceResult,
 )
-from jobhunter.work_intelligence_models import JobWorkIntelligence
+from jobhunter.work_intelligence_models import (
+    AcceptedWorkItem,
+    CandidateJobWorkIntelligence,
+    DeliverableCandidate,
+    JobWorkIntelligence,
+    WorkTheme,
+)
 from jobhunter.work_intelligence_store import JobWorkIntelligenceArtifact, WorkIntelligenceStore
 
-WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v1"
-WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v1.3"
+WORK_INTELLIGENCE_CONTRACT_VERSION = "job-work-intelligence-v2"
+WORK_INTELLIGENCE_PROMPT_VERSION = "job-work-intelligence-v2.0"
 WORK_INTELLIGENCE_SCHEMA_VERSION = WORK_INTELLIGENCE_CONTRACT_VERSION
-DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v1"
+DETERMINISTIC_LIMITED_MODEL = "jobhunter-deterministic-limited-work-v2"
 
 _SCOPE_INTENSIFIERS = (
     "end-to-end",
@@ -39,32 +45,28 @@ _SCOPE_INTENSIFIERS = (
     "whole security stack",
 )
 
-_WORK_INTELLIGENCE_PROMPT = """You are JobHunter's Job Work Intelligence interpreter.
+_WORK_INTELLIGENCE_PROMPT = """You are JobHunter's Job Work Intelligence candidate interpreter.
 
-Your job is to help a user understand what the supplied vacancy actually involves faster than
-reading and mentally synthesizing every responsibility.
+Your job is to help a user understand how the supplied accepted work is organized. You are NOT the
+authority for the factual wording of that work. JobHunter will deterministically inject the exact
+accepted P1.6 statements after your structured references pass validation.
 
 AUTHORITY
 - The supplied P1.6 responsibilities and role_purpose items are accepted factual substrate.
-- A responsibility/role_purpose `statement` defines the accepted work claim. Its `evidence` may be
-  a larger shared source sentence containing neighboring clauses, examples, or equipment names.
-  Do not transfer details from one neighboring clause into a different responsibility unless the
-  accepted statement itself supports that scope.
-- Preserve action strength and responsibility relationship from the accepted direct-work
-  statements. Do not upgrade advisory, collaborative, transitional, or solution-provision wording
-  into stronger execution or ownership claims. For example, `develop/provide` is not automatically
-  `implement`, and `partner to move toward production` is not automatically `deploy` or own
-  production deployment.
+- Use their zero-based indices to organize work; do not attempt to replace their statements.
 - Requirements are supporting context only. A requirement must NEVER become a duty by itself or
-  supply a stronger action verb, ownership claim, or lifecycle stage than the direct-work
-  statements establish.
-- Your output is JobHunter interpretation, not employer wording and not promoted taxonomy.
+  supply stronger action, ownership, autonomy, or lifecycle scope.
+- Your labels, emphasis, confidence, rationales, deliverable candidates, and role interpretation
+  are JobHunter analytical interpretation, not employer wording and not promoted taxonomy.
+- Do not produce a general work summary or paraphrased factual work description.
 
 WORK THEMES
 - Group the direct work into a small useful set of themes, normally 2-6.
 - Every supplied responsibility index and role-purpose index must appear in at least one theme.
 - A work item may belong to two themes when genuinely hybrid; avoid gratuitous duplication.
 - Use theme IDs theme-1, theme-2, ... and relative emphasis primary/supporting/uncertain.
+- Theme labels and optional rationales may interpret the grouping, but must not be presented as
+  replacement factual work statements.
 - Do not invent percentages, time allocation, ownership, leadership, autonomy, or lifecycle scope.
 - Do not use scope intensifiers such as `end-to-end`, `full lifecycle`, or `entire security stack`
   unless that scope is explicit in a supplied responsibility or role-purpose statement.
@@ -72,9 +74,10 @@ WORK THEMES
 DELIVERABLES
 - Include only outputs that are source-explicit or strongly implied by the supplied work itself.
 - Do not infer deliverables from generic knowledge of a tool, title, or profession.
+- Every deliverable must reference direct work. Strongly implied deliverables require a rationale.
 
 ROLE INTERPRETATION
-- A candidate role label/summary is allowed when it clarifies the work composition.
+- A concise candidate role label is allowed when it clarifies the work composition.
 - It is tentative analytical interpretation, not a canonical role archetype.
 - Expose alternatives/limitations when the evidence supports more than one reading.
 
@@ -97,35 +100,6 @@ Generate one fresh candidate from the same supplied evidence. Correct the cited 
 preserving useful supported grouping. Do not weaken, guess, clamp, or omit structured source
 references. Do not invent new duties, stronger action ownership, lifecycle scope, or unsupported
 source details. This is the only post-validation semantic repair attempt.
-"""
-
-_AUTHORITY_REVIEW_PROMPT = """You are JobHunter's final semantic authority reviewer for one
-candidate Job Work Intelligence document.
-
-The draft has already been generated from accepted P1.6 work evidence and has passed structural
-reference checks. Your task is NOT to redesign the grouping. Audit the draft specifically for
-semantic authority inflation, then return the full corrected JobWorkIntelligence document.
-
-REVIEW BOUNDARY
-- Accepted responsibility and role-purpose `statement` values are the direct-work authority.
-- Supporting requirements are context only and cannot create a duty or strengthen an action.
-- Preserve the draft's useful theme boundaries, theme IDs, emphasis, confidence, and structured
-  references unless a wording correction itself requires a minimal adjustment.
-- Prefer minimal prose rewrites over regrouping.
-- Do not add new duties, deliverables, role interpretations, lifecycle stages, ownership, or scope.
-- Do not turn advisory, collaborative, transitional, or solution-provision wording into stronger
-  execution claims.
-- `develop/provide` must not silently become `implement`.
-- `partner/collaborate to move models toward production` must not silently become direct
-  `deploying models` or ownership of production deployment.
-- Requirements such as `model deployment` may clarify the domain but cannot override the weaker
-  direct-work relationship.
-- Remove or soften unsupported words such as ownership/lifecycle intensifiers when direct work
-  does not establish them.
-- If the draft is already bounded, preserve it rather than rewriting for style.
-
-Return only the corrected full structured JobWorkIntelligence document using the supplied
-zero-based references.
 """
 
 
@@ -159,7 +133,9 @@ def _work_fact(index: int, item: Any, *, section: str) -> dict[str, Any]:
         )
     return {
         "index": index,
-        "statement": statement.strip(),
+        # Preserve the accepted P1.6 statement exactly. It is also the value later injected into
+        # the persisted artifact; the model sees it for reasoning but never authors its replacement.
+        "statement": statement,
         "evidence": _source_evidence(item),
         "confidence": item.get("confidence"),
     }
@@ -187,16 +163,12 @@ def _requirement_fact(index: int, item: Any) -> dict[str, Any]:
 def _limited_intelligence() -> JobWorkIntelligence:
     return JobWorkIntelligence(
         evidence_status="limited",
-        work_summary=(
-            "The accepted job analysis contains no direct responsibility or role-purpose evidence, "
-            "so JobHunter will not invent duties from qualifications alone."
-        ),
         work_themes=[],
         deliverables=[],
         role_interpretation=None,
         limitations=[
-            "Direct work structure is unavailable from the accepted vacancy evidence; requirements "
-            "can describe candidate expectations but are not treated as job duties."
+            "The accepted job analysis contains no direct responsibility or role-purpose evidence, "
+            "so JobHunter will not invent duties from qualifications alone."
         ],
     )
 
@@ -217,29 +189,32 @@ def _direct_work_statement_text(responsibilities: list[Any], role_purpose: list[
     return _normalized_semantic_text(" ".join(statements))
 
 
-def _candidate_scope_text(intelligence: JobWorkIntelligence) -> str:
-    values = [intelligence.work_summary]
+def _candidate_scope_text(intelligence: CandidateJobWorkIntelligence) -> str:
+    values: list[str] = []
     for theme in intelligence.work_themes:
-        values.extend([theme.label, theme.summary])
+        values.append(theme.label)
+        if theme.rationale:
+            values.append(theme.rationale)
     for deliverable in intelligence.deliverables:
-        values.extend([deliverable.label, deliverable.summary])
+        values.append(deliverable.label)
+        if deliverable.rationale:
+            values.append(deliverable.rationale)
     if intelligence.role_interpretation is not None:
-        values.extend(
-            [
-                intelligence.role_interpretation.label,
-                intelligence.role_interpretation.summary,
-            ]
-        )
+        role = intelligence.role_interpretation
+        values.append(role.label)
+        values.extend(role.alternatives)
+        values.extend(role.limitations)
+    values.extend(intelligence.limitations)
     return _normalized_semantic_text(" ".join(values))
 
 
 def _validate_scope_language(
-    intelligence: JobWorkIntelligence,
+    intelligence: CandidateJobWorkIntelligence,
     *,
     responsibilities: list[Any],
     role_purpose: list[Any],
 ) -> None:
-    """Reject unsupported lifecycle/scope amplification without constraining normal semantics."""
+    """Reject explicit unsupported scope intensifiers in model-owned candidate interpretation."""
 
     source_text = _direct_work_statement_text(responsibilities, role_purpose)
     candidate_text = _candidate_scope_text(intelligence)
@@ -256,8 +231,121 @@ def _validate_scope_language(
         )
 
 
+def _accepted_confidence(item: dict[str, Any]) -> str | None:
+    value = item.get("confidence")
+    return value if value in {"high", "medium", "low"} else None
+
+
+def _accepted_work_item(
+    *,
+    kind: str,
+    index: int,
+    responsibilities: list[Any],
+    role_purpose: list[Any],
+) -> AcceptedWorkItem:
+    source = responsibilities if kind == "responsibility" else role_purpose
+    label = "responsibility" if kind == "responsibility" else "role_purpose"
+    if index < 0 or index >= len(source):
+        raise WorkIntelligenceError(f"Cannot assemble missing accepted {label}[{index}]")
+    item = source[index]
+    if not isinstance(item, dict):
+        raise WorkIntelligenceError(f"Accepted P1.6 {label}[{index}] is not an object")
+    statement = item.get("statement")
+    if not isinstance(statement, str) or not statement.strip():
+        raise WorkIntelligenceError(f"Accepted P1.6 {label}[{index}] has no usable statement")
+    return AcceptedWorkItem(
+        kind=kind,
+        index=index,
+        statement=statement,
+        confidence=_accepted_confidence(item),
+    )
+
+
+def _accepted_work_items(
+    *,
+    responsibility_indices: list[int],
+    role_purpose_indices: list[int],
+    responsibilities: list[Any],
+    role_purpose: list[Any],
+) -> list[AcceptedWorkItem]:
+    return [
+        *[
+            _accepted_work_item(
+                kind="responsibility",
+                index=index,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+            )
+            for index in responsibility_indices
+        ],
+        *[
+            _accepted_work_item(
+                kind="role_purpose",
+                index=index,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+            )
+            for index in role_purpose_indices
+        ],
+    ]
+
+
+def _assemble_document(
+    candidate: CandidateJobWorkIntelligence,
+    *,
+    responsibilities: list[Any],
+    role_purpose: list[Any],
+) -> JobWorkIntelligence:
+    """Combine model-owned structure with exact accepted P1.6 work by deterministic reference."""
+
+    if candidate.evidence_status != "sufficient":
+        raise WorkIntelligenceError(
+            "Direct accepted work evidence requires evidence_status='sufficient'"
+        )
+
+    themes = [
+        WorkTheme(
+            theme_id=theme.theme_id,
+            label=theme.label,
+            emphasis=theme.emphasis,
+            confidence=theme.confidence,
+            accepted_work_items=_accepted_work_items(
+                responsibility_indices=theme.responsibility_indices,
+                role_purpose_indices=theme.role_purpose_indices,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+            ),
+            supporting_requirement_indices=theme.supporting_requirement_indices,
+            rationale=theme.rationale,
+        )
+        for theme in candidate.work_themes
+    ]
+    deliverables = [
+        DeliverableCandidate(
+            label=item.label,
+            status=item.status,
+            confidence=item.confidence,
+            accepted_work_items=_accepted_work_items(
+                responsibility_indices=item.responsibility_indices,
+                role_purpose_indices=item.role_purpose_indices,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+            ),
+            rationale=item.rationale,
+        )
+        for item in candidate.deliverables
+    ]
+    return JobWorkIntelligence(
+        evidence_status=candidate.evidence_status,
+        work_themes=themes,
+        deliverables=deliverables,
+        role_interpretation=candidate.role_interpretation,
+        limitations=candidate.limitations,
+    )
+
+
 class WorkIntelligenceService:
-    """Build or reuse one candidate Work Intelligence artifact above accepted English P1.6."""
+    """Build or reuse one v2 candidate artifact above accepted English P1.6."""
 
     def __init__(
         self,
@@ -331,7 +419,7 @@ class WorkIntelligenceService:
 
     @staticmethod
     def _validate_references(
-        intelligence: JobWorkIntelligence,
+        intelligence: CandidateJobWorkIntelligence,
         *,
         responsibility_count: int,
         role_purpose_count: int,
@@ -344,10 +432,9 @@ class WorkIntelligenceService:
                     f"Work Intelligence references missing {label} indices: {invalid}"
                 )
 
-        # When a source section is structurally empty, there is no possible semantic target for a
-        # model-emitted reference into that section. Removing only those impossible references is a
-        # deterministic normalization, not a semantic remap. References into non-empty sections
-        # are never clamped, guessed, or reassigned; ordinary bounds validation still rejects them.
+        # A reference into a structurally empty section has no possible semantic target. Removing
+        # only those impossible references is deterministic normalization, not semantic remapping.
+        # References into non-empty sections are never clamped, guessed, or reassigned.
         covered_responsibilities: set[int] = set()
         covered_purpose: set[int] = set()
         for theme in intelligence.work_themes:
@@ -367,6 +454,7 @@ class WorkIntelligenceService:
             validate(theme.supporting_requirement_indices, requirement_count, "requirement")
             covered_responsibilities.update(theme.responsibility_indices)
             covered_purpose.update(theme.role_purpose_indices)
+
         for deliverable in intelligence.deliverables:
             if responsibility_count == 0:
                 deliverable.responsibility_indices.clear()
@@ -377,7 +465,11 @@ class WorkIntelligenceService:
                     "Deliverable has no valid direct work references after removing references to "
                     "absent source sections"
                 )
-            validate(deliverable.responsibility_indices, responsibility_count, "responsibility")
+            validate(
+                deliverable.responsibility_indices,
+                responsibility_count,
+                "responsibility",
+            )
             validate(deliverable.role_purpose_indices, role_purpose_count, "role-purpose")
 
         if intelligence.evidence_status == "sufficient":
@@ -395,92 +487,122 @@ class WorkIntelligenceService:
                 )
 
     @staticmethod
-    def _document_from_inference(
+    def _candidate_from_inference(
         inference: WorkIntelligenceInferenceResult,
-    ) -> JobWorkIntelligence:
+    ) -> CandidateJobWorkIntelligence:
         if inference.validated_model is not None:
-            if not isinstance(inference.validated_model, JobWorkIntelligence):
+            if not isinstance(inference.validated_model, CandidateJobWorkIntelligence):
                 raise WorkIntelligenceError(
                     "Work Intelligence provider returned an incompatible validated model"
                 )
-            document = inference.validated_model
+            candidate = inference.validated_model
         else:
-            document = JobWorkIntelligence.model_validate(inference.intelligence)
-        if document.evidence_status != "sufficient":
+            candidate = CandidateJobWorkIntelligence.model_validate(inference.intelligence)
+        if candidate.evidence_status != "sufficient":
             raise WorkIntelligenceError(
                 "Direct accepted work evidence requires evidence_status='sufficient'"
             )
-        return document
+        return candidate
 
-    def _validate_generated_document(
+    def _validate_generated_candidate(
         self,
-        document: JobWorkIntelligence,
+        candidate: CandidateJobWorkIntelligence,
         *,
         responsibilities: list[Any],
         role_purpose: list[Any],
         requirements: list[Any],
     ) -> None:
         self._validate_references(
-            document,
+            candidate,
             responsibility_count=len(responsibilities),
             role_purpose_count=len(role_purpose),
             requirement_count=len(requirements),
         )
         _validate_scope_language(
-            document,
+            candidate,
             responsibilities=responsibilities,
             role_purpose=role_purpose,
         )
 
-    def _authority_review_candidate(
-        self,
-        *,
+    @staticmethod
+    def _validate_assembled_document(
         document: JobWorkIntelligence,
-        user_payload: dict[str, Any],
+        *,
         responsibilities: list[Any],
         role_purpose: list[Any],
-        requirements: list[Any],
-        generation_request_body: dict[str, Any],
-        generation_raw_response: dict[str, Any],
-    ) -> tuple[JobWorkIntelligence, dict[str, Any], dict[str, Any]]:
-        """Run one semantic authority audit before persisting a direct-work candidate."""
+        requirement_count: int,
+    ) -> None:
+        """Verify persisted factual items still exactly match their accepted P1.6 dependency."""
 
-        if self._provider is None:
-            raise WorkIntelligenceError("Work Intelligence provider is unavailable")
+        if document.evidence_status == "limited":
+            if responsibilities or role_purpose:
+                raise WorkIntelligenceError(
+                    "Limited Work Intelligence cannot represent accepted direct work evidence"
+                )
+            return
 
-        review_payload = {
-            "source_job_id": user_payload.get("source_job_id"),
-            "analysis_artifact_id": user_payload.get("analysis_artifact_id"),
-            "responsibilities": user_payload.get("responsibilities", []),
-            "role_purpose": user_payload.get("role_purpose", []),
-            "supporting_requirements": user_payload.get("supporting_requirements", []),
-            "candidate": document.model_dump(mode="json"),
+        expected = {
+            *[("responsibility", index) for index in range(len(responsibilities))],
+            *[("role_purpose", index) for index in range(len(role_purpose))],
         }
-        inference = self._provider.complete(
-            response_model=JobWorkIntelligence,
-            system_prompt=_AUTHORITY_REVIEW_PROMPT,
-            user_payload=review_payload,
-            max_tokens=min(self._max_tokens, 4096),
-            seed=1,
-        )
-        reviewed = self._document_from_inference(inference)
-        self._validate_generated_document(
-            reviewed,
-            responsibilities=responsibilities,
-            role_purpose=role_purpose,
-            requirements=requirements,
-        )
-        return (
-            reviewed,
-            {
-                "generation": generation_request_body,
-                "authority_review": inference.request_body,
-            },
-            {
-                "generation": generation_raw_response,
-                "authority_review": inference.raw_response,
-            },
-        )
+        covered: set[tuple[str, int]] = set()
+
+        def validate_item(item: AcceptedWorkItem) -> None:
+            source = responsibilities if item.kind == "responsibility" else role_purpose
+            if item.index >= len(source):
+                raise WorkIntelligenceError(
+                    f"Persisted Work Intelligence references missing {item.kind}[{item.index}]"
+                )
+            raw = source[item.index]
+            if not isinstance(raw, dict):
+                raise WorkIntelligenceError(
+                    f"Accepted P1.6 {item.kind}[{item.index}] is not an object"
+                )
+            statement = raw.get("statement")
+            if not isinstance(statement, str) or item.statement != statement:
+                raise WorkIntelligenceError(
+                    "Persisted accepted work statement does not exactly match P1.6 "
+                    f"{item.kind}[{item.index}]"
+                )
+            expected_confidence = _accepted_confidence(raw)
+            if item.confidence != expected_confidence:
+                raise WorkIntelligenceError(
+                    "Persisted accepted work confidence does not match P1.6 "
+                    f"{item.kind}[{item.index}]"
+                )
+
+        for theme in document.work_themes:
+            invalid_requirements = [
+                index
+                for index in theme.supporting_requirement_indices
+                if index >= requirement_count
+            ]
+            if invalid_requirements:
+                raise WorkIntelligenceError(
+                    "Persisted Work Intelligence references missing requirement indices: "
+                    f"{invalid_requirements}"
+                )
+            for item in theme.accepted_work_items:
+                validate_item(item)
+                covered.add((item.kind, item.index))
+
+        for deliverable in document.deliverables:
+            for item in deliverable.accepted_work_items:
+                validate_item(item)
+
+        missing = expected - covered
+        if missing:
+            missing_responsibilities = sorted(
+                index for kind, index in missing if kind == "responsibility"
+            )
+            missing_purpose = sorted(
+                index for kind, index in missing if kind == "role_purpose"
+            )
+            raise WorkIntelligenceError(
+                "Persisted work themes omitted accepted direct work evidence: "
+                f"responsibilities={missing_responsibilities}, "
+                f"role_purpose={missing_purpose}"
+            )
 
     def _generate_with_semantic_repair(
         self,
@@ -489,8 +611,8 @@ class WorkIntelligenceService:
         responsibilities: list[Any],
         role_purpose: list[Any],
         requirements: list[Any],
-    ) -> tuple[JobWorkIntelligence, dict[str, Any], dict[str, Any]]:
-        """Generate, repair one validation failure, then run one semantic authority review."""
+    ) -> tuple[CandidateJobWorkIntelligence, dict[str, Any], dict[str, Any]]:
+        """Generate one candidate, with at most one repair after deterministic rejection."""
 
         if self._provider is None:
             raise WorkIntelligenceError("Work Intelligence provider is unavailable")
@@ -502,16 +624,16 @@ class WorkIntelligenceService:
 
         for repair_attempt in range(2):
             inference = self._provider.complete(
-                response_model=JobWorkIntelligence,
+                response_model=CandidateJobWorkIntelligence,
                 system_prompt=system_prompt,
                 user_payload=user_payload,
                 max_tokens=min(self._max_tokens, 4096),
                 seed=0,
             )
-            document = self._document_from_inference(inference)
+            candidate = self._candidate_from_inference(inference)
             try:
-                self._validate_generated_document(
-                    document,
+                self._validate_generated_candidate(
+                    candidate,
                     responsibilities=responsibilities,
                     role_purpose=role_purpose,
                     requirements=requirements,
@@ -527,16 +649,16 @@ class WorkIntelligenceService:
                 )
                 continue
 
-            generation_request_body = inference.request_body
-            generation_raw_response = inference.raw_response
+            request_body = inference.request_body
+            raw_response = inference.raw_response
             if first_error is not None:
-                generation_request_body = dict(inference.request_body)
-                generation_request_body["semantic_repair"] = {
+                request_body = dict(inference.request_body)
+                request_body["semantic_repair"] = {
                     "attempts": 1,
                     "trigger": str(first_error),
                     "initial_request_body": first_request_body,
                 }
-                generation_raw_response = {
+                raw_response = {
                     "semantic_repair": {
                         "attempts": 1,
                         "trigger": str(first_error),
@@ -544,16 +666,7 @@ class WorkIntelligenceService:
                         "final_raw_response": inference.raw_response,
                     }
                 }
-
-            return self._authority_review_candidate(
-                document=document,
-                user_payload=user_payload,
-                responsibilities=responsibilities,
-                role_purpose=role_purpose,
-                requirements=requirements,
-                generation_request_body=generation_request_body,
-                generation_raw_response=generation_raw_response,
-            )
+            return candidate, request_body, raw_response
 
         raise WorkIntelligenceError("Bounded semantic repair exhausted without a candidate")
 
@@ -569,19 +682,30 @@ class WorkIntelligenceService:
         return self._work_model, True
 
     def current_artifact(self, source_job_id: str) -> JobWorkIntelligenceArtifact | None:
-        """Return an artifact only when it depends on the exact current accepted P1.6 artifact."""
+        """Return only the v2 artifact on the exact current accepted P1.6 dependency."""
 
         try:
             analysis = self._current_p16(source_job_id)
+            responsibilities, role_purpose, requirements = self._sections(analysis)
             model, _ = self._identity_for(analysis)
         except WorkIntelligenceError:
             return None
-        return self._work_store.find_artifact(
+        artifact = self._work_store.find_artifact(
             analysis_artifact_id=analysis.id,
             model=model,
             prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
             schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
         )
+        if artifact is None:
+            return None
+        document = JobWorkIntelligence.model_validate(artifact.intelligence)
+        self._validate_assembled_document(
+            document,
+            responsibilities=responsibilities,
+            role_purpose=role_purpose,
+            requirement_count=len(requirements),
+        )
+        return artifact
 
     def analyze_job(self, source_job_id: str) -> WorkIntelligenceResult:
         source_job_id = source_job_id.strip()
@@ -599,6 +723,13 @@ class WorkIntelligenceService:
             schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
         )
         if existing is not None:
+            document = JobWorkIntelligence.model_validate(existing.intelligence)
+            self._validate_assembled_document(
+                document,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+                requirement_count=len(requirements),
+            )
             self._work_store.record_attempt(
                 analysis_artifact_id=analysis.id,
                 attempted_at=attempted_at,
@@ -608,7 +739,6 @@ class WorkIntelligenceService:
                 outcome="reused",
                 artifact_id=existing.id,
             )
-            document = JobWorkIntelligence.model_validate(existing.intelligence)
             return WorkIntelligenceResult(
                 source_job_id=source_job_id,
                 artifact_id=existing.id,
@@ -627,12 +757,6 @@ class WorkIntelligenceService:
                     "analysis_artifact_id": analysis.id,
                 }
                 raw_response = {"deterministic": True, "reason": "no_direct_work_evidence"}
-                self._validate_generated_document(
-                    document,
-                    responsibilities=responsibilities,
-                    role_purpose=role_purpose,
-                    requirements=requirements,
-                )
             else:
                 user_payload = {
                     "source_job_id": source_job_id,
@@ -650,12 +774,24 @@ class WorkIntelligenceService:
                         for index, item in enumerate(requirements)
                     ],
                 }
-                document, request_body, raw_response = self._generate_with_semantic_repair(
+                candidate, request_body, raw_response = self._generate_with_semantic_repair(
                     user_payload=user_payload,
                     responsibilities=responsibilities,
                     role_purpose=role_purpose,
                     requirements=requirements,
                 )
+                document = _assemble_document(
+                    candidate,
+                    responsibilities=responsibilities,
+                    role_purpose=role_purpose,
+                )
+
+            self._validate_assembled_document(
+                document,
+                responsibilities=responsibilities,
+                role_purpose=role_purpose,
+                requirement_count=len(requirements),
+            )
 
             artifact_id = self._work_store.record_artifact(
                 analysis_artifact_id=analysis.id,
@@ -699,28 +835,24 @@ class WorkIntelligenceService:
 
 
 def build_work_intelligence_service(settings: Settings) -> WorkIntelligenceService:
-    """Build the current P2.2A service without making Work Intelligence canonical authority."""
+    """Build the current P2.2A v2 service without promoting candidate interpretation."""
 
     analysis_model = settings.effective_analysis_lm_studio_model()
     if not analysis_model:
         raise ValueError("No analysis model is configured for accepted English P1.6")
 
-    # P2.2A currently uses the stronger accepted analysis reasoning role for both generation and
-    # its final semantic authority review. Real-local evidence showed that the smaller Capability
-    # model produced useful grouping but repeatedly preserved action-authority inflation even after
-    # an explicit review pass. Model identity is already part of artifact currentness, so existing
-    # 2B artifacts remain immutable history and are not reused as current 4B results.
+    # Keep the accepted analysis reasoning model for the single bounded candidate-generation role.
+    # The v2 representation no longer asks a second model pass to establish factual action
+    # authority; exact accepted P1.6 work is injected deterministically after candidate validation.
     work_model = analysis_model
-    provider = None
-    if work_model:
-        provider = WorkIntelligenceInferenceProvider(
-            base_url=settings.lm_studio_base_url,
-            configured_model=work_model,
-            api_token=settings.lm_studio_api_token,
-            timeout_seconds=settings.inference_timeout_seconds,
-            network_retries=settings.inference_max_retries,
-            validation_retries=1,
-        )
+    provider = WorkIntelligenceInferenceProvider(
+        base_url=settings.lm_studio_base_url,
+        configured_model=work_model,
+        api_token=settings.lm_studio_api_token,
+        timeout_seconds=settings.inference_timeout_seconds,
+        network_retries=settings.inference_max_retries,
+        validation_retries=1,
+    )
     return WorkIntelligenceService(
         source_store=TranslationStore(settings.database_path),
         analysis_store=AnalysisStore(settings.database_path),
@@ -734,33 +866,65 @@ def build_work_intelligence_service(settings: Settings) -> WorkIntelligenceServi
 
 
 def format_work_intelligence(artifact: JobWorkIntelligenceArtifact) -> str:
+    """Render the same v2 fact-versus-interpretation hierarchy used by the browser."""
+
     document = JobWorkIntelligence.model_validate(artifact.intelligence)
     lines = [
         f"Job Work Intelligence: {artifact.source_job_id}",
         f"State: {artifact.semantic_state} / {document.evidence_status}",
         f"Model: {artifact.model}",
         f"P1.6 dependency: artifact {artifact.analysis_artifact_id}",
-        "",
-        document.work_summary,
     ]
+
     if document.work_themes:
         lines.append("\nWork themes:")
         for theme in document.work_themes:
-            lines.append(
-                f"- {theme.label} [{theme.emphasis}, {theme.confidence}] — {theme.summary}"
-            )
+            lines.append(f"- {theme.label} [{theme.emphasis}, {theme.confidence}]")
+            lines.append("  JobHunter candidate theme")
+            lines.append("  Accepted P1.6 work:")
+            for item in theme.accepted_work_items:
+                source_label = (
+                    "responsibility" if item.kind == "responsibility" else "role purpose"
+                )
+                confidence = f", {item.confidence}" if item.confidence else ""
+                lines.append(
+                    f"  * [{source_label} {item.index}{confidence}] {item.statement}"
+                )
+            if theme.rationale:
+                lines.append(f"  JobHunter interpretation: {theme.rationale}")
+            if theme.supporting_requirement_indices:
+                lines.append(
+                    "  Supporting requirement indices: "
+                    + ", ".join(str(value) for value in theme.supporting_requirement_indices)
+                )
+
     if document.deliverables:
-        lines.append("\nLikely deliverables:")
+        lines.append("\nCandidate deliverables:")
         for item in document.deliverables:
-            lines.append(f"- {item.label} [{item.status}, {item.confidence}] — {item.summary}")
+            lines.append(f"- {item.label} [{item.status}, {item.confidence}]")
+            lines.append("  Accepted P1.6 work support:")
+            for work in item.accepted_work_items:
+                source_label = (
+                    "responsibility" if work.kind == "responsibility" else "role purpose"
+                )
+                lines.append(f"  * [{source_label} {work.index}] {work.statement}")
+            if item.rationale:
+                lines.append(f"  JobHunter interpretation: {item.rationale}")
+
     if document.role_interpretation is not None:
         role = document.role_interpretation
         lines.extend(
             [
                 "\nCandidate role interpretation:",
-                f"- {role.label} [{role.confidence}] — {role.summary}",
+                f"- {role.label} [{role.confidence}]",
+                "  Supporting themes: " + ", ".join(role.supporting_theme_ids),
             ]
         )
+        if role.alternatives:
+            lines.append("  Alternatives: " + "; ".join(role.alternatives))
+        if role.limitations:
+            lines.append("  Role limits: " + "; ".join(role.limitations))
+
     if document.limitations:
         lines.append("\nLimitations:")
         lines.extend(f"- {item}" for item in document.limitations)
