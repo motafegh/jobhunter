@@ -11,12 +11,12 @@
 <section class="panel">
   <div class="panel-header">
     <div>
-      <p class="eyebrow">P2.2A · job-work-intelligence-v1</p>
+      <p class="eyebrow">P2.2A · job-work-intelligence-v2</p>
       <h2>What does this job actually involve?</h2>
     </div>
     {% if artifact %}<span class="badge warn">candidate · {{ document.evidence_status }}</span>{% else %}<span class="badge">not generated</span>{% endif %}
   </div>
-  <p class="muted">This page separates accepted employer-derived work facts from JobHunter's analytical interpretation. Candidate Work Intelligence is useful immediately but is not employer wording, canonical taxonomy, or a promoted role archetype.</p>
+  <p class="muted">JobHunter groups the accepted work for faster understanding. Exact accepted P1.6 work is shown separately from candidate theme, deliverable, and role interpretation.</p>
   <form method="post" action="/jobs/{{ source_job_id }}/work-intelligence">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <button class="button primary" type="submit">{{ 'Recheck Work Intelligence' if artifact else 'Generate Work Intelligence' }}</button>
@@ -26,10 +26,9 @@
 {% if artifact and document %}
 <section class="panel analysis-panel">
   <div class="panel-header">
-    <div><p class="eyebrow">JobHunter interpretation</p><h2>Work composition</h2></div>
+    <div><p class="eyebrow">Candidate structure + accepted work</p><h2>Work composition</h2></div>
     <span class="badge {{ 'good' if document.evidence_status == 'sufficient' else 'warn' }}">{{ document.evidence_status }}</span>
   </div>
-  <p class="long-copy">{{ document.work_summary }}</p>
 
   {% if document.work_themes %}
   <div class="analysis-section">
@@ -37,13 +36,27 @@
     {% for theme in document.work_themes %}
     <div class="claim-card">
       <div class="claim-head"><strong>{{ theme.label }}</strong><span class="badge">{{ theme.emphasis }} · {{ theme.confidence }}</span></div>
-      <p>{{ theme.summary }}</p>
-      <p class="muted">Why: {{ theme.rationale }}</p>
-      <div class="artifact-meta">
-        {% if theme.responsibility_indices %}<span>responsibilities {{ theme.responsibility_indices }}</span>{% endif %}
-        {% if theme.role_purpose_indices %}<span>role purpose {{ theme.role_purpose_indices }}</span>{% endif %}
-        {% if theme.supporting_requirement_indices %}<span>supporting requirements {{ theme.supporting_requirement_indices }}</span>{% endif %}
+      <p class="eyebrow">JobHunter candidate theme</p>
+      <div>
+        <strong>Accepted P1.6 work</strong>
+        <ul>
+          {% for item in theme.accepted_work_items %}
+          <li>
+            <span>{{ item.statement }}</span>
+            <div class="artifact-meta">
+              <span>P1.6 {{ item.kind.replace('_', ' ') }} {{ item.index }}</span>
+              {% if item.confidence %}<span>{{ item.confidence }} confidence</span>{% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
       </div>
+      {% if theme.rationale %}
+      <div><strong>JobHunter interpretation</strong><p class="muted">{{ theme.rationale }}</p></div>
+      {% endif %}
+      {% if theme.supporting_requirement_indices %}
+      <div class="artifact-meta"><span>supporting requirements {{ theme.supporting_requirement_indices }}</span></div>
+      {% endif %}
     </div>
     {% endfor %}
   </div>
@@ -51,16 +64,18 @@
 
   {% if document.deliverables %}
   <div class="analysis-section">
-    <h3>Likely deliverables · {{ document.deliverables|length }}</h3>
+    <h3>Candidate deliverables · {{ document.deliverables|length }}</h3>
     {% for item in document.deliverables %}
     <div class="claim-card">
-      <div class="claim-head"><strong>{{ item.label }}</strong><span class="badge">{{ item.status.replace('_', ' ') }} · {{ item.confidence }}</span></div>
-      <p>{{ item.summary }}</p>
-      <p class="muted">Why: {{ item.rationale }}</p>
-      <div class="artifact-meta">
-        {% if item.responsibility_indices %}<span>responsibilities {{ item.responsibility_indices }}</span>{% endif %}
-        {% if item.role_purpose_indices %}<span>role purpose {{ item.role_purpose_indices }}</span>{% endif %}
-      </div>
+      <div class="claim-head"><strong>{{ item.label }}</strong><span class="badge warn">candidate · {{ item.status.replace('_', ' ') }} · {{ item.confidence }}</span></div>
+      <p class="eyebrow">JobHunter candidate deliverable</p>
+      <strong>Accepted P1.6 work support</strong>
+      <ul>
+        {% for work in item.accepted_work_items %}
+        <li><span>{{ work.statement }}</span><div class="artifact-meta"><span>P1.6 {{ work.kind.replace('_', ' ') }} {{ work.index }}</span></div></li>
+        {% endfor %}
+      </ul>
+      {% if item.rationale %}<div><strong>JobHunter interpretation</strong><p class="muted">{{ item.rationale }}</p></div>{% endif %}
     </div>
     {% endfor %}
   </div>
@@ -71,8 +86,7 @@
     <h3>Candidate role interpretation</h3>
     <div class="claim-card">
       <div class="claim-head"><strong>{{ role.label }}</strong><span class="badge warn">candidate · {{ role.confidence }}</span></div>
-      <p>{{ role.summary }}</p>
-      <div class="artifact-meta"><span>themes {{ role.supporting_theme_ids }}</span></div>
+      <div class="artifact-meta"><span>supporting themes {{ role.supporting_theme_ids }}</span></div>
       {% if role.alternatives %}<p class="muted"><strong>Alternatives:</strong> {{ role.alternatives|join('; ') }}</p>{% endif %}
       {% if role.limitations %}<p class="muted"><strong>Role interpretation limits:</strong> {{ role.limitations|join('; ') }}</p>{% endif %}
     </div>
@@ -80,7 +94,7 @@
   {% endif %}
 
   {% if document.limitations %}
-  <div class="analysis-section"><h3>Uncertainty / limits</h3><ul>{% for item in document.limitations %}<li>{{ item }}</li>{% endfor %}</ul></div>
+  <div class="analysis-section"><h3>Unknown / limited</h3><ul>{% for item in document.limitations %}<li>{{ item }}</li>{% endfor %}</ul></div>
   {% endif %}
 
   <div class="artifact-meta">
@@ -88,14 +102,15 @@
     <span>P1.6 artifact {{ artifact.analysis_artifact_id }}</span>
     <span>{{ artifact.model }}</span>
     <span>{{ artifact.prompt_version }}</span>
+    <span>{{ artifact.schema_version }}</span>
   </div>
 </section>
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Authority boundary</p><h2>What this result means</h2></div></div>
   <div class="dashboard-grid lower-grid">
-    <div class="claim-card"><strong>Employer / accepted P1.6 facts</strong><p class="muted">The responsibility and role-purpose indices referenced above remain the factual substrate.</p></div>
-    <div class="claim-card"><strong>JobHunter interpretation</strong><p class="muted">Theme labels, work composition, inferred deliverables, and candidate role interpretation are analytical synthesis.</p></div>
+    <div class="claim-card"><strong>Accepted P1.6 facts</strong><p class="muted">The exact accepted English P1.6 responsibility and role-purpose statements shown inside each theme carry factual work authority. Their underlying source evidence remains recoverable through P1.6.</p></div>
+    <div class="claim-card"><strong>JobHunter interpretation</strong><p class="muted">Theme labels, relative emphasis, rationales, candidate deliverables, and candidate role interpretation are analytical synthesis, not employer-authored wording or promoted taxonomy.</p></div>
   </div>
 </section>
 {% else %}
