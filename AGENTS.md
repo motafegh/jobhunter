@@ -154,8 +154,17 @@ t4qV artifact 2  v1.1  useful accepted candidate anchor; historical under v1.3
 tmyX artifact 3  v1.1  useful candidate with recorded action-strengthening limitation; historical
 tG9K artifact 4  v1.1  useful grouping and supporting emphasis; historical
 tG9K artifact 5  v1.2  useful grouping but direct-deployment wording remained; historical
-fresh tG9K v1.3  NEXT live authority-review anchor
-tmBK             PENDING limited-work boundary
+artifacts 6-11    preserved local action-authority/model/protocol trial evidence
+current source    restored to committed v1.3 after later trials remained insufficient
+next              focused P2.2A representation-plan amendment before more live anchors
+```
+
+The 2026-09-01 checkpoint verified that free-form model review does not reliably preserve action
+relationships across both `tG9K` and `tmyX`. Controlled v1.3-v1.7/2B/4B/12B trials remain immutable
+local evidence, but their experimental code/configuration was not retained. Exact record:
+
+```text
+docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
 ```
 
 Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
@@ -257,21 +266,13 @@ tG9K artifact 5
 
 Current exact next action:
 
-```bash
-git pull --ff-only origin main
-python -m jobhunter.work_intelligence_cli generate tG9K
-```
-
-This must create a fresh v1.3 artifact. Review whether the final authority-reviewed candidate preserves collaborative production-readiness rather than direct deployment ownership while retaining useful industrial-ML grouping.
-
-Then continue to:
-
 ```text
-tmyX v1.3 authority-review validation
-→ t4qV v1.3 current-identity regeneration
-→ tmBK limited-work boundary
-→ unchanged current-artifact reuse
-→ browser real-artifact UX
+do not run another prompt/model action-authority trial
+→ amend and approve the P2.2A representation plan
+→ preserve model candidate grouping and relative emphasis
+→ deterministically inject exact accepted P1.6 direct-work statements within themes
+→ keep optional free-form interpretation separate from factual action wording
+→ only then resume t4qV, tmBK, reuse, and browser acceptance
 → P2.2A close/acceptance decision
 → only then P2.2B decision
 ```
@@ -380,7 +381,9 @@ Phase-1 closure accepted
 → tG9K useful grouping + second action-strengthening example
 → v1.2 prompt/repair refinement proved insufficient for action authority
 → v1.3 final semantic authority-review stage implemented / CI green
-→ fresh tG9K v1.3 live acceptance NEXT
+→ v1.3-v1.7 cross-model/protocol trials preserved as local evidence
+→ tG9K/tmyX cross-job free-form action-authority reliability blocker verified
+→ representation-plan amendment NEXT
 ```
 
 ## 6. Permanent semantic boundaries

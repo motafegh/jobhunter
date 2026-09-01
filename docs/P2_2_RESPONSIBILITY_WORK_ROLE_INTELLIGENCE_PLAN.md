@@ -1,11 +1,11 @@
 # P2.2 Responsibility, Work, and Role Intelligence Plan
 
-**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A IMPLEMENTED / REAL-LOCAL SEMANTIC ACCEPTANCE OPEN  
-**Date:** 2026-08-26  
+**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A IMPLEMENTED / ACTION-AUTHORITY REPRESENTATION AMENDMENT REQUIRED
+**Date:** 2026-09-01
 **Scope:** P2.2 responsibility/work interpretation, selective responsibility/deliverable promotion, responsibility families, and role-archetype intelligence  
 **Authority:** Subordinate to `docs/PRODUCT_SPECIFICATION.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/SOURCE_POLICY.md`, `docs/ARCHITECTURE.md`, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
 **Previous gate:** P2.1 Canonical Concept Registry — CLOSED / ACCEPTED  
-**Current gate:** P2.2A Job Work Intelligence v1 — IMPLEMENTED / CI GREEN / REAL-LOCAL SEMANTIC-PRODUCT ACCEPTANCE NEXT
+**Current gate:** P2.2A Job Work Intelligence v1 — IMPLEMENTED / ACCEPTANCE OPEN / cross-job action-authority representation blocker verified
 
 ---
 
@@ -934,19 +934,24 @@ P2.2A implementation and repository mechanical quality are complete.
 
 Do **not** start P2.2B yet.
 
-Next:
+Verified checkpoint:
+
+`docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md`
+
+Next plan decision:
 
 ```text
-pull current main locally
-→ run Work Intelligence on tG9K, t4qV, tmyX, tmBK
-→ inspect candidate output and browser UX against the Tier-C/product utility criteria
-→ confirm unchanged rerun reuse
-→ fix only evidence-backed material defects if found
-→ record P2.2A acceptance or remaining blocker
+retain model candidate grouping and relative emphasis
+→ deterministically inject exact accepted P1.6 direct-work statements within each theme
+→ keep free-form candidate interpretation optional and visually/structurally separate
+→ define which existing free-form action-bearing fields are removed, demoted, or retained
+→ preserve currentness/reference/coverage validation and immutable candidate history
+→ approve the bounded representation amendment before implementation
 ```
 
 The current implementation record is:
 
 `docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
 
-Progressively document real findings and revise this plan only when implementation evidence exposes a material design defect or a better bounded approach consistent with controlling governance.
+The cross-job `tG9K`/`tmyX` evidence is the material design evidence required to amend this plan.
+Do not continue prompt/model retries or start P2.2B before the representation decision.

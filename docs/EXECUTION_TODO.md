@@ -1,11 +1,11 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-08-27  
+**Date:** 2026-09-01
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment, and the current focused plan  
 **Current focused plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md` — APPROVED  
-**Current gate:** P2.2A Job Work Intelligence v1 IMPLEMENTED / LIVE SEMANTIC-PRODUCT ACCEPTANCE IN PROGRESS / fresh `tG9K` v1.3 generation NEXT
+**Current gate:** P2.2A IMPLEMENTED / ACCEPTANCE OPEN / cross-job action-authority representation blocker VERIFIED / focused-plan amendment NEXT
 
 Repository workflow:
 
@@ -186,23 +186,29 @@ t4qV  artifact 2  v1.1  useful accepted candidate anchor; historical under curre
 tmyX  artifact 3  v1.1  useful candidate with recorded action-strengthening limitation; historical
 tG9K  artifact 4  v1.1  useful grouping; showed supporting emphasis + action strengthening; historical
 tG9K  artifact 5  v1.2  useful grouping; still direct deployment wording; historical
+tG9K  artifacts 6-10  v1.3-v1.7 controlled action-authority evidence; historical/experimental
+tmyX  artifact 11     v1.7 controlled field-review evidence; historical/experimental
 ```
 
-Current acceptance targets under v1.3:
+Checkpoint record:
+`docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md`
+
+Acceptance sequence after the representation amendment:
 
 ```text
-tG9K  industrial ML / manufacturing AI                  NEXT
-tmyX  security infrastructure / Microsoft services      AFTER tG9K
-t4qV  network/security                                   regenerate for current identity after tmyX
-tmBK  requirements-only / no direct work evidence       PENDING
+tG9K  industrial ML / manufacturing AI                  action-authority evidence COMPLETE
+tmyX  security infrastructure / Microsoft services      cross-job defect evidence COMPLETE
+t4qV  network/security                                   PENDING redesigned representation
+tmBK  requirements-only / no direct work evidence       PENDING redesigned representation
 ```
 
 - [x] live `t4qV` and `tmyX` demonstrated that Work Intelligence materially reduces manual synthesis effort.
 - [x] `tG9K` demonstrated useful heterogeneous industrial-ML grouping.
 - [x] `tG9K` v1.1 produced `3 primary + 1 supporting`, resolving the concern that emphasis always collapses to all-primary. Do not add a fixed quota.
 - [x] repeated action-strengthening justified a semantic authority-review stage rather than deterministic verb mappings.
-- [ ] regenerate/review `tG9K` under v1.3 and verify production-readiness relationship is preserved without direct deployment ownership inflation.
-- [ ] regenerate/review `tmyX` under v1.3 against the earlier `develop/provide → implementing` case.
+- [x] run controlled `tG9K` v1.3-v1.7 action-authority trials across 2B, 4B, 12B, full-document, compact, and field-complete review protocols.
+- [x] verify on `tmyX` that field-complete review still strengthened `develop/provide hardening solutions` into directly `hardening the security posture`.
+- [ ] amend/approve the P2.2A representation so exact accepted direct-work statements carry factual action authority while model grouping remains candidate interpretation.
 - [ ] regenerate/review `t4qV` under v1.3 for current identity without reopening already-resolved scope issues.
 - [ ] generate `tmBK` and confirm deterministic `limited` behavior with no invented duties.
 - [ ] rerun at least one unchanged current v1.3 job and confirm artifact reuse.
@@ -268,12 +274,12 @@ Do not introduce a deterministic action-verb equivalence system or a fixed prima
 ```text
 P2.2A implementation is complete; live acceptance remains open.
 Current prompt/pipeline identity = job-work-intelligence-v1.3.
-Historical artifacts 2-5 remain preserved but are not current under v1.3.
-→ regenerate/review tG9K under v1.3 next
-→ then validate the same authority-review behavior on tmyX
-→ regenerate t4qV for current v1.3 identity
-→ then test tmBK limited-work behavior
-→ then artifact reuse + browser UX
-→ close P2.2A only after usefulness + authority-boundary review
+Historical/experimental artifacts 2-11 and all attempt records remain preserved.
+→ do not run another prompt-only or model-only action-authority trial
+→ amend the focused P2.2A representation plan
+→ model grouping/emphasis may remain candidate interpretation
+→ deterministically inject exact accepted work statements for action-bearing factual content
+→ visually separate exact employer/P1.6 work from optional JobHunter interpretation
+→ only then resume t4qV/tmBK/reuse/browser acceptance
 → only then decide P2.2B
 ```

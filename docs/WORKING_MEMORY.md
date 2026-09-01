@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-08-27  
+**Date:** 2026-09-01
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; utility/epistemic governance REORIENTED; P2.2 plan APPROVED; P2.2A IMPLEMENTED; LIVE SEMANTIC-PRODUCT ACCEPTANCE IN PROGRESS; fresh `tG9K` v1.3 generation NEXT
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A IMPLEMENTED / ACCEPTANCE OPEN; repeated cross-job action-authority defect VERIFIED; representation-plan amendment NEXT
 
 ## 1. Frozen factual substrate
 
@@ -178,38 +178,26 @@ artifact 2  t4qV  v1.1  useful accepted candidate anchor; historical under v1.3
 artifact 3  tmyX  v1.1  useful candidate with action-strengthening limitation; historical
 artifact 4  tG9K  v1.1  useful grouping; supporting emphasis demonstrated; historical
 artifact 5  tG9K  v1.2  useful grouping but direct-deployment wording remained; historical
+artifact 6  tG9K  v1.3/2B  useful grouping; direct-deployment inflation remained; historical
+artifact 7  tG9K  v1.4/4B  compact verdict accepted direct deploying; experimental history
+artifact 8  tG9K  v1.5/4B  field review removed ownership but strengthened lifecycle endpoint
+artifact 9  tG9K  v1.6/4B+12B  slow split trial; endpoint strengthening remained
+artifact 10 tG9K  v1.7/4B  useful bounded candidate; residual `into production` paraphrase
+artifact 11 tmyX  v1.7/4B  useful grouping; top summary strengthened solution provision to hardening
 ```
 
-No current v1.3 direct-work artifact has yet been live-reviewed.
+Artifacts 7-11 were produced by controlled local experimental code that was not retained. Source
+was restored to committed v1.3; those artifacts and all failed attempts remain immutable evidence.
 
 ## 8. Exact next action
 
-On the user's real local environment:
-
-```bash
-git pull --ff-only origin main
-python -m jobhunter.work_intelligence_cli generate tG9K
-```
-
-This must create a fresh v1.3 artifact rather than reuse artifact 5.
-
-Review specifically whether:
-
-1. the industrial-ML grouping remains useful;
-2. the final persisted/output wording preserves collaborative production-readiness (`move models toward production`) rather than direct deployment ownership;
-3. unsupported lifecycle/scope language does not survive;
-4. the result still materially reduces manual synthesis effort.
-
-If `tG9K` v1.3 succeeds:
-
 ```text
-→ regenerate/review tmyX under v1.3 against the earlier develop/provide → implementing case
-→ regenerate/review t4qV under v1.3 for current identity
-→ test tmBK deterministic limited-work behavior
-→ prove unchanged current-artifact reuse
-→ inspect browser UX + employer-fact / JobHunter-interpretation distinction
-→ decide P2.2A closure
-→ only then decide P2.2B
+do not run another prompt/model action-authority trial
+→ amend the focused P2.2A representation plan
+→ retain model candidate grouping and relative emphasis
+→ deterministically inject exact accepted direct-work statements inside themes
+→ keep optional candidate interpretation visibly separate from factual action wording
+→ decide the bounded v2 representation before implementation
 ```
 
 ## 9. Do not start yet
@@ -233,6 +221,7 @@ Until P2.2A closes:
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md
+docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
 docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_LIVE_GENERATION_STRUCTURED_REFERENCE_FAILURE.md
 docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_VALID_CANDIDATE_AND_SCOPE_REPAIR.md
 docs/working-memory/2026-08-27_P2_2A_T4QV_V11_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED.md

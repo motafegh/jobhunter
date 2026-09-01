@@ -555,7 +555,7 @@ The accepted heterogeneous reference order is:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 is accepted; the active product gate is the focused Phase-2 canonical concept registry.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 and P2.1 are accepted; the active product gate is P2.2A Job Work Intelligence semantic/product acceptance.
 
 ### 10.4 Planned next product layers
 

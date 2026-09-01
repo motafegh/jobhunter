@@ -161,7 +161,7 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
 
-Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 is accepted; P2.1 canonical concept registry is next.
+Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 and P2.1 are accepted; P2.2A Job Work Intelligence semantic/product acceptance is active.
 
 ### 3.4 Current governance state
 
