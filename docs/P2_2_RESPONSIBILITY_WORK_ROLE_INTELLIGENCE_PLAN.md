@@ -1,11 +1,11 @@
 # P2.2 Responsibility, Work, and Role Intelligence Plan
 
-**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A IMPLEMENTED / ACTION-AUTHORITY REPRESENTATION AMENDMENT REQUIRED
+**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A ACCEPTED / P2.2B NOT STARTED
 **Date:** 2026-09-01
 **Scope:** P2.2 responsibility/work interpretation, selective responsibility/deliverable promotion, responsibility families, and role-archetype intelligence  
 **Authority:** Subordinate to `docs/PRODUCT_SPECIFICATION.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/SOURCE_POLICY.md`, `docs/ARCHITECTURE.md`, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
 **Previous gate:** P2.1 Canonical Concept Registry — CLOSED / ACCEPTED  
-**Current gate:** P2.2A Job Work Intelligence v1 — IMPLEMENTED / ACCEPTANCE OPEN / cross-job action-authority representation blocker verified
+**Current gate:** P2.2A Job Work Intelligence v2 — ACCEPTED / CLOSED; P2.2B DECISION NOT STARTED
 
 ---
 
@@ -607,19 +607,23 @@ pytest warnings-as-errors  PASS
 
 The retrieved CI evidence did not include an exact test count; do not invent one.
 
-### Tier C — bounded analytical usefulness — OPEN
+### Tier C — bounded analytical usefulness — ACCEPTED UNDER THE V2 AMENDMENT
 
-Must still prove on real heterogeneous jobs:
+Accepted evidence proves on the bounded heterogeneous set:
 
-- [ ] work themes are useful and materially reduce manual synthesis effort;
-- [ ] employer facts and JobHunter interpretation remain distinguishable;
-- [ ] dense work does not collapse into an unhelpful generic theme;
-- [ ] multiple plausible work areas may coexist;
-- [ ] ambiguous cases can lower confidence/show alternatives;
-- [ ] likely deliverables are properly labeled explicit versus work-implied;
-- [ ] limited-work jobs do not fabricate responsibilities;
-- [ ] no exact wording match is required from semantic reasoning;
-- [ ] harmless phrasing variation is not treated as a contract failure.
+- [x] work themes are useful and materially reduce manual synthesis effort;
+- [x] employer facts and JobHunter interpretation remain distinguishable;
+- [x] dense work does not collapse into an unhelpful generic theme;
+- [x] multiple plausible work areas may coexist;
+- [x] ambiguous cases can lower confidence/show alternatives;
+- [x] likely deliverables are properly labeled explicit versus work-implied;
+- [x] limited-work jobs do not fabricate responsibilities;
+- [x] no exact wording match is required from semantic reasoning;
+- [x] harmless phrasing variation is not treated as a contract failure.
+
+The controlling v2 amendment replaced repeated live `tG9K`/`tmyX` action-authority trials with the
+bounded `t4qV → tmBK → reuse → browser → CLI` acceptance sequence. That sequence passed and is
+recorded in `docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`.
 
 P2.2A does **not** require Tier B promotion-grade human acceptance for every generated artifact.
 
@@ -840,7 +844,7 @@ Record harmless model wording variation or non-repeatable low-impact differences
 
 ## 17. P2.2 delivery increments and stop lines
 
-### P2.2A — Job Work Intelligence v1 — IMPLEMENTED / REAL-LOCAL ACCEPTANCE NEXT
+### P2.2A — Job Work Intelligence v2 — ACCEPTED / CLOSED
 
 Implemented scope:
 
@@ -855,15 +859,18 @@ Implemented scope:
 - [x] progressive implementation working-memory documentation;
 - [x] repository Ruff/full-pytest/warnings CI gates.
 
-Acceptance still open:
+Acceptance complete under the controlling v2 amendment:
 
-- [ ] live semantic/product review on `tG9K`;
-- [ ] live semantic/product review on `t4qV`;
-- [ ] live semantic/product review on `tmyX`;
-- [ ] live limited-evidence review on `tmBK`;
-- [ ] unchanged rerun/reuse proof on at least one real job;
-- [ ] browser usability/authority-boundary review on real artifacts;
-- [ ] final P2.2A acceptance decision and documentation.
+- [x] live v2 semantic/product review on `t4qV` artifact 12 / P1.6 44;
+- [x] exact 10/10 accepted-work assembly and visible fact/interpretation separation;
+- [x] deterministic limited-evidence review on `tmBK` artifact 13 / P1.6 39;
+- [x] unchanged `t4qV` rerun reused artifact 12 without duplicate generation;
+- [x] real Edge browser usability/authority-boundary review on artifacts 12/13;
+- [x] CLI same-assembled-semantics review;
+- [x] final P2.2A acceptance decision and documentation.
+
+Historical `tG9K`/`tmyX` evidence remains the accepted cross-job reason for the v2 representation;
+the amendment explicitly did not require another live model-trial matrix.
 
 Stop line:
 
@@ -930,28 +937,17 @@ P2.2 does not authorize:
 
 ## 20. Exact next action
 
-P2.2A implementation and repository mechanical quality are complete.
+P2.2A is accepted and closed on `job-work-intelligence-v2 / job-work-intelligence-v2.0`.
 
-Do **not** start P2.2B yet.
+Acceptance record:
 
-Verified checkpoint:
-
-`docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md`
-
-Next plan decision:
+`docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
 
 ```text
-retain model candidate grouping and relative emphasis
-→ deterministically inject exact accepted P1.6 direct-work statements within each theme
-→ keep free-form candidate interpretation optional and visually/structurally separate
-→ define which existing free-form action-bearing fields are removed, demoted, or retained
-→ preserve currentness/reference/coverage validation and immutable candidate history
-→ approve the bounded representation amendment before implementation
+STOP at the P2.2A acceptance decision
+→ P2.2B remains unstarted
+→ require a separate focused decision before P2.2B work
 ```
 
-The current implementation record is:
-
-`docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md`
-
-The cross-job `tG9K`/`tmyX` evidence is the material design evidence required to amend this plan.
-Do not continue prompt/model retries or start P2.2B before the representation decision.
+Do not continue prompt/model retries or infer authorization for P2.2B, Market v2, publication, or
+taxonomy expansion from P2.2A closure.

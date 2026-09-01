@@ -146,7 +146,7 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 ```
 
-P2.2A Job Work Intelligence v2 is **implemented** and repository quality is green. Real-local semantic/product acceptance remains open.
+P2.2A Job Work Intelligence v2 is **accepted and closed**. Repository quality and the recorded real-local semantic/product sequence are green. P2.2B has not started and requires a separate decision.
 
 Current P2.2A state:
 
@@ -156,7 +156,7 @@ v2 schema                           → job-work-intelligence-v2
 v2 prompt/runtime                   → job-work-intelligence-v2.0
 v2 representation implementation   → COMPLETE
 repository CI                       → GREEN
-real-local acceptance               → NEXT
+real-local acceptance               → PASSED / P2.2A CLOSED
 ```
 
 The 2026-09-01 checkpoint verified that free-form model review did not reliably preserve action relationships across both `tG9K` and `tmyX`. Controlled v1.3-v1.7/2B/4B/12B trials remain immutable local evidence. The approved response is representation-level fact/interpretation separation, not another model-trial matrix.
@@ -166,6 +166,7 @@ Records:
 ```text
 docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
 docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
+docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 ```
 
 Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
@@ -176,7 +177,7 @@ Blueprint is implemented and inspectable but **is not an accepted Phase-1 decisi
 
 Historical v6/12B artifact 7 remains experimental evidence. Complete semantic review found assumption-bearing interpretation beyond vacancy authority even after mechanical provenance passed.
 
-During current P2.2A acceptance:
+After P2.2A closure and until a separate next-stage decision:
 
 - do not create Blueprint v7;
 - do not weaken Blueprint validators;
@@ -194,7 +195,7 @@ This does **not** mean Phase-2 interpretation in general is prohibited. New boun
 
 ## 5. Current exact next-work rule
 
-Phase 1 and P2.1 are closed. P2.2A v2 representation implementation is complete. **Do not start P2.2B yet.**
+Phase 1, P2.1, and P2.2A are closed. **Do not start P2.2B without a separate focused decision.**
 
 Current controlling focused plan:
 
@@ -214,7 +215,9 @@ Current active gate:
 P2.2A Job Work Intelligence
 → v2 representation implementation COMPLETE
 → repository quality GREEN
-→ real-local semantic/product acceptance NEXT
+→ real-local semantic/product acceptance PASSED
+→ P2.2A CLOSED
+→ P2.2B decision NOT STARTED
 ```
 
 Current direct-work flow:
@@ -276,20 +279,16 @@ artifacts 6-11
 Current exact next action:
 
 ```text
-t4qV real-local v2 generation/review
-→ tmBK deterministic limited verification
-→ unchanged v2 artifact reuse verification
-→ browser authority/usability inspection
-→ CLI same-semantics inspection
-→ P2.2A close/acceptance decision
-→ only then P2.2B decision
+STOP at the recorded P2.2A acceptance decision
+→ P2.2B remains unstarted
+→ a separate focused decision is required before P2.2B work
 ```
 
 `tG9K`/`tmyX` already establish the action-authority design defect. Do not run another prompt/model trial matrix merely to prove the same point.
 
 P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
 
-During P2.2A acceptance:
+After P2.2A closure and until a separate next-stage decision:
 
 - do not bulk-map the remaining accepted P1.6 claim corpus;
 - do not broaden the canonical ontology merely to eliminate unmapped cases;
@@ -380,7 +379,9 @@ Phase-1 closure accepted
 → exact accepted P1.6 work injection + candidate interpretation separation implemented
 → second authority-review model pass removed
 → repository Ruff/full pytest/warnings-as-errors GREEN
-→ real-local v2 acceptance NEXT
+→ t4qV/tmBK/reuse/browser/CLI real-local v2 acceptance PASSED
+→ P2.2A CLOSED
+→ P2.2B decision NOT STARTED
 ```
 
 ## 6. Permanent semantic boundaries

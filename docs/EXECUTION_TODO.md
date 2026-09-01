@@ -6,7 +6,7 @@
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, the focused P2.2 plan, and the approved P2.2A representation amendment  
 **Current focused plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`  
 **Current controlling companion:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`  
-**Current gate:** P2.2A Work Intelligence v2 IMPLEMENTED / REPOSITORY QUALITY GREEN / REAL-LOCAL ACCEPTANCE NEXT
+**Current gate:** P2.2A Work Intelligence v2 ACCEPTED / CLOSED; P2.2B DECISION NOT STARTED
 
 Repository workflow:
 
@@ -97,7 +97,7 @@ P2.2A Job Work Intelligence
 → P2.2D role-archetype intelligence
 ```
 
-### D1 — P2.2A Job Work Intelligence — IMPLEMENTED / ACCEPTANCE OPEN
+### D1 — P2.2A Job Work Intelligence — ACCEPTED / CLOSED
 
 Current identities:
 
@@ -163,7 +163,7 @@ quality job               SUCCESS
 - [x] browser/CLI authority-separation regression.
 - [x] no-publication browser regression.
 
-#### Real-local semantic/product acceptance — NEXT
+#### Real-local semantic/product acceptance — ACCEPTED
 
 Historical evidence already complete:
 
@@ -174,13 +174,17 @@ another prompt/model trial matrix         → NOT REQUIRED
 
 Acceptance sequence:
 
-- [ ] `t4qV`: generate current v2 on accepted P1.6 44.
-- [ ] `t4qV`: review theme usefulness and exact accepted-work presentation.
-- [ ] `tmBK`: verify deterministic `limited` result and no invented duties.
-- [ ] reuse: rerun at least one unchanged current v2 job and confirm artifact reuse.
-- [ ] browser: inspect same real artifacts for immediate fact/interpretation distinction.
-- [ ] CLI: confirm same assembled semantics.
-- [ ] decide final P2.2A semantic/product acceptance.
+- [x] `t4qV`: generated current v2 artifact 12 on accepted P1.6 44 with one normal model call and no semantic repair.
+- [x] `t4qV`: three useful themes preserve exact kind/index/statement/confidence for all 10/10 accepted responsibilities and visibly separate candidate interpretation.
+- [x] `tmBK`: artifact 13 is deterministic `limited` on accepted P1.6 39, with zero themes/deliverables/role interpretation, no model call, and no invented duties.
+- [x] reuse: unchanged `t4qV` rerun returned artifact 12 as `reused`; one artifact row remains and attempt 20 records reuse without another model generation.
+- [x] browser: real Edge renders for artifacts 12/13 make candidate structure, exact accepted work, interpretation, and limited state immediately distinct; browser GET inspection caused no mutation/publication.
+- [x] CLI: `show t4qV` / `show tmBK` expose the same assembled semantic fields and authority labels as the browser.
+- [x] final P2.2A semantic/product acceptance: PASS / CLOSED on `job-work-intelligence-v2 / v2.0`.
+
+Progressive acceptance record:
+
+`docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
 
 Interpretive policy:
 
@@ -198,9 +202,10 @@ semantic relationship problem
 → do not invent deterministic verb-equivalence machinery
 ```
 
-### D2 — P2.2B selective responsibility/deliverable promotion — BLOCKED
+### D2 — P2.2B selective responsibility/deliverable promotion — NOT STARTED / SEPARATE DECISION REQUIRED
 
-- [ ] start only after D1 acceptance.
+- [x] D1 prerequisite is now accepted.
+- [ ] do not start without a separate focused decision after this stop point.
 - [ ] promote only correspondences with demonstrated downstream reuse value.
 - [ ] do not optimize mapping completeness.
 
@@ -237,11 +242,8 @@ semantic relationship problem
 ## Exact next action
 
 ```text
-real-local t4qV v2 generation/review
-→ tmBK deterministic limited verification
-→ unchanged v2 reuse verification
-→ browser authority/usability inspection
-→ CLI same-semantics inspection
-→ P2.2A acceptance decision
-→ only then P2.2B decision
+P2.2A real-local acceptance sequence COMPLETE
+→ P2.2A ACCEPTED / CLOSED
+→ STOP
+→ P2.2B decision remains unstarted
 ```

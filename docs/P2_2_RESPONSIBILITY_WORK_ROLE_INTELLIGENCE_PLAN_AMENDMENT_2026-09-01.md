@@ -1,12 +1,12 @@
 # P2.2A Job Work Intelligence Representation Amendment
 
-**Status:** APPROVED / CONTROLLING COMPANION AMENDMENT  
+**Status:** APPROVED / IMPLEMENTED / REAL-LOCAL ACCEPTED
 **Date:** 2026-09-01  
 **Applies to:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`  
 **Scope:** P2.2A Job Work Intelligence representation, authority ownership, persistence contract, browser/CLI presentation, and post-redesign acceptance  
 **Evidence checkpoint:** `docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md`
 
-This amendment resolves the P2.2A action-authority representation blocker. It is controlling where it is more specific than the base P2.2 plan. All unrelated P2.2 boundaries, non-goals, promotion rules, publication limits, and P2.2B/C/D sequencing remain unchanged.
+This amendment resolves the P2.2A action-authority representation blocker. It is controlling where it is more specific than the base P2.2 plan. All unrelated P2.2 boundaries, non-goals, promotion rules, publication limits, and P2.2B/C/D sequencing remain unchanged. Its implementation and bounded post-implementation acceptance sequence are complete.
 
 ---
 
@@ -436,9 +436,9 @@ P2.2A acceptance should answer:
 
 ## 11. Stop lines
 
-This amendment does **not** authorize:
+This amendment and the completed P2.2A acceptance do **not** authorize:
 
-- P2.2B/C/D implementation before P2.2A acceptance;
+- P2.2B/C/D implementation without a separate next-stage decision;
 - deterministic action-verb equivalence machinery;
 - another prompt-only/model-only action-authority experiment series;
 - 12B authority-review routing for ordinary Work Intelligence;
@@ -453,22 +453,24 @@ This amendment does **not** authorize:
 
 ---
 
-## 12. Exact next action
+## 12. Acceptance outcome and exact next action
 
-The representation decision is now **APPROVED**.
-
-Next execution order:
+The representation decision is approved, implemented, and accepted on:
 
 ```text
-implement job-work-intelligence-v2 candidate-vs-assembled representation
-→ remove the dedicated second model authority-review call
-→ deterministically inject exact accepted P1.6 direct-work statements
-→ update browser/CLI presentation around accepted-work vs interpretation
-→ add focused representation/authority regressions
-→ run focused repository quality gates
-→ resume t4qV / tmBK / reuse / browser acceptance
-→ P2.2A close/acceptance decision
-→ only then P2.2B decision
+job-work-intelligence-v2 / job-work-intelligence-v2.0
 ```
 
-No further representation-design or prompt/model action-authority trial is required before implementation.
+The real-local `t4qV → tmBK → reuse → browser → CLI` sequence passed. Evidence and the final
+P2.2A decision are recorded in:
+
+`docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
+
+```text
+P2.2A ACCEPTED / CLOSED
+→ STOP
+→ P2.2B decision NOT STARTED
+```
+
+No further representation-design or prompt/model action-authority trial is required. P2.2B work
+requires a separate focused decision.

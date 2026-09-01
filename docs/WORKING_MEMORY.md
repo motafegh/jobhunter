@@ -4,7 +4,7 @@
 **Date:** 2026-09-01  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 IMPLEMENTED / REPOSITORY QUALITY GREEN / REAL-LOCAL ACCEPTANCE NEXT
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B DECISION NOT STARTED
 
 ## 1. Frozen accepted substrate
 
@@ -41,6 +41,12 @@ Implementation checkpoint:
 
 ```text
 docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
+```
+
+Progressive real-local acceptance record:
+
+```text
+docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 ```
 
 ## 3. Current P2.2A identities
@@ -148,7 +154,8 @@ full pytest: PASS
 pytest warnings-as-errors: PASS
 ```
 
-Do not confuse this with real-local semantic/product acceptance. No live LM Studio generation was performed in this remote session.
+That CI record proves repository mechanics only. The later real-local semantic/product evidence and
+acceptance decision are recorded separately in Section 9-10 below.
 
 ## 8. Why v2 exists
 
@@ -175,40 +182,72 @@ requirements, Best Practices, and hardening solutions.
 
 Free-form model review repeatedly strengthened those action relationships. The response is now representation-level separation, not another prompt/model trial.
 
-## 9. Exact next action
+## 9. Current real-local acceptance evidence
 
-Real-local acceptance sequence:
+`t4qV` v2 artifact 12 was generated locally on accepted P1.6 artifact 44 with
+`gemma-4-e4b-it-ud`:
 
 ```text
-1. t4qV
-   → generate current v2 on accepted P1.6 44
-   → review grouping usefulness + exact accepted-work presentation
+outcome:                         completed
+themes:                          3
+accepted responsibility coverage: 10/10 exact
+semantic repair:                 none
+fact/interpretation separation:  PASS
+theme usefulness:                PASS
+```
 
-2. tmBK
-   → verify deterministic limited result
-   → zero invented duties
+The candidate separates architecture/policy, firewall/VPN operations, and
+troubleshooting/documentation while displaying every exact accepted P1.6 statement inside its
+theme. Stored kind/index/statement/confidence values exactly match P1.6 artifact 44.
 
-3. reuse
-   → rerun one unchanged v2 job
-   → confirm same artifact is reused
+`tmBK` v2 artifact 13 passed the deterministic limited-work gate on accepted P1.6 artifact 39:
 
-4. browser
-   → inspect same real artifacts
-   → confirm factual work and interpretation are immediately distinguishable
+```text
+evidence status:     limited
+themes/deliverables: 0 / 0
+role interpretation: none
+model call:          none
+invented duties:     none
+```
 
-5. CLI
-   → confirm same assembled semantics
+An unchanged `t4qV` rerun returned `reused` for artifact 12. Exactly one v2 artifact remains on
+P1.6 artifact 44; attempt 20 records reuse and no new model generation/artifact occurred.
 
-6. decide P2.2A acceptance
+Real Edge browser inspection at a 1440-pixel viewport verified that candidate theme/deliverable/
+role labels, exact accepted P1.6 work, and optional JobHunter interpretation are visually distinct.
+The `tmBK` page visibly presents the limited/no-invented-duty state without fabricated semantic
+cards. Browser GET inspection caused no persistence/publication side effect.
 
-7. only then decide P2.2B
+CLI `show` for both jobs displayed the same assembled semantic content and authority hierarchy.
+
+## 10. P2.2A acceptance decision
+
+```text
+P2.2A Job Work Intelligence v2: ACCEPTED / CLOSED
+contract:                         job-work-intelligence-v2
+prompt/runtime:                   job-work-intelligence-v2.0
+```
+
+The redesigned view materially reduces manual `t4qV` responsibility synthesis while keeping every
+exact accepted work statement immediately recoverable. Candidate prose remains visibly and
+structurally interpretation. `tmBK`, reuse, browser, CLI, and publication-boundary gates passed.
+
+Candidate themes/deliverables/role interpretations remain generated analytical interpretation,
+not promoted reusable authority. P2.2 overall is not closed.
+
+## 11. Exact next action
+
+```text
+STOP at the recorded P2.2A acceptance decision.
+
+P2.2B remains unstarted and requires a separate focused decision.
 ```
 
 `tG9K`/`tmyX` already established the action-authority design defect. Do not repeat the model-trial matrix.
 
-## 10. Stop lines
+## 12. Stop lines
 
-Until P2.2A closes:
+After P2.2A closure and until a separate next-stage decision:
 
 - do not start P2.2B;
 - do not bulk-map responsibilities;
@@ -222,7 +261,7 @@ Until P2.2A closes:
 - do not add personal readiness/gap/scoring/recommendations;
 - do not revive Blueprint as authority.
 
-## 11. Key current records
+## 13. Key current records
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
@@ -230,4 +269,5 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
 docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
+docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 ```
