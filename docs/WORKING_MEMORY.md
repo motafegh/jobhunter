@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-01
+**Date:** 2026-09-01  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A IMPLEMENTED / ACCEPTANCE OPEN; repeated cross-job action-authority defect VERIFIED; representation-plan amendment NEXT
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A IMPLEMENTED v1 / ACCEPTANCE OPEN; v2 representation amendment APPROVED; v2 implementation NEXT
 
 ## 1. Frozen factual substrate
 
@@ -26,208 +26,269 @@ t4qV → P1.6 44 → Capability 14
 tmyX → P1.6 46 → Capability 15
 ```
 
-Public-corpus baseline remains 353 known/discovered jobs, 43 fetched/parsed details, 20 current English projections, 5 accepted/current English P1.6 artifacts, and 5 accepted/current Capability artifacts. Registry and Work Intelligence publication remain unauthorized.
+Registry and Work Intelligence publication remain unauthorized. Do not reopen accepted P1.6/Capability contracts merely for harmless downstream candidate wording variation.
 
 ## 2. Permanent governance model
 
-Controlling companion:
+Controlling reasoning companion:
 
 `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 
-Operational rule:
+Operational distinction:
 
 ```text
 SOURCE / STATE INTEGRITY
 → strict provenance/currentness/persistence boundaries
 
 ANALYTICAL INTERPRETATION
-→ semantic/model reasoning is allowed and expected
+→ semantic/model reasoning allowed and expected
 → traceable, uncertainty-aware, candidate by default
 
 PROMOTED REUSABLE AUTHORITY
 → stronger review proportional to reuse/blast radius
 ```
 
-Never collapse these distinctions:
+Never collapse:
 
 ```text
 source fact ≠ normalized correspondence ≠ analytical interpretation ≠ recommendation
 candidate/generated ≠ reviewed/promoted
 ```
 
-Semantic relationship problems should normally be solved semantically, not by inventing brittle deterministic vocabularies.
+## 3. P2.2 controlling plan and approved amendment
 
-## 3. P2.1 closure
-
-P2.1 Canonical Concept Registry is accepted and closed. Accepted seed remains four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision. Do not reopen P2.1 merely because P2.2 uses candidate analytical interpretation.
-
-Final record:
-
-`docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md`
-
-## 4. P2.2 focused plan
-
-Controlling plan:
+Base focused plan:
 
 `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
-Approved sequence:
+Approved controlling companion amendment:
+
+`docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`
+
+Evidence checkpoint that triggered the amendment:
+
+`docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md`
+
+The amendment is more specific and controls where it changes the base P2.2A representation/pipeline decision.
+
+## 4. Why the representation changed
+
+Real `tG9K` and `tmyX` evidence established that model reasoning remains useful for grouping and emphasis, but free-form model prose is not reliable enough to carry factual action authority.
+
+Known examples:
 
 ```text
-P2.2A Job Work Intelligence v1
-→ P2.2B selective responsibility/deliverable promotion
-→ P2.2C responsibility-family intelligence
-→ P2.2D role-archetype intelligence
+tG9K accepted work:
+Partner with the semiconductor technical lead and engineering to move models toward production.
+
+Model variants repeatedly strengthened that relationship toward direct deployment / into production.
+
+
+tmyX accepted role purpose:
+...develop and provide security requirements, Best Practices, and hardening solutions.
+
+Model variants strengthened this toward direct hardening execution.
 ```
 
-P2.2A answers the practical user question: **What does this job actually involve?** Useful job-level interpretation must not wait for exhaustive canonical mapping.
+Controlled v1.3-v1.7 trials across 2B/4B/12B and multiple review protocols are complete historical evidence. Do **not** run another prompt/model action-authority trial matrix.
 
-## 5. P2.2A implementation — COMPLETE / ACCEPTANCE OPEN
+## 5. Approved v2 representation
 
-Contract/schema:
+The key authority rule is now:
+
+> The model decides how accepted work is usefully organized; accepted P1.6 statements decide what factual work is actually asserted.
+
+Approved flow:
 
 ```text
-job-work-intelligence-v1
+accepted/current English P1.6 direct work
+→ compact indexed factual input
+→ model candidate grouping / emphasis / bounded interpretation
+→ deterministic reference + coverage validation
+→ deterministic injection of exact accepted P1.6 work statements
+→ persist assembled candidate artifact
+→ browser / CLI
 ```
 
-Current prompt/pipeline identity:
+New identities to implement:
 
 ```text
-job-work-intelligence-v1.3
+persisted Work Intelligence schema/contract: job-work-intelligence-v2
+prompt/runtime identity:                     job-work-intelligence-v2.0
 ```
 
-Current direct-work pipeline:
+Historical v1 artifacts 2-11 and attempt history remain immutable.
+
+## 6. Field ownership
+
+Model candidate owns:
 
 ```text
-accepted/current English P1.6
-→ compact indexed work payload
-→ typed local-model Work Intelligence generation
-→ deterministic reference/coverage/scope validation
-→ one bounded regeneration if those post-generation guards reject the draft
-→ final semantic authority review against accepted direct-work statements
-→ deterministic reference/coverage/scope validation again
-→ immutable candidate artifact
-→ CLI/browser inspection
+theme IDs / labels
+relative emphasis
+confidence
+source indices used for grouping
+supporting requirement references
+optional interpretation / rationale
+candidate deliverables
+candidate role label / alternatives / limitations
+unknowns / limitations
 ```
 
-Requirement-only jobs use the deterministic `limited` path and do not call the model or turn qualifications into duties.
+Application code owns factual assembly:
 
-The final semantic authority review is deliberately model-semantic. It focuses on action strength, ownership relationship, lifecycle scope, and unsupported transfer from requirements/shared evidence. It is instructed to preserve theme grouping, IDs, emphasis, confidence, and structured references by default and prefer minimal prose corrections.
+```text
+AcceptedWorkItem
+- kind: responsibility | role_purpose
+- index
+- exact accepted P1.6 statement
+- copied P1.6 confidence when available
+```
 
-Do **not** replace this with a deterministic action-verb equivalence table.
+Each persisted theme contains exact accepted work items rather than relying on a model-written theme summary plus raw indices.
 
-Core files:
+Current action-bearing free-form fields are intentionally reduced in v2:
+
+```text
+work_summary                     → remove
+WorkTheme.summary                → remove as factual description
+CandidateRoleInterpretation.summary → remove from required v2 shape
+DeliverableCandidate.summary     → remove from required v2 shape
+```
+
+Optional interpretation/rationale may remain only when structurally and visually labeled as JobHunter candidate interpretation.
+
+## 7. Pipeline change
+
+Normal v2 direct-work path:
+
+```text
+one model candidate generation
+→ deterministic validation
+→ optional one bounded regeneration only after deterministic candidate rejection
+→ deterministic exact-work assembly
+→ persistence
+```
+
+Remove the dedicated second model semantic authority-review call from the active successful path. The completed trials showed that another free-form model review cannot reliably establish factual action authority and increases repeated-use latency.
+
+Do not replace it with:
+
+- deterministic verb-equivalence tables;
+- 12B authority review;
+- multi-model voting;
+- another prompt-only trial series.
+
+Keep deterministic dependency/currentness/reference/coverage/schema/publication protections. The existing small unsupported scope-intensifier guard may remain for clearly misleading candidate interpretation but must not expand into semantic paraphrase machinery.
+
+## 8. Browser / CLI target
+
+Themes should present authority at the point of use:
+
+```text
+Candidate theme label
+PRIMARY / SUPPORTING / UNCERTAIN · confidence
+
+Accepted P1.6 work
+- exact accepted statement
+- exact accepted statement
+
+JobHunter interpretation
+- optional rationale / explanation
+```
+
+Raw source indices alone are not sufficient factual presentation.
+
+Do not label translated/derived English P1.6 statements as literal employer-authored English. Underlying original source evidence remains recoverable through P1.6 provenance.
+
+Browser and CLI must render the same assembled artifact semantics.
+
+## 9. Expected implementation surface
+
+Start with the smallest bounded set:
 
 ```text
 src/jobhunter/work_intelligence_models.py
-src/jobhunter/work_intelligence_store.py
-src/jobhunter/work_intelligence_inference.py
 src/jobhunter/work_intelligence_service.py
-src/jobhunter/work_intelligence_cli.py
-src/jobhunter/web/work_intelligence.py
+src/jobhunter/work_intelligence_inference.py        # only where new candidate model / review removal requires it
+src/jobhunter/web/work_intelligence.py              # only if context assembly changes
 src/jobhunter/web/templates/work_intelligence.html
+src/jobhunter/work_intelligence_cli.py              # formatter/rendering as needed
+focused Work Intelligence tests
 ```
 
-Core regressions now include generation schema, scope guard, empty-section reference normalization, bounded semantic repair, and semantic authority review.
+`work_intelligence_store.py` should remain structurally unchanged unless implementation finds a real table-level need. Do not create a migration ceremonially.
 
-Current repository-quality evidence on the v1.3 code/test pipeline:
+Do not modify P1.6, Capability v9, Blueprint, Registry, Market, or public-corpus publication as part of this repair.
+
+## 10. Required deterministic regression evidence
+
+At minimum prove:
+
+- exact P1.6 direct-work statements survive unchanged into final theme work items;
+- kind/index/statement correspondence cannot drift;
+- model candidate wording cannot replace factual action wording;
+- all accepted direct work remains covered;
+- invalid references still fail;
+- requirement-only `tmBK` remains deterministic limited/no-model;
+- valid normal generation no longer performs a second authority-review model call;
+- bounded regeneration remains bounded;
+- historical v1 artifacts remain historical and are not reused as current v2;
+- v2 reuse remains idempotent;
+- browser/CLI visibly separate accepted work from interpretation;
+- Work Intelligence remains excluded from public-corpus publication.
+
+## 11. Post-implementation real acceptance
+
+Do not repeat the completed `tG9K`/`tmyX` action-authority model experiments.
+
+After v2 deterministic quality is green:
 
 ```text
-Ruff                         PASS
-full pytest                  PASS — 530 tests
-pytest warnings-as-errors    PASS
-overall CI quality job       PASS
+1. t4qV — generate/review redesigned direct-work artifact
+2. tmBK — verify deterministic limited behavior
+3. unchanged current v2 job — verify reuse
+4. browser — inspect authority separation + comprehension
+5. CLI — confirm same representation semantics
+6. decide P2.2A acceptance
+7. only then decide P2.2B
 ```
 
-Do not ask the user to repeat these repository gates locally.
-
-## 6. Live P2.2A history that matters
-
-### `t4qV`
-
-First generation exposed missing structured provenance fields. That was fixed by making structured reference arrays required.
-
-First structurally valid artifact 1 then exposed unsupported `end-to-end` / `entire security stack` scope inflation and shared-evidence transfer risk. v1.1 strengthened the prompt and added a bounded scope-intensifier guard.
-
-Artifact 2 under v1.1 became a useful network/security candidate anchor with four coherent themes and no repeated unsupported lifecycle inflation. It is historical under current v1.3 identity.
-
-### `tmyX`
-
-Artifact 3 under v1.1 gave useful security-assessment/hardening/request/documentation/automation grouping, but its summary strengthened accepted `develop and provide ... hardening solutions` into `implementing hardening solutions`.
-
-That was initially recorded as a bounded candidate limitation. Once a similar pattern appeared independently on `tG9K`, it became evidence for a general semantic action-authority refinement.
-
-### `tG9K`
-
-The first attempt exposed an impossible `role_purpose[1]` reference while the accepted role-purpose section was empty. JobHunter now deterministically removes references into structurally empty sections only; invalid references into non-empty sections still fail.
-
-Artifact 4 under v1.1 produced useful industrial-ML grouping and proved emphasis does not always collapse to all-primary: it had `3 primary + 1 supporting`. Therefore do not add a fixed primary-theme quota.
-
-Artifact 4 also strengthened `partner ... to move models toward production` into direct `deploying` language. Together with `tmyX`, this justified v1.2 prompt-level action-authority refinement.
-
-The first v1.2 generation then hit unsupported `entire lifecycle`; that revealed a runtime UX problem, so JobHunter gained one bounded post-validation semantic-repair retry.
-
-Artifact 5 under v1.2 successfully persisted after those changes and remained useful, but still said `building, validating, and deploying Machine Learning/AI models`. Therefore prompt-only action-authority refinement was proven insufficient.
-
-Current response: v1.3 adds a dedicated final semantic authority-review pass before persistence. Artifact 5 remains immutable historical v1.2 evidence and is not current under v1.3.
-
-## 7. Current artifact state
+## 12. Exact next action
 
 ```text
-artifact 2  t4qV  v1.1  useful accepted candidate anchor; historical under v1.3
-artifact 3  tmyX  v1.1  useful candidate with action-strengthening limitation; historical
-artifact 4  tG9K  v1.1  useful grouping; supporting emphasis demonstrated; historical
-artifact 5  tG9K  v1.2  useful grouping but direct-deployment wording remained; historical
-artifact 6  tG9K  v1.3/2B  useful grouping; direct-deployment inflation remained; historical
-artifact 7  tG9K  v1.4/4B  compact verdict accepted direct deploying; experimental history
-artifact 8  tG9K  v1.5/4B  field review removed ownership but strengthened lifecycle endpoint
-artifact 9  tG9K  v1.6/4B+12B  slow split trial; endpoint strengthening remained
-artifact 10 tG9K  v1.7/4B  useful bounded candidate; residual `into production` paraphrase
-artifact 11 tmyX  v1.7/4B  useful grouping; top summary strengthened solution provision to hardening
+implement job-work-intelligence-v2 candidate-vs-assembled representation
+→ remove dedicated second model authority-review call
+→ deterministically inject exact accepted P1.6 direct-work statements
+→ update browser/CLI authority presentation
+→ add focused v2 regression coverage
+→ run focused repository quality gates
+→ resume t4qV / tmBK / reuse / browser acceptance
+→ P2.2A close/acceptance decision
+→ only then P2.2B decision
 ```
 
-Artifacts 7-11 were produced by controlled local experimental code that was not retained. Source
-was restored to committed v1.3; those artifacts and all failed attempts remain immutable evidence.
-
-## 8. Exact next action
-
-```text
-do not run another prompt/model action-authority trial
-→ amend the focused P2.2A representation plan
-→ retain model candidate grouping and relative emphasis
-→ deterministically inject exact accepted direct-work statements inside themes
-→ keep optional candidate interpretation visibly separate from factual action wording
-→ decide the bounded v2 representation before implementation
-```
-
-## 9. Do not start yet
+## 13. Do not start yet
 
 Until P2.2A closes:
 
-- do not start P2.2B;
-- do not promote responsibility families/archetypes;
-- do not bulk-map remaining claims merely for completeness;
-- do not broaden ontology just to eliminate unresolved cases;
-- do not publish Work Intelligence or registry state;
+- do not start P2.2B/C/D implementation;
+- do not bulk canonicalize responsibilities;
+- do not broaden ontology for completeness;
+- do not publish Work Intelligence/registry state;
 - do not start Market v2;
 - do not add personal readiness/gap/scoring/recommendations;
 - do not revive Blueprint as authority;
-- do not add a deterministic action-verb equivalence system;
-- do not add a fixed primary-theme quota.
+- do not add deterministic action-verb equivalence;
+- do not add a fixed primary-theme quota;
+- do not rerun the completed action-authority model trial matrix.
 
-## 10. Key current records
+## 14. Key records
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
+docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/working-memory/2026-08-26_P2_2A_JOB_WORK_INTELLIGENCE_V1_IMPLEMENTATION.md
 docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
-docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_LIVE_GENERATION_STRUCTURED_REFERENCE_FAILURE.md
-docs/working-memory/2026-08-26_P2_2A_T4QV_FIRST_VALID_CANDIDATE_AND_SCOPE_REPAIR.md
-docs/working-memory/2026-08-27_P2_2A_T4QV_V11_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED.md
-docs/working-memory/2026-08-27_P2_2A_TMYX_SEMANTIC_PRODUCT_ANCHOR_ACCEPTED_WITH_LIMITATION.md
-docs/working-memory/2026-08-27_P2_2A_TG9K_EMPTY_ROLE_PURPOSE_REFERENCE_FAILURE_AND_REPAIR.md
-docs/working-memory/2026-08-27_P2_2A_TG9K_USEFUL_CANDIDATE_AND_ACTION_AUTHORITY_V12_REFINEMENT.md
-docs/working-memory/2026-08-27_P2_2A_V12_SCOPE_FAILURE_AND_BOUNDED_SEMANTIC_REPAIR_RETRY.md
-docs/working-memory/2026-08-27_P2_2A_TG9K_V12_PERSISTED_ACTION_INFLATION_AND_V13_AUTHORITY_REVIEW.md
 ```
