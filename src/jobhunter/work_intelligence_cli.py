@@ -21,8 +21,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="jobhunter-work",
         description=(
-            "Generate or inspect P2.2A Job Work Intelligence. Output is candidate analytical "
-            "interpretation, not employer wording or promoted taxonomy."
+            "Generate or inspect P2.2A Job Work Intelligence. Exact accepted P1.6 work is shown "
+            "separately from JobHunter candidate interpretation and promoted taxonomy."
         ),
     )
     parser.add_argument(
