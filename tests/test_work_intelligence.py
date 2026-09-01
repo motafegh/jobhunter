@@ -16,7 +16,10 @@ from jobhunter.translation_store import TranslationStore
 from jobhunter.web.launcher import build_runtime_app
 from jobhunter.work_intelligence_inference import WorkIntelligenceInferenceResult
 from jobhunter.work_intelligence_models import (
+    AcceptedWorkItem,
+    CandidateJobWorkIntelligence,
     CandidateRoleInterpretation,
+    CandidateWorkTheme,
     JobWorkIntelligence,
     WorkTheme,
 )
@@ -26,6 +29,7 @@ from jobhunter.work_intelligence_service import (
     WORK_INTELLIGENCE_SCHEMA_VERSION,
     WorkIntelligenceError,
     WorkIntelligenceService,
+    format_work_intelligence,
 )
 from jobhunter.work_intelligence_store import WorkIntelligenceStore
 
@@ -118,19 +122,21 @@ def _seed_version(
 
 
 class _FakeProvider:
-    def __init__(self, document: JobWorkIntelligence) -> None:
-        self.document = document
+    def __init__(self, candidate: CandidateJobWorkIntelligence) -> None:
+        self.candidate = candidate
         self.calls = 0
+        self.response_models: list[type] = []
 
-    def complete(self, **_kwargs) -> WorkIntelligenceInferenceResult:
+    def complete(self, **kwargs) -> WorkIntelligenceInferenceResult:
         self.calls += 1
+        self.response_models.append(kwargs["response_model"])
         return WorkIntelligenceInferenceResult(
             model="work-model",
-            intelligence=self.document.model_dump(mode="json"),
+            intelligence=self.candidate.model_dump(mode="json"),
             request_body={"fake": True},
             raw_response={"fake": True},
             finish_reason="stop",
-            validated_model=self.document,
+            validated_model=self.candidate,
         )
 
 
@@ -155,44 +161,34 @@ def _service(
     )
 
 
-def _valid_direct_document() -> JobWorkIntelligence:
-    return JobWorkIntelligence(
+def _valid_direct_candidate() -> CandidateJobWorkIntelligence:
+    return CandidateJobWorkIntelligence(
         evidence_status="sufficient",
-        work_summary=(
-            "The job combines security assessment work with repeatable audit automation and "
-            "technical reporting."
-        ),
         work_themes=[
-            WorkTheme(
+            CandidateWorkTheme(
                 theme_id="theme-1",
                 label="Security assessment",
-                summary="Review security posture and identify configuration or control weaknesses.",
                 emphasis="primary",
                 confidence="high",
                 responsibility_indices=[0],
                 role_purpose_indices=[0],
                 supporting_requirement_indices=[0],
-                rationale="The accepted work explicitly covers assessment and security review.",
+                rationale="This groups the accepted assessment and security-review work.",
             ),
-            WorkTheme(
+            CandidateWorkTheme(
                 theme_id="theme-2",
                 label="Audit automation",
-                summary="Automate recurring assessment and audit activities with scripting.",
                 emphasis="supporting",
                 confidence="high",
                 responsibility_indices=[1],
                 role_purpose_indices=[],
                 supporting_requirement_indices=[0],
-                rationale="The second accepted responsibility explicitly describes automation.",
+                rationale="This groups the accepted recurring audit-automation work.",
             ),
         ],
         deliverables=[],
         role_interpretation=CandidateRoleInterpretation(
             label="Security assessment and automation role",
-            summary=(
-                "A candidate interpretation centered on security review work with a supporting "
-                "automation component."
-            ),
             confidence="high",
             supporting_theme_ids=["theme-1", "theme-2"],
             alternatives=[],
@@ -229,42 +225,46 @@ def test_requirement_only_job_produces_limited_artifact_without_model_call(
     assert artifact.intelligence["work_themes"] == []
     assert artifact.intelligence["deliverables"] == []
     assert artifact.intelligence["role_interpretation"] is None
+    assert "work_summary" not in artifact.intelligence
 
 
-def test_direct_work_is_persisted_as_candidate_and_reused(tmp_path: Path) -> None:
+def test_direct_work_is_assembled_with_exact_p16_facts_and_reused(tmp_path: Path) -> None:
     database_path = tmp_path / "jobhunter.sqlite3"
+    responsibility_0 = "Assess vulnerabilities and security configurations"
+    responsibility_1 = "Automate assessment and audit processes"
+    role_purpose_0 = "Strengthen infrastructure security"
     analysis_id = _seed_version(
         database_path,
         job_id="tmyX",
         version=1,
         responsibilities=[
             {
-                "statement": "Assess vulnerabilities and security configurations",
-                "evidence": "Assess vulnerabilities and security configurations",
+                "statement": responsibility_0,
+                "evidence": responsibility_0,
                 "confidence": "high",
             },
             {
-                "statement": "Automate assessment and audit processes",
-                "evidence": "Automate assessment and audit processes",
+                "statement": responsibility_1,
+                "evidence": responsibility_1,
                 "confidence": "high",
             },
         ],
         role_purpose=[
             {
-                "statement": "Strengthen infrastructure security",
-                "evidence": "Strengthen infrastructure security",
+                "statement": role_purpose_0,
+                "evidence": role_purpose_0,
                 "confidence": "high",
             }
         ],
     )
-    provider = _FakeProvider(_valid_direct_document())
+    provider = _FakeProvider(_valid_direct_candidate())
     service = _service(database_path, provider=provider, work_model="work-model")
 
     first = service.analyze_job("tmyX")
     second = service.analyze_job("tmyX")
     artifact = service.current_artifact("tmyX")
 
-    assert provider.calls == 2
+    assert provider.calls == 1
     assert first.outcome == "completed"
     assert second.outcome == "reused"
     assert first.artifact_id == second.artifact_id
@@ -274,9 +274,142 @@ def test_direct_work_is_persisted_as_candidate_and_reused(tmp_path: Path) -> Non
     assert artifact.semantic_state == "candidate"
     assert artifact.prompt_version == WORK_INTELLIGENCE_PROMPT_VERSION
     assert artifact.schema_version == WORK_INTELLIGENCE_SCHEMA_VERSION
+
+    document = JobWorkIntelligence.model_validate(artifact.intelligence)
+    assert document.work_themes[0].accepted_work_items == [
+        AcceptedWorkItem(
+            kind="responsibility",
+            index=0,
+            statement=responsibility_0,
+            confidence="high",
+        ),
+        AcceptedWorkItem(
+            kind="role_purpose",
+            index=0,
+            statement=role_purpose_0,
+            confidence="high",
+        ),
+    ]
+    assert document.work_themes[1].accepted_work_items[0].statement == responsibility_1
     assert artifact.intelligence["role_interpretation"]["label"] == (
         "Security assessment and automation role"
     )
+    assert "work_summary" not in artifact.intelligence
+    assert "summary" not in artifact.intelligence["work_themes"][0]
+    assert "responsibility_indices" not in artifact.intelligence["work_themes"][0]
+
+
+def test_candidate_interpretation_cannot_replace_exact_tg9k_factual_statement(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    exact_statement = (
+        "Partner with the semiconductor technical lead and engineering to move models toward "
+        "production."
+    )
+    _seed_version(
+        database_path,
+        job_id="tG9K",
+        version=1,
+        responsibilities=[
+            {
+                "statement": exact_statement,
+                "evidence": exact_statement,
+                "confidence": "high",
+            }
+        ],
+    )
+    candidate = CandidateJobWorkIntelligence(
+        evidence_status="sufficient",
+        work_themes=[
+            CandidateWorkTheme(
+                theme_id="theme-1",
+                label="Production deployment",
+                emphasis="primary",
+                confidence="high",
+                responsibility_indices=[0],
+                role_purpose_indices=[],
+                supporting_requirement_indices=[],
+                rationale="Candidate grouping around production-readiness activity.",
+            )
+        ],
+        deliverables=[],
+        role_interpretation=None,
+        limitations=[],
+    )
+    service = _service(
+        database_path,
+        provider=_FakeProvider(candidate),
+        work_model="work-model",
+    )
+
+    result = service.analyze_job("tG9K")
+    artifact = WorkIntelligenceStore(database_path).artifact_by_id(result.artifact_id)
+
+    assert artifact is not None
+    persisted = artifact.intelligence["work_themes"][0]
+    assert persisted["label"] == "Production deployment"
+    assert persisted["accepted_work_items"] == [
+        {
+            "kind": "responsibility",
+            "index": 0,
+            "statement": exact_statement,
+            "confidence": "high",
+        }
+    ]
+
+
+def test_role_purpose_hardening_wording_is_preserved_exactly(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    exact_role_purpose = (
+        "Assess security posture of servers and Microsoft services and to develop and provide "
+        "security requirements, Best Practices, and hardening solutions."
+    )
+    _seed_version(
+        database_path,
+        job_id="tmyX-role-purpose",
+        version=1,
+        responsibilities=[],
+        role_purpose=[
+            {
+                "statement": exact_role_purpose,
+                "evidence": exact_role_purpose,
+                "confidence": "high",
+            }
+        ],
+    )
+    candidate = CandidateJobWorkIntelligence(
+        evidence_status="sufficient",
+        work_themes=[
+            CandidateWorkTheme(
+                theme_id="theme-1",
+                label="Security hardening",
+                emphasis="primary",
+                confidence="high",
+                responsibility_indices=[],
+                role_purpose_indices=[0],
+                supporting_requirement_indices=[],
+                rationale="Candidate grouping of the accepted security-posture work.",
+            )
+        ],
+        deliverables=[],
+        role_interpretation=None,
+        limitations=[],
+    )
+    service = _service(
+        database_path,
+        provider=_FakeProvider(candidate),
+        work_model="work-model",
+    )
+
+    result = service.analyze_job("tmyX-role-purpose")
+    artifact = WorkIntelligenceStore(database_path).artifact_by_id(result.artifact_id)
+
+    assert artifact is not None
+    work = artifact.intelligence["work_themes"][0]["accepted_work_items"][0]
+    assert work["kind"] == "role_purpose"
+    assert work["index"] == 0
+    assert work["statement"] == exact_role_purpose
 
 
 def test_direct_work_rejects_out_of_range_source_reference(tmp_path: Path) -> None:
@@ -293,14 +426,12 @@ def test_direct_work_rejects_out_of_range_source_reference(tmp_path: Path) -> No
             }
         ],
     )
-    document = JobWorkIntelligence(
+    candidate = CandidateJobWorkIntelligence(
         evidence_status="sufficient",
-        work_summary="The role contains direct security control review responsibilities.",
         work_themes=[
-            WorkTheme(
+            CandidateWorkTheme(
                 theme_id="theme-1",
                 label="Security review",
-                summary="Review technical security controls and their configuration.",
                 emphasis="primary",
                 confidence="high",
                 responsibility_indices=[2],
@@ -315,7 +446,7 @@ def test_direct_work_rejects_out_of_range_source_reference(tmp_path: Path) -> No
     )
     service = _service(
         database_path,
-        provider=_FakeProvider(document),
+        provider=_FakeProvider(candidate),
         work_model="work-model",
     )
 
@@ -343,14 +474,12 @@ def test_direct_work_rejects_omitted_accepted_responsibility(tmp_path: Path) -> 
             },
         ],
     )
-    document = JobWorkIntelligence(
+    candidate = CandidateJobWorkIntelligence(
         evidence_status="sufficient",
-        work_summary="The role includes security review work with an incomplete model grouping.",
         work_themes=[
-            WorkTheme(
+            CandidateWorkTheme(
                 theme_id="theme-1",
                 label="Security review",
-                summary="Review technical security controls and their configuration.",
                 emphasis="primary",
                 confidence="high",
                 responsibility_indices=[0],
@@ -365,7 +494,7 @@ def test_direct_work_rejects_omitted_accepted_responsibility(tmp_path: Path) -> 
     )
     service = _service(
         database_path,
-        provider=_FakeProvider(document),
+        provider=_FakeProvider(candidate),
         work_model="work-model",
     )
 
@@ -402,6 +531,73 @@ def test_historical_artifact_stops_being_current_after_new_accepted_p16_dependen
     preserved = WorkIntelligenceStore(database_path).artifact_by_id(first.artifact_id)
     assert preserved is not None
     assert preserved.analysis_artifact_id == first_analysis_id
+
+
+def test_historical_v1_artifact_remains_readable_but_is_not_reused_as_v2(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    analysis_id = _seed_version(
+        database_path,
+        job_id="historical-v1",
+        version=1,
+        responsibilities=[
+            {
+                "statement": "Review security controls",
+                "evidence": "Review security controls",
+                "confidence": "high",
+            }
+        ],
+    )
+    store = WorkIntelligenceStore(database_path)
+    historical_id = store.record_artifact(
+        analysis_artifact_id=analysis_id,
+        model="work-model",
+        prompt_version="job-work-intelligence-v1.3",
+        schema_version="job-work-intelligence-v1",
+        intelligence={
+            "evidence_status": "sufficient",
+            "work_summary": "Historical v1 candidate.",
+            "work_themes": [],
+            "deliverables": [],
+            "role_interpretation": None,
+            "limitations": [],
+        },
+        request_body={"historical": True},
+        raw_response={"historical": True},
+        created_at=_NOW,
+    )
+    service = _service(
+        database_path,
+        provider=_FakeProvider(
+            CandidateJobWorkIntelligence(
+                evidence_status="sufficient",
+                work_themes=[
+                    CandidateWorkTheme(
+                        theme_id="theme-1",
+                        label="Security review",
+                        emphasis="primary",
+                        confidence="high",
+                        responsibility_indices=[0],
+                        role_purpose_indices=[],
+                        supporting_requirement_indices=[],
+                        rationale="Candidate grouping of accepted review work.",
+                    )
+                ],
+                deliverables=[],
+                role_interpretation=None,
+                limitations=[],
+            )
+        ),
+        work_model="work-model",
+    )
+
+    historical = store.artifact_by_id(historical_id)
+
+    assert historical is not None
+    assert historical.prompt_version == "job-work-intelligence-v1.3"
+    assert historical.intelligence["work_summary"] == "Historical v1 candidate."
+    assert service.current_artifact("historical-v1") is None
 
 
 def test_pending_p16_cannot_generate_work_intelligence(tmp_path: Path) -> None:
@@ -452,7 +648,140 @@ def test_browser_limited_work_flow_is_candidate_and_does_not_publish(
         assert generated.status_code == 200
         assert "candidate · limited" in generated.text
         assert "will not invent duties from qualifications alone" in generated.text
+        assert "Accepted P1.6 facts" in generated.text
         assert "JobHunter interpretation" in generated.text
-        assert "Employer / accepted P1.6 facts" in generated.text
+        assert "job-work-intelligence-v2" in generated.text
 
     assert publication_calls == []
+
+
+def test_browser_and_cli_show_exact_work_separately_from_interpretation(
+    tmp_path: Path,
+) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    exact_statement = "Partner with engineering to move models toward production."
+    analysis_id = _seed_version(
+        database_path,
+        job_id="v2-view",
+        version=1,
+        responsibilities=[
+            {
+                "statement": exact_statement,
+                "evidence": exact_statement,
+                "confidence": "high",
+            }
+        ],
+    )
+    document = JobWorkIntelligence(
+        evidence_status="sufficient",
+        work_themes=[
+            WorkTheme(
+                theme_id="theme-1",
+                label="Production readiness",
+                emphasis="primary",
+                confidence="high",
+                accepted_work_items=[
+                    AcceptedWorkItem(
+                        kind="responsibility",
+                        index=0,
+                        statement=exact_statement,
+                        confidence="high",
+                    )
+                ],
+                supporting_requirement_indices=[],
+                rationale="This groups the accepted collaboration around production readiness.",
+            )
+        ],
+        deliverables=[],
+        role_interpretation=None,
+        limitations=[],
+    )
+    artifact_id = WorkIntelligenceStore(database_path).record_artifact(
+        analysis_artifact_id=analysis_id,
+        model="analysis-model",
+        prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+        schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+        intelligence=document.model_dump(mode="json"),
+        request_body={"manual_fixture": True},
+        raw_response={"manual_fixture": True},
+        created_at=_NOW,
+    )
+    settings = _settings(database_path)
+    app = build_runtime_app(settings)
+
+    with TestClient(app) as client:
+        response = client.get("/jobs/v2-view/work-intelligence")
+
+    assert response.status_code == 200
+    assert "JobHunter candidate theme" in response.text
+    assert "Accepted P1.6 work" in response.text
+    assert exact_statement in response.text
+    assert "JobHunter interpretation" in response.text
+
+    artifact = WorkIntelligenceStore(database_path).artifact_by_id(artifact_id)
+    assert artifact is not None
+    rendered = format_work_intelligence(artifact)
+    assert "JobHunter candidate theme" in rendered
+    assert "Accepted P1.6 work:" in rendered
+    assert exact_statement in rendered
+    assert "JobHunter interpretation:" in rendered
+
+
+def test_current_v2_artifact_rejects_kind_index_statement_mismatch(tmp_path: Path) -> None:
+    database_path = tmp_path / "jobhunter.sqlite3"
+    analysis_id = _seed_version(
+        database_path,
+        job_id="mismatched-fact",
+        version=1,
+        responsibilities=[
+            {
+                "statement": "Partner with engineering to move models toward production.",
+                "evidence": "Partner with engineering to move models toward production.",
+                "confidence": "high",
+            }
+        ],
+    )
+    WorkIntelligenceStore(database_path).record_artifact(
+        analysis_artifact_id=analysis_id,
+        model="work-model",
+        prompt_version=WORK_INTELLIGENCE_PROMPT_VERSION,
+        schema_version=WORK_INTELLIGENCE_SCHEMA_VERSION,
+        intelligence={
+            "evidence_status": "sufficient",
+            "work_themes": [
+                {
+                    "theme_id": "theme-1",
+                    "label": "Production readiness",
+                    "emphasis": "primary",
+                    "confidence": "high",
+                    "accepted_work_items": [
+                        {
+                            "kind": "responsibility",
+                            "index": 0,
+                            "statement": "Deploy models to production.",
+                            "confidence": "high",
+                        }
+                    ],
+                    "supporting_requirement_indices": [],
+                    "rationale": "Candidate grouping.",
+                }
+            ],
+            "deliverables": [],
+            "role_interpretation": None,
+            "limitations": [],
+        },
+        request_body={"manual_fixture": True},
+        raw_response={"manual_fixture": True},
+        created_at=_NOW,
+    )
+    service = _service(
+        database_path,
+        provider=_FakeProvider(_valid_direct_candidate()),
+        work_model="work-model",
+    )
+
+    with pytest.raises(
+        WorkIntelligenceError,
+        match="does not exactly match P1.6 responsibility\\[0\\]",
+    ):
+        service.current_artifact("mismatched-fact")
