@@ -139,24 +139,25 @@ Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.
 
 The 2026-08-26 governance reorientation is accepted through `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`. It preserves the strict Phase-1/P2.1 substrate while preventing future work from requiring promotion-grade proof for every low-blast-radius interpretation.
 
-The focused P2.2 plan and its current representation amendment are approved:
+The controlling P2.2 plans are:
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
+docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-P2.2A Job Work Intelligence v2 is **accepted and closed**. Repository quality and the recorded real-local semantic/product sequence are green. P2.2B has not started and requires a separate decision.
+P2.2A Job Work Intelligence v2 is **accepted and closed**. P2.2B-B1 is now **authorized only as a bounded responsibility-promotion evidence-selection pilot**. No responsibility promotion has occurred yet.
 
-Current P2.2A state:
+Current P2.2 state:
 
 ```text
-historical v1-v1.7 artifacts/attempts → preserved immutable evidence
-v2 schema                           → job-work-intelligence-v2
-v2 prompt/runtime                   → job-work-intelligence-v2.0
-v2 representation implementation   → COMPLETE
-repository CI                       → GREEN
-real-local acceptance               → PASSED / P2.2A CLOSED
+P2.2A historical v1-v1.7 artifacts/attempts → preserved immutable evidence
+P2.2A v2 schema                           → job-work-intelligence-v2
+P2.2A v2 prompt/runtime                   → job-work-intelligence-v2.0
+P2.2A representation implementation       → COMPLETE
+P2.2A repository/live acceptance          → PASSED / CLOSED
+P2.2B-B1                                  → EVIDENCE SELECTION / NO PROMOTION YET
 ```
 
 The 2026-09-01 checkpoint verified that free-form model review did not reliably preserve action relationships across both `tG9K` and `tmyX`. Controlled v1.3-v1.7/2B/4B/12B trials remain immutable local evidence. The approved response is representation-level fact/interpretation separation, not another model-trial matrix.
@@ -169,7 +170,7 @@ docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
 docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 ```
 
-Do not reopen P1.6 v20, Capability v9, or P2.1 merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
+Do not reopen P1.6 v20, Capability v9, P2.1, or P2.2A merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ## 4. Blueprint disposition
 
@@ -177,7 +178,7 @@ Blueprint is implemented and inspectable but **is not an accepted Phase-1 decisi
 
 Historical v6/12B artifact 7 remains experimental evidence. Complete semantic review found assumption-bearing interpretation beyond vacancy authority even after mechanical provenance passed.
 
-After P2.2A closure and until a separate next-stage decision:
+During P2.2B-B1:
 
 - do not create Blueprint v7;
 - do not weaken Blueprint validators;
@@ -195,15 +196,13 @@ This does **not** mean Phase-2 interpretation in general is prohibited. New boun
 
 ## 5. Current exact next-work rule
 
-Phase 1, P2.1, and P2.2A are closed. **Do not start P2.2B without a separate focused decision.**
-
-Current controlling focused plan:
+Phase 1, P2.1, and P2.2A are closed. P2.2B-B1 is authorized under the separate focused decision in:
 
 ```text
-docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
+docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-Current controlling companion:
+The P2.2A representation amendment remains controlling for Work Intelligence v2 behavior:
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
@@ -212,15 +211,14 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 Current active gate:
 
 ```text
-P2.2A Job Work Intelligence
-→ v2 representation implementation COMPLETE
-→ repository quality GREEN
-→ real-local semantic/product acceptance PASSED
-→ P2.2A CLOSED
-→ P2.2B decision NOT STARTED
+P2.2B-B1 selective responsibility promotion
+→ focused plan APPROVED
+→ evidence selection ACTIVE
+→ no canonical responsibility promotion yet
+→ P2.2C BLOCKED
 ```
 
-Current direct-work flow:
+The P2.2A direct-work flow remains permanently accepted:
 
 ```text
 accepted/current English P1.6 factual work substrate
@@ -232,7 +230,7 @@ accepted/current English P1.6 factual work substrate
 → persisted generated/candidate artifact for repeated-use UX
 ```
 
-Core P2.2A decisions:
+Core P2.2A decisions remain:
 
 - accepted/current English P1.6 v20/v5 is the primary authoritative input;
 - Capability v9 is not an authoritative dependency for P2.2A;
@@ -279,23 +277,34 @@ artifacts 6-11
 Current exact next action:
 
 ```text
-STOP at the recorded P2.2A acceptance decision
-→ P2.2B remains unstarted
-→ a separate focused decision is required before P2.2B work
+bounded local scan for one clean repeated accepted responsibility
+→ prefer already-available current English evidence
+→ if necessary, accept at most one additional evidence-bearing P1.6 job for this concrete recurrence question
+→ present the exact two responsibility claims + proposed responsibility:<slug>
+→ semantic review before any canonical mutation
+→ only then apply one concept + two mappings
+→ rerun/idempotency + CLI/browser/currentness/publication-boundary inspection
+→ B1 PASS or evidence-based NO-PROMOTION / DEFER decision
 ```
 
-`tG9K`/`tmyX` already establish the action-authority design defect. Do not run another prompt/model trial matrix merely to prove the same point.
+The initially considered documentation pair is explicitly **not approved** for promotion because `t4qV` responsibility[9] is equipment-specific technical documentation while `tmyX` responsibility[3] is compound checklists + technical documentation + security reports. Do not normalize partial overlap into whole-claim equivalence merely to produce a promotion.
+
+`tG9K`/`tmyX` already establish the P2.2A action-authority design defect. Do not run another prompt/model trial matrix merely to prove the same point.
 
 P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
 
-After P2.2A closure and until a separate next-stage decision:
+During P2.2B-B1:
 
 - do not bulk-map the remaining accepted P1.6 claim corpus;
 - do not broaden the canonical ontology merely to eliminate unmapped cases;
+- do not normalize partial semantic overlaps as whole-claim equivalence;
+- do not broaden a concept merely to absorb compound claims;
+- do not auto-promote P2.2A theme or deliverable labels;
+- do not add deliverable mapping schema without concrete repeated-value evidence;
 - do not publish canonical-registry or P2.2 state;
 - do not start Market v2;
 - do not add personal evidence/readiness/scoring/recommendations;
-- do not create global responsibility families/archetypes merely to complete P2.2A;
+- do not create responsibility families/archetypes yet;
 - do not make stable market-archetype claims from insufficient cross-job/employer evidence;
 - do not add deterministic action-verb equivalence machinery;
 - do not restore the v1.3 second semantic authority-review pass;
@@ -381,7 +390,9 @@ Phase-1 closure accepted
 → repository Ruff/full pytest/warnings-as-errors GREEN
 → t4qV/tmBK/reuse/browser/CLI real-local v2 acceptance PASSED
 → P2.2A CLOSED
-→ P2.2B decision NOT STARTED
+→ P2.2B-B1 focused responsibility-promotion plan APPROVED
+→ initial documentation pair REJECTED as lossy normalization
+→ bounded evidence selection ACTIVE
 ```
 
 ## 6. Permanent semantic boundaries
