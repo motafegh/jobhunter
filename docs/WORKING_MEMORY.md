@@ -4,7 +4,7 @@
 **Date:** 2026-09-01  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 AUTHORIZED / EVIDENCE SELECTION / NO PROMOTION YET
+**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET
 
 ## 1. Frozen accepted substrate
 
@@ -37,7 +37,7 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-The P2.2A amendment remains controlling for Work Intelligence v2. The P2.2B focused plan now controls the first selective responsibility-promotion increment.
+The P2.2A amendment remains controlling for Work Intelligence v2. The P2.2B focused plan controls the first selective responsibility-promotion increment.
 
 Key records:
 
@@ -45,6 +45,7 @@ Key records:
 docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
 docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
 docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
+docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md
 ```
 
 ## 3. P2.2A closure
@@ -74,9 +75,9 @@ Real-local acceptance passed on the recorded `t4qV → tmBK → reuse → browse
 
 ## 4. P2.2B-B1 decision
 
-P2.2B is now authorized only as a **selective responsibility-promotion pilot**.
+P2.2B is authorized only as a **selective responsibility-promotion pilot**.
 
-The first increment must reuse the existing Canonical Registry unchanged unless a concrete eligible responsibility correspondence proves a real contract gap.
+The first increment reuses the existing Canonical Registry unchanged unless a concrete eligible responsibility correspondence proves a real contract gap.
 
 Target proof:
 
@@ -87,30 +88,91 @@ Target proof:
 0 completeness-driven mapping
 ```
 
-A valid B1 result may also be **no promotion** if the bounded evidence pool does not contain a safe reusable correspondence.
+A valid B1 result may also be **no promotion** if the selected evidence does not survive the P1.6/final correspondence gate.
 
-## 5. Important rejected first candidate
+## 5. Repo-side evidence selection result
 
-Do **not** promote the initially considered documentation pair:
+The bounded repository scan is complete. Stop scanning once this selected candidate is tested; do not search the full 353-job corpus merely to find an easier match.
+
+Selected additional evidence-bearing job:
 
 ```text
-t4qV artifact 44 responsibility[9]
-Preparing technical documentation for security equipment ...
-
-tmyX artifact 46 responsibility[3]
-Preparing checklists, technical documentation, and security reports
+ta9l — Senior Applied AI Engineer — Mofid Securities
+current source detail version: 25
+source: parsed / active
+current English projection: none
+current accepted P1.6: none
 ```
 
-Reason:
+Accepted anchor:
 
-- the `t4qV` claim is specifically equipment technical documentation;
-- the `tmyX` claim is compound work covering checklists, technical documentation, and security reports;
-- the registry maps one immutable P1.6 responsibility claim to one canonical responsibility concept;
-- mapping both to one broad concept could erase material source distinctions or treat partial overlap as whole-claim correspondence.
+```text
+tG9K P1.6 artifact 36 responsibility[5]
+Design rigorous validation and monitoring for models running in an industrial setting.
+```
+
+`ta9l` employer source duty:
+
+```text
+Create evaluation, testing, and observability frameworks for LLM and agent performance.
+```
+
+Tentative canonical identity, not yet promoted:
+
+```text
+responsibility:design-ai-evaluation-monitoring
+preferred label: Design AI evaluation and monitoring
+```
+
+Semantic core:
+
+```text
+design/create
+→ AI-system performance evaluation/validation
+→ monitoring/observability
+```
+
+Source-specific details must remain in exact claims:
+
+```text
+tG9K: industrial-setting models; rigorous validation + monitoring
+ta9l: LLMs and agents; evaluation + testing + observability frameworks
+```
+
+No ownership, deployment, or lifecycle strengthening is authorized.
+
+Downstream reuse hypothesis:
+
+```text
+AI/ML reliability, evaluation, and monitoring work
+```
+
+across industrial ML and LLM/agent roles, potentially supporting P2.2C responsibility-family and later capability-profile reasoning.
+
+## 6. Important rejected alternatives
+
+Do not promote these merely because they are related:
+
+```text
+t4qV responsibility[9] + tmyX responsibility[3]
+→ rejected: equipment-specific documentation vs compound checklists/documentation/reports
+
+t49W vulnerability work + tmyX vulnerability/configuration work
+→ rejected: remediation/priority/engineering scope differs
+
+t49N vulnerability work + tmyX vulnerability/configuration work
+→ rejected: risk analysis + remediation coordination creates compound mismatch
+
+tGM0 backend/AI-integration duties + tG9K model/pipeline duties
+→ rejected: different work identity
+
+tG9K Build robust pipelines + ta9l RAG pipeline design
+→ plausible weaker alternative; not selected because evaluation/monitoring is semantically crisper
+```
 
 Keyword/theme overlap is not enough for promotion.
 
-## 6. B1 eligibility rule
+## 7. B1 eligibility rule
 
 A pair is eligible only when:
 
@@ -118,12 +180,12 @@ A pair is eligible only when:
 2. they express the same reusable responsibility identity at canonical level;
 3. differences are harmless wording/grammar or source specificity that can safely remain source detail;
 4. neither claim contains an extra material action, object, ownership relationship, lifecycle endpoint, or compound duty that would be lost by the mapping;
-5. the concept has a concrete downstream reuse hypothesis, primarily P2.2C family membership or later capability-profile reuse;
+5. the concept has a concrete downstream reuse hypothesis;
 6. exact source wording and provenance remain recoverable.
 
-Do not create deterministic verb-equivalence machinery to force this decision.
+The selected `ta9l` source duty is **not yet eligible for mapping** because it does not yet have accepted/current P1.6 authority.
 
-## 7. Current registry boundary
+## 8. Current registry boundary
 
 Reuse:
 
@@ -139,25 +201,25 @@ CLI + browser review
 
 The registry already has a `deliverable` category, but its reviewed claim-mapping identity is built around P1.6 `requirement | responsibility` claims. B1 therefore defers deliverable promotion rather than adding speculative schema.
 
-## 8. Exact next action
+## 9. Exact next action
 
-The next step requires local evidence because the repository contains only the bounded accepted/public chains while the machine-local database has the broader current English-projection pool.
+This step requires the machine-local runtime:
 
 ```text
-inspect the bounded local candidate pool for one clean repeated responsibility
-→ prefer already-available current English evidence
-→ if necessary, accept at most one additional evidence-bearing P1.6 job for this concrete recurrence question
-→ present the exact two responsibility claims + proposed responsibility:<slug>
-→ semantic review before mutation
-→ only then apply one concept + two mappings
-→ rerun for idempotency
-→ CLI/browser/currentness/publication-boundary inspection
-→ B1 decision
+ta9l current English projection
+→ English P1.6 generation using job-analysis-english-v20 / job-analysis-v5
+→ semantic review / acceptance decision
+→ report exact accepted artifact ID + responsibility index + statement + evidence
+→ compare that exact accepted claim with tG9K P1.6 36 responsibility[5]
+→ if semantic shape remains aligned, final correspondence review
+→ only then one-concept/two-mapping Canonical Registry mutation
 ```
 
-Stop after one strong pair or after the bounded candidate set demonstrates that no safe pair exists.
+If `ta9l` P1.6 materially splits, strengthens, weakens, or otherwise changes the selected source-duty shape, stop before registry mutation and re-evaluate the correspondence.
 
-## 9. Stop lines
+Do not accept a second additional job for B1 unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
+
+## 10. Stop lines
 
 During P2.2B-B1:
 
@@ -165,6 +227,7 @@ During P2.2B-B1:
 - do not broaden ontology merely to eliminate unresolved cases;
 - do not normalize partial overlap as whole-claim equivalence;
 - do not broaden one concept merely to absorb compound claims;
+- do not create the tentative `ta9l` concept before P1.6 acceptance/final review;
 - do not auto-promote P2.2A theme or deliverable labels;
 - do not add deliverable mapping schema without concrete evidence-backed need;
 - do not create responsibility families or role archetypes yet;
