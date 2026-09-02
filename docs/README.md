@@ -52,6 +52,7 @@ These documents explain implemented subsystems and normal operation. They are su
 | [`SEARCH_CONFIGURATION.md`](SEARCH_CONFIGURATION.md) | bilingual search catalog/configuration |
 | [`TRANSLATION_AND_ENGLISH_CORPUS.md`](TRANSLATION_AND_ENGLISH_CORPUS.md) | translation and English-projection boundary |
 | [`SEMANTIC_ANALYSIS.md`](SEMANTIC_ANALYSIS.md) | P1.6 structured factual-analysis design |
+| [`CURRENT_RUNTIME_AND_VERSIONED_CODE.md`](CURRENT_RUNTIME_AND_VERSIONED_CODE.md) | current semantic runtime entrypoints, versioned dependency roles, and safe historical-code disposition |
 | [`LOCAL_WEB_APP.md`](LOCAL_WEB_APP.md) | local browser application behavior and operation |
 | [`../corpus/README.md`](../corpus/README.md) | deterministic repository-safe public corpus |
 | [`../review-snapshots/README.md`](../review-snapshots/README.md) | selected semantic-review/acceptance exports |
