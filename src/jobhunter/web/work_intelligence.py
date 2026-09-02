@@ -7,38 +7,19 @@ analytical layer has not been authorized.
 
 from __future__ import annotations
 
-import secrets
-from pathlib import Path
 from typing import Annotated
-from urllib.parse import urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 from jobhunter.config import Settings
 from jobhunter.storage import JobHunterStore
+from jobhunter.web.common import TEMPLATES, redirect_with_notice, require_csrf, template_context
 from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_service import (
     WorkIntelligenceError,
     build_work_intelligence_service,
 )
-
-_WEB_DIR = Path(__file__).resolve().parent
-_TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
-
-
-def _csrf(request: Request, submitted: str) -> None:
-    if not secrets.compare_digest(submitted, request.app.state.csrf_token):
-        raise HTTPException(status_code=403, detail="Invalid local form token")
-
-
-def _redirect(source_job_id: str, *, notice: str) -> RedirectResponse:
-    query = urlencode({"notice": notice})
-    return RedirectResponse(
-        url=f"/jobs/{source_job_id}/work-intelligence?{query}",
-        status_code=303,
-    )
 
 
 def register_work_intelligence_routes(app: FastAPI, settings: Settings) -> None:
@@ -72,22 +53,20 @@ def register_work_intelligence_routes(app: FastAPI, settings: Settings) -> None:
         except (ValueError, WorkIntelligenceError) as exc:
             readiness_error = str(exc)
 
-        return _TEMPLATES.TemplateResponse(
+        return TEMPLATES.TemplateResponse(
             request=request,
             name="work_intelligence.html",
-            context={
-                "request": request,
-                "page": "jobs",
-                "csrf_token": request.app.state.csrf_token,
-                "active_operation": request.app.state.operations.active(),
-                "source_job_id": source_job_id,
-                "posting": posting,
-                "detail": detail,
-                "artifact": artifact,
-                "document": document,
-                "notice": notice,
-                "readiness_error": readiness_error,
-            },
+            context=template_context(
+                request,
+                page="jobs",
+                source_job_id=source_job_id,
+                posting=posting,
+                detail=detail,
+                artifact=artifact,
+                document=document,
+                notice=notice,
+                readiness_error=readiness_error,
+            ),
         )
 
     @app.post("/jobs/{source_job_id}/work-intelligence")
@@ -96,14 +75,15 @@ def register_work_intelligence_routes(app: FastAPI, settings: Settings) -> None:
         source_job_id: str,
         csrf_token: Annotated[str, Form()],
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
+        target = f"/jobs/{source_job_id}/work-intelligence"
         try:
             result = build_work_intelligence_service(settings).analyze_job(source_job_id)
         except (ValueError, WorkIntelligenceError) as exc:
-            return _redirect(source_job_id, notice=f"Work Intelligence not ready: {exc}")
-        return _redirect(
-            source_job_id,
-            notice=(
+            return redirect_with_notice(target, f"Work Intelligence not ready: {exc}")
+        return redirect_with_notice(
+            target,
+            (
                 f"Work Intelligence {result.outcome}: artifact {result.artifact_id}, "
                 f"themes {result.work_theme_count}. Candidate interpretation only."
             ),
