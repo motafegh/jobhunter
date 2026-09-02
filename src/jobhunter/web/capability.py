@@ -2,14 +2,10 @@
 
 from __future__ import annotations
 
-import secrets
-from pathlib import Path
 from typing import Annotated
-from urllib.parse import urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 from jobhunter.analysis_current import ENGLISH_ANALYSIS_SCHEMA_VERSION, ENGLISH_PROMPT_VERSION
 from jobhunter.analysis_store import AnalysisStore
@@ -24,21 +20,14 @@ from jobhunter.capability_store import CapabilityIntelligenceStore
 from jobhunter.config import Settings
 from jobhunter.storage import JobHunterStore
 from jobhunter.translation_service import build_translation_service
+from jobhunter.web.common import (
+    TEMPLATES,
+    operation_redirect,
+    redirect_with_notice,
+    require_csrf,
+    template_context,
+)
 from jobhunter.web.operations import OperationBusyError, WebOperationLink, WebOperationResult
-
-_WEB_DIR = Path(__file__).resolve().parent
-_TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
-
-
-def _csrf(request: Request, submitted: str) -> None:
-    if not secrets.compare_digest(submitted, request.app.state.csrf_token):
-        raise HTTPException(status_code=403, detail="Invalid local form token")
-
-
-def _operation_redirect(operation_id: str, source_job_id: str) -> RedirectResponse:
-    return_to = f"/jobs/{source_job_id}/capability-intelligence"
-    query = urlencode({"return_to": return_to, "auto_return": "1"})
-    return RedirectResponse(url=f"/operations/{operation_id}?{query}", status_code=303)
 
 
 def register_capability_routes(app: FastAPI, settings: Settings) -> None:
@@ -90,23 +79,21 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
             and capability_artifact.translation_artifact_id
             == english_analysis.translation_artifact_id
         )
-        return _TEMPLATES.TemplateResponse(
+        return TEMPLATES.TemplateResponse(
             request=request,
             name="capability_intelligence.html",
-            context={
-                "request": request,
-                "page": "jobs",
-                "csrf_token": request.app.state.csrf_token,
-                "active_operation": request.app.state.operations.active(),
-                "source_job_id": source_job_id,
-                "posting": posting,
-                "detail": detail,
-                "english_analysis": english_analysis,
-                "capability_artifact": capability_artifact,
-                "capability_current": current_dependency,
-                "analysis_model": analysis_model,
-                "capability_model": capability_model,
-            },
+            context=template_context(
+                request,
+                page="jobs",
+                source_job_id=source_job_id,
+                posting=posting,
+                detail=detail,
+                english_analysis=english_analysis,
+                capability_artifact=capability_artifact,
+                capability_current=current_dependency,
+                analysis_model=analysis_model,
+                capability_model=capability_model,
+            ),
         )
 
     @app.post("/jobs/{source_job_id}/capability-intelligence")
@@ -115,7 +102,7 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
         source_job_id: str,
         csrf_token: Annotated[str, Form()],
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
 
         def action() -> WebOperationResult:
             try:
@@ -156,8 +143,12 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
                 action,
             )
         except OperationBusyError as exc:
-            return RedirectResponse(
-                url=f"/jobs/{source_job_id}/capability-intelligence?notice={exc}",
-                status_code=303,
+            return redirect_with_notice(
+                f"/jobs/{source_job_id}/capability-intelligence",
+                str(exc),
             )
-        return _operation_redirect(operation.id, source_job_id)
+        return operation_redirect(
+            operation.id,
+            return_to=f"/jobs/{source_job_id}/capability-intelligence",
+            auto_return=True,
+        )
