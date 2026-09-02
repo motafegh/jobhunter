@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import secrets
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
@@ -10,8 +9,7 @@ from typing import Annotated
 from urllib.parse import urlencode
 
 from fastapi import FastAPI, Form, HTTPException, Request
-from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 from jobhunter.canonical_registry import (
     AliasProvenanceKind,
@@ -28,33 +26,7 @@ from jobhunter.canonical_registry_review import (
     list_concept_aliases,
 )
 from jobhunter.config import Settings
-
-_WEB_DIR = Path(__file__).resolve().parent
-_TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
-
-
-def _csrf(request: Request, submitted: str) -> None:
-    if not secrets.compare_digest(submitted, request.app.state.csrf_token):
-        raise HTTPException(status_code=403, detail="Invalid local form token")
-
-
-def _template_context(request: Request, **extra):
-    context = {
-        "request": request,
-        "page": "registry",
-        "csrf_token": request.app.state.csrf_token,
-        "active_operation": request.app.state.operations.active(),
-    }
-    context.update(extra)
-    return context
-
-
-def _redirect(path: str, notice: str) -> RedirectResponse:
-    separator = "&" if "?" in path else "?"
-    return RedirectResponse(
-        url=f"{path}{separator}{urlencode({'notice': notice})}",
-        status_code=303,
-    )
+from jobhunter.web.common import TEMPLATES, redirect_with_notice, require_csrf, template_context
 
 
 def _review_reader(settings: Settings):
@@ -139,11 +111,12 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         except ValueError as exc:
             review_error = str(exc)
 
-        return _TEMPLATES.TemplateResponse(
+        return TEMPLATES.TemplateResponse(
             request=request,
             name="registry.html",
-            context=_template_context(
+            context=template_context(
                 request,
+                page="registry",
                 concepts=concepts,
                 categories=tuple(item.value for item in ConceptCategory),
                 q=q,
@@ -193,11 +166,12 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
             )
             if item.concept_id != concept.concept_id
         )
-        return _TEMPLATES.TemplateResponse(
+        return TEMPLATES.TemplateResponse(
             request=request,
             name="registry_concept.html",
-            context=_template_context(
+            context=template_context(
                 request,
+                page="registry",
                 concept=concept,
                 aliases=aliases,
                 mappings=mappings,
@@ -234,11 +208,12 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         responsibility_concepts = tuple(
             item for item in active_concepts if item.category == ConceptCategory.RESPONSIBILITY
         )
-        return _TEMPLATES.TemplateResponse(
+        return TEMPLATES.TemplateResponse(
             request=request,
             name="registry_claims.html",
-            context=_template_context(
+            context=template_context(
                 request,
+                page="registry",
                 items=items,
                 job_id=job_id,
                 kind=kind,
@@ -261,7 +236,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         reason: Annotated[str, Form()],
         description: Annotated[str, Form()] = "",
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
         try:
             concept = CanonicalRegistryStore(settings.database_path).create_concept(
                 concept_id=concept_id,
@@ -273,7 +248,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
             )
         except (CanonicalRegistryError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
-        return _redirect(
+        return redirect_with_notice(
             f"/registry/concepts/{concept.concept_id}",
             f"Reviewed concept {concept.concept_id}",
         )
@@ -288,7 +263,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         reference: Annotated[str, Form()],
         reason: Annotated[str, Form()],
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
         try:
             alias = CanonicalRegistryStore(settings.database_path).add_alias(
                 concept_id,
@@ -300,7 +275,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
             )
         except (CanonicalRegistryError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
-        return _redirect(
+        return redirect_with_notice(
             f"/registry/concepts/{concept_id}",
             f"Reviewed alias {alias.alias_text}",
         )
@@ -313,7 +288,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         reason: Annotated[str, Form()],
         successor_concept_id: Annotated[str, Form()] = "",
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
         try:
             concept = CanonicalRegistryStore(settings.database_path).deprecate_concept(
                 concept_id,
@@ -323,7 +298,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
             )
         except (CanonicalRegistryError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
-        return _redirect(
+        return redirect_with_notice(
             f"/registry/concepts/{concept_id}",
             f"Deprecated concept {concept.concept_id}",
         )
@@ -339,7 +314,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         reason: Annotated[str, Form()],
         canonical_concept_id: Annotated[str, Form()] = "",
     ):
-        _csrf(request, csrf_token)
+        require_csrf(request, csrf_token)
         if claim_index < 0:
             raise HTTPException(status_code=400, detail="claim index must not be negative")
         try:
@@ -363,7 +338,7 @@ def register_registry_routes(app: FastAPI, settings: Settings) -> None:
         except (CanonicalRegistryError, ValueError) as exc:
             raise HTTPException(status_code=400, detail=str(exc)) from exc
 
-        return _redirect(
+        return redirect_with_notice(
             f"/registry/claims?{urlencode({'job_id': job_id, 'state': 'all'})}",
             f"Recorded {mapping.disposition} for {mapping.claim_kind}[{mapping.claim_index}]",
         )
