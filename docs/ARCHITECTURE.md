@@ -1,84 +1,156 @@
 # JobHunter Architecture
 
 **Status:** Current architecture  
-**Date:** 2026-08-16
+**Date:** 2026-09-02
+
+JobHunter is a **local-first Python modular monolith** for turning public job-market evidence into traceable career intelligence.
+
+This document describes the current implemented system and its authority boundaries. Product meaning is defined more fully in `docs/PRODUCT_SPECIFICATION.md`; source/evidence rules remain controlled by `docs/SOURCE_POLICY.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, and `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`.
+
+---
 
 ## 1. Architectural direction
-
-JobHunter is a **local Python modular monolith**.
 
 One application owns:
 
 - typed configuration;
-- approved-source acquisition;
-- immutable evidence preservation;
-- SQLite persistence/migrations;
-- deterministic Jobinja parsing;
-- source version/check/lifecycle state;
-- hardened English projection;
-- strict factual semantic extraction;
-- bounded per-job Capability Intelligence;
-- experimental Role Capability Blueprint;
-- first deterministic Market read models;
-- complete repository-safe public-corpus projection;
+- bounded approved-source acquisition;
+- immutable source evidence;
+- deterministic Jobinja parsing and source-version identity;
+- fetch/check/lifecycle state;
+- SQLite persistence and migrations;
+- provenance-preserving English projection;
+- reviewed P1.6 factual semantic extraction;
+- Capability Intelligence;
+- Job Work Intelligence;
+- reviewed Canonical Concept Registry mappings;
+- bounded Market/report read models;
+- experimental historical Role Capability Blueprint research;
+- repository-safe public-corpus projection;
 - selected review-snapshot export;
 - browser and CLI interaction surfaces.
 
+The current deployment target is one local application/process and one local SQLite database. The browser is a server-rendered interface over the same services and durable records used by the CLI; it is not a separate frontend product with a second analytical data model.
+
 ```text
-Browser UI                 CLI
-normal human use      automation/debug
-        \                /
-         application services
-                 ↓
-              SQLite
-        + raw evidence files
-       runtime/history authority
-                 ↓
-       deterministic projections
-          /               \
-     corpus/         review-snapshots/
- complete public      selected review
- current dataset         evidence
+                         JobHunter local application
+
+ Browser UI                                                 CLI
+ normal repeated use                              automation / review / debug
+      \                                                       /
+       \                                                     /
+        └──────────── shared application services ──────────┘
+                              │
+                              ▼
+                           SQLite
+                     structured runtime/history
+                              +
+                     immutable raw evidence
+                              │
+                              ▼
+                 deterministic repository projections
+                     ┌───────────────┴──────────────┐
+                     ▼                              ▼
+                  corpus/                    review-snapshots/
+          complete repository-safe          selected semantic-review
+          current public projection          / acceptance evidence
 ```
 
-The browser is not a separate frontend product with a second analytical data model. It is a thin server-rendered interface over the same services and durable records used by the CLI.
-
-The deployment target remains one local process/application. Future domains may add focused modules/repositories without becoming microservices.
+SQLite and raw evidence remain runtime/history authority. Repository projections are inspectable outputs, not runtime write authorities.
 
 ---
 
-## 2. Permanent principles
+## 2. Why a modular monolith
+
+The current architecture deliberately favors a modular monolith over microservices or distributed infrastructure.
+
+Reasons:
+
+- JobHunter is a local repeated-use utility, not a multi-tenant hosted platform;
+- acquisition, semantic processing, review, persistence, and UI all benefit from one explicit local transaction/history boundary;
+- SQLite is sufficient for current scale and offers simple durable inspection and migration;
+- browser and CLI can share the same services without duplicate APIs or state models;
+- local LM Studio inference fits the privacy and offline-first product direction;
+- distributed queues, service discovery, orchestration, Kubernetes, a separate SPA, or cloud databases would add operational complexity without a demonstrated product need.
+
+This is not a permanent ban on decomposition. A domain should split into another process/repository only when measured scale, isolation, deployment, ownership, or reliability requirements justify that cost.
+
+---
+
+## 3. Permanent architectural principles
 
 1. Preserve source evidence before parsing, translation, or interpretation.
 2. Keep source acquisition useful when LM Studio is unavailable.
-3. Keep source truth, English projection, factual extraction, reasoning, aggregation, and user state distinct.
-4. Deterministic parsing/identity/counts/lifecycle logic remain deterministic.
+3. Keep source fact, English projection, factual extraction, normalization/correspondence, interpretation, aggregation, and future personal evidence distinct.
+4. Deterministic parsing, identity, provenance, counts, lifecycle, coverage, currentness, and bookkeeping remain deterministic.
 5. Treat acquired content as untrusted data, never instructions.
 6. Keep source-specific behavior explicit and bounded.
-7. Keep browser and CLI on the same services/data.
-8. Use SQLite as the canonical local structured/runtime state until measured limits justify replacement.
+7. Keep browser and CLI on the same services and durable state.
+8. Use SQLite as canonical local structured runtime/history state until measured limits justify replacement.
 9. Keep raw evidence independently inspectable.
 10. Separate semantic source versions from volatile HTTP/fetch observations.
 11. Separate operational attempts from successful semantic/derived artifacts.
 12. Preserve native-versus-translated provenance.
-13. Preserve exact model/prompt/schema/dependency identity for durable derived artifacts.
-14. Prefer missing/unknown/review-required over fabricated certainty.
-15. Bound requests/pages/detail batches/model calls/output tokens/retries where applicable.
-16. Do not impose arbitrary local-generation read deadlines merely to force responsiveness when a valid long model call is progressing.
-17. Deterministic bookkeeping repairs belong in code, not repeated LLM calls.
-18. Models may reason; they do not manufacture source truth.
+13. Preserve exact source/model/prompt/schema/dependency identity for durable derived artifacts.
+14. Prefer missing, unknown, limited, or review-required over fabricated certainty.
+15. Bound requests, pages, batches, retries, model calls, validation retries, and output size where applicable.
+16. Deterministic bookkeeping repairs belong in code, not repeated model calls.
+17. Models may organize and interpret accepted evidence; they do not manufacture source truth.
+18. Generated/candidate state is distinct from reviewed/promoted state.
 19. Add complexity only for observed product need.
-20. Keep local-first privacy/network boundaries explicit.
-21. Do not build generic plugin/vector/agent infrastructure before demonstrated need.
-22. Historical artifacts remain historical when contracts change.
-23. Coverage and semantic quality are different metrics.
-24. A technology list is not an architecture specification.
-25. Keep runtime persistence separate from repository projections.
-26. A public-data projection never implicitly authorizes future private/personal state for publication.
+20. Keep local-first privacy and network boundaries explicit.
+21. Historical artifacts remain historical when contracts change.
+22. Coverage and semantic quality are different properties.
+23. Runtime persistence and repository projections have different authority.
+24. Public-data projection never authorizes future private/personal state for publication.
+25. Downstream interpretation must never silently strengthen upstream evidence.
 
 ---
 
-## 3. Current end-to-end flow
+## 4. Epistemic authority model
+
+The system uses four conceptual authority levels:
+
+```text
+SOURCE FACT
+    ↓
+NORMALIZED CORRESPONDENCE
+    ↓
+ANALYTICAL INTERPRETATION
+    ↓
+RECOMMENDATION / DECISION SYNTHESIS
+```
+
+Current JobHunter is strongest in the first three levels. Personal recommendation/decision synthesis remains future work.
+
+The practical rule is:
+
+> A downstream layer may organize, normalize, or interpret evidence only within its authorized scope; it never upgrades unsupported meaning into source fact.
+
+Never conflate:
+
+```text
+Raw evidence                 exact acquired source bytes + metadata
+JobPosting                   stable logical source identity
+JobPostingVersion            meaningful employer-content version
+Fetch/check observation      one operational source check
+Lifecycle state/event        cautious source-availability interpretation
+Translation artifact         derived English representation
+P1.6 artifact                reviewed factual semantic substrate
+Capability artifact          bounded capability-level organization/reasoning
+Work Intelligence artifact   bounded work organization/interpretation
+Canonical concept            reviewed reusable correspondence identity
+Canonical claim mapping      reviewed exact P1.6 claim → concept decision
+Market/report aggregate      bounded read model over accepted evidence
+Blueprint artifact           experimental historical interpretation
+User workflow state          local human triage, not employer truth
+Public Corpus                repository-safe current public projection
+Review Snapshot              selected semantic-review evidence
+```
+
+---
+
+## 5. Current end-to-end data and authority flow
 
 ```text
 TOML configuration
@@ -87,236 +159,137 @@ data-driven bilingual Jobinja search catalog
         ↓
 bounded deterministic search plan
         ↓
-sequential Jobinja search acquisition
+Jobinja acquisition
         ↓
-immutable search evidence
+immutable source evidence
         ↓
 stable JobPosting identity + discovery provenance
         ↓
-missing / refresh-due detail selection
+classified detail fetch / refresh observations
         ↓
-classified bounded detail acquisition
+jobinja-detail-v2 deterministic parsing
         ↓
-immutable valid detail evidence
-        ↓
-jobinja-detail-v2 parser
-        ↓
-semantic source version
-        ↓
-fetch observation + lifecycle evidence
+semantic JobPostingVersion
         ↓
 current English projection v2
         ↓
-P1.6 strict factual extraction
+English P1.6 candidate
         ↓
-Capability Intelligence v9
+explicit semantic review
         ↓
-first Market aggregation from accepted English P1.6
-
-repository projections:
-current durable public state
-        ↓
-jobhunter-public-corpus-v1
-
-selected acceptance evidence
-        ↓
-job-review-snapshot-v1
-
-experimental branch only:
-historical Blueprint-compatible accepted chain
-        ↓
-Role Capability Blueprint v6
+ACCEPTED/CURRENT P1.6 FACTUAL SUBSTRATE
+        │
+        ├────────→ Capability Intelligence v9
+        │            bounded capability grouping/reasoning
+        │            exact source survival remains deterministic
+        │
+        ├────────→ Job Work Intelligence v2
+        │            bounded work grouping/interpretation
+        │            exact accepted work is injected deterministically
+        │
+        ├────────→ Canonical Concept Registry
+        │            reviewed exact requirement/responsibility mappings
+        │            no automatic ontology promotion
+        │
+        └────────→ Market / report read models
+                     bounded aggregates over accepted evidence
 ```
 
-Capability v9 is an accepted/current Phase-1 layer. Blueprint remains experimental/non-authoritative and is not on the Phase-1 critical path.
+This fan-out is important. Capability, Work Intelligence, Canonical Registry, and Market are different consumers of accepted P1.6. None is allowed to rewrite P1.6 source truth.
+
+The current P2.2B pilot is testing selective reviewed responsibility correspondence through the existing Canonical Registry. Responsibility families/archetypes and broader Market v2 remain later work.
 
 ---
 
-## 4. Current active contract identities
+## 6. Current contract identities
 
 ```text
-source parser:                 jobinja-detail-v2
-translation provider:         lm-studio-translation-v2
-English projection:           english-projection-v2
+Source parser
+  jobinja-detail-v2
 
-English P1.6 prompt/runtime:   job-analysis-english-v20
-English P1.6 schema:           job-analysis-v5
-Original P1.6 prompt/runtime:  job-analysis-original-v9
-Original P1.6 schema:          job-analysis-v4
+Translation
+  provider/runtime: lm-studio-translation-v2
+  projection:       english-projection-v2
 
-Capability prompt/runtime:     job-capability-intelligence-v9
-Capability persisted schema:   job-capability-intelligence-v5
+P1.6 factual extraction
+  English runtime:  job-analysis-english-v20
+  English schema:   job-analysis-v5
+  Original runtime: job-analysis-original-v9
+  Original schema:  job-analysis-v4
 
-Blueprint experimental:        role-capability-blueprint-v6
-Blueprint schema:              role-capability-blueprint-v5
+Capability Intelligence
+  runtime:           job-capability-intelligence-v9
+  schema:            job-capability-intelligence-v5
 
-Review Snapshot schema:        job-review-snapshot-v1
-Public Corpus schema:          jobhunter-public-corpus-v1
+Job Work Intelligence
+  contract/schema:   job-work-intelligence-v2
+  runtime/prompt:    job-work-intelligence-v2.0
+  deterministic limited path:
+                     jobhunter-deterministic-limited-work-v2
+
+Canonical Registry
+  jobhunter-canonical-concept-registry-v1
+
+Experimental Blueprint
+  runtime:           role-capability-blueprint-v6
+  schema:            role-capability-blueprint-v5
+
+Review Snapshot
+  job-review-snapshot-v1
+
+Public Corpus
+  jobhunter-public-corpus-v1
 ```
 
-Current accepted opposite-end anchors:
+Prompt/runtime changes intentionally create distinct current/historical artifacts even when a persisted schema remains compatible.
+
+Current accepted heterogeneous P1.6 → Capability anchors are:
 
 ```text
-tG9K P1.6 artifact 36 → Capability artifact 11
-t4jp P1.6 artifact 37 → Capability artifact 12
+tG9K → P1.6 36 → Capability 11
+t4jp → P1.6 37 → Capability 12
+tmBK → P1.6 39 → Capability 13
+t4qV → P1.6 44 → Capability 14
+tmyX → P1.6 46 → Capability 15
 ```
 
-Prompt/runtime version changes intentionally produce distinct current/historical artifacts even when a persisted schema remains unchanged.
+These are acceptance anchors, not a claim that every discovered job has been semantically analyzed.
 
 ---
 
-## 5. Authority boundaries
+## 7. Source registry and acquisition boundary
 
-Never conflate:
+The Jobinja acquisition subsystem owns:
 
-```text
-Raw evidence                    exact acquired source bytes/metadata
-JobPosting                      stable logical source identity
-JobPostingVersion               meaningful employer-content version
-Fetch/check observation         one operational source check
-Lifecycle state/event           cautious derived source availability
-Translation artifact            derived English representation
-Translation attempt             operational translation history
-P1.6 analysis artifact          strict model-derived factual interpretation
-P1.6 analysis attempt           operational analysis history
-Capability artifact             evidence-qualified reasoning above P1.6
-Capability attempt              operational Capability history
-Blueprint artifact              experimental human-facing interpretation
-Blueprint attempt               operational Blueprint history
-Market aggregate                deterministic aggregate of accepted current P1.6
-User workflow state             local human triage/preference
-Browser WebOperation            ephemeral UI execution state
-Public Corpus                   deterministic repository-safe public projection
-Review Snapshot                 selected repository-review export
-```
-
-Authority hierarchy:
-
-```text
-original employer/source evidence     authoritative
-        ↓
-deterministic parsed fields            source-derived
-        ↓
-English projection                     derived convenience
-        ↓
-P1.6 factual semantic extraction       strict factual substrate
-        ↓
-Capability v9 deterministic source truth + bounded grouping/reasoning
-```
-
-Blueprint sits outside this accepted authority chain during Phase 1.
-
-The Market layer currently aggregates accepted English P1.6, not Capability/Blueprint.
-
-A downstream layer never upgrades an upstream error into source truth.
-
----
-
-## 6. Interaction surfaces
-
-### Browser
-
-Current stack:
-
-```text
-FastAPI
-Uvicorn
-Jinja2
-packaged CSS
-small vanilla JavaScript
-```
-
-No Node/npm build and no runtime CDN dependency.
-
-Current browser domains include Overview, Jobs, Job detail, Capability Intelligence, experimental Blueprint review, Search plan/effectiveness, Market, Operations, and System.
-
-### CLI
-
-CLI remains supported for automation/debugging/acceptance.
-
-Important current commands include:
-
-```bash
-jobhunter run
-jobhunter jobs health <id>
-jobhunter jobs analyze <id>
-jobhunter jobs capability <id>
-jobhunter jobs snapshot <id>
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-```
-
-Both surfaces must use the same source, translation, analysis, reasoning, and persistence services.
-
----
-
-## 7. Browser security and operation boundary
-
-The app is loopback-first.
-
-Protections include:
-
-- CSRF validation on mutating forms;
-- restrictive Content Security Policy;
-- frame/content-type/referrer/cache protections;
-- packaged local static assets;
-- one mutable browser workflow at a time unless concurrency is proven safe;
-- acquired job text rendered as data, never instruction/tool authority.
-
-All background browser operations share `WebOperationManager`. The runtime installs a post-success public-corpus projection hook on this manager. Durable service work completes first; the projection runs afterward.
-
-If projection fails, durable SQLite state is preserved and the web operation visibly reports the projection failure.
-
----
-
-## 8. Configuration and independent model roles
-
-Configuration is typed TOML plus selected `JOBHUNTER_*` environment overrides. Unknown configuration fails closed.
-
-Current model roles:
-
-```toml
-analysis_lm_studio_model = "..."
-capability_lm_studio_model = "..."
-blueprint_lm_studio_model = "..."
-```
-
-Effective role selection is explicit in the corresponding service builders. The best factual extractor is not assumed to be the best reasoning model.
-
-Use controlled same-job comparison when model adequacy is genuinely the variable. Do not change evidence, contract, and model simultaneously.
-
----
-
-## 9. Source registry/acquisition boundary
-
-The Jobinja implementation owns:
-
-- approved URL/host/path validation;
+- approved host/path/URL validation;
 - canonical source identity;
+- bilingual configurable search planning;
 - bounded sequential requests;
-- redirect/content-type/size validation;
-- search/detail acquisition;
-- classified failures/retryability;
-- source-specific deterministic parsing.
+- redirect/content-type/response-size validation;
+- search and detail acquisition;
+- classified failure/retryability state;
+- deterministic source-specific parsing;
+- discovery provenance;
+- refresh selection;
+- lifecycle evidence.
 
 Critical invariant:
 
 ```text
 network / 429 / 5xx / challenge / auth / access failure
 !=
-expired or removed job
+expired or removed vacancy
 ```
 
-Provider/source failure is not a valid empty result.
+Provider/source failure is never treated as a valid empty result.
 
 ---
 
-## 10. Evidence and source-version model
+## 8. Evidence and source-version model
 
-Exact acquired bytes + metadata are preserved independently from normalized records.
+Exact acquired evidence is preserved independently from normalized records.
 
-Source versioning distinguishes:
+The system distinguishes:
 
 ```text
 logical job identity
@@ -326,64 +299,95 @@ operational source check
 lifecycle interpretation
 ```
 
-Volatile HTML changes must not manufacture logical semantic changes.
+Volatile HTML changes must not manufacture a semantic job version.
 
-`jobinja-detail-v2` extracts explicit public fields including title, company, category, location, employment type, minimum experience, salary, description, skills, gender, military service, education, company description, source dates, language, and parser version where available.
+`jobinja-detail-v2` extracts explicit public fields such as title, company, category, location, employment type, minimum experience, salary, description, skills, gender, military-service requirement, education, company description, source dates, language, and parser version where supplied.
 
-Missing source values stay missing. Parser metadata is not employer evidence. Structural parser audit is not semantic-quality certification.
+Missing employer values stay missing. Parser metadata is not employer evidence. Structural parser correctness is not semantic-quality certification.
 
 ---
 
-## 11. Translation boundary
+## 9. Persistence and operational-history model
 
-Current trusted English path:
+SQLite is canonical structured runtime/history state.
+
+Durable domains include separate records for:
+
+- searches and discovery provenance;
+- source evidence/version state;
+- fetch/check/lifecycle observations;
+- translation artifacts and attempts;
+- P1.6 artifacts, attempts, and semantic-review state;
+- Capability artifacts and attempts;
+- Work Intelligence artifacts;
+- Canonical Registry concepts, aliases, and claim mappings;
+- experimental Blueprint artifacts/attempts;
+- user workflow state;
+- application/report support state where applicable.
+
+Schema migration is application-owned, deterministic, and regression-tested.
+
+An operational failure does not erase already committed successful work from earlier pipeline stages.
+
+---
+
+## 10. Translation boundary
+
+Current English flow:
 
 ```text
 current parsed source version
 → semantic source segments
-→ native-English identity OR bounded local translation
+→ native-English identity OR bounded translation
 → structured response validation
 → deterministic integrity checks
-→ english-projection-v2 artifact
+→ english-projection-v2
 ```
 
-Historical translation artifacts remain preserved but non-current when contracts/source dependencies change.
+The original employer source remains authoritative. English projection is derived convenience data with segment provenance and exact source dependency.
 
-LM Studio is the normal local translation provider. Optional external translation remains deliberate/policy-controlled.
-
----
-
-## 12. P1.6 factual semantic boundary
-
-P1.6 uses Instructor + Pydantic over LM Studio for structured factual extraction plus independent deterministic reconciliation/validation.
-
-Current English v20/v5 behavior preserves:
-
-- exact source evidence/provenance;
-- complete meaningful requirement accounting on rich sources;
-- structured source skills;
-- required/preferred/contextual strength;
-- concept-specific explicit depth;
-- education and experience constraints;
-- qualification-vs-duty separation;
-- conservative handling of sparse/ambiguous sources.
-
-P1.6 remains factual substrate. It does not produce full technical curricula or personal recommendations.
-
-See `docs/SEMANTIC_ANALYSIS.md` and `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
+LM Studio is the normal local translation provider. Optional external translation is deliberate and policy-controlled rather than an implicit fallback.
 
 ---
 
-## 13. Capability Intelligence v9 boundary
+## 11. P1.6 factual semantic boundary
 
-Capability v9 reasons above accepted English P1.6 while making source survival deterministic.
+P1.6 is the reviewed factual substrate used by higher layers.
 
-Architecture:
+It extracts conservative employer-supported information including:
+
+- role purpose when explicitly supported;
+- responsibilities;
+- requirements;
+- required/preferred/contextual/inferred strength where authorized;
+- concept type;
+- source-explicit concept-scoped depth;
+- confidence;
+- exact evidence/provenance.
+
+Important invariants:
+
+- qualifications do not become duties;
+- contextual tools do not become required expertise without evidence;
+- one adjective/depth statement is not spread across neighboring concepts;
+- unsupported role purpose is omitted;
+- evidence must validate against authoritative employer fields;
+- fresh English v20 artifacts remain `pending` until explicit semantic review;
+- pending candidates are inspectable but excluded from accepted downstream layers;
+- rejection archives local candidate evidence and removes the rejected artifact from current runtime state so the same contract can be rebuilt.
+
+`src/jobhunter/analysis_current.py` is the current public routing boundary: English uses v20/v5 while original-language P1.6 remains on independently validated v9/v4.
+
+---
+
+## 12. Capability Intelligence boundary
+
+Capability Intelligence v9 consumes accepted/current English P1.6 and organizes source truth into coherent capability areas.
 
 ```text
 accepted P1.6 source truth
-→ compact semantic capability-group plan
-→ bounded exact source-fact assignment partitions
+→ compact capability-group plan
+→ bounded exact source-fact assignment
 → bounded optional per-group reasoning
 → deterministic source-link injection
 → deterministic reconciliation
@@ -399,44 +403,192 @@ MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
 OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
 ```
 
-Artifact identity includes source detail version, exact translation artifact, exact accepted English P1.6 artifact, model, prompt, and schema.
+Complete source coverage/provenance is mandatory. Requirement strength, source-explicit depth, and source work activities are deterministic. Unsupported ownership, lifecycle, autonomy, architecture, or optionality inflation is blocked or filtered. Zero optional enrichment is valid.
 
-Complete source coverage/provenance is mandatory. Source strength/depth/work are deterministic. Role-level education/duration-only experience remain separate. Unsupported ownership/lifecycle/autonomy/architecture and optionality inflation are blocked/filtered. Zero optional enrichment is valid.
-
-Historical v7/v8 modules/artifacts remain reproducible but non-current.
+Historical v7/v8 implementations remain historical/reproducibility material rather than current public contracts.
 
 ---
 
-## 14. Role Capability Blueprint boundary
+## 13. Job Work Intelligence v2 boundary
 
-Blueprint v6 is implemented for research/inspection but remains **deferred and non-authoritative** in Phase 1.
+Job Work Intelligence addresses a different question from Capability Intelligence: **how is the accepted direct work of this job usefully organized?**
 
-It is pinned to historical Capability v7 dependency semantics so Capability v9 promotion does not silently rebase it.
+Permanent authority rule:
 
-Historical mechanically valid Blueprint evidence still failed complete semantic acceptance because professional interpretation could introduce unsupported assumptions about architecture, topology, automation, platforms, or ownership.
+> The model decides how accepted work is usefully organized; accepted P1.6 statements decide what factual work is actually asserted.
 
-Do not route Blueprint into Market, personal readiness, recommendations, or other authoritative Phase-1 decisions.
+Current flow:
+
+```text
+accepted/current English P1.6
+→ typed candidate work interpretation
+→ deterministic source-reference / coverage / scope validation
+→ at most one bounded regeneration after deterministic rejection
+→ deterministic injection of exact accepted P1.6 work statements
+→ exact dependency validation
+→ persisted Work Intelligence artifact
+```
+
+The model may propose:
+
+- work themes;
+- relative primary/supporting/uncertain emphasis;
+- bounded deliverable candidates;
+- tentative role interpretation;
+- limitations/uncertainty.
+
+The model may **not** replace accepted factual work statements or turn requirements into duties.
+
+Scope inflation such as unsupported `end-to-end`, `full lifecycle`, ownership, autonomy, or deployment responsibility is rejected/controlled.
+
+For requirement-only jobs with no accepted direct responsibility/role-purpose evidence, JobHunter takes a deterministic `limited` path and does not call the model to invent work.
+
+Work Intelligence is accepted P2.2A functionality. Its interpretive themes/deliverables are not automatically promoted into the Canonical Registry or Market taxonomy.
 
 ---
 
-## 15. Public Corpus architecture
+## 14. Canonical Concept Registry boundary
 
-The live SQLite database remains local and ignored. The complete repository-safe current public dataset lives in:
+The Canonical Registry provides **reviewed reusable correspondence identities** across exact accepted P1.6 claims.
+
+Current contract:
+
+```text
+jobhunter-canonical-concept-registry-v1
+```
+
+It stores:
+
+- stable explicit `category:slug` concept IDs;
+- preferred labels;
+- reviewed aliases with provenance;
+- concept status/deprecation relationships;
+- immutable reviewed exact-claim mapping decisions;
+- exact P1.6/source/translation dependency identity;
+- mapped / unmapped / rejected dispositions.
+
+Current claim mappings operate on accepted/current P1.6:
+
+```text
+requirement
+responsibility
+```
+
+A `deliverable` concept category exists, but candidate Work Intelligence deliverables do not currently have an authorized automatic mapping path.
+
+The Registry is deliberately human-reviewed. Similar words, shared domains, or partial semantic overlap do not prove canonical equivalence. No model is allowed to silently create or accept canonical concepts/aliases/mappings.
+
+The current P2.2B-B1 pilot is a selective responsibility-promotion proof, not a completeness-driven taxonomy build.
+
+---
+
+## 15. Market and report read-model boundary
+
+Current Market/report surfaces aggregate bounded accepted/current evidence for inspection and operational understanding.
+
+They may expose:
+
+- analyzed sample size;
+- responsibility/requirement counts;
+- requirement-strength prevalence;
+- source/search effectiveness/provenance views;
+- current pipeline/artifact counts and queues;
+- lineage/currentness information.
+
+Current Market is not yet a reviewed corpus-wide canonical role taxonomy or Market v2.
+
+Capability, Work Intelligence themes, Blueprint interpretations, and speculative canonical relationships are not silently mixed into Market truth.
+
+---
+
+## 16. Browser and CLI interaction surfaces
+
+### Browser
+
+Current web stack:
+
+```text
+FastAPI
+Uvicorn
+Jinja2
+packaged CSS
+small vanilla JavaScript
+```
+
+No Node/npm build or runtime CDN is required.
+
+The browser covers repeated-use workflows across overview/reporting, job inspection, source/translation/analysis state, semantic review, Capability Intelligence, Work Intelligence, Canonical Registry review, acquisition/search operations, and experimental Blueprint inspection where explicitly labeled.
+
+### CLI
+
+The CLI remains a first-class technical surface for automation, debugging, acceptance, inspection, and advanced workflows.
+
+Representative entry points:
+
+```bash
+jobhunter ...
+jobhunter-work ...
+jobhunter-registry ...
+jobhunter-corpus ...
+```
+
+Both browser and CLI use shared application services and the same durable state.
+
+---
+
+## 17. Browser security and operation boundary
+
+The browser is loopback-first.
+
+Protections include:
+
+- CSRF validation for mutating forms;
+- restrictive Content Security Policy;
+- frame/content-type/referrer/cache protections;
+- packaged local static assets;
+- acquired job text rendered as data, never instruction/tool authority;
+- bounded background-operation coordination;
+- durable service work committed before repository projection hooks run.
+
+If a post-success public-corpus projection fails, durable SQLite state remains preserved and the operation reports the projection failure rather than silently diverging.
+
+---
+
+## 18. Configuration and model-role boundary
+
+Configuration is typed TOML plus selected `JOBHUNTER_*` environment overrides. Unknown configuration fails closed.
+
+Semantic roles may use independent local models:
+
+```toml
+analysis_lm_studio_model = "..."
+capability_lm_studio_model = "..."
+blueprint_lm_studio_model = "..."
+```
+
+The best factual extractor is not assumed to be the best higher-level reasoning model.
+
+Model adequacy is evaluated with controlled evidence/contract/model comparisons. Evidence, contract, and model should not all change simultaneously when diagnosing one variable.
+
+---
+
+## 19. Public Corpus architecture
+
+The runtime database remains local and ignored. The complete repository-safe current public projection lives under:
 
 ```text
 corpus/
 ```
 
-Contract:
+Current contract:
 
 ```text
 jobhunter-public-corpus-v1
 ```
 
-Layout:
+Current job layout:
 
 ```text
-corpus/manifest.json
 corpus/jobs/<job-id>/source.json
 corpus/jobs/<job-id>/english-projection.json
 corpus/jobs/<job-id>/p16-english.json
@@ -444,220 +596,175 @@ corpus/jobs/<job-id>/p16-original.json
 corpus/jobs/<job-id>/capability.json
 ```
 
+The current public-corpus contract deliberately does **not** project Work Intelligence, Canonical Registry state, experimental Blueprint state, raw model protocol, SQLite, or future personal evidence.
+
 Properties:
 
 - deterministic sorted UTF-8 JSON;
 - atomic file replacement;
-- every known Jobinja identity represented in the manifest;
-- original parsed Persian/English public vacancy content preserved;
-- current derived stage files retain exact artifact/dependency/model/prompt/schema identities;
-- stale downstream files disappear when source dependency changes until rebuilt;
-- DB↔corpus verification is deterministic;
-- no network/model calls during export/verification.
+- every known Jobinja identity represented by the manifest;
+- exact current source/derived dependency identities;
+- stale downstream stage files removed when source/dependency currentness changes;
+- deterministic DB↔corpus verification;
+- no network/model calls during export or verification.
 
-Excluded from the public corpus:
+Excluded:
 
 - SQLite/WAL/SHM;
 - raw HTML evidence;
 - machine-local evidence paths;
 - raw model request/response protocol;
-- prompts/secrets/logs/local config;
+- prompts, secrets, logs, and local config;
 - future personal/private evidence, applications, notes, profiles, or outcomes.
 
-Normal mutating CLI workflows and completed browser background operations project current durable state after SQLite work. Projection failure never rolls back SQLite but is surfaced.
-
-Git commit/push is intentionally manual; runtime correctness never depends on GitHub/network availability.
-
-See `corpus/README.md` and `docs/working-memory/2026-08-16_PUBLIC_CORPUS_PROJECTION.md`.
+Git commit/push is intentionally manual. Runtime correctness never depends on GitHub availability.
 
 ---
 
-## 16. Review Snapshot architecture
+## 20. Review Snapshot architecture
 
-Review workflow:
-
-```bash
-jobhunter jobs snapshot <job-id>
-```
-
-Output:
+`review-snapshots/` stores deliberately selected repository-safe semantic-review/acceptance evidence.
 
 ```text
-review-snapshots/jobs/<job-id>.json
+corpus/           complete current public projection
+review-snapshots/ selected review / regression evidence
 ```
 
-Review Snapshots are **selected** semantic-review/acceptance artifacts. They are not the complete public corpus and are not runtime inputs.
+Snapshots may preserve current/historical compatible semantic chains and model/config identities needed for inspection, while excluding raw model protocol, SQLite, secrets, logs, machine-local evidence, and future private state.
 
-The integrated command records configured model roles and exact current-chain dependencies while excluding raw model protocol, SQLite, secrets, logs, raw HTML, and future private state.
-
-Current-chain flags prove dependency currentness, not semantic acceptance.
+Current-chain flags prove dependency currentness. They do not themselves prove semantic acceptance.
 
 ---
 
-## 17. Market read model
+## 21. Experimental Blueprint boundary
 
-Current Market reads accepted/current English P1.6 artifacts under the selected analysis contract.
+Role Capability Blueprint v6 remains implemented for historical research/inspection but is **not an accepted current decision layer**.
 
-It is not yet Phase-2 canonical market intelligence.
+It is pinned to historical Capability v7 dependency semantics and is intentionally not silently rebased onto Capability v9.
 
-Keep visible/recoverable analyzed sample size, source/filter scope, requirement-strength semantics, contract identity, and sampling/concentration warning state.
-
-Capability/Blueprint are not mixed into Market yet.
+Blueprint must not feed current Market truth, personal readiness, recommendations, canonical promotion, or other authoritative decisions unless separately redesigned and accepted later.
 
 ---
 
-## 18. User workflow and future private state
+## 22. Future private/personal state
 
-Local triage remains independent of employer/source truth:
+Current workflow triage remains local human state and is not employer truth.
 
-```text
-unreviewed
-interested
-review_later
-reviewed
-not_relevant
-```
+Personal capability evidence, readiness, gaps, constraints, applications, outcomes, and strategy remain later product domains.
 
-Acquisition priority must not be presented as personal fit/readiness.
-
-Personal capability evidence remains a future separate reviewed domain. Future private/personal state may coexist in SQLite but must never enter `corpus/` without an explicit public/privacy boundary change—which is not currently authorized.
+When implemented, personal evidence must have an explicit reviewed/private authority model separate from public market evidence. Coexistence in SQLite would not authorize publication into `corpus/`.
 
 ---
 
-## 19. Persistence model
+## 23. Runtime model-call policy
 
-SQLite remains the canonical structured application/runtime/history state.
+For long local semantic generation, JobHunter distinguishes connection establishment from legitimate post-connection reasoning.
 
-Current durable concerns include separate tables/repositories for source/search/discovery/version records, fetch observations/lifecycle, translation artifacts/attempts, P1.6 artifacts/attempts, Capability artifacts/attempts, Blueprint artifacts/attempts, and user workflow state.
-
-Schema migration is application-owned, deterministic, and regression-tested.
-
-Repository projections (`corpus/`, `review-snapshots/`) do not replace SQLite tables or become runtime write authorities.
-
----
-
-## 20. Runtime model-call policy
-
-For long local semantic reasoning:
+Current principle:
 
 ```text
 connection establishment bounded
-read timeout after connection none
-transport replay disabled
+transport retries bounded/explicit
 output tokens bounded
-validation retry bounded separately
+structured validation retries bounded
+legitimate local generation not killed only by an arbitrary short read deadline
 ```
 
-A local generation that has connected and is legitimately reasoning should not be terminated solely by an arbitrary short read deadline.
+This policy is local-runtime specific and does not weaken bounded acquisition or validation controls.
 
 ---
 
-## 21. Failure semantics
+## 24. Failure semantics
 
-Keep distinct:
+Keep these states distinct:
 
 ```text
-no eligible work           != operation failure
-zero source results        != provider/source failure
-stale artifact             != failed artifact
-transient source failure   != vacancy removed
-translation failure        != source failure
-P1.6 failure               != translation/source failure
-Capability failure         != P1.6 failure
-Blueprint failure          != Capability failure
-corpus projection failure  != rollback of durable SQLite success
-partial workflow success   != complete success
+no eligible work              != operation failure
+zero source results           != provider/source failure
+stale artifact                != failed artifact
+transient source failure      != vacancy removed
+translation failure           != source failure
+P1.6 failure                  != translation/source failure
+semantic rejection            != transport failure
+Capability failure            != P1.6 failure
+Work Intelligence failure     != P1.6 failure
+Registry unmapped/rejected    != registry corruption
+Blueprint failure             != Capability failure
+corpus projection failure     != rollback of durable SQLite success
+partial workflow success      != complete success
 ```
 
-Valid earlier durable work remains preserved when a later stage fails.
+Earlier valid durable work remains preserved when a later stage fails.
 
 ---
 
-## 22. Testing and acceptance strategy
+## 25. Testing and acceptance strategy
 
 Normal deterministic tests do not contact Jobinja, LM Studio, or Google Cloud.
 
-Important real failures become fixtures.
+CI currently runs:
 
-Current acceptance distinguishes deterministic contract defect, source ambiguity/low evidence density, model-quality limitation, domain/technical correctness issue, bookkeeping/provenance issue, and repository-projection drift.
+```bash
+ruff check .
+pytest
+pytest -W error
+```
 
-The focused acceptance sequence is `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
+Important real failures become deterministic fixtures where possible.
+
+Acceptance distinguishes at least:
+
+- deterministic contract defects;
+- source ambiguity or weak evidence density;
+- model-quality limitations;
+- domain/technical correctness issues;
+- bookkeeping/provenance/currentness defects;
+- repository-projection drift;
+- UI/CLI representation defects.
+
+Accepted semantic layers are not reopened for harmless non-authoritative wording variation.
 
 ---
 
-## 23. Current gate and future evolution
-
-Current mini-gate:
+## 26. Current architectural state
 
 ```text
-public corpus implementation complete
-→ local full SQLite backfill
-→ DB↔corpus verify
-→ intentional Git publish
-→ remote corpus proof
-→ heterogeneous semantic review
+Phase 1                         CLOSED
+P2.1 Canonical Registry        CLOSED
+P2.2A Job Work Intelligence    ACCEPTED / CLOSED
+P2.2B selective responsibility promotion pilot    IN PROGRESS
 ```
 
-Heterogeneous review families:
+Current P2.2B-B1 is deliberately narrow: prove or reject one reviewed reusable responsibility correspondence using exact accepted/current P1.6 evidence. It does not authorize responsibility families, broad ontology construction, deliverable promotion, Market v2, or personal scoring.
 
-```text
-Python/software
-network/security
-operations/platform/DevOps
-```
+The machine-local next gate for that product work remains `ta9l` English projection → P1.6 v20/v5 generation → semantic review → final correspondence evaluation.
 
-After remaining Phase-1 gates close:
-
-1. reviewed canonical concept registry;
-2. alias/mapping provenance;
-3. responsibility/deliverable families;
-4. corpus-scale capability requirement profiles;
-5. role archetypes / Market v2;
-6. reviewed personal evidence;
-7. explainable gap/action/readiness;
-8. later application workspace;
-9. retrieval/advanced AI only after measured need.
-
-Implement one real second source before extracting a generic source-adapter abstraction.
+Portfolio/documentation work may proceed independently but must not bypass that product gate or change accepted semantics.
 
 ---
 
-## 24. Architectural non-goals
+## 27. Planned architectural evolution
 
-Do not introduce without demonstrated need:
-
-- microservices;
-- Redis/message broker/API gateway;
-- Kubernetes;
-- React/Node rewrite;
-- graph/vector database;
-- generic plugin runtime;
-- autonomous agent swarm;
-- multi-model voting system;
-- separate browser analytical database;
-- cloud-first personal-data architecture;
-- live SQLite committed to Git as the public dataset.
-
----
-
-## 25. Current plan relationship
+The intended direction remains:
 
 ```text
-docs/ROADMAP.md
-→ strategic direction
-
-docs/IMPLEMENTATION_PLAN.md
-→ controlling product-level order
-
-docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md
-→ detailed active Phase-1 order
-
-docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
-→ focused current semantic/public-corpus acceptance sequence
-
-docs/EXECUTION_TODO.md
-→ current operational checklist
-
-docs/WORKING_MEMORY.md
-→ rolling non-authoritative handoff/current-session memory
+MARKET EVIDENCE
+→ reviewed reusable concepts / responsibility correspondence
+→ responsibility families / role intelligence when justified
+→ REVIEWED PERSONAL EVIDENCE
+→ gaps / constraints / readiness
+→ learn / practise / build / verify actions
+→ application decision
+→ outcome
+→ updated evidence and decisions
+↺
 ```
+
+Future additions should preserve the same architecture discipline:
+
+- explicit evidence authority;
+- review where authority increases;
+- deterministic provenance/currentness;
+- bounded model reasoning;
+- local-first privacy;
+- no generic retrieval/agent/vector/distributed infrastructure until a measured need proves its value.
