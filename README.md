@@ -1,12 +1,276 @@
 # JobHunter
 
-JobHunter is a **local-first personal career-intelligence application**.
+[![CI](https://github.com/motafegh/jobhunter/actions/workflows/ci.yml/badge.svg)](https://github.com/motafegh/jobhunter/actions/workflows/ci.yml)
 
-It acquires approved public job-market evidence, preserves source provenance, creates a hardened English projection, performs strict evidence-backed factual extraction, and builds auditable Capability Intelligence above that source truth.
+**JobHunter is a local-first career-intelligence system that turns real job postings into traceable, reviewable evidence for career decisions.**
 
-The browser application is the primary repeated-use interface. The CLI remains supported for automation, debugging, acceptance work, and advanced workflows.
+It is designed as more than a scraper or generic LLM wrapper. JobHunter combines bounded public-source acquisition, immutable evidence, deterministic parsing, local model inference, strict factual extraction, explicit semantic review, capability/work intelligence, reviewed canonical mappings, and durable provenance.
+
+The browser application is the primary repeated-use interface. The CLI exposes the same services and durable state for automation, debugging, review, and advanced workflows.
+
+## What JobHunter does today
+
+JobHunter currently supports an end-to-end Jobinja-centered workflow:
+
+- discover and refresh public jobs through bounded, configurable search plans;
+- preserve immutable source evidence and semantic job versions before interpretation;
+- build a provenance-preserving English projection without replacing the employer's original text;
+- extract conservative responsibilities, requirements, strength, explicit depth, and exact evidence through accepted P1.6 contracts;
+- keep fresh semantic artifacts in a review gate before they can feed higher-authority layers;
+- build Capability Intelligence above accepted factual claims while preserving complete source coverage;
+- organize accepted work through Job Work Intelligence v2 without letting model prose replace source truth;
+- maintain reviewed canonical concepts and exact claim mappings in the Canonical Registry;
+- expose bounded Market/report read models from accepted evidence;
+- inspect the same durable state through a local browser UI and CLI;
+- export a deterministic repository-safe public corpus for remote inspection and reproducibility;
+- preserve selected semantic-review evidence as curated review snapshots.
+
+## Why the engineering is non-trivial
+
+The central design problem is not "call an LLM on a job description." It is deciding **what may become authoritative, what remains interpretation, and how every important claim stays recoverable to evidence**.
+
+JobHunter uses an explicit authority ladder:
+
+```text
+SOURCE FACT
+    ↓
+NORMALIZED CORRESPONDENCE
+    ↓
+ANALYTICAL INTERPRETATION
+    ↓
+RECOMMENDATION / DECISION SYNTHESIS
+```
+
+Important boundaries include:
+
+- **source truth before reasoning** — acquired employer evidence is preserved before parsing, translation, or model interpretation;
+- **deterministic vs model responsibilities** — identity, provenance, coverage, currentness, lifecycle, counts, and source bookkeeping stay deterministic;
+- **reviewed promotion** — generated semantic candidates are not automatically treated as accepted truth;
+- **exact lineage** — durable derived artifacts retain model, prompt, schema, source, and dependency identity;
+- **local-first inference** — LM Studio is the primary local model boundary for translation and semantic reasoning;
+- **partial-success semantics** — one failed fetch, translation, analysis, or downstream operation does not invalidate already successful durable work;
+- **public/private separation** — runtime SQLite/history authority is local while only deliberately repository-safe projections are committed;
+- **bounded acquisition** — source access, pages, retries, batches, and model calls are intentionally constrained.
+
+## Architecture at a glance
+
+JobHunter is intentionally a **Python modular monolith** with SQLite as the local runtime/history authority.
+
+```text
+Public Jobinja source
+        ↓
+immutable evidence + source observations
+        ↓
+jobinja-detail-v2 deterministic parsing
+        ↓
+semantic JobPosting version
+        ↓
+English projection v2
+        ↓
+reviewed P1.6 factual substrate
+        ├──→ Capability Intelligence v9
+        ├──→ Job Work Intelligence v2
+        ├──→ reviewed Canonical Registry mappings
+        └──→ bounded Market / report read models
+
+Browser UI ─┐
+            ├──→ shared application services ──→ SQLite
+CLI ────────┘                                  runtime/history authority
+                                                     ↓
+                                      deterministic repository projections
+                                         ├── corpus/
+                                         └── review-snapshots/
+```
+
+The browser is server-rendered and intentionally shares the same service/data model as the CLI. There is no separate SPA data model, Node runtime, or distributed-service layer.
+
+### Current semantic boundaries
+
+Current accepted/public contracts include:
+
+- English P1.6: `job-analysis-english-v20 / job-analysis-v5`;
+- original-language P1.6: `job-analysis-original-v9 / job-analysis-v4`;
+- Capability Intelligence: `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
+- Job Work Intelligence: `job-work-intelligence-v2 / v2.0`;
+- Canonical Registry: `jobhunter-canonical-concept-registry-v1`;
+- Public Corpus: `jobhunter-public-corpus-v1`.
+
+Role Capability Blueprint v6 remains implemented as **experimental/historical research**, not an accepted current decision layer.
+
+## Public corpus: inspect real output without LM Studio
+
+The operational database remains local at runtime, but the repository includes a deterministic public projection under [`corpus/`](corpus/README.md).
+
+Current committed baseline:
+
+| Public corpus state | Count |
+| --- | ---: |
+| Known/discovered jobs | 353 |
+| Fetched/parsed job details | 43 |
+| Current English projections | 20 |
+| Accepted English P1.6 artifacts | 5 |
+| Accepted Capability artifacts | 5 |
+
+`353` means known/discovered job identities, not 353 complete advertisements.
+
+A fresh clone can inspect the committed corpus without SQLite, Jobinja access, or LM Studio:
+
+```bash
+python -m pip install -e ".[dev]"
+jobhunter-corpus status
+```
+
+For a concrete accepted example, inspect the committed `t4qV` chain:
+
+```bash
+python -m json.tool corpus/jobs/t4qV/source.json
+python -m json.tool corpus/jobs/t4qV/english-projection.json
+python -m json.tool corpus/jobs/t4qV/p16-english.json
+python -m json.tool corpus/jobs/t4qV/capability.json
+```
+
+The corpus intentionally excludes SQLite files, raw HTML evidence, machine-local paths, raw model protocol history, prompts, secrets, logs, local configuration, and future personal/private evidence.
+
+## Quick start
+
+### Requirements
+
+- Python 3.12+
+- LM Studio only for local translation/semantic-generation workflows
+- network access to Jobinja only for live acquisition workflows
+
+### Install and run quality checks
+
+```bash
+git clone https://github.com/motafegh/jobhunter.git
+cd jobhunter
+python -m pip install -e ".[dev]"
+ruff check .
+pytest
+pytest -W error
+```
+
+Normal deterministic tests do not contact Jobinja, Google Cloud, or LM Studio.
+
+### Launch the local application
+
+```bash
+jobhunter-app
+```
+
+Default URL:
+
+```text
+http://127.0.0.1:8765/
+```
+
+The application operates on local SQLite/runtime state. The committed `corpus/` is a repository-safe projection for inspection and reproducibility; it is not silently imported into the local database.
+
+### Selected CLI entry points
+
+```bash
+jobhunter jobs list
+jobhunter jobs show <job-id>
+jobhunter jobs analyze <job-id>
+jobhunter jobs review-analysis <job-id> status
+jobhunter jobs capability <job-id>
+
+jobhunter-work <...>
+jobhunter-registry <...>
+
+jobhunter translations status
+jobhunter-corpus status
+```
+
+Run each command with `--help` for the exact subcommands/options supported by the installed version.
+
+## Technology stack
+
+| Concern | Current choice |
+| --- | --- |
+| Language/runtime | Python 3.12+ |
+| Web application | FastAPI, Uvicorn, Jinja2 |
+| Persistence | SQLite |
+| Typed validation/contracts | Pydantic, JSON Schema |
+| HTTP/source access | HTTPX |
+| Local structured inference | LM Studio through OpenAI-compatible APIs + Instructor |
+| Testing | pytest |
+| Lint/static quality | Ruff |
+| CI | GitHub Actions |
+| UI model | server-rendered browser UI + shared CLI services |
+
+The architecture deliberately avoids microservices, Kubernetes, a separate SPA, vector infrastructure, queues, or cloud dependencies until a measured product need justifies them.
+
+## Current maturity
+
+Accepted/current foundation:
+
+```text
+Phase 1                         CLOSED
+P2.1 Canonical Registry        CLOSED
+P2.2A Job Work Intelligence    ACCEPTED / CLOSED
+P2.2B selective responsibility promotion pilot    IN PROGRESS
+```
+
+Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
+
+JobHunter does **not** currently claim:
+
+- semantic acceptance across every discovered job;
+- a complete canonical labor-market taxonomy;
+- arbitrary-web ingestion;
+- reviewed personal capability/gap scoring;
+- autonomous job applications;
+- production-scale multi-user deployment;
+- an evaluated RAG/agent platform.
+
+Those boundaries are intentional: current claims stay narrower than the evidence.
+
+## Project structure
+
+```text
+src/jobhunter/        application, domain, persistence, inference, CLI and web modules
+tests/                deterministic unit/integration/regression coverage
+corpus/               complete current repository-safe public projection
+review-snapshots/     selected semantic-review and acceptance evidence
+docs/                 product, architecture, policies, plans and engineering history
+scripts/              bounded audits and historical/verification utilities
+.github/workflows/    CI quality gates
+```
+
+Historical/versioned semantic implementations are currently retained for reproducibility and compatibility. They are not all current runtime paths; their eventual disposition is being handled conservatively rather than by mass deletion.
+
+## Documentation
+
+Useful entry points:
+
+- [`docs/PRODUCT_SPECIFICATION.md`](docs/PRODUCT_SPECIFICATION.md) — product purpose, current capabilities, outputs, and boundaries;
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — core architecture, authority, persistence, and runtime design;
+- [`docs/DOMAIN_AND_ANALYSIS_MODEL.md`](docs/DOMAIN_AND_ANALYSIS_MODEL.md) — domain/analysis semantics;
+- [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
+- [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
+- [`corpus/README.md`](corpus/README.md) — public corpus contract and usage;
+- [`review-snapshots/README.md`](review-snapshots/README.md) — curated semantic-review evidence.
+
+The repository also retains detailed plans, experiments, working memory, and historical acceptance records for engineering traceability. They are deeper implementation history, not the intended first-pass product narrative.
+
+## Quality and trustworthiness
+
+CI runs the repository's normal deterministic gates on every push to `main` and on pull requests:
+
+```bash
+ruff check .
+pytest
+pytest -W error
+```
+
+Beyond ordinary tests, the project has regression coverage around source parsing, translation integrity, P1.6 factual contracts, semantic review, Capability reconciliation, lifecycle/source truth, public-corpus projection, Canonical Registry behavior, Work Intelligence, CLI behavior, and browser workflows.
+
+The design prefers **unknown / unresolved / review-required** over fabricated certainty and treats provenance or authority violations as correctness failures rather than presentation details.
 
 ## Product direction
+
+The long-term loop remains:
 
 ```text
 MARKET
@@ -20,288 +284,4 @@ MARKET
 ↺
 ```
 
-Every consequential conclusion should remain traceable to source and/or reviewed personal evidence.
-
-Start with:
-
-- `AGENTS.md`
-- `docs/ARCHITECTURE.md`
-- `docs/EXECUTION_TODO.md`
-- `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`
-- `docs/WORKING_MEMORY.md`
-- `corpus/README.md`
-- `review-snapshots/README.md`
-
-## Current accepted semantic stack
-
-```text
-Jobinja public source
-        ↓
-jobinja-detail-v2
-        ↓
-english-projection-v2
-  provider: lm-studio-translation-v2
-        ↓
-P1.6 strict factual extraction
-  English:  job-analysis-english-v20 / job-analysis-v5
-  Original: job-analysis-original-v9 / job-analysis-v4
-        ↓
-Capability Intelligence
-  job-capability-intelligence-v9 / job-capability-intelligence-v5
-```
-
-Current accepted/current anchors:
-
-```text
-tG9K
-P1.6 artifact 36
-→ Capability artifact 11
-
-t4jp
-P1.6 artifact 37
-→ Capability artifact 12
-```
-
-Capability v9 public promotion is fully closed and operationally verified. Normal public commands reuse those accepted artifacts on their exact P1.6 dependencies.
-
-Role Capability Blueprint remains implemented experimentally at:
-
-```text
-role-capability-blueprint-v6 / role-capability-blueprint-v5
-```
-
-Blueprint is **not an accepted Phase-1 decision layer**, is pinned to historical Capability v7 dependency semantics, and is not current on the accepted v9 chains.
-
-## P1.6 — factual substrate
-
-P1.6 records conservative employer-supported facts including:
-
-- role purpose when actually stated;
-- responsibilities;
-- requirements;
-- required/preferred/contextual strength;
-- concept type;
-- explicit depth attached to the exact concept;
-- confidence;
-- exact evidence/provenance.
-
-Dense `tG9K` v20/v5 acceptance:
-
-```text
-requirements:      33
-responsibilities:  8
-role purpose:      0
-```
-
-Sparse `t4jp` v20/v5 acceptance:
-
-```text
-requirements:      8
-responsibilities:  0
-role purpose:      0
-```
-
-The accepted contract preserves structured source skills, optionality, experience/education constraints, qualification-vs-duty separation, and exact source depth without spreading one adjective across neighboring technologies.
-
-Heterogeneous validation is closed across three materially different role shapes: Python/software `tmBK` uses P1.6 39 → Capability 13; network/security `t4qV` uses 44 → 14; operations/platform `tmyX` uses 46 → 15. Complete reviews verified source coverage, obligation/depth calibration, role-level separation, grouping, and fail-closed enrichment. Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are accepted. `jobhunter report` and `/report` share exact current counts, queues, and artifact lineage. Phase 1 is closed.
-
-Fresh English v20 artifacts now persist as `pending` semantic-review candidates. Pending candidates remain inspectable in the browser, CLI, and Review Snapshot, but are excluded from Capability, Market, dashboard accepted counts, and the public corpus. Explicit acceptance records reviewer time/note; rejection archives the complete local candidate and removes it from current runtime state so the same contract can be rebuilt. Existing promoted artifacts migrate as accepted for compatibility.
-
-## Capability Intelligence v9
-
-Capability v9 separates semantic grouping from authoritative source bookkeeping:
-
-```text
-accepted P1.6 source truth
-→ compact capability-group plan
-→ bounded exact source-fact assignment
-→ bounded optional per-group reasoning
-→ deterministic source-link injection
-→ deterministic reconciliation
-→ persisted Capability
-```
-
-Authority split:
-
-```text
-AUTHORITATIVE SOURCE TRUTH → STRICT
-PLANNER PROSE              → NON-AUTHORITATIVE / NORMALIZE
-MODEL SOURCE-TRUTH ECHO    → REDUNDANT / FILTER
-OPTIONAL MODEL ENRICHMENT  → OPTIONAL + FAIL-CLOSED
-```
-
-Complete source coverage/provenance is mandatory. Source requirement strength, source-explicit depth, and source work activities are deterministic. Unsupported ownership/lifecycle/autonomy/architecture or optionality inflation is blocked/filtered. Zero optional model enrichment is valid.
-
-Historical v7/v8 modules and artifacts remain available for reproducibility but are not the public/current Capability contract.
-
-## Complete versioned public corpus
-
-The operational database remains local:
-
-```text
-data/jobhunter.sqlite3
-```
-
-The complete repository-safe public projection is:
-
-```text
-corpus/
-```
-
-Contract:
-
-```text
-jobhunter-public-corpus-v1
-```
-
-Layout:
-
-```text
-corpus/
-├── manifest.json
-└── jobs/
-    └── <job-id>/
-        ├── source.json
-        ├── english-projection.json
-        ├── p16-english.json
-        ├── p16-original.json
-        └── capability.json
-```
-
-The corpus preserves current public Jobinja source fields—including original Persian/English text—and current successful translation/P1.6/Capability outputs with exact artifact/dependency/model/contract identities.
-
-It deliberately excludes SQLite files, raw HTML evidence, machine-local evidence paths, model request/raw protocol responses, prompts, secrets, logs/configuration, and future private/personal state.
-
-The real published/verified baseline is:
-
-```text
-Known/discovered jobs:       353
-Fetched/parsed job details:   43
-Current English projections:  20
-English P1.6:                  5
-Original P1.6:                 0
-Capabilities:                  5
-```
-
-`353` therefore means known/discovered identities, not 353 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection. Historical English v1 artifacts remain in SQLite but are excluded from the current public corpus.
-
-Commands:
-
-```bash
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-```
-
-Normal mutating CLI workflows and completed browser background operations refresh the local `corpus/` projection after durable SQLite work. JobHunter does **not** automatically Git commit or push; repository publication remains intentional.
-
-See `corpus/README.md`.
-
-## Review Snapshots
-
-`review-snapshots/` remains a separate small set of deliberately selected semantic-review/acceptance artifacts.
-
-```text
-corpus/           complete current public dataset
-review-snapshots/ selected acceptance evidence
-```
-
-Generate a snapshot with:
-
-```bash
-jobhunter jobs snapshot <job-id>
-```
-
-Current-chain flags prove dependency currentness, not semantic acceptance.
-
-## Independent local model roles
-
-```toml
-analysis_lm_studio_model = "..."
-capability_lm_studio_model = "..."
-blueprint_lm_studio_model = "..."
-```
-
-Current tracked project configuration uses independent local model roles. Blueprint's configured model does not make Blueprint an accepted decision layer.
-
-The tracked `jobhunter.toml` is public project configuration. Never put actual API tokens/passwords/keys into it; use an ignored local secret mechanism.
-
-## Start the application
-
-Requires Python 3.12+.
-
-```bash
-python -m pip install -e ".[dev]"
-jobhunter-app
-```
-
-Default local URL:
-
-```text
-http://127.0.0.1:8765/
-```
-
-No Node/npm runtime or CDN is required.
-
-## Important CLI commands
-
-```bash
-jobhunter run
-
-jobhunter jobinja plan
-jobhunter jobinja discover
-jobhunter jobinja sync
-jobhunter jobinja fetch <job-id>
-
-jobhunter jobs list
-jobhunter jobs show <job-id>
-jobhunter jobs health <job-id>
-jobhunter jobs checks <job-id>
-jobhunter jobs audit
-jobhunter jobs analyze <job-id>
-jobhunter jobs review-analysis <job-id> status
-jobhunter jobs review-analysis <job-id> accept --reason "complete source review passed"
-jobhunter jobs review-analysis <job-id> reject --reason "material source-truth defect"
-jobhunter jobs capability <job-id>
-jobhunter jobs blueprint <job-id>   # experimental
-jobhunter jobs snapshot <job-id>
-
-jobhunter translations status
-jobhunter translations models
-jobhunter translations run --missing --limit 20
-jobhunter translations export
-
-jobhunter-corpus export
-jobhunter-corpus verify
-jobhunter-corpus status
-```
-
-Browser and CLI share the same durable application state and service boundaries.
-
-## Current near-term sequence
-
-```text
-P1.6 v20/v5 promoted/closed
-→ Capability v9/v5 promoted/closed
-→ public corpus operationally closed / remotely available
-→ Python/software heterogeneous validation accepted (tmBK 39 → 13)
-→ heterogeneous review closed (tmBK 39→13, t4qV 44→14, tmyX 46→15)
-→ Market truthfulness and source/lifecycle acceptance closed
-→ partial-success semantics accepted
-→ P1.7 report/run/browser accepted
-→ Phase-1 closure accepted
-→ preserve accepted P1.6 + Capability as Phase-2 input
-→ focused canonical concept registry
-```
-
-JobHunter now claims bounded Phase-1 closure on the documented contracts and accepted representative anchors. It does not claim semantic acceptance across every role family, a canonical Phase-2 taxonomy, reviewed personal readiness/gap state, arbitrary-web ingestion, autonomous applications, or an evaluated RAG/agent platform.
-
-## Development validation
-
-```bash
-ruff check .
-python -m pytest
-python -m pytest -W error
-```
-
-Normal deterministic tests do not contact Jobinja, Google Cloud, or LM Studio. Live source/model validation is separate and bounded.
+Current development is still building the reviewed market/work/canonical substrate needed before personal scoring or recommendation layers can be trusted.
