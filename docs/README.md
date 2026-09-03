@@ -54,6 +54,7 @@ These documents explain implemented subsystems and normal operation. They are su
 | [`SEMANTIC_ANALYSIS.md`](SEMANTIC_ANALYSIS.md) | P1.6 structured factual-analysis design |
 | [`CURRENT_RUNTIME_AND_VERSIONED_CODE.md`](CURRENT_RUNTIME_AND_VERSIONED_CODE.md) | current semantic runtime entrypoints, versioned dependency roles, and safe historical-code disposition |
 | [`LOCAL_WEB_APP.md`](LOCAL_WEB_APP.md) | local browser application behavior and operation |
+| [`demo/README.md`](demo/README.md) | reproducible public-corpus walkthrough using real accepted rich and sparse examples |
 | [`../corpus/README.md`](../corpus/README.md) | deterministic repository-safe public corpus |
 | [`../review-snapshots/README.md`](../review-snapshots/README.md) | selected semantic-review/acceptance exports |
 
@@ -136,6 +137,7 @@ Candidate idea only; never self-authorizing.
 To prevent `docs/` from becoming flat and ambiguous again:
 
 - keep only stable controlling documents, current supporting subsystem guides, active top-level plans, and a small number of repository-wide audit/track documents at `docs/` root;
+- put reproducible reviewer/demo walkthroughs under `demo/`;
 - put model/contract investigations in `experiments/`;
 - put dated execution/handoff evidence in `working-memory/`;
 - put candidate product/architecture ideas in `proposals/`;
@@ -147,10 +149,11 @@ To prevent `docs/` from becoming flat and ambiguous again:
 
 ## 10. External-reviewer route
 
-A technical reviewer who wants increasing depth should normally follow:
+A reviewer who wants increasing depth should normally follow:
 
 ```text
 README.md
+→ demo/README.md for a concrete accepted evidence chain
 → PRODUCT_SPECIFICATION.md
 → ARCHITECTURE.md
 → DOMAIN_AND_ANALYSIS_MODEL.md / SOURCE_POLICY.md
