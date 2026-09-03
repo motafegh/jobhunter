@@ -137,27 +137,46 @@ The corpus intentionally excludes SQLite files, raw HTML evidence, machine-local
 
 ### Requirements
 
+- Git
 - Python 3.12+
 - LM Studio only for local translation/semantic-generation workflows
 - network access to Jobinja only for live acquisition workflows
 
-### Install and run quality checks
+### Install an isolated developer environment
 
 ```bash
 git clone https://github.com/motafegh/jobhunter.git
 cd jobhunter
+python -m venv .venv
+source .venv/bin/activate       # Linux/macOS/WSL
 python -m pip install -e ".[dev]"
+jobhunter init --path config/local.toml
+```
+
+On Windows PowerShell, activate with:
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+`config/local.toml` is ignored by Git and is the recommended fresh-clone configuration path. It avoids coupling a developer setup to maintainer-specific local model identifiers.
+
+Verify the deterministic baseline:
+
+```bash
+jobhunter --config config/local.toml jobinja plan
+jobhunter-corpus status
 ruff check .
 pytest
 pytest -W error
 ```
 
-Normal deterministic tests do not contact Jobinja, Google Cloud, or LM Studio.
+Normal deterministic tests and offline search planning do not contact Jobinja or LM Studio.
 
 ### Launch the local application
 
 ```bash
-jobhunter-app
+jobhunter-app --config config/local.toml
 ```
 
 Default URL:
@@ -166,7 +185,9 @@ Default URL:
 http://127.0.0.1:8765/
 ```
 
-The application operates on local SQLite/runtime state. The committed `corpus/` is a repository-safe projection for inspection and reproducibility; it is not silently imported into the local database.
+A fresh local database may be empty; that is valid. The committed `corpus/` is a repository-safe projection for inspection and reproducibility and is not silently imported into local SQLite.
+
+For the complete setup path—including local-state boundaries, optional LM Studio, optional live acquisition, WSL/Windows notes, and troubleshooting—see [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md).
 
 ### Selected CLI entry points
 
@@ -184,7 +205,7 @@ jobhunter translations status
 jobhunter-corpus status
 ```
 
-Run each command with `--help` for the exact subcommands/options supported by the installed version.
+Use `--config config/local.toml` (or set `JOBHUNTER_CONFIG`) for local commands that load runtime settings. Run each command with `--help` for the exact subcommands/options supported by the installed version.
 
 ## Technology stack
 
@@ -248,6 +269,7 @@ Useful entry points:
 
 - [`docs/PRODUCT_SPECIFICATION.md`](docs/PRODUCT_SPECIFICATION.md) — product purpose, current capabilities, outputs, and boundaries;
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — core architecture, authority, persistence, and runtime design;
+- [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md) — fresh-clone development setup and optional local services;
 - [`docs/DOMAIN_AND_ANALYSIS_MODEL.md`](docs/DOMAIN_AND_ANALYSIS_MODEL.md) — domain/analysis semantics;
 - [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
@@ -266,6 +288,8 @@ ruff check .
 pytest
 pytest -W error
 ```
+
+CI also smoke-checks the installed public entrypoints and offline public/demo paths so package installation can succeed while onboarding commands are broken only with a visible failure.
 
 Beyond ordinary tests, the project has regression coverage around source parsing, translation integrity, P1.6 factual contracts, semantic review, Capability reconciliation, lifecycle/source truth, public-corpus projection, Canonical Registry behavior, Work Intelligence, CLI behavior, and browser workflows.
 
