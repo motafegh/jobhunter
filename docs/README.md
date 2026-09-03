@@ -48,6 +48,7 @@ These documents explain implemented subsystems and normal operation. They are su
 
 | Document | Purpose |
 | --- | --- |
+| [`DEVELOPMENT_AND_LOCAL_SETUP.md`](DEVELOPMENT_AND_LOCAL_SETUP.md) | fresh-clone developer setup, isolated local config, optional LM Studio/Jobinja, and local-state boundaries |
 | [`ACQUISITION_OPERATIONS.md`](ACQUISITION_OPERATIONS.md) | Jobinja acquisition and operational workflow |
 | [`SEARCH_CONFIGURATION.md`](SEARCH_CONFIGURATION.md) | bilingual search catalog/configuration |
 | [`TRANSLATION_AND_ENGLISH_CORPUS.md`](TRANSLATION_AND_ENGLISH_CORPUS.md) | translation and English-projection boundary |
@@ -156,6 +157,7 @@ README.md
 → demo/README.md for a concrete accepted evidence chain
 → PRODUCT_SPECIFICATION.md
 → ARCHITECTURE.md
+→ DEVELOPMENT_AND_LOCAL_SETUP.md when cloning/running locally
 → DOMAIN_AND_ANALYSIS_MODEL.md / SOURCE_POLICY.md
 → current subsystem or active-plan docs as needed
 → decisions / experiments / working-memory only for deeper historical evidence
