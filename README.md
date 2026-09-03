@@ -129,6 +129,8 @@ python -m json.tool corpus/jobs/t4qV/p16-english.json
 python -m json.tool corpus/jobs/t4qV/capability.json
 ```
 
+For a guided two-case walkthrough—including lineage checks and a sparse listing where JobHunter deliberately keeps accepted responsibilities empty—see [`docs/demo/README.md`](docs/demo/README.md).
+
 The corpus intentionally excludes SQLite files, raw HTML evidence, machine-local paths, raw model protocol history, prompts, secrets, logs, local configuration, and future personal/private evidence.
 
 ## Quick start
@@ -249,6 +251,7 @@ Useful entry points:
 - [`docs/DOMAIN_AND_ANALYSIS_MODEL.md`](docs/DOMAIN_AND_ANALYSIS_MODEL.md) — domain/analysis semantics;
 - [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
+- [`docs/demo/README.md`](docs/demo/README.md) — guided reproducible public-corpus demo using real accepted artifacts;
 - [`corpus/README.md`](corpus/README.md) — public corpus contract and usage;
 - [`review-snapshots/README.md`](review-snapshots/README.md) — curated semantic-review evidence.
 
