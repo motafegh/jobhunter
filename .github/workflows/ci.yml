@@ -30,6 +30,13 @@ jobs:
       - name: Install package and development tools
         run: python -m pip install -e ".[dev]"
 
+      - name: Smoke installed public entrypoints
+        run: |
+          jobhunter --version
+          jobhunter-corpus status
+          jobhunter --config jobhunter.toml.example jobinja plan
+          jobhunter-app --help
+
       - name: Run Ruff
         run: ruff check .
 
