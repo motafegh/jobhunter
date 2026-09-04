@@ -43,8 +43,11 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
-  # Starlette TestClient still references an alias deprecated by AnyIO 4.15.
-  # Keep strict `pytest -W error` deterministic until that upstream boundary is compatible.
+  # Current Starlette TestClient prefers httpx2 and emits a deprecation warning
+  # when it must fall back to httpx. Keep this explicit while web tests use TestClient.
+  "httpx2>=2.7,<3",
+  # Preserve the PR6 strict-warning compatibility boundary independently until
+  # a clean dependency run proves that AnyIO 4.15+ is warning-free for our stack.
   "anyio>=4,<4.15",
   "pytest>=8.3,<9",
   "ruff>=0.12,<1",
