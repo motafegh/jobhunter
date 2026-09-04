@@ -1,4 +1,8 @@
-# JobHunter local configuration
+# JobHunter maintainer runtime configuration.
+# This tracked file records the current maintainer machine/model choices for reproducibility;
+# it is not the portable fresh-clone configuration. New developers should use the ignored
+# `config/local.toml` path documented in docs/DEVELOPMENT_AND_LOCAL_SETUP.md.
+# Do not add secrets to this tracked file.
 
 [jobhunter]
 
