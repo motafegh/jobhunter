@@ -166,6 +166,7 @@ Verify the deterministic baseline:
 ```bash
 jobhunter --config config/local.toml jobinja plan
 jobhunter-corpus status
+python -m pip check
 ruff check .
 pytest
 pytest -W error
@@ -275,7 +276,8 @@ Useful entry points:
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
 - [`docs/demo/README.md`](docs/demo/README.md) — guided reproducible public-corpus demo using real accepted artifacts;
 - [`corpus/README.md`](corpus/README.md) — public corpus contract and usage;
-- [`review-snapshots/README.md`](review-snapshots/README.md) — curated semantic-review evidence.
+- [`review-snapshots/README.md`](review-snapshots/README.md) — curated semantic-review evidence;
+- [`SECURITY.md`](SECURITY.md) — security scope, secret/private-state rules, and vulnerability reporting.
 
 The repository also retains detailed plans, experiments, working memory, and historical acceptance records for engineering traceability. They are deeper implementation history, not the intended first-pass product narrative.
 
@@ -284,6 +286,7 @@ The repository also retains detailed plans, experiments, working memory, and his
 CI runs the repository's normal deterministic gates on every push to `main` and on pull requests:
 
 ```bash
+python -m pip check
 ruff check .
 pytest
 pytest -W error
