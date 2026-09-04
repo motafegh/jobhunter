@@ -80,7 +80,7 @@ python -m pip install -e ".[dev]"
 
 `.venv/` is ignored by Git.
 
-The repository CI performs the same editable development install on Python 3.12 before running the quality gates.
+The repository CI performs the same editable development install on Python 3.12 before running dependency consistency, entrypoint smoke, linting, and test gates.
 
 ---
 
@@ -121,8 +121,9 @@ After that, commands that load normal settings may omit `--config`.
 
 ### About the root configuration files
 
-- `jobhunter.toml.example` is the portable documented example.
-- the repository may retain a maintainer-oriented root `jobhunter.toml` while configuration hygiene is being handled separately;
+- `jobhunter.toml.example` is the portable documented reference and may be copied to `config/local.toml`;
+- the tracked root `jobhunter.toml` is explicitly a maintainer/runtime reference containing current machine/model selections for reproducibility;
+- the tracked root config must not contain secrets and is **not** the recommended fresh-clone configuration;
 - new developers should use their own ignored `config/local.toml` rather than inheriting machine-specific model selections.
 
 ### About `.env.example`
@@ -139,12 +140,15 @@ These commands require no live Jobinja request and no model call:
 jobhunter --version
 jobhunter --config config/local.toml jobinja plan
 jobhunter-corpus status
+python -m pip check
 ruff check .
 pytest
 pytest -W error
 ```
 
 `jobhunter-corpus status` reads the committed repository manifest and does not query your SQLite database.
+
+`python -m pip check` verifies that the installed dependency graph has no known package requirement conflicts. CI runs it immediately after installation.
 
 The expected current public-corpus shape is documented in [`demo/README.md`](demo/README.md). Corpus counts will naturally change as accepted public project state evolves.
 
@@ -207,7 +211,7 @@ The repository ignores:
 - virtual environments;
 - logs, exports, backups, local models, and common temporary/editor files.
 
-Do not commit private/personal runtime data, credentials, raw model protocol history, or machine-local evidence paths.
+Do not commit private/personal runtime data, credentials, raw model protocol history, or machine-local evidence paths. See [`../SECURITY.md`](../SECURITY.md) for the repository security/reporting boundary.
 
 ### Important: public-corpus synchronization
 
@@ -342,7 +346,7 @@ A clone does not contain the maintainer's operational state:
 
 - local SQLite history;
 - raw local evidence files;
-- LM Studio models;
+- LM Studio model files;
 - private/personal career evidence;
 - local secrets or tokens;
 - uncommitted review notes/logs.
@@ -353,7 +357,8 @@ It **does** contain:
 - current public documentation;
 - deterministic public corpus projection;
 - selected repository-safe review snapshots;
-- configuration examples;
+- portable configuration examples;
+- the tracked maintainer/runtime config reference (model identifiers/URL choices, no secrets);
 - CI definition and engineering history.
 
 This distinction is intentional. Reproducibility does not mean publishing private runtime state.
@@ -369,6 +374,7 @@ Check:
 ```bash
 python --version
 python -m pip install -e ".[dev]"
+python -m pip check
 ```
 
 JobHunter requires Python 3.12+.
@@ -407,6 +413,7 @@ First confirm that offline planning works, then use the bounded acquisition runb
 Before sharing a code change:
 
 ```bash
+python -m pip check
 ruff check .
 pytest
 pytest -W error
