@@ -1,124 +1,127 @@
 # JobHunter Portfolio Readiness and Public Presentation Plan
 
-**Status:** ACTIVE / PR0–PR2 IMPLEMENTED / PR3 NEXT  
-**Date:** 2026-09-02  
+**Status:** ACTIVE / PR0–PR8 REPOSITORY-SIDE IMPLEMENTED / PR9 NEXT  
+**Date:** 2026-09-04  
 **Scope:** Make the public JobHunter repository professional, understandable, demonstrable, maintainable, and credible as a CV/portfolio project without weakening or rewriting accepted product semantics.  
-**Relationship to product work:** P2.2B-B1 remains the current product-development gate and is locally blocked on `ta9l` P1.6 acceptance. Portfolio work may proceed while that local blocker exists, but it does not authorize new product features, semantic-contract changes, registry promotion, or reopening accepted layers.
+**Relationship to product work:** P2.2B-B1 remains the current product-development gate and is locally blocked on `ta9l` English projection/P1.6 acceptance. Portfolio work may proceed independently but does not authorize new product features, semantic-contract changes, registry promotion, or reopening accepted layers.
 
 ## 0. Progress ledger
 
 | Phase | State | Primary evidence |
 | --- | --- | --- |
-| PR0 — full portfolio-readiness audit | COMPLETE | `docs/PORTFOLIO_READINESS_AUDIT_2026-09-02.md` / commit `c7334723613e0c95b06e859222fc990d54bb905e` |
-| PR1 — README / public landing story | README COMPLETE | commit `1dae378acb11941d58828c941438851985fcdfd7`; GitHub description/topics remain a later repository-settings task |
-| PR2 — architecture / engineering story | IMPLEMENTED | `docs/ARCHITECTURE.md` / commit `6a2eeb9e1f2205c087c27d962b5a7a0d48432d2c` |
-| PR3 — documentation information architecture | NEXT | not started |
-| PR4 — historical/versioned source disposition | PENDING | not started |
-| PR5 — current-code structure/readability | PENDING | not started |
-| PR6 — demo/screenshots/public-corpus walkthrough | PENDING | not started |
-| PR7 — installation/developer onboarding | PENDING | not started |
-| PR8 — repository/package/security hygiene | PENDING | not started |
-| PR9 — stable portfolio release + CV/interview package | PENDING | not started |
+| PR0 — full portfolio-readiness audit | COMPLETE | `docs/PORTFOLIO_READINESS_AUDIT_2026-09-02.md` |
+| PR1 — README / public landing story | COMPLETE | root `README.md`; GitHub settings remain external/manual |
+| PR2 — architecture / engineering story | COMPLETE | `docs/ARCHITECTURE.md` |
+| PR3 — documentation information architecture | COMPLETE | `docs/README.md`; PR3 working-memory closure |
+| PR4 — historical/versioned source disposition | COMPLETE | `docs/CURRENT_RUNTIME_AND_VERSIONED_CODE.md`; PR4 working-memory closure |
+| PR5 — current-code structure/readability | COMPLETE | shared `web/common.py` boundary + regression tests; PR5 closure |
+| PR6 — reproducible demo/public-corpus experience | REPOSITORY-SIDE COMPLETE | `docs/demo/README.md`; real browser screenshots deferred until local runtime access |
+| PR7 — installation/developer onboarding | COMPLETE | `docs/DEVELOPMENT_AND_LOCAL_SETUP.md`; clean CI onboarding smoke |
+| PR8 — repository/package/security hygiene | REPOSITORY-SIDE COMPLETE | `SECURITY.md`, package/config/CI hygiene, `docs/working-memory/2026-09-04_PR8_REPOSITORY_PACKAGE_SECURITY_HYGIENE.md` |
+| PR9 — portfolio release + CV/interview package | NEXT | final validation/release package not started |
+
+Two external/owner decisions remain intentionally outside the completed repository-side PR8 work:
+
+1. choose a license if third-party reuse should be granted;
+2. apply GitHub repository description/topics/homepage through repository settings when available.
+
+PR6 also retains one machine-local presentation item: real browser screenshots must come from the real local application when system access returns; they must not be fabricated.
 
 ---
 
 ## 1. Objective
 
-Prepare JobHunter so that a recruiter, hiring manager, senior engineer, or technical interviewer can quickly understand:
+Prepare JobHunter so a recruiter, hiring manager, senior engineer, technical interviewer, or developer can quickly understand:
 
-1. what problem the project solves;
-2. what is implemented today;
-3. what makes the engineering non-trivial;
-4. how the architecture works;
-5. how source truth, deterministic logic, model reasoning, and reviewed authority are separated;
-6. how to run or inspect the project safely;
-7. how quality, testing, provenance, privacy, and failure handling are enforced;
-8. which parts are current, experimental, historical, or future work;
-9. what major design decisions were made and why;
-10. that the repository is intentionally engineered rather than an unstructured accumulation of generated code.
+1. the problem and current product value;
+2. what is implemented today versus experimental/historical/future;
+3. the non-trivial engineering and architecture;
+4. source truth, deterministic logic, model reasoning, and reviewed authority boundaries;
+5. how provenance, privacy, persistence, failure handling, and bounded acquisition work;
+6. how to inspect meaningful real output without private SQLite state or LM Studio;
+7. how to install, test, and run the project safely;
+8. why major architectural choices were made;
+9. how historical/versioned code is intentionally retained;
+10. that AI-assisted implementation remained subject to explicit architecture, evidence, review, testing, and project ownership.
 
 The target is **professional technical credibility**, not visual decoration or artificial complexity.
 
 ---
 
-## 2. Reviewer journeys to optimize
+## 2. Reviewer journeys
 
-### Recruiter / first-pass reviewer — about 30–90 seconds
+### Recruiter / first pass — roughly 30–90 seconds
 
-They should immediately see:
+Expected path:
 
-- concise project identity/value proposition;
-- major implemented capabilities;
-- primary technology stack;
-- one clean architecture visual;
-- screenshots/product preview;
-- current maturity/status;
-- why this is more than a scraper or generic LLM wrapper.
+```text
+README
+→ value proposition / implemented capabilities
+→ architecture at a glance
+→ technology + current maturity
+→ real public-corpus/demo evidence
+```
 
-### Hiring manager — about 3–5 minutes
+### Hiring manager — roughly 3–5 minutes
 
-They should understand:
+They should understand the end-to-end workflow, current limits, local-first rationale, deterministic/model/review split, persistence/provenance, tests/CI, and demo path.
 
-- end-to-end workflow;
-- current features and limitations;
-- architecture/boundaries;
-- local-first/privacy rationale;
-- deterministic-versus-model responsibilities;
-- persistence/provenance strategy;
-- tests and CI;
-- public-corpus/demo path.
+### Senior engineer / interviewer — roughly 10–30 minutes
 
-### Senior engineer / technical interviewer — about 10–30 minutes
+Expected deeper path:
 
-They should be able to inspect:
-
-- package/module boundaries;
-- important service/data flows;
-- current versus historical implementations;
-- failure semantics and safety boundaries;
-- schema/artifact versioning rationale;
-- testing strategy and representative regressions;
-- source acquisition constraints;
-- canonicalization/review architecture;
-- design tradeoffs and known limitations.
+```text
+README
+→ docs/README.md
+→ PRODUCT_SPECIFICATION.md
+→ ARCHITECTURE.md
+→ CURRENT_RUNTIME_AND_VERSIONED_CODE.md
+→ relevant source/tests
+→ decisions/experiments/working-memory only when deeper evidence is useful
+```
 
 ### Developer cloning the repository
 
-Expected route:
+Validated route:
 
 ```text
 clone
-→ install
-→ configure
-→ inspect/demo
-→ run tests
-→ optionally run the local application
+→ Python 3.12 virtual environment
+→ pip install -e ".[dev]"
+→ jobhunter init --path config/local.toml
+→ pip check / offline entrypoint smoke
+→ Ruff / pytest / pytest -W error
+→ optional browser
+→ optional LM Studio
+→ optional bounded Jobinja acquisition
 ```
 
-A reviewer without Jobinja acquisition access or LM Studio should still be able to inspect meaningful committed project output.
+A reviewer without Jobinja or LM Studio can still inspect the committed public corpus and demo.
 
 ---
 
-## 3. Permanent rules for this track
+## 3. Permanent rules
 
 1. Do not redesign architecture merely for CV appearance.
-2. Do not introduce microservices, Kubernetes, React, vector databases, queues, cloud infrastructure, or other fashionable technology solely for portfolio signaling.
+2. Do not introduce microservices, Kubernetes, React, vector databases, queues, cloud infrastructure, or fashionable technology solely for portfolio signaling.
 3. Do not rewrite Git history to hide engineering evolution.
-4. Do not delete historical/versioned source modules until imports, tests, artifact compatibility, reproducibility needs, and runtime dependencies are audited.
-5. Do not change accepted semantic behavior as a side effect of presentation/refactor work.
+4. Do not delete historical/versioned source until imports, tests, artifact compatibility, reproducibility, and runtime dependencies are proved unnecessary.
+5. Do not change accepted semantic behavior as a presentation/refactor side effect.
 6. Do not reopen accepted P1.6, Capability v9, P2.1, or P2.2A for harmless wording/style differences.
 7. Do not publish private/local state.
-8. Public-facing documentation should be layered and concise; deep governance/history may remain available without dominating entry paths.
-9. Do not add ceremonial files simply because other repositories have them.
-10. Do not misrepresent AI-assisted development. Demonstrate project ownership through problem framing, architecture, evidence boundaries, acceptance criteria, validation, tradeoffs, and technical understanding.
-11. Keep claims accurate: implemented/current, experimental, historical, deferred, and planned must remain distinct.
+8. Keep public documentation layered and concise; retain deep governance/history without making it the entry path.
+9. Do not add ceremonial files, bots, badges, templates, or tooling simply because other repositories have them.
+10. Do not misrepresent AI-assisted development. Demonstrate ownership through framing, architecture, evidence boundaries, review, validation, tradeoffs, and technical understanding.
+11. Keep implemented/current, experimental, historical, deferred, and planned claims distinct.
 12. Preserve one source of truth per concern.
+13. Do not fabricate screenshots/demo state or claim machine-local acceptance that has not occurred.
+14. Legal/repository-owner choices such as license grants must be explicit rather than inferred for portfolio polish.
 
 ---
 
 ## 4. Finding classification
 
-Every change should use one of these dispositions:
+Use:
 
 ```text
 KEEP        already professional and appropriate
@@ -132,310 +135,202 @@ ADD         missing artifact/capability justified by reviewer/developer usabilit
 
 `REMOVE` requires stronger evidence than `ARCHIVE` or `REORGANIZE`.
 
-PR0 authorized **no removal** based only on filename/history appearance.
-
 ---
 
-# Part I — Completed public foundation
+# Part I — Completed foundation
 
-## 5. PR0 — Full portfolio-readiness audit — COMPLETE
+## 5. PR0–PR2 — Audit, README, and architecture — COMPLETE
 
-Deliverable:
+### PR0
 
-`docs/PORTFOLIO_READINESS_AUDIT_2026-09-02.md`
+The full audit established that JobHunter already had sufficient engineering substance for a strong portfolio project. The principal weakness was public presentation/information architecture, not technical depth.
 
-Key result:
+Core disposition:
 
 ```text
-KEEP core architecture + trust/provenance model
+KEEP architecture/trust model
 → POLISH public story
-→ reconcile current architecture
-→ REORGANIZE documentation/history visibility
-→ dependency-audit historical code before movement/removal
-→ selectively REFACTOR only measured current problems
-→ build a real corpus-backed demo
-→ finish package/release/CV presentation last
+→ reconcile architecture
+→ organize documentation/history
+→ dependency-audit versioned code
+→ selectively refactor measured current problems
+→ real corpus-backed demo
+→ onboarding/hygiene
+→ release/CV package last
 ```
+
+### PR1
+
+The README now leads with product identity, implemented capabilities, engineering differentiators, current architecture, real public corpus, setup, stack, maturity, limits, and documentation entry points.
+
+### PR2
+
+`docs/ARCHITECTURE.md` now matches the current modular-monolith/local-first implementation, fan-out from accepted P1.6 authority, Capability v9, Work Intelligence v2, Canonical Registry, Market/report boundaries, public corpus/runtime separation, browser/CLI shared services, failure semantics, and experimental Blueprint isolation.
 
 ---
 
-## 6. PR1 — GitHub landing page and README — README COMPLETE
+# Part II — Information architecture and maintainability — COMPLETE
 
-The root README has been redesigned around:
+## 6. PR3 — Documentation information architecture — COMPLETE
 
-```text
-problem / value proposition
-→ current product capabilities
-→ engineering differentiators
-→ architecture at a glance
-→ real public-corpus inspection
-→ quick start
-→ technology stack
-→ maturity and limitations
-→ project structure / docs
-```
+Result:
 
-Requirements retained:
+- `docs/README.md` is the professional documentation map;
+- stable governance-critical paths were preserved instead of mass-moving files;
+- current/supporting/active/closed/historical/proposal/working-memory lifecycles are explicit;
+- public Review Snapshot wording/baseline was reconciled;
+- deep history remains available without dominating external navigation.
 
-- no inflated claims;
-- current vs experimental/future capabilities separated;
-- Blueprint explicitly non-authoritative;
-- local-first / LM Studio role explained practically;
-- provenance/authority design surfaced as a differentiator;
-- internal artifact chronology no longer dominates the landing page;
-- CI badge linked to the real workflow;
-- screenshots must later come from real application output.
+## 7. PR4 — Historical/versioned source disposition — COMPLETE
 
-Still pending outside the README:
+`docs/CURRENT_RUNTIME_AND_VERSIONED_CODE.md` records the evidence-backed runtime/dependency roles.
 
-- GitHub repository description/topics;
-- optional homepage only if a meaningful destination exists;
-- license decision.
+The audit proved that older-looking modules are not uniformly dead. Current paths transitively reuse earlier P1.6/Capability components, and experimental Blueprint retains a historical Capability compatibility boundary. No mass deletion or relocation was authorized.
 
-Those belong to PR8 because the currently available connector does not expose repository-settings writes.
+## 8. PR5 — Current-code structure/readability — COMPLETE
 
----
+The bounded refactor centralized shared web CSRF/template/redirect/operation primitives in `web/common.py` and migrated specialized route modules to that boundary with focused tests.
 
-## 7. PR2 — Architecture and engineering story — IMPLEMENTED
-
-`docs/ARCHITECTURE.md` now describes the current architecture including:
-
-- modular-monolith/local-first rationale;
-- current epistemic authority model;
-- current end-to-end evidence/data flow;
-- accepted P1.6 factual substrate as a fan-out authority boundary;
-- Capability Intelligence v9;
-- Job Work Intelligence v2;
-- Canonical Concept Registry;
-- Market/report boundaries;
-- public corpus vs runtime authority;
-- selected review snapshots;
-- experimental Blueprint isolation;
-- failure semantics;
-- browser/CLI shared-service architecture;
-- security/privacy boundaries;
-- current contracts/acceptance anchors;
-- current P2.2B boundary and planned evolution.
-
-The architecture diagram is maintained as repository text so it remains reviewable and versionable without external diagram tooling.
-
-No ADR bureaucracy is required yet. Add an ADR only if a major durable choice benefits from a focused decision record beyond the architecture document itself.
-
----
-
-# Part II — Information architecture and source maintainability
-
-## 8. PR3 — Documentation information architecture — NEXT
-
-**Goal:** Keep deep engineering history while giving external readers a clean navigation path.
-
-Before moving files, classify the documentation families:
-
-```text
-CURRENT PRODUCT / PUBLIC
-ARCHITECTURE / DESIGN
-DEVELOPER / OPERATIONS
-DECISION RECORD
-CURRENT EXECUTION PLAN
-HISTORICAL PLAN
-EXPERIMENT / RESEARCH
-WORKING MEMORY / HANDOFF
-SUPERSEDED / DUPLICATED
-```
-
-Then design the smallest useful target hierarchy. Candidate families may include:
-
-```text
-docs/product/
-docs/architecture/
-docs/development/
-docs/operations/
-docs/decisions/
-docs/plans/
-docs/experiments/
-docs/working-memory/
-```
-
-Do not adopt that structure mechanically. The audit must determine which boundaries are worth the move.
-
-Required outputs:
-
-- concise `docs/README.md` or equivalent documentation map;
-- current controlling/product docs immediately discoverable;
-- internal/historical material clearly separated from normal reviewer navigation;
-- stale current-state statements identified and reconciled;
-- broken links/references prevented;
-- no duplicate current source of truth.
-
-If large-scale file movement creates more churn than value, prefer a strong index + explicit historical/current labeling over mass relocation.
-
----
-
-## 9. PR4 — Historical/versioned source disposition
-
-**Goal:** Make current runtime paths obvious without sacrificing reproducibility.
-
-For each versioned source/test/script family:
-
-1. build import/reference map;
-2. identify current runtime dependencies;
-3. identify historical-artifact compatibility/replay needs;
-4. identify regression-test dependencies;
-5. identify research-only code;
-6. prove any genuinely unreferenced code;
-7. choose:
-
-```text
-KEEP IN PLACE
-ISOLATE AS HISTORICAL/COMPATIBILITY
-ARCHIVE OUTSIDE CURRENT RUNTIME PACKAGE
-REMOVE AFTER PROOF
-```
-
-No mass deletion.
-
----
-
-## 10. PR5 — Current-code structure and readability
-
-**Goal:** Make important current code understandable to another engineer without over-engineering.
-
-Audit and selectively improve:
-
-- module responsibility boundaries;
-- large web route/orchestration files;
-- CLI command organization;
-- service construction/dependency wiring;
-- Registry/Work Intelligence boundaries;
-- names/public interfaces;
-- type annotations;
-- comments/docstrings for important invariants and cross-file data flow;
-- genuinely redundant wrappers/helpers;
-- test organization around current public behavior.
-
-Rules:
-
-- split by responsibility, not arbitrary line counts;
-- prefer explicit modules over generic frameworks;
-- preserve current behavior and persisted contracts;
-- no dependency-injection framework without demonstrated need;
-- runtime changes require targeted regression plus normal quality gates.
+CLI, Work Intelligence service decomposition, Registry persistence/domain structure, and the modular monolith were kept. `web/app.py` remains a future candidate only if a concrete maintenance/reuse problem justifies a split; file size alone is not authorization.
 
 ---
 
 # Part III — Demonstrability and developer experience
 
-## 11. PR6 — Reproducible demo / public-corpus experience
+## 9. PR6 — Reproducible demo / public-corpus experience — REPOSITORY-SIDE COMPLETE
 
-**Goal:** Let an external reviewer experience meaningful JobHunter output with minimal setup.
+`docs/demo/README.md` provides a real committed-evidence walkthrough:
 
-Preferred path:
+- `t4qV` demonstrates a rich accepted source → English → P1.6 → Capability chain;
+- `tmBK` demonstrates a sparse/qualification-heavy case where accepted responsibilities remain empty rather than being invented.
 
-- reuse committed `corpus/` rather than fabricate data;
-- select one or two representative accepted jobs;
-- demonstrate source → English projection → P1.6 → Capability, plus Work Intelligence/Registry where repository-safe evidence is available;
-- avoid requiring live acquisition merely to understand the product;
-- avoid requiring LM Studio for read-only committed-output inspection;
-- state clearly which workflows do require SQLite/local runtime/LM Studio.
+No fake demo app or fabricated data was added.
 
-Potential justified outputs:
-
-- `docs/demo/` walkthrough;
-- 2–4 real browser screenshots;
-- concise expected CLI/corpus output;
-- a tiny read-only helper only if existing commands/files cannot provide an adequate experience.
-
-Do not create a separate fake demo application.
-
----
-
-## 12. PR7 — Installation and developer onboarding
-
-Validate and document:
+Remaining machine-local item:
 
 ```text
-Python 3.12+
-installation
-configuration
-public-corpus inspection
-browser launch
-CLI entrypoints
-optional LM Studio setup
-optional live Jobinja acquisition
-running tests
-linting
-warnings-as-errors
-expected local-only files
-common setup boundaries
+2–4 real browser screenshots from the actual local application
 ```
 
-Add `CONTRIBUTING.md` only if it provides real value beyond README/development documentation.
+This remains deferred until local runtime access returns.
 
-Avoid Makefiles/task runners that only wrap already-simple commands.
+## 10. PR7 — Installation/developer onboarding — COMPLETE
+
+`docs/DEVELOPMENT_AND_LOCAL_SETUP.md` now separates:
+
+```text
+repository review only
+developer deterministic baseline
+optional LM Studio intelligence workflow
+optional live Jobinja acquisition
+```
+
+CI validates the actual fresh-install entrypoints and isolated config bootstrap. The recommended developer config is ignored `config/local.toml`, not the maintainer-specific tracked root runtime reference.
 
 ---
 
 # Part IV — Repository quality and release
 
-## 13. PR8 — Open-source/repository hygiene
+## 11. PR8 — Repository/package/security hygiene — REPOSITORY-SIDE COMPLETE
 
-Audit and address where justified:
+Implemented:
 
-- license decision/file;
-- `pyproject.toml` metadata;
-- GitHub description/topics;
-- project URLs;
-- configuration examples;
-- `.gitignore` completeness;
-- accidental secret/private-data risk;
-- public-corpus privacy boundary;
-- dependency ranges/rationale;
-- CI reliability/badge;
-- optional dependency/security automation only if maintainable;
-- `SECURITY.md` only if it can state a meaningful reporting/security model;
-- stale/broken links;
-- dead scripts/temporary artifacts only after proof;
-- repository terminology consistency.
+- polished `pyproject.toml` package metadata and project URLs;
+- explicit evidence-backed dev dependency rationale;
+- `python -m pip check` in CI/developer verification;
+- aligned tracked maintainer config, portable example, and environment-example boundaries;
+- `SECURITY.md` with meaningful local-first/privacy/reporting scope;
+- targeted tracked-tree secret/private-artifact review;
+- retained minimal CI repository permissions;
+- no unnecessary bots/templates/task runners/container infrastructure.
 
-Do not add badges, bots, templates, CODEOWNERS, issue forms, or community files purely as decoration.
+Important dependency evidence:
+
+- removing `httpx2` was tested rather than assumed;
+- current Starlette 1.6 TestClient explicitly requires/prefers it and strict CI failed without it;
+- `httpx2` is therefore retained as a justified dev/test dependency;
+- the AnyIO `<4.15` cap remains a separate strict-warning compatibility boundary until independently disproved.
+
+Still external/owner-controlled:
+
+- **license:** explicit owner choice required before adding a legal reuse grant;
+- **GitHub description/topics/homepage:** settings update required; current connector cannot write repository settings.
+
+PR8 closure: `docs/working-memory/2026-09-04_PR8_REPOSITORY_PACKAGE_SECURITY_HYGIENE.md`.
 
 ---
 
-## 14. PR9 — Portfolio release and CV/interview package
+## 12. PR9 — Portfolio release and CV/interview package — NEXT
 
-Only after PR0–PR8 acceptance:
+PR9 should perform the final integrated portfolio acceptance rather than starting new product work.
 
-1. establish an intentional project version/release label;
-2. create a GitHub release/tag with truthful release notes;
-3. ensure README/screenshots/architecture match that release;
-4. prepare truthful CV project wording;
-5. prepare:
+### PR9-A — final repository/public consistency audit
+
+Verify:
+
+- README ↔ docs ↔ architecture ↔ package metadata consistency;
+- current public-corpus baseline/demo paths;
+- documentation links and current/historical labels;
+- latest CI quality result;
+- release version/tag readiness;
+- no unresolved portfolio claim inflation;
+- no accidental private/runtime publication.
+
+Do not reopen accepted product semantics during this audit.
+
+### PR9-B — resolve owner/external release blockers
+
+Before an intentional public portfolio release:
+
+1. owner chooses license policy (if any);
+2. apply GitHub description/topics and optional homepage through repository settings;
+3. capture real browser screenshots when local runtime access is available.
+
+Do not substitute generated/fake screenshots.
+
+### PR9-C — intentional portfolio release
+
+After the final state is accepted:
+
+1. choose an intentional release label/version;
+2. ensure package/version/release notes are consistent;
+3. create the Git tag/GitHub release with truthful release notes;
+4. ensure README/architecture/demo accurately describe that release.
+
+Do not claim production scale, a production user base, accuracy levels, or capabilities not demonstrated by evidence.
+
+### PR9-D — CV/interview package
+
+Prepare truthful reusable material:
 
 ```text
+CV project entry
 30-second recruiter summary
 2–3 minute hiring-manager explanation
 10–15 minute technical architecture walkthrough
 ```
 
-6. prepare talking points for:
+Cover:
 
 - problem/product motivation;
 - local-first rationale;
 - source/provenance model;
-- deterministic vs LLM reasoning;
-- semantic-review boundary;
+- deterministic vs LLM responsibilities;
+- semantic review/promotion boundary;
 - SQLite/artifact/versioning strategy;
-- acquisition safety/failure handling;
+- bounded acquisition and failure handling;
 - public-corpus design;
 - tests/CI and important regressions;
-- tradeoffs and future scale changes;
-- how AI assistance was directed, reviewed, validated, and incorporated into project ownership.
+- current limitations/tradeoffs and future scale triggers;
+- how AI assistance was directed, reviewed, tested, and incorporated into project ownership.
 
-Do not claim a production user base, scale, accuracy level, or automation capability that has not been demonstrated.
+### PR9-E — owner mastery check
+
+Before using the project in interviews, ensure the owner can explain the major architecture/data flows and tradeoffs at the depth claimed in the CV package. This is a learning/review responsibility, not a requirement to manually rewrite AI-assisted code from scratch.
 
 ---
 
-## 15. Validation rules
+## 13. Validation rules
 
 ### Documentation/presentation-only
 
@@ -455,16 +350,20 @@ Require:
 - documentation links verified;
 - tests/CI when executable paths are touched.
 
-### Runtime refactor
+### Runtime/package/dependency change
 
-Require:
+Require as applicable:
 
-- targeted tests;
-- `ruff check .`;
-- `pytest`;
-- `pytest -W error`;
-- no persisted-contract/currentness changes unless separately authorized;
-- local/live acceptance only when behavior cannot be validated remotely.
+```bash
+python -m pip check
+ruff check .
+pytest
+pytest -W error
+```
+
+Also require targeted regression or clean-install/entrypoint validation when the changed boundary demands it.
+
+No persisted-contract/currentness changes unless separately authorized. Local/live acceptance is required only where behavior cannot be validated remotely.
 
 ### Removal
 
@@ -478,13 +377,13 @@ Require proof of:
 
 ---
 
-## 16. Portfolio-readiness acceptance criteria
+## 14. Portfolio-readiness acceptance criteria
 
 ### Public understanding
 
-- [ ] GitHub metadata professional and accurate.
+- [ ] GitHub description/topics are professional and accurate — external settings action remains.
 - [x] README explains the product before implementation chronology.
-- [ ] real screenshots/visual product evidence exist.
+- [ ] real browser screenshots/visual product evidence exist — local-runtime deferred.
 - [x] current, experimental, limited, and future capabilities are separated.
 - [x] technology stack and engineering differentiators are visible without hype.
 
@@ -497,55 +396,58 @@ Require proof of:
 
 ### Code
 
-- [ ] current runtime paths are obvious to a new engineer.
-- [ ] historical/versioned code has intentional documented disposition.
-- [ ] no known dead/temporary source clutter remains without reason.
-- [ ] major modules have defensible responsibility boundaries.
-- [ ] important invariants/data flows are understandable.
+- [x] current runtime paths are documented for a new engineer.
+- [x] historical/versioned code has an intentional documented disposition.
+- [x] retained historical/current source clutter has an evidence-backed reason or bounded future trigger.
+- [x] major current modules have defensible responsibility boundaries.
+- [x] important invariants/data flows are documented and test-backed.
 
 ### Documentation
 
-- [ ] external-reader documentation path is concise.
-- [ ] deep governance/history does not dominate normal navigation.
-- [ ] stale current-state documentation is reconciled.
-- [ ] repository links are valid after any reorganization.
+- [x] external-reader documentation path is concise.
+- [x] deep governance/history does not dominate normal navigation.
+- [x] known stale current-state public documentation from the audit has been reconciled.
+- [x] no mass reorganization introduced known broken-path churn.
 
 ### Demo / onboarding
 
 - [x] committed public corpus can be inspected without live acquisition/LM Studio.
-- [x] README states LM Studio/local-runtime boundaries at a high level.
-- [ ] fresh-clone install/test/run path receives dedicated final verification.
-- [ ] real demo walkthrough/screenshots are present.
+- [x] README states LM Studio/local-runtime boundaries.
+- [x] fresh-clone install/test/entrypoint path has clean CI verification.
+- [x] real corpus-backed demo walkthrough exists.
+- [ ] real browser screenshots are present.
 
 ### Quality / hygiene
 
 - [x] CI is visible in README.
-- [x] tests/linting commands are visible.
-- [ ] package metadata is portfolio-ready.
-- [ ] license status is intentional.
-- [ ] final privacy/secret exposure audit is complete.
+- [x] install/dependency/entrypoint/lint/test/warnings gates are documented and CI-backed.
+- [x] package metadata is portfolio-ready for the current alpha state.
+- [x] license status is explicit: no license grant has been chosen; owner decision remains before any permissive reuse claim.
+- [x] targeted tracked-tree privacy/secret exposure audit is recorded with its limits.
+- [x] meaningful security/private-state/public-corpus boundaries are documented.
 
 ### CV readiness
 
-- [ ] stable tagged portfolio release exists.
+- [ ] final integrated PR9 audit is accepted.
+- [ ] intentional tagged portfolio release exists.
 - [ ] CV project description is finalized.
 - [ ] short, medium, and deep interview explanations are prepared.
-- [ ] owner learning/mastery pass covers major architectural tradeoffs and important code/data flows.
+- [ ] owner learning/mastery pass covers the architecture/tradeoffs represented in the CV package.
 
 ---
 
-## 17. Exact next action
+## 15. Exact next action
 
-Do not begin source-code cleanup yet.
-
-Next:
+Proceed with **PR9 final portfolio validation and release/CV package**, beginning with an integrated consistency audit rather than immediately tagging a release.
 
 ```text
-PR3 documentation information-architecture audit
-→ classify current/public vs internal/history document families
-→ design the smallest useful navigation/hierarchy change
-→ add a professional docs entry path
-→ move files only when the benefit clearly exceeds reference churn
+final public/repository consistency audit
+→ identify only true remaining release blockers
+→ resolve owner/settings items where possible
+→ real screenshots when local access permits
+→ intentional release/tag
+→ CV + recruiter/hiring-manager/interview package
+→ owner mastery review
 ```
 
-P2.2B product work remains paused at the existing machine-local `ta9l` P1.6 gate until system access returns. Portfolio work must not bypass that product gate.
+P2.2B product work remains paused at the existing machine-local `ta9l` P1.6 gate until system access returns. PR9 must not bypass or alter that product gate.
