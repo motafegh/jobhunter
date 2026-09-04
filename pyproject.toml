@@ -5,9 +5,30 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "jobhunter-local"
 version = "0.1.0"
-description = "Local-first personal career-intelligence application"
+description = "Local-first career intelligence from real job evidence with provenance-preserving LLM analysis"
 readme = "README.md"
 requires-python = ">=3.12"
+authors = [
+  { name = "Ali Rajabi" },
+]
+keywords = [
+  "career-intelligence",
+  "job-market",
+  "llm",
+  "local-first",
+  "provenance",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Framework :: FastAPI",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development",
+]
 dependencies = [
   "fastapi>=0.116,<1",
   "httpx>=0.28,<1",
@@ -25,10 +46,15 @@ dev = [
   # Starlette TestClient still references an alias deprecated by AnyIO 4.15.
   # Keep strict `pytest -W error` deterministic until that upstream boundary is compatible.
   "anyio>=4,<4.15",
-  "httpx2>=2.7,<3",
   "pytest>=8.3,<9",
   "ruff>=0.12,<1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/motafegh/jobhunter"
+Repository = "https://github.com/motafegh/jobhunter"
+Documentation = "https://github.com/motafegh/jobhunter/tree/main/docs"
+Issues = "https://github.com/motafegh/jobhunter/issues"
 
 [project.scripts]
 jobhunter = "jobhunter.app_entrypoint:main"
