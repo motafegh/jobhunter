@@ -1,4 +1,7 @@
-# Copy this file to jobhunter.toml and adjust local values.
+# Portable JobHunter configuration reference.
+# Recommended fresh-clone bootstrap: `jobhunter init --path config/local.toml`.
+# You may also copy this file to `config/local.toml` and adjust local values.
+# `config/local.*` is ignored; do not commit machine-specific model IDs or secrets.
 [jobhunter]
 data_dir = "data"
 evidence_dir = "data/evidence"
