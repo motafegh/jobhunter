@@ -1,10 +1,11 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-01  
+**Date:** 2026-09-05  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET
+**Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; release + owner mastery pending
 
 ## 1. Frozen accepted substrate
 
@@ -47,6 +48,14 @@ docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
 docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md
 ```
+
+Current-state reconciliation for older master-document status wording:
+
+```text
+docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md
+```
+
+That record supersedes only obsolete present-tense status labels such as `Phase 1 Active`, `heterogeneous validation active`, and `P2.2A active`. It does not replace the master documents' durable product/roadmap/implementation semantics.
 
 ## 3. P2.2A closure
 
@@ -201,7 +210,7 @@ CLI + browser review
 
 The registry already has a `deliverable` category, but its reviewed claim-mapping identity is built around P1.6 `requirement | responsibility` claims. B1 therefore defers deliverable promotion rather than adding speculative schema.
 
-## 9. Exact next action
+## 9. Exact next product action
 
 This step requires the machine-local runtime:
 
@@ -219,7 +228,44 @@ If `ta9l` P1.6 materially splits, strengthens, weakens, or otherwise changes the
 
 Do not accept a second additional job for B1 unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
 
-## 10. Stop lines
+## 10. Parallel portfolio / release state
+
+The portfolio-readiness track has not changed the product-development frontier.
+
+Current state:
+
+```text
+PR0–PR8    COMPLETE / repository-side complete as recorded
+PR9-A      final repository/public consistency audit COMPLETE
+PR9-B      owner/external release blockers PENDING
+PR9-C      intentional v0.1.0 tag/release PENDING
+PR9-D      CV/interview package COMPLETE
+PR9-E      owner mastery PREPARED / NOT VERIFIED
+```
+
+Repository-side release preparation is mature enough that further portfolio polishing should be avoided unless it closes a concrete remaining blocker.
+
+Still genuinely pending:
+
+```text
+owner license-policy decision
+GitHub description/topics settings action
+real browser screenshots from actual local runtime + privacy review
+final current-count/version check
+final CI green after release-state changes
+intentional v0.1.0 tag/release
+owner mastery verification
+```
+
+Prepared package:
+
+```text
+docs/PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md
+```
+
+Portfolio work must not authorize registry promotion, P2.2C, Market v2, personal scoring, or other product expansion.
+
+## 11. Stop lines
 
 During P2.2B-B1:
 
