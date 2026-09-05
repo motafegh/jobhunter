@@ -1,11 +1,13 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-01  
+**Date:** 2026-09-05  
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
-**Current focused plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
-**Current gate:** P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET
+**Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`  
+**Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
+**Current product gate:** P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Parallel portfolio gate:** PR9 repository-side package complete / owner-external release actions + owner mastery pending
 
 Repository workflow:
 
@@ -189,7 +191,34 @@ Repository evidence record:
 
 ---
 
-## E. Still deferred / not authorized
+## E. Portfolio / release readiness — PARALLEL TRACK
+
+This track improves repository demonstrability and professional presentation without changing the P2.2 product gate.
+
+- [x] PR0 portfolio-readiness audit.
+- [x] PR1 README/public landing story.
+- [x] PR2 current architecture/engineering story.
+- [x] PR3 documentation information architecture.
+- [x] PR4 current/historical versioned-code disposition.
+- [x] PR5 bounded current-code readability/shared-web refactor.
+- [x] PR6 repository-side reproducible public-corpus demo.
+- [x] PR7 developer onboarding/install path.
+- [x] PR8 repository/package/security/configuration hygiene.
+- [x] PR9-A final repository/public consistency audit.
+- [ ] PR9-B owner/external blockers: license decision, GitHub description/topics, real browser screenshots + privacy review.
+- [ ] PR9-C intentional `v0.1.0` tag/GitHub release after blockers and final CI.
+- [x] PR9-D release/CV/interview package prepared.
+- [ ] PR9-E owner mastery verification.
+
+Prepared package:
+
+`docs/PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md`
+
+Do not continue generic portfolio polishing after the remaining concrete blockers are closed.
+
+---
+
+## F. Still deferred / not authorized
 
 - [-] Work Intelligence public-corpus publication.
 - [-] canonical-registry publication.
@@ -208,7 +237,9 @@ Repository evidence record:
 
 ---
 
-## Exact next action
+## Exact next actions
+
+### Product track
 
 ```text
 local runtime: ta9l English projection
@@ -219,3 +250,18 @@ local runtime: ta9l English projection
 ```
 
 Do not accept a second new job or manufacture a promotion if `ta9l` does not preserve the selected responsibility shape.
+
+### Portfolio/release track
+
+```text
+owner license-policy decision
+→ GitHub description/topics settings action
+→ real local browser screenshots + privacy review
+→ final public-count/version/current-state check
+→ final CI green
+→ intentional v0.1.0 tag/release
+→ verify tagged public surfaces
+→ owner mastery verification
+```
+
+Neither track authorizes the other to bypass its gate.
