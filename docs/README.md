@@ -18,6 +18,8 @@ For the current product and engineering model, use this sequence:
 
 These are the stable controlling documents. Their root paths are kept intentionally stable because `AGENTS.md`, active plans, source comments, tests, and historical records reference them extensively.
 
+Some large August 23 master documents retain older present-tense status wording from before later acceptance closures. [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) is the narrow status-only bridge for those known passages. It does not replace their durable product/roadmap/implementation semantics.
+
 ## 2. Current execution state
 
 The live project state is narrower than the whole roadmap.
@@ -34,6 +36,7 @@ P2.2C                       BLOCKED
 
 Use these files for current execution:
 
+- [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) — status-only reconciliation for known stale master-document present-tense wording.
 - [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md) — controlling P2.2 responsibility/work/role-intelligence plan.
 - [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md) — accepted P2.2A representation amendment and current constraints.
 - [`P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`](P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md) — focused active P2.2B-B1 plan.
@@ -69,6 +72,8 @@ The 2026-08-26 governance reorientation remains part of the current authority ch
 
 They stay at stable paths until their rules are deliberately consolidated into their parent documents. Do not treat an amendment as a free-standing replacement for its parent.
 
+The 2026-09-05 current-state reconciliation is narrower: it supersedes only obsolete present-tense status labels already contradicted by later accepted evidence/current governance. It does not amend product meaning or strategic sequencing.
+
 ## 5. Closed or historical implementation/acceptance plans
 
 These records remain useful engineering evidence, but they are **not the current execution route** unless a current controlling document explicitly points back to a preserved invariant.
@@ -83,7 +88,7 @@ These records remain useful engineering evidence, but they are **not the current
 | [`ROLE_CAPABILITY_BLUEPRINT_PLAN.md`](ROLE_CAPABILITY_BLUEPRINT_PLAN.md) | experimental Blueprint research history; Blueprint is non-authoritative/currently deferred |
 | [`SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md`](SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md) | engineering lessons/history, not a controlling semantic contract |
 
-Some older records retain header wording from the period when they were active. **Current lifecycle classification comes from the accepted project state, `AGENTS.md`, current plans, and `WORKING_MEMORY.md`; a legacy `Active` header does not reopen closed work.**
+Some older records retain header wording from the period when they were active. **Current lifecycle classification comes from the accepted project state, `AGENTS.md`, the current-state reconciliation where applicable, current plans, and `WORKING_MEMORY.md`; a legacy `Active` header does not reopen closed work.**
 
 ## 6. Proposal, experiment, decision, incident, and working-memory collections
 
@@ -103,8 +108,21 @@ The temporary repository-quality track is separate from product feature authorit
 
 - [`PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md`](PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md) — controlling portfolio-readiness sequence.
 - [`PORTFOLIO_READINESS_AUDIT_2026-09-02.md`](PORTFOLIO_READINESS_AUDIT_2026-09-02.md) — frozen PR0 evidence/audit record.
+- [`PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md`](PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md) — prepared PR9 release/CV/interview/mastery package.
+- [`working-memory/2026-09-04_PR9_FINAL_PORTFOLIO_AUDIT_AND_RELEASE_READINESS.md`](working-memory/2026-09-04_PR9_FINAL_PORTFOLIO_AUDIT_AND_RELEASE_READINESS.md) — current PR9 repository-side release-readiness audit/handoff.
 
-This track may improve presentation, documentation, source organization, demoability, onboarding, and repository hygiene. It must not silently change accepted semantic behavior or bypass the active P2.2B product gate.
+Current portfolio status:
+
+```text
+PR0–PR8    complete / repository-side complete as recorded
+PR9-A      final repository/public audit complete
+PR9-B      owner/external release blockers pending
+PR9-C      intentional v0.1.0 release pending
+PR9-D      CV/interview package complete
+PR9-E      owner mastery prepared / not verified
+```
+
+This track may improve presentation, documentation, source organization, demoability, onboarding, and repository hygiene. It must not silently change accepted semantic behavior or bypass the active P2.2B product gate. Further generic portfolio polishing should stop; remaining work should close only the concrete PR9 blockers/mastery items.
 
 ## 8. Document lifecycle labels
 
