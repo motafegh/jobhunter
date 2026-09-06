@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Local-first career intelligence from real job evidence with provenance-preserving LLM analysis"
 readme = "README.md"
 requires-python = ">=3.12"
+license = { file = "LICENSE" }
 authors = [
   { name = "Ali Rajabi" },
 ]
@@ -24,6 +25,7 @@ classifiers = [
   "Environment :: Web Environment",
   "Framework :: FastAPI",
   "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.12",
