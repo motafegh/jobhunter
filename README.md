@@ -315,3 +315,7 @@ MARKET
 ```
 
 Current development is still building the reviewed market/work/canonical substrate needed before personal scoring or recommendation layers can be trusted.
+
+## License
+
+JobHunter is licensed under the [MIT License](LICENSE).
