@@ -1,7 +1,7 @@
 # JobHunter Portfolio Readiness and Public Presentation Plan
 
 **Status:** ACTIVE / PR0–PR8 COMPLETE / PR9 REPOSITORY-SIDE PACKAGE COMPLETE / RELEASE + OWNER MASTERY PENDING  
-**Date:** 2026-09-04  
+**Date:** 2026-09-06  
 **Scope:** Make the public JobHunter repository professional, understandable, demonstrable, maintainable and credible as a CV/portfolio project without weakening or rewriting accepted product semantics.  
 **Product-development boundary:** P2.2B-B1 remains locally blocked on `ta9l` English projection/P1.6 acceptance. Portfolio work does not authorize product-semantic changes, registry promotion or P2.2C.
 
@@ -21,14 +21,18 @@
 | PR7 — installation/developer onboarding | COMPLETE | `DEVELOPMENT_AND_LOCAL_SETUP.md` + CI onboarding smoke |
 | PR8 — repository/package/security hygiene | REPOSITORY-SIDE COMPLETE | `SECURITY.md`, package/config/CI cleanup + PR8 closure |
 | PR9-A — final repository/public consistency audit | COMPLETE | `working-memory/2026-09-04_PR9_FINAL_PORTFOLIO_AUDIT_AND_RELEASE_READINESS.md` |
-| PR9-B — owner/external release blockers | PENDING | license + GitHub metadata + real screenshots |
+| PR9-B — owner/external release blockers | PARTIAL | MIT license complete; GitHub metadata + real screenshots pending |
 | PR9-C — intentional portfolio tag/release | PENDING | candidate `v0.1.0`; no tag/release yet |
 | PR9-D — CV/interview package | COMPLETE | `PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md` |
 | PR9-E — owner mastery | PREPARED / NOT VERIFIED | mastery route in PR9 package |
 
+Current release-state amendment:
+
+`PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md`
+
 Correct current portfolio state:
 
-> **The repository-side portfolio work is complete enough for release preparation, but PR9 is not globally closed until the intentional release state and owner mastery are actually completed.**
+> **The repository-side portfolio work is complete enough for release preparation, the MIT license decision is complete, but PR9 is not globally closed until the remaining external/local release state and owner mastery are actually completed.**
 
 ---
 
@@ -172,11 +176,19 @@ Completed:
 
 `httpx2` remains a justified dev/test dependency because the current Starlette TestClient path was empirically shown to require/prefer it for a clean strict-warning run.
 
-Still owner/external:
+Owner-authorized license decision now complete:
 
-- license decision;
+```text
+LICENSE      → MIT License / Copyright (c) 2026 Ali Rajabi
+pyproject    → license file metadata + MIT classifier
+README       → public MIT license statement
+```
+
+Still external/local:
+
 - GitHub description/topics;
-- optional homepage only if a meaningful external destination exists.
+- optional homepage only if a meaningful external destination exists;
+- real browser screenshots from the actual local application.
 
 ---
 
@@ -199,28 +211,37 @@ Verified:
 - no public claim inflation was identified in the primary reviewer path;
 - private/runtime publication boundaries remain explicit.
 
-Residual older status wording inside some large 2026-08-23 master documents is recorded as bounded documentation-consolidation debt rather than being rewritten opportunistically during PR9. Current operational status is explicit in the current governance/rolling-state surfaces.
+Residual older status wording inside some large 2026-08-23 master documents is handled by `CURRENT_STATE_RECONCILIATION_2026-09-05.md`. Current operational status is explicit in the current governance/rolling-state surfaces.
 
-## 9. PR9-B — owner/external release blockers — PENDING
+## 9. PR9-B — owner/external release blockers — PARTIAL
 
-### License
+### License — COMPLETE
 
-No license is currently present/detected. The owner must explicitly choose whether/how third-party reuse is granted.
+The repository owner explicitly selected MIT on 2026-09-06.
 
-### GitHub metadata
+Current repository state includes:
 
-Current GitHub settings remain:
+```text
+LICENSE
+pyproject.toml MIT license metadata/classifier
+README MIT license statement
+```
+
+Earlier PR8/PR9 text describing the license as absent or undecided is historical status and is superseded by `PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md`.
+
+### GitHub metadata — PENDING SETTINGS ACTION
+
+At the last checked repository-settings state:
 
 ```text
 description: null
 topics: []
 homepage: null
-license: null
 ```
 
 Recommended description/topics are prepared in `PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md`.
 
-### Browser screenshots
+### Browser screenshots — PENDING LOCAL ACTION
 
 Real screenshots remain machine-local. They must be captured from the real application and privacy-reviewed; generated/mock screenshots may not substitute.
 
@@ -232,13 +253,14 @@ Candidate release:
 package: 0.1.0
 Git tag:  v0.1.0
 maturity: alpha portfolio release
+license:  MIT
 ```
 
-There are currently no Git tags/releases.
+There are currently no intentional JobHunter Git tags/releases recorded in the PR9 baseline.
 
 Release notes are prepared in `PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md`.
 
-Do not create the tag/release until PR9-B actions are resolved and final CI is reconfirmed.
+Do not create the tag/release until the remaining PR9-B actions are resolved and final release-candidate CI/current-state checks are reconfirmed.
 
 ## 11. PR9-D — CV/interview package — COMPLETE
 
@@ -251,6 +273,8 @@ Do not create the tag/release until PR9-B actions are resolved and final CI is r
 - likely technical interview questions/answers;
 - transparent AI-assistance ownership wording;
 - exact candidate release notes and metadata recommendations.
+
+The package's older license-pending section is superseded by the 2026-09-06 release-state amendment; the rest of the package remains current.
 
 ## 12. PR9-E — owner mastery — PREPARED / NOT VERIFIED
 
@@ -305,7 +329,7 @@ PR9-E remains open until an interactive mastery pass verifies that understanding
 - [x] CI visible and green at latest checked baseline.
 - [x] dependency/entrypoint/lint/test/warning gates are documented.
 - [x] package metadata is portfolio-ready for current alpha state.
-- [x] license state is truthfully explicit as undecided/no grant selected.
+- [x] MIT license decision/application is explicit and repository-visible.
 - [x] targeted privacy/secret audit and security boundary are documented.
 
 ### Release/CV readiness
@@ -321,10 +345,9 @@ PR9-E remains open until an interactive mastery pass verifies that understanding
 ## 14. Exact remaining sequence
 
 ```text
-owner license-policy decision
-→ GitHub description/topics update
+GitHub description/topics update
 → machine-local real screenshots + privacy review
-→ README/demo screenshot integration
+→ README/demo screenshot integration if approved
 → final current-count/version check
 → final CI green
 → tag v0.1.0
