@@ -6,8 +6,8 @@
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`  
 **Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
-**Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — plan recorded / implementation gated  
-**Current product gate:** P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — owner activation queued behind B1 / implementation gated  
+**Current product gate:** P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
 **Parallel portfolio gate:** PR9 repository-side package complete / MIT license complete / GitHub metadata + real screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -131,6 +131,10 @@ Repository evidence record:
 
 `docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md`
 
+Local-runtime preflight record:
+
+`docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md`
+
 #### Decision and boundaries
 
 - [x] P2.2A prerequisite accepted.
@@ -159,13 +163,17 @@ Repository evidence record:
 - [x] tentative identity: `responsibility:design-ai-evaluation-monitoring` / `Design AI evaluation and monitoring`.
 - [x] downstream hypothesis: reusable AI/ML reliability, evaluation, and monitoring work across industrial ML and LLM/agent roles.
 - [x] verify repo-side semantic shape has no unrelated ownership/lifecycle action; source-specific setting/model/testing/observability details remain source detail.
+- [x] verify committed `ta9l` source detail/version 25 and semantic identity; confirm no committed current English projection exists.
+- [x] verify exact CLI path for explicit translation → English P1.6 → semantic review and record the local execution packet.
 
 #### `ta9l` P1.6 authority gate — NEXT / LOCAL RUNTIME REQUIRED
 
+- [ ] run local provider/runtime preflight against the real owner SQLite/configuration.
 - [ ] create/reuse current English projection for `ta9l`.
 - [ ] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`.
-- [ ] semantically review the `ta9l` P1.6 artifact for acceptance.
-- [ ] report exact accepted artifact ID, responsibility index, statement, evidence, and semantic-review state for the evaluation/testing/observability duty.
+- [ ] inspect the complete current candidate with `jobhunter jobs review-analysis ta9l status`.
+- [ ] semantically review the `ta9l` P1.6 artifact for acceptance or rejection.
+- [ ] report exact accepted artifact ID, responsibility index, statement, evidence, and semantic-review state for the evaluation/testing/observability duty if accepted.
 - [ ] if the P1.6 claim materially changes/splits the responsibility shape, re-evaluate correspondence before mutation.
 - [ ] if it remains aligned, perform final two-P1.6-claim correspondence review before canonical mutation.
 
@@ -190,25 +198,26 @@ Repository evidence record:
 - [ ] job-local candidate role interpretation already exists in P2.2A.
 - [ ] stable reusable archetypes require stronger cross-job/employer evidence and explicit promotion.
 
-### D5 — Market and Role-Family Intelligence — PLAN RECORDED / IMPLEMENTATION GATED
+### D5 — Market and Role-Family Intelligence — ACTIVATION QUEUED / IMPLEMENTATION GATED
 
 Owner-approved future-focused plan:
 
 `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 
-Planning decision record:
+Planning/activation decision record:
 
 `docs/working-memory/2026-09-06_MARKET_ROLE_FAMILY_INTELLIGENCE_PLANNING_DECISION.md`
 
 - [x] owner intent recorded: target-scoped refresh → qualified corpus → one aggregate Role-Family Intelligence Report.
 - [x] initial architecture fit established against existing acquisition, P1.6, Capability, Work Intelligence, Canonical Registry, Market/report and browser/CLI foundations.
 - [x] future formal investigation requirements recorded, including relevance membership, duplicate/repost handling, snapshot comparability and role-family authority boundaries.
-- [-] formal Market/role-family implementation investigation remains gated until P2.2B-B1 closes and the owner explicitly activates this plan.
+- [x] owner explicitly instructed the project to continue this responsibility; activation is queued behind B1.
+- [-] formal Market/role-family foundation investigation remains gated until P2.2B-B1 closes.
 - [-] Market-v2 source implementation remains unauthorized during B1.
 - [-] historical trends require comparable versioned snapshots; `emerging` must not be inferred from low current frequency alone.
 - [-] Market → You comparison remains later and requires reviewed personal evidence.
 
-When activated after B1 closure, the first task is the plan's **Foundation investigation and design** stage, not source implementation.
+After B1 closure, begin the plan's **Foundation investigation and design** stage directly unless the owner changes direction or repository evidence materially invalidates the plan. No second activation ceremony is required merely to start that already-approved investigation.
 
 ---
 
@@ -254,7 +263,7 @@ Do not continue generic portfolio polishing after the remaining concrete blocker
 - [-] P2.2B deliverable promotion until concrete repeated-value evidence exists.
 - [-] deterministic action-verb equivalence system.
 - [-] fixed primary-theme quota.
-- [-] Market v2 implementation; the owner-approved future plan is recorded but remains gated by D5.
+- [-] Market v2 implementation during B1; owner activation is queued for the foundation investigation after B1 closure.
 - [-] personal evidence/readiness/gap scoring/recommendations.
 - [-] learning-plan generation/application ranking.
 - [-] autonomous application/recruiter communication.
@@ -269,11 +278,14 @@ Do not continue generic portfolio polishing after the remaining concrete blocker
 ### Product track
 
 ```text
-local runtime: ta9l English projection
-→ ta9l P1.6 v20 generation + semantic acceptance review
-→ report exact accepted responsibility shape
+local runtime preflight on real owner state
+→ ta9l English projection
+→ ta9l P1.6 v20 generation + complete semantic review
+→ accept or reject with explicit reason
+→ if accepted, report exact responsibility shape
 → final correspondence review against tG9K P1.6 36 responsibility[5]
-→ only then canonical mutation
+→ only then possible canonical mutation
+→ B1 closure decision
 ```
 
 Do not accept a second new job or manufacture a promotion if `ta9l` does not preserve the selected responsibility shape.
@@ -281,9 +293,9 @@ Do not accept a second new job or manufacture a promotion if `ta9l` does not pre
 ### Market / role-family future track
 
 ```text
-plan recorded / no implementation during B1
-→ after B1 closure + explicit owner activation
-→ perform bounded foundation investigation from MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
+owner activation GIVEN / queued behind B1
+→ no Market implementation or formal foundation audit during B1
+→ immediately after B1 closure, perform bounded foundation investigation from MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
 → record decisions in dated working memory
 → authorize first vertical implementation slice only after that investigation
 ```
