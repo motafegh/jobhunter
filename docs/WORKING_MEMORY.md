@@ -4,8 +4,8 @@
 **Date:** 2026-09-06  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
-**Future Market/role-family responsibility:** owner-approved plan recorded / implementation gated until B1 closure + explicit activation  
+**Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Future Market/role-family responsibility:** owner-approved plan recorded / owner activation GIVEN and queued behind B1 / implementation gated  
 **Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
 
 ## 1. Frozen accepted substrate
@@ -48,6 +48,7 @@ docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_
 docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
 docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
 docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md
+docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
 ```
 
 Current-state reconciliation for older master-document status wording:
@@ -120,6 +121,7 @@ current source detail version: 25
 source: parsed / active
 current English projection: none
 current accepted P1.6: none
+semantic sha256: cd9dbf6be622113836b951e9042c87798954fc01dea520ba08b090eae2b54fc6
 ```
 
 Accepted anchor:
@@ -166,6 +168,8 @@ AI/ML reliability, evaluation, and monitoring work
 ```
 
 across industrial ML and LLM/agent roles, potentially supporting P2.2C responsibility-family and later capability-profile reasoning.
+
+Repository-side local-runtime preflight is now complete. It confirmed the missing dependency is real: `ta9l` has current parsed source evidence but no committed/current English projection. The exact explicit-job CLI path is recorded in `docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md`.
 
 ## 6. Important rejected alternatives
 
@@ -221,23 +225,35 @@ The registry already has a `deliverable` category, but its reviewed claim-mappin
 
 ## 9. Exact next product action
 
-This step requires the machine-local runtime:
+This step requires the machine-local runtime and real owner SQLite/configuration.
+
+Preflight packet:
 
 ```text
-ta9l current English projection
-→ English P1.6 generation using job-analysis-english-v20 / job-analysis-v5
-→ semantic review / acceptance decision
-→ report exact accepted artifact ID + responsibility index + statement + evidence
-→ compare that exact accepted claim with tG9K P1.6 36 responsibility[5]
-→ if semantic shape remains aligned, final correspondence review
-→ only then one-concept/two-mapping Canonical Registry mutation
+docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
 ```
 
-If `ta9l` P1.6 materially splits, strengthens, weakens, or otherwise changes the selected source-duty shape, stop before registry mutation and re-evaluate the correspondence.
+Exact order:
 
-Do not accept a second additional job for B1 unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
+```text
+local doctor / translation-provider status
+→ ta9l current English projection
+→ inspect current English projection
+→ English P1.6 generation using job-analysis-english-v20 / job-analysis-v5
+→ review-analysis ta9l status
+→ complete semantic review / acceptance or rejection decision
+→ if accepted, report exact artifact ID + responsibility index + statement + evidence
+→ compare that exact accepted claim with tG9K P1.6 36 responsibility[5]
+→ if semantic shape remains aligned, final correspondence review
+→ only then possible one-concept/two-mapping Canonical Registry mutation
+→ B1 closure decision
+```
 
-## 9A. Future Market and Role-Family Intelligence — PLAN RECORDED / IMPLEMENTATION GATED
+If `ta9l` P1.6 materially splits, strengthens, weakens, merges, or otherwise changes the selected source-duty shape, stop before registry mutation and re-evaluate the correspondence.
+
+Do not accept an otherwise defective P1.6 artifact merely because the selected responsibility is useful for B1. Do not accept a second additional job unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
+
+## 9A. Future Market and Role-Family Intelligence — ACTIVATION QUEUED / IMPLEMENTATION GATED
 
 Owner-approved future plan:
 
@@ -245,7 +261,7 @@ Owner-approved future plan:
 docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
 ```
 
-Planning decision record:
+Planning/activation decision record:
 
 ```text
 docs/working-memory/2026-09-06_MARKET_ROLE_FAMILY_INTELLIGENCE_PLANNING_DECISION.md
@@ -292,9 +308,18 @@ Important planned safeguards:
 - objective Market intelligence remains separate from later personal `Market → You` comparison;
 - no generic source/plugin/vector/RAG/graph/agent infrastructure without demonstrated need.
 
-Formal foundation investigation is **queued but not started**. It must be activated only after P2.2B-B1 closes and the owner explicitly authorizes this track.
+The owner explicitly instructed the project on 2026-09-06 to continue this responsibility. That activation is now **given but queued behind B1**.
 
-When activated, investigate before source implementation:
+Therefore:
+
+```text
+owner activation             GIVEN
+formal foundation audit      QUEUED / NOT STARTED
+Market-v2 implementation     NOT AUTHORIZED DURING B1
+second activation after B1   NOT REQUIRED merely to start the queued audit
+```
+
+Immediately after B1 closure, unless the owner changes direction or repository evidence materially invalidates the plan, begin the foundation investigation before source implementation:
 
 ```text
 target-market definition
@@ -314,7 +339,7 @@ publication/privacy boundary
 representative tests/semantic acceptance
 ```
 
-Current B1 stop line still wins: do not start Market v2 while B1 is open.
+Current B1 stop line still wins: do not start Market v2 implementation or the formal Market foundation investigation while B1 is open.
 
 ## 10. Parallel portfolio / release state
 
