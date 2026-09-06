@@ -1,7 +1,7 @@
 # Market and Role-Family Intelligence — Planning Decision
 
 **Date:** 2026-09-06  
-**Status:** OWNER INTENT CONFIRMED / PLAN RECORDED / IMPLEMENTATION GATED  
+**Status:** OWNER INTENT CONFIRMED / PLAN RECORDED / ACTIVATION QUEUED / IMPLEMENTATION GATED  
 **Branch:** `main`  
 **Controlling future-focused plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 
@@ -134,15 +134,28 @@ Therefore this planning decision authorizes:
 
 It does **not** authorize:
 
-- Market-v2 source implementation;
-- responsibility-family/archetype implementation;
+- Market-v2 source implementation during B1;
+- responsibility-family/archetype implementation during B1;
 - corpus-wide Market experiments that bypass B1;
 - personal readiness/gap/scoring;
 - speculative new infrastructure.
 
-## 6. Formal investigation queued after activation
+## 6. Owner activation — queued behind B1
 
-After B1 closes and the owner explicitly activates this plan, perform the bounded investigation defined in `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` before source implementation.
+On 2026-09-06, after reviewing the completed planning package, the owner explicitly instructed the project to **go on with this responsibility**.
+
+Interpretation:
+
+```text
+owner activation decision  → GIVEN
+current B1 gate             → STILL CONTROLLING
+formal foundation audit     → QUEUED
+Market-v2 implementation    → STILL BLOCKED DURING B1
+```
+
+The activation must not be used to bypass the current B1 stop line. Instead, it removes the need for a second approval ceremony after B1 closes.
+
+After B1 closure, unless the owner changes direction or the repository state materially invalidates the plan, proceed directly to the bounded foundation investigation defined in `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` before writing Market-v2 source code.
 
 The investigation must resolve at minimum:
 
@@ -194,21 +207,23 @@ Do not broad-rewrite master product/architecture/roadmap documents until an impl
 ## 8. Exact current state
 
 ```text
-feature intent             CONFIRMED
-focused plan               RECORDED
-initial architecture fit   CONFIRMED
+feature intent              CONFIRMED
+focused plan                RECORDED
+initial architecture fit    CONFIRMED
+owner activation            GIVEN / QUEUED BEHIND B1
 formal implementation audit QUEUED / NOT STARTED
-source implementation      NOT AUTHORIZED
-current product frontier   P2.2B-B1 / ta9l P1.6 gate
+source implementation       NOT AUTHORIZED DURING B1
+current product frontier    P2.2B-B1 / ta9l P1.6 gate
 ```
 
 ## 9. Exact next action for this track
 
 ```text
 wait for P2.2B-B1 closure
-→ owner explicitly activates Market/role-family plan
-→ perform the plan's foundation investigation
+→ begin the queued Market/role-family foundation investigation directly
 → write a dated investigation/decision record
 → amend plan if evidence requires it
 → authorize first bounded implementation slice
 ```
+
+No second owner activation is required merely to start the already-approved foundation investigation after B1 closure.
