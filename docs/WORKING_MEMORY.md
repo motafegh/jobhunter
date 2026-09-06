@@ -1,11 +1,11 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-05  
+**Date:** 2026-09-06  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
 **Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
-**Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; release + owner mastery pending
+**Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
 
 ## 1. Frozen accepted substrate
 
@@ -56,6 +56,14 @@ docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md
 ```
 
 That record supersedes only obsolete present-tense status labels such as `Phase 1 Active`, `heterogeneous validation active`, and `P2.2A active`. It does not replace the master documents' durable product/roadmap/implementation semantics.
+
+Current PR9 release-state amendment:
+
+```text
+docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md
+```
+
+It supersedes only older status wording that describes the repository license as absent/undecided or an owner decision still pending.
 
 ## 3. P2.2A closure
 
@@ -237,7 +245,7 @@ Current state:
 ```text
 PR0–PR8    COMPLETE / repository-side complete as recorded
 PR9-A      final repository/public consistency audit COMPLETE
-PR9-B      owner/external release blockers PENDING
+PR9-B      MIT license COMPLETE; GitHub metadata + real screenshots PENDING
 PR9-C      intentional v0.1.0 tag/release PENDING
 PR9-D      CV/interview package COMPLETE
 PR9-E      owner mastery PREPARED / NOT VERIFIED
@@ -245,13 +253,20 @@ PR9-E      owner mastery PREPARED / NOT VERIFIED
 
 Repository-side release preparation is mature enough that further portfolio polishing should be avoided unless it closes a concrete remaining blocker.
 
+MIT licensing is now explicit:
+
+```text
+LICENSE      → standard MIT License / Copyright (c) 2026 Ali Rajabi
+pyproject    → license file metadata + MIT classifier
+README       → public MIT license statement
+```
+
 Still genuinely pending:
 
 ```text
-owner license-policy decision
 GitHub description/topics settings action
 real browser screenshots from actual local runtime + privacy review
-final current-count/version check
+final public-count/version/current-state check
 final CI green after release-state changes
 intentional v0.1.0 tag/release
 owner mastery verification
@@ -261,6 +276,13 @@ Prepared package:
 
 ```text
 docs/PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md
+```
+
+Current release-state amendment/evidence:
+
+```text
+docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md
+docs/working-memory/2026-09-06_PR9_MIT_LICENSE_DECISION_AND_RELEASE_PROGRESS.md
 ```
 
 Portfolio work must not authorize registry promotion, P2.2C, Market v2, personal scoring, or other product expansion.
