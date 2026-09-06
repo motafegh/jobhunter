@@ -5,6 +5,7 @@
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
 **Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Future Market/role-family responsibility:** owner-approved plan recorded / implementation gated until B1 closure + explicit activation  
 **Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
 
 ## 1. Frozen accepted substrate
@@ -236,6 +237,85 @@ If `ta9l` P1.6 materially splits, strengthens, weakens, or otherwise changes the
 
 Do not accept a second additional job for B1 unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
 
+## 9A. Future Market and Role-Family Intelligence — PLAN RECORDED / IMPLEMENTATION GATED
+
+Owner-approved future plan:
+
+```text
+docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
+```
+
+Planning decision record:
+
+```text
+docs/working-memory/2026-09-06_MARKET_ROLE_FAMILY_INTELLIGENCE_PLANNING_DECISION.md
+```
+
+Owner intent:
+
+```text
+define/select a target job category / role family / market slice
+→ update/discover current relevant advertisements
+→ fetch/refresh required source details
+→ reuse/build required semantic artifacts
+→ qualify genuine target-market membership
+→ freeze an evidence-backed market snapshot
+→ aggregate requirements / responsibilities / skills / tools / experience / context
+→ synthesize candidate work/role subfamilies
+→ produce ONE Role-Family Intelligence Report
+→ preserve history for later comparable market-change analysis
+```
+
+The main output is aggregate intelligence across the qualified corpus, not one generated report per job. Individual jobs remain supporting evidence/drill-down.
+
+Initial architecture mapping confirmed that this should extend existing owners rather than create a parallel stack:
+
+```text
+search registry / Jobinja discovery + sync
+→ source evidence/version/lifecycle
+→ English projection
+→ accepted P1.6
+→ optional authorized Capability / Work / reviewed Registry inputs
+→ current Market/report foundation
+→ target-scoped snapshot + aggregate + bounded role-family synthesis
+```
+
+Important planned safeguards:
+
+- exact counts/denominators remain deterministic;
+- relevance can use bounded semantic reasoning but must preserve disposition/evidence/uncertainty;
+- raw prevalence and requirement-strength distribution stay visible;
+- distinct-employer support and concentration matter;
+- repost/near-duplicate inflation must be investigated before strong prevalence/trend claims;
+- candidate work/role subfamilies are not silently promoted reusable taxonomy;
+- `emerging` requires longitudinal comparable evidence and does not mean merely rare;
+- objective Market intelligence remains separate from later personal `Market → You` comparison;
+- no generic source/plugin/vector/RAG/graph/agent infrastructure without demonstrated need.
+
+Formal foundation investigation is **queued but not started**. It must be activated only after P2.2B-B1 closes and the owner explicitly authorizes this track.
+
+When activated, investigate before source implementation:
+
+```text
+target-market definition
+acquisition/orchestration reuse
+corpus currentness/membership
+relevance qualification
+P1.6 sufficiency
+Capability / Work / Registry reuse boundaries
+responsibility-family/archetype dependency
+repost/near-duplicate handling
+sample/employer-concentration policy
+snapshot/trend comparability
+persistence/artifact model
+browser/CLI repeated-use workflow
+incremental/model-call budget
+publication/privacy boundary
+representative tests/semantic acceptance
+```
+
+Current B1 stop line still wins: do not start Market v2 while B1 is open.
+
 ## 10. Parallel portfolio / release state
 
 The portfolio-readiness track has not changed the product-development frontier.
@@ -302,7 +382,7 @@ During P2.2B-B1:
 - do not add deterministic action-verb equivalence machinery;
 - do not restore the P2.2A second semantic authority-review pass;
 - do not publish Work Intelligence or registry state;
-- do not start Market v2;
+- do not start Market v2 implementation or its formal implementation investigation;
 - do not add personal readiness/gap/scoring/recommendations;
 - do not revive Blueprint as authority.
 
