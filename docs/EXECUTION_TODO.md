@@ -1,13 +1,13 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-05  
+**Date:** 2026-09-06  
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`  
 **Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
 **Current product gate:** P2.2B-B1 REPO EVIDENCE SELECTED / `ta9l` P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
-**Parallel portfolio gate:** PR9 repository-side package complete / owner-external release actions + owner mastery pending
+**Parallel portfolio gate:** PR9 repository-side package complete / MIT license complete / GitHub metadata + real screenshots + release + owner mastery pending
 
 Repository workflow:
 
@@ -205,10 +205,16 @@ This track improves repository demonstrability and professional presentation wit
 - [x] PR7 developer onboarding/install path.
 - [x] PR8 repository/package/security/configuration hygiene.
 - [x] PR9-A final repository/public consistency audit.
-- [ ] PR9-B owner/external blockers: license decision, GitHub description/topics, real browser screenshots + privacy review.
-- [ ] PR9-C intentional `v0.1.0` tag/GitHub release after blockers and final CI.
+- [x] PR9-B license decision/application — MIT.
+- [ ] PR9-B GitHub description/topics settings action.
+- [ ] PR9-B real browser screenshots + privacy review.
+- [ ] PR9-C intentional `v0.1.0` tag/GitHub release after remaining blockers and final CI.
 - [x] PR9-D release/CV/interview package prepared.
 - [ ] PR9-E owner mastery verification.
+
+Current PR9 release-state amendment:
+
+`docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md`
 
 Prepared package:
 
@@ -254,9 +260,9 @@ Do not accept a second new job or manufacture a promotion if `ta9l` does not pre
 ### Portfolio/release track
 
 ```text
-owner license-policy decision
-→ GitHub description/topics settings action
+GitHub description/topics settings action
 → real local browser screenshots + privacy review
+→ README/demo screenshot integration if approved
 → final public-count/version/current-state check
 → final CI green
 → intentional v0.1.0 tag/release
