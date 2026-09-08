@@ -8,6 +8,10 @@ It is designed as more than a scraper or generic LLM wrapper. JobHunter combines
 
 The browser application is the primary repeated-use interface. The CLI exposes the same services and durable state for automation, debugging, review, and advanced workflows.
 
+## Development and contribution model
+
+JobHunter is also an AI-assisted engineering project. Ali directs the product, evidence/authority boundaries, semantic-review rules, and acceptance/rejection decisions, and evaluates the resulting behavior and research. Substantial architecture, source, tests, debugging, and continuation have been produced with AI assistance. The repository's product capability is therefore kept separate from claims about Ali's independent FastAPI, SQLite/SQL, LLM-orchestration, or full-source implementation ownership.
+
 ## What JobHunter does today
 
 JobHunter currently supports an end-to-end Jobinja-centered workflow:
