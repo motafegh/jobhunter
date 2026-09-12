@@ -1,21 +1,24 @@
 # JobHunter Current-State Reconciliation — 2026-09-05
 
-**Status:** CURRENT-STATE RECONCILIATION / STATUS-ONLY OVERLAY  
+**Status:** SUPERSEDED / HISTORICAL STATUS CHECKPOINT  
 **Date:** 2026-09-05  
 **Branch:** `main`  
-**Scope:** Reconcile obsolete current-status wording in large controlling documents without rewriting historical acceptance narrative or changing product semantics.
+**Scope:** Reconcile obsolete current-status wording in large controlling documents without rewriting historical acceptance narrative or changing product semantics.  
+**Superseded for present-tense execution by:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
+
+> This file preserves the September 5 status checkpoint. Do not use its `current`, `remaining`, or `next` wording as present-tense execution authority after September 12. In particular, later work completed the MIT license decision, the P2.2B repository evidence selection/preflight, and the Market research/preparation package. Use the September 12 reconciliation for current routing.
 
 ## 1. Purpose
 
 Several large 2026-08-23 controlling documents still contain status sentences written before Phase 1, P2.1, and P2.2A closed. Later/current governance, implementation evidence, working memory, and portfolio audit already record the true state consistently.
 
-This document resolves that narrow ambiguity.
+This document resolved that narrow ambiguity at its checkpoint date.
 
 It does **not** redesign the roadmap, change product meaning, authorize new features, alter semantic contracts, or rewrite historical chronology.
 
-## 2. Current authoritative operating state
+## 2. Operating state recorded at this checkpoint
 
-For present-tense execution/status interpretation, use:
+For the September 5 checkpoint, the recorded state was:
 
 ```text
 Phase 1                         CLOSED / ACCEPTED
@@ -26,7 +29,7 @@ P2.2C                          BLOCKED
 Blueprint v6                   EXPERIMENTAL / HISTORICAL / NON-AUTHORITATIVE
 ```
 
-Current public/accepted contracts remain:
+Current public/accepted contracts recorded here were:
 
 ```text
 parser:                       jobinja-detail-v2
@@ -40,7 +43,7 @@ Canonical Registry:           jobhunter-canonical-concept-registry-v1
 Public Corpus:                jobhunter-public-corpus-v1
 ```
 
-Current accepted heterogeneous P1.6 → Capability anchors are:
+Accepted heterogeneous P1.6 → Capability anchors recorded here were:
 
 ```text
 tG9K → P1.6 36 → Capability 11
@@ -50,20 +53,20 @@ t4qV → P1.6 44 → Capability 14
 tmyX → P1.6 46 → Capability 15
 ```
 
-## 3. Status wording superseded for current-state reading
+## 3. Status wording superseded at this checkpoint
 
-The following older present-tense status statements must not be used as current execution truth:
+The following older present-tense status statements were not to be used as execution truth even at this checkpoint.
 
 ### `docs/ROADMAP.md`
 
-Older wording includes, in substance:
+Older wording included, in substance:
 
 - heterogeneous role-family validation is active;
 - P2.2A semantic/product acceptance is active;
 - Stage R0 / Phase 1 is `Active now`;
 - Phase 2 is blocked as though P2.1/P2.2A had not yet progressed.
 
-Current interpretation:
+September 5 interpretation:
 
 ```text
 heterogeneous validation → CLOSED
@@ -73,11 +76,11 @@ P2.2A                    → CLOSED / ACCEPTED
 Phase-2 current frontier → P2.2B-B1
 ```
 
-The roadmap's strategic sequencing, permanent rules, proposal disposition, and future-stage design remain controlling unless separately amended. Only obsolete present-tense status wording is superseded here.
+The roadmap's strategic sequencing, permanent rules, proposal disposition, and future-stage design remained controlling unless separately amended. Only obsolete present-tense status wording was superseded.
 
 ### `docs/IMPLEMENTATION_PLAN.md`
 
-The stage table still contains the older entry:
+The stage table contained the older entry:
 
 ```text
 Phase 1 | Active
@@ -85,7 +88,7 @@ Phase 1 | Active
 
 Later sections of the same document correctly state that Phase 1 closed on 2026-08-23.
 
-Current interpretation:
+September 5 interpretation:
 
 ```text
 Phase 1 → CLOSED / ACCEPTED
@@ -93,20 +96,20 @@ Phase 2 → ACTIVE IN BOUNDED INCREMENTS
 current exact increment → P2.2B-B1 selective responsibility promotion pilot
 ```
 
-Historical Phase-1 gate descriptions remain historical acceptance evidence and are not converted into current work.
+Historical Phase-1 gate descriptions remained historical acceptance evidence and were not converted into current work.
 
 ### `docs/PRODUCT_SPECIFICATION.md`
 
-Older passages still describe heterogeneous validation as active and do not fully reflect the later P2.1/P2.2A accepted surfaces.
+Older passages described heterogeneous validation as active and did not fully reflect later P2.1/P2.2A accepted surfaces.
 
-Current interpretation:
+September 5 interpretation:
 
-- the product specification's product purpose, authority model, functional requirements, and permanent boundaries remain controlling;
-- current implemented/accepted status is read together with `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/EXECUTION_TODO.md`, `docs/WORKING_MEMORY.md`, and the active P2.2 plans;
-- P2.1 Canonical Registry and P2.2A Work Intelligence are accepted current functionality;
-- P2.2B-B1 is the current product-development gate.
+- the product specification's product purpose, authority model, functional requirements, and permanent boundaries remained controlling;
+- current implemented/accepted status was read together with `AGENTS.md`, `docs/ARCHITECTURE.md`, `docs/EXECUTION_TODO.md`, `docs/WORKING_MEMORY.md`, and the active P2.2 plans;
+- P2.1 Canonical Registry and P2.2A Work Intelligence were accepted current functionality;
+- P2.2B-B1 was the current product-development gate.
 
-## 4. Current exact product-development gate
+## 4. Product-development gate recorded at this checkpoint
 
 Controlling focused plan:
 
@@ -114,7 +117,7 @@ Controlling focused plan:
 docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-Current evidence state:
+Evidence state recorded here:
 
 ```text
 repo-side recurrence scan complete
@@ -123,7 +126,7 @@ repo-side recurrence scan complete
 → no responsibility promotion yet
 ```
 
-Exact next product action remains:
+The next product action recorded at the checkpoint was:
 
 ```text
 ta9l current English projection
@@ -135,13 +138,13 @@ ta9l current English projection
 → only then possible one-concept/two-mapping registry mutation
 ```
 
-If `ta9l` does not preserve the selected responsibility shape, stop before canonical mutation and record the evidence-based decision.
+If `ta9l` did not preserve the selected responsibility shape, the rule was to stop before canonical mutation and record the evidence-based decision.
 
-## 5. Parallel portfolio/release state
+## 5. Parallel portfolio/release state recorded at this checkpoint
 
-Portfolio-readiness work is a separate track and does not advance the product semantic gate.
+Portfolio-readiness work was a separate track and did not advance the product semantic gate.
 
-Current portfolio state:
+The then-recorded state was:
 
 ```text
 PR0–PR8    COMPLETE / repository-side complete as recorded
@@ -152,43 +155,30 @@ PR9-D      CV/interview package COMPLETE
 PR9-E      owner mastery PREPARED / NOT VERIFIED
 ```
 
-Remaining PR9 blockers/actions are intentionally not fabricated or auto-resolved:
+At that checkpoint the remaining list still included an owner license-policy decision. That item is now historical: the owner subsequently selected MIT and the repository applied it. The current release truth is controlled by `docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md` and the September 12 reconciliation.
 
-1. owner license-policy decision;
-2. GitHub description/topics settings action;
-3. real browser screenshots from the actual local application plus privacy review;
-4. final current-count/version check and CI confirmation;
-5. intentional `v0.1.0` tag/release;
-6. owner mastery verification.
+Other then-recorded actions included GitHub description/topics, real browser screenshots/privacy review, final count/version/CI checks, intentional `v0.1.0` release, and owner mastery verification.
 
-Portfolio work must not bypass P2.2B-B1, promote registry state, or start P2.2C.
+Portfolio work did not authorize bypassing P2.2B-B1, promoting registry state, or starting P2.2C.
 
-## 6. Precedence rule for stale status text
+## 6. Precedence rule at this checkpoint
 
-When a historical/current-status sentence conflicts with the accepted state above:
+When a historical/current-status sentence conflicted with the accepted state above, this checkpoint used:
 
 ```text
 product/domain/source/architecture invariants
 → utility/epistemic reasoning policy
 → strategic roadmap/implementation semantics
-→ this current-state reconciliation for obsolete present-tense status only
+→ this status reconciliation
 → active focused plan
 → EXECUTION_TODO / WORKING_MEMORY
 → implementation/tests/live acceptance
 ```
 
-This reconciliation has no authority to weaken higher-level product/domain/source/architecture meaning. Its only job is to prevent old status labels from being mistaken for the current execution frontier.
+For current work, replace this file in that chain with `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`.
 
-## 7. Closure decision
+## 7. Historical closure decision
 
-The documentation issue identified by the PR9 audit is now bounded and explicitly reconciled:
+The September 5 documentation issue was handled by preserving chronology and superseding obsolete status wording rather than broad-rewriting large master documents.
 
-```text
-KEEP historical chronology
-→ DO NOT broad-rewrite large master documents merely for cosmetic consistency
-→ SUPERSEDE obsolete present-tense status wording explicitly
-→ keep one current product frontier: P2.2B-B1 / ta9l P1.6 gate
-→ keep portfolio release work separate
-```
-
-Future deliberate rewrites of `ROADMAP.md`, `IMPLEMENTATION_PLAN.md`, or `PRODUCT_SPECIFICATION.md` may fold these status corrections directly into those documents. Until then, this record is the current status bridge and prevents the known stale passages from controlling execution.
+That approach remains valid. The current status bridge is now the September 12 reconciliation.
