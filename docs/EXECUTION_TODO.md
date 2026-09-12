@@ -4,9 +4,9 @@
 **Date:** 2026-09-12  
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
-**Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`  
+**Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
-**Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — owner activation queued behind B1 / implementation gated  
+**Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — owner activation GIVEN / formal investigation queued behind B1 / implementation gated  
 **Market preparation state:** research consolidated + formal investigation entry protocol prepared / formal investigation still blocked by open B1  
 **Current product gate:** P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
 **Parallel portfolio gate:** PR9 repository-side package complete / MIT license complete / GitHub metadata + real screenshots + release + owner mastery pending
@@ -199,7 +199,7 @@ Local-runtime preflight record:
 - [ ] job-local candidate role interpretation already exists in P2.2A.
 - [ ] stable reusable archetypes require stronger cross-job/employer evidence and explicit promotion.
 
-### D5 — Market and Role-Family Intelligence — ACTIVATION QUEUED / ENTRY PREP COMPLETE / IMPLEMENTATION GATED
+### D5 — Market and Role-Family Intelligence — ACTIVATION GIVEN / ENTRY PREP COMPLETE / IMPLEMENTATION GATED
 
 Owner-approved future-focused plan:
 
@@ -220,7 +220,7 @@ Prepared post-B1 investigation protocol:
 - [x] owner intent recorded: target-scoped refresh → qualified corpus → one aggregate Role-Family Intelligence Report.
 - [x] initial architecture fit established against existing acquisition, P1.6, Capability, Work Intelligence, Canonical Registry, Market/report and browser/CLI foundations.
 - [x] future formal investigation requirements recorded, including relevance membership, duplicate/repost handling, snapshot comparability and role-family authority boundaries.
-- [x] owner explicitly instructed the project to continue this responsibility; activation is queued behind B1.
+- [x] owner explicitly activated this future responsibility; execution of the formal investigation is queued behind B1.
 - [x] six bounded remote research passes completed without bypassing B1.
 - [x] research consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED` so the later audit does not repeat broad research.
 - [x] formal foundation investigation entry protocol prepared with Q1-Q12 questions, required evidence, smallest experiments, acceptance criteria and implementation-authorization boundaries.
@@ -275,7 +275,8 @@ Do not continue generic portfolio polishing after the remaining concrete blocker
 - [-] P2.2B deliverable promotion until concrete repeated-value evidence exists.
 - [-] deterministic action-verb equivalence system.
 - [-] fixed primary-theme quota.
-- [-] Market v2 implementation during B1; owner activation is queued for the foundation investigation after B1 closure.
+- [-] formal Market foundation investigation during B1.
+- [-] Market-v2 implementation until B1 closes and the formal investigation explicitly authorizes a first vertical slice.
 - [-] personal evidence/readiness/gap scoring/recommendations.
 - [-] learning-plan generation/application ranking.
 - [-] autonomous application/recruiter communication.
@@ -305,7 +306,8 @@ Do not accept a second new job or manufacture a promotion if `ta9l` does not pre
 ### Market / role-family future track
 
 ```text
-research consolidation + entry protocol PREPARED
+owner activation GIVEN
+→ research consolidation + entry protocol PREPARED
 → no formal Market investigation or implementation while B1 remains open
 → immediately after B1 closure, reconcile final B1 outcome
 → execute MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
