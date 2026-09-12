@@ -5,7 +5,7 @@
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
 **Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
-**Future Market/role-family responsibility:** owner-approved / research consolidated / formal investigation entry protocol prepared / formal investigation queued behind B1 / implementation gated  
+**Future Market/role-family responsibility:** owner-approved / activation GIVEN / research consolidated / formal investigation entry protocol prepared / formal investigation queued behind B1 / implementation gated  
 **Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
 
 ## 1. Frozen accepted substrate
@@ -39,7 +39,7 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-The P2.2A amendment remains controlling for Work Intelligence v2. The P2.2B focused plan controls the first selective responsibility-promotion increment.
+The P2.2A amendment remains controlling for Work Intelligence v2 representation/authority. Its terminal `P2.2B decision NOT STARTED` wording is historical. The P2.2B focused plan controls the current selective responsibility-promotion increment.
 
 Key records:
 
@@ -51,13 +51,13 @@ docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md
 docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
 ```
 
-Current-state reconciliation for older master-document status wording:
+Current-state reconciliation for older master/current-document status wording:
 
 ```text
-docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md
+docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md
 ```
 
-That record supersedes only obsolete present-tense status labels such as `Phase 1 Active`, `heterogeneous validation active`, and `P2.2A active`. It does not replace the master documents' durable product/roadmap/implementation semantics.
+The prior `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md` is superseded/historical. The September 12 overlay supersedes only obsolete present-tense status labels; it does not replace durable master-document product/roadmap/implementation semantics.
 
 Current PR9 release-state amendment:
 
@@ -65,7 +65,7 @@ Current PR9 release-state amendment:
 docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md
 ```
 
-It supersedes only older status wording that describes the repository license as absent/undecided or an owner decision still pending.
+It supersedes older status wording that describes the repository license as absent/undecided or an owner decision still pending.
 
 ## 3. P2.2A closure
 
@@ -169,7 +169,7 @@ AI/ML reliability, evaluation, and monitoring work
 
 across industrial ML and LLM/agent roles, potentially supporting P2.2C responsibility-family and later capability-profile reasoning.
 
-Repository-side local-runtime preflight is now complete. It confirmed the missing dependency is real: `ta9l` has current parsed source evidence but no committed/current English projection. The exact explicit-job CLI path is recorded in `docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md`.
+Repository-side local-runtime preflight is complete. It confirmed the missing dependency is real: `ta9l` has current parsed source evidence but no committed/current English projection. The exact explicit-job CLI path is recorded in `docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md`.
 
 ## 6. Important rejected alternatives
 
@@ -315,11 +315,11 @@ Important planned safeguards:
 - objective Market intelligence remains separate from later personal `Market → You` comparison;
 - no generic source/plugin/vector/RAG/graph/agent infrastructure without demonstrated need.
 
-Six bounded remote research passes are complete. They have now been consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED` items so the later formal audit starts from current knowledge rather than repeating broad research.
+Six bounded remote research passes are complete and consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED` items so the later audit starts from current knowledge rather than repeating broad research.
 
 The prepared entry plan defines Q1-Q12, required repository/real-data evidence, six smallest experiments, investigation acceptance criteria, first-slice stop lines, and the implementation-authorization boundary.
 
-The owner has already activated this future responsibility, but the current B1 stop line still controls timing.
+The owner has already activated this future responsibility, but the current B1 stop line controls timing.
 
 Therefore:
 
@@ -328,8 +328,8 @@ owner activation                         GIVEN
 broad remote research                    COMPLETE ENOUGH
 research consolidation                   COMPLETE
 formal investigation entry protocol      PREPARED
-formal foundation investigation           QUEUED / NOT STARTED / BLOCKED BY B1
-Market-v2 implementation                  NOT AUTHORIZED
+formal foundation investigation          QUEUED / NOT STARTED / BLOCKED BY B1
+Market-v2 implementation                 NOT AUTHORIZED
 second activation after B1               NOT REQUIRED merely to start the queued audit
 implementation after audit               REQUIRES explicit PASS / FIRST VERTICAL SLICE AUTHORIZED decision
 ```
@@ -345,7 +345,7 @@ read final B1 decision
 → authorize implementation only if that record says PASS / FIRST VERTICAL SLICE AUTHORIZED
 ```
 
-Current B1 stop line still wins: do not start Market v2 implementation or the formal Market foundation investigation while B1 is open.
+Current B1 stop line still wins: do not start Market-v2 implementation or the formal Market foundation investigation while B1 is open.
 
 ## 10. Parallel portfolio / release state
 
@@ -364,7 +364,7 @@ PR9-E      owner mastery PREPARED / NOT VERIFIED
 
 Repository-side release preparation is mature enough that further portfolio polishing should be avoided unless it closes a concrete remaining blocker.
 
-MIT licensing is now explicit:
+MIT licensing is explicit:
 
 ```text
 LICENSE      → standard MIT License / Copyright (c) 2026 Ali Rajabi
@@ -396,12 +396,13 @@ docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md
 docs/working-memory/2026-09-06_PR9_MIT_LICENSE_DECISION_AND_RELEASE_PROGRESS.md
 ```
 
-Portfolio work must not authorize registry promotion, P2.2C, Market v2, personal scoring, or other product expansion.
+Portfolio work must not authorize registry promotion, P2.2C, Market-v2, personal scoring, or other product expansion.
 
 ## 11. Stop lines
 
 During P2.2B-B1:
 
+- do not repeat the completed repository responsibility scan merely to find an easier candidate;
 - do not bulk-map responsibilities;
 - do not broaden ontology merely to eliminate unresolved cases;
 - do not normalize partial overlap as whole-claim equivalence;
@@ -409,12 +410,28 @@ During P2.2B-B1:
 - do not create the tentative `ta9l` concept before P1.6 acceptance/final review;
 - do not auto-promote P2.2A theme or deliverable labels;
 - do not add deliverable mapping schema without concrete evidence-backed need;
-- do not create responsibility families or role archetypes yet;
+- do not create promoted responsibility families or stable role archetypes yet;
 - do not add deterministic action-verb equivalence machinery;
 - do not restore the P2.2A second semantic authority-review pass;
 - do not publish Work Intelligence or registry state;
-- do not start Market v2 implementation or its formal implementation investigation;
+- do not start Market-v2 implementation or its formal foundation investigation;
 - do not add personal readiness/gap/scoring/recommendations;
 - do not revive Blueprint as authority.
 
 P2.2C remains blocked until B1 either proves one useful reusable responsibility authority or records an explicit evidence-based deferral decision.
+
+## 12. Pre-local documentation alignment — COMPLETE
+
+Before resuming any machine-local B1 work, the current documentation route was audited and reconciled on 2026-09-12.
+
+Current routing now agrees on:
+
+```text
+B1 repository evidence selection/preflight COMPLETE
+→ ta9l local English + P1.6 authority gate NEXT
+→ no canonical mutation before accepted P1.6 + final correspondence review
+→ B1 closure before formal Market foundation investigation
+→ explicit foundation PASS/AUTHORIZED decision before Market-v2 implementation
+```
+
+`AGENTS.md`, the active P2.2B plan, `docs/README.md`, `docs/EXECUTION_TODO.md`, this handoff, and the September 12 reconciliation are the live current-state surfaces. Older contradictory `current`/`next` wording is either explicitly superseded or classified as historical.
