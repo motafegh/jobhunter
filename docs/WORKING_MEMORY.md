@@ -1,11 +1,11 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-06  
+**Date:** 2026-09-12  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
 **Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
-**Future Market/role-family responsibility:** owner-approved plan recorded / owner activation GIVEN and queued behind B1 / implementation gated  
+**Future Market/role-family responsibility:** owner-approved / research consolidated / formal investigation entry protocol prepared / formal investigation queued behind B1 / implementation gated  
 **Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
 
 ## 1. Frozen accepted substrate
@@ -253,7 +253,7 @@ If `ta9l` P1.6 materially splits, strengthens, weakens, merges, or otherwise cha
 
 Do not accept an otherwise defective P1.6 artifact merely because the selected responsibility is useful for B1. Do not accept a second additional job unless this candidate is explicitly rejected and a new focused decision authorizes continued evidence search.
 
-## 9A. Future Market and Role-Family Intelligence — ACTIVATION QUEUED / IMPLEMENTATION GATED
+## 9A. Future Market and Role-Family Intelligence — PREPARATION COMPLETE / FORMAL AUDIT QUEUED / IMPLEMENTATION GATED
 
 Owner-approved future plan:
 
@@ -265,6 +265,13 @@ Planning/activation decision record:
 
 ```text
 docs/working-memory/2026-09-06_MARKET_ROLE_FAMILY_INTELLIGENCE_PLANNING_DECISION.md
+```
+
+Research consolidation and prepared investigation protocol:
+
+```text
+docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md
+docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
 ```
 
 Owner intent:
@@ -308,35 +315,34 @@ Important planned safeguards:
 - objective Market intelligence remains separate from later personal `Market → You` comparison;
 - no generic source/plugin/vector/RAG/graph/agent infrastructure without demonstrated need.
 
-The owner explicitly instructed the project on 2026-09-06 to continue this responsibility. That activation is now **given but queued behind B1**.
+Six bounded remote research passes are complete. They have now been consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED` items so the later formal audit starts from current knowledge rather than repeating broad research.
+
+The prepared entry plan defines Q1-Q12, required repository/real-data evidence, six smallest experiments, investigation acceptance criteria, first-slice stop lines, and the implementation-authorization boundary.
+
+The owner has already activated this future responsibility, but the current B1 stop line still controls timing.
 
 Therefore:
 
 ```text
-owner activation             GIVEN
-formal foundation audit      QUEUED / NOT STARTED
-Market-v2 implementation     NOT AUTHORIZED DURING B1
-second activation after B1   NOT REQUIRED merely to start the queued audit
+owner activation                         GIVEN
+broad remote research                    COMPLETE ENOUGH
+research consolidation                   COMPLETE
+formal investigation entry protocol      PREPARED
+formal foundation investigation           QUEUED / NOT STARTED / BLOCKED BY B1
+Market-v2 implementation                  NOT AUTHORIZED
+second activation after B1               NOT REQUIRED merely to start the queued audit
+implementation after audit               REQUIRES explicit PASS / FIRST VERTICAL SLICE AUTHORIZED decision
 ```
 
-Immediately after B1 closure, unless the owner changes direction or repository evidence materially invalidates the plan, begin the foundation investigation before source implementation:
+Immediately after B1 closure, unless the owner changes direction or repository evidence materially invalidates the plan:
 
 ```text
-target-market definition
-acquisition/orchestration reuse
-corpus currentness/membership
-relevance qualification
-P1.6 sufficiency
-Capability / Work / Registry reuse boundaries
-responsibility-family/archetype dependency
-repost/near-duplicate handling
-sample/employer-concentration policy
-snapshot/trend comparability
-persistence/artifact model
-browser/CLI repeated-use workflow
-incremental/model-call budget
-publication/privacy boundary
-representative tests/semantic acceptance
+read final B1 decision
+→ load the consolidation ledger
+→ execute docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
+→ resolve Q1-Q12 with bounded code/evidence inspection + smallest experiments
+→ write one dated foundation decision record
+→ authorize implementation only if that record says PASS / FIRST VERTICAL SLICE AUTHORIZED
 ```
 
 Current B1 stop line still wins: do not start Market v2 implementation or the formal Market foundation investigation while B1 is open.
