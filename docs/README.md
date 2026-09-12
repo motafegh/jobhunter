@@ -8,44 +8,74 @@ The files are intentionally layered rather than treated as one flat set of equal
 
 For the current product and engineering model, use this sequence:
 
-1. [`PRODUCT_SPECIFICATION.md`](PRODUCT_SPECIFICATION.md) — product purpose, allowed meaning, current product boundaries, and intended long-term utility.
+1. [`PRODUCT_SPECIFICATION.md`](PRODUCT_SPECIFICATION.md) — product purpose, allowed meaning, product boundaries, and intended long-term utility.
 2. [`ARCHITECTURE.md`](ARCHITECTURE.md) — current implemented architecture, authority/data flow, persistence, failure semantics, and major tradeoffs.
 3. [`DOMAIN_AND_ANALYSIS_MODEL.md`](DOMAIN_AND_ANALYSIS_MODEL.md) — domain entities and analytical semantics.
 4. [`SOURCE_POLICY.md`](SOURCE_POLICY.md) — approved acquisition and source-authority rules.
 5. [`UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — source fact, correspondence, interpretation, recommendation, and promotion boundaries.
 6. [`ROADMAP.md`](ROADMAP.md) — strategic sequencing.
 7. [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) — delivery order and implementation gates.
+8. [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status-only overlay for present-tense routing.
 
-These are the stable controlling documents. Their root paths are kept intentionally stable because `AGENTS.md`, active plans, source comments, tests, and historical records reference them extensively.
+These are stable controlling or routing documents. Their root paths are kept intentionally stable because `AGENTS.md`, active plans, source comments, tests, and historical records reference them extensively.
 
-Some large August 23 master documents retain older present-tense status wording from before later acceptance closures. [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) is the narrow status-only bridge for those known passages. It does not replace their durable product/roadmap/implementation semantics.
+Some large master documents intentionally retain historical present-tense wording from earlier checkpoints. The 2026-09-12 reconciliation supersedes those **status-only** passages without rewriting their durable product/roadmap/implementation semantics or historical chronology.
+
+The older [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) is retained as the previous status checkpoint and is no longer the current overlay.
 
 ## 2. Current execution state
 
 The live project state is narrower than the whole roadmap.
 
-Current state at this documentation checkpoint:
-
 ```text
-Phase 1                      CLOSED
+Phase 1                      CLOSED / ACCEPTED
 P2.1 Canonical Registry     CLOSED / ACCEPTED
 P2.2A Work Intelligence     CLOSED / ACCEPTED
-P2.2B-B1                    ACTIVE / bounded selective-responsibility promotion pilot
+P2.2B-B1                    IN PROGRESS
+                            repo evidence selection/preflight COMPLETE
+                            ta9l local English + P1.6 authority gate NEXT
+                            no promotion yet
 P2.2C                       BLOCKED
+P2.2D                       LATER
+
+Market / Role-Family        research preparation COMPLETE
+                            formal foundation investigation BLOCKED BY B1
+                            implementation NOT AUTHORIZED
 ```
 
 Use these files for current execution:
 
-- [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) — status-only reconciliation for known stale master-document present-tense wording.
-- [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md) — controlling P2.2 responsibility/work/role-intelligence plan.
-- [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md) — accepted P2.2A representation amendment and current constraints.
-- [`P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`](P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md) — focused active P2.2B-B1 plan.
+- [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay for older status text.
+- [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md) — durable P2.2 responsibility/work/role-intelligence plan; older header/current-gate wording is superseded by the current reconciliation.
+- [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md) — accepted P2.2A representation/authority amendment; its terminal `P2.2B not started` state is historical.
+- [`P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`](P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md) — focused active P2.2B-B1 plan; `ta9l` is already selected and the local P1.6 gate is next.
 - [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — current working checklist.
 - [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — rolling non-authoritative handoff/current-state memory.
 
-The current product-development gate requires machine-local `ta9l` English projection/P1.6 review before any P2.2B registry promotion. Portfolio-readiness work may proceed independently but does not bypass that gate.
+The current product-development gate requires machine-local `ta9l` English projection/P1.6 review before any P2.2B registry promotion. Do not repeat the already-completed repository candidate scan unless `ta9l` is explicitly rejected and a new focused decision authorizes continued search.
 
-## 3. Current technical and operational references
+## 3. Prepared future Market / Role-Family route
+
+The Market / Role-Family responsibility is owner-approved but remains gated behind B1.
+
+Current owners:
+
+- [`MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — controlling future product/design direction; implementation gated.
+- [`working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`](working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md) — six research passes consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED`.
+- [`MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md`](MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md) — prepared post-B1 Q1-Q12 formal investigation protocol.
+
+Current routing:
+
+```text
+broad remote research       COMPLETE ENOUGH / STOP
+formal investigation prep  COMPLETE
+formal investigation       NOT STARTED / BLOCKED BY B1
+Market-v2 implementation   NOT AUTHORIZED
+```
+
+After B1 closes, the prepared formal investigation may start without another owner-activation ceremony. Implementation still requires its explicit `PASS / FIRST VERTICAL SLICE AUTHORIZED` decision.
+
+## 4. Current technical and operational references
 
 These documents explain implemented subsystems and normal operation. They are supporting engineering references, not higher authority than the product/domain/source/architecture stack.
 
@@ -62,7 +92,7 @@ These documents explain implemented subsystems and normal operation. They are su
 | [`../corpus/README.md`](../corpus/README.md) | deterministic repository-safe public corpus |
 | [`../review-snapshots/README.md`](../review-snapshots/README.md) | selected semantic-review/acceptance exports |
 
-## 4. Current amendments retained beside their controlling documents
+## 5. Current amendments retained beside their controlling documents
 
 The 2026-08-26 governance reorientation remains part of the current authority chain and is not merely historical notes:
 
@@ -72,9 +102,9 @@ The 2026-08-26 governance reorientation remains part of the current authority ch
 
 They stay at stable paths until their rules are deliberately consolidated into their parent documents. Do not treat an amendment as a free-standing replacement for its parent.
 
-The 2026-09-05 current-state reconciliation is narrower: it supersedes only obsolete present-tense status labels already contradicted by later accepted evidence/current governance. It does not amend product meaning or strategic sequencing.
+The 2026-09-12 current-state reconciliation is narrower: it supersedes obsolete present-tense status labels contradicted by later accepted evidence/current governance. It does not amend product meaning or strategic sequencing.
 
-## 5. Closed or historical implementation/acceptance plans
+## 6. Closed or historical implementation/acceptance plans
 
 These records remain useful engineering evidence, but they are **not the current execution route** unless a current controlling document explicitly points back to a preserved invariant.
 
@@ -88,9 +118,9 @@ These records remain useful engineering evidence, but they are **not the current
 | [`ROLE_CAPABILITY_BLUEPRINT_PLAN.md`](ROLE_CAPABILITY_BLUEPRINT_PLAN.md) | experimental Blueprint research history; Blueprint is non-authoritative/currently deferred |
 | [`SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md`](SEMANTIC_ANALYSIS_ENGINEERING_LESSONS.md) | engineering lessons/history, not a controlling semantic contract |
 
-Some older records retain header wording from the period when they were active. **Current lifecycle classification comes from the accepted project state, `AGENTS.md`, the current-state reconciliation where applicable, current plans, and `WORKING_MEMORY.md`; a legacy `Active` header does not reopen closed work.**
+Some older records retain header/next-action wording from the period when they were active. **Current lifecycle classification comes from `AGENTS.md`, the current-state reconciliation, the active focused plan, `EXECUTION_TODO.md`, and `WORKING_MEMORY.md`; a legacy `Active` or `next` statement does not reopen closed work.**
 
-## 6. Proposal, experiment, decision, incident, and working-memory collections
+## 7. Proposal, experiment, decision, incident, and working-memory collections
 
 These directories intentionally keep deep engineering history off the first-pass product path:
 
@@ -102,29 +132,34 @@ These directories intentionally keep deep engineering history off the first-pass
 
 `AI_INTELLIGENCE_RAG_CONTINUAL_LEARNING_PROPOSAL.md` is a legacy root-level proposal retained at its existing path for reference stability. It is **not controlling** and should be read as proposal/history alongside `proposals/`, not as current architecture authorization.
 
-## 7. Portfolio-readiness track
+## 8. Portfolio-readiness track
 
 The temporary repository-quality track is separate from product feature authority:
 
-- [`PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md`](PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md) — controlling portfolio-readiness sequence.
+- [`PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md`](PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md) — portfolio-readiness sequence/history.
 - [`PORTFOLIO_READINESS_AUDIT_2026-09-02.md`](PORTFOLIO_READINESS_AUDIT_2026-09-02.md) — frozen PR0 evidence/audit record.
 - [`PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md`](PORTFOLIO_RELEASE_CV_AND_INTERVIEW_PACKAGE.md) — prepared PR9 release/CV/interview/mastery package.
-- [`working-memory/2026-09-04_PR9_FINAL_PORTFOLIO_AUDIT_AND_RELEASE_READINESS.md`](working-memory/2026-09-04_PR9_FINAL_PORTFOLIO_AUDIT_AND_RELEASE_READINESS.md) — current PR9 repository-side release-readiness audit/handoff.
+- [`PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md`](PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md) — current release-state amendment; MIT decision/application complete.
+- [`working-memory/2026-09-06_PR9_MIT_LICENSE_DECISION_AND_RELEASE_PROGRESS.md`](working-memory/2026-09-06_PR9_MIT_LICENSE_DECISION_AND_RELEASE_PROGRESS.md) — dated release-progress evidence.
 
 Current portfolio status:
 
 ```text
 PR0–PR8    complete / repository-side complete as recorded
 PR9-A      final repository/public audit complete
-PR9-B      owner/external release blockers pending
+PR9-B      MIT license complete
+           GitHub description/topics pending
+           real browser screenshots + privacy review pending
 PR9-C      intentional v0.1.0 release pending
 PR9-D      CV/interview package complete
 PR9-E      owner mastery prepared / not verified
 ```
 
-This track may improve presentation, documentation, source organization, demoability, onboarding, and repository hygiene. It must not silently change accepted semantic behavior or bypass the active P2.2B product gate. Further generic portfolio polishing should stop; remaining work should close only the concrete PR9 blockers/mastery items.
+Any older portfolio-plan/package wording that says licensing is absent, undecided, or awaiting owner choice is status-only historical text superseded by the MIT release-state amendment.
 
-## 8. Document lifecycle labels
+This track may improve presentation, documentation, source organization, demoability, onboarding, and repository hygiene. It must not silently change accepted semantic behavior or bypass the active P2.2B product gate. Further generic portfolio polishing should stop; remaining work should close only concrete PR9 blockers/mastery items.
+
+## 9. Document lifecycle labels
 
 Use these meanings when adding or reviewing documentation:
 
@@ -151,7 +186,7 @@ PROPOSAL
 Candidate idea only; never self-authorizing.
 ```
 
-## 9. Placement rules for future documentation
+## 10. Placement rules for future documentation
 
 To prevent `docs/` from becoming flat and ambiguous again:
 
@@ -166,7 +201,7 @@ To prevent `docs/` from becoming flat and ambiguous again:
 - do not move widely referenced controlling files merely to make the directory visually tidy;
 - if a future move is justified, update all repository references and verify links in the same bounded change.
 
-## 10. External-reviewer route
+## 11. External-reviewer route
 
 A reviewer who wants increasing depth should normally follow:
 
