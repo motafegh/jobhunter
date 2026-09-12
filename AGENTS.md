@@ -24,14 +24,17 @@ Before material changes, read:
 6. `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 7. `docs/ROADMAP.md`
 8. `docs/IMPLEMENTATION_PLAN.md`
-9. the current active phase/focused plan
-10. `docs/EXECUTION_TODO.md`
-11. `docs/WORKING_MEMORY.md`
-12. task-specific experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
+9. `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
+10. the current active phase/focused plan
+11. `docs/EXECUTION_TODO.md`
+12. `docs/WORKING_MEMORY.md`
+13. task-specific experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
 
 Historical Phase-1 plans remain evidence/history, not automatic current execution gates after their scope is closed.
 
-Proposal/experiment/working-memory files do not override controlling product, domain, source, architecture, reasoning-policy, roadmap, or implementation documents.
+Proposal/experiment/working-memory files do not override controlling product, domain, source, architecture, reasoning-policy, roadmap, implementation, or active focused-plan documents.
+
+The dated current-state reconciliation is a **status-only overlay**: it supersedes obsolete present-tense status wording in older master/current documents but does not replace their durable product/architecture/roadmap semantics.
 
 Authority:
 
@@ -40,8 +43,9 @@ product/domain/source/architecture
 → utility/epistemic reasoning policy
 → roadmap
 → implementation plan
+→ current-state reconciliation for present-tense status only
 → active phase/focused plan
-→ execution TODO
+→ execution TODO / working memory
 → implementation/tests/live acceptance
 ```
 
@@ -116,16 +120,19 @@ Review Snapshot:            job-review-snapshot-v1
 Public Corpus:              jobhunter-public-corpus-v1
 ```
 
-Accepted/current opposite-end factual anchors:
+Accepted/current factual chains:
 
 ```text
 tG9K English P1.6 artifact 36 → Capability v9 artifact 11
 t4jp English P1.6 artifact 37 → Capability v9 artifact 12
+tmBK English P1.6 artifact 39 → Capability v9 artifact 13
+t4qV English P1.6 artifact 44 → Capability v9 artifact 14
+tmyX English P1.6 artifact 46 → Capability v9 artifact 15
 ```
 
-Capability v9 public promotion is closed and operationally verified. Normal public commands reuse artifacts 11/12 on P1.6 artifacts 36/37, Review Snapshot marks those chains current, and Blueprint remains non-current.
+Capability v9 public promotion is closed and operationally verified. Blueprint remains non-current/non-authoritative.
 
-The public corpus is also operationally closed and remotely available. The accepted publication baseline is:
+The public corpus is operationally closed and remotely available. The accepted publication baseline is:
 
 ```text
 known/discovered Jobinja jobs: 353
@@ -135,11 +142,11 @@ accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
 
-Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small real-data seed are all accepted. **P2.1 is closed.** The accepted P2.1D seed remains deliberately bounded to four concepts, one reviewed alias, five mapped decisions, and one explicit unmapped decision across the five accepted P1.6 chains. Registry publication remains unauthorized.
+Canonical Registry P2.1A deterministic persistence, P2.1B manual CLI review, P2.1C browser review, and P2.1D small real-data seed are all accepted. **P2.1 is closed.** Registry publication remains unauthorized.
 
 The 2026-08-26 governance reorientation is accepted through `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`. It preserves the strict Phase-1/P2.1 substrate while preventing future work from requiring promotion-grade proof for every low-blast-radius interpretation.
 
-The controlling P2.2 plans are:
+The controlling P2.2 documents are:
 
 ```text
 docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md
@@ -147,7 +154,7 @@ docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
 ```
 
-P2.2A Job Work Intelligence v2 is **accepted and closed**. P2.2B-B1 is now **authorized only as a bounded responsibility-promotion evidence-selection pilot**. No responsibility promotion has occurred yet.
+P2.2A Job Work Intelligence v2 is **accepted and closed**. P2.2B-B1 is the active bounded responsibility-promotion pilot. Repository-side evidence selection and preflight are complete; no responsibility promotion has occurred yet.
 
 Current P2.2 state:
 
@@ -155,28 +162,23 @@ Current P2.2 state:
 P2.2A historical v1-v1.7 artifacts/attempts → preserved immutable evidence
 P2.2A v2 schema                           → job-work-intelligence-v2
 P2.2A v2 prompt/runtime                   → job-work-intelligence-v2.0
-P2.2A representation implementation       → COMPLETE
 P2.2A repository/live acceptance          → PASSED / CLOSED
-P2.2B-B1                                  → EVIDENCE SELECTION / NO PROMOTION YET
+P2.2B-B1 repo evidence selection          → COMPLETE
+P2.2B-B1 selected candidate               → ta9l
+P2.2B-B1 current gate                     → ta9l local English + P1.6 semantic authority
+P2.2B-B1 canonical promotion              → NOT YET AUTHORIZED
+P2.2C                                     → BLOCKED
 ```
 
-The 2026-09-01 checkpoint verified that free-form model review did not reliably preserve action relationships across both `tG9K` and `tmyX`. Controlled v1.3-v1.7/2B/4B/12B trials remain immutable local evidence. The approved response is representation-level fact/interpretation separation, not another model-trial matrix.
-
-Records:
-
-```text
-docs/working-memory/2026-09-01_P2_2A_ACTION_AUTHORITY_TRIALS_AND_REPRESENTATION_REDESIGN_GATE.md
-docs/working-memory/2026-09-01_P2_2A_V2_REPRESENTATION_IMPLEMENTATION.md
-docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md
-```
+The 2026-09-01 P2.2A checkpoint verified that free-form model review did not reliably preserve action relationships across heterogeneous jobs. Controlled historical trials remain immutable evidence. The accepted response is representation-level fact/interpretation separation, not another model-trial matrix.
 
 Do not reopen P1.6 v20, Capability v9, P2.1, or P2.2A merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ## 4. Blueprint disposition
 
-Blueprint is implemented and inspectable but **is not an accepted Phase-1 decision layer**.
+Blueprint is implemented and inspectable but **is not an accepted decision layer**.
 
-Historical v6/12B artifact 7 remains experimental evidence. Complete semantic review found assumption-bearing interpretation beyond vacancy authority even after mechanical provenance passed.
+Historical v6/12B evidence remains experimental. Complete semantic review found assumption-bearing interpretation beyond vacancy authority even after mechanical provenance passed.
 
 During P2.2B-B1:
 
@@ -196,16 +198,10 @@ This does **not** mean Phase-2 interpretation in general is prohibited. New boun
 
 ## 5. Current exact next-work rule
 
-Phase 1, P2.1, and P2.2A are closed. P2.2B-B1 is authorized under the separate focused decision in:
+Phase 1, P2.1, and P2.2A are closed. The exact current product gate is P2.2B-B1 under:
 
 ```text
 docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
-```
-
-The P2.2A representation amendment remains controlling for Work Intelligence v2 behavior:
-
-```text
-docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md
 ```
 
 Current active gate:
@@ -213,10 +209,52 @@ Current active gate:
 ```text
 P2.2B-B1 selective responsibility promotion
 → focused plan APPROVED
-→ evidence selection ACTIVE
+→ bounded repository evidence scan COMPLETE
+→ ta9l selected
+→ repository-side local-runtime preflight COMPLETE
+→ ta9l current English projection + P1.6 v20/v5 semantic review NEXT
 → no canonical responsibility promotion yet
 → P2.2C BLOCKED
 ```
+
+Selected evidence:
+
+```text
+accepted anchor:
+tG9K P1.6 artifact 36 responsibility[5]
+Design rigorous validation and monitoring for models running in an industrial setting.
+
+selected ta9l source duty:
+Create evaluation, testing, and observability frameworks for LLM and agent performance.
+
+tentative identity, NOT PROMOTED:
+responsibility:design-ai-evaluation-monitoring
+```
+
+Local execution packet:
+
+```text
+docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
+```
+
+Current exact next action:
+
+```text
+local doctor / translation-provider status
+→ ta9l current English projection
+→ inspect current English projection
+→ ta9l English P1.6 v20/v5 generation
+→ inspect complete review-analysis state
+→ semantic accept or reject on whole-artifact quality
+→ if accepted, report exact artifact ID + responsibility index + statement + evidence
+→ compare exact accepted ta9l claim with tG9K P1.6 36 responsibility[5]
+→ final non-lossy correspondence review
+→ only if still aligned: one concept + two mappings
+→ idempotency + CLI/browser/currentness/publication-boundary verification
+→ B1 PASS or evidence-based NO-PROMOTION / DEFER
+```
+
+Do **not** repeat the already-completed repository scan before testing `ta9l`. Do not accept a second additional job unless `ta9l` is explicitly rejected and a new focused decision authorizes continued evidence search. Do not accept an otherwise defective P1.6 artifact merely because one selected responsibility is convenient for B1.
 
 The P2.2A direct-work flow remains permanently accepted:
 
@@ -250,49 +288,6 @@ Core P2.2A decisions remain:
 - browser is the normal user surface; CLI is secondary generation/inspection/debugging;
 - P2.2 state remains local unless a separate publication decision authorizes otherwise.
 
-Historical action-authority evidence:
-
-```text
-t4qV artifact 2
-→ v1.1 candidate grouping useful and bounded
-
-tmyX artifact 3
-→ grouping useful
-→ free-form summary strengthened `develop/provide hardening solutions` to `implementing`
-
-tG9K artifact 4
-→ useful industrial-ML grouping
-→ 3 primary + 1 supporting
-→ free-form action wording strengthened `move models toward production` to direct `deploying`
-
-tG9K artifact 5
-→ v1.2 remained useful
-→ direct `deploying` persisted despite prompt-level authority refinement
-
-artifacts 6-11
-→ controlled v1.3-v1.7 model/protocol evidence
-→ stronger/larger/free-form review still did not reliably preserve action relationship
-```
-
-Current exact next action:
-
-```text
-bounded local scan for one clean repeated accepted responsibility
-→ prefer already-available current English evidence
-→ if necessary, accept at most one additional evidence-bearing P1.6 job for this concrete recurrence question
-→ present the exact two responsibility claims + proposed responsibility:<slug>
-→ semantic review before any canonical mutation
-→ only then apply one concept + two mappings
-→ rerun/idempotency + CLI/browser/currentness/publication-boundary inspection
-→ B1 PASS or evidence-based NO-PROMOTION / DEFER decision
-```
-
-The initially considered documentation pair is explicitly **not approved** for promotion because `t4qV` responsibility[9] is equipment-specific technical documentation while `tmyX` responsibility[3] is compound checklists + technical documentation + security reports. Do not normalize partial overlap into whole-claim equivalence merely to produce a promotion.
-
-`tG9K`/`tmyX` already establish the P2.2A action-authority design defect. Do not run another prompt/model trial matrix merely to prove the same point.
-
-P2.2 must **not** require manual canonicalization of every responsibility before useful role/work intelligence is shown.
-
 During P2.2B-B1:
 
 - do not bulk-map the remaining accepted P1.6 claim corpus;
@@ -302,98 +297,12 @@ During P2.2B-B1:
 - do not auto-promote P2.2A theme or deliverable labels;
 - do not add deliverable mapping schema without concrete repeated-value evidence;
 - do not publish canonical-registry or P2.2 state;
-- do not start Market v2;
+- do not start P2.2C/P2.2D promoted family/archetype work;
 - do not add personal evidence/readiness/scoring/recommendations;
-- do not create responsibility families/archetypes yet;
-- do not make stable market-archetype claims from insufficient cross-job/employer evidence;
 - do not add deterministic action-verb equivalence machinery;
-- do not restore the v1.3 second semantic authority-review pass;
+- do not restore the P2.2A second semantic authority-review pass;
 - do not impose a fixed quota of primary themes;
 - do not ask the owner to rerun already-proven repository quality gates without new evidence requiring them.
-
-Accepted P2.1D seed:
-
-```text
-canonical concepts: 4
-reviewed aliases:   1
-claim decisions:    6
-  mapped:           5
-  unmapped:         1
-accepted chains:    5
-```
-
-P2.1 acceptance record:
-
-```text
-docs/working-memory/2026-08-23_P2_1D_AND_P2_1_FINAL_ACCEPTANCE.md
-```
-
-Current accepted heterogeneous factual order remains:
-
-```text
-1. Python/software             → tmBK P1.6 39 / Capability 13 ACCEPTED
-2. network/security            → t4qV P1.6 44 / Capability 14 ACCEPTED
-3. operations/platform/DevOps  → tmyX P1.6 46 / Capability 15 ACCEPTED
-```
-
-The accepted Python/software anchor is:
-
-```text
-tmBK — Python Developer
-source detail version:       44
-English projection artifact: 38
-P1.6 contract:               job-analysis-english-v20 / job-analysis-v5
-accepted P1.6 artifact:      39
-accepted Capability artifact: 13
-```
-
-`tmBK` is closed and accepted after complete P1.6 and Capability review. Artifact 39 has 16 requirements, 0 responsibilities, correct 7/7 explicit depth facts, and accepted semantic-review state. Capability 13 covers 16/16 requirements and 7/7 explicit depth facts with no fabricated duties or role-level inflation.
-
-The network/security anchor `t4qV` (detail 30, English projection 20) is accepted on P1.6 artifact 44 and Capability artifact 14. P1.6 artifacts 40-43 remain rejected/archived evidence. General deterministic fixes from those reviews cover:
-
-- exact structured-skill tags materialized deterministically rather than model-restated;
-- composite preferred headings retain their optionality in exact evidence;
-- explicit experience lower bounds such as `more than six years` remain intact;
-- explicit `position/role ... responsible for` clauses enter responsibility coverage;
-- explicit pre-heading `we are looking/seeking ... with experience in ...` clauses enter requirement coverage.
-
-The operations/platform anchor `tmyX` (detail 35, English projection 24) is accepted on P1.6 artifact 46 and Capability artifact 15. Artifact 45 was rejected for missing the explicit opening role actions. Its reviews additionally fixed:
-
-```text
-generic heading words inside ordinary sentences no longer split evidence
-explicit pre-heading candidate duty clauses enter responsibility coverage
-Ability to / Skill in application wording stays non-depth without real depth markers
-```
-
-Fresh English v20 artifacts are `pending` by default. Pending artifacts remain excluded from authoritative Capability/Market/accepted dashboard/public-corpus flows under the accepted Phase-1 contract. That strict promotion rule protects the reusable factual substrate; it must not be generalized into a rule that every future analytical view requires human acceptance first.
-
-Do not rerun accepted factual anchors merely for wording variation. Phase-2 work must preserve the frozen P1.6 v20/v5 and Capability v9/v5 source-truth input contracts.
-
-Convert repeatable deterministic defects into tests. Record bounded model limitations separately. Do not patch one vacancy at a time.
-
-Accepted progression to the current point:
-
-```text
-Phase-1 closure accepted
-→ P2.1 canonical concept registry accepted / closed
-→ utility/epistemic reasoning governance corrected
-→ P2.2 focused responsibility/work/role-intelligence plan approved
-→ P2.2A Job Work Intelligence v1 implemented
-→ t4qV/tmyX/tG9K live candidate evidence established
-→ v1.2/v1.3 prompt/review refinements proved insufficient for action authority
-→ v1.3-v1.7 cross-model/protocol trials preserved as local evidence
-→ tG9K/tmyX cross-job free-form action-authority reliability blocker verified
-→ P2.2A representation amendment approved
-→ job-work-intelligence-v2 / v2.0 implemented
-→ exact accepted P1.6 work injection + candidate interpretation separation implemented
-→ second authority-review model pass removed
-→ repository Ruff/full pytest/warnings-as-errors GREEN
-→ t4qV/tmBK/reuse/browser/CLI real-local v2 acceptance PASSED
-→ P2.2A CLOSED
-→ P2.2B-B1 focused responsibility-promotion plan APPROVED
-→ initial documentation pair REJECTED as lossy normalization
-→ bounded evidence selection ACTIVE
-```
 
 ## 6. Permanent semantic boundaries
 
@@ -454,7 +363,7 @@ Important downstream lesson: **Capability grouping and deterministic source trut
 
 ### Blueprint
 
-Blueprint is experimental professional interpretation above historical accepted source truth. Its generated prose is not Phase-1 authority.
+Blueprint is experimental professional interpretation above historical accepted source truth. Its generated prose is not current authority.
 
 No downstream layer replaces upstream authority. Mechanical linkage never certifies semantic truth.
 
@@ -502,21 +411,10 @@ Purpose:
 
 - make every known public Jobinja job remotely inspectable;
 - preserve original Persian/English parsed vacancy content as UTF-8 JSON;
-- project current successful English projection, P1.6, and Capability artifacts with exact dependency/contract identities;
-- support remote AI review, heterogeneous selection, reproducibility, Market work, and later Phase-2 analysis without direct access to local SQLite.
+- project current successful English projection, accepted P1.6, and Capability artifacts with exact dependency/contract identities;
+- support remote AI review, heterogeneous selection, reproducibility, and bounded analysis without direct access to local SQLite.
 
 The public corpus is a deterministic projection, **not** a runtime input and **not** a replacement database.
-
-Current layout:
-
-```text
-corpus/manifest.json
-corpus/jobs/<job-id>/source.json
-corpus/jobs/<job-id>/english-projection.json
-corpus/jobs/<job-id>/p16-english.json
-corpus/jobs/<job-id>/p16-original.json
-corpus/jobs/<job-id>/capability.json
-```
 
 Optional stage files exist only when that stage is current for the current source dependency. If the source changes, stale downstream files must disappear until rebuilt. Git history preserves previously published states.
 
@@ -531,19 +429,11 @@ Never export into `corpus/`:
 - local configuration;
 - future private/personal evidence, applications, notes, profiles, or outcomes.
 
-The public corpus contains only public job-domain facts and repository-safe derived intelligence. Any future schema expansion must explicitly review this privacy/public boundary before adding fields.
+Any future schema expansion must explicitly review the privacy/publication boundary before adding fields.
 
-Normal mutating CLI workflows and completed web background operations synchronize the local `corpus/` projection **after** durable SQLite work. Projection failure must be surfaced but must never roll back durable SQLite success.
+Normal mutating CLI workflows and completed web background operations synchronize the local `corpus/` projection **after** durable SQLite work where currently designed. Projection failure must be surfaced but must never roll back durable SQLite success.
 
-JobHunter does **not** automatically Git commit or push. Publishing remains intentional:
-
-```bash
-jobhunter-corpus verify
-git diff -- corpus/
-git add corpus/
-git commit -m "data: update JobHunter public corpus"
-git push origin main
-```
+JobHunter does **not** automatically Git commit or push. Publishing remains intentional.
 
 Detailed format and command rules live in `corpus/README.md`.
 
@@ -562,7 +452,7 @@ corpus/           complete current public dataset
 review-snapshots/ selected semantic-review evidence
 ```
 
-Snapshots are generated review artifacts, not runtime inputs. Commit selected public review examples intentionally. Dependency-current flags remain distinct from the explicit P1.6 semantic-review status/time/note.
+Snapshots are generated review artifacts, not runtime inputs. Commit selected public review examples intentionally. Dependency-current flags remain distinct from explicit semantic-review state.
 
 Never commit SQLite/WAL/SHM, raw model responses/prompts, secrets, logs, raw HTML contents, or future private user state.
 
@@ -645,7 +535,49 @@ Models may reason, synthesize, compare, classify, and recommend within the appli
 
 ## 12. Market and personal-evidence boundaries
 
-Current Market aggregates accepted/current English P1.6 only. Preserve sample size, source/filter scope, requirement-strength semantics, contract identity, and concentration/small-sample warnings.
+The current implemented Market read model remains a bounded deterministic aggregate over accepted/current English P1.6. Preserve sample size, source/filter scope, requirement-strength semantics, contract identity, and concentration/small-sample warnings.
+
+The future target-scoped Market / Role-Family responsibility is owner-approved but **not yet an active implementation stream**.
+
+Current Market state:
+
+```text
+docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
+→ owner-approved direction / implementation gated
+
+six bounded remote research passes
+→ COMPLETE ENOUGH
+
+docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md
+→ research consolidated into DECIDED / PROVISIONAL / OPEN / DEFERRED
+
+docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
+→ formal post-B1 Q1-Q12 investigation protocol PREPARED
+
+formal foundation investigation
+→ NOT STARTED / BLOCKED BY OPEN B1
+
+Market-v2 implementation
+→ NOT AUTHORIZED
+```
+
+While B1 remains open, do not start the formal Market foundation investigation or source implementation. The already-completed research/preparation records are design input only.
+
+After B1 closes by PASS or evidence-based NO-PROMOTION / DEFER:
+
+```text
+load final B1 decision
+→ load Market consolidation ledger
+→ execute prepared Q1-Q12 foundation investigation
+→ write one dated foundation decision
+→ implement only if it explicitly states:
+   FOUNDATION INVESTIGATION: PASS
+   FIRST VERTICAL SLICE: AUTHORIZED
+```
+
+No second owner activation is required merely to start that already-approved post-B1 investigation.
+
+Candidate Market subfamilies may be useful analytical interpretation without prior P2.2C/P2.2D promotion; stable reusable families/archetypes require their stronger promotion boundary.
 
 Small samples may support bounded hypotheses or job-level interpretations with warnings. They do not support unqualified broad-market claims.
 
