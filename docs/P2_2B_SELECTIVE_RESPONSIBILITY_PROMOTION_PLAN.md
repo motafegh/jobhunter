@@ -6,6 +6,17 @@
 **Scope:** First bounded P2.2B responsibility-promotion increment after P2.2A closure  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
+## Local execution checkpoint — 2026-09-13
+
+English projection **40** is complete and reviewed on source **25**. P1.6
+attempt **98** failed after the configured bounded validation retry; there is no
+artifact to accept/reject. **B1 remains OPEN, with no promotion.** The next decision
+is focused extraction recovery versus an explicit NO-PROMOTION/DEFER disposition.
+Do not repeat translation or treat generation failure as semantic rejection.
+The pre-local sequence below resumes only after this failure is resolved.
+
+Evidence: `docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
+
 ## 1. Decision
 
 P2.2B is authorized only as a **selective responsibility-promotion pilot**.

@@ -15,7 +15,7 @@
   },
   "counts": {
     "capabilities": 5,
-    "english_projections": 20,
+    "english_projections": 21,
     "jobs": 353,
     "p16_english": 5,
     "p16_original": 0,
@@ -3601,7 +3601,7 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": null,
+        "english_projection": 40,
         "p16_english": null,
         "p16_original": null
       },
@@ -3615,7 +3615,7 @@
       "source_job_id": "ta9l",
       "stages": {
         "capability": false,
-        "english_projection": false,
+        "english_projection": true,
         "p16_english": false,
         "p16_original": false,
         "source": true

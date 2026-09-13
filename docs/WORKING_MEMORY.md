@@ -1,12 +1,27 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-12  
+**Date:** 2026-09-13\
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Current product gate:** Phase 1 CLOSED; P2.1 CLOSED; P2.2A v2 ACCEPTED / CLOSED; P2.2B-B1 OPEN / `ta9l` ENGLISH 40 REVIEWED / P1.6 ATTEMPT 98 FAILED WITHOUT ARTIFACT / RECOVERY OR DEFER DECISION NEXT / NO PROMOTION\
 **Future Market/role-family responsibility:** owner-approved / activation GIVEN / research consolidated / formal investigation entry protocol prepared / formal investigation queued behind B1 / implementation gated  
 **Parallel portfolio state:** PR0–PR8 complete; PR9 repository-side package complete; MIT license complete; GitHub metadata + real screenshots + release + owner mastery pending
+
+## Latest local checkpoint — 2026-09-13
+
+Read `docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`
+before following older pre-local instructions below. Projection 40 on source 25 is
+reviewed; attempt 98 exhausted the bounded P1.6 validation retry and created no
+artifact. This is generation failure, not semantic rejection or B1 closure.
+The exact source phrase is representable by the current validator; no frozen
+contract change has been justified. Decide focused extraction recovery or explicit
+B1 NO-PROMOTION/DEFER. Market stays gated while B1 remains open.
+
+Local public projection counts are now 353 / 43 / 21 / 5 / 5. Nothing was committed
+or pushed. Registry remains four concepts, one alias, six decisions. The local app
+serves the correct source/English/missing-analysis state; visual browser acceptance
+was unavailable because Computer Use could not initialize against the WSL URI.
 
 ## 1. Frozen accepted substrate
 

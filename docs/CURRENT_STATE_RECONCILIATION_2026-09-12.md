@@ -6,6 +6,21 @@
 **Scope:** Present-tense project state, exact active/queued gates, and status precedence before any further machine-local execution.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
 
+## Local execution update — 2026-09-13
+
+This update supersedes the pre-local status below where it describes missing
+`ta9l` English projection or generation as unattempted. English projection **40**
+on source detail **25** is complete and reviewed. P1.6 attempt **98** failed after
+its bounded validation retry and created no artifact; semantic acceptance/rejection
+and final correspondence review therefore remain unavailable. **B1 stays OPEN**.
+
+Current decision: focused extraction recovery versus an explicit evidence-based
+B1 NO-PROMOTION/DEFER decision. No closure or Market activation is implied by the
+generation failure. See
+`docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
+The local corpus now has 21 current English v2 projections; the last published
+20-projection baseline has not been republished. Registry state is unchanged.
+
 ## 1. Purpose
 
 JobHunter intentionally preserves detailed plans, acceptance records, amendments, experiments, and working memories. Some of those files contain present-tense status wording that was correct when written but is no longer the current execution state.

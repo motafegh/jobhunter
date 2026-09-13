@@ -1,14 +1,14 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-12  
+**Date:** 2026-09-13\
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
 **Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — owner activation GIVEN / formal investigation queued behind B1 / implementation gated  
 **Market preparation state:** research consolidated + formal investigation entry protocol prepared / formal investigation still blocked by open B1  
-**Current product gate:** P2.2B-B1 REPO PREFLIGHT COMPLETE / `ta9l` LOCAL ENGLISH + P1.6 ACCEPTANCE NEXT / NO PROMOTION YET  
+**Current product gate:** P2.2B-B1 OPEN / `ta9l` ENGLISH 40 REVIEWED / P1.6 ATTEMPT 98 FAILED WITHOUT ARTIFACT / RECOVERY OR DEFER DECISION NEXT / NO PROMOTION\
 **Parallel portfolio gate:** PR9 repository-side package complete / MIT license complete / GitHub metadata + real screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -169,9 +169,9 @@ Local-runtime preflight record:
 
 #### `ta9l` P1.6 authority gate — NEXT / LOCAL RUNTIME REQUIRED
 
-- [ ] run local provider/runtime preflight against the real owner SQLite/configuration.
-- [ ] create/reuse current English projection for `ta9l`.
-- [ ] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`.
+- [x] run local provider/runtime preflight against the real owner SQLite/configuration; explicitly load configured models after discovering that visible does not mean loaded.
+- [x] create and inspect current English projection 40 for `ta9l`, source detail 25; native description and dependency equality pass.
+- [~] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`: attempt 98 failed after its bounded validation retry, with no artifact. Resolve focused recovery versus explicit B1 defer before further generation.
 - [ ] inspect the complete current candidate with `jobhunter jobs review-analysis ta9l status`.
 - [ ] semantically review the `ta9l` P1.6 artifact for acceptance or rejection.
 - [ ] report exact accepted artifact ID, responsibility index, statement, evidence, and semantic-review state for the evaluation/testing/observability duty if accepted.
@@ -289,6 +289,11 @@ Do not continue generic portfolio polishing after the remaining concrete blocker
 ## Exact next actions
 
 ### Product track
+
+Current checkpoint: `docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
+Translation is complete. P1.6 generation failed without an artifact; decide focused
+recovery or explicit B1 NO-PROMOTION/DEFER. B1 is still open. The remaining sequence
+below applies after recovery and must not cause successful translation to rerun.
 
 ```text
 local runtime preflight on real owner state
