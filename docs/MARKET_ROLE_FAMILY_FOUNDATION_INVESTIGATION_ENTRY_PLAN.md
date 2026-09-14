@@ -1,66 +1,64 @@
 # Market / Role-Family Foundation Investigation Entry Plan
 
-**Status:** PREPARED / QUEUED BEHIND P2.2B-B1 / NOT ACTIVE YET  
-**Date:** 2026-09-12  
+**Status:** EXECUTED / CLOSED — FOUNDATION PASS / FIRST VERTICAL SLICE AUTHORIZED  
+**Original date:** 2026-09-12  
+**Executed:** 2026-09-14  
 **Branch:** `main`  
 **Controlling parent:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Consolidated research input:** `docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`  
-**Current product gate:** P2.2B-B1 remains open; this plan does not authorize the formal investigation or Market-v2 implementation before B1 closure
+**Research input:** `docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`  
+**Final decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
 
-## 1. Purpose
+## 1. Lifecycle / execution result
 
-This is the ready-to-use entry protocol for the formal Market / Role-Family Intelligence foundation investigation that is already owner-approved to begin after P2.2B-B1 closes.
+This file was the prepared entry protocol for the formal Market / Role-Family foundation investigation. Its activation condition was satisfied when P2.2B-B1 closed as **NO-PROMOTION / DEFER** on 2026-09-14.
 
-It converts the broad investigation queue and six research passes into one bounded decision exercise with:
+The protocol has now been executed.
 
-1. exact questions;
+Final result:
+
+```text
+FOUNDATION INVESTIGATION: PASS
+FIRST VERTICAL SLICE: AUTHORIZED
+```
+
+The current next action is **not another investigation**. It is implementation increment **I1 — Market domain models + SQLite persistence**, under the exact scope and stop lines recorded in the final decision.
+
+This file remains a closed protocol/evidence record. The final decision owns current Q1–Q12 answers and implementation authorization.
+
+---
+
+## 2. Original investigation purpose
+
+The protocol existed to convert six bounded research passes into one evidence-based decision exercise covering:
+
+1. exact first-slice questions;
 2. required repository/real-data evidence;
 3. smallest experiments;
 4. acceptance criteria;
 5. implementation-authorization boundaries.
 
-The objective is **not** to design the entire future Market system. It is to decide the smallest trustworthy first Market vertical slice and whether repository evidence is sufficient to implement it.
-
----
-
-## 2. Activation condition
-
-Do not execute this investigation while B1 remains open.
-
-Activate immediately after one of these recorded B1 outcomes:
+It deliberately prohibited production Market implementation until the foundation result explicitly said:
 
 ```text
-B1 PASS
-→ one reviewed responsibility concept + two accepted/current P1.6 mappings
-
-B1 NO-PROMOTION / DEFER
-→ bounded evidence insufficient or selected correspondence rejected
+FOUNDATION INVESTIGATION: PASS
+FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-Either B1 outcome is compatible with starting Market foundation investigation.
-
-At activation time:
-
-1. read the final B1 decision record;
-2. reconcile only the Market questions affected by that result;
-3. do not require P2.2C responsibility families or P2.2D stable role archetypes before useful Market work;
-4. keep candidate analytical role/work families distinct from promoted reusable taxonomy.
-
-No second owner activation ceremony is required merely to start this already-approved investigation after B1 closure.
+That condition is now satisfied by the September 14 decision record.
 
 ---
 
-## 3. Investigation rules
+## 3. Investigation principles that remain useful implementation history
 
-### 3.1 Preserve decided research conclusions
+### Preserve prior research decisions
 
-Start from the consolidation ledger's `DECIDED` items. Reopen them only if code or real evidence materially contradicts them.
+The investigation started from the consolidation ledger's `DECIDED` items and reopened them only where repository/real evidence materially required it.
 
-Do not repeat broad ESCO/O*NET/Cedefop/OECD/Lightcast research merely for completeness.
+Broad ESCO/O*NET/Cedefop/OECD/Lightcast research was not repeated merely for completeness.
 
-### 3.2 Prefer code/evidence inspection over speculative redesign
+### Prefer existing owners
 
-Use existing JobHunter owners first:
+The protocol required auditing/reusing:
 
 ```text
 search/config/acquisition
@@ -76,114 +74,49 @@ CLI
 SQLite migration/store patterns
 ```
 
-Add a new owner only where the first vertical slice has a real responsibility that no existing owner can safely represent.
+The final decision confirmed a thin extension of these owners rather than a parallel platform.
 
-### 3.3 Keep the investigation bounded
-
-The investigation should produce decisions, small evidence tables, and at most the minimal prototypes/throwaway analyses needed to answer open questions.
-
-It must not drift into production implementation.
-
-### 3.4 Authority split
+### Keep authority split explicit
 
 ```text
-hard integrity/currentness/count/persistence questions
-→ deterministic evidence and exact tests
+hard integrity/currentness/count/persistence
+→ deterministic application evidence/tests
 
-role relevance / candidate work-family interpretation
-→ semantic evaluation with evidence and uncertainty
+role relevance / semantic interpretation
+→ bounded semantic evaluation with evidence and uncertainty
 ```
 
-Do not convert interpretive uncertainty into an infrastructure or review blocker.
+Interpretive uncertainty is not an infrastructure failure.
 
 ---
 
-# 4. Exact investigation questions
+# 4. Q1–Q12 protocol and resolved outcome pointer
 
-## Q1 — What is the smallest first-slice target-definition contract?
+The original protocol asked the following questions. Their authoritative answers now live in the final decision record.
 
-Resolve:
+## Q1 — Smallest target-definition contract
 
-- stable target identity fields;
-- immutable definition-version fields;
-- which existing search profile/pack/config references can be reused;
-- which membership-intent fields must be represented independently from acquisition search terms;
-- which geography/seniority/employment/freshness constraints belong in v1;
-- which request/page/detail/model budgets are target/run controls rather than durable semantic identity.
+Resolve stable `TargetMarket` identity versus immutable `TargetMarketDefinitionVersion`, acquisition references, membership intent, target constraints, and run-only budgets.
 
-Expected decision:
+**Resolved:** stable target + immutable definition version; operational budgets belong to `MarketResearchRun` rather than silently changing semantic target identity.
 
-```text
-minimal TargetMarket
-minimal TargetMarketDefinitionVersion
-```
+## Q2 — Target-run reuse and orchestration
 
-Do not design every possible future target dimension.
+Resolve how one target run composes existing discovery/sync, source currentness, translation, P1.6, bounded budgets and partial-success state.
 
-## Q2 — How should one target run reuse acquisition and derived artifacts?
+**Resolved:** one thin target-aware coordinator over existing owners; target-scoped affected-work queues are required so bounded budget does not spill into unrelated global backlog.
 
-Resolve:
+## Q3 — Source-level snapshot eligibility
 
-- existing discovery/sync entrypoint reuse;
-- target-aware candidate selection without parallel source identities;
-- missing vs refresh-due detail selection;
-- current English projection reuse;
-- accepted/current P1.6 reuse;
-- whether one thin `MarketResearchService`/coordinator is sufficient;
-- stage ledger and bounded budgets;
-- partial-success terminal states.
+Resolve lifecycle/currentness/fetch-failure/freshness behavior.
 
-Expected decision:
+**Resolved:** successfully parsed current source evidence is required; failed refresh is not disappearance; expired/removed postings stay historical but leave the active primary corpus; weak/retryable availability failures retain prior evidence subject to freshness/warnings.
 
-```text
-existing services + thin target-aware coordinator
-```
+## Q4 — Target-market membership evidence
 
-unless concrete evidence proves another boundary necessary.
+Resolve deterministic eligibility, semantic relevance, evidence dependencies and dispositions.
 
-## Q3 — Which jobs may enter a snapshot at source level?
-
-Define deterministic source/corpus eligibility for:
-
-- active/current source jobs;
-- stale/unchecked jobs;
-- explicit expiry/removal;
-- failed refresh attempts;
-- incomplete details;
-- changed semantic source version;
-- native-English vs translation-required source;
-- target time/freshness window.
-
-Critical rule:
-
-```text
-failed refresh != market disappearance
-```
-
-Expected output: one explicit source-eligibility table.
-
-## Q4 — What evidence is sufficient for target-market membership?
-
-Test the staged model:
-
-```text
-deterministic eligibility
-→ semantic relevance when needed
-```
-
-Resolve:
-
-- whether title + parsed source content is enough for obvious cases;
-- when English projection is required;
-- when accepted P1.6 materially improves classification;
-- whether Capability/Work adds enough value to justify optional use;
-- exact first-slice dispositions;
-- evidence/reason fields;
-- qualitative confidence, if useful;
-- correction/review behavior;
-- which dispositions enter which denominator.
-
-Expected default vocabulary to confirm/refine:
+**Resolved:**
 
 ```text
 core_match
@@ -192,452 +125,200 @@ uncertain
 excluded
 ```
 
-## Q5 — How should the first slice handle P1.6 acceptance coverage?
+Current parsed source + title/English evidence can establish source-level membership. Accepted P1.6 is optional stronger evidence, not a membership prerequisite. Capability/Work are not first-slice gates.
 
-Resolve the operational gap between:
+## Q5 — P1.6 acceptance coverage
 
-```text
-qualified source jobs
-and
-qualified jobs with accepted-current P1.6
-```
+Resolve how a useful Market view survives incomplete accepted-semantic coverage without weakening P1.6 authority.
 
-The investigation must answer:
+**Resolved:** source-level core membership and accepted-P1.6 semantic prevalence use separate explicit denominators. Accepted/pending/missing/failed/rejected processing state remains visible. Missing analysis never becomes zero demand.
 
-- what useful source-level Market information can be shown before semantic coverage is complete;
-- which aggregate sections require accepted P1.6;
-- how pending/missing P1.6 backlog appears in the run/report;
-- whether review prioritization can be target-aware without auto-acceptance;
-- what constitutes a sufficiently useful first target run.
+## Q6 — Jobinja repost/new-ID policy
 
-Do not weaken the existing P1.6 acceptance gate.
+Resolve the smallest defensible same-demand policy from real evidence.
 
-## Q6 — What is the smallest defensible repost/new-ID policy for Jobinja?
+**Resolved for v1:** automatic new-ID collapse is deferred because the investigation did not establish a defensible real pair set. Use `qualified source postings`, disclose the limitation, and do not claim `unique demand units`.
 
-Using real or repository-safe Jobinja examples, distinguish:
+## Q7 — Minimum persistence model
+
+Resolve identity, mutability, history, dependency and recomputation rules.
+
+**Resolved conceptual first-slice owners:**
 
 ```text
-same logical source posting / repeated observation
-repost or materially same hiring demand under a new source ID
-separate requisition
-uncertain near-duplicate
+market_targets
+market_target_definition_versions
+market_research_runs
+market_job_memberships
+market_corpus_snapshots
+market_corpus_snapshot_members
+market_aggregate_profiles
 ```
 
-Resolve:
+SQLite remains the runtime/history store. Definition versions, snapshots and profiles are immutable history artifacts.
 
-- evidence features used;
-- whether the first slice needs model-assisted similarity at all;
-- persistence location;
-- representative unique-demand-unit rule;
-- effect of uncertainty on denominators.
+## Q8 — First deterministic aggregate profile
 
-Do not build cross-source duplicate infrastructure while only Jobinja is approved.
+Resolve evidence-quality header, requirement/work metrics, denominators, employer breadth and drill-down.
 
-## Q7 — What is the minimum Market persistence model?
+**Resolved:** deterministic profile over the frozen target snapshot with explicit source and accepted-P1.6 denominators, employer concentration, requirement type/strength support and evidence drill-down. No opaque demand score/bands/trends.
 
-Confirm/refine the provisional shape:
+## Q9 — Capability / Work dependency
 
-```text
-TargetMarket
-TargetMarketDefinitionVersion
-MarketResearchRun
-MarketJobMembership
-MarketCorpusSnapshot + members
-MarketAggregateProfile
-```
+**Resolved:** neither is mandatory in the first slice. Reviewed Registry mappings may enrich where available; unmapped evidence remains valid.
 
-For each, define:
+## Q10 — Semantic role-subfamily synthesis
 
-- identity/key;
-- mutability/history rule;
-- exact upstream dependencies;
-- reuse/currentness identity;
-- minimum stored fields;
-- indexes/constraints actually needed;
-- migration strategy;
-- what remains recomputable.
+**Resolved:** defer from the first slice. First prove the deterministic target corpus/profile. Any later synthesis is candidate/non-canonical and should operate at report/aggregate level rather than generating one narrative per job.
 
-Do not add a separate storage engine.
+## Q11 — Browser/CLI repeated-use workflow
 
-## Q8 — What should the first deterministic aggregate profile contain?
+**Resolved:** browser remains primary and reuses the existing one-mutable-operation pattern; CLI exposes the same services/state for inspection/automation/debugging. Market runtime state remains local by default.
 
-Resolve the first useful set only:
+## Q12 — First-slice acceptance gate
 
-```text
-evidence/corpus quality
-unique qualified postings/demand units
-employer breadth/concentration
-requirements by semantic type
-required/preferred/contextual/inferred counts
-accepted responsibilities/work evidence
-explicit experience/seniority/education/context where supported
-bounded evidence drill-down
-```
-
-Confirm exact denominator for every metric.
-
-Do not introduce opaque importance scores or demand bands in v1.
-
-## Q9 — Does the first slice need Capability or Work Intelligence as dependencies?
-
-For each desired aggregate/report section, record:
-
-```text
-P1.6 sufficient
-Capability adds material value
-Work adds material value
-not needed yet
-```
-
-Default assumption:
-
-> P1.6 is the factual aggregate substrate; Capability/Work are optional enrichments and must not unnecessarily gate corpus coverage.
-
-## Q10 — Where should semantic role-subfamily synthesis enter?
-
-On one representative target, decide whether a deterministic aggregate alone already produces useful product value.
-
-If not, define the smallest bounded candidate synthesis using:
-
-```text
-accepted recurring work/responsibilities
-→ requirement/capability bundles
-→ tools/knowledge/context
-→ titles as supporting evidence
-```
-
-Do not promote candidate subfamilies into stable archetypes.
-
-## Q11 — What browser/CLI workflow is the smallest coherent repeated-use path?
-
-Define one shared-service workflow for:
-
-```text
-select/create target
-→ preview bounds
-→ run/refresh
-→ inspect stage ledger
-→ inspect membership/coverage
-→ inspect aggregate report
-→ drill down to source evidence
-→ rerun and observe reuse
-```
-
-Browser remains primary. CLI remains inspection/automation/debugging.
-
-## Q12 — What exact first-slice acceptance gate authorizes implementation completion?
-
-Turn the existing testing strategy into an implementation-specific checklist after Q1-Q11 decisions are known.
-
-Do not expand acceptance into later trend/personal/archetype responsibilities.
+**Resolved:** exact deterministic/store/service/semantic-boundary/browser/CLI invariants are recorded in the final decision. A bounded real local target run remains required before implementation closure.
 
 ---
 
-# 5. Required evidence
+# 5. Evidence owners inspected by the executed investigation
 
-The formal investigation should inspect only evidence needed to answer Q1-Q12.
-
-## 5.1 Repository owners
-
-At minimum inspect current versions of:
+The investigation inspected the current responsibilities needed for its decisions, including:
 
 ```text
 src/jobhunter/search_registry.py
 src/jobhunter/config.py
-src/jobhunter/jobinja_discovery.py
 src/jobhunter/jobinja_sync.py
-src/jobhunter/jobinja_batch.py
-src/jobhunter/storage.py
 src/jobhunter/job_detail_observations.py
-src/jobhunter/translation_store.py
+src/jobhunter/lifecycle.py
+src/jobhunter/storage.py
 src/jobhunter/translation_service.py
 src/jobhunter/analysis_store.py
-current P1.6 service/currentness owners
-src/jobhunter/capability_store.py
-current Capability service/currentness owners
-current Work Intelligence store/service owners
-src/jobhunter/canonical_registry.py
-src/jobhunter/market_insights.py
 src/jobhunter/phase1_run.py
-browser operation/service wiring
-CLI entrypoints
+src/jobhunter/market_insights.py
+src/jobhunter/work_intelligence_service.py
+src/jobhunter/canonical_registry.py
+src/jobhunter/web/operations.py
+src/jobhunter/cli.py
 ```
 
-Inspect tests adjacent to these owners rather than reading the whole test suite indiscriminately.
+Adjacent tests and representative public-corpus jobs/P1.6 artifacts were inspected rather than reading the repository indiscriminately.
 
-## 5.2 Existing real/repository-safe evidence
-
-Use:
-
-- current public corpus for bounded remote case selection;
-- selected accepted P1.6 anchors;
-- Work Intelligence accepted behavior where relevant;
-- Canonical Registry seed and final B1 result;
-- current Market aggregate behavior;
-- existing discovery provenance/search-effectiveness records;
-- local real runtime only for questions that repository-safe evidence cannot answer.
-
-## 5.3 Research inputs
-
-Load the consolidation record and consult the six research records only when a specific decision needs their detail.
-
-Do not treat external methodology as stronger authority than JobHunter's source/evidence model.
+The final decision records the evidence boundary: no new live Jobinja acquisition run was performed during this formal audit, so search-recall optimization is an implementation-acceptance concern rather than a fabricated investigation result.
 
 ---
 
-# 6. Smallest experiments
+# 6. Executed bounded experiments/evidence
 
-The investigation is complete only when the genuinely open questions have evidence. Prefer the following bounded experiments.
+## E1 — Target/search contract
 
-## E1 — Representative target-definition/search experiment
-
-Choose **one** real target market representative of the product goal.
-
-Recommended type:
-
-```text
-AI Security / ML Security
-```
-
-or the best equivalent current target available when the investigation begins.
-
-Compare a very small set of existing search profile/pack/term combinations.
-
-Record:
-
-```text
-candidates discovered
-obvious relevant examples
-obvious noise
-important missed known examples if detectable
-request/page budget
-which target-definition fields were actually necessary
-```
-
-Stop when the domain-contract question is answered; do not optimize search recall indefinitely.
+Existing bilingual/versioned search profiles/packs plus current config were sufficient to establish the target/acquisition contract. Live recall/noise optimization remains a bounded real-run acceptance task.
 
 ## E2 — Membership boundary set
 
-Use approximately 8-12 deliberately varied real or repository-safe cases:
+Representative repository-safe cases demonstrated:
 
 ```text
-clear core / expected title
-clear core / non-obvious title
-adjacent technology-overlap role
-misleading keyword/title hit
-sparse evidence
-hybrid role
-two-subfamily plausible role
-genuinely uncertain role
+ta9l  → clear Applied-AI core despite missing accepted P1.6
+tG9K  → clear Applied-ML core with accepted rich P1.6
+tGM0  → adjacent backend/AI-platform work
+t4jp  → misleading AI title; content-production role
+tmBK  → Python/backend role with AI-usage qualification only
+t4qV  → network-security role
+tmyX  → Microsoft infrastructure-security role
 ```
 
-Compare the lowest sufficient inputs:
+This established that title-only classification is unsafe and accepted P1.6 should not gate source-level membership.
 
-```text
-title/source
-vs
-English/source semantic text
-vs
-accepted P1.6
-```
+## E3 — Repost/new-ID evidence
 
-Only test Capability/Work if Q9 still has concrete uncertainty.
+No credible bounded real pair set was established. Per protocol, automatic repost adjustment was explicitly deferred rather than simulated into authority.
 
-Output: evidence table + recommended first-slice membership input/contract.
+## E4 — P1.6 coverage/backlog
 
-## E3 — Jobinja repost/new-ID mini-set
+Current analysis-store semantics plus the real B1 `ta9l` result proved the need to distinguish accepted/pending/missing/failed/rejected semantic coverage from source-level target membership.
 
-Find only enough real candidate pairs to establish the first policy boundary.
+## E5 — Schema/dependency walk
 
-For each pair record:
+The proposed relational responsibilities survived unchanged rerun, new source version, new target definition, new membership contract and new aggregate contract without requiring historical rewrites or unrelated upstream invalidation.
 
-```text
-employer
-title
-location/time
-source IDs
-semantic/source similarity evidence
-responsibility/requirement overlap where available
-disposition: same demand / separate / uncertain
-```
+## E6 — Deterministic report/read-model
 
-If no credible examples are available, explicitly defer sophisticated repost adjustment and keep strong prevalence claims correspondingly limited. Do not invent fixtures as proof of real source behavior.
-
-## E4 — P1.6 coverage/backlog simulation
-
-Using a small synthetic/repository-safe target snapshot, model:
-
-```text
-accepted P1.6
-pending P1.6
-missing P1.6
-translation failure
-stale semantic version
-```
-
-Verify the report/run can remain useful while denominators stay honest.
-
-This is an orchestration/product-boundary experiment, not a semantic auto-acceptance experiment.
-
-## E5 — Minimal schema sketch and dependency walk
-
-Before source implementation, write the smallest table/domain sketch for Q7 and manually walk these changes through it:
-
-```text
-unchanged rerun
-new source semantic version
-new target-definition version
-new membership contract
-new aggregate contract
-```
-
-Reject any schema that requires rewriting immutable history or invalidates unrelated upstream artifacts.
-
-## E6 — First-report product sketch
-
-Using deterministic values from the bounded case set, produce one temporary structured report/read-model sketch and answer:
-
-- Can the user see exactly what corpus was analyzed?
-- Are denominators obvious?
-- Are recurring work and requirements useful without semantic narrative?
-- Is evidence drill-down clear?
-- Is missing semantic coverage obvious?
-
-This is a design/prototype artifact only. Do not create production UI during the investigation.
+Current `MarketInsights` already proves deterministic requirement-strength counts, employer concentration/sample warnings and explicit scope/duplicate disclosures. The target-scoped first profile extends those responsibilities over a frozen membership snapshot.
 
 ---
 
-# 7. Investigation acceptance criteria
+# 7. Acceptance criteria result
 
-The formal foundation investigation passes only when all of these are true:
+The investigation passed because it resolved the integrity architecture needed before implementation:
 
-1. The exact first-slice product question is stated in one paragraph.
-2. `TargetMarket` and definition-version responsibilities are explicit and minimal.
-3. Acquisition reuses existing source identity/provenance and bounded sync behavior.
-4. A target-aware affected-work/reuse model is explicit.
-5. Source-level snapshot eligibility is defined without treating fetch failure as disappearance.
-6. Membership disposition semantics and the primary denominator are explicit.
-7. The lowest sufficient semantic evidence for membership is decided from representative cases.
-8. Accepted/pending/missing P1.6 coverage remains visible and authority-safe.
-9. The first same-source repost/new-ID policy is either evidence-backed or explicitly deferred with corresponding report limitations.
-10. The minimal persistence/schema boundary is defined with immutable history/currentness rules.
-11. Every first-slice aggregate metric has an explicit denominator and deterministic owner.
-12. Capability/Work dependencies are included only where their value is demonstrated.
-13. Candidate subfamily synthesis is either explicitly deferred or bounded as non-canonical interpretation.
-14. One coherent browser/CLI workflow is defined over shared services/state.
-15. The first implementation-test matrix is explicit and bounded.
-16. Publication remains local/private by default.
-17. Deferred responsibilities remain outside the implementation authorization.
-18. No unresolved integrity question remains that could corrupt source identity, snapshot history, denominator truth, or dependency currentness.
+- explicit first-slice product question;
+- stable target and immutable definition-version responsibilities;
+- existing source identity/provenance reuse;
+- target-scoped affected-work model;
+- source eligibility without treating fetch failure as disappearance;
+- explicit membership states and primary denominator;
+- lowest sufficient membership evidence;
+- explicit accepted/pending/missing P1.6 coverage;
+- repost policy explicitly deferred with claim limitations;
+- bounded SQLite persistence shape;
+- explicit deterministic metric denominators;
+- Capability/Work included only when later evidence demonstrates value;
+- subfamily synthesis deferred from v1;
+- coherent browser/CLI workflow;
+- bounded implementation test matrix;
+- local/private publication boundary;
+- no unresolved integrity issue that would corrupt identity, history, denominator truth or currentness.
 
-The investigation may still pass with semantic uncertainty. It may not pass with unresolved integrity architecture.
-
----
-
-# 8. Required investigation output
-
-Produce **one** dated working-memory decision record containing:
-
-```text
-final first-slice product scope
-Q1-Q12 decisions
-experiment evidence/results
-accepted domain/persistence/orchestration shape
-membership + denominator policy
-repost disposition/policy or explicit deferral
-P1.6 coverage/review-throughput handling
-first aggregate contract
-Capability/Work reuse decision
-semantic synthesis placement decision
-browser/CLI workflow
-implementation order
-acceptance matrix
-explicit non-goals
-implementation authorization decision
-```
-
-Do not create one decision file per question unless a genuinely independent experiment needs its own raw evidence record.
+Semantic uncertainty remains allowed. Integrity ambiguity does not.
 
 ---
 
-# 9. Implementation authorization boundary
+# 8. Implementation authorization
 
-## 9.1 Not authorized by this prepared plan
-
-While B1 remains open, do **not**:
+The final decision authorizes this exact slice:
 
 ```text
-start the formal Q1-Q12 investigation
-create Market runtime tables/migrations
-write Market-v2 services
-write target-membership model prompts/contracts
-modify current Market behavior
-build browser Market-v2 screens
-run corpus-wide Market model inference
-publish Market state
-start P2.2C/P2.2D as a substitute
+TargetMarket
++ TargetMarketDefinitionVersion
++ MarketResearchRun
++ MarketJobMembership
++ MarketCorpusSnapshot + members
++ MarketAggregateProfile
++ minimal browser/CLI workflow
 ```
 
-## 9.2 Authorized automatically after B1 closure
-
-The already-owner-approved next action is:
+Implementation sequence:
 
 ```text
-execute this bounded foundation investigation
-→ record one dated decision result
+I1 domain models + SQLite persistence
+→ I2 target-scoped source eligibility / affected-work planning
+→ I3 membership qualification
+→ I4 immutable snapshot
+→ I5 deterministic aggregate profile
+→ I6 browser + CLI workflow
+→ I7 bounded real local acceptance
 ```
 
-No new permission is needed merely to perform that investigation unless repository state materially changes the owner-approved direction.
-
-## 9.3 Implementation authorization after investigation
-
-Implementation is authorized only when the formal decision record explicitly states:
-
-```text
-FOUNDATION INVESTIGATION: PASS
-FIRST VERTICAL SLICE: AUTHORIZED
-```
-
-and names the exact slice.
-
-A likely slice is:
-
-```text
-TargetMarket + definition version
-→ run
-→ membership
-→ immutable snapshot
-→ deterministic aggregate profile
-→ minimal browser/CLI inspection
-```
-
-but this remains provisional until Q1-Q12 are resolved.
-
-If the investigation exposes a material unresolved authority/data-integrity problem, record:
-
-```text
-FOUNDATION INVESTIGATION: HOLD
-```
-
-with the smallest next evidence task. Do not start source implementation around the uncertainty.
+The current next action is **I1**.
 
 ---
 
-# 10. Explicit first-slice non-goals
-
-Unless the formal investigation proves one is strictly necessary for basic correctness, keep these out:
+# 9. Non-goals that remain outside the authorization
 
 ```text
 longitudinal trends / `emerging`
 forecasting
-fixed demand-band thresholds
+fixed demand bands
 stable role archetypes
 responsibility-family promotion for reporting
-Market → You personal scoring/recommendations
+semantic role-subfamily synthesis in v1
+persisted model-generated Role-Family Intelligence Report in v1
+Market → You scoring/recommendations
 salary benchmarking
-second-source abstraction/plugin framework
+second-source plugin abstraction
 cross-source duplicate system
-external taxonomy ingestion infrastructure
+external-taxonomy ingestion infrastructure
 vector/RAG/graph platform
 agent/workflow framework
 exhaustive canonicalization
@@ -647,12 +328,15 @@ public Market corpus/export
 
 ---
 
-## 11. Prepared transition state
+## 10. Closed transition state
 
 ```text
 broad Market research                  COMPLETE ENOUGH
 research consolidation                 COMPLETE
-formal investigation entry protocol    PREPARED
-formal foundation investigation         QUEUED / BLOCKED BY OPEN B1
-Market-v2 implementation                NOT AUTHORIZED
+foundation investigation protocol      EXECUTED / CLOSED
+foundation investigation               PASS
+first vertical slice                   AUTHORIZED
+current next action                    I1 DOMAIN + SQLITE PERSISTENCE
 ```
+
+For implementation details, use the final foundation decision rather than reopening this protocol.
