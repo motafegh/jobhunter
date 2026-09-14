@@ -1,67 +1,33 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Date:** 2026-09-12  
+**Last reconciled:** 2026-09-14  
 **Branch:** `main`  
-**Scope:** Present-tense project state, exact active/queued gates, and status precedence before any further machine-local execution.  
+**Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
 
-## Current decision update — 2026-09-14
-
-**B1 CLOSED: NO-PROMOTION / DEFER.** This update supersedes open-B1 and pre-local
-status below. Projection 40/source 25 is reviewed and published. Artifact 47 was
-rejected for material coverage loss; the repaired final rebuild (attempt 101)
-exhausted its bounded retry without an artifact. No eligible second accepted claim
-was obtained and no concept/mappings were created. General coverage/depth repairs
-passed 552 tests. See `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md` for exact evidence and limits.
-
-**Next:** the already-approved formal Market foundation investigation may start
-using the prepared entry plan and consolidation ledger. No second activation is
-required. Market implementation still requires the explicit investigation PASS /
-FIRST VERTICAL SLICE AUTHORIZED decision. Promoted P2.2C/P2.2D taxonomy and personal
-intelligence remain unauthorized. Do not interpret defer as semantic incompatibility
-of the proposed pair or permission for another candidate/model matrix.
-
-Published corpus counts are 353 / 43 / 21 / 5 / 5. The five accepted anchors and
-private registry are unchanged. Older routing below records the pre-local gate and
-is superseded by this update for current status only.
-
-## 1. Purpose
-
-JobHunter intentionally preserves detailed plans, acceptance records, amendments, experiments, and working memories. Some of those files contain present-tense status wording that was correct when written but is no longer the current execution state.
-
-This reconciliation prevents historical status text from becoming an accidental execution instruction.
-
-It does **not** redesign product meaning, weaken evidence/provenance rules, alter accepted semantic contracts, rewrite historical chronology, or authorize implementation beyond the gates below.
-
-Use this file only for **current status and routing**. Durable product/domain/source/architecture semantics remain owned by their normal controlling documents.
-
----
-
-## 2. Current authoritative operating state
+## 1. Current authoritative operating state
 
 ```text
-Phase 1                         CLOSED / ACCEPTED
-P2.1 Canonical Registry        CLOSED / ACCEPTED
-P2.2A Job Work Intelligence    CLOSED / ACCEPTED
-P2.2B-B1                       IN PROGRESS
-                               repo evidence selection + preflight COMPLETE
-                               ta9l local English/P1.6 authority gate NEXT
-                               no responsibility promotion yet
-P2.2C responsibility families BLOCKED by B1
-P2.2D stable role archetypes   LATER
-Blueprint v6                   EXPERIMENTAL / HISTORICAL / NON-AUTHORITATIVE
+Phase 1                              CLOSED / ACCEPTED
+P2.1 Canonical Registry             CLOSED / ACCEPTED
+P2.2A Job Work Intelligence         CLOSED / ACCEPTED
+P2.2B-B1                            CLOSED / NO-PROMOTION / DEFER
+P2.2C promoted responsibility       NOT ACTIVE / NOT AUTHORIZED
+P2.2D stable role archetypes        LATER / NOT AUTHORIZED
+Blueprint v6                        EXPERIMENTAL / HISTORICAL / NON-AUTHORITATIVE
 
-Market / Role-Family           owner-approved direction
-                               broad research COMPLETE ENOUGH
-                               research consolidation COMPLETE
-                               formal investigation entry plan PREPARED
-                               formal foundation investigation BLOCKED by B1
-                               Market-v2 implementation NOT AUTHORIZED
+Market / Role-Family research       COMPLETE ENOUGH
+Market research consolidation       COMPLETE
+Market foundation investigation     PASS / COMPLETE
+First Market vertical slice         AUTHORIZED / NEXT PRODUCT IMPLEMENTATION
+Market implementation completion    NOT YET ACCEPTED
+Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
+Market → You                        LATER / NOT AUTHORIZED
 
-Portfolio / release            repository-side package mature
-                               MIT license COMPLETE
-                               GitHub metadata + real screenshots + release + owner mastery PENDING
+Portfolio / release                 parallel track
+MIT license                         COMPLETE
+GitHub metadata/screenshots/release/owner mastery  PENDING
 ```
 
 Current accepted/public contracts remain:
@@ -78,7 +44,17 @@ Canonical Registry:           jobhunter-canonical-concept-registry-v1
 Public Corpus:                jobhunter-public-corpus-v1
 ```
 
-Accepted/current factual anchors remain:
+Current public-corpus baseline:
+
+```text
+known/discovered Jobinja jobs: 353
+fetched/parsed detail jobs:      43
+current English projections:     21
+accepted/current English P1.6:    5
+accepted/current Capability:      5
+```
+
+Accepted P1.6 → Capability anchors remain:
 
 ```text
 tG9K → P1.6 36 → Capability 11
@@ -90,116 +66,133 @@ tmyX → P1.6 46 → Capability 15
 
 ---
 
-## 3. Exact current P2.2B-B1 gate
+## 2. Final P2.2B-B1 disposition
 
-The repository-side candidate search is **finished**. Do not repeat it before testing the selected candidate.
+B1 is closed as **NO-PROMOTION / DEFER**.
 
-Selected additional evidence-bearing job:
+Final evidence:
 
-```text
-ta9l — Senior Applied AI Engineer — Mofid Securities
-source detail version: 25
-source state: parsed / active
-current committed English projection: none
-current accepted P1.6: none
-semantic sha256: cd9dbf6be622113836b951e9042c87798954fc01dea520ba08b090eae2b54fc6
-```
+`docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
 
-Accepted comparison anchor:
+Exact outcome:
 
 ```text
-tG9K P1.6 artifact 36 responsibility[5]
-Design rigorous validation and monitoring for models running in an industrial setting.
+ta9l source detail 25
+→ English projection 40 reviewed/published
+→ attempt 98 failed without artifact
+→ attempt 99 produced artifact 47
+→ artifact 47 materially incomplete and explicitly rejected/archived
+→ deterministic source-coverage defects reproduced and repaired
+→ depth-boundary defect reproduced and repaired
+→ attempts 100 and 101 failed without an acceptable artifact
+→ no accepted/current ta9l P1.6
+→ no canonical responsibility concept
+→ no claim mappings
+→ B1 NO-PROMOTION / DEFER
 ```
 
-Selected `ta9l` employer duty:
+The retained coverage/depth repairs passed the full 552-test warnings-as-errors suite recorded in the recovery evidence. The five accepted P1.6 anchors were not regenerated.
 
-```text
-Create evaluation, testing, and observability frameworks for LLM and agent performance.
-```
+Do not:
 
-Tentative identity — **not promoted**:
+- repeat `ta9l` translation or extraction to force a B1 promotion;
+- select another B1 candidate without a new explicit focused decision;
+- treat the defer result as proof that the proposed cross-job responsibility identity was semantically incompatible;
+- infer that `ta9l` lacks duties merely because accepted P1.6 could not be produced within the bounded recovery.
 
-```text
-responsibility:design-ai-evaluation-monitoring
-Design AI evaluation and monitoring
-```
-
-The exact local execution packet is:
-
-```text
-docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
-```
-
-Before any canonical mutation, execute in this order:
-
-```text
-local doctor / translation-provider status
-→ create/reuse ta9l current English projection
-→ inspect the projection
-→ generate English P1.6 v20/v5
-→ inspect complete review-analysis status
-→ explicitly accept or reject the P1.6 artifact
-→ if accepted, report exact artifact ID + responsibility index + statement + evidence
-→ compare that exact accepted claim with tG9K P1.6 36 responsibility[5]
-→ final non-lossy correspondence review
-→ only if still aligned: one-concept/two-mapping Canonical Registry pilot
-→ idempotency + CLI/browser/currentness/publication-boundary verification
-→ B1 PASS or evidence-based NO-PROMOTION / DEFER
-```
-
-If `ta9l` P1.6 splits, strengthens, weakens, merges, or otherwise materially changes the selected responsibility shape, stop before mutation and re-evaluate. Do not accept an otherwise defective P1.6 artifact merely because one claim would be useful for B1. Do not select a second additional job unless `ta9l` is explicitly rejected and a new focused decision authorizes continued evidence search.
+The old B1 plan and pre-local records remain historical evidence; their former `NEXT` actions no longer control execution.
 
 ---
 
-## 4. Market / Role-Family state after the remote research period
+## 3. Market foundation investigation — COMPLETE
 
-The future Market responsibility is already owner-approved. Six bounded research passes were completed while local B1 work was postponed, and that research has now been consolidated.
+Controlling future plan:
 
-Current preparation owners:
+`docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 
-```text
-docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
+Research consolidation:
 
-docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md
+`docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`
 
-docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
-```
+Prepared investigation protocol:
 
-Current routing:
+`docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md`
 
-```text
-broad remote Market research            COMPLETE ENOUGH / STOP
-research consolidation                  COMPLETE
-formal investigation protocol           PREPARED
-formal foundation investigation         QUEUED / NOT STARTED / BLOCKED BY B1
-Market-v2 source implementation         NOT AUTHORIZED
-```
+Final investigation decision:
 
-After B1 closes—whether by PASS or evidence-based NO-PROMOTION / DEFER—no second owner activation ceremony is required merely to start the already-approved formal Market foundation investigation.
+`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
 
-Then:
+Decision:
 
 ```text
-read final B1 decision
-→ load the consolidation ledger
-→ execute MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
-→ resolve Q1-Q12 using bounded repository/real-data evidence and the smallest experiments
-→ write one dated foundation decision record
-→ begin implementation only if that record explicitly says:
-   FOUNDATION INVESTIGATION: PASS
-   FIRST VERTICAL SLICE: AUTHORIZED
+FOUNDATION INVESTIGATION: PASS
+FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-P2.2C/P2.2D promoted families/archetypes are **not prerequisites** for candidate analytical Market subfamilies. Candidate interpretation and promoted reusable taxonomy remain distinct.
+The authorized first slice is:
+
+```text
+TargetMarket
++ immutable TargetMarketDefinitionVersion
++ thin target-aware MarketResearchRun coordinator
++ MarketJobMembership
++ immutable MarketCorpusSnapshot + members
++ deterministic MarketAggregateProfile
++ thin browser/CLI workflow over the same services/state
+```
+
+### First-slice permanent boundaries
+
+- reuse current Jobinja source identity/provenance, lifecycle, observation, translation and P1.6 machinery;
+- target runs must use target-scoped affected-work queues rather than spill bounded budgets into unrelated global backlog;
+- source-level membership uses `core_match | adjacent_match | uncertain | excluded`;
+- accepted P1.6 is a strong semantic-statistics boundary, not a prerequisite for source-level target membership;
+- core source postings and core+accepted-P1.6 are distinct denominators;
+- pending/missing/failed P1.6 must remain visible and never become zero demand;
+- Capability and Work Intelligence are not mandatory first-slice dependencies;
+- reviewed Registry mappings may enrich where available but unmapped evidence remains valid;
+- first-slice repost/new-ID collapse is deliberately deferred because no defensible real Jobinja pair set established an authority rule;
+- denominator wording is `qualified source postings`, not `unique demand units`;
+- snapshot history is immutable;
+- numeric aggregation is deterministic;
+- Market state remains local by default.
+
+### Explicitly outside the authorized first slice
+
+```text
+model-generated/persisted Role-Family Intelligence Report
+semantic role-subfamily synthesis
+P2.2C/P2.2D promoted taxonomy
+repost/new-ID automatic collapse
+trend / emerging / forecasting
+personal Market → You scoring/recommendations
+Market publication
+new workflow/vector/graph/RAG/agent infrastructure
+```
+
+Implementation completion is not pre-accepted. A bounded real local target run remains part of first-slice acceptance after the source implementation exists.
+
+---
+
+## 4. Exact next product action
+
+Follow the implementation order from the foundation decision:
+
+```text
+I1  Target/definition/run/membership/snapshot/profile domain + SQLite persistence
+→ I2 target-scoped source eligibility and affected-work planning
+→ I3 membership qualification service/contract
+→ I4 immutable snapshot construction
+→ I5 deterministic target aggregate profile
+→ I6 browser + CLI thin workflow
+→ I7 bounded local real acceptance + reuse rerun
+```
+
+Start with **I1**. Do not implement later semantic report/subfamily responsibilities during I1 merely because they appear in the long-term Market plan.
 
 ---
 
 ## 5. Parallel portfolio / release state
-
-MIT licensing is complete and must not be treated as an unresolved owner decision.
-
-Current state:
 
 ```text
 PR0–PR8    COMPLETE / repository-side complete as recorded
@@ -212,138 +205,84 @@ PR9-D      release/CV/interview package COMPLETE
 PR9-E      owner mastery PREPARED / NOT VERIFIED
 ```
 
-Current release-state amendment:
-
-```text
-docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md
-```
-
-Remaining release work must not bypass P2.2B-B1 or authorize Market/P2.2C work.
+Portfolio work remains independent and may not silently alter semantic contracts or broaden the authorized Market slice.
 
 ---
 
-## 6. Known older present-tense wording and its current interpretation
+## 6. Precedence for older status wording
 
-The files below remain valuable controlling/historical documents, but some status sentences must be read through this overlay.
-
-### `docs/ROADMAP.md`
-
-Older present-tense wording such as Phase 1 / R0 active, heterogeneous semantic validation active, or P2.2A active is superseded for current-state interpretation.
-
-Current interpretation:
+Several controlling/historical documents intentionally retain wording that was correct at their original checkpoint. For **present-tense status only**, this reconciliation supersedes statements such as:
 
 ```text
-Phase 1 CLOSED
-P2.1 CLOSED
-P2.2A CLOSED
-current product frontier = P2.2B-B1 ta9l authority gate
+Phase 1 active
+P2.1/P2.2A not closed
+P2.2B-B1 active / ta9l P1.6 next
+Market foundation investigation blocked by B1
+Market foundation investigation not started
+license undecided
 ```
 
-Roadmap strategy/permanent rules remain controlling.
+Their durable product/design/architecture semantics remain controlling where not superseded by a later accepted decision.
 
-### `docs/IMPLEMENTATION_PLAN.md`
+In particular:
 
-Older stage-table/history wording such as `Phase 1 | Active` is not current execution truth. Later acceptance evidence already closed Phase 1.
+- `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md` is now a closed B1 plan;
+- `docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md` is an executed investigation protocol, not the current next action;
+- `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` remains the controlling long-term Market direction, but its old B1-open status wording is superseded;
+- `docs/PORTFOLIO_RELEASE_STATE_AMENDMENT_2026-09-06_MIT_LICENSE.md` supersedes older license-pending wording.
 
-Current implementation frontier is P2.2B-B1 as described above.
-
-### `docs/PRODUCT_SPECIFICATION.md`
-
-Older implementation-status passages predate later P2.1/P2.2A closure. Product purpose, functional requirements, authority model, and boundaries remain controlling; current accepted surface is read with this reconciliation, `ARCHITECTURE.md`, `AGENTS.md`, `EXECUTION_TODO.md`, and `WORKING_MEMORY.md`.
-
-### `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
-
-Its header/current-gate wording saying P2.2B is not started is superseded. The plan's durable P2.2 semantics and A→B→C→D sequencing remain controlling.
-
-Current P2.2B execution is owned by:
-
-```text
-docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
-```
-
-### `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN_AMENDMENT_2026-09-01.md`
-
-Its terminal `P2.2B decision NOT STARTED` text records the state at P2.2A acceptance time. It is historical, not the current next action. Its Work Intelligence v2 representation/authority rules remain accepted/current.
-
-### Portfolio plan/package/audit records
-
-Any older wording saying licensing is absent, undecided, or awaiting owner choice is status-only historical text superseded by the MIT release-state amendment.
-
-### `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
-
-Its requirement for explicit owner activation has already been satisfied by the recorded owner decision. The plan remains implementation-gated; after B1, the prepared foundation investigation may start directly, while source implementation still requires the explicit post-investigation PASS/AUTHORIZED decision.
+Do not mass-edit dated experiments/incidents/working memories merely because their historical next action is no longer current.
 
 ---
 
-## 7. Historical-document rule
+## 7. Current execution owner set
 
-Do **not** mass-edit dated experiments, incidents, working memories, closed phase plans, or acceptance records merely because their historical `next` action is no longer current.
-
-A historical file is not stale when:
-
-- its date/scope makes the state temporal;
-- current documentation classifies it as closed/historical;
-- it does not claim to override the live route.
-
-The correct repair is to update current routing/precedence, not falsify chronology.
-
----
-
-## 8. Current execution owner set
-
-Before the next product action, use this set:
+Before implementing the first Market slice, use:
 
 ```text
 AGENTS.md
 README.md
 product/domain/source/architecture + reasoning policy
 ROADMAP.md / IMPLEMENTATION_PLAN.md for durable semantics
-THIS reconciliation for current status
-docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md
-docs/EXECUTION_TODO.md
-docs/WORKING_MEMORY.md
-docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
-```
-
-For Market work after B1, additionally load:
-
-```text
+THIS reconciliation for present-tense status
 docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
 docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md
-docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
+docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md
+docs/EXECUTION_TODO.md
+docs/WORKING_MEMORY.md
 ```
 
----
-
-## 9. Current stop lines
-
-While B1 remains open:
-
-- do not rescan the full corpus for another responsibility pair;
-- do not create the tentative `ta9l` concept before accepted P1.6 + final correspondence review;
-- do not bulk-map responsibilities;
-- do not start P2.2C responsibility-family promotion;
-- do not start P2.2D stable archetype promotion;
-- do not start the formal Market foundation investigation;
-- do not implement Market-v2;
-- do not add personal readiness/gap/scoring/recommendation layers;
-- do not revive Blueprint as authority;
-- do not publish Work Intelligence, registry state, or future Market state without a separate publication decision.
+Load the entry protocol and six research records only when a specific implementation decision needs their detail; do not repeat the broad investigation.
 
 ---
 
-## 10. Reconciliation decision
+## 8. Current stop lines
 
-Current-state documentation should now follow one unambiguous route:
+During the authorized first Market slice:
+
+- do not reopen B1 or force another `ta9l` P1.6 matrix;
+- do not implement P2.2C/P2.2D promoted families/archetypes;
+- do not make Capability/Work mandatory Market gates;
+- do not auto-accept P1.6;
+- do not claim repost-adjusted unique demand;
+- do not add trends/emerging/forecasting;
+- do not add personal evidence/readiness/gap/scoring/recommendations;
+- do not publish Market state without a separate privacy/publication decision;
+- do not add graph/vector/RAG/autonomous-agent infrastructure without demonstrated need;
+- do not build a generic source/plugin framework before a real second approved source exists.
+
+---
+
+## 9. Current routing
 
 ```text
-historical chronology stays intact
-→ obsolete present-tense status is explicitly superseded
-→ B1 repo scan/preflight is complete
-→ ta9l local P1.6 authority gate is next
-→ B1 closes by PASS or evidence-based DEFER
-→ only then formal Market foundation investigation
-→ only after formal PASS/AUTHORIZED decision may the first Market vertical slice be implemented
+B1 CLOSED / NO-PROMOTION / DEFER
+→ Market foundation investigation PASS
+→ first vertical slice AUTHORIZED
+→ implement I1 next
+→ continue I2–I6 only within the authorized boundary
+→ run I7 bounded local real acceptance
+→ close the slice only if its implementation-specific acceptance matrix passes
 ```
 
-This file supersedes the 2026-09-05 status overlay for present-tense execution. The older reconciliation remains historical evidence of the prior checkpoint.
+This file remains a status-only overlay. It does not replace durable product/domain/source/architecture authority or rewrite historical evidence.
