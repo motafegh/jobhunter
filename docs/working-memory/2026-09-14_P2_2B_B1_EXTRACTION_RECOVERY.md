@@ -110,3 +110,26 @@ Validation after repair:
 
 Next: one normal ta9l rebuild using the repaired coverage, followed by complete
 semantic review. B1 stays open until the accepted-claim correspondence decision.
+
+## Coverage rebuild and depth boundary
+
+Coverage repair `3f88260` passed GitHub CI (run 34862271150). Rebuild attempt **100**
+failed without an artifact after the bounded retry. It now reached the formerly
+omitted qualifications, but rejected `Production experience` and `Deep understanding`
+as unrecognized depth signals. No complete-artifact semantic result is claimed.
+
+These require different treatment. Production experience is source context/prior
+exposure, not a calibrated proficiency degree; preserve it in concept/evidence with
+null depth. Deep understanding/knowledge is an explicit employer degree phrase.
+The latter was missing from the v20-local depth registry. Add that specific phrase
+shape, excluding bare `deep` so `deep learning` stays a technical subject. The
+historical base registry remains unchanged. Clarify generic non-depth error feedback
+to retain context in the concept/evidence without inventing a degree.
+
+Tests cover both explicit degree phrases, historical-registry isolation, deep
+learning as a non-depth subject, and production context as a non-depth requirement.
+This is a correctness repair for newly exposed source evidence, not a model-trial
+matrix or a reason to regenerate accepted anchors.
+
+Depth-boundary validation: Ruff PASS; full warnings-as-errors suite **552 passed**.
+The next normal rebuild reuses translation 40/source 25 and the configured E4B model.

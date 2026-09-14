@@ -81,6 +81,58 @@ def test_v20_does_not_treat_plain_knowledge_as_depth() -> None:
         )
 
 
+@pytest.mark.parametrize("degree", ["Deep understanding", "Deep knowledge"])
+def test_v20_preserves_explicit_deep_degree_without_changing_historical_registry(degree):
+    evidence = f"{degree} of retrieval and embeddings."
+    fields = {"description": evidence}
+    payload = {
+        "concept": "Retrieval and embeddings",
+        "depth_signal": degree,
+        "requirement_type": "required",
+        "concept_type": "knowledge",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "Explicit employer degree.",
+    }
+    result = AnalysisRequirementV20.model_validate(payload, context=_context(fields))
+    assert result.depth_signal == degree
+    assert result.evidence == evidence
+    with pytest.raises(ValidationError, match="explicit employer depth"):
+        HistoricalAnalysisRequirement.model_validate(payload, context=_context(fields))
+
+
+@pytest.mark.parametrize(
+    ("concept", "evidence"),
+    [
+        ("Deep learning", "Knowledge of deep learning."),
+        (
+            "Production experience with storage engines",
+            "Production experience with storage engines.",
+        ),
+    ],
+)
+def test_v20_keeps_technical_subject_and_experience_context_out_of_depth(concept, evidence):
+    payload = {
+        "concept": concept,
+        "depth_signal": None,
+        "requirement_type": "required",
+        "concept_type": "experience" if concept.startswith("Production") else "knowledge",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "Source context without an explicit proficiency degree.",
+    }
+    context = _context({"description": evidence})
+    result = AnalysisRequirementV20.model_validate(payload, context=context)
+    assert result.concept == concept
+    assert result.evidence == evidence
+    assert result.depth_signal is None
+    payload["depth_signal"] = (
+        "Production experience" if concept.startswith("Production") else "deep"
+    )
+    with pytest.raises(ValidationError, match="explicit employer depth"):
+        AnalysisRequirementV20.model_validate(payload, context=context)
+
+
 @pytest.mark.parametrize(
     ("concept", "signal", "expected"),
     [

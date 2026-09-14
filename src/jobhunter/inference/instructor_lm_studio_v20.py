@@ -77,6 +77,7 @@ _NON_DEPTH_CAPABILITY_RE = re.compile(r"^(?:ability\s+to|skill\s+in)\b", re.I)
 _DEPTH_SIGNAL_PATTERNS = {
     **_BASE_DEPTH_SIGNAL_PATTERNS,
     "sufficient_knowledge": re.compile(r"\bsufficient\s+knowledge\b", re.I),
+    "deep_understanding": re.compile(r"\bdeep\s+(?:understanding|knowledge)\b", re.I),
 }
 
 
@@ -149,7 +150,10 @@ def _validate_depth_fields_v20(
     signal_matches = _depth_matches(normalized_signal)
     if not signal_matches:
         raise ValueError(
-            "depth_signal must contain an explicit employer depth or experience-extent signal"
+            "depth_signal must contain an explicit employer depth or experience-extent signal. "
+            "A work setting or prior-exposure context alone is not a proficiency degree or "
+            "duration: use depth_signal=null for that case and retain the source-supported "
+            "context in the concept and evidence. Do not discard an explicit degree phrase."
         )
     distinct_signal_markers = {_normalize(item[2]) for item in signal_matches}
     if len(distinct_signal_markers) > 1:
