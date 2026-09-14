@@ -32,6 +32,7 @@ from jobhunter.analysis_service_v13 import (
     validate_v13_candidate_structured,
 )
 from jobhunter.analysis_store import AnalysisStore
+from jobhunter.evidence_refs import build_requirement_coverage_plan
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
@@ -65,7 +66,7 @@ _ENGLISH_SYSTEM_PROMPT_V14 = _ENGLISH_SYSTEM_PROMPT_V13 + _V14_RULES
 
 
 def residual_requirement_spans(analysis_fields: dict[str, Any]) -> list[str]:
-    """Return exact residual sentences after the final detected qualification-list item.
+    """Return exact uncovered qualification text plus the historical post-list tail.
 
     This candidate helper activates only when deterministic qualification-list decomposition is
     present. The returned text is exact source text from the same description; it is not inferred
@@ -93,17 +94,44 @@ def residual_requirement_spans(analysis_fields: dict[str, Any]) -> list[str]:
     if last_end is None:
         return []
 
+    # A decomposed coarse span can contain qualifications before and between the
+    # detected lists too. Subtract exact covered intervals instead of treating a
+    # matching item count as proof that the entire parent was accounted for.
+    uncovered: list[str] = []
+    plan = build_requirement_coverage_plan(analysis_fields)
+    for reference in decomposed_requirement_references(analysis_fields):
+        text = str(plan[reference]["text"])
+        parent_start = description.index(text)
+        parent_end = parent_start + len(text)
+        intervals: list[tuple[int, int]] = []
+        for span in spans:
+            start = description.find(span)
+            while start >= 0:
+                stop = start + len(span)
+                if start < parent_end and stop > parent_start:
+                    intervals.append(
+                        (max(start, parent_start) - parent_start,
+                         min(stop, parent_end) - parent_start)
+                    )
+                start = description.find(span, stop)
+        end = 0
+        for start, stop in sorted(intervals):
+            if start > end:
+                uncovered.append(text[end:start])
+            end = max(end, stop)
+        uncovered.append(text[end:])
+
     tail = description[last_end:]
     leading = len(tail) - len(tail.lstrip(" \t\r\n,;:-"))
     tail = tail[leading:]
-    if not tail:
-        return []
-
-    return [
-        match.group(0).strip()
-        for match in _SENTENCE_RE.finditer(tail)
-        if match.group(0).strip()
-    ][:32]
+    result: list[str] = []
+    for gap in [*uncovered, tail]:
+        gap = gap.lstrip(" \t\r\n,;:.-!?").rstrip()
+        for match in _SENTENCE_RE.finditer(gap):
+            sentence = match.group(0).strip()
+            if re.search(r"\w", sentence) and sentence not in result:
+                result.append(sentence)
+    return result[:32]
 
 
 def _normalize(value: str) -> str:

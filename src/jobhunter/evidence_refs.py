@@ -16,6 +16,7 @@ _SECTION_HEADING_RE = re.compile(
     r"what\s+you(?:'|’)ll\s+do|what\s+we(?:'|’)re\s+looking\s+for|"
     r"technical\s+skill\s+stack|key\s+responsibilities|"
     r"responsibilities(?=\s*(?::|-|include\b))|"
+    r"(?-i:Responsibilities(?=\s+[A-Z][a-z]))|"
     r"requirements(?=\s*(?::|-))|"
     r"qualifications(?=\s*(?::|-|include\b))|"
     r"specialized\s+competencies|skills(?=\s*(?::|-)|\s+in\b))"

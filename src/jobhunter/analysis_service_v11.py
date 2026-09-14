@@ -107,10 +107,20 @@ def qualification_list_spans(fields: dict[str, Any]) -> list[str]:
         clauses = [part.strip() for part in sentence_body.split(",") if part.strip()]
         if len(clauses) < 2 or _QUALIFICATION_START_RE.search(clauses[0]) is None:
             continue
+        items: list[str] = []
         for index, clause in enumerate(clauses):
             if index > 0 and not _looks_like_list_continuation(clause):
                 break
-            result.append(clause)
+            items.append(clause)
+        if any(re.search(r"\bor\b", item, re.I) for item in items):
+            # Disjunction is source authority: decomposition must not turn alternatives
+            # into independently mandatory requirements. Keep the exact list together.
+            end = 0
+            for item in items:
+                end = sentence_body.index(item, end) + len(item)
+            result.append(sentence_body[:end])
+        else:
+            result.extend(items)
     return result
 
 
