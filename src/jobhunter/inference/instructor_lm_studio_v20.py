@@ -106,7 +106,11 @@ def _validate_depth_fields_v20(
         if pattern.search(concept):
             raise ValueError(
                 f"Requirement concept contains {label} depth wording; keep concept depth-neutral "
-                "and copy the exact source depth phrase into depth_signal."
+                "and copy the exact source depth phrase into depth_signal. "
+                "That excerpt must contain only one explicit depth marker applying to this "
+                "concept, not a whole sentence containing multiple markers. Preserve the full "
+                "source wording in evidence; do not combine markers or borrow another subject's "
+                "depth."
             )
 
     normalized_concept = _normalize(concept)
@@ -150,7 +154,10 @@ def _validate_depth_fields_v20(
     distinct_signal_markers = {_normalize(item[2]) for item in signal_matches}
     if len(distinct_signal_markers) > 1:
         raise ValueError(
-            "depth_signal must identify one employer depth level for one requirement concept"
+            "depth_signal must identify one employer depth level for one requirement concept. "
+            "Use an exact source excerpt containing only one explicit depth marker applying "
+            "to this concept. Preserve the full source wording in evidence; do not combine "
+            "markers or borrow another subject's depth."
         )
     return signal_matches[0][2]
 

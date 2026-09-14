@@ -155,6 +155,43 @@ def test_v20_rejects_depth_guessing_for_multi_level_evidence() -> None:
         )
 
 
+@pytest.mark.parametrize(
+    ("concept", "signal", "error"),
+    [
+        ("Expertise with SQL and relational database", "Strong", "concept contains expert"),
+        (
+            "SQL and relational database",
+            "Strong SQL and relational database expertise.",
+            "one employer depth level",
+        ),
+        ("SQL and relational database", "Strong", None),
+        ("SQL and relational database", "expertise", None),
+    ],
+)
+def test_v20_depth_retry_preserves_validation_boundary(concept, signal, error) -> None:
+    evidence = "Strong SQL and relational database expertise."
+    payload = {
+        "concept": concept,
+        "depth_signal": signal,
+        "requirement_type": "required",
+        "concept_type": "knowledge",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "Direct employer qualification.",
+    }
+    context = _context({"description": evidence})
+    if error:
+        with pytest.raises(ValidationError, match=error) as captured:
+            AnalysisRequirementV20.model_validate(payload, context=context)
+        assert "only one explicit depth marker" in str(captured.value)
+        return
+
+    result = AnalysisRequirementV20.model_validate(payload, context=context)
+    assert result.depth_signal == signal
+    assert result.concept == concept
+    assert result.evidence == evidence
+
+
 def test_v20_clears_exact_effective_application_phrase_when_evidence_has_no_depth() -> None:
     evidence = (
         "Ability to effectively use (AI) to increase the quality and speed of software "
