@@ -1,7 +1,27 @@
 # P2.2B-B1 focused extraction recovery
 
 **Date:** 2026-09-14
-**Status:** ARTIFACT 47 REJECTED / DETERMINISTIC COVERAGE REPAIR VERIFIED / B1 OPEN
+**Status:** B1 CLOSED — NO-PROMOTION / DEFER; VERIFIED REPAIRS RETAINED
+
+## Final decision
+
+**B1: NO-PROMOTION / DEFER.** The selected evidence did not yield an acceptable
+second P1.6 artifact within this bounded recovery. Artifact 47 was materially
+incomplete and was rejected; final rebuild attempt 101 exhausted its existing
+validation retry and created no artifact. Create no canonical concept or mappings.
+
+This is the focused plan's evidence-based no-promotion disposition, not semantic
+rejection of the proposed cross-job identity or evidence that ta9l lacks duties.
+Five duties are explicit in the unchanged source and now enter the coverage ledger.
+No second job search, model matrix, or weakened acceptance is authorized by closure.
+
+The already-approved next step is the formal Market foundation investigation under
+`docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md`, informed by this
+failure and the research consolidation ledger. Market implementation still requires
+the explicit post-investigation PASS / FIRST VERTICAL SLICE AUTHORIZED decision.
+P2.2C/P2.2D promoted taxonomy and personal intelligence are not authorized by closure.
+
+The sections below preserve the progressive investigation chronology.
 
 The owner authorized focused recovery, progressive recording, and publication of
 repository-safe changes. The preceding checkpoint and English projection 40 were
@@ -133,3 +153,36 @@ matrix or a reason to regenerate accepted anchors.
 
 Depth-boundary validation: Ruff PASS; full warnings-as-errors suite **552 passed**.
 The next normal rebuild reuses translation 40/source 25 and the configured E4B model.
+
+## Final rebuild and retained evidence
+
+Source revision `9364dc4` produced attempt **101**, which failed without an artifact.
+The final bounded correction still assigned a non-degree production-experience
+phrase to depth and left expert wording in a normalized concept. The new explicit
+deep-understanding marker was no longer among the final validation errors. This
+is a bounded model-output limitation after the demonstrated deterministic defects
+were repaired, not grounds for another source-specific prompt patch.
+
+| Attempt | Source revision | Result | Durable evidence |
+| --- | --- | --- | --- |
+| 98 | d45313b | Generation failed | Local failed attempt; no artifact |
+| 99 | bf1cd99 | Generated, then semantically rejected | Artifact 47 preserved in rejected archive 6 |
+| 100 | 3f88260 | Generation failed | Local failed attempt; no artifact |
+| 101 | 9364dc4 | Generation failed | Local failed attempt; no artifact |
+
+Every attempt uses source 25 and projection 40. The original artifact's raw protocol
+and all available failure details remain local. No ta9l artifact is accepted/current;
+there is no accepted responsibility index to report and no final normalized
+correspondence or registry idempotency/browser-promotion acceptance to claim.
+
+Retained engineering outcome: complete source coverage survives partial list
+decomposition, explicit alternatives remain alternatives, and explicit degree is
+distinguished from technical subject/experience context. Ruff and all 552 tests
+pass with warnings as errors; the five accepted anchors remain intact. These fixes
+remove silent input loss even though the local model did not complete this candidate.
+
+Registry stays at four concepts, one alias, six decisions. Public corpus stays at
+353 known jobs, 43 fetched details, 21 current English projections, five accepted
+P1.6, five Capability artifacts. Registry/Work Intelligence/raw protocol/SQLite are
+not published. Git publication is limited to reviewed source/test/documentation
+changes and the approved English projection.

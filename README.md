@@ -111,7 +111,7 @@ Current committed baseline:
 | --- | ---: |
 | Known/discovered jobs | 353 |
 | Fetched/parsed job details | 43 |
-| Current English projections | 20 |
+| Current English projections | 21 |
 | Accepted English P1.6 artifacts | 5 |
 | Accepted Capability artifacts | 5 |
 
@@ -237,7 +237,7 @@ Accepted/current foundation:
 Phase 1                         CLOSED
 P2.1 Canonical Registry        CLOSED
 P2.2A Job Work Intelligence    ACCEPTED / CLOSED
-P2.2B selective responsibility promotion pilot    IN PROGRESS
+P2.2B first responsibility promotion pilot       CLOSED / NO-PROMOTION / DEFER
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.

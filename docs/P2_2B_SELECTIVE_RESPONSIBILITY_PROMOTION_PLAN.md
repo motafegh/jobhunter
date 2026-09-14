@@ -1,21 +1,22 @@
 # P2.2B Selective Responsibility Promotion Plan
 
-**Status:** APPROVED / CONTROLLING FOCUSED PLAN — B1 REPO EVIDENCE SELECTED / `ta9l` LOCAL P1.6 AUTHORITY GATE / NO PROMOTION YET  
+**Status:** B1 CLOSED — NO-PROMOTION / DEFER (2026-09-14)
 **Date:** 2026-09-01  
 **Current-state reconciliation:** 2026-09-12  
 **Scope:** First bounded P2.2B responsibility-promotion increment after P2.2A closure  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
-## Local execution checkpoint — 2026-09-13
+## Final B1 disposition — 2026-09-14
 
-English projection **40** is complete and reviewed on source **25**. P1.6
-attempt **98** failed after the configured bounded validation retry; there is no
-artifact to accept/reject. **B1 remains OPEN, with no promotion.** The next decision
-is focused extraction recovery versus an explicit NO-PROMOTION/DEFER disposition.
-Do not repeat translation or treat generation failure as semantic rejection.
-The pre-local sequence below resumes only after this failure is resolved.
+**NO-PROMOTION / DEFER.** The bounded run did not obtain an acceptable second P1.6
+artifact: 47 was rejected/archived; final attempt 101 failed after bounded correction.
+No concept or mappings were created. Projection 40 and verified general engineering
+repairs are retained. This does not establish semantic incompatibility of the pair.
 
-Evidence: `docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
+Evidence: `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`. The original execution
+protocol below remains historical evidence; its pre-local next actions are complete
+or deferred. The already-approved formal Market foundation investigation is next.
+Market implementation and promoted family/archetype work remain separately gated.
 
 ## 1. Decision
 

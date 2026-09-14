@@ -1,14 +1,14 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-13\
+**Date:** 2026-09-14\
 **Active working branch:** `main`  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and the controlling focused P2.2 plans  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Current focused product plan:** `docs/P2_2B_SELECTIVE_RESPONSIBILITY_PROMOTION_PLAN.md`  
 **Future Market/role-family plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md` — owner activation GIVEN / formal investigation queued behind B1 / implementation gated  
-**Market preparation state:** research consolidated + formal investigation entry protocol prepared / formal investigation still blocked by open B1  
-**Current product gate:** P2.2B-B1 OPEN / `ta9l` ENGLISH 40 REVIEWED / P1.6 ATTEMPT 98 FAILED WITHOUT ARTIFACT / RECOVERY OR DEFER DECISION NEXT / NO PROMOTION\
+**Market preparation state:** research consolidated / formal foundation investigation READY after B1 defer / implementation gated\
+**Current product gate:** P2.2B-B1 CLOSED — NO-PROMOTION / DEFER / FORMAL MARKET FOUNDATION INVESTIGATION NEXT / IMPLEMENTATION GATED\
 **Parallel portfolio gate:** PR9 repository-side package complete / MIT license complete / GitHub metadata + real screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -122,7 +122,7 @@ Acceptance record:
 
 `docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
 
-### D2 — P2.2B-B1 selective responsibility promotion — IN PROGRESS / `ta9l` P1.6 GATE
+### D2 — P2.2B-B1 — CLOSED / NO-PROMOTION / DEFER
 
 Controlling focused plan:
 
@@ -167,18 +167,18 @@ Local-runtime preflight record:
 - [x] verify committed `ta9l` source detail/version 25 and semantic identity; confirm no committed current English projection exists.
 - [x] verify exact CLI path for explicit translation → English P1.6 → semantic review and record the local execution packet.
 
-#### `ta9l` P1.6 authority gate — NEXT / LOCAL RUNTIME REQUIRED
+#### `ta9l` P1.6 authority gate — bounded run ended; history below
 
 - [x] run local provider/runtime preflight against the real owner SQLite/configuration; explicitly load configured models after discovering that visible does not mean loaded.
 - [x] create and inspect current English projection 40 for `ta9l`, source detail 25; native description and dependency equality pass.
-- [~] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`: attempt 98 failed after its bounded validation retry, with no artifact. Resolve focused recovery versus explicit B1 defer before further generation.
+- [~] generate English P1.6 using `job-analysis-english-v20 / job-analysis-v5`: attempt 98 failed after its bounded validation retry, with no artifact. Recovery authorized; artifact 47 rejected, attempts 98/100 failed, and repaired rebuild is in progress. See the September 14 recovery record.
 - [ ] inspect the complete current candidate with `jobhunter jobs review-analysis ta9l status`.
 - [ ] semantically review the `ta9l` P1.6 artifact for acceptance or rejection.
 - [ ] report exact accepted artifact ID, responsibility index, statement, evidence, and semantic-review state for the evaluation/testing/observability duty if accepted.
 - [ ] if the P1.6 claim materially changes/splits the responsibility shape, re-evaluate correspondence before mutation.
 - [ ] if it remains aligned, perform final two-P1.6-claim correspondence review before canonical mutation.
 
-#### Promotion pilot — ONLY AFTER `ta9l` P1.6 ACCEPTANCE + FINAL REVIEW
+#### Promotion pilot — NOT EXECUTED; B1 closed without eligible inputs
 
 - [ ] create/reuse exactly one reviewed responsibility concept.
 - [ ] map exactly the two approved accepted/current P1.6 responsibility claims.
@@ -187,7 +187,7 @@ Local-runtime preflight record:
 - [ ] inspect same authority/provenance in browser.
 - [ ] verify stale/current behavior remains intact.
 - [ ] verify no registry/P2.2 public-corpus publication occurred.
-- [ ] decide B1 PASS or evidence-based NO-PROMOTION / DEFER.
+- [x] decide B1 NO-PROMOTION / DEFER: artifact 47 rejected; final attempt 101 failed without a valid artifact. Promotion-specific checks above are not applicable; no mutation occurred.
 
 ### D3 — P2.2C responsibility families — BLOCKED
 
@@ -288,37 +288,21 @@ Do not continue generic portfolio polishing after the remaining concrete blocker
 
 ## Exact next actions
 
-### Product track
+### Product and Market track
 
-Current checkpoint: `docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
-Translation is complete. P1.6 generation failed without an artifact; decide focused
-recovery or explicit B1 NO-PROMOTION/DEFER. B1 is still open. The remaining sequence
-below applies after recovery and must not cause successful translation to rerun.
+B1 is closed as NO-PROMOTION / DEFER. Final evidence: `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`.
+Do not repeat candidate selection, translation, or extraction to force a promotion.
 
 ```text
-local runtime preflight on real owner state
-→ ta9l English projection
-→ ta9l P1.6 v20 generation + complete semantic review
-→ accept or reject with explicit reason
-→ if accepted, report exact responsibility shape
-→ final correspondence review against tG9K P1.6 36 responsibility[5]
-→ only then possible canonical mutation
-→ B1 closure decision
+load final B1 decision
+→ load Market research consolidation ledger
+→ execute MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md (Q1–Q12)
+→ write a dated foundation decision
+→ implement only after explicit PASS / FIRST VERTICAL SLICE AUTHORIZED
 ```
 
-Do not accept a second new job or manufacture a promotion if `ta9l` does not preserve the selected responsibility shape.
-
-### Market / role-family future track
-
-```text
-owner activation GIVEN
-→ research consolidation + entry protocol PREPARED
-→ no formal Market investigation or implementation while B1 remains open
-→ immediately after B1 closure, reconcile final B1 outcome
-→ execute MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md
-→ record one dated Q1-Q12 foundation decision
-→ only if that record says PASS / FIRST VERTICAL SLICE AUTHORIZED, begin bounded implementation
-```
+The formal investigation is ready; implementation remains gated. P2.2C/P2.2D
+promoted taxonomy is not authorized by this closure.
 
 ### Portfolio/release track
 

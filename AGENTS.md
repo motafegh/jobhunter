@@ -137,7 +137,7 @@ The public corpus is operationally closed and remotely available. The accepted p
 ```text
 known/discovered Jobinja jobs: 353
 fetched/parsed detail jobs:      43
-current English projections:     20
+current English projections:     21
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
@@ -197,6 +197,15 @@ docs/experiments/2026-08-12_BLUEPRINT_V6_12B_REVIEW_AND_PHASE1_DEFER_DECISION.md
 This does **not** mean Phase-2 interpretation in general is prohibited. New bounded analytical interpretation may be designed under the reasoning policy without promoting Blueprint or treating model prose as employer truth.
 
 ## 5. Current exact next-work rule
+
+**2026-09-14 current decision:** B1 is CLOSED as NO-PROMOTION / DEFER. Projection
+40/source 25 is reviewed and published; artifact 47 is rejected/archived and final
+attempt 101 failed without an artifact. No concept or mappings were created.
+Read `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md` and the updated current-state
+reconciliation before older open-B1/pre-local wording below. The formal Market
+foundation investigation is now the next approved action, without another activation
+ceremony. Market implementation and promoted P2.2C/P2.2D taxonomy remain gated.
+Do not repeat translation, selection, or extraction to force B1 promotion.
 
 Phase 1, P2.1, and P2.2A are closed. The exact current product gate is P2.2B-B1 under:
 

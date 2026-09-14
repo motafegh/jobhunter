@@ -6,20 +6,25 @@
 **Scope:** Present-tense project state, exact active/queued gates, and status precedence before any further machine-local execution.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
 
-## Local execution update — 2026-09-13
+## Current decision update — 2026-09-14
 
-This update supersedes the pre-local status below where it describes missing
-`ta9l` English projection or generation as unattempted. English projection **40**
-on source detail **25** is complete and reviewed. P1.6 attempt **98** failed after
-its bounded validation retry and created no artifact; semantic acceptance/rejection
-and final correspondence review therefore remain unavailable. **B1 stays OPEN**.
+**B1 CLOSED: NO-PROMOTION / DEFER.** This update supersedes open-B1 and pre-local
+status below. Projection 40/source 25 is reviewed and published. Artifact 47 was
+rejected for material coverage loss; the repaired final rebuild (attempt 101)
+exhausted its bounded retry without an artifact. No eligible second accepted claim
+was obtained and no concept/mappings were created. General coverage/depth repairs
+passed 552 tests. See `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md` for exact evidence and limits.
 
-Current decision: focused extraction recovery versus an explicit evidence-based
-B1 NO-PROMOTION/DEFER decision. No closure or Market activation is implied by the
-generation failure. See
-`docs/working-memory/2026-09-13_P2_2B_B1_TA9L_LOCAL_GENERATION_CHECKPOINT.md`.
-The local corpus now has 21 current English v2 projections; the last published
-20-projection baseline has not been republished. Registry state is unchanged.
+**Next:** the already-approved formal Market foundation investigation may start
+using the prepared entry plan and consolidation ledger. No second activation is
+required. Market implementation still requires the explicit investigation PASS /
+FIRST VERTICAL SLICE AUTHORIZED decision. Promoted P2.2C/P2.2D taxonomy and personal
+intelligence remain unauthorized. Do not interpret defer as semantic incompatibility
+of the proposed pair or permission for another candidate/model matrix.
+
+Published corpus counts are 353 / 43 / 21 / 5 / 5. The five accepted anchors and
+private registry are unchanged. Older routing below records the pre-local gate and
+is superseded by this update for current status only.
 
 ## 1. Purpose
 
