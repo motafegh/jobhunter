@@ -29,6 +29,8 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
 
+The next authorized product increment is the first **target-scoped Market / Role-Family Intelligence vertical slice**. Its foundation investigation is complete; implementation begins with target/definition/run/membership/snapshot/profile domain and SQLite persistence. That target-scoped slice is **authorized but not yet implemented/accepted**.
+
 ## Why the engineering is non-trivial
 
 The central design problem is not "call an LLM on a job description." It is deciding **what may become authoritative, what remains interpretation, and how every important claim stays recoverable to evidence**.
@@ -135,7 +137,7 @@ python -m json.tool corpus/jobs/t4qV/capability.json
 
 For a guided two-case walkthrough—including lineage checks and a sparse listing where JobHunter deliberately keeps accepted responsibilities empty—see [`docs/demo/README.md`](docs/demo/README.md).
 
-The corpus intentionally excludes SQLite files, raw HTML evidence, machine-local paths, raw model protocol history, prompts, secrets, logs, local configuration, and future personal/private evidence.
+The corpus intentionally excludes SQLite files, raw HTML evidence, machine-local paths, raw model protocol history, prompts, secrets, logs, local configuration, Market runtime state, and future personal/private evidence.
 
 ## Quick start
 
@@ -231,13 +233,16 @@ The architecture deliberately avoids microservices, Kubernetes, a separate SPA, 
 
 ## Current maturity
 
-Accepted/current foundation:
+Accepted/current foundation and active frontier:
 
 ```text
-Phase 1                         CLOSED
-P2.1 Canonical Registry        CLOSED
-P2.2A Job Work Intelligence    ACCEPTED / CLOSED
-P2.2B first responsibility promotion pilot       CLOSED / NO-PROMOTION / DEFER
+Phase 1                                  CLOSED
+P2.1 Canonical Registry                 CLOSED
+P2.2A Job Work Intelligence             ACCEPTED / CLOSED
+P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
+Market foundation investigation         PASS / COMPLETE
+Market first vertical slice             AUTHORIZED / NOT YET IMPLEMENTED
+Current exact increment                 I1 DOMAIN + SQLITE PERSISTENCE
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -245,6 +250,8 @@ Five heterogeneous accepted P1.6 → Capability chains currently serve as semant
 JobHunter does **not** currently claim:
 
 - semantic acceptance across every discovered job;
+- that the target-scoped Market first slice is already implemented or accepted;
+- repost/new-ID-adjusted `unique demand` statistics;
 - a complete canonical labor-market taxonomy;
 - arbitrary-web ingestion;
 - reviewed personal capability/gap scoring;
@@ -266,7 +273,7 @@ scripts/              bounded audits and historical/verification utilities
 .github/workflows/    CI quality gates
 ```
 
-Historical/versioned semantic implementations are currently retained for reproducibility and compatibility. They are not all current runtime paths; their eventual disposition is being handled conservatively rather than by mass deletion.
+Historical/versioned semantic implementations are retained for reproducibility and compatibility. They are not all current runtime paths; disposition is handled conservatively rather than by mass deletion.
 
 ## Documentation
 
@@ -274,10 +281,13 @@ Useful entry points:
 
 - [`docs/PRODUCT_SPECIFICATION.md`](docs/PRODUCT_SPECIFICATION.md) — product purpose, current capabilities, outputs, and boundaries;
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — core architecture, authority, persistence, and runtime design;
-- [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md) — fresh-clone development setup and optional local services;
 - [`docs/DOMAIN_AND_ANALYSIS_MODEL.md`](docs/DOMAIN_AND_ANALYSIS_MODEL.md) — domain/analysis semantics;
 - [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
+- [`docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`](docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay;
+- [`docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — controlling Market plan and authorized first slice;
+- [`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal foundation PASS/authorization;
+- [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md) — fresh-clone development setup and optional local services;
 - [`docs/demo/README.md`](docs/demo/README.md) — guided reproducible public-corpus demo using real accepted artifacts;
 - [`corpus/README.md`](corpus/README.md) — public corpus contract and usage;
 - [`review-snapshots/README.md`](review-snapshots/README.md) — curated semantic-review evidence;
@@ -296,7 +306,7 @@ pytest
 pytest -W error
 ```
 
-CI also smoke-checks the installed public entrypoints and offline public/demo paths so package installation can succeed while onboarding commands are broken only with a visible failure.
+CI also smoke-checks installed public entrypoints and offline public/demo paths so packaging/onboarding breakage is visible.
 
 Beyond ordinary tests, the project has regression coverage around source parsing, translation integrity, P1.6 factual contracts, semantic review, Capability reconciliation, lifecycle/source truth, public-corpus projection, Canonical Registry behavior, Work Intelligence, CLI behavior, and browser workflows.
 
@@ -318,7 +328,7 @@ MARKET
 ↺
 ```
 
-Current development is still building the reviewed market/work/canonical substrate needed before personal scoring or recommendation layers can be trusted.
+Current development is now implementing the first target-scoped Market substrate while keeping semantic role-subfamily synthesis, longitudinal trend claims, and personal scoring separately gated.
 
 ## License
 
