@@ -1,37 +1,72 @@
 # JobHunter Market and Role-Family Intelligence Plan
 
-**Status:** OWNER-APPROVED PRODUCT DIRECTION / CONTROLLING DESIGN-AND-INVESTIGATION PLAN / IMPLEMENTATION GATED  
-**Date:** 2026-09-06  
+**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / FIRST VERTICAL SLICE AUTHORIZED / I1 NEXT  
+**Original date:** 2026-09-06  
+**Last reconciled:** 2026-09-14  
 **Branch:** `main`  
-**Scope:** Target-scoped market refresh → qualified evidence corpus → aggregate market/role-family intelligence → versioned report/history → later reviewed personal comparison  
-**Current implementation gate:** P2.2B-B1 remains the active product frontier. This plan records and controls the future Market/role-family responsibility but does **not** authorize Market-v2 implementation while that gate remains open.
+**Scope:** Target-scoped market refresh → qualified evidence corpus → deterministic aggregate intelligence → later bounded semantic role-family synthesis/history → later reviewed personal comparison
 
-## 1. Purpose
+## 1. Current execution decision
 
-JobHunter must let the user ask for a current view of a target job market and receive **one evidence-backed aggregate intelligence report across the relevant postings**, rather than reading or receiving one report per vacancy.
+The former P2.2B-B1 gate is closed as **NO-PROMOTION / DEFER**. The formal Market foundation investigation has been executed and passed.
 
-A representative user intent is:
+Final foundation decision:
+
+`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
+
+Research consolidation:
+
+`docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`
+
+Decision:
 
 ```text
-Update the market for AI Security / ML Security roles in Germany,
-process the relevant current job advertisements,
-and show me what this market actually asks people to know and do.
+FOUNDATION INVESTIGATION: PASS
+FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-The system should then perform a bounded, inspectable workflow that:
+Current implementation order:
 
-1. defines the target market slice;
-2. updates/discovers relevant source postings within approved source policy;
-3. fetches/refreshes the required source details;
-4. reuses or builds current derived artifacts as needed;
-5. determines which postings genuinely belong to the requested market slice;
-6. records a reproducible qualified corpus/snapshot;
-7. aggregates requirements, responsibilities, skills, tools, practices, experience and other useful dimensions across that corpus;
-8. synthesizes recurring work and candidate role-family/subfamily patterns without presenting inference as employer fact;
-9. produces one useful **Role-Family Intelligence Report** with evidence scope, counts, warnings and drill-down provenance;
-10. preserves versioned snapshots so later runs can show real market change rather than only overwrite the latest answer.
+```text
+I1  domain models + SQLite persistence          ← NEXT
+I2  target-scoped source eligibility / affected-work planning
+I3  membership qualification
+I4  immutable snapshot construction
+I5  deterministic aggregate profile
+I6  browser + CLI thin workflow
+I7  bounded local real acceptance + reuse rerun
+```
 
-The capability directly advances JobHunter's existing product purpose:
+This plan now controls both the long-term Market direction and the authorized first implementation slice. Implementation completion is **not** pre-accepted.
+
+---
+
+## 2. Product purpose
+
+JobHunter must let the user ask for a current view of a target job market and receive **one evidence-backed aggregate intelligence view across the relevant postings**, rather than manually reading or receiving one report per vacancy.
+
+Representative intent:
+
+```text
+Update the market for AI Security / ML Security roles,
+process the relevant current advertisements,
+and show what this market actually asks people to know and do.
+```
+
+The mature capability should eventually:
+
+1. define/version the target market;
+2. discover/refresh relevant approved-source postings;
+3. reuse/build required current derived artifacts;
+4. qualify which postings genuinely belong;
+5. freeze a reproducible qualified corpus snapshot;
+6. aggregate requirements, responsibilities, tools, knowledge, practices, experience and context;
+7. optionally synthesize bounded candidate work/role subfamilies without presenting inference as employer fact;
+8. render one Role-Family Intelligence Report;
+9. preserve comparable versioned history;
+10. later compare objective Market evidence with reviewed personal evidence.
+
+Long-term product chain:
 
 ```text
 MARKET
@@ -41,11 +76,11 @@ MARKET
 → ACTION
 ```
 
-Job acquisition remains an input subsystem. The product value is the trustworthy synthesis of what a target market is asking for.
+Job acquisition is an input subsystem. The value is trustworthy synthesis.
 
 ---
 
-## 2. Authority and relationship to current work
+## 3. Authority model
 
 This plan is subordinate to:
 
@@ -60,271 +95,165 @@ docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/ROADMAP.md
 docs/IMPLEMENTATION_PLAN.md
         ↓
-current active focused product plan
+docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md
+        ↓
+this plan + current foundation decision
 ```
 
-Current exact product gate remains:
-
-```text
-P2.2B-B1 selective responsibility promotion
-→ ta9l current English projection / P1.6 acceptance
-→ final correspondence decision
-→ possible one-concept/two-mapping pilot
-→ B1 closure decision
-```
-
-Therefore:
-
-- recording this plan is authorized now;
-- repository orientation and plan-level architectural analysis are authorized now;
-- **Market-v2 implementation is not started by this document**;
-- formal implementation investigation/experiments begin only after the current P2.2B-B1 gate is closed and the owner explicitly activates this plan;
-- this plan must be reconciled against whatever P2.2B/P2.2C evidence exists at activation time rather than assuming today's future dependencies remain unchanged.
-
-The plan should not force P2.2C responsibility families or P2.2D stable role archetypes to exist before useful market interpretation can be shown. Candidate analytical groupings are allowed under the reasoning policy when clearly labeled and evidence-qualified; reusable promoted taxonomy has a stronger gate.
-
----
-
-## 3. Product outcome and naming
-
-The primary user-facing artifact should be called a:
-
-**Role-Family Intelligence Report**
-
-The same durable product responsibility may also be described generically as a **Market Brief** or **Target Role Profile**, but repository contracts should use one canonical name after the implementation investigation finalizes terminology.
-
-The report is **one aggregate output for one target-market definition and one evidence snapshot**. Individual job pages remain drill-down evidence and are not the main report unit.
-
-Example high-level output:
-
-```text
-AI / ML Security — Germany
-Role-Family Intelligence Report
-Generated: <timestamp>
-
-Target corpus
-- discovered candidates: ...
-- fetched/current source jobs: ...
-- eligible relevant jobs: ...
-- analyzed jobs: ...
-- distinct employers: ...
-- duplicate/repost adjustments: ...
-- uncertain/excluded jobs: ...
-- important sampling/concentration warnings: ...
-
-Requirements
-- Python: 44 / 63 postings (70%)
-  required: 31 | preferred: 8 | contextual: 5
-- Cloud: ...
-- Kubernetes: ...
-
-Responsibilities
-- security automation / engineering: ...
-- AI/ML evaluation and monitoring: ...
-- threat/vulnerability analysis: ...
-
-Candidate role subfamilies
-- AI/ML platform security
-- security automation / detection engineering
-- adversarial testing / AI assurance
-
-Experience / context
-...
-
-Evidence and limitations
-...
-```
-
-All example numbers and labels above are illustrative only. The implementation must calculate numeric aggregates deterministically from qualified stored evidence.
-
----
-
-## 4. Permanent authority model for this capability
-
-The report must preserve JobHunter's four epistemic levels:
+Preserve JobHunter's four epistemic levels:
 
 ```text
 SOURCE FACT
 exact employer/source evidence
 
 NORMALIZED CORRESPONDENCE
-reviewed/deterministic concept correspondence while preserving source wording
+reviewed/deterministic mapping while preserving source wording
 
 ANALYTICAL INTERPRETATION
-candidate role-family/work/responsibility synthesis with evidence and uncertainty
+candidate relevance/work/role-family synthesis with evidence and uncertainty
 
 RECOMMENDATION / DECISION SYNTHESIS
-later Market → You comparison and personal action guidance
+later Market → You comparison/action guidance
 ```
 
-### 4.1 Deterministic responsibilities
+### Deterministic responsibilities
 
 Keep deterministic where the problem is deterministic:
 
-- target-definition identity/version;
+- target/definition identity and versioning;
 - run/snapshot identity;
-- source/job/source-version membership;
+- exact source/source-version membership dependencies;
 - current/stale dependency checks;
 - exact counts and denominators;
 - requirement-strength counts;
-- distinct-employer counts;
-- duplicate/repost adjustments once their rule is approved;
-- sample/concentration calculations;
-- artifact currentness and lineage;
-- historical snapshot comparison inputs;
-- source drill-down links;
-- persistence/reuse/idempotency rules.
+- distinct-employer counts/concentration;
+- approved duplicate adjustments if/when a future rule exists;
+- sample/coverage warnings;
+- persistence/reuse/idempotency/history;
+- evidence drill-down links.
 
-### 4.2 Semantic/model responsibilities
+### Semantic responsibilities
 
-Semantic reasoning may be used for tasks that actually require interpretation:
+Semantic/model reasoning may be used for:
 
-- target-role relevance qualification when deterministic filters are insufficient;
-- candidate responsibility/work clustering;
-- candidate role-subfamily interpretation;
-- comparative narrative synthesis;
-- identifying meaningful combinations or unusual patterns;
-- later explaining changes between snapshots.
+- target-role relevance when deterministic filters are insufficient;
+- later candidate responsibility/work grouping;
+- later candidate role-subfamily interpretation;
+- later bounded narrative/comparative synthesis.
 
-Model output must not fabricate counts, silently create canonical concepts, silently strengthen employer claims, or become the only record of corpus membership/evidence.
+Models must not fabricate counts, silently create canonical concepts, strengthen employer claims, or become the only record of corpus membership/evidence.
 
-### 4.3 Promotion boundary
+### Promotion boundary
 
-Candidate market interpretation may be useful without canonical promotion.
+Candidate Market interpretation may be useful without canonical promotion.
 
-However, stronger review is required before a concept becomes reusable stable authority such as:
-
-- canonical responsibility family;
-- stable role archetype;
-- canonical cross-run market taxonomy;
-- reusable capability relationship;
-- durable personal gap/readiness decision input with high downstream impact.
+Stable reusable responsibility families, role archetypes, cross-run taxonomy, capability relationships, or high-impact personal decisions require their stronger review/promotion boundary.
 
 ---
 
-## 5. Intended end-to-end user workflow
+## 4. Permanent target-market distinction
 
-The mature normal browser workflow should be approximately:
+A target market must separate:
 
 ```text
-1. Define/select target market
-        ↓
-2. Preview bounded acquisition/search scope
-        ↓
-3. Run market refresh
-        ↓
-4. Discover + refresh source jobs
-        ↓
-5. Reuse/process missing current English/P1.6 dependencies
-        ↓
-6. Qualify target-market membership
-        ↓
-7. Freeze qualified market snapshot
-        ↓
-8. Build deterministic aggregate profile
-        ↓
-9. Build bounded candidate work/role-family synthesis
-        ↓
-10. Render Role-Family Intelligence Report
-        ↓
-11. Save versioned report/snapshot
-        ↓
-12. On later runs, compare like-for-like snapshots when valid
+ACQUISITION ENVELOPE
+How do we obtain useful candidate recall?
+
+MEMBERSHIP INTENT
+What role/work actually belongs?
 ```
 
-The CLI should expose the same services for advanced use, automation, inspection and debugging. The browser remains the normal repeated-use surface.
-
-Partial-success semantics apply throughout. One failed source fetch, translation, P1.6 operation or semantic qualification must not erase successful durable work or turn the entire market run into a false generic success/failure.
-
----
-
-## 6. Target-market definition
-
-A durable target market must be more precise than a raw keyword string but must not become a rigid predefined career taxonomy.
-
-The implementation investigation should determine the smallest useful `TargetMarketDefinition` contract. Candidate dimensions include:
-
-- stable target ID and user-facing name;
-- search phrases / configured search profile or pack references;
-- include terms or role hints;
-- explicit exclude terms where useful;
-- geography/country/region/city scope;
-- remote/hybrid/on-site constraints when relevant;
-- seniority/experience scope;
-- employment type;
-- date/freshness window;
-- enabled approved source(s);
-- bounded request/page/detail budgets;
-- optional direct approved job/search URLs;
-- definition version / semantic fingerprint.
-
-Important rule:
+Permanent rule:
 
 ```text
 search vocabulary
-!=
-target-market relevance truth
-!=
-canonical role taxonomy
+!= target-market relevance truth
+!= canonical role taxonomy
 ```
 
-Search terms exist to obtain useful recall. A posting discovered by an AI-security phrase is not automatically an AI-security role. Conversely, a relevant role may use a different title and still belong to the requested market based on its work and requirements.
+Search terms are recall machinery. A job found through an AI-security term is not automatically an AI-security role. A relevant role may use a different title and still belong because of its actual work/requirements.
 
-The first implementation should remain Jobinja-centered. Do not build a generic source/plugin framework before a real approved second source demonstrates the abstraction need.
+External standards such as ESCO/O*NET may later support optional crosswalk/validation, but they do not silently decide JobHunter membership.
 
 ---
 
-## 7. Formal investigation required before implementation
+# 5. Authorized first vertical slice
 
-After the current P2.2B-B1 gate closes and this plan is explicitly activated, perform one bounded architecture/product investigation before writing new Market-v2 source code.
+The first slice deliberately stops before semantic report/subfamily synthesis.
 
-The investigation must answer the following questions and produce a dated working-memory decision record.
-
-### 7.1 Acquisition and orchestration reuse
-
-Inspect at minimum:
+Authorized responsibility:
 
 ```text
-src/jobhunter/search_registry.py
-src/jobhunter/jobinja_discovery.py
-src/jobhunter/jobinja_sync.py
-src/jobhunter/jobinja_batch.py
-src/jobhunter/phase1_run.py
-src/jobhunter/config.py
-browser operation wiring
-CLI entrypoints
+TargetMarket
++ immutable TargetMarketDefinitionVersion
++ MarketResearchRun
++ MarketJobMembership
++ immutable MarketCorpusSnapshot + members
++ deterministic MarketAggregateProfile
++ thin browser/CLI workflow
 ```
 
-Determine:
+## 5.1 `TargetMarket`
 
-- whether existing search profiles/packs can represent target-market acquisition cleanly;
-- whether a new target-definition domain object is needed;
-- how a target run should reuse existing discovery provenance instead of creating parallel source identities;
-- how to update only missing/stale eligible detail data rather than refetch everything;
-- how to expose request budgets and partial-success state to the user.
+Stable user-recognizable target identity.
 
-### 7.2 Corpus freshness and membership boundary
+Minimum responsibility:
 
-Define exactly which source jobs may enter one market snapshot.
+```text
+stable target ID/slug
+name
+short description/intent
+created_at
+ordinary active/archive lifecycle only if needed
+```
 
-Investigate:
+Do not mutate target meaning directly on this stable row.
 
-- active/current source state;
-- stale/unchecked source state;
-- explicit expiry/removal;
-- current semantic source version;
-- failed refresh observations;
-- jobs with incomplete details;
-- jobs with missing/stale translation/P1.6;
-- when an old accepted analysis is no longer current for the current source version.
+## 5.2 `TargetMarketDefinitionVersion`
 
-A failed source refresh must not be interpreted as market disappearance.
+Immutable exact definition used by runs/snapshots.
 
-### 7.3 Relevance qualification
+First-slice semantic content may include:
 
-Design a target-membership step that is stronger than keyword matching.
+```text
+target_market_id
+version / semantic fingerprint
+membership intent
+Jobinja source scope
+search-catalog version
+selected profile/pack references
+bounded custom/extra terms/raw approved searches
+include/exclude role/work hints
+geography
+work arrangement when material
+seniority/experience scope when material
+employment type when material
+freshness/time-window rule
+created_at
+```
 
-Candidate dispositions:
+Operational request/detail/model budgets belong to the run and must not silently redefine market meaning.
+
+## 5.3 `MarketResearchRun`
+
+Operational attempt, not market semantic authority.
+
+Record:
+
+- exact definition version;
+- exact acquisition/detail/model budgets/settings used;
+- start/end/terminal status;
+- requested/eligible/attempted/completed/reused/failed/pending/remaining stage ledger;
+- snapshot/profile references when created;
+- bounded failure summary.
+
+Partial success is first-class.
+
+## 5.4 `MarketJobMembership`
+
+Target-specific semantic decision; never a global property of a job.
+
+Confirmed first-slice dispositions:
 
 ```text
 core_match
@@ -333,960 +262,561 @@ uncertain
 excluded
 ```
 
-The investigation must decide:
+Membership identity must preserve:
 
-- which dimensions can be deterministic filters;
-- when semantic/model classification is justified;
-- what evidence references/reasons are stored;
-- whether confidence is qualitative;
-- how user correction/review works when useful;
-- which dispositions enter the primary denominator;
-- how adjacent/uncertain postings are displayed without contaminating core prevalence statistics.
+```text
+target definition version
+source_job_id
+exact source detail version
+classifier contract/version
+model/prompt/schema if semantic model used
+exact English/P1.6 artifacts actually consumed, if any
+disposition
+reason/evidence refs
+qualitative confidence if used
+review/correction state as applicable
+```
 
-Interpretive uncertainty should fail soft. It should not force false inclusion/exclusion.
+`uncertain` is a valid successful result.
 
-### 7.4 P1.6 sufficiency audit
+## 5.5 `MarketCorpusSnapshot`
 
-Compare the desired report fields against current accepted P1.6 output.
+Point-in-time historical Market authority.
 
-Confirm whether existing P1.6 already supplies enough authoritative substrate for:
+A snapshot must freeze:
 
-- requirements;
-- required/preferred/contextual/inferred strength;
-- concept types;
-- source-explicit depth;
-- responsibilities;
-- role purpose;
-- exact evidence/provenance.
+- exact target definition version;
+- exact member source/source-version identities;
+- effective membership decisions/dispositions;
+- exact accepted/pending/missing semantic coverage state used by the report;
+- applicable lifecycle/freshness state/warnings;
+- denominator semantics;
+- duplicate/repost policy identity/disclosure;
+- aggregate contract input identity.
 
-Do not reopen P1.6 merely because Market wants different presentation. Reopen only if a repeatable material substrate gap is proven.
+Old snapshots remain immutable after source/target/contract changes.
 
-### 7.5 Capability Intelligence reuse audit
+## 5.6 `MarketAggregateProfile`
 
-Determine which market questions genuinely benefit from Capability v9 and which should aggregate directly from P1.6.
+Deterministic immutable derivative of one exact snapshot + aggregate contract.
 
-Questions include:
+It is the first-slice user intelligence artifact. A separate model-generated report artifact is not required yet.
 
-- capability grouping across jobs;
-- source work linked to capabilities;
-- source-explicit depth distribution;
-- whether current Capability artifacts exist widely enough to support a market-level claim;
-- whether using Capability would unnecessarily gate useful Market output.
+---
 
-No Market result should silently treat optional Capability model enrichment as employer truth.
+## 6. Acquisition and orchestration reuse
 
-### 7.6 Work Intelligence reuse audit
+Reuse existing JobHunter owners:
 
-Determine how accepted P2.2A Work Intelligence can contribute to responsibility/work-composition synthesis.
+```text
+search_registry / config
+Jobinja discovery
+Jobinja sync/detail fetch
+source identity/version/evidence
+fetch observations
+lifecycle
+translation
+P1.6
+existing browser operation model
+CLI
+SQLite
+```
 
-Keep the permanent rule:
+Use one thin target-aware coordinator rather than a workflow framework.
 
-> The model may organize accepted work; accepted P1.6 statements decide what factual work is actually asserted.
+### Important first-slice rule: target-scoped affected work
 
-Investigate whether candidate work themes can support low-blast-radius market interpretation without being promoted, while any stable cross-run family/archetype requires the proper promotion boundary.
+Existing Phase-1 orchestration is a useful composition precedent, but global missing/refresh queues that merely prioritize target IDs may spill remaining bounded budget into unrelated jobs.
 
-### 7.7 Canonical Registry dependency audit
+A Market run must select affected work from the target candidate set for:
 
-Determine which aggregates require reviewed canonical correspondence and which can remain immediately useful using bounded normalization/source concepts.
+- detail missing/refresh;
+- translation missing/stale;
+- P1.6 missing/stale/review backlog.
+
+Do not create parallel source identities or derived-artifact caches.
+
+### Reuse/invalidation
+
+```text
+source semantic version changes
+→ recompute affected translation/P1.6 per their existing contracts
+→ membership for that source/version becomes stale
+→ old snapshots remain unchanged
+
+Target definition changes
+→ new definition version
+→ membership/snapshot/profile recompute
+→ generic source/translation/P1.6 stay valid
+
+membership classifier contract changes
+→ membership/snapshot/profile recompute
+→ upstream source/translation/P1.6 stay valid
+
+aggregate contract changes
+→ snapshot stays valid
+→ new aggregate profile
+```
+
+---
+
+## 7. Source eligibility and lifecycle
+
+A posting must have a current successfully parsed source detail version before it can become a qualified source-level snapshot member.
+
+Active-market handling:
+
+```text
+active
+→ eligible subject to target freshness/membership
+
+possibly_unavailable
+→ may remain eligible with explicit warning when prior valid source evidence is fresh enough
+
+expired / removed
+→ outside active primary corpus; preserved historically
+
+rate_limited / access_denied / challenge / auth_required /
+server_error / network_error / unexpected_page / unknown_error
+→ weak/retryable failure is not disappearance; preserve prior valid evidence subject to freshness policy
+```
+
+Permanent rule:
+
+```text
+failed refresh != market disappearance
+```
+
+Missing-detail discoveries remain candidates/backlog, not qualified snapshot members.
+
+---
+
+## 8. Membership evidence and denominator policy
+
+First-slice staged membership:
+
+```text
+deterministic source/target eligibility
+→ bounded semantic role/work relevance when necessary
+```
+
+Lowest sufficient semantic evidence:
+
+```text
+current parsed source detail + title
++ current English projection when needed
++ accepted-current P1.6 opportunistically when available
+```
+
+Accepted P1.6 is **not** required for source-level target membership.
+
+Capability and Work Intelligence are not first-slice membership dependencies.
+
+### Primary target corpus
+
+```text
+primary corpus = core_match
+adjacent_match = visible separately
+uncertain = visible separately
+excluded = traceable / outside primary denominator
+```
+
+### P1.6 semantic coverage
+
+Always distinguish within the core source corpus:
+
+```text
+core source postings
+core + accepted-current P1.6
+core + pending P1.6
+core + missing/no-current P1.6
+core + failed/rejected current processing where relevant
+```
+
+Source-level metrics use their exact source denominator.
+
+Requirement/responsibility prevalence uses only core postings with accepted-current P1.6 under the declared semantic contract.
+
+Pending/missing/failed P1.6 must never be interpreted as zero requirements or zero work.
+
+B1 `ta9l` is a concrete proof of this boundary: source-level relevance can be clear while accepted P1.6 remains unavailable.
+
+---
+
+## 9. Repost / duplicate policy for first slice
+
+Stable repeated observation of one `source_job_id` is already one logical source posting.
+
+Automatic repost/new-source-ID collapsing is deliberately **not implemented in the first slice** because the formal investigation did not establish a defensible real Jobinja pair set for an authority rule.
+
+Therefore first-slice denominator language is:
+
+```text
+qualified source postings
+```
+
+not:
+
+```text
+unique demand units
+```
+
+Profiles must disclose that repost/new-ID adjustment is not implemented.
+
+Keep employer concentration visible and avoid strong deduplicated-demand, trend, or `emerging` claims.
+
+All source advertisements must remain preserved if a later explicit duplicate/repost policy is introduced.
+
+---
+
+## 10. Deterministic first aggregate profile
+
+The first `MarketAggregateProfile` should contain only evidence-backed deterministic values.
+
+### Evidence/corpus-quality header
+
+Include:
+
+- target + definition version;
+- run/snapshot identity/time;
+- source/search scope;
+- candidate/source-eligible counts;
+- core/adjacent/uncertain/excluded counts;
+- qualified core source postings;
+- accepted/pending/missing-or-failed P1.6 coverage;
+- raw source-posting count;
+- repost-adjustment disclosure;
+- distinct employers;
+- largest-employer contribution/share;
+- freshness/lifecycle warnings;
+- processing failures/backlog.
+
+### Requirement rows
+
+For accepted-current P1.6 core members:
+
+- concept;
+- concept type;
+- supporting-posting count/share with explicit denominator;
+- required/preferred/contextual/inferred support;
+- distinct-employer support;
+- source-explicit depth distribution where useful;
+- exact job/artifact/claim/evidence drill-down.
+
+One posting supports one concept at most once in the concept-support count.
+
+Strength columns may remain non-exclusive where one posting genuinely states the same normalized concept at multiple strengths; disclose that behavior.
+
+### Responsibilities/work
+
+Expose accepted responsibility/work evidence/counts/drill-down without inventing cross-job family equivalence.
+
+Reviewed Registry mappings may enrich normalization where available. Unmapped accepted facts remain visible.
+
+### Source-level context
+
+Aggregate geography/employment/experience/education/context only where exact field/normalization/denominator semantics are explicit.
+
+### Excluded from v1
+
+- model-generated numeric statistics;
+- opaque importance scores;
+- fixed `core/common/specialized` bands;
+- semantic subfamily prevalence;
+- trends/`emerging`/forecasting.
+
+---
+
+## 11. Capability, Work and Registry reuse
+
+### Capability
+
+Not a mandatory first-slice dependency. Current coverage and model dependency would unnecessarily reduce Market coverage for basic factual aggregation.
+
+### Work Intelligence
+
+Not a mandatory first-slice dependency. P1.6 already owns factual responsibilities/role purpose. Work may later add useful candidate organization after first-slice product value is proven.
+
+### Canonical Registry
+
+Use reviewed mappings opportunistically when available.
 
 Avoid both extremes:
 
-- **under-normalized:** `Postgres`, `PostgreSQL`, translated aliases and harmless variants split the same demand signal indefinitely;
-- **over-gated:** every useful report waits for exhaustive manual canonicalization.
-
-Use promoted registry mappings where available. Unmapped claims remain valid evidence and must not disappear.
-
-### 7.8 Responsibility-family and role-archetype dependency audit
-
-Reconcile the final P2.2B/P2.2C state at activation time.
-
-Determine:
-
-- what can be a candidate analytical family immediately;
-- what requires reviewed reusable responsibility-family authority;
-- how candidate role subfamilies are supported across jobs/employers;
-- when a candidate archetype becomes stable enough for promotion;
-- how multiple plausible subfamilies are represented without forced classification.
-
-Titles are supporting evidence. Recurrent work/responsibilities/capability expectations should carry more semantic weight than inconsistent titles.
-
-### 7.9 Duplicate/repost investigation
-
-Current Market explicitly discloses that repost/cross-post near-duplicate adjustment is not implemented. Market-v2 prevalence/trend claims must address this before strong statistics are presented.
-
-Investigate:
-
-- same logical source job across observations;
-- reposted jobs with new source IDs;
-- employer/title/content near-duplicates;
-- cross-source duplicates if/when a second source exists;
-- whether duplicate groups should count once for prevalence while preserving all source evidence;
-- how uncertain duplicate relationships are represented.
-
-Do not solve this with opaque similarity thresholds without review evidence.
-
-### 7.10 Sample quality and employer concentration
-
-Reuse and extend the current Market safeguards:
-
-- analyzed sample size;
-- distinct-employer count;
-- largest-employer share;
-- source/filter scope;
-- processing coverage;
-- translation/model coverage;
-- duplicate-adjustment disclosure.
-
-Investigate stronger claims only when the sample supports them. One employer contributing many postings must not masquerade as broad market demand.
-
-### 7.11 Temporal and trend model
-
-Historical intelligence must compare comparable snapshots, not arbitrary report outputs.
-
-Define:
-
-- exact target-definition identity/version;
-- snapshot time/window;
-- source scope;
-- inclusion/membership policy version;
-- aggregate contract version;
-- duplicate policy version;
-- denominator semantics;
-- minimum comparability checks.
-
-If target definition or aggregation semantics materially change, JobHunter should display a comparability warning rather than invent a trend.
-
-### 7.12 Persistence and artifact model
-
-Determine the smallest durable records needed for reproducibility and repeated use.
-
-Provisional concepts, subject to investigation:
-
 ```text
-TargetMarketDefinition
-MarketResearchRun
-MarketJobMembership
-MarketCorpusSnapshot
-MarketAggregateProfile
-RoleFamilyIntelligenceReport
+under-normalization
+→ harmless variants split every signal forever
+
+over-gating
+→ useful report waits for exhaustive manual canonicalization
 ```
 
-Do not create separate storage systems. Reuse SQLite and existing source/derived artifact identities.
-
-### 7.13 Browser and CLI integration
-
-Design one coherent repeated-use workflow instead of many disconnected commands.
-
-Browser requirements should include:
-
-- target definition/selection;
-- run preview and bounds;
-- operation progress/partial-success result;
-- corpus quality/scope summary;
-- aggregate report;
-- expandable evidence/drill-down to source jobs;
-- prior snapshot comparison when comparable;
-- clear candidate/promoted/uncertain labeling.
-
-CLI should provide the same underlying service operations and deterministic inspection.
-
-### 7.14 Performance and model-call budget
-
-Market refresh must be incremental.
-
-Investigate/reuse:
-
-- current source versions;
-- current English projections;
-- accepted current P1.6 artifacts;
-- current Capability/Work artifacts when actually required;
-- missing/stale queues;
-- bounded batch limits.
-
-Do not re-run model inference across the entire corpus on every market report.
-
-### 7.15 Publication/privacy boundary
-
-The first report should remain local unless a separate publication decision exists.
-
-Do not automatically add Market-v2, Work Intelligence, Canonical Registry or later personal state to `corpus/`.
-
-Any future repository-safe projection requires a separate privacy/publication review.
-
-### 7.16 Testing and acceptance strategy
-
-Before implementation, define representative fixtures/cases covering:
-
-- core relevant role;
-- adjacent role;
-- misleading keyword/title match;
-- sparse posting;
-- dense posting;
-- multiple postings from one employer;
-- repost/near-duplicate case;
-- stale source version;
-- partial translation/analysis failure;
-- native-English and translated postings;
-- ambiguous role-family membership;
-- multiple candidate subfamilies.
-
-Semantic tests should validate dangerous authority/boundary failures rather than require identical model prose.
+Unmapped claims remain valid evidence and must not disappear.
 
 ---
 
-## 8. Proposed evidence and artifact flow
+## 12. Browser and CLI first-slice workflow
 
-The intended architecture, subject to the formal investigation, is:
+### Browser — primary
+
+Target repeated-use flow:
 
 ```text
-TargetMarketDefinition
-        ↓
-existing bounded search planning
-        ↓
-Jobinja discovery + refresh
-        ↓
-existing source/evidence/version/lifecycle authority
-        ↓
-current English projection where required
-        ↓
-accepted/current P1.6 factual substrate
-        ↓
-Target-market membership qualification
-        ↓
-MarketCorpusSnapshot
-        │
-        ├──→ deterministic requirement/context aggregation
-        │
-        ├──→ reviewed canonical mappings where available
-        │
-        ├──→ bounded Capability/Work inputs where authorized/useful
-        │
-        └──→ candidate cross-job semantic synthesis
-                    ↓
-          RoleFamilyIntelligenceReport
-                    ↓
-          later comparable snapshot history
-                    ↓
-          later reviewed Market → You comparison
+Targets
+→ create/select target
+→ create immutable definition version when meaning changes
+→ preview acquisition scope + run budgets
+→ run/refresh using existing one-mutable-operation pattern
+→ inspect partial-success ledger
+→ inspect membership/evidence/uncertainty
+→ inspect frozen snapshot + deterministic profile
+→ drill down to source/semantic evidence
+→ inspect run/snapshot history
 ```
 
-This is an extension of the current modular monolith and current Market read-model boundary, not a new microservice, vector database, graph platform or agent framework.
+Market runtime state stays local.
+
+Existing public-corpus synchronization may continue publishing only upstream repository-safe artifacts already governed for publication. Market target/membership/snapshot/profile tables are not automatically exported.
+
+### CLI — secondary
+
+Expose the same underlying services for advanced use, automation and debugging. Exact command names are implementation details; responsibilities include target/version, run, membership, snapshot and profile inspection.
+
+No CLI-only semantic path.
 
 ---
 
-## 9. Aggregate intelligence contract
+## 13. First-slice testing and acceptance
 
-### 9.1 Every statistic must expose its denominator
-
-A statement such as:
+Use the accepted three-tier philosophy:
 
 ```text
-Python appears in 70% of jobs
+Tier 1: compact synthetic deterministic mini-market
+Tier 2: curated repository-safe semantic boundary cases
+Tier 3: bounded real local target run
 ```
 
-is invalid without a defined denominator.
-
-The report must distinguish at least where applicable:
-
-- discovered candidate postings;
-- current fetched/parsed postings;
-- relevance-qualified postings;
-- postings with current accepted P1.6;
-- distinct employers;
-- duplicate-adjusted posting units.
-
-The primary denominator for a metric must be explicit and stable for that metric.
-
-### 9.2 Requirement demand
-
-For each useful normalized/canonical concept, preserve at minimum:
-
-- posting count;
-- posting share;
-- distinct-employer count/share where useful;
-- required count;
-- preferred count;
-- contextual count;
-- inferred count;
-- evidence/normalization status;
-- source aliases/wording drill-down;
-- sample/coverage warnings.
-
-The current Market behavior of counting a source job at most once per concept/classification is a useful baseline to preserve unless the investigation proves a better contract.
-
-### 9.3 Responsibility/work demand
-
-Responsibility reporting must distinguish:
-
-```text
-exact accepted P1.6 responsibilities
-vs
-normalized/promoted responsibility correspondence
-vs
-candidate analytical responsibility/work family
-```
-
-A candidate cluster must never be displayed as though every employer used that wording.
-
-Useful aggregate dimensions may include:
-
-- supporting posting count;
-- distinct employers;
-- exact supporting responsibility claims;
-- candidate/promoted status;
-- representative source wording;
-- confidence/ambiguity;
-- source-specific details intentionally not normalized away.
-
-### 9.4 Skills, tools, practices, knowledge and domains
-
-The report should separate concept types where useful instead of flattening every concept into a single skill list.
-
-Potential sections include:
-
-- programming languages;
-- frameworks/libraries;
-- platforms/tools;
-- security/engineering practices;
-- knowledge areas;
-- domain knowledge;
-- interpersonal/professional capabilities;
-- language/legal/location constraints.
-
-A tool mention is not automatically an applied capability.
-
-### 9.5 Experience, seniority and education
-
-Aggregate explicit signals separately:
-
-- years/duration requirements;
-- seniority wording;
-- education requirements/preferences;
-- credentials/certifications;
-- prior-domain experience;
-- leadership/ownership expectations only when source/work evidence supports them.
-
-Do not convert years mechanically into technical depth.
-
-### 9.6 Work arrangement and market context
-
-Where the source supports it, aggregate:
-
-- geography;
-- remote/hybrid/on-site arrangement;
-- employment type;
-- language expectations;
-- salary/compensation only if source quality/coverage is sufficient and the contract is explicitly designed for it.
-
-Missing data must not be interpreted as negative evidence.
-
-### 9.7 Co-occurrence and capability bundles
-
-Co-occurrence can reveal useful market bundles, but it must remain distinct from prerequisite logic.
-
-Example:
-
-```text
-Docker + Kubernetes frequently co-occur
-```
-
-must not become:
-
-```text
-Kubernetes is a prerequisite for Docker
-```
-
-unless separate evidence supports that relationship.
-
----
-
-## 10. Demand bands and report interpretation
-
-The report may eventually use human-readable demand bands such as:
-
-```text
-core
-common
-specialized
-```
-
-but the first accepted implementation should not hide raw counts/shares behind arbitrary labels.
-
-Before demand bands become durable semantics, investigate and document:
-
-- denominator;
-- threshold rule;
-- minimum sample size;
-- employer concentration effect;
-- whether the threshold is global or target-specific;
-- whether the classification remains stable enough to be useful.
-
-### 10.1 `Emerging` has a stricter meaning
-
-`Emerging` must **not** mean simply low-frequency or unusual.
-
-It requires longitudinal evidence such as:
-
-- materially increasing prevalence across comparable snapshots;
-- increasing distinct-employer support;
-- repeated new appearance across successive valid windows;
-- appropriate sample/comparability warnings.
-
-Until trend history exists, use terms such as `niche`, `less common`, `limited-sample signal`, or simply show the count.
-
----
-
-## 11. Role-family and subfamily synthesis
-
-The report should aim to answer:
-
-> What kinds of work actually make up this target market, independent of inconsistent job titles?
-
-Candidate subfamily inference may use:
-
-- accepted responsibilities;
-- role purpose;
-- Work Intelligence themes where valid;
-- canonical responsibility mappings/families when available;
-- capability/requirement patterns;
-- deliverables where evidence is authorized;
-- titles only as supporting context.
-
-Example candidate output:
-
-```text
-Target: AI Security
-
-Candidate subfamilies:
-1. AI/ML platform security
-2. security automation and detection engineering
-3. adversarial testing / AI assurance
-```
-
-For each candidate subfamily, retain:
-
-- supporting jobs;
-- distinct employers;
-- representative exact responsibilities;
-- differentiating requirements/capabilities;
-- overlap with other subfamilies;
-- confidence/uncertainty;
-- candidate versus promoted status.
-
-Do not force every job into exactly one subfamily. Multiple membership or unresolved classification can be correct.
-
-Stable reusable role archetypes require stronger cross-job/employer evidence and explicit promotion.
-
----
-
-## 12. Role-Family Intelligence Report structure
-
-The first complete report should be designed around fast comprehension with inspectable depth.
-
-Recommended sections:
-
-### 12.1 Header and target identity
-
-- target name;
-- target definition/version;
-- geography/seniority/source/time scope;
-- generated timestamp;
-- report/snapshot contract identity.
-
-### 12.2 Corpus and evidence quality
-
-- discovered candidates;
-- fetched/current details;
-- relevance-qualified jobs;
-- analyzed/current jobs;
-- distinct employers;
-- duplicate/repost adjustment;
-- native/translated coverage where relevant;
-- excluded/adjacent/uncertain counts;
-- source/model partial failures;
-- sample/concentration/comparability warnings.
-
-### 12.3 Executive market summary
-
-A concise bounded interpretation of what this market appears to value and do, clearly separated from employer-authored facts.
-
-### 12.4 Role-family landscape
-
-- candidate/promoted subfamilies;
-- supporting jobs/employers;
-- overlaps/uncertainty;
-- representative responsibilities.
-
-### 12.5 Responsibilities and work patterns
-
-- recurring direct work;
-- supporting counts;
-- employer diversity;
-- exact evidence drill-down;
-- candidate family/grouping status.
-
-### 12.6 Requirements and capabilities
-
-- core/common/specialized only if accepted band semantics exist;
-- otherwise sorted raw prevalence;
-- required/preferred/contextual/inferred distribution;
-- distinct-employer support;
-- tools versus applied capabilities kept distinguishable.
-
-### 12.7 Technology/tool landscape
-
-- languages;
-- frameworks/libraries;
-- platforms;
-- infrastructure/security/ML tooling;
-- co-occurrence where meaningful.
-
-### 12.8 Knowledge/practice/domain expectations
-
-- engineering practices;
-- security/ML/domain knowledge;
-- quality/reliability/operations practices;
-- professional/interpersonal expectations.
-
-### 12.9 Experience/seniority/education/context
-
-- explicit experience patterns;
-- seniority distribution;
-- education/credentials;
-- location/arrangement/language patterns.
-
-### 12.10 Market change since prior comparable snapshot
-
-Later history stage only:
-
-- increased/decreased prevalence;
-- newly recurring patterns;
-- disappearing patterns;
-- employer-diversity changes;
-- explicit comparability limitations.
-
-### 12.11 Evidence and limitations
-
-Always expose:
-
-- exact scope;
-- important missing coverage;
-- duplicate policy;
-- model/translation dependencies;
-- sample warnings;
-- uncertainty;
-- what the report is **not** claiming.
-
-### 12.12 Evidence drill-down
-
-The user must be able to inspect supporting postings/claims from an aggregate item without turning the entire report into one summary per vacancy.
-
----
-
-## 13. Historical market intelligence
-
-Every accepted report run should preserve enough state to compare future runs safely.
-
-The goal is to answer questions such as:
-
-```text
-Python demand: 68% → 73%
-Kubernetes: 29% → 37%
-LLM security responsibilities: 11% → 26%
-```
-
-only when the underlying snapshots are sufficiently comparable.
-
-Historical storage should support:
-
-- exact target definition/version;
-- source scope;
-- snapshot timestamp/window;
-- job/source-version membership;
-- aggregate contract version;
-- duplicate policy;
-- role-family interpretation contract/version if persisted;
-- prior report reference.
-
-A trend is an analytical conclusion over deterministic snapshot measurements. The measurements should be deterministic; the narrative explanation may be semantic and uncertainty-aware.
-
----
-
-## 14. Later Market → You layer
-
-The objective market report must be built first and remain independently inspectable.
-
-Only after JobHunter has an accepted reviewed personal-evidence layer should a later workflow compare:
-
-```text
-qualified market / role-family requirements
-        ↕
-reviewed personal capability evidence
-```
-
-Potential output:
-
-```text
-Market priority / recurring expectation
-→ current personal evidence
-→ exact gap class
-→ recommended learn / practise / build / document / assess action
-```
-
-Permanent boundaries:
-
-- do not infer personal capability from chat memory, repository keywords, course completion or AI-generated code alone;
-- do not contaminate the objective market aggregate with the user's current skills;
-- do not create a fake single readiness percentage;
-- do not rank personal action solely by keyword frequency;
-- preserve knowledge/practice/depth/integration/evidence/recency/context/presentation gap distinctions.
-
-This is a later product stage, not part of the first Market/role-family implementation.
-
----
-
-## 15. Delivery sequence
-
-Implementation should proceed as bounded vertical slices after activation.
-
-### Foundation investigation and design
-
-**Outcome:** exact reuse/new-contract decision before code.
-
-- perform Section 7 investigation;
-- inspect current source/tests/services only as needed;
-- document decisions in a dated working-memory record;
-- amend this plan if evidence changes architecture or ordering;
-- define first acceptance corpus/cases;
-- explicitly authorize the first implementation slice.
-
-**Stop line:** no speculative framework/database/agent/taxonomy build during investigation.
-
-### Target definition and scoped refresh
-
-**Outcome:** one target market can drive the existing bounded acquisition/update pipeline reproducibly.
-
-- target definition contract;
-- target-run identity;
-- search-plan integration;
-- incremental discovery/detail refresh;
-- explicit bounds;
-- partial-success operation result;
-- browser/CLI parity.
-
-**Acceptance:** a repeated target run reuses existing source identities and does not broaden source policy.
-
-### Qualified market snapshot
-
-**Outcome:** one run produces an inspectable target-market membership snapshot.
-
-- relevance membership contract;
-- core/adjacent/uncertain/excluded dispositions;
-- currentness/dependency rules;
-- exact job/source-version membership;
-- corpus quality metrics;
-- representative semantic review.
-
-**Acceptance:** inclusion/exclusion is explainable and uncertain cases do not silently contaminate the primary denominator.
-
-### Deterministic aggregate profile
-
-**Outcome:** trustworthy requirements/context statistics over the qualified snapshot.
-
-- posting + employer prevalence;
-- strength distributions;
-- type-aware concept groups;
-- sample/concentration disclosures;
-- duplicate policy appropriate to claim strength;
-- source drill-down;
-- no model-generated numeric statistics.
-
-**Acceptance:** same snapshot + same aggregate contract yields the same numeric result.
-
-### Responsibility/work and candidate role-family synthesis
-
-**Outcome:** useful cross-job work interpretation above deterministic facts.
-
-- accepted responsibilities remain factual anchors;
-- reuse reviewed mappings/families where available;
-- candidate analytical grouping where promotion is unnecessary;
-- candidate subfamily support/overlap/confidence;
-- no forced stable archetypes.
-
-**Acceptance:** candidate synthesis reduces manual reading while exact supporting claims remain recoverable and no interpretation is presented as employer wording.
-
-### Report and repeated-use browser workflow
-
-**Outcome:** one normal browser flow produces the Role-Family Intelligence Report.
-
-- report UI;
-- operation progress/result;
-- scope/warnings first-class;
-- drill-down evidence;
-- saved report/snapshot;
-- CLI equivalent service operations.
-
-**Acceptance:** the user can understand the target market without opening every vacancy, while still being able to inspect evidence on demand.
-
-### Historical snapshot and trend comparison
-
-**Outcome:** comparable prior/current market snapshots show evidence-backed change.
-
-- comparability contract;
-- trend calculations;
-- employer-diversity checks;
-- emerging/declining signals;
-- explicit warnings for incompatible snapshots.
-
-**Acceptance:** no trend is asserted from incompatible or insufficient evidence.
-
-### Later reviewed personal comparison
-
-**Outcome:** objective Market → You gap/action layer after personal-evidence prerequisites are accepted.
-
-This remains separately gated and must not be pulled into earlier Market implementation for convenience.
-
----
-
-## 16. Acceptance criteria for the complete capability
-
-The complete first-generation Market/role-family capability is acceptable only when all applicable criteria below pass.
-
-### Integrity
-
-- every included posting is linked to an exact source identity/version;
-- stale derived artifacts do not silently feed current reports;
-- every numeric aggregate is deterministically reproducible from the recorded snapshot;
-- every material semantic interpretation has recoverable supporting evidence;
-- source failures are not treated as zero-market evidence;
-- duplicate/repost policy is disclosed and appropriate to the claim;
-- no model output manufactures numeric prevalence;
-- no candidate interpretation becomes source fact;
-- no private/personal data enters public projections without separate authorization.
-
-### Scope honesty
-
-- target definition is explicit;
-- report denominator(s) are explicit;
-- distinct employer support is available for broad claims;
-- small/concentrated samples produce warnings;
-- incomplete translation/analysis coverage is visible;
-- uncertain relevance cases remain visible;
-- missing employer information is not interpreted as absence of a requirement.
-
-### Utility
-
-- one report materially reduces vacancy-by-vacancy reading;
-- recurring requirements and responsibilities are easy to identify;
-- requirement strength is visible;
-- tools are not flattened into capabilities blindly;
-- candidate role subfamilies explain actual work differences better than titles alone;
-- evidence drill-down is available without overwhelming the summary;
-- later repeated runs can reuse prior work and show comparable changes.
-
-### Operational quality
-
-- bounded source requests and model calls;
-- incremental/reuse behavior;
-- explicit partial success;
+### Mandatory invariants
+
+- stable target vs immutable definition version;
+- target-definition change does not invalidate generic source/translation/P1.6;
+- unchanged rerun reuses upstream work;
+- target run does not spend budgets on unrelated global backlog;
+- failed refresh != disappearance;
+- expired/removed does not mutate old snapshots;
+- `adjacent_match` / `uncertain` / `excluded` never enter core prevalence silently;
+- `uncertain` is a valid semantic result;
+- missing/pending/failed P1.6 is visible, not zero demand;
+- only accepted-current P1.6 enters strong semantic statistics;
+- one posting max once per concept support count;
+- every share has recoverable denominator semantics;
+- employer breadth/concentration is deterministic;
+- snapshot/member dependencies are exact and immutable;
+- aggregate profile references exact snapshot + contract;
+- no first-slice `unique demand` claim;
+- partial success preserves successful durable work;
 - browser/CLI share services/state;
-- deterministic tests green;
-- representative semantic acceptance performed for new model-derived responsibilities;
-- important repeatable defects become regression tests.
+- normal CI uses deterministic fixtures/fakes and never requires Jobinja/LM Studio;
+- Market state remains local/private by default.
+
+### Real local acceptance
+
+I7 must run one representative target and verify:
+
+- bounded acquisition scope/noise is visible;
+- source/detail/model reuse on rerun;
+- membership inspection;
+- honest P1.6 coverage;
+- denominator/warnings;
+- evidence drill-down;
+- partial-success behavior;
+- browser/CLI shared state.
+
+Do not call the first slice closed before this passes.
 
 ---
 
-## 17. Explicit non-goals and stop lines
+# 14. Later Market responsibilities — separately gated
 
-This plan does **not** authorize:
+The long-term product direction remains broader than the first slice.
 
-- Market-v2 implementation before the current P2.2B-B1 gate closes and owner activation occurs;
-- unrestricted web crawling;
-- authenticated LinkedIn automation or access-control bypass;
-- a generic source/plugin framework before a real second source;
-- exhaustive canonicalization merely to make a report look complete;
-- automatic canonical taxonomy growth from model output;
-- Blueprint v6 as Market authority;
-- opaque model-generated market percentages;
-- a single generic `market demand score` hiding real dimensions;
-- arbitrary `core/common/emerging` labels without explicit accepted semantics;
-- calling a low-frequency concept `emerging` without longitudinal evidence;
-- forced one-role-per-job classification;
-- fake prerequisite relations from co-occurrence;
-- a vector database, graph database, RAG platform or agent framework without demonstrated need;
-- microservices/distributed queues for the current local workload;
-- personal readiness/gap scoring before reviewed personal evidence exists;
-- autonomous applications or recruiter communication;
-- automatic publication of Market/Work/Registry/personal state.
+## 14.1 Candidate responsibility/work + role-subfamily synthesis
+
+After deterministic target/profile acceptance, investigate/add one bounded **report-level** semantic synthesis if it materially reduces manual interpretation.
+
+Preferred evidence order:
+
+```text
+accepted recurring responsibilities/work
+→ requirement/capability bundles
+→ tools/knowledge/context
+→ titles as supporting evidence
+```
+
+Candidate subfamilies remain analytical interpretation. Do not force every job into exactly one family.
+
+Do not generate per-job semantic narratives merely to summarize them upward.
+
+## 14.2 Role-Family Intelligence Report
+
+Once semantic synthesis exists and exact nondeterministic output must be recoverable, persist a versioned user-facing `RoleFamilyIntelligenceReport` referencing the exact snapshot/profile and model/prompt/schema contract.
+
+Numeric values must be injected from deterministic profile data rather than authored by the model.
+
+Recommended mature reading order:
+
+```text
+Target + Evidence Quality
+→ Executive Market Summary
+→ Market Shape
+→ Responsibilities / Work
+→ Technologies / Tools
+→ Applied Skills / Capabilities
+→ Knowledge / Practices
+→ Professional / Transversal Capabilities
+→ Experience / Seniority / Education / Credentials
+→ Work Context / Geography / Arrangement
+→ Useful Co-occurrence / Bundles
+→ Candidate Role Subfamilies
+→ Changes Since Comparable Snapshot
+→ Evidence Drill-down + Method / Limitations
+```
+
+## 14.3 Repost/new-ID adjustment
+
+Reopen only with real bounded Jobinja evidence. Preserve every source advertisement and represent `same demand / separate / uncertain` explicitly before any unique-demand denominator becomes authoritative.
+
+## 14.4 Historical comparison / trends
+
+Only after comparable immutable snapshots exist.
+
+Comparability must account for:
+
+- same logical target;
+- compatible target-definition semantics;
+- source/search scope;
+- membership policy;
+- duplicate policy;
+- aggregate contract;
+- denominator semantics;
+- sufficient support.
+
+Materially incompatible snapshots must display `NOT DIRECTLY COMPARABLE` rather than invent a trend.
+
+`emerging` requires sustained comparable evidence and employer breadth; rare != emerging.
+
+## 14.5 Later Market → You
+
+Objective Market intelligence must remain independently inspectable.
+
+Personal comparison requires a separately accepted reviewed personal-evidence schema. Do not infer personal capability from chat memory, repository keywords, course completion, or AI-generated code alone.
+
+No fake single readiness percentage.
 
 ---
 
-## 18. Documentation and progressive memory protocol
+## 15. Architecture discipline
 
-This responsibility is large enough that decisions must be recorded progressively rather than reconstructed at the end.
+Keep this capability inside the current local modular monolith and SQLite history model.
 
-Use the following documentation pattern:
+Do not introduce without demonstrated need:
 
-### 18.1 This plan
+- microservices/distributed queues;
+- vector database;
+- graph database;
+- generic RAG platform;
+- agent/workflow framework;
+- generic source/plugin layer before a real second approved source;
+- exhaustive canonicalization.
+
+Prefer existing versioned service/store patterns and typed contracts.
+
+---
+
+## 16. Publication / privacy
+
+The first Market slice remains local/private.
+
+Do not automatically publish:
+
+```text
+Market target definitions
+membership decisions
+snapshots
+aggregate profiles
+Work Intelligence
+Canonical Registry
+future personal evidence
+```
+
+into `corpus/`.
+
+Any future repository-safe Market projection requires a separate privacy/publication review and explicit authorization.
+
+---
+
+## 17. Documentation / progressive memory
+
+Use:
+
+### Current plan
 
 `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 
-Controls the feature's design/investigation/delivery intent once activated. Update it only when durable scope, ordering, acceptance or architecture decisions change.
+Update only when durable Market scope/order/acceptance/architecture changes.
 
-### 18.2 Rolling working memory
+### Rolling state
 
 `docs/WORKING_MEMORY.md`
 
-At meaningful gate transitions, keep a concise pointer to:
+Keep current status, accepted decision, next action, stop lines and latest record; do not turn it into a transcript.
 
-- current status;
-- latest accepted decision;
-- exact next action;
-- current stop lines;
-- latest dated working-memory record.
-
-Do not turn the rolling file into a full historical transcript.
-
-### 18.3 Execution checklist
+### Execution checklist
 
 `docs/EXECUTION_TODO.md`
 
-Keep the current product frontier unchanged while this plan is gated. Once activated, add only the exact currently authorized slice and its acceptance tasks; do not pre-mark future implementation as active.
+Keep only authorized increments active.
 
-### 18.4 Dated working-memory records
+### Dated records
 
-Create a new record under `docs/working-memory/` for every meaningful investigation/implementation/acceptance transition, especially:
+Use `docs/working-memory/` for meaningful design/implementation/acceptance transitions.
 
-- plan creation / owner intent;
-- formal foundation investigation;
-- target-definition contract decision;
-- relevance/membership design decision;
-- duplicate/repost decision;
-- aggregate contract decision;
-- role-family semantic experiment/acceptance;
-- browser/live acceptance;
-- trend-comparability decision;
-- eventual Market → You prerequisite/activation decision.
+The foundation protocol is now closed:
 
-Each record should state:
+`docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md`
 
-```text
-what was attempted
-what evidence was inspected
-what changed
-what did not change
-accepted/rejected/deferred decisions
-exact current state
-exact next action
-stop lines / unresolved risks
-```
+The final foundation decision is current implementation input:
 
-### 18.5 Experiments
+`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
 
-Use `docs/experiments/` only for bounded model/semantic/relevance/cluster experiments whose evidence needs preservation. Experiments do not become controlling authority merely by existing.
-
-### 18.6 Master product/architecture/domain docs
-
-Do not broad-rewrite `PRODUCT_SPECIFICATION.md`, `ARCHITECTURE.md`, `DOMAIN_AND_ANALYSIS_MODEL.md`, `ROADMAP.md` or `IMPLEMENTATION_PLAN.md` merely because this plan exists.
-
-Update/amend them only when an implemented/accepted durable contract changes their product meaning or architecture. If old present-tense status becomes misleading, use the repository's existing reconciliation/amendment practice rather than rewriting historical chronology.
-
-### 18.7 Tests and regression memory
-
-A repeatable deterministic or authority-boundary defect found during implementation should become a test when practical. One-off model wording variation should be recorded as bounded semantic evidence rather than forcing endless contract churn.
+Repeatable deterministic/authority defects should become tests when practical. One-off model prose variation should not force endless contract churn.
 
 ---
 
-## 19. Initial repository mapping already established during planning
+## 18. Definition of done for the first slice
 
-The plan was created only after confirming that the desired capability fits the current architecture rather than requiring a parallel subsystem.
+The first Market vertical slice is done only when:
 
-Existing reusable foundations include:
-
-```text
-Acquisition
-- search_registry.py
-- jobinja_discovery.py
-- jobinja_sync.py
-- jobinja_batch.py
-- phase1_run.py
-
-Factual substrate
-- current English projection
-- accepted English P1.6 v20/v5
-- AnalysisStore / currentness semantics
-
-Per-job interpretation
-- Capability Intelligence v9
-- Job Work Intelligence v2
-
-Reviewed normalization
-- Canonical Registry v1
-
-Current aggregate/read model
-- market_insights.py
-- phase1_report.py
-- browser /market and report surfaces
-
-Durable/runtime foundation
-- SQLite
-- source evidence/version/lifecycle model
-- browser + CLI shared services
-```
-
-Current `MarketInsights` already provides a useful v1 baseline:
-
-- deterministic aggregation over accepted current P1.6;
-- requirement prevalence by distinct posting;
-- required/preferred/contextual/inferred counts;
-- analyzed sample size;
-- distinct-employer concentration warning;
-- source/filter/duplicate-policy disclosure.
-
-The desired feature should therefore evolve JobHunter toward **target-scoped, snapshot-based Market/role-family intelligence** rather than replace this foundation.
-
-Known gap already identified for later investigation:
-
-```text
-current Market has no repost/cross-post near-duplicate adjustment
-```
-
-Known governance boundary already identified:
-
-```text
-current Market does not silently consume Capability, Work Intelligence,
-Blueprint, or speculative canonical relationships
-```
-
-Any broader use of those layers must be explicitly designed and evidence-qualified.
+1. I1–I6 implement the authorized responsibilities without later-scope leakage;
+2. deterministic/store/service/browser/CLI tests pass;
+3. source/state/privacy/provenance invariants hold;
+4. target/source/P1.6 denominators are explicit and correct;
+5. partial failures are inspectable without erasing durable success;
+6. one bounded real local target run passes I7;
+7. unchanged rerun proves useful reuse;
+8. evidence drill-down is usable;
+9. docs match behavior;
+10. the workflow materially reduces target-market vacancy-by-vacancy reading.
 
 ---
 
-## 20. Exact next action
-
-### Current product track — unchanged
+## 19. Current exact next action
 
 ```text
-ta9l current English projection
-→ ta9l English P1.6 v20 generation + semantic acceptance review
-→ exact responsibility-shape report
-→ final correspondence review against tG9K P1.6 36 responsibility[5]
-→ possible one-concept/two-mapping B1 mutation
-→ B1 closure decision
+I1 — implement Market domain models + SQLite persistence
+→ deterministic tests
+→ reconcile implementation record/current state
+→ proceed to I2 only after I1 is coherent
 ```
 
-### Market/role-family track — plan recorded, implementation gated
-
-```text
-owner-approved feature intent recorded
-→ focused plan recorded
-→ rolling memory/TODO pointer recorded
-→ WAIT while P2.2B-B1 remains current product gate
-→ after B1 closure + explicit owner activation:
-   perform Section 7 foundation investigation
-→ write dated investigation record
-→ reconcile/amend this plan if evidence changes the design
-→ authorize the first bounded implementation slice
-```
-
-Do not begin Market-v2 source implementation, role-family promotion, personal scoring or speculative infrastructure merely because this plan now exists.
+Do not restart the foundation investigation or B1. Do not pull semantic report/subfamily/trend/personal responsibilities into I1.
