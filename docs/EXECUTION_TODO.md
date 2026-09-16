@@ -1,12 +1,13 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-14  
+**Date:** 2026-09-16  
 **Active working branch:** `main`  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Foundation decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
-**Current product gate:** MARKET FIRST VERTICAL SLICE AUTHORIZED / I1 NEXT  
+**I1 acceptance:** `docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`  
+**Current product gate:** MARKET I1 ACCEPTED / I2 NEXT  
 **Parallel portfolio gate:** MIT complete / GitHub metadata + screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -40,87 +41,26 @@ Status vocabulary:
 - [x] Phase 1 CLOSED.
 - [x] P2.1 Canonical Registry CLOSED / accepted.
 - [x] P2.2A Job Work Intelligence v2 CLOSED / accepted.
+- [x] P2.2B-B1 CLOSED / NO-PROMOTION / DEFER.
 
-Accepted/current P1.6 → Capability anchors:
-
-```text
-tG9K 36 → 11
-t4jp 37 → 12
-tmBK 39 → 13
-t4qV 44 → 14
-tmyX 46 → 15
-```
-
-Public-corpus baseline:
-
-```text
-known jobs:           353
-fetched details:       43
-English projections:   21
-accepted P1.6:          5
-Capability:             5
-```
+Do not reopen B1 or manufacture another responsibility-promotion/model matrix merely to obtain a promotion.
 
 ---
 
-## B. P2.2B-B1 selective responsibility pilot — CLOSED / NO-PROMOTION / DEFER
-
-Final evidence:
-
-`docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
-
-- [x] selected `ta9l` as the one bounded additional evidence-bearing job.
-- [x] created/reviewed English projection 40 on source detail 25.
-- [x] attempt 98 failed without artifact.
-- [x] artifact 47 from attempt 99 was materially incomplete and explicitly rejected/archived.
-- [x] deterministic coverage-loss defects were reproduced and repaired.
-- [x] explicit `deep understanding / deep knowledge` depth handling was repaired without changing historical validator vocabulary.
-- [x] attempts 100 and 101 ended without an acceptable P1.6 artifact.
-- [x] full recorded quality gate reached 552 passing tests with warnings as errors.
-- [x] no canonical responsibility concept or mappings were created.
-- [x] B1 disposition = **NO-PROMOTION / DEFER**.
-
-Do not repeat `ta9l` translation/extraction or search another pair merely to manufacture a B1 promotion.
-
-P2.2C/P2.2D promoted taxonomy remains unauthorized.
-
----
-
-## C. Market / Role-Family foundation — COMPLETE / PASS
-
-Research consolidation:
-
-`docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`
-
-Investigation protocol:
-
-`docs/MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_ENTRY_PLAN.md`
-
-Final decision:
-
-`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
+## B. Market / Role-Family foundation — COMPLETE / PASS
 
 - [x] Q1–Q12 resolved for the first implementation slice.
-- [x] representative source/membership boundary cases inspected.
-- [x] target definition identity/version boundary decided.
-- [x] target-aware orchestration/reuse boundary decided.
-- [x] lifecycle/source snapshot eligibility decided.
-- [x] membership states confirmed: `core_match / adjacent_match / uncertain / excluded`.
-- [x] source-level membership separated from accepted-P1.6 semantic denominator.
-- [x] P1.6 accepted/pending/missing/failed coverage policy decided.
-- [x] repost/new-ID automatic collapse explicitly deferred for lack of defensible real evidence.
-- [x] minimal SQLite persistence responsibilities decided.
-- [x] deterministic first aggregate profile decided.
-- [x] Capability/Work are not mandatory first-slice dependencies.
-- [x] semantic role-subfamily synthesis deferred from first slice.
-- [x] browser/CLI repeated-use workflow decided.
-- [x] first-slice implementation acceptance matrix decided.
 - [x] `FOUNDATION INVESTIGATION: PASS`.
 - [x] `FIRST VERTICAL SLICE: AUTHORIZED`.
+- [x] source-level membership separated from accepted-P1.6 semantic denominator.
+- [x] membership states fixed to `core_match / adjacent_match / uncertain / excluded` for the first slice.
+- [x] Capability/Work are not mandatory first-slice dependencies.
+- [x] automatic repost/new-ID collapse deferred pending defensible real evidence.
+- [x] semantic role-subfamily/report synthesis deferred from first slice.
 
 ---
 
-## D. Authorized first Market vertical slice — ACTIVE / NOT IMPLEMENTED YET
+## C. Authorized first Market vertical slice — ACTIVE
 
 Exact authorized responsibility:
 
@@ -134,95 +74,116 @@ TargetMarket
 + thin browser/CLI workflow over the same services/state
 ```
 
-### D1 — I1 domain + SQLite persistence — NEXT
+### C1 — I1 domain + SQLite persistence — ACCEPTED / CLOSED
 
-- [ ] define minimal typed domain records/contracts for TargetMarket, definition version, research run, membership, snapshot/member and aggregate profile.
-- [ ] add bounded SQLite tables/migrations using existing repository patterns.
-- [ ] enforce immutable definition/snapshot/profile history.
-- [ ] preserve exact upstream dependency IDs rather than copying source/P1.6 payloads.
-- [ ] prove target-definition changes do not invalidate generic source/translation/P1.6 artifacts.
-- [ ] add deterministic store/domain tests.
+Acceptance record:
 
-### D2 — I2 target-scoped eligibility / affected-work planning — AFTER I1
+`docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`
 
-- [ ] compose existing Jobinja discovery/detail/lifecycle/observation owners.
-- [ ] ensure bounded target runs do not consume unrelated global missing/refresh/model backlog.
-- [ ] reuse current translation/P1.6 artifacts by exact existing identity.
-- [ ] preserve partial-success stage ledger.
+- [x] minimal typed Market domain records/contracts.
+- [x] bounded SQLite persistence using the existing source → translation → analysis dependency chain.
+- [x] stable target identity separated from immutable target-definition versions.
+- [x] canonical definition fingerprint/version reuse.
+- [x] research-run controls + stage ledger + running/terminal lifecycle.
+- [x] immutable membership decisions with exact dependency identity and explicit correction history.
+- [x] optional P1.6 membership evidence requires the exact accepted source/translation chain.
+- [x] immutable snapshot/member history.
+- [x] explicit accepted/pending/missing/failed/rejected semantic-coverage vocabulary.
+- [x] only `core_match` is persisted as primary-corpus inclusion at this layer.
+- [x] immutable deterministic aggregate-profile persistence over exact snapshot + contract.
+- [x] target-definition change proven not to invalidate generic source/translation/P1.6 artifacts.
+- [x] deterministic I1 tests.
+- [x] final I1 CI 1160 passed install, dependency check, entrypoint smoke, Ruff, pytest and `pytest -W error`.
+
+### C2 — I2 target-scoped source eligibility + affected-work planning — NEXT
+
+- [ ] define one target-scoped candidate/source-state read model over existing Jobinja/source/lifecycle owners.
+- [ ] compose existing discovery/detail/lifecycle/observation semantics rather than adding a second acquisition authority.
+- [ ] prove target-run missing-detail selection cannot spill into unrelated global backlog.
+- [ ] prove target-run refresh-due selection cannot spill into unrelated global backlog.
+- [ ] plan translation only for target candidates missing the effective current English projection.
+- [ ] plan P1.6 only for target candidates with current English evidence and no matching current artifact.
+- [ ] reuse current translation/P1.6 artifacts by their existing exact identities.
+- [ ] preserve explicit counts for reused / needed / unavailable / failed / remaining affected work.
 - [ ] preserve `failed refresh != disappearance`.
+- [ ] keep source eligibility deterministic; do not implement semantic membership inference yet.
+- [ ] add focused deterministic tests for target-scoped selection/currentness/partial-success planning.
 
-### D3 — I3 membership qualification — AFTER I2
+### C3 — I3 membership qualification — AFTER I2
 
 - [ ] deterministic eligibility first.
 - [ ] bounded semantic relevance only where necessary.
 - [ ] support `core_match / adjacent_match / uncertain / excluded`.
-- [ ] store exact target/source/classifier/artifact dependency identity.
-- [ ] accepted P1.6 may strengthen membership but must not be required for source-level membership.
-- [ ] Capability/Work must not become mandatory gates.
+- [ ] accepted P1.6 may strengthen membership but is not required for source-level membership.
+- [ ] Capability/Work remain optional, not gates.
 
-### D4 — I4 immutable snapshot — AFTER I3
+### C4 — I4 immutable snapshot construction — AFTER I3
 
-- [ ] freeze exact definition version, members, source versions, membership decisions and semantic coverage state.
-- [ ] preserve core/adjacent/uncertain/excluded counts and P1.6 coverage.
-- [ ] keep old snapshots immutable after source/target/contract changes.
+- [ ] freeze exact definition, run, memberships, source versions and semantic coverage.
+- [ ] keep core/adjacent/uncertain/excluded separate.
+- [ ] keep historical snapshots immutable after source/target/contract changes.
 
-### D5 — I5 deterministic aggregate profile — AFTER I4
+### C5 — I5 deterministic aggregate profile — AFTER I4
 
 - [ ] explicit target/corpus/evidence-quality header.
 - [ ] qualified core source-posting denominator.
 - [ ] accepted-current-P1.6 semantic sub-denominator.
-- [ ] requirement concept/type/strength support counts.
-- [ ] distinct-employer support and concentration warnings.
+- [ ] requirement concept/type/strength counts.
+- [ ] employer breadth/concentration warnings.
 - [ ] accepted responsibility/work evidence drill-down.
-- [ ] explicit repost/new-ID adjustment warning.
+- [ ] explicit no-repost-adjustment limitation.
 - [ ] no model-authored counts or opaque scores.
 
-### D6 — I6 browser + CLI thin workflow — AFTER I5
+### C6 — I6 browser + CLI thin workflow — AFTER I5
 
-- [ ] browser primary: target → definition version → preview → run → ledger → membership → snapshot/profile → evidence drill-down/history.
-- [ ] reuse existing one-mutable-web-operation pattern.
-- [ ] CLI exposes same underlying services/state for advanced inspection/automation.
-- [ ] Market state remains local; no implicit corpus publication.
+- [ ] browser primary target/run/report workflow.
+- [ ] reuse existing one-mutable-operation behavior.
+- [ ] CLI uses the same services/state.
+- [ ] Market state stays local/private by default.
 
-### D7 — I7 bounded real acceptance — AFTER I6
+### C7 — I7 bounded real acceptance — AFTER I6
 
-- [ ] run one representative real target locally.
-- [ ] verify acquisition bounds/noise are visible rather than hidden.
-- [ ] verify unchanged rerun reuses upstream work.
-- [ ] verify membership and denominator display.
-- [ ] verify missing/pending/failed P1.6 remains explicit.
-- [ ] verify evidence drill-down.
-- [ ] verify partial success.
-- [ ] run complete applicable quality gates.
-- [ ] close the slice only if the implementation-specific acceptance matrix passes.
+- [ ] one representative real local target run.
+- [ ] verify acquisition bounds/noise visibility.
+- [ ] verify unchanged rerun reuse.
+- [ ] verify membership/denominator/semantic-coverage display.
+- [ ] verify evidence drill-down and partial success.
+- [ ] run all applicable quality gates.
+- [ ] close the first slice only after the implementation-specific acceptance matrix passes.
 
 ---
 
-## E. First-slice invariants
+## D. First-slice invariants
 
-- [ ] stable target identity is separate from immutable definition versions.
-- [ ] target-definition change does not invalidate generic source/translation/P1.6.
-- [ ] target run queues are target-scoped.
+Already proven in I1:
+
+- [x] stable target identity is separate from immutable definition versions.
+- [x] target-definition change does not invalidate generic source/translation/P1.6 artifacts.
+- [x] membership decisions are immutable and exact-dependency keyed.
+- [x] snapshots/members are immutable.
+- [x] aggregate profile references exact snapshot/contract identity and rejects conflicting deterministic replay.
+- [x] ordinary I1 CI requires no Jobinja or LM Studio network/model access.
+
+Still to prove across later increments:
+
+- [ ] target-run affected work is target-scoped.
 - [ ] failed refresh never means disappearance by itself.
-- [ ] `adjacent_match`, `uncertain`, and `excluded` never silently enter core prevalence.
-- [ ] missing/pending/failed P1.6 never means zero semantic demand.
+- [ ] `adjacent_match`, `uncertain`, and `excluded` never enter final core prevalence silently.
+- [ ] pending/missing/failed P1.6 never becomes zero semantic demand.
 - [ ] only accepted-current P1.6 contributes to strong semantic statistics.
 - [ ] every percentage has recoverable denominator semantics.
 - [ ] one posting contributes at most once per concept-support count.
-- [ ] snapshots are immutable.
-- [ ] aggregate profile references exact snapshot/contract identity.
-- [ ] first slice uses `qualified source postings`, not unproven `unique demand units`.
-- [ ] ordinary CI requires no Jobinja/LM Studio network/model access.
+- [ ] first slice says `qualified source postings`, not unproven `unique demand units`.
 
 ---
 
-## F. Explicitly deferred / not authorized
+## E. Explicitly deferred / not authorized
 
 - [-] another B1 responsibility-promotion/model matrix.
 - [-] P2.2C promoted responsibility families.
 - [-] P2.2D stable promoted role archetypes.
-- [-] first-slice Capability/Work gating.
 - [-] P1.6 auto-acceptance.
+- [-] first-slice Capability/Work gating.
 - [-] automatic repost/new-ID collapsing.
 - [-] semantic role-subfamily synthesis in the first slice.
 - [-] persisted model-generated Role-Family Intelligence Report in the first slice.
@@ -234,27 +195,28 @@ TargetMarket
 
 ---
 
-## G. Portfolio / release — PARALLEL
+## F. Portfolio / release — PARALLEL
 
 - [x] PR0–PR8 repository-side work complete as recorded.
 - [x] PR9-A final repository/public audit complete.
-- [x] MIT license decision/application complete.
+- [x] MIT license complete.
 - [ ] GitHub description/topics settings action.
 - [ ] real browser screenshots + privacy review.
-- [ ] intentional `v0.1.0` tag/GitHub release after remaining blockers/final CI.
+- [ ] intentional `v0.1.0` tag/GitHub release.
 - [x] release/CV/interview package prepared.
 - [ ] owner mastery verification.
 
-Portfolio work cannot broaden the Market implementation authorization.
+Portfolio work cannot broaden Market implementation authorization.
 
 ---
 
 ## Exact next action
 
 ```text
-implement Market first-slice I1
-→ domain models + SQLite persistence
-→ deterministic tests
-→ reconcile docs/working memory
-→ then proceed to I2 only if I1 is clean
+I2 only
+→ target-scoped source eligibility + affected-work planning
+→ compose existing source/lifecycle/translation/P1.6 currentness owners
+→ deterministic focused tests
+→ reconcile state
+→ only then proceed to I3
 ```
