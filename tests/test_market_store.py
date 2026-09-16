@@ -170,16 +170,18 @@ def test_target_definition_is_versioned_normalized_and_immutable(tmp_path: Path)
     assert renamed.id == target.id
     assert store.get_definition_version(first.id) == first
 
-    with sqlite3.connect(database_path) as connection:
-        with pytest.raises(sqlite3.IntegrityError, match="immutable"):
-            connection.execute(
-                """
-                UPDATE market_target_definition_versions
-                SET definition_json = '{}'
-                WHERE id = ?
-                """,
-                (first.id,),
-            )
+    with (
+        sqlite3.connect(database_path) as connection,
+        pytest.raises(sqlite3.IntegrityError, match="immutable"),
+    ):
+        connection.execute(
+            """
+            UPDATE market_target_definition_versions
+            SET definition_json = '{}'
+            WHERE id = ?
+            """,
+            (first.id,),
+        )
 
 
 def test_market_run_ledger_moves_once_from_running_to_terminal(tmp_path: Path) -> None:
@@ -437,12 +439,14 @@ def test_snapshot_freezes_membership_and_p16_coverage_without_zero_filling(
             created_at=_NOW,
         )
 
-    with sqlite3.connect(database_path) as connection:
-        with pytest.raises(sqlite3.IntegrityError, match="immutable"):
-            connection.execute(
-                "UPDATE market_corpus_snapshots SET freshness_rule = 'changed' WHERE id = ?",
-                (snapshot.id,),
-            )
+    with (
+        sqlite3.connect(database_path) as connection,
+        pytest.raises(sqlite3.IntegrityError, match="immutable"),
+    ):
+        connection.execute(
+            "UPDATE market_corpus_snapshots SET freshness_rule = 'changed' WHERE id = ?",
+            (snapshot.id,),
+        )
 
 
 def test_aggregate_profile_is_deterministic_for_one_snapshot_contract(
@@ -481,9 +485,11 @@ def test_aggregate_profile_is_deterministic_for_one_snapshot_contract(
             created_at=_NOW,
         )
 
-    with sqlite3.connect(database_path) as connection:
-        with pytest.raises(sqlite3.IntegrityError, match="immutable"):
-            connection.execute(
-                "UPDATE market_aggregate_profiles SET profile_json = '{}' WHERE id = ?",
-                (first.id,),
-            )
+    with (
+        sqlite3.connect(database_path) as connection,
+        pytest.raises(sqlite3.IntegrityError, match="immutable"),
+    ):
+        connection.execute(
+            "UPDATE market_aggregate_profiles SET profile_json = '{}' WHERE id = ?",
+            (first.id,),
+        )
