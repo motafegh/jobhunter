@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-14  
+**Date:** 2026-09-16  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current product gate:** MARKET FOUNDATION PASS / FIRST VERTICAL SLICE AUTHORIZED / I1 NEXT  
+**Current product gate:** MARKET I1 ACCEPTED / I2 NEXT  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -18,19 +18,19 @@ Current Market design authority:
 
 `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 
-Research decisions:
-
-`docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`
-
-Formal foundation result:
+Foundation result:
 
 `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
 
-B1 final evidence:
+Latest implementation/acceptance record:
 
-`docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
+`docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`
 
-Do not follow older open-B1 or pre-Market-investigation `NEXT` instructions when they conflict with these current owners.
+Execution checklist:
+
+`docs/EXECUTION_TODO.md`
+
+Do not follow older `I1 NEXT`, open-B1, or pre-foundation instructions when they conflict with these current owners.
 
 ---
 
@@ -44,7 +44,7 @@ Capability:                 job-capability-intelligence-v9 / job-capability-inte
 Canonical Registry:         jobhunter-canonical-concept-registry-v1 / P2.1 CLOSED
 Work Intelligence:          job-work-intelligence-v2 / v2.0 / P2.2A CLOSED
 Public Corpus:              jobhunter-public-corpus-v1
-Blueprint:                  deferred / historical / non-authoritative
+Blueprint:                  historical / experimental / non-authoritative
 ```
 
 Accepted/current P1.6 → Capability anchors:
@@ -57,7 +57,7 @@ t4qV 44 → 14
 tmyX 46 → 15
 ```
 
-Current repository-safe public corpus:
+Public corpus remains:
 
 ```text
 353 known/discovered jobs
@@ -67,188 +67,59 @@ Current repository-safe public corpus:
 5 accepted/current Capability
 ```
 
-Do not reopen accepted P1.6/Capability/P2.1/P2.2A merely for harmless wording variation.
+B1 is closed as NO-PROMOTION / DEFER. Do not repeat the `ta9l` extraction/model matrix merely to force responsibility promotion.
 
 ---
 
-## 3. B1 is closed; retain only the engineering lessons
+## 3. Market foundation state
 
-Final B1 disposition:
-
-```text
-NO-PROMOTION / DEFER
-```
-
-`ta9l` evidence:
-
-```text
-Senior Applied AI Engineer — Mofid Securities
-source detail: 25
-English projection: 40 / reviewed / published
-accepted/current P1.6: none
-```
-
-Bounded run chronology:
-
-```text
-attempt 98 → failed, no artifact
-attempt 99 → artifact 47 → whole-artifact semantic rejection / archived
-attempt 100 → failed, no artifact
-attempt 101 → failed, no artifact
-```
-
-No responsibility concept/mappings were created.
-
-The defer result does not prove the proposed `tG9K`/`ta9l` evaluation-monitoring correspondence is semantically incompatible. It means the selected second claim never reached accepted P1.6 authority within the bounded run.
-
-### General engineering repairs retained from B1
-
-- flattened capitalized `Responsibilities ...` source headings no longer silently lose duties;
-- partial qualification-list decomposition preserves uncovered prefix/middle/tail requirement text;
-- explicit `or` alternatives remain one source qualification rather than becoming independent mandatory items;
-- v20 recognizes explicit `Deep understanding / Deep knowledge` degree phrases without treating bare `deep` or `deep learning` as proficiency depth;
-- prior-exposure wording such as `Production experience ...` is not automatically a calibrated depth degree;
-- historical stored artifacts are not rewritten.
-
-Recorded quality state: Ruff green and 552 tests passed with warnings as errors; accepted anchors remained intact.
-
-Architectural caution for later cleanup: current v20 still reuses helpers in historically named analysis modules. Exact replay of recent behavior therefore depends on source revision as well as contract IDs. Do not refactor this during Market I1 unless a concrete dependency problem requires it.
-
----
-
-## 4. Market foundation investigation result
-
-Decision:
+Formal decision:
 
 ```text
 FOUNDATION INVESTIGATION: PASS
 FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-The first slice exists to answer one bounded product question:
-
-> For one defined target market, which current Jobinja postings genuinely belong, what trustworthy evidence coverage exists, and what deterministic recurring requirements/work can be shown without hiding missing semantic processing or overstating the sample?
-
-Authorized slice:
+Authorized first slice:
 
 ```text
 TargetMarket
-+ TargetMarketDefinitionVersion
-+ MarketResearchRun
++ immutable TargetMarketDefinitionVersion
++ thin target-aware MarketResearchRun coordinator
 + MarketJobMembership
-+ MarketCorpusSnapshot + members
-+ MarketAggregateProfile
-+ thin browser/CLI flow
++ immutable MarketCorpusSnapshot + members
++ deterministic MarketAggregateProfile
++ thin browser/CLI workflow
 ```
 
-Do not add a persisted model-generated `RoleFamilyIntelligenceReport` in this slice.
+Permanent first-slice boundaries:
+
+- Jobinja remains the only approved recurring source.
+- search/acquisition recall is not target membership truth.
+- `core_match / adjacent_match / uncertain / excluded` remain distinct.
+- primary target corpus is core only.
+- accepted P1.6 is not required for source-level membership.
+- accepted P1.6 is required for strong semantic prevalence statistics.
+- Capability and Work are optional enrichments, not gates.
+- missing/pending/failed P1.6 is not zero demand.
+- automatic repost/new-ID collapse remains deferred; say `qualified source postings`, not `unique demand units`.
+- semantic role-subfamily synthesis, trends and personal intelligence remain outside the first slice.
+- Market state remains local/private by default.
 
 ---
 
-## 5. Settled first-slice design decisions
+## 4. I1 domain + SQLite persistence — ACCEPTED / CLOSED
 
-### Target identity
-
-```text
-TargetMarket
-→ stable user-recognizable identity
-
-TargetMarketDefinitionVersion
-→ immutable exact acquisition + membership meaning used by runs/snapshots
-```
-
-Definition version should carry the bounded Jobinja acquisition references plus membership intent/constraints. Operational request/detail/model budgets are recorded on the run, not silently treated as target semantic identity.
-
-### Acquisition/orchestration
-
-Use a thin target-aware coordinator over existing owners.
-
-Do not build another source pipeline/cache/workflow framework.
-
-Important correction relative to global Phase-1 orchestration: target runs must use target-scoped candidate IDs for missing/refresh/translation/P1.6 affected work. `preferred_ids` that spill remaining budget into unrelated global backlog are insufficient for a Market run.
-
-### Source eligibility
-
-- current successfully parsed source detail required for qualified snapshot membership;
-- `active` normally eligible;
-- `possibly_unavailable` may remain with warning when prior evidence is fresh enough;
-- `expired` / `removed` outside the active primary corpus but historical evidence remains;
-- network/rate-limit/challenge/auth/server failures do not equal disappearance;
-- changed semantic source version requires new membership evaluation but never mutates an old snapshot.
-
-### Membership
-
-Confirmed dispositions:
+Implementation:
 
 ```text
-core_match
-adjacent_match
-uncertain
-excluded
+src/jobhunter/market_models.py
+src/jobhunter/market_store.py
+tests/test_market_store.py
+tests/test_market_i1_invalidation.py
 ```
 
-First-slice membership evidence:
-
-```text
-current parsed source detail + title
-+ current English projection when needed
-+ accepted-current P1.6 opportunistically when available
-```
-
-Accepted P1.6 is **not** required for source-level membership. Capability and Work are not membership gates.
-
-Primary target corpus = `core_match` only. Adjacent/uncertain remain visible separately.
-
-### Representative membership evidence used in the investigation
-
-For a representative Applied AI / ML Engineering target:
-
-```text
-ta9l  → core      explicit applied AI/RAG/agent/retrieval/evaluation work; P1.6 missing
-tG9K  → core      applied industrial ML work; accepted rich P1.6
-tGM0  → adjacent  backend/AI-platform integration; role center remains backend/platform
-t4jp  → excluded  AI title but actual AI-assisted content-production role
-tmBK  → excluded  Python/backend role with AI-usage qualification only
-t4qV  → excluded  network security engineering
-tmyX  → excluded  Microsoft infrastructure security/hardening
-```
-
-This proves title-only relevance is unsafe and source-level membership can be clear before accepted P1.6 exists.
-
-### P1.6 coverage
-
-One snapshot preserves source-level qualified membership and exact semantic-processing state.
-
-Always distinguish:
-
-```text
-core source postings
-core + accepted-current P1.6
-core + pending P1.6
-core + missing/failed/rejected current P1.6 processing
-```
-
-Strong requirement/responsibility prevalence uses only the accepted-current P1.6 sub-denominator.
-
-Never turn missing/failed P1.6 into zero demand.
-
-### Repost/new-ID dedup
-
-Automatic new-ID repost collapse is deliberately **deferred** because no defensible real Jobinja pair set established an authority rule during the foundation investigation.
-
-First-slice denominator wording:
-
-```text
-qualified source postings
-```
-
-not `unique demand units`.
-
-Expose the absence of repost adjustment and keep employer concentration visible.
-
-### Persistence
-
-Conceptual first-slice SQLite owners:
+I1 established these durable runtime/history boundaries:
 
 ```text
 market_targets
@@ -260,116 +131,136 @@ market_corpus_snapshot_members
 market_aggregate_profiles
 ```
 
-No separate storage engine. No first-slice semantic report table.
+### Accepted I1 behavior
 
-History rules:
+- `TargetMarket` is stable identity; display metadata may evolve.
+- definition versions are canonicalized, fingerprinted and immutable.
+- same normalized definition reuses its version; semantic changes create a new version.
+- target-definition changes do not invalidate generic source/translation/P1.6 artifacts.
+- research runs preserve exact target definition, controls and a partial-success ledger.
+- membership reuse is keyed by exact target/source/classifier/artifact dependency identity.
+- membership decisions are immutable; correction creates a new superseding record.
+- membership may consume P1.6 only when it is from the exact chain and accepted.
+- snapshot/member history is immutable.
+- snapshot semantic coverage records `accepted / pending / missing / failed / rejected` separately.
+- only `core_match` is persisted as primary-corpus inclusion at the I1 state layer.
+- aggregate-profile persistence is immutable and deterministic over exact snapshot + contract.
+- conflicting deterministic replay for the same snapshot/contract is an integrity failure.
 
-- definition version immutable;
-- run operational record preserved;
-- membership exact-dependency identity/reuse;
-- snapshot/member set immutable;
-- aggregate profile immutable derivative of one exact snapshot + contract;
-- source/P1.6 payloads referenced by ID rather than copied as authority.
-
-### Aggregate profile
-
-First profile must show:
-
-- target/version/run/snapshot/source scope;
-- core/adjacent/uncertain/excluded counts;
-- qualified core source postings;
-- accepted/pending/missing-or-failed P1.6 coverage;
-- distinct employers / largest-employer share / warnings;
-- deterministic P1.6 requirement concept/type/strength support with explicit denominator;
-- source-explicit depth where useful;
-- accepted responsibility/work evidence and drill-down;
-- repost adjustment limitation.
-
-No opaque score, demand band, trend, emerging label, or model-authored count.
-
-### Capability / Work / Registry
-
-Capability and Work are optional future enrichments, not first-slice prerequisites.
-
-Reviewed Registry mappings may normalize where available; unmapped evidence remains valid and visible.
-
-### Semantic role subfamilies
-
-Deferred from first slice. First prove deterministic target corpus/profile value.
-
-If later needed, use one bounded report-level synthesis over aggregate/accepted work, not per-job narratives summarized upward. Candidate subfamilies remain non-canonical.
-
----
-
-## 6. Exact implementation sequence
+Contracts introduced:
 
 ```text
-I1  domain models + SQLite persistence
-I2  target-scoped source eligibility + affected-work planning
-I3  membership qualification
-I4  immutable snapshot construction
-I5  deterministic aggregate profile
-I6  browser + CLI thin workflow
-I7  bounded local real acceptance + reuse rerun
+market-corpus-snapshot-v1
+market-aggregate-profile-v1
 ```
 
-### Current exact next action
+Final I1 technical evidence:
 
-**I1 only.**
+```text
+code/test head: f0cded55a9887c061898d0dcab7f5e6b10300d8e
+CI: 1160 / 35108236384
+Ruff: PASS
+pytest: PASS
+pytest -W error: PASS
+```
 
-Build the smallest domain/persistence substrate and its deterministic tests. Do not drift into acquisition/model/browser work before I1 is coherent.
-
-I1 must prove at least:
-
-- stable target identity vs immutable definition versions;
-- run history;
-- membership dependency identity shape;
-- immutable snapshot/member history;
-- aggregate profile exact snapshot dependency;
-- target-version changes do not invalidate generic upstream source/translation/P1.6 artifacts.
+I1 does not yet make a real target run, decide lifecycle eligibility, classify target membership, calculate the aggregate profile, or expose a browser/CLI Market workflow.
 
 ---
 
-## 7. First-slice acceptance invariants to keep visible during implementation
+## 5. Exact next action — I2 only
 
-- target-run affected work is target-scoped;
-- failed refresh != disappearance;
-- `adjacent_match` / `uncertain` / `excluded` cannot enter core prevalence silently;
-- `uncertain` is a successful semantic state;
-- pending/missing/failed P1.6 cannot enter accepted semantic statistics;
-- one source posting contributes at most once per concept-support count;
-- every share exposes its denominator;
-- snapshots are immutable;
-- aggregate profile references exact snapshot/contract;
-- no `unique demand` claim while repost adjustment is deferred;
-- partial success preserves prior durable work;
-- browser/CLI share services/state;
-- ordinary CI uses fixtures/fakes, not Jobinja/LM Studio;
-- I7 real local run is required before first-slice closure;
-- Market data remains local by default.
+I2 responsibility:
+
+**Target-scoped source eligibility + affected-work planning.**
+
+The problem to solve is narrower than full Market orchestration:
+
+> Given one immutable target definition and the existing JobHunter source/runtime state, determine exactly which target candidates are source-eligible and which target-scoped source/translation/P1.6 work is missing or stale—without spilling run budget into unrelated global backlog and without confusing refresh failure with disappearance.
+
+### I2 must inspect/reuse
+
+At minimum:
+
+```text
+search_registry.py / config search definitions
+jobinja_discovery.py
+jobinja_sync.py
+jobinja_batch.py
+job_catalog.py
+job_detail_observations.py
+lifecycle.py
+storage.py
+translation_service.py / translation_store.py
+analysis currentness/store/service owners
+phase1_run.py as orchestration precedent only
+market_models.py / market_store.py from I1
+```
+
+### I2 must decide/implement
+
+- one target-scoped candidate/source-state representation;
+- deterministic source eligibility from current parsed source + lifecycle/freshness evidence;
+- target-only missing-detail selection;
+- target-only refresh-due selection;
+- target-only translation affected-work selection;
+- target-only P1.6 affected-work selection;
+- exact reuse state for already-current artifacts;
+- explicit unavailable/failure/remaining counts suitable for the later Market run ledger;
+- no semantic target-membership inference yet.
+
+### I2 critical regression boundary
+
+Existing global Phase-1 helpers may use preferred IDs and then fill remaining budget from the global backlog. That behavior is useful for global maintenance but **must not be reused blindly for a target Market run**.
+
+I2 should prove target runs cannot consume unrelated jobs merely because budget remains.
+
+### Lifecycle rule
+
+```text
+failed refresh != disappearance
+```
+
+Network/rate-limit/challenge/auth/server failures remain non-destructive evidence. `expired` / confirmed `removed` state is different from a failed check.
 
 ---
 
-## 8. Explicit stop lines
+## 6. First-slice sequence after I1
 
-Do not during the first slice:
+```text
+I1  domain + persistence                         ACCEPTED
+I2  target source eligibility / affected work   NEXT
+I3  membership qualification                    BLOCKED BY I2
+I4  snapshot construction                       BLOCKED BY I3
+I5  deterministic aggregate                     BLOCKED BY I4
+I6  browser + CLI                               BLOCKED BY I5
+I7  bounded real local acceptance               BLOCKED BY I6
+```
 
-- reopen B1 or force another `ta9l` P1.6 matrix;
-- start promoted P2.2C/P2.2D taxonomy;
+Do not jump to I3/I4/I5 because I1 already contains their persistence records. Persistence capability is not the same as accepted service behavior.
+
+---
+
+## 7. Stop lines
+
+Do not during I2:
+
+- implement semantic `core/adjacent/uncertain/excluded` classification;
+- assemble production Market snapshots;
+- calculate final Market aggregates;
+- build browser/report UI;
 - auto-accept P1.6;
 - make Capability/Work corpus-wide gates;
-- invent a repost similarity threshold;
-- implement semantic subfamily/report synthesis early;
-- add trend/emerging/forecasting;
+- invent repost similarity thresholds;
+- start P2.2C/P2.2D promotion;
+- add trends/emerging/forecasting;
 - add personal readiness/gap/scoring/recommendations;
 - publish Market state to `corpus/`;
-- add generic source/plugin/vector/RAG/graph/autonomous-agent infrastructure.
+- add generic workflow/vector/RAG/graph/agent infrastructure.
 
 ---
 
-## 9. Portfolio/release parallel track
-
-Repository-side PR0–PR8 and PR9 package work remain as previously recorded.
+## 8. Parallel portfolio/release state
 
 Still pending:
 
@@ -380,4 +271,4 @@ intentional v0.1.0 release
 owner mastery verification
 ```
 
-This parallel track does not change Market implementation scope.
+This parallel track does not change the I2 product frontier.
