@@ -215,6 +215,27 @@ class JobDetailObservationStore:
             ).fetchall()
         return tuple(_observation_from_row(row) for row in rows)
 
+    def latest_successful_check_at(self, source_job_id: str) -> str | None:
+        """Return the newest successful parsed detail check for one Jobinja job."""
+
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT o.checked_at
+                FROM job_detail_fetch_observations AS o
+                JOIN job_postings AS p ON p.id = o.job_posting_id
+                WHERE p.source = 'jobinja'
+                  AND p.source_job_id = ?
+                  AND o.outcome IN ('new_version', 'unchanged')
+                  AND o.parse_status = 'parsed'
+                ORDER BY o.checked_at DESC, o.id DESC
+                LIMIT 1
+                """,
+                (source_job_id,),
+            ).fetchone()
+        return str(row["checked_at"]) if row is not None else None
+
     def refresh_due_job_ids(
         self,
         *,
