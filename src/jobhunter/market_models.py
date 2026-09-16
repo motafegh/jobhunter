@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from enum import StrEnum
 from typing import Any
+from dataclasses import dataclass
 
 
 MARKET_SNAPSHOT_CONTRACT_VERSION = "market-corpus-snapshot-v1"
