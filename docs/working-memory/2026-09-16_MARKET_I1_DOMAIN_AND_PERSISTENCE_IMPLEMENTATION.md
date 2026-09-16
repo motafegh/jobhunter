@@ -27,6 +27,7 @@ It did **not** implement target acquisition orchestration, source-eligibility pl
 src/jobhunter/market_models.py
 src/jobhunter/market_store.py
 tests/test_market_store.py
+tests/test_market_i1_invalidation.py
 ```
 
 ### Domain records
@@ -84,6 +85,8 @@ No second database, cache, document store, vector store, or workflow system was 
 `market_target_definition_versions` stores canonicalized immutable definition JSON plus a SHA-256 semantic fingerprint. Re-recording the same normalized definition reuses the same version; a material definition change creates the next version.
 
 The first slice accepts only the already-approved `jobinja` source. Search profiles/packs/terms/raw searches and membership-intent constraints are stored as definition semantics. Operational run budgets remain separate run controls.
+
+A dedicated regression test proves that creating a new target-definition version leaves already-persisted source detail, English projection, and P1.6 artifacts intact. Target-definition evolution therefore does not act as upstream invalidation.
 
 ### Research runs
 
@@ -158,7 +161,7 @@ I1 does not yet calculate that profile; I5 will own aggregate calculation.
 
 ## 4. Deterministic tests
 
-`tests/test_market_store.py` covers the first I1 invariants:
+The I1 tests cover:
 
 1. stable target identity vs normalized immutable definition versions;
 2. definition fingerprint idempotency;
@@ -171,20 +174,21 @@ I1 does not yet calculate that profile; I5 will own aggregate calculation.
 9. one snapshot preserves core/uncertain/adjacent disposition separately;
 10. accepted/pending/missing P1.6 coverage remains distinct;
 11. snapshot history is immutable;
-12. one snapshot + aggregate contract cannot silently persist conflicting deterministic profiles.
+12. one snapshot + aggregate contract cannot silently persist conflicting deterministic profiles;
+13. a new target-definition version does not delete or invalidate generic source/translation/P1.6 artifacts.
 
 ## 5. Quality evidence
 
-Final I1 head before documentation reconciliation:
+Final I1 code/test head before status-document reconciliation:
 
 ```text
-e871e23d88e301a885d4b153e672d5d593c9961d
+f0cded55a9887c061898d0dcab7f5e6b10300d8e
 ```
 
-GitHub Actions CI run:
+Final I1 GitHub Actions CI run:
 
 ```text
-1158 / 35107895662
+1160 / 35108236384
 ```
 
 Result:
