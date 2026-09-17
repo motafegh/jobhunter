@@ -30,6 +30,10 @@ docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTAT
 docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
 ```
 
+I3 real-model boundary evaluation:
+
+`docs/experiments/2026-09-17_market-i3-real-model-acceptance/README.md`
+
 Execution checklist:
 
 `docs/EXECUTION_TODO.md`
@@ -83,6 +87,12 @@ Market state local/private by default
 ```
 
 Semantic role-subfamily synthesis, trends/forecasting, personal Market→You scoring, P2.2C/P2.2D promotion, and Market publication remain outside the first slice.
+
+A material I3 semantic lesson is now also frozen for this slice:
+
+> `TargetMarketDefinitionVersion.membership_intent` must express the intended market boundary with enough precision for target-relative classification. A short role-family label is not always sufficient to distinguish core work from adjacent enabling work.
+
+Do not patch the membership prompt around individual vacancies when the unresolved distinction is actually missing from the target definition.
 
 ---
 
@@ -230,21 +240,66 @@ I2 is planning-only. Actual target discovery/source/model execution and persiste
 
 ---
 
-## 6. I3 repository acceptance / I4 next
+## 6. I3 — REPOSITORY ACCEPTED / REAL-MODEL BOUNDARY CHECK RECORDED
 
-I3 evidence owner: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`.
+I3 evidence owner:
+
+`docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`
+
+Implementation commit:
+
+```text
+0eaf04109a57846aa6d0a920d0563f89a4dfb535
+```
+
+Repository acceptance:
+
+```text
+CI 1172
+Ruff: PASS
+pytest: PASS — 608 passed
+pytest -W error: PASS — 608 passed
+```
 
 Membership qualification now composes fresh I2 eligibility with bounded interpretation,
 validated evidence refs, exact dependency reuse, and explicit immutable corrections.
-Pending/missing P1.6 is not a membership gate. Uncertain is valid success; provider,
+Pending/missing P1.6 is not a membership gate. `uncertain` is valid success; provider,
 stale-dependency, and invalid-reference failures do not become saved uncertainty.
 
-The provider is wired as a service factory; browser/CLI orchestration remains I6.
-Fake/HTTP fixtures prove the engineering contract, not real-model adequacy. I7 still
-owns bounded real target acceptance and reuse.
+### Real-model evidence
 
-**Next: I4 immutable snapshot construction**, with current membership identities,
-explicit P1.6 coverage, core-only primary denominator, and preserved historical snapshots.
+Preserved at:
+
+`docs/experiments/2026-09-17_market-i3-real-model-acceptance/`
+
+Using seven historical real postings plus one synthetic sparse case:
+
+```text
+broad target definition       7/8 expected outcomes overall
+                              6/7 real vacancies
+sole disagreement             tGM0: core_match vs expected adjacent_match
+
+clarified target definition   8/8 expected outcomes
+```
+
+The clarified comparison changed only target meaning; model, prompt/schema, and vacancy evidence were held fixed. It was written after observing the baseline miss, so **8/8 is post-hoc boundary-calibration evidence, not a population accuracy estimate or blinded benchmark**.
+
+Product lesson:
+
+```text
+membership quality
+= target-definition quality
++ source/derived evidence quality
++ classifier contract/model behavior
+```
+
+Do not reopen I3 or add a `tGM0`-specific prompt rule. The boundary belongs in the immutable target definition when it matters.
+
+Immediate second calls reused persisted membership decisions and did not call the model again. That proves persistence reuse, not fresh-call model reproducibility.
+
+The provider is wired as a service factory; browser/CLI orchestration remains I6. I7 still owns bounded real target workflow acceptance and reuse.
+
+**Next: I4 immutable snapshot construction**, with current membership identities, explicit P1.6 coverage, core-only primary denominator, and preserved historical snapshots.
 
 ---
 
