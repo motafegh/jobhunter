@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Market run {{ run.id }} · JobHunter{% endblock %}
+{% block heading %}Market run #{{ run.id }}{% endblock %}
+{% block eyebrow %}Target-scoped partial-success ledger{% endblock %}
+{% block topbar_actions %}<a class="button secondary" href="/market/targets?definition_id={{ run.target_definition_version_id }}">Back to target</a>{% endblock %}
+
+{% block content %}
+<section class="metric-grid three">
+  <article class="metric-card accent"><span class="metric-label">Status</span><strong class="metric-value small-value">{{ run.status }}</strong><span class="metric-help">Terminal runs remain immutable</span></article>
+  <article class="metric-card"><span class="metric-label">Definition</span><strong class="metric-value">{{ run.target_definition_version_id }}</strong><span class="metric-help">Exact target meaning</span></article>
+  <article class="metric-card"><span class="metric-label">Snapshot</span><strong class="metric-value">{% if snapshot %}{{ snapshot.id }}{% else %}—{% endif %}</strong><span class="metric-help">{% if snapshot %}<a href="/market/snapshots/{{ snapshot.id }}">Open immutable snapshot</a>{% else %}No snapshot created{% endif %}</span></article>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Lifecycle</p><h2>Run identity</h2></div></div>
+  <div class="guide-content">
+    <p><strong>Started:</strong> {{ run.started_at }}</p>
+    <p><strong>Completed:</strong> {{ run.completed_at or '—' }}</p>
+    {% if run.error_summary %}<p><strong>Error summary:</strong> {{ run.error_summary }}</p>{% endif %}
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Bounded stages</p><h2>Partial-success ledger</h2></div></div>
+  <p class="muted">Durable success from an earlier stage is not erased when a later source/model/membership stage fails.</p>
+  <pre>{{ run.ledger | tojson(indent=2) }}</pre>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Run controls</p><h2>Exact budgets and acquisition scope</h2></div></div>
+  <pre>{{ run.controls | tojson(indent=2) }}</pre>
+</section>
+{% endblock %}
