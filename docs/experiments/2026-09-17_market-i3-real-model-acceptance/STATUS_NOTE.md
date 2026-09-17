@@ -1,0 +1,1 @@
+This directory preserves a bounded Market I3 real-model evaluation. The experiment runners were reformatted after preservation so the repository-wide Ruff gate can inspect them cleanly. The original semantic outputs in `report.json`, `comparison.json`, and the input/decision JSON files are unchanged by that formatting cleanup.
