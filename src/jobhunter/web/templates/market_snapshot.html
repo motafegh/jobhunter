@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Market snapshot {{ snapshot.id }} · JobHunter{% endblock %}
+{% block heading %}Market snapshot #{{ snapshot.id }}{% endblock %}
+{% block eyebrow %}Immutable qualified corpus and deterministic profile{% endblock %}
+{% block topbar_actions %}<a class="button secondary" href="/market/targets?definition_id={{ snapshot.target_definition_version_id }}&snapshot_id={{ snapshot.id }}">Back to target</a>{% endblock %}
+
+{% block content %}
+{% set p = profile.profile if profile else none %}
+{% set corpus = p.corpus if p else none %}
+<section class="metric-grid three">
+  <article class="metric-card accent"><span class="metric-label">Snapshot members</span><strong class="metric-value">{{ members|length }}</strong><span class="metric-help">Exact frozen membership identities</span></article>
+  <article class="metric-card"><span class="metric-label">Core postings</span><strong class="metric-value">{{ corpus.primary_core_postings if corpus else snapshot.metadata.primary_core_postings or 0 }}</strong><span class="metric-help">Qualified source postings</span></article>
+  <article class="metric-card"><span class="metric-label">Accepted semantic core</span><strong class="metric-value">{{ corpus.accepted_semantic_core_postings if corpus else snapshot.metadata.accepted_semantic_core_postings or 0 }}</strong><span class="metric-help">Accepted-current P1.6 denominator</span></article>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Authority</p><h2>Snapshot contract and denominators</h2></div><span class="badge">{{ snapshot.snapshot_contract_version }}</span></div>
+  <div class="guide-content">
+    <p><strong>Created:</strong> {{ snapshot.created_at }} · <strong>Run:</strong> <a href="/market/runs/{{ snapshot.run_id }}">#{{ snapshot.run_id }}</a></p>
+    <p><strong>Freshness rule:</strong> {{ snapshot.freshness_rule }}</p>
+    <p><strong>Denominator:</strong> {{ (corpus.denominator_language if corpus else snapshot.metadata.denominator_language) or 'qualified source postings' }}.</p>
+    <p><strong>Repost/new-ID adjustment:</strong> {{ (corpus.repost_adjustment if corpus else snapshot.metadata.repost_adjustment) or 'not_implemented' }}.</p>
+    <p class="muted">Missing, pending, failed, or rejected P1.6 never means zero semantic demand and never enters accepted semantic prevalence.</p>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Evidence drill-down</p><h2>Frozen members</h2></div></div>
+  {% if members %}<div class="table-wrap"><table><thead><tr><th>Job</th><th>Disposition</th><th>P1.6 coverage</th><th>Membership</th><th>Source</th><th>English</th><th>P1.6</th></tr></thead><tbody>{% for item in members %}<tr><td><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a></td><td>{{ item.disposition }}</td><td>{{ item.semantic_coverage_status }}</td><td>#{{ item.membership_id }}</td><td>v{{ item.job_detail_version_id }}</td><td>{{ item.translation_artifact_id or '—' }}</td><td>{{ item.analysis_artifact_id or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">This snapshot contains no qualified memberships.</div>{% endif %}
+</section>
+
+{% if p %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Coverage</p><h2>Corpus composition</h2></div><span class="badge">{{ profile.aggregate_contract_version }}</span></div>
+  <pre>{{ p.corpus | tojson(indent=2) }}</pre>
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Requirement demand</p><h2>Accepted semantic concepts</h2></div><span class="badge">N = {{ p.corpus.accepted_semantic_core_postings }}</span></div>
+  {% if p.requirements %}<div class="table-wrap"><table><thead><tr><th>Concept</th><th>Postings</th><th>Share</th><th>Required</th><th>Preferred</th><th>Employers</th></tr></thead><tbody>{% for row in p.requirements %}<tr><td><strong>{{ row.label }}</strong></td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.strength_postings.required }}</td><td>{{ row.strength_postings.preferred }}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic requirement evidence exists in the core denominator.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Work evidence</p><h2>Responsibilities</h2></div><span class="badge">No subfamily inference</span></div>
+  {% if p.responsibilities %}<div class="table-wrap"><table><thead><tr><th>Responsibility</th><th>Postings</th><th>Share</th><th>Employers</th></tr></thead><tbody>{% for row in p.responsibilities %}<tr><td><strong>{{ row.label }}</strong></td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic responsibility evidence exists in the core denominator.</div>{% endif %}
+</section>
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Warnings and limitations</h2></div></div>
+  <div class="guide-content">
+    {% for warning in p.warnings %}<p><strong>Warning:</strong> {{ warning }}</p>{% endfor %}
+    {% for limitation in p.limitations %}<p>{{ limitation }}</p>{% endfor %}
+  </div>
+</section>
+{% else %}
+<section class="panel"><div class="empty-state">No deterministic aggregate profile is stored for this snapshot.</div></section>
+{% endif %}
+{% endblock %}
