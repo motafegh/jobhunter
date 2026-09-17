@@ -197,9 +197,15 @@ class MarketAggregateService:
             "warnings": warnings,
             "limitations": [
                 "No automatic repost/new-ID or cross-source duplicate adjustment is applied.",
-                "Semantic requirement/responsibility statistics use accepted-P1.6 core postings only.",
+                (
+                    "Semantic requirement/responsibility statistics use accepted-P1.6 core "
+                    "postings only."
+                ),
                 "Registry enrichment uses only reviewed mappings dated no later than the snapshot.",
-                "No role-subfamily, trend, forecast, personal-fit, or model-authored numeric score is present.",
+                (
+                    "No role-subfamily, trend, forecast, personal-fit, or model-authored numeric "
+                    "score is present."
+                ),
             ],
         }
         artifact = self._market.record_aggregate_profile(
@@ -572,7 +578,9 @@ class MarketAggregateService:
                     ),
                 }
             )
-        rows.sort(key=lambda row: (-row["postings"], row["label"].casefold(), row["key"]))
+        rows.sort(
+            key=lambda row: (-row["postings"], row["label"].casefold(), row["key"])
+        )
         return rows
 
     def _accepted_artifact(self, member: MarketCorpusSnapshotMember) -> AnalysisArtifact:
@@ -613,7 +621,9 @@ class MarketAggregateService:
             return key, raw_text, None, "raw_unreviewed", None
         disposition = str(mapping["disposition"])
         state = (
-            "reviewed_unmapped" if disposition == "unmapped" else "reviewed_rejected_mapping"
+            "reviewed_unmapped"
+            if disposition == "unmapped"
+            else "reviewed_rejected_mapping"
         )
         return key, raw_text, None, state, int(mapping["mapping_id"])
 
@@ -733,7 +743,10 @@ class MarketAggregateService:
         return warnings
 
     def _connect_readonly(self) -> sqlite3.Connection:
-        connection = sqlite3.connect(f"file:{self._database_path.resolve()}?mode=ro", uri=True)
+        connection = sqlite3.connect(
+            f"file:{self._database_path.resolve()}?mode=ro",
+            uri=True,
+        )
         connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys=ON")
         return connection
