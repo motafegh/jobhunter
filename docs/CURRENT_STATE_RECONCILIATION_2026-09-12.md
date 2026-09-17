@@ -22,8 +22,9 @@ Market I1 domain + persistence      ACCEPTED / CLOSED
 Market I2 affected-work planning    ACCEPTED / CLOSED
 Market I3 membership qualification ACCEPTED / CLOSED
 Market I4 snapshot construction     ACCEPTED / CLOSED
-Market I5 aggregate profile         NEXT / ACTIVE PRODUCT FRONTIER
-Market I6-I7                        BLOCKED SEQUENTIALLY
+Market I5 aggregate profile         ACCEPTED / CLOSED
+Market I6 browser + CLI workflow    NEXT / ACTIVE PRODUCT FRONTIER
+Market I7 real local acceptance     BLOCKED BY I6
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
 
@@ -32,7 +33,7 @@ MIT license                         COMPLETE
 GitHub metadata/screenshots/release/owner mastery  PENDING
 ```
 
-Current contracts relevant to the active slice:
+Current first-slice contracts:
 
 ```text
 parser:                       jobinja-detail-v2
@@ -67,11 +68,11 @@ Final evidence:
 
 `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
 
-No responsibility concept or claim mappings were created. Do not reopen B1 or select another candidate merely to manufacture promotion.
+No responsibility concept or mappings were created. Do not reopen B1 merely to manufacture a promotion.
 
 ---
 
-## 3. Market foundation — PASS
+## 3. Market first-slice foundation
 
 Foundation decision:
 
@@ -89,219 +90,172 @@ TargetMarket
 + thin browser/CLI workflow over the same services/state
 ```
 
-Permanent first-slice rules:
+Permanent boundaries:
 
-- Jobinja remains the only approved recurring source;
-- acquisition/search recall is not target membership truth;
-- `core_match | adjacent_match | uncertain | excluded` remain distinct;
-- primary source-level corpus is `core_match` only;
+- Jobinja is the first recurring source;
+- search/acquisition recall != target membership truth;
+- dispositions remain `core_match / adjacent_match / uncertain / excluded`;
+- primary source-level corpus is core only;
 - accepted P1.6 is not required for source-level membership;
 - accepted-current P1.6 is required for strong semantic prevalence;
-- pending/missing/failed/rejected P1.6 never means zero demand;
+- pending/missing/failed/rejected P1.6 != zero demand;
 - Capability/Work are optional, not first-slice gates;
-- repost/new-ID automatic collapse remains deferred;
+- repost/new-ID collapse remains deferred;
 - denominator wording is `qualified source postings`, not `unique demand units`;
 - Market state remains local/private by default.
 
+I3 real-model evidence additionally established that material core-vs-adjacent semantics belong in the immutable target definition rather than vacancy-specific prompt patches.
+
 ---
 
-## 4. I1-I3 accepted state
+## 4. I1-I5 accepted chain
 
-Implementation records:
+Accepted records:
 
 ```text
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
 docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
 docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
+docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md
+docs/working-memory/2026-09-17_MARKET_I5_DETERMINISTIC_AGGREGATE_PROFILE.md
 ```
 
-I1 established immutable target/run/membership/snapshot/profile persistence.
+### I1
 
-I2 established target-scoped source/translation/P1.6 affected-work planning with no global-backlog spill and with `failed refresh != disappearance`.
+Immutable target/definition/run/membership/snapshot/profile persistence and exact dependency history.
 
-I3 established target-relative membership qualification with exact dependency reuse, explicit correction history, valid `uncertain`, and optional accepted-P1.6 evidence.
+### I2
 
-I3 real-model boundary evidence is preserved at:
+Target-scoped source/translation/P1.6 affected-work planning with no global backlog spill and cautious lifecycle/freshness semantics.
 
-`docs/experiments/2026-09-17_market-i3-real-model-acceptance/README.md`
+### I3
 
-Observed result:
+Target-relative membership qualification with exact evidence refs, valid `uncertain`, optional accepted P1.6, exact dependency reuse and immutable corrections.
+
+Repository acceptance: implementation `0eaf04109a57846aa6d0a920d0563f89a4dfb535`, CI 1172 with 608 tests twice.
+
+Real-model boundary evidence:
 
 ```text
-broad target meaning       7/8 expected outcomes; tGM0 sole disagreement
-clarified target meaning   8/8 post-hoc boundary-calibration outcomes
+broad target       7/8 expected outcomes; tGM0 sole disagreement
+clarified target   8/8 post-hoc boundary-calibration outcomes
 ```
 
-This is not a population accuracy benchmark. It establishes that material core-vs-adjacent semantics belong in the immutable target definition rather than vacancy-specific prompt patches.
+This is not a population accuracy benchmark.
 
----
+### I4
 
-## 5. I4 immutable snapshot construction — ACCEPTED / CLOSED
+Immutable point-in-time snapshot assembly from exact current I3 membership identities, with derived `accepted/pending/missing/failed/rejected` P1.6 coverage and core-only primary corpus.
 
-Acceptance record:
+Technical acceptance: CI 1182, 617 tests twice.
 
-`docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`
+### I5
 
-Implementation:
-
-```text
-src/jobhunter/market_snapshot_service.py
-tests/test_market_snapshot_service.py
-```
-
-I4 now validates exact I3 membership IDs against one terminal Market run and current I2/source/dependency state before writing through the existing immutable snapshot store.
+Deterministic aggregate profile over one exact immutable I4 snapshot.
 
 Accepted boundaries:
 
-- snapshots require `completed` or `completed_with_failures` run state;
-- membership must belong to the exact run target definition;
-- stale source-version memberships are rejected;
-- superseded memberships are rejected;
-- one source job contributes at most once;
-- model membership must still consume the current translation and current accepted P1.6 when available;
-- deterministic source-only membership remains source-only as membership identity;
-- semantic coverage is derived by I4 rather than trusted from the caller;
-- coverage is explicitly `accepted / pending / missing / failed / rejected`;
-- failed/rejected coverage is bounded to the current source/translation/P1.6 contract evidence;
-- only `core_match` enters the primary source-level corpus;
-- accepted-semantic core coverage remains a narrower denominator;
-- historical snapshots remain immutable after later source/membership changes.
-
-I4 freezes snapshot evidence-quality metadata such as disposition counts, primary core postings, semantic coverage counts, denominator language, and repost-adjustment status. It does **not** calculate the I5 final Market profile.
+- never reconstructs the historical corpus from today's current state;
+- source denominator = qualified core source postings;
+- semantic denominator = accepted-P1.6 core postings;
+- employer/source context derives from exact immutable source-detail evidence;
+- unknown employer remains explicit;
+- requirement/responsibility semantic counts use accepted snapshot P1.6 only;
+- one posting contributes at most once to a normalized support count;
+- strength support remains explicit;
+- evidence drill-down preserves source job, artifact and claim indexes;
+- Canonical Registry enrichment is permitted only for mappings reviewed no later than the snapshot timestamp;
+- later Registry review cannot silently change historical aggregate replay;
+- no model writes counts/shares/denominators/scores;
+- repost adjustment remains explicitly absent;
+- deterministic profile persistence is immutable and replay-safe.
 
 Technical acceptance:
 
 ```text
-head: 4b5e83134202d32ee167f499c3aca9cb43478f56
-CI 1182 / 35249049607
+head 5defb23cb769a4be7a6b0d13ea7762d35ec0f4ba
+CI 1189 / 35250174702
 Ruff: PASS
-pytest: 617 passed
-pytest -W error: 617 passed
+pytest: 622 passed
+pytest -W error: 622 passed
 conclusion: SUCCESS
 ```
 
 ---
 
-## 6. Exact current product action — I5
+## 5. Exact current action — I6
 
 Current active frontier:
 
 ```text
-I5 — deterministic Market aggregate profile
+I6 — thin browser + CLI Market workflow
 ```
 
-I5 must compute only from one exact immutable I4 snapshot and the exact historical source/P1.6 identities frozen by that snapshot. It must not rebuild the corpus from today's current state.
+I6 must expose the accepted I1-I5 state/services through the existing product surfaces rather than creating duplicate business logic.
 
-Minimum I5 output/authority:
+Minimum useful surface:
 
 ```text
-target + definition identity
-snapshot + run identity/time
-source/search scope
-core / adjacent / uncertain / excluded counts
-qualified core source-posting denominator
-accepted / pending / missing / failed / rejected core P1.6 coverage
-accepted-semantic core denominator
-raw snapshot member count
-repost-adjustment status
-distinct employer count
-largest-employer contribution/share
-freshness/lifecycle/processing warnings
+list/create Market target
+create/inspect immutable target definition
+inspect target run state/ledger
+inspect snapshot/profile history
+render deterministic profile and warnings
+show source vs accepted-semantic denominators
+show membership/coverage counts
+show requirement/responsibility evidence drill-down
 ```
 
-For accepted-semantic core members, I5 may deterministically aggregate P1.6 requirements/responsibilities with exact posting/artifact drill-down.
+The browser remains the primary repeat-use surface. CLI provides the same service/state access for automation/debugging.
 
-Required invariants:
+A thin coordinator may connect the accepted stages for one bounded run, but I6 must preserve partial-success ledgers and existing one-mutable-operation behavior. Do not introduce a generic workflow engine.
 
-- one posting supports one normalized concept at most once in concept-support count;
-- strength support stays explicit (`required / preferred / contextual / inferred`);
-- distinct-employer support is deterministic;
-- Registry mappings may enrich reviewed correspondences where already available, but unmapped evidence remains visible;
-- no model may author counts, percentages, scores, or denominators;
-- no repost collapse, trend, forecasting, role-subfamily clustering, personal scoring, or browser/CLI work in I5.
+I6 must not add model-generated report prose, role-subfamily clustering, repost heuristics, trends/forecasting, personal scoring, public corpus publication, or new infrastructure frameworks.
 
 ---
 
-## 7. Sequence
+## 6. Sequence
 
 ```text
 I1  domain + persistence                         ACCEPTED
 I2  target source eligibility / affected work   ACCEPTED
 I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
-I5  deterministic aggregate                     NEXT
-I6  browser + CLI                               BLOCKED BY I5
+I5  deterministic aggregate                     ACCEPTED
+I6  browser + CLI thin workflow                 NEXT
 I7  bounded real local acceptance               BLOCKED BY I6
 ```
 
 ---
 
-## 8. Precedence for older status wording
+## 7. Precedence
 
-For present-tense status only, this reconciliation supersedes old statements such as:
+For present-tense status only, this file supersedes older `B1 active`, `Market foundation incomplete`, or `I1-I5 next` language. Dated historical records remain evidence and should not be mass-rewritten.
 
-```text
-B1 active
-Market foundation incomplete
-I1/I2/I3/I4 next or not implemented
-I3 work not pushed / no CI claimed
-```
-
-Historical records remain evidence. Do not mass-edit dated history merely because its old `NEXT` action is no longer current.
-
----
-
-## 9. Current execution owner set
-
-Before I5 work, use:
+Current owner set before I6:
 
 ```text
 AGENTS.md
 README.md
 product/domain/source/architecture + reasoning policy
-ROADMAP.md / IMPLEMENTATION_PLAN.md for durable semantics
-THIS reconciliation for present-tense status
+this reconciliation
 docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
-docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md
-docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md
+docs/working-memory/2026-09-17_MARKET_I5_DETERMINISTIC_AGGREGATE_PROFILE.md
 docs/EXECUTION_TODO.md
 docs/WORKING_MEMORY.md
 ```
 
-Use I1-I3 records when a specific dependency/history question requires them; do not repeat accepted investigations.
-
 ---
 
-## 10. Current stop lines
-
-During I5:
-
-- do not build I6 browser/CLI workflow;
-- do not start I7 operational real-target acceptance;
-- do not auto-accept P1.6;
-- do not make Capability/Work mandatory Market gates;
-- do not invent repost similarity thresholds;
-- do not reopen B1/I3 for harmless semantic variation;
-- do not promote membership to Canonical Registry/P2.2C/P2.2D;
-- do not add semantic role-subfamilies, trends/emerging/forecasting, or personal scoring;
-- do not publish Market state to `corpus/`;
-- do not add generic source/plugin/vector/RAG/graph/autonomous-agent infrastructure.
-
----
-
-## 11. Current routing
+## 8. Current routing
 
 ```text
 B1 CLOSED / DEFER
 → Market foundation PASS
-→ I1 ACCEPTED
-→ I2 ACCEPTED
-→ I3 ACCEPTED
-→ I4 ACCEPTED
-→ I5 NEXT
-→ I6 after I5 acceptance
-→ I7 bounded real local acceptance after I6
-→ close first Market slice only when I7 acceptance matrix passes
+→ I1-I5 ACCEPTED
+→ I6 NEXT
+→ I7 bounded real local acceptance
+→ close first Market slice only after I7 acceptance
 ```
 
-This file remains a status-only overlay. It does not replace durable product/domain/source/architecture authority.
+This file is a status-only overlay. It does not replace durable product/domain/source/architecture authority.
