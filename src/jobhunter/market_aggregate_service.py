@@ -18,6 +18,7 @@ from typing import Any
 
 from jobhunter.analysis_store import AnalysisArtifact, AnalysisStore
 from jobhunter.canonical_registry import normalize_registry_text
+from jobhunter.config import Settings
 from jobhunter.market_models import (
     MARKET_AGGREGATE_CONTRACT_VERSION,
     MarketAggregateProfile,
@@ -219,27 +220,26 @@ class MarketAggregateService:
         with closing(self._connect_readonly()) as connection:
             row = connection.execute(
                 """
-                SELECT p.source_job_id, v.fields_json
+                SELECT v.fields_json
                 FROM job_detail_versions AS v
-                JOIN job_postings AS p ON p.id = v.job_posting_id
                 WHERE v.id = ?
                 """,
                 (member.job_detail_version_id,),
             ).fetchone()
         if row is None:
             raise MarketAggregateError(
-                f"Snapshot member {member.id} lost source detail {member.job_detail_version_id}"
+                f"Snapshot lost source detail version {member.job_detail_version_id}"
             )
-        source_job_id = str(row["source_job_id"])
-        if source_job_id != member.source_job_id:
-            raise MarketAggregateError("Snapshot/source logical identity mismatch")
         fields = json.loads(str(row["fields_json"]))
-        company = _text(fields.get("company"))
+        if not isinstance(fields, dict):
+            raise MarketAggregateError("Source detail fields are not a JSON object")
+        employer_label = _text(fields.get("company"))
+        employer_key = normalize_registry_text(employer_label) if employer_label else None
         return _SourceEvidence(
-            source_job_id=source_job_id,
+            source_job_id=member.source_job_id,
             fields=fields,
-            employer_key=normalize_registry_text(company) if company else None,
-            employer_label=company,
+            employer_key=employer_key,
+            employer_label=employer_label,
         )
 
     def _employer_profile(
@@ -247,74 +247,65 @@ class MarketAggregateService:
         core: tuple[MarketCorpusSnapshotMember, ...],
         source_by_member: dict[int, _SourceEvidence],
     ) -> dict[str, Any]:
-        counts: Counter[str] = Counter()
+        postings_by_employer: Counter[str] = Counter()
         labels: dict[str, str] = {}
-        unknown = 0
+        unknown_jobs: list[str] = []
         for member in core:
             source = source_by_member[member.id]
-            if source.employer_key is None or source.employer_label is None:
-                unknown += 1
+            if source.employer_key is None:
+                unknown_jobs.append(member.source_job_id)
                 continue
-            counts[source.employer_key] += 1
-            labels.setdefault(source.employer_key, source.employer_label)
+            postings_by_employer[source.employer_key] += 1
+            labels.setdefault(source.employer_key, source.employer_label or source.employer_key)
+        largest = max(postings_by_employer.values(), default=0)
         rows = [
-            {"employer": labels[key], "postings": count}
-            for key, count in sorted(
-                counts.items(), key=lambda item: (-item[1], labels[item[0]].casefold())
-            )
+            {
+                "employer_key": key,
+                "employer": labels[key],
+                "postings": count,
+                "share_of_core": _share(count, len(core)),
+            }
+            for key, count in postings_by_employer.items()
         ]
-        largest = rows[0]["postings"] if rows else 0
+        rows.sort(key=lambda row: (-row["postings"], row["employer"].casefold()))
         return {
-            "distinct_known_employers": len(rows),
-            "unknown_employer_postings": unknown,
+            "known_employer_postings": sum(postings_by_employer.values()),
+            "unknown_employer_postings": len(unknown_jobs),
+            "unknown_employer_job_ids": sorted(unknown_jobs),
+            "distinct_known_employers": len(postings_by_employer),
             "largest_employer_postings": largest,
             "largest_employer_share_of_core": _share(largest, len(core)),
-            "postings_by_employer": rows,
+            "rows": rows,
         }
 
     def _source_context(
         self,
         core: tuple[MarketCorpusSnapshotMember, ...],
         source_by_member: dict[int, _SourceEvidence],
-    ) -> dict[str, Any]:
-        result: dict[str, Any] = {}
-        for field in _CONTEXT_FIELDS:
+    ) -> dict[str, list[dict[str, Any]]]:
+        result: dict[str, list[dict[str, Any]]] = {}
+        for field_name in _CONTEXT_FIELDS:
             counts: Counter[str] = Counter()
             labels: dict[str, str] = {}
             for member in core:
-                value = _text(source_by_member[member.id].fields.get(field))
+                value = _text(source_by_member[member.id].fields.get(field_name))
                 if value is None:
                     continue
                 key = normalize_registry_text(value)
                 counts[key] += 1
                 labels.setdefault(key, value)
-            rows = [
-                {"value": labels[key], "postings": count}
-                for key, count in sorted(
-                    counts.items(), key=lambda item: (-item[1], labels[item[0]].casefold())
-                )
-            ]
             denominator = sum(counts.values())
-            result[field] = {
-                "known_postings": denominator,
-                "unknown_postings": len(core) - denominator,
-                "values": rows,
-            }
-        lifecycle = Counter(
-            str(member.state.get("lifecycle_state") or "unknown") for member in core
-        )
-        warning_counts: Counter[str] = Counter()
-        for member in core:
-            for warning in member.state.get("warnings") or []:
-                if isinstance(warning, str) and warning.strip():
-                    warning_counts[" ".join(warning.split())] += 1
-        result["lifecycle"] = dict(sorted(lifecycle.items()))
-        result["source_warnings"] = [
-            {"warning": warning, "postings": count}
-            for warning, count in sorted(
-                warning_counts.items(), key=lambda item: (-item[1], item[0].casefold())
-            )
-        ]
+            rows = [
+                {
+                    "value": labels[key],
+                    "postings": count,
+                    "denominator": denominator,
+                    "share": _share(count, denominator),
+                }
+                for key, count in counts.items()
+            ]
+            rows.sort(key=lambda row: (-row["postings"], row["value"].casefold()))
+            result[field_name] = rows
         return result
 
     def _requirement_profile(
@@ -327,17 +318,11 @@ class MarketAggregateService:
         groups: dict[str, dict[str, Any]] = {}
         for member in accepted_core:
             artifact = self._accepted_artifact(member)
-            requirements = artifact.analysis.get("requirements") or []
-            if not isinstance(requirements, list):
-                raise MarketAggregateError("Accepted P1.6 requirements must be a list")
             per_job: dict[str, dict[str, Any]] = {}
-            for index, claim in enumerate(requirements):
-                if not isinstance(claim, dict):
-                    continue
+            for index, claim in enumerate(artifact.analysis.get("requirements", [])):
                 concept = _text(claim.get("concept"))
-                concept_type = _text(claim.get("concept_type"))
-                strength = _text(claim.get("requirement_type"))
-                if concept is None or concept_type is None or strength not in _STRENGTHS:
+                concept_type = _text(claim.get("concept_type")) or "other"
+                if concept is None:
                     continue
                 mapping = self._claim_mapping(
                     artifact.id,
@@ -358,24 +343,24 @@ class MarketAggregateService:
                         "canonical_concept_id": canonical_id,
                         "normalization_states": set(),
                         "mapping_ids": set(),
-                        "source_concept_types": set(),
+                        "concept_types": set(),
                         "strengths": set(),
                         "depth_signals": set(),
                         "claim_indexes": [],
-                        "source_concepts": [],
                         "evidence": [],
                     },
                 )
                 support["normalization_states"].add(state)
                 if mapping_id is not None:
                     support["mapping_ids"].add(mapping_id)
-                support["source_concept_types"].add(concept_type)
-                support["strengths"].add(strength)
+                support["concept_types"].add(concept_type)
+                strength = _text(claim.get("strength"))
+                if strength in _STRENGTHS:
+                    support["strengths"].add(strength)
                 depth = _text(claim.get("depth_signal"))
-                if depth is not None:
+                if depth:
                     support["depth_signals"].add(depth)
                 support["claim_indexes"].append(index)
-                support["source_concepts"].append(concept)
                 evidence = _text(claim.get("evidence"))
                 if evidence is not None:
                     support["evidence"].append(evidence)
@@ -390,83 +375,69 @@ class MarketAggregateService:
                         "canonical_concept_id": support["canonical_concept_id"],
                         "normalization_states": set(),
                         "mapping_ids": set(),
-                        "source_concept_types": set(),
+                        "concept_types": set(),
                         "postings": set(),
+                        "strength_postings": {strength: set() for strength in _STRENGTHS},
+                        "depth_signal_postings": defaultdict(set),
                         "employers": set(),
                         "unknown_employer_postings": set(),
-                        "strength_postings": {value: set() for value in _STRENGTHS},
-                        "depth_postings": defaultdict(set),
                         "evidence": [],
                     },
                 )
                 group["label_candidates"].add(support["label"])
                 group["normalization_states"].update(support["normalization_states"])
                 group["mapping_ids"].update(support["mapping_ids"])
-                group["source_concept_types"].update(support["source_concept_types"])
+                group["concept_types"].update(support["concept_types"])
                 group["postings"].add(member.source_job_id)
+                for strength in support["strengths"]:
+                    group["strength_postings"][strength].add(member.source_job_id)
+                for depth in support["depth_signals"]:
+                    group["depth_signal_postings"][depth].add(member.source_job_id)
                 if source.employer_key is None:
                     group["unknown_employer_postings"].add(member.source_job_id)
                 else:
                     group["employers"].add(source.employer_key)
-                for strength in support["strengths"]:
-                    group["strength_postings"][strength].add(member.source_job_id)
-                for depth in support["depth_signals"]:
-                    group["depth_postings"][depth].add(member.source_job_id)
                 group["evidence"].append(
                     {
                         "source_job_id": member.source_job_id,
                         "analysis_artifact_id": artifact.id,
                         "claim_indexes": sorted(support["claim_indexes"]),
-                        "strengths": sorted(support["strengths"]),
-                        "source_concepts": sorted(set(support["source_concepts"])),
                         "evidence": sorted(set(support["evidence"])),
                     }
                 )
 
-        rows = [
-            self._requirement_row(group, len(accepted_core)) for group in groups.values()
-        ]
-        rows.sort(
-            key=lambda row: (
-                -row["postings"],
-                -row["strength_postings"]["required"],
-                row["label"].casefold(),
-                row["key"],
+        rows: list[dict[str, Any]] = []
+        for group in groups.values():
+            label = min(group["label_candidates"], key=lambda value: value.casefold())
+            rows.append(
+                {
+                    "key": group["key"],
+                    "label": label,
+                    "canonical_concept_id": group["canonical_concept_id"],
+                    "normalization_states": sorted(group["normalization_states"]),
+                    "mapping_ids": sorted(group["mapping_ids"]),
+                    "concept_types": sorted(group["concept_types"]),
+                    "postings": len(group["postings"]),
+                    "share_of_accepted_semantic_core": _share(
+                        len(group["postings"]), len(accepted_core)
+                    ),
+                    "strength_postings": {
+                        strength: len(group["strength_postings"][strength])
+                        for strength in _STRENGTHS
+                    },
+                    "depth_signal_postings": {
+                        depth: len(postings)
+                        for depth, postings in sorted(group["depth_signal_postings"].items())
+                    },
+                    "distinct_known_employers": len(group["employers"]),
+                    "unknown_employer_postings": len(group["unknown_employer_postings"]),
+                    "evidence": sorted(
+                        group["evidence"], key=lambda item: item["source_job_id"]
+                    ),
+                }
             )
-        )
+        rows.sort(key=lambda row: (-row["postings"], row["label"].casefold(), row["key"]))
         return rows
-
-    def _requirement_row(
-        self,
-        group: dict[str, Any],
-        accepted_denominator: int,
-    ) -> dict[str, Any]:
-        label = min(group["label_candidates"], key=lambda value: value.casefold())
-        return {
-            "key": group["key"],
-            "label": label,
-            "canonical_concept_id": group["canonical_concept_id"],
-            "normalization_states": sorted(group["normalization_states"]),
-            "mapping_ids": sorted(group["mapping_ids"]),
-            "source_concept_types": sorted(group["source_concept_types"]),
-            "postings": len(group["postings"]),
-            "share_of_accepted_semantic_core": _share(
-                len(group["postings"]), accepted_denominator
-            ),
-            "distinct_known_employers": len(group["employers"]),
-            "unknown_employer_postings": len(group["unknown_employer_postings"]),
-            "strength_postings": {
-                value: len(group["strength_postings"][value]) for value in _STRENGTHS
-            },
-            "depth_signal_postings": [
-                {"depth_signal": depth, "postings": len(postings)}
-                for depth, postings in sorted(
-                    group["depth_postings"].items(),
-                    key=lambda item: (-len(item[1]), item[0].casefold()),
-                )
-            ],
-            "evidence": sorted(group["evidence"], key=lambda item: item["source_job_id"]),
-        }
 
     def _responsibility_profile(
         self,
@@ -478,13 +449,8 @@ class MarketAggregateService:
         groups: dict[str, dict[str, Any]] = {}
         for member in accepted_core:
             artifact = self._accepted_artifact(member)
-            responsibilities = artifact.analysis.get("responsibilities") or []
-            if not isinstance(responsibilities, list):
-                raise MarketAggregateError("Accepted P1.6 responsibilities must be a list")
             per_job: dict[str, dict[str, Any]] = {}
-            for index, claim in enumerate(responsibilities):
-                if not isinstance(claim, dict):
-                    continue
+            for index, claim in enumerate(artifact.analysis.get("responsibilities", [])):
                 statement = _text(claim.get("statement"))
                 if statement is None:
                     continue
@@ -750,3 +716,13 @@ class MarketAggregateService:
         connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys=ON")
         return connection
+
+
+def build_market_aggregate_service(settings: Settings) -> MarketAggregateService:
+    """Compose I5 from the accepted Market store and P1.6 analysis owner."""
+
+    return MarketAggregateService(
+        database_path=settings.database_path,
+        market_store=MarketStore(settings.database_path),
+        analysis_store=AnalysisStore(settings.database_path),
+    )
