@@ -145,6 +145,11 @@ The evaluation used seven real historical postings plus one synthetic sparse cas
 explicit 90-day retrospective freshness window. It did not refresh the jobs or claim that they
 remained open on the evaluation date.
 
+The first preservation commit `e45925f` failed repository CI only because the two copied
+scratch runner scripts were not Ruff-formatted. That preservation CI failure did not indicate a
+product/test regression. The runners were subsequently reformatted without changing the stored
+semantic outputs in `report.json`, `comparison.json`, or the preserved model input/decision JSON.
+
 ### Baseline target
 
 With the broad membership intent:
