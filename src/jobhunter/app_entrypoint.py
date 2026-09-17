@@ -10,6 +10,7 @@ from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.entrypoint import main as core_main
+from jobhunter.market_cli import main as market_main
 from jobhunter.public_corpus import (
     DEFAULT_PUBLIC_CORPUS_DIR,
     PublicCorpusError,
@@ -24,6 +25,7 @@ _MUTATING_PREFIXES: tuple[tuple[str, ...], ...] = (
     ("translations", "run"),
     ("jobs", "analyze"),
     ("jobs", "capability"),
+    ("market", "run"),
 )
 
 
@@ -52,6 +54,18 @@ def _command_tokens(arguments: Sequence[str]) -> tuple[str, ...]:
             continue
         tokens.append(argument)
     return tuple(tokens)
+
+
+def _market_arguments(arguments: Sequence[str]) -> list[str] | None:
+    tokens = _command_tokens(arguments)
+    if not tokens or tokens[0] != "market":
+        return None
+    normalized: list[str] = []
+    config = _config_path(arguments)
+    if config is not None:
+        normalized.extend(("--config", str(config)))
+    normalized.extend(tokens[1:])
+    return normalized
 
 
 def _should_sync(arguments: Sequence[str]) -> bool:
@@ -92,7 +106,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     """Run the established CLI and project durable public state after mutations."""
 
     arguments = list(argv if argv is not None else sys.argv[1:])
-    result = core_main(arguments)
+    market_arguments = _market_arguments(arguments)
+    result = market_main(market_arguments) if market_arguments is not None else core_main(arguments)
 
     # Return code 2 means argument/config/readiness failure before a valid durable
     # mutation. Return code 0 or 1 may still contain completed durable work, so the
