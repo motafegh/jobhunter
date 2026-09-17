@@ -1,14 +1,17 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-17
+**Date:** 2026-09-17  
 **Active working branch:** `main`  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Foundation decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
 **I1 acceptance:** `docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`  
 **I2 acceptance:** `docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md`  
-**Current product gate:** MARKET I1-I3 REPOSITORY ACCEPTED / I4 NEXT
+**I3 acceptance:** `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`  
+**I4 acceptance:** `docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`  
+**I3 real-model evidence:** `docs/experiments/2026-09-17_market-i3-real-model-acceptance/README.md`  
+**Current product gate:** MARKET I1-I4 ACCEPTED / I5 NEXT  
 **Parallel portfolio gate:** MIT complete / GitHub metadata + screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -75,9 +78,6 @@ TargetMarket
 
 ### C1 — I1 domain + SQLite persistence — ACCEPTED / CLOSED
 
-Acceptance:
-`docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`
-
 - [x] typed Market domain records.
 - [x] SQLite Market persistence/history.
 - [x] stable target vs immutable definition versions.
@@ -90,62 +90,71 @@ Acceptance:
 
 ### C2 — I2 target-scoped source eligibility + affected-work planning — ACCEPTED / CLOSED
 
-Acceptance:
-`docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md`
-
 - [x] exact target candidate/source-state representation.
 - [x] deterministic current-active source eligibility.
-- [x] target-only missing-detail selection.
-- [x] target-only refresh/repair selection.
-- [x] failed refresh does not freshen evidence or imply disappearance.
-- [x] unchanged successful parsed check refreshes freshness without a new semantic version.
-- [x] `possibly_unavailable` can remain usable with explicit warning when evidence is recent.
-- [x] `expired` / `removed` excluded from current-active source eligibility.
-- [x] target-only translation affected-work planning and exact artifact reuse.
-- [x] target-only P1.6 affected-work planning and exact source+translation+contract reuse.
-- [x] pending-current P1.6 preserved as pending-review rather than regenerated.
-- [x] new source semantic version invalidates old downstream currentness without deleting history.
-- [x] explicit selected / remaining / unavailable / blocked planning ledger.
-- [x] critical global-backlog spill regressions covered.
-- [x] no semantic membership inference added.
+- [x] target-only missing-detail and refresh/repair selection.
+- [x] target-only translation and P1.6 affected-work planning.
+- [x] exact translation/P1.6 reuse/currentness.
+- [x] pending-current P1.6 preserved as pending-review.
+- [x] `failed refresh != disappearance` and `failed refresh != fresh evidence`.
+- [x] global-backlog spill regressions covered.
 - [x] CI 1167 green through `pytest -W error`.
 
-### C3 — I3 membership qualification — REPOSITORY ACCEPTED / CLOSED
+### C3 — I3 membership qualification — ACCEPTED / CLOSED
 
-- [x] define one explicit first-slice membership classifier contract/version.
-- [x] consume only I2 source-eligible candidates.
-- [x] apply deterministic target constraints before any model call.
-- [x] use current source title/detail as factual authority.
-- [x] use current English projection only where language/semantic reasoning requires it.
-- [x] use accepted-current P1.6 opportunistically as stronger evidence, never as a prerequisite.
-- [x] support exactly `core_match / adjacent_match / uncertain / excluded`.
-- [x] preserve `uncertain` as a successful bounded outcome.
-- [x] store exact target/source/classifier/translation/P1.6 dependency identity through `MarketStore`.
-- [x] reuse exact membership decisions when dependencies match.
-- [x] require explicit superseding correction instead of hidden overwrite.
-- [x] title/keyword match alone must not prove core membership.
-- [x] Capability/Work remain optional and must not become gates.
-- [x] add deterministic/fake-provider boundary tests using representative core/adjacent/excluded/uncertain cases.
-- [x] do not auto-promote membership into Canonical Registry/P2.2C/P2.2D taxonomy.
+- [x] deterministic constraints before model reasoning.
+- [x] bounded semantic role/work interpretation.
+- [x] exactly `core_match / adjacent_match / uncertain / excluded`.
+- [x] title/skill keywords alone cannot prove core membership.
+- [x] accepted P1.6 optional evidence, not a membership gate.
+- [x] pending P1.6 not consumed or regenerated.
+- [x] exact dependency identity + immutable correction history.
+- [x] provider/runtime/stale-dependency failures remain failures, not saved uncertainty.
+- [x] CI 1172 passed 608 tests under normal and warnings-as-errors gates.
+- [x] bounded real-model evidence preserved.
+- [x] broad target: 7/8 expected outcomes overall; only `tGM0` disagreed.
+- [x] clarified target: 8/8 post-hoc boundary-calibration outcomes with model/prompt/evidence fixed.
+- [x] target-definition lesson recorded; no vacancy-specific prompt patch added.
 
-I3 evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`. Real-model/end-to-end acceptance remains I7.
+### C4 — I4 immutable snapshot construction — ACCEPTED / CLOSED
 
-### C4 — I4 immutable snapshot construction — NEXT
+Acceptance:
+`docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`
 
-- [ ] freeze exact definition/run/membership/source/semantic coverage identities.
-- [ ] keep core/adjacent/uncertain/excluded separate.
-- [ ] preserve accepted/pending/missing/failed/rejected P1.6 coverage.
+- [x] snapshot requires `completed` or `completed_with_failures` Market run.
+- [x] exact I3 membership IDs are validated against run target definition and current I2 source state.
+- [x] stale source-version membership is rejected.
+- [x] superseded membership correction ancestor is rejected.
+- [x] one source job may contribute at most once to one snapshot.
+- [x] model membership must consume current translation and current accepted P1.6 when available.
+- [x] deterministic source-only membership remains source-only as membership identity.
+- [x] I4 derives semantic coverage; callers do not supply trusted coverage authority.
+- [x] `accepted / pending / missing / failed / rejected` coverage states are frozen explicitly.
+- [x] failed/rejected coverage is scoped to the current source/translation/P1.6 contract boundary.
+- [x] only `core_match` enters the primary source-level corpus.
+- [x] accepted-semantic core denominator remains narrower and explicit.
+- [x] pending/missing/failed/rejected never becomes zero semantic demand.
+- [x] historical snapshots remain immutable after later source/membership changes.
+- [x] CI 1182 passed Ruff and 617 tests under normal and warnings-as-errors gates.
 
-### C5 — I5 deterministic aggregate profile — AFTER I4
+### C5 — I5 deterministic aggregate profile — NEXT
 
-- [ ] explicit target/corpus/evidence-quality header.
+- [ ] calculate only from one immutable I4 snapshot; no live-current reconstruction.
+- [ ] explicit target/snapshot/run/evidence-quality header.
 - [ ] qualified core source-posting denominator.
 - [ ] accepted-current-P1.6 semantic sub-denominator.
-- [ ] requirement concept/type/strength counts.
-- [ ] employer breadth/concentration warnings.
-- [ ] accepted responsibility/work drill-down.
+- [ ] preserve core/adjacent/uncertain/excluded and semantic-coverage counts from snapshot authority.
+- [ ] source-level employer breadth/concentration with explicit denominator semantics.
+- [ ] deterministic P1.6 requirement concept/type/strength support counts.
+- [ ] one posting contributes at most once per normalized concept support count.
+- [ ] distinct-employer support per semantic concept.
+- [ ] accepted responsibility/work evidence counts + exact drill-down without inventing role families.
+- [ ] reviewed Canonical Registry mappings may enrich where available; unmapped evidence remains visible.
 - [ ] explicit no-repost-adjustment limitation.
-- [ ] no model-authored counts or opaque scores.
+- [ ] small-sample/concentration warnings where justified.
+- [ ] no model-authored counts, opaque scores, bands, trends, forecasts, or semantic subfamilies.
+- [ ] persist immutable deterministic profile through existing `market_aggregate_profiles` contract.
+- [ ] focused deterministic tests for denominator, dedup-within-posting, employer breadth and replay integrity.
 
 ### C6 — I6 browser + CLI thin workflow — AFTER I5
 
@@ -158,6 +167,7 @@ I3 evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_
 
 - [ ] one representative real local target run.
 - [ ] verify acquisition bounds/noise, reuse, membership, denominators, evidence drill-down and partial success.
+- [ ] verify clarified target-definition semantics in a real repeated workflow.
 - [ ] run all applicable quality gates.
 - [ ] close first slice only after acceptance matrix passes.
 
@@ -165,26 +175,29 @@ I3 evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_
 
 ## D. First-slice invariants
 
-Already proven:
+Already proven through I4:
 
 - [x] stable target identity vs immutable definition versions.
 - [x] target-definition changes do not invalidate generic upstream artifacts.
-- [x] target affected-work planning is target-scoped and does not fill from global backlog.
-- [x] failed refresh does not imply disappearance.
+- [x] target affected-work planning cannot fill from global backlog.
+- [x] failed refresh does not imply disappearance or freshness.
 - [x] source/translation/P1.6 currentness is exact-dependency aware.
-- [x] pending current P1.6 is not silently regenerated or treated as accepted.
-- [x] snapshot/member/profile persistence is immutable.
-- [x] ordinary I1/I2 CI needs no Jobinja or LM Studio network/model access.
+- [x] membership decisions are immutable and correction-aware.
+- [x] `uncertain` is a valid bounded membership outcome.
+- [x] target membership quality depends on sufficiently explicit target meaning.
+- [x] non-core membership dispositions remain outside the primary snapshot denominator.
+- [x] pending/missing/failed/rejected P1.6 remains explicit snapshot state rather than zero demand.
+- [x] only accepted-current P1.6 forms accepted-semantic snapshot coverage.
+- [x] point-in-time snapshot/member identity is immutable.
 
-Still to prove:
+Still to prove in I5+:
 
-- [ ] non-core membership dispositions cannot silently enter core denominator.
-- [ ] `uncertain` behaves as valid successful classification.
-- [ ] pending/missing/failed P1.6 never becomes zero semantic demand.
-- [ ] only accepted-current P1.6 contributes to strong semantic statistics.
-- [ ] every percentage has recoverable denominator semantics.
+- [ ] every aggregate percentage has recoverable denominator semantics.
 - [ ] one posting contributes at most once per concept-support count.
-- [ ] first slice says `qualified source postings`, not unproven `unique demand units`.
+- [ ] distinct-employer support/concentration is calculated deterministically.
+- [ ] first profile exposes `qualified source postings`, not unproven `unique demand units`.
+- [ ] browser/CLI use the same accepted services/state.
+- [ ] one real target run is useful and repeatable end-to-end.
 
 ---
 
@@ -222,10 +235,12 @@ Still to prove:
 ## Exact next action
 
 ```text
-I4 only
-→ construct immutable snapshots from exact current memberships
-→ retain explicit P1.6 coverage and source/semantic denominators
-→ preserve old snapshots
+I5 only
+→ deterministic aggregate profile from one immutable I4 snapshot
+→ explicit source vs accepted-semantic denominators
+→ one-posting-at-most-once support semantics
+→ employer breadth/concentration + evidence drill-down
+→ persist exact profile through existing immutable store
 → focused tests + state reconciliation
-→ only then proceed to I5
+→ only then proceed to I6
 ```
