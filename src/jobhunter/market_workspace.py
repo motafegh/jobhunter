@@ -28,7 +28,7 @@ from jobhunter.lifecycle import LifecycleStore
 from jobhunter.market_affected_work import MarketAffectedWorkPlan, MarketAffectedWorkPlanner
 from jobhunter.market_aggregate_service import (
     MarketAggregateBuildResult,
-    build_market_aggregate_service,
+    MarketAggregateService,
 )
 from jobhunter.market_membership_service import (
     MarketMembershipError,
@@ -679,15 +679,28 @@ class MarketWorkspaceService:
         controls: MarketRunControls,
         candidate_source_job_ids: tuple[str, ...] = (),
     ) -> MarketScopePreview:
-        coordinator = build_market_run_coordinator_with_budget(
+        controls = controls.validate()
+        definition = self.store.get_definition_version(definition_id)
+        if definition is None:
+            raise LookupError(f"Unknown Market target definition {definition_id}")
+        searches = resolve_market_searches(
             self.settings,
-            request_budget=controls.request_budget,
+            definition,
+            search_limit=controls.search_limit,
+            default_max_pages=controls.default_max_pages,
         )
-        return coordinator.preview(
-            definition_id,
-            controls=controls,
-            candidate_source_job_ids=candidate_source_job_ids,
-        )
+        plan = None
+        if candidate_source_job_ids:
+            plan = _planner(self.settings, self.store).plan(
+                target_definition_version_id=definition.id,
+                candidate_source_job_ids=candidate_source_job_ids,
+                missing_limit=controls.missing_limit,
+                refresh_limit=controls.refresh_limit,
+                refresh_after_hours=controls.refresh_after_hours,
+                translation_limit=controls.translation_limit,
+                analysis_limit=controls.analysis_limit,
+            )
+        return MarketScopePreview(definition, searches, controls, plan)
 
     def run(
         self,
@@ -901,7 +914,11 @@ def build_market_run_coordinator_with_budget(
         analysis_service=build_job_analysis_service(settings),
         membership_service=build_market_membership_service(settings),
         snapshot_service=build_market_snapshot_service(settings),
-        aggregate_service=build_market_aggregate_service(settings),
+        aggregate_service=MarketAggregateService(
+            database_path=settings.database_path,
+            market_store=market,
+            analysis_store=AnalysisStore(settings.database_path),
+        ),
     )
 
 
