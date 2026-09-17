@@ -1,11 +1,12 @@
 # Market I3 — Membership Qualification
 
-**Date:** 2026-09-17
-**Status:** REPOSITORY ACCEPTED / CLOSED FOR I3; I7 live acceptance remains outstanding
-**Branch:** `main` (local changes; not committed or pushed by this implementation session)
-**Base:** `7fee62e62844632dbb8c87481a5c46d7a8e21e37`
-**Controlling plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
-**Foundation:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
+**Date:** 2026-09-17  
+**Status:** REPOSITORY ACCEPTED / CLOSED FOR I3; real-model boundary evaluation recorded; I7 live workflow acceptance remains outstanding  
+**Branch:** `main`  
+**Implementation commit:** `0eaf04109a57846aa6d0a920d0563f89a4dfb535`  
+**Controlling plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
+**Foundation:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
+**Real-model evaluation:** `docs/experiments/2026-09-17_market-i3-real-model-acceptance/README.md`
 
 ## Scope and product contribution
 
@@ -99,17 +100,25 @@ I2/source/translation/P1.6 stores and currentness owners. The override is option
 configured effective analysis model is the default. The factory itself performs no network
 or model calls. No new browser route or CLI command is claimed in I3.
 
-## Verification
+## Repository verification
 
-Local checks on this implementation:
+Implementation commit:
 
 ```text
-editable installation with development dependencies     PASS
-pip check                                               PASS
-installed public entrypoint smoke                       PASS
-Ruff                                                    PASS
-pytest                                                  608 passed
-pytest -W error                                         608 passed
+0eaf04109a57846aa6d0a920d0563f89a4dfb535
+```
+
+GitHub Actions CI for that implementation:
+
+```text
+run 1172
+package install                     PASS
+pip dependency consistency          PASS
+installed public entrypoint smoke   PASS
+Ruff                                PASS
+pytest                              PASS — 608 passed
+pytest -W error                     PASS — 608 passed
+CI conclusion                       SUCCESS
 ```
 
 The suite includes 42 new I3 cases: the eight representative scripted role outcomes,
@@ -121,19 +130,97 @@ bounds, provider failure, and structured HTTP/runtime behavior.
 The representative fixture outcomes are explicit paraphrase/scripted expectations based on
 the foundation boundary cases (`ta9l`, `tG9K`, `tGM0`, `t4jp`, `tmBK`, `t4qV`, `tmyX`, and
 one sparse uncertain case). They are not new employer quotations or real-model evaluations.
-No Jobinja request, live LM Studio generation, operational Market mutation, registry mutation,
-P1.6 acceptance, or corpus publication was performed. No new remote CI run is claimed.
+No Jobinja request, operational Market mutation, registry mutation, P1.6 acceptance, or corpus
+publication was performed by the repository test suite.
+
+## Real-model boundary evaluation
+
+After repository acceptance, a bounded real-model semantic evaluation was run against an
+isolated copy of operational SQLite using the configured `gemma-4-e4b-it-ud` membership model.
+The exact preserved evidence is under:
+
+`docs/experiments/2026-09-17_market-i3-real-model-acceptance/`
+
+The evaluation used seven real historical postings plus one synthetic sparse case and an
+explicit 90-day retrospective freshness window. It did not refresh the jobs or claim that they
+remained open on the evaluation date.
+
+### Baseline target
+
+With the broad membership intent:
+
+```text
+Applied AI / ML engineering work
+```
+
+the model matched 7/8 expected outcomes overall (6/7 real vacancies). The sole disagreement
+was `tGM0`, a backend/software-infrastructure role in an AI team, which was classified
+`core_match` instead of expected `adjacent_match`.
+
+The baseline still correctly demonstrated:
+
+- `ta9l` can be recognized as core without accepted P1.6;
+- `tG9K` can consume accepted P1.6 opportunistically;
+- AI-content creation is excluded from an engineering target;
+- generic backend work that merely uses AI tools is excluded;
+- unrelated security roles are excluded;
+- sparse evidence becomes `uncertain` rather than fabricated certainty;
+- every immediate rerun reused the exact membership without another model call.
+
+### Clarified-target comparison
+
+A controlled follow-up kept the same model, prompt/schema, and vacancy evidence but made the
+target meaning explicit:
+
+```text
+Applied AI / ML engineering where the primary work is developing, evaluating, or improving
+AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure
+roles primarily enabling or integrating AI services are adjacent rather than core. Using AI
+tools for general software or content production does not qualify for this target.
+```
+
+That comparison produced 8/8 expected outcomes, including `tGM0 -> adjacent_match`, while
+preserving both clear AI-engineering cases as core.
+
+This 8/8 is **not** an independent accuracy benchmark. The clarified definition was written
+after observing the baseline miss, so it is post-hoc boundary calibration evidence. The correct
+product conclusion is that a target definition must state the intended core-vs-adjacent boundary
+when that distinction matters. It is not evidence that the I3 prompt should be patched around
+`tGM0` specifically.
+
+The immediate reuse checks prove persisted-decision reuse, not fresh-call model reproducibility.
+No repeated fresh-call stability study or larger blinded semantic benchmark was performed.
+
+## Target-definition lesson
+
+For target-relative Market membership:
+
+```text
+membership quality
+= target definition quality
++ source/derived evidence quality
++ classifier contract/model behavior
+```
+
+A short label such as `Applied AI / ML engineering work` can be semantically under-specified
+for edge cases where backend/platform work enables AI systems. The immutable
+`TargetMarketDefinitionVersion.membership_intent` should explicitly encode core-vs-adjacent and
+other material inclusion boundaries rather than expecting the membership prompt to infer the
+user's unstated market semantics.
+
+This finding does not reopen I3 and does not promote any role taxonomy.
 
 ## Decision and next boundary
 
 ```text
 I1-I3: REPOSITORY ACCEPTED / CLOSED
+I3 REAL-MODEL BOUNDARY CHECK: RECORDED / SUPPORTIVE WITH TARGET-DEFINITION CAVEAT
 NEXT: I4 immutable snapshot construction
 I5-I7: sequentially gated
 ```
 
 I4 should construct immutable snapshots from exact current memberships with explicit P1.6
 coverage states, separate source/semantic denominators, and a core-only primary corpus.
-I7 must still demonstrate the bounded real target workflow, semantic usefulness, and reuse.
-Do not promote membership into P2.2C/P2.2D, add reports/subfamilies/trends/personal claims,
-or publish Market state.
+I7 still owns the bounded repeated-use real target workflow and broader semantic/product
+acceptance. Do not promote membership into P2.2C/P2.2D, add report/subfamily/trend/personal
+claims, or publish Market state.
