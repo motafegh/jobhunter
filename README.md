@@ -241,8 +241,8 @@ P2.1 Canonical Registry                 CLOSED
 P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
-Market first vertical slice             AUTHORIZED / NOT YET IMPLEMENTED
-Current exact increment                 I1 DOMAIN + SQLITE PERSISTENCE
+Market first vertical slice             I1-I3 REPOSITORY ACCEPTED / INCOMPLETE
+Current exact increment                 I4 IMMUTABLE SNAPSHOT CONSTRUCTION
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.

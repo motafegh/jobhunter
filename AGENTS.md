@@ -164,7 +164,8 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     AUTHORIZED / ACTIVE IMPLEMENTATION FRONTIER
-first exact increment           I1 domain + SQLite persistence
+Market I1-I3                    REPOSITORY ACCEPTED / CLOSED
+next exact increment            I4 immutable snapshot construction
 ```
 
 B1 final evidence is retained at:
@@ -227,27 +228,29 @@ TargetMarket
 Implementation order:
 
 ```text
-I1  domain models + SQLite persistence          ← NEXT
-I2  target-scoped source eligibility / affected-work planning
-I3  membership qualification
-I4  immutable snapshot construction
+I1  domain models + SQLite persistence          ACCEPTED
+I2  target-scoped source eligibility / affected-work planning  ACCEPTED
+I3  membership qualification                    REPOSITORY ACCEPTED
+I4  immutable snapshot construction             ← NEXT
 I5  deterministic aggregate profile
 I6  browser + CLI thin workflow
 I7  bounded local real acceptance + reuse rerun
 ```
 
-### 5.1 I1 exact boundary
+### 5.1 I4 exact boundary
 
-I1 should build only the minimum domain/persistence substrate and deterministic tests for:
+I1 persistence, I2 affected-work planning, and I3 membership qualification have passed
+repository acceptance. I3 record:
 
-- stable `TargetMarket` identity;
-- immutable target-definition versions;
-- operational research-run history;
-- exact membership dependency identity/history;
-- immutable snapshot/member history;
-- aggregate profile exact snapshot/contract identity.
+`docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`
 
-Do not drift into live acquisition, semantic membership inference, browser screens, or report synthesis merely because they belong to later authorized increments.
+I3 fake-provider/HTTP tests do not establish real-model semantic adequacy. The complete
+first slice still requires I7 bounded local acceptance after I4-I6 are implemented.
+
+I4 should build immutable snapshots from exact current memberships and explicit P1.6
+coverage states, keeping core/adjacent/uncertain/excluded separate. Preserve historical
+snapshots and source versus accepted-semantic denominators. Do not add aggregate
+calculation, browser/CLI orchestration, or report synthesis before their increments.
 
 ### 5.2 First-slice settled rules
 
@@ -546,7 +549,7 @@ Personal/private state must never enter the public corpus merely because it live
 - use structured/keyword retrieval before embeddings/RAG;
 - no graph/vector DB or autonomous-agent orchestration without demonstrated product/query need and explicit privacy/provenance/budget controls;
 - prefer a thin target-aware coordinator over a workflow framework;
-- extract neutral shared helpers from versioned modules only when a concrete maintenance/replay need justifies it, not as unrelated cleanup during Market I1.
+- extract neutral shared helpers from versioned modules only when a concrete maintenance/replay need justifies it, not as unrelated cleanup during Market implementation.
 
 ---
 

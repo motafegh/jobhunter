@@ -1,8 +1,8 @@
 # JobHunter Market and Role-Family Intelligence Plan
 
-**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / FIRST VERTICAL SLICE AUTHORIZED / I1 NEXT  
+**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / FIRST VERTICAL SLICE AUTHORIZED / I1-I3 REPOSITORY ACCEPTED / I4 NEXT
 **Original date:** 2026-09-06  
-**Last reconciled:** 2026-09-14  
+**Last reconciled:** 2026-09-17
 **Branch:** `main`  
 **Scope:** Target-scoped market refresh → qualified evidence corpus → deterministic aggregate intelligence → later bounded semantic role-family synthesis/history → later reviewed personal comparison
 
@@ -28,10 +28,10 @@ FIRST VERTICAL SLICE: AUTHORIZED
 Current implementation order:
 
 ```text
-I1  domain models + SQLite persistence          ← NEXT
-I2  target-scoped source eligibility / affected-work planning
-I3  membership qualification
-I4  immutable snapshot construction
+I1  domain models + SQLite persistence          ACCEPTED
+I2  target-scoped source eligibility / affected-work planning  ACCEPTED
+I3  membership qualification                    REPOSITORY ACCEPTED
+I4  immutable snapshot construction             ← NEXT
 I5  deterministic aggregate profile
 I6  browser + CLI thin workflow
 I7  bounded local real acceptance + reuse rerun
@@ -813,10 +813,14 @@ The first Market vertical slice is done only when:
 ## 19. Current exact next action
 
 ```text
-I1 — implement Market domain models + SQLite persistence
-→ deterministic tests
+I1-I3 repository acceptance complete
+→ I4 immutable snapshot construction from current membership + coverage
+→ focused dependency/denominator/history tests
 → reconcile implementation record/current state
-→ proceed to I2 only after I1 is coherent
+→ proceed to I5 only after I4 is coherent
 ```
 
-Do not restart the foundation investigation or B1. Do not pull semantic report/subfamily/trend/personal responsibilities into I1.
+I3 implementation and evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`.
+Scripted semantic fixtures validate service mechanics, not real-model accuracy.
+I7 remains the real workflow and reuse acceptance gate after I4-I6.
+Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope.

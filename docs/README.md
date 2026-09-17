@@ -36,7 +36,7 @@ P2.2D stable role archetypes        LATER
 Market research                     COMPLETE ENOUGH
 Market foundation investigation     PASS / COMPLETE
 Market first vertical slice         AUTHORIZED / ACTIVE FRONTIER
-Current exact increment             I1 domain models + SQLite persistence
+Current exact increment             I4 immutable snapshot construction
 Semantic report/subfamily synthesis DEFERRED FROM FIRST SLICE
 ```
 
@@ -49,7 +49,7 @@ Use these files for current execution:
 - [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — current implementation checklist.
 - [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — rolling handoff/current-state memory.
 
-The exact next product action is **Market I1 — domain models + SQLite persistence**. Do not restart B1 or the foundation investigation.
+The exact next product action is **Market I4 — immutable snapshot construction**. Do not restart B1 or the foundation investigation.
 
 ## 3. Closed P2.2B and executed Market-foundation records
 

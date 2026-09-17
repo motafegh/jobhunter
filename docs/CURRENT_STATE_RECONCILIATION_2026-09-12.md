@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-16  
+**Last reconciled:** 2026-09-17
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -21,8 +21,9 @@ Market / Role-Family research       COMPLETE ENOUGH
 Market foundation investigation     PASS / COMPLETE
 Market I1 domain + persistence      ACCEPTED / CLOSED
 Market I2 affected-work planning    ACCEPTED / CLOSED
-Market I3 membership qualification NEXT / ACTIVE PRODUCT FRONTIER
-Market I4-I7                        NOT ACTIVE YET
+Market I3 membership qualification REPOSITORY ACCEPTED / CLOSED
+Market I4 snapshot construction    NEXT / ACTIVE PRODUCT FRONTIER
+Market I5-I7                        BLOCKED SEQUENTIALLY
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
 
@@ -238,65 +239,26 @@ I2 makes no Jobinja network or LM Studio calls in CI and does not implement sema
 
 ---
 
-## 6. Exact current product action — I3
+## 6. I3 repository acceptance and exact next action
 
-Current active product frontier:
+I3 record: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`.
 
-```text
-I3 — membership qualification contract + service
-```
+Implemented `market-membership-v1` / `market-membership-v1.0`:
 
-I3 must consume **only I2 source-eligible candidates** and decide exactly one bounded disposition:
+- fresh I2 source eligibility before classification and before persistence;
+- narrow deterministic structured employment conflicts before model calls;
+- bounded semantic interpretation for free-form scope and role/work relevance;
+- original source evidence, current English when available, accepted P1.6 opportunistically;
+- exactly core/adjacent/uncertain/excluded, with validated evidence references;
+- exact target/source/classifier/consumed-artifact reuse and explicit superseding corrections;
+- no acquisition, P1.6 acceptance, canonical promotion, or corpus publication.
 
-```text
-core_match
-adjacent_match
-uncertain
-excluded
-```
+Repository fake-provider/HTTP tests are engineering acceptance, not a claim of live
+model classification quality. I7 remains required for the complete first slice.
 
-Required staged shape:
-
-```text
-1. deterministic target constraints / obvious exclusions
-2. bounded semantic role/work relevance when deterministic evidence is insufficient
-3. persist/reuse immutable MarketJobMembership with exact dependencies
-```
-
-Minimum evidence boundary:
-
-```text
-current parsed source detail + title
-+ current English projection when needed
-+ accepted-current P1.6 opportunistically when available
-```
-
-Accepted P1.6 is not a prerequisite. Capability and Work remain optional and must not become gates.
-
-I3 acceptance must prove:
-
-- title/keyword equality alone cannot prove `core_match`;
-- deterministic exclusions happen before model calls where evidence is sufficient;
-- model output is bounded to the four dispositions plus short reason/evidence refs;
-- `uncertain` is valid success, not an error/retry trigger;
-- exact target/source/classifier/translation/P1.6 dependencies control membership reuse;
-- changed source/target/classifier dependencies prevent stale membership reuse;
-- exact reruns reuse immutable membership;
-- reviewed corrections supersede rather than overwrite prior decisions;
-- no Canonical Registry, P2.2C, or P2.2D promotion side effect.
-
-Representative fixture boundary set remains:
-
-```text
-ta9l  → core source evidence despite missing accepted P1.6
-tG9K  → core with accepted P1.6 support
-tGM0  → adjacent backend/AI-platform role
-t4jp  → excluded AI-title/content-production false positive
-tmBK  → excluded Python/backend with AI-usage qualification
-t4qV  → excluded network security
-tmyX  → excluded infrastructure security
-+ one sparse/borderline uncertain case
-```
+**Next: I4 immutable snapshot construction.** Consume exact current memberships,
+freeze source/semantic coverage separately, preserve historical snapshots, and keep
+adjacent/uncertain/excluded outside the primary core denominator. I5-I7 remain sequential.
 
 ---
 
@@ -305,8 +267,8 @@ tmyX  → excluded infrastructure security
 ```text
 I1  domain + SQLite persistence                  ACCEPTED / CLOSED
 I2  target source eligibility / affected work    ACCEPTED / CLOSED
-I3  membership qualification                     NEXT
-I4  immutable snapshot construction              BLOCKED BY I3
+I3  membership qualification                     REPOSITORY ACCEPTED / CLOSED
+I4  immutable snapshot construction              NEXT
 I5  deterministic aggregate profile              BLOCKED BY I4
 I6  browser + CLI thin workflow                  BLOCKED BY I5
 I7  bounded real local acceptance                BLOCKED BY I6
@@ -334,13 +296,14 @@ Current implementation evidence owners are:
 ```text
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
 docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
+docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
 ```
 
 ---
 
 ## 9. Current execution owner set
 
-Before I3 work, use:
+Before I4 work, use:
 
 ```text
 AGENTS.md
@@ -352,19 +315,19 @@ docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
 docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
 docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
+docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
 docs/EXECUTION_TODO.md
 docs/WORKING_MEMORY.md
 ```
 
-Load older research records only when a specific I3 decision requires their detail.
+Load older research records only when a specific I4 decision requires their detail.
 
 ---
 
 ## 10. Current stop lines
 
-During I3:
+During I4:
 
-- do not build I4 snapshot construction early;
 - do not calculate I5 aggregates early;
 - do not build I6 browser/report UI early;
 - do not auto-accept P1.6;
@@ -385,8 +348,9 @@ B1 CLOSED / DEFER
 → Market foundation PASS
 → I1 ACCEPTED / CLOSED
 → I2 ACCEPTED / CLOSED
-→ I3 NEXT
-→ I4-I6 sequentially after preceding acceptance
+→ I3 REPOSITORY ACCEPTED / CLOSED
+→ I4 NEXT
+→ I5-I6 sequentially after preceding acceptance
 → I7 bounded local real acceptance
 → close first Market slice only when its acceptance matrix passes
 ```

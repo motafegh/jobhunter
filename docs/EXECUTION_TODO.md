@@ -1,14 +1,14 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-16  
+**Date:** 2026-09-17
 **Active working branch:** `main`  
 **Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Foundation decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
 **I1 acceptance:** `docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`  
 **I2 acceptance:** `docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md`  
-**Current product gate:** MARKET I1 + I2 ACCEPTED / I3 NEXT  
+**Current product gate:** MARKET I1-I3 REPOSITORY ACCEPTED / I4 NEXT
 **Parallel portfolio gate:** MIT complete / GitHub metadata + screenshots + release + owner mastery pending
 
 Repository workflow:
@@ -110,25 +110,27 @@ Acceptance:
 - [x] no semantic membership inference added.
 - [x] CI 1167 green through `pytest -W error`.
 
-### C3 — I3 membership qualification — NEXT
+### C3 — I3 membership qualification — REPOSITORY ACCEPTED / CLOSED
 
-- [ ] define one explicit first-slice membership classifier contract/version.
-- [ ] consume only I2 source-eligible candidates.
-- [ ] apply deterministic target constraints before any model call.
-- [ ] use current source title/detail as factual authority.
-- [ ] use current English projection only where language/semantic reasoning requires it.
-- [ ] use accepted-current P1.6 opportunistically as stronger evidence, never as a prerequisite.
-- [ ] support exactly `core_match / adjacent_match / uncertain / excluded`.
-- [ ] preserve `uncertain` as a successful bounded outcome.
-- [ ] store exact target/source/classifier/translation/P1.6 dependency identity through `MarketStore`.
-- [ ] reuse exact membership decisions when dependencies match.
-- [ ] require explicit superseding correction instead of hidden overwrite.
-- [ ] title/keyword match alone must not prove core membership.
-- [ ] Capability/Work remain optional and must not become gates.
-- [ ] add deterministic/fake-provider boundary tests using representative core/adjacent/excluded/uncertain cases.
-- [ ] do not auto-promote membership into Canonical Registry/P2.2C/P2.2D taxonomy.
+- [x] define one explicit first-slice membership classifier contract/version.
+- [x] consume only I2 source-eligible candidates.
+- [x] apply deterministic target constraints before any model call.
+- [x] use current source title/detail as factual authority.
+- [x] use current English projection only where language/semantic reasoning requires it.
+- [x] use accepted-current P1.6 opportunistically as stronger evidence, never as a prerequisite.
+- [x] support exactly `core_match / adjacent_match / uncertain / excluded`.
+- [x] preserve `uncertain` as a successful bounded outcome.
+- [x] store exact target/source/classifier/translation/P1.6 dependency identity through `MarketStore`.
+- [x] reuse exact membership decisions when dependencies match.
+- [x] require explicit superseding correction instead of hidden overwrite.
+- [x] title/keyword match alone must not prove core membership.
+- [x] Capability/Work remain optional and must not become gates.
+- [x] add deterministic/fake-provider boundary tests using representative core/adjacent/excluded/uncertain cases.
+- [x] do not auto-promote membership into Canonical Registry/P2.2C/P2.2D taxonomy.
 
-### C4 — I4 immutable snapshot construction — AFTER I3
+I3 evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`. Real-model/end-to-end acceptance remains I7.
+
+### C4 — I4 immutable snapshot construction — NEXT
 
 - [ ] freeze exact definition/run/membership/source/semantic coverage identities.
 - [ ] keep core/adjacent/uncertain/excluded separate.
@@ -220,12 +222,10 @@ Still to prove:
 ## Exact next action
 
 ```text
-I3 only
-→ membership qualification contract + service
-→ deterministic constraints first
-→ bounded semantic relevance only where needed
-→ exact dependency persistence/reuse
-→ focused boundary tests
-→ reconcile state
-→ only then proceed to I4
+I4 only
+→ construct immutable snapshots from exact current memberships
+→ retain explicit P1.6 coverage and source/semantic denominators
+→ preserve old snapshots
+→ focused tests + state reconciliation
+→ only then proceed to I5
 ```

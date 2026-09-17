@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-16  
+**Date:** 2026-09-17
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current product gate:** MARKET I1 + I2 ACCEPTED / I3 NEXT  
+**Current product gate:** MARKET I1-I3 REPOSITORY ACCEPTED / I4 NEXT
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -27,6 +27,7 @@ Accepted implementation records:
 ```text
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
 docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
+docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
 ```
 
 Execution checklist:
@@ -229,66 +230,21 @@ I2 is planning-only. Actual target discovery/source/model execution and persiste
 
 ---
 
-## 6. Exact next action — I3 only
+## 6. I3 repository acceptance / I4 next
 
-I3 responsibility:
+I3 evidence owner: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`.
 
-**Membership qualification contract + service.**
+Membership qualification now composes fresh I2 eligibility with bounded interpretation,
+validated evidence refs, exact dependency reuse, and explicit immutable corrections.
+Pending/missing P1.6 is not a membership gate. Uncertain is valid success; provider,
+stale-dependency, and invalid-reference failures do not become saved uncertainty.
 
-I3 must consume only I2 source-eligible candidates and decide one of:
+The provider is wired as a service factory; browser/CLI orchestration remains I6.
+Fake/HTTP fixtures prove the engineering contract, not real-model adequacy. I7 still
+owns bounded real target acceptance and reuse.
 
-```text
-core_match
-adjacent_match
-uncertain
-excluded
-```
-
-### Required I3 shape
-
-```text
-1. deterministic target constraints
-2. bounded semantic role/work relevance only when deterministic evidence is insufficient
-3. persist/reuse exact MarketJobMembership dependency identity
-```
-
-Minimum factual evidence boundary:
-
-```text
-current parsed source detail + title
-+ current English projection when needed for language/semantic reasoning
-+ accepted-current P1.6 opportunistically when available
-```
-
-Accepted P1.6 must **not** become a prerequisite. Capability and Work remain optional and must not become gates.
-
-### Representative boundary cases already authorized for fake/fixture tests
-
-For the Applied AI / ML Engineering representative target:
-
-```text
-ta9l  → clear core source evidence despite no accepted P1.6
-tG9K  → clear core with accepted P1.6 support
-tGM0  → adjacent backend/AI-platform role
-t4jp  → excluded AI-title false positive / content-production center
-tmBK  → excluded Python/backend with AI-usage qualification only
-t4qV  → excluded network security
-tmyX  → excluded infrastructure security
-```
-
-Add a sparse/borderline fixture where `uncertain` is the correct successful output.
-
-### I3 must prove
-
-- title/keyword equality cannot by itself create `core_match`;
-- deterministic exclusions/constraints happen before model calls;
-- model output is bounded to the four dispositions + short reason/evidence refs;
-- `uncertain` is valid success, not a failure/retry trigger;
-- exact target/source/classifier/translation/P1.6 dependencies drive reuse;
-- changed source/target/classifier dependencies prevent stale membership reuse;
-- exact reruns reuse membership;
-- reviewed corrections supersede rather than overwrite history;
-- no Registry/P2.2C/P2.2D promotion side effect.
+**Next: I4 immutable snapshot construction**, with current membership identities,
+explicit P1.6 coverage, core-only primary denominator, and preserved historical snapshots.
 
 ---
 
@@ -297,8 +253,8 @@ Add a sparse/borderline fixture where `uncertain` is the correct successful outp
 ```text
 I1  domain + persistence                         ACCEPTED
 I2  target source eligibility / affected work   ACCEPTED
-I3  membership qualification                    NEXT
-I4  snapshot construction                       BLOCKED BY I3
+I3  membership qualification                    REPOSITORY ACCEPTED
+I4  snapshot construction                       NEXT
 I5  deterministic aggregate                     BLOCKED BY I4
 I6  browser + CLI                               BLOCKED BY I5
 I7  bounded real local acceptance               BLOCKED BY I6
@@ -306,11 +262,11 @@ I7  bounded real local acceptance               BLOCKED BY I6
 
 ---
 
-## 8. Stop lines during I3
+## 8. Stop lines during I4
 
 Do not:
 
-- implement snapshot construction or aggregate calculation early;
+- implement aggregate calculation early;
 - build browser/report UI;
 - auto-accept P1.6;
 - make Capability/Work mandatory;
@@ -334,4 +290,4 @@ intentional v0.1.0 release
 owner mastery verification
 ```
 
-This does not change the I3 product frontier.
+This does not change the I4 product frontier.
