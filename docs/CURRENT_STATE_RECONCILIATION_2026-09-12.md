@@ -23,8 +23,9 @@ Market I2 affected-work planning    ACCEPTED / CLOSED
 Market I3 membership qualification ACCEPTED / CLOSED
 Market I4 snapshot construction     ACCEPTED / CLOSED
 Market I5 aggregate profile         ACCEPTED / CLOSED
-Market I6 browser + CLI workflow    NEXT / ACTIVE PRODUCT FRONTIER
-Market I7 real local acceptance     BLOCKED BY I6
+Market I6 browser + CLI workflow    ACCEPTED / CLOSED
+Market I7 real local acceptance     NEXT / ACTIVE PRODUCT FRONTIER
+First Market vertical slice         NOT END-TO-END ACCEPTED UNTIL I7
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
 
@@ -72,190 +73,194 @@ No responsibility concept or mappings were created. Do not reopen B1 merely to m
 
 ---
 
-## 3. Market first-slice foundation
+## 3. Market foundation and accepted increments
 
 Foundation decision:
 
 `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
 
-Authorized first slice:
+Decision:
 
 ```text
-TargetMarket
-+ immutable TargetMarketDefinitionVersion
-+ thin target-aware MarketResearchRun coordinator
-+ MarketJobMembership
-+ immutable MarketCorpusSnapshot + members
-+ deterministic MarketAggregateProfile
-+ thin browser/CLI workflow over the same services/state
+FOUNDATION INVESTIGATION: PASS
+FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-Permanent boundaries:
+Accepted implementation sequence:
 
-- Jobinja is the first recurring source;
-- search/acquisition recall != target membership truth;
-- dispositions remain `core_match / adjacent_match / uncertain / excluded`;
-- primary source-level corpus is core only;
-- accepted P1.6 is not required for source-level membership;
-- accepted-current P1.6 is required for strong semantic prevalence;
-- pending/missing/failed/rejected P1.6 != zero demand;
-- Capability/Work are optional, not first-slice gates;
-- repost/new-ID collapse remains deferred;
-- denominator wording is `qualified source postings`, not `unique demand units`;
-- Market state remains local/private by default.
+```text
+I1  domain + SQLite persistence                 ACCEPTED
+I2  target-scoped source/affected work          ACCEPTED
+I3  membership qualification                    ACCEPTED
+I4  immutable snapshot construction             ACCEPTED
+I5  deterministic aggregate profile             ACCEPTED
+I6  browser + CLI thin workflow                 ACCEPTED
+I7  bounded real local acceptance               NEXT
+```
 
-I3 real-model evidence additionally established that material core-vs-adjacent semantics belong in the immutable target definition rather than vacancy-specific prompt patches.
+Latest I6 acceptance owner:
 
----
+`docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
 
-## 4. I1-I5 accepted chain
-
-Accepted records:
+Earlier accepted Market evidence remains applicable:
 
 ```text
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
-docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
 docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
-docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md
-docs/working-memory/2026-09-17_MARKET_I5_DETERMINISTIC_AGGREGATE_PROFILE.md
 ```
 
-### I1
+I3 real-model evaluation is preserved at:
 
-Immutable target/definition/run/membership/snapshot/profile persistence and exact dependency history.
+`docs/experiments/2026-09-17_market-i3-real-model-acceptance/`
 
-### I2
-
-Target-scoped source/translation/P1.6 affected-work planning with no global backlog spill and cautious lifecycle/freshness semantics.
-
-### I3
-
-Target-relative membership qualification with exact evidence refs, valid `uncertain`, optional accepted P1.6, exact dependency reuse and immutable corrections.
-
-Repository acceptance: implementation `0eaf04109a57846aa6d0a920d0563f89a4dfb535`, CI 1172 with 608 tests twice.
-
-Real-model boundary evidence:
-
-```text
-broad target       7/8 expected outcomes; tGM0 sole disagreement
-clarified target   8/8 post-hoc boundary-calibration outcomes
-```
-
-This is not a population accuracy benchmark.
-
-### I4
-
-Immutable point-in-time snapshot assembly from exact current I3 membership identities, with derived `accepted/pending/missing/failed/rejected` P1.6 coverage and core-only primary corpus.
-
-Technical acceptance: CI 1182, 617 tests twice.
-
-### I5
-
-Deterministic aggregate profile over one exact immutable I4 snapshot.
-
-Accepted boundaries:
-
-- never reconstructs the historical corpus from today's current state;
-- source denominator = qualified core source postings;
-- semantic denominator = accepted-P1.6 core postings;
-- employer/source context derives from exact immutable source-detail evidence;
-- unknown employer remains explicit;
-- requirement/responsibility semantic counts use accepted snapshot P1.6 only;
-- one posting contributes at most once to a normalized support count;
-- strength support remains explicit;
-- evidence drill-down preserves source job, artifact and claim indexes;
-- Canonical Registry enrichment is permitted only for mappings reviewed no later than the snapshot timestamp;
-- later Registry review cannot silently change historical aggregate replay;
-- no model writes counts/shares/denominators/scores;
-- repost adjustment remains explicitly absent;
-- deterministic profile persistence is immutable and replay-safe.
-
-Technical acceptance:
-
-```text
-head 5defb23cb769a4be7a6b0d13ea7762d35ec0f4ba
-CI 1189 / 35250174702
-Ruff: PASS
-pytest: 622 passed
-pytest -W error: 622 passed
-conclusion: SUCCESS
-```
+Its clarified-target 8/8 result is post-hoc boundary calibration, not a general model-accuracy benchmark.
 
 ---
 
-## 5. Exact current action — I6
+## 4. Accepted I6 product path
 
-Current active frontier:
-
-```text
-I6 — thin browser + CLI Market workflow
-```
-
-I6 must expose the accepted I1-I5 state/services through the existing product surfaces rather than creating duplicate business logic.
-
-Minimum useful surface:
+The shared first-slice workflow now exists in repository code:
 
 ```text
-list/create Market target
-create/inspect immutable target definition
-inspect target run state/ledger
-inspect snapshot/profile history
-render deterministic profile and warnings
-show source vs accepted-semantic denominators
-show membership/coverage counts
-show requirement/responsibility evidence drill-down
+TargetMarket
+→ immutable TargetMarketDefinitionVersion
+→ exact target acquisition envelope
+→ bounded target-only Jobinja discovery
+→ bounded I2 source/translation/P1.6 affected work
+→ bounded I3 membership qualification
+→ terminal MarketResearchRun + partial-success ledger
+→ I4 immutable snapshot
+→ I5 deterministic aggregate profile
+→ shared browser/CLI inspection
 ```
 
-The browser remains the primary repeat-use surface. CLI provides the same service/state access for automation/debugging.
+Browser primary surface:
 
-A thin coordinator may connect the accepted stages for one bounded run, but I6 must preserve partial-success ledgers and existing one-mutable-operation behavior. Do not introduce a generic workflow engine.
+```text
+/market/targets
+```
 
-I6 must not add model-generated report prose, role-subfamily clustering, repost heuristics, trends/forecasting, personal scoring, public corpus publication, or new infrastructure frameworks.
+The older `/market` current-corpus aggregate page remains available as a legacy view. It is not the target-scoped historical authority.
+
+CLI surface:
+
+```text
+jobhunter market target list
+jobhunter market target create
+jobhunter market definition create TARGET_ID
+jobhunter market show
+jobhunter market preview DEFINITION_ID
+jobhunter market run DEFINITION_ID
+jobhunter market run-show RUN_ID
+jobhunter market snapshot-show SNAPSHOT_ID
+```
+
+I6 uses the existing `WebOperationManager` one-mutable-operation boundary. Browser and CLI use the same Market workspace/services/state.
+
+Market target/definition/membership/run/snapshot/profile tables remain local/private and are not exported to the repository public corpus by default.
 
 ---
 
-## 6. Sequence
+## 5. Permanent first-slice semantic/denominator boundaries
 
-```text
-I1  domain + persistence                         ACCEPTED
-I2  target source eligibility / affected work   ACCEPTED
-I3  membership qualification                    ACCEPTED
-I4  immutable snapshot construction             ACCEPTED
-I5  deterministic aggregate                     ACCEPTED
-I6  browser + CLI thin workflow                 NEXT
-I7  bounded real local acceptance               BLOCKED BY I6
-```
-
----
-
-## 7. Precedence
-
-For present-tense status only, this file supersedes older `B1 active`, `Market foundation incomplete`, or `I1-I5 next` language. Dated historical records remain evidence and should not be mass-rewritten.
-
-Current owner set before I6:
-
-```text
-AGENTS.md
-README.md
-product/domain/source/architecture + reasoning policy
-this reconciliation
-docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
-docs/working-memory/2026-09-17_MARKET_I5_DETERMINISTIC_AGGREGATE_PROFILE.md
-docs/EXECUTION_TODO.md
-docs/WORKING_MEMORY.md
-```
+- acquisition/search vocabulary is not target-membership truth;
+- target meaning is versioned and immutable;
+- target search catalog version is locked to the definition meaning;
+- `core_match / adjacent_match / uncertain / excluded` remain distinct;
+- only core enters the primary corpus;
+- accepted P1.6 is not required for source-level membership;
+- accepted-current P1.6 is required for strong P1.6-backed prevalence statistics;
+- pending/missing/failed/rejected P1.6 never means zero demand;
+- Capability and Work are optional enrichments, not Market gates;
+- automatic repost/new-ID collapse remains deferred;
+- denominator language remains `qualified source postings`;
+- no model-authored counts or opaque composite scores;
+- semantic subfamily synthesis, trends, forecasts and personal scoring remain outside this slice.
 
 ---
 
-## 8. Current routing
+## 6. I6 acceptance evidence
+
+Accepted technical head before status reconciliation:
+
+```text
+4076bb731b3485aa99fbdf63bf73a96dc7a5773b
+```
+
+CI:
+
+```text
+run 1210 / 35263630011
+installed entrypoint smoke     PASS
+Ruff                           PASS
+pytest                         632 passed
+pytest -W error                632 passed
+conclusion                     SUCCESS
+```
+
+During integration, repository tests caught an accidental attempted drift in accepted I5 aggregate semantics. The exact accepted I5 implementation was restored before I6 acceptance. Current I6 composes I5 directly and does not redefine the aggregate contract.
+
+---
+
+## 7. Exact active frontier — I7 only
+
+I7 is the required **bounded real local acceptance** of the complete first Market vertical slice.
+
+Use one small representative target, preferably a well-specified Applied AI / ML Engineering definition whose core-vs-adjacent boundary is explicit.
+
+I7 must verify on the owner's actual local runtime:
+
+```text
+target creation/versioning or intentional reuse
+→ exact search-scope preview
+→ bounded Jobinja acquisition
+→ candidate/noise inspection
+→ source/translation/P1.6 affected-work behavior
+→ membership core/adjacent/uncertain/excluded inspection
+→ immutable run ledger
+→ immutable snapshot
+→ source/core denominator display
+→ accepted-semantic denominator display
+→ requirement/responsibility evidence drill-down
+→ unchanged rerun reuse/currentness
+→ partial-success behavior where naturally encountered or safely injected
+→ privacy/publication boundary
+→ browser usability + CLI parity
+```
+
+I7 may produce PASS, bounded repair work, or HOLD. Do not pre-commit to PASS.
+
+The first Market vertical slice is not end-to-end accepted until I7 evidence supports closure.
+
+---
+
+## 8. I7 stop lines
+
+During I7 do not:
+
+- broaden into semantic role-subfamily synthesis;
+- add trends/emerging/forecasting;
+- add Market → You/personal readiness scoring;
+- auto-accept P1.6;
+- make Capability or Work mandatory;
+- invent repost similarity thresholds;
+- publish Market local tables to `corpus/`;
+- reopen B1/P2.2C/P2.2D;
+- introduce a second workflow/persistence/currentness stack;
+- weaken deterministic tests merely to accommodate a live provider result.
+
+If real evidence exposes a concrete correctness defect, repair only the owning boundary and rerun the relevant acceptance checks.
+
+---
+
+## 9. Current routing
 
 ```text
 B1 CLOSED / DEFER
 → Market foundation PASS
-→ I1-I5 ACCEPTED
-→ I6 NEXT
-→ I7 bounded real local acceptance
-→ close first Market slice only after I7 acceptance
+→ I1-I6 ACCEPTED
+→ I7 NEXT
+→ first Market vertical slice closure only from real local acceptance evidence
 ```
 
-This file is a status-only overlay. It does not replace durable product/domain/source/architecture authority.
+For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
