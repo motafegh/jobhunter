@@ -20,6 +20,7 @@ from jobhunter.public_corpus import DEFAULT_PUBLIC_CORPUS_DIR, export_public_cor
 from jobhunter.web.app import create_app
 from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
+from jobhunter.web.market_workspace import register_market_workspace_routes
 from jobhunter.web.operations import WebOperationManager
 from jobhunter.web.registry import register_registry_routes
 from jobhunter.web.work_intelligence import register_work_intelligence_routes
@@ -184,7 +185,7 @@ def _synchronize_public_corpus(settings: Settings) -> None:
 
 
 def build_runtime_app(settings: Settings):
-    """Build the normal web app plus reviewed expert-analysis and registry routes."""
+    """Build the local browser app plus reviewed expert and Market routes."""
 
     operations = WebOperationManager(after_success=lambda: _synchronize_public_corpus(settings))
     app = create_app(settings, operations=operations)
@@ -192,6 +193,7 @@ def build_runtime_app(settings: Settings):
     register_blueprint_routes(app, settings)
     register_registry_routes(app, settings)
     register_work_intelligence_routes(app, settings)
+    register_market_workspace_routes(app, settings)
     return app
 
 
