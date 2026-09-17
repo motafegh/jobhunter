@@ -1,6 +1,6 @@
 """Shared I6 Market workspace and bounded target-run coordinator.
 
-The browser and CLI use this module as one service/state boundary.  It composes the
+Browser and CLI adapters use this module as one service/state boundary. It composes
 accepted I1-I5 owners; it does not introduce another persistence model, semantic
 classifier, report layer, or publication path.
 """
@@ -10,7 +10,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from collections import Counter
-from contextlib import closing
+from contextlib import closing, suppress
 from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
@@ -72,6 +72,7 @@ class MarketRunControls:
     refresh_after_hours: float = 24
     translation_limit: int = 20
     analysis_limit: int = 5
+    membership_limit: int = 20
 
     def validate(self) -> MarketRunControls:
         if not 1 <= self.request_budget <= 500:
@@ -92,6 +93,8 @@ class MarketRunControls:
             raise MarketWorkspaceError("translation_limit must be between 0 and 50")
         if not 0 <= self.analysis_limit <= 20:
             raise MarketWorkspaceError("analysis_limit must be between 0 and 20")
+        if not 0 <= self.membership_limit <= 50:
+            raise MarketWorkspaceError("membership_limit must be between 0 and 50")
         return self
 
 
@@ -143,8 +146,14 @@ def _raw_search(item: dict[str, Any], index: int) -> DiscoverySearch:
     name = str(item.get("name") or f"target:raw:{index}").strip()
     url = canonicalize_search_url(str(item.get("url") or ""))
     raw_pages = item.get("max_pages", 1)
-    if isinstance(raw_pages, bool) or not isinstance(raw_pages, int) or not 1 <= raw_pages <= 50:
-        raise MarketWorkspaceError("raw search max_pages must be an integer between 1 and 50")
+    if (
+        isinstance(raw_pages, bool)
+        or not isinstance(raw_pages, int)
+        or not 1 <= raw_pages <= 50
+    ):
+        raise MarketWorkspaceError(
+            "raw search max_pages must be an integer between 1 and 50"
+        )
     if not name:
         raise MarketWorkspaceError("raw search name must not be empty")
     return DiscoverySearch(name=name, url=url, max_pages=raw_pages)
@@ -189,7 +198,10 @@ def resolve_market_searches(
     return selected
 
 
-def _planner(settings: Settings, market: MarketStore | None = None) -> MarketAffectedWorkPlanner:
+def _planner(
+    settings: Settings,
+    market: MarketStore | None = None,
+) -> MarketAffectedWorkPlanner:
     translations = TranslationStore(settings.database_path)
     return MarketAffectedWorkPlanner(
         market_store=market or MarketStore(settings.database_path),
@@ -243,13 +255,13 @@ class MarketRunCoordinator:
         settings: Settings,
         market_store: MarketStore,
         planner: MarketAffectedWorkPlanner,
-        discovery_service: JobinjaDiscoveryService,
-        detail_batch: JobinjaBatchFetchService,
-        translation_service,
-        analysis_service,
-        membership_service,
-        snapshot_service,
-        aggregate_service,
+        discovery_service: Any,
+        detail_batch: Any,
+        translation_service: Any,
+        analysis_service: Any,
+        membership_service: Any,
+        snapshot_service: Any,
+        aggregate_service: Any,
         clock=_utc_now,
     ) -> None:
         self._settings = settings
@@ -274,7 +286,9 @@ class MarketRunCoordinator:
         controls = controls.validate()
         definition = self._market.get_definition_version(target_definition_version_id)
         if definition is None:
-            raise LookupError(f"Unknown Market target definition {target_definition_version_id}")
+            raise LookupError(
+                f"Unknown Market target definition {target_definition_version_id}"
+            )
         searches = resolve_market_searches(
             self._settings,
             definition,
@@ -347,26 +361,9 @@ class MarketRunCoordinator:
                 analysis_limit=0,
             )
             source_selected = (*source_plan.missing_selected, *source_plan.refresh_selected)
-            if source_selected:
-                detail = self._details.run(source_selected)
-                failures.extend(
-                    f"source:{item.source_job_id}: {item.error}" for item in detail.failures
-                )
-                ledger["stages"]["source_execution"] = {
-                    "attempted": detail.attempted,
-                    "succeeded": detail.succeeded,
-                    "new_versions": detail.new_versions,
-                    "unchanged": detail.unchanged,
-                    "failures": len(detail.failures),
-                }
-            else:
-                ledger["stages"]["source_execution"] = {
-                    "attempted": 0,
-                    "succeeded": 0,
-                    "new_versions": 0,
-                    "unchanged": 0,
-                    "failures": 0,
-                }
+            source_result = self._execute_source(source_selected)
+            failures.extend(source_result["failure_messages"])
+            ledger["stages"]["source_execution"] = source_result["ledger"]
 
             translation_plan = self._planner.plan(
                 target_definition_version_id=target_definition_version_id,
@@ -377,28 +374,12 @@ class MarketRunCoordinator:
                 translation_limit=controls.translation_limit,
                 analysis_limit=0,
             )
-            if translation_plan.translation_selected:
-                translation = self._translations.run(
-                    source_job_ids=translation_plan.translation_selected,
-                    limit=max(1, controls.translation_limit),
-                )
-                failures.extend(
-                    f"translation:{item.source_job_id}: {item.error}"
-                    for item in translation.failures
-                )
-                ledger["stages"]["translation"] = {
-                    "attempted": translation.attempted,
-                    "completed": translation.completed,
-                    "reused": translation.reused,
-                    "failures": len(translation.failures),
-                }
-            else:
-                ledger["stages"]["translation"] = {
-                    "attempted": 0,
-                    "completed": 0,
-                    "reused": 0,
-                    "failures": 0,
-                }
+            translation_result = self._execute_translation(
+                translation_plan.translation_selected,
+                controls.translation_limit,
+            )
+            failures.extend(translation_result["failure_messages"])
+            ledger["stages"]["translation"] = translation_result["ledger"]
 
             analysis_plan = self._planner.plan(
                 target_definition_version_id=target_definition_version_id,
@@ -409,26 +390,12 @@ class MarketRunCoordinator:
                 translation_limit=0,
                 analysis_limit=controls.analysis_limit,
             )
-            if analysis_plan.analysis_selected:
-                analysis = self._analyses.run_english(
-                    analysis_plan.analysis_selected,
-                    limit=max(1, controls.analysis_limit),
-                )
-                failures.extend(
-                    f"analysis:{item.source_job_id}: {item.error}"
-                    for item in analysis.failures
-                )
-                ledger["stages"]["analysis"] = {
-                    "attempted": analysis.attempted,
-                    "completed_or_reused": len(analysis.results),
-                    "failures": len(analysis.failures),
-                }
-            else:
-                ledger["stages"]["analysis"] = {
-                    "attempted": 0,
-                    "completed_or_reused": 0,
-                    "failures": 0,
-                }
+            analysis_result = self._execute_analysis(
+                analysis_plan.analysis_selected,
+                controls.analysis_limit,
+            )
+            failures.extend(analysis_result["failure_messages"])
+            ledger["stages"]["analysis"] = analysis_result["ledger"]
 
             final_plan = self._planner.plan(
                 target_definition_version_id=target_definition_version_id,
@@ -441,51 +408,31 @@ class MarketRunCoordinator:
             )
             ledger["stages"]["affected_work"] = final_plan.ledger()
 
-            dispositions: Counter[str] = Counter()
-            membership_failures = 0
-            for source_job_id in final_plan.source_ready:
-                try:
-                    result = self._memberships.qualify(
-                        target_definition_version_id=target_definition_version_id,
-                        source_job_id=source_job_id,
-                        refresh_after_hours=controls.refresh_after_hours,
-                    )
-                except (
-                    MarketMembershipError,
-                    MarketMembershipUnavailableError,
-                    LookupError,
-                    OSError,
-                    RuntimeError,
-                    ValueError,
-                ) as exc:
-                    membership_failures += 1
-                    failures.append(f"membership:{source_job_id}: {exc}")
-                    continue
-                membership_ids.append(result.membership.id)
-                dispositions[result.membership.disposition] += 1
-            ledger["stages"]["membership"] = {
-                "attempted": len(final_plan.source_ready),
-                "succeeded": len(membership_ids),
-                "failed": membership_failures,
-                "dispositions": dict(sorted(dispositions.items())),
-            }
+            membership_stage = self._qualify_memberships(
+                target_definition_version_id=target_definition_version_id,
+                source_job_ids=final_plan.source_ready,
+                refresh_after_hours=controls.refresh_after_hours,
+                limit=controls.membership_limit,
+            )
+            membership_ids.extend(membership_stage["membership_ids"])
+            failures.extend(membership_stage["failure_messages"])
+            ledger["stages"]["membership"] = membership_stage["ledger"]
             ledger["failures"] = failures
 
-            terminal_status = (
-                MarketRunStatus.COMPLETED_WITH_FAILURES
-                if failures
-                else MarketRunStatus.COMPLETED
-            )
             run = self._market.finish_run(
                 run.id,
-                status=terminal_status,
+                status=(
+                    MarketRunStatus.COMPLETED_WITH_FAILURES
+                    if failures
+                    else MarketRunStatus.COMPLETED
+                ),
                 ledger=ledger,
                 completed_at=self._clock(),
                 error_summary="\n".join(failures) if failures else None,
             )
         except Exception as exc:
             ledger["failures"] = [*failures, f"fatal:{type(exc).__name__}: {exc}"]
-            try:
+            with suppress(Exception):
                 run = self._market.finish_run(
                     run.id,
                     status=MarketRunStatus.FAILED,
@@ -493,8 +440,6 @@ class MarketRunCoordinator:
                     completed_at=self._clock(),
                     error_summary=str(exc),
                 )
-            except Exception:
-                pass
             raise
 
         snapshot_result: MarketSnapshotBuildResult | None = None
@@ -518,32 +463,154 @@ class MarketRunCoordinator:
             failures=tuple(failures),
         )
 
+    def _execute_source(self, source_job_ids: tuple[str, ...]) -> dict[str, Any]:
+        if not source_job_ids:
+            return {
+                "failure_messages": [],
+                "ledger": {
+                    "attempted": 0,
+                    "succeeded": 0,
+                    "new_versions": 0,
+                    "unchanged": 0,
+                    "failures": 0,
+                },
+            }
+        result = self._details.run(source_job_ids)
+        return {
+            "failure_messages": [
+                f"source:{item.source_job_id}: {item.error}" for item in result.failures
+            ],
+            "ledger": {
+                "attempted": result.attempted,
+                "succeeded": result.succeeded,
+                "new_versions": result.new_versions,
+                "unchanged": result.unchanged,
+                "failures": len(result.failures),
+            },
+        }
 
-def build_market_run_coordinator(settings: Settings) -> MarketRunCoordinator:
-    market = MarketStore(settings.database_path)
-    return MarketRunCoordinator(
-        settings=settings,
-        market_store=market,
-        planner=_planner(settings, market),
-        discovery_service=_discovery(settings, request_budget=settings.jobinja_search_request_budget),
-        detail_batch=_detail_batch(settings),
-        translation_service=build_translation_service(settings),
-        analysis_service=build_job_analysis_service(settings),
-        membership_service=build_market_membership_service(settings),
-        snapshot_service=build_market_snapshot_service(settings),
-        aggregate_service=build_market_aggregate_service(settings),
-    )
+    def _execute_translation(
+        self,
+        source_job_ids: tuple[str, ...],
+        limit: int,
+    ) -> dict[str, Any]:
+        if not source_job_ids:
+            return {
+                "failure_messages": [],
+                "ledger": {
+                    "attempted": 0,
+                    "completed": 0,
+                    "reused": 0,
+                    "failures": 0,
+                },
+            }
+        result = self._translations.run(
+            source_job_ids=source_job_ids,
+            limit=max(1, limit),
+        )
+        return {
+            "failure_messages": [
+                f"translation:{item.source_job_id}: {item.error}"
+                for item in result.failures
+            ],
+            "ledger": {
+                "attempted": result.attempted,
+                "completed": result.completed,
+                "reused": result.reused,
+                "failures": len(result.failures),
+            },
+        }
+
+    def _execute_analysis(
+        self,
+        source_job_ids: tuple[str, ...],
+        limit: int,
+    ) -> dict[str, Any]:
+        if not source_job_ids:
+            return {
+                "failure_messages": [],
+                "ledger": {
+                    "attempted": 0,
+                    "completed_or_reused": 0,
+                    "failures": 0,
+                },
+            }
+        result = self._analyses.run_english(
+            source_job_ids,
+            limit=max(1, limit),
+        )
+        return {
+            "failure_messages": [
+                f"analysis:{item.source_job_id}: {item.error}" for item in result.failures
+            ],
+            "ledger": {
+                "attempted": result.attempted,
+                "completed_or_reused": len(result.results),
+                "failures": len(result.failures),
+            },
+        }
+
+    def _qualify_memberships(
+        self,
+        *,
+        target_definition_version_id: int,
+        source_job_ids: tuple[str, ...],
+        refresh_after_hours: float,
+        limit: int,
+    ) -> dict[str, Any]:
+        selected = source_job_ids[:limit]
+        remaining = source_job_ids[limit:]
+        membership_ids: list[int] = []
+        failure_messages: list[str] = []
+        dispositions: Counter[str] = Counter()
+        for source_job_id in selected:
+            try:
+                result = self._memberships.qualify(
+                    target_definition_version_id=target_definition_version_id,
+                    source_job_id=source_job_id,
+                    refresh_after_hours=refresh_after_hours,
+                )
+            except (
+                MarketMembershipError,
+                MarketMembershipUnavailableError,
+                LookupError,
+                OSError,
+                RuntimeError,
+                ValueError,
+            ) as exc:
+                failure_messages.append(f"membership:{source_job_id}: {exc}")
+                continue
+            membership_ids.append(result.membership.id)
+            dispositions[result.membership.disposition] += 1
+        return {
+            "membership_ids": membership_ids,
+            "failure_messages": failure_messages,
+            "ledger": {
+                "eligible": len(source_job_ids),
+                "selected": len(selected),
+                "remaining": len(remaining),
+                "succeeded": len(membership_ids),
+                "failed": len(failure_messages),
+                "dispositions": dict(sorted(dispositions.items())),
+            },
+        }
 
 
 class MarketWorkspaceService:
-    """Small shared read/write facade used by I6 CLI and browser adapters."""
+    """Shared read/write facade used by I6 CLI and browser adapters."""
 
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
         self.store = MarketStore(settings.database_path)
         self._database_path = settings.database_path
 
-    def create_target(self, *, slug: str, name: str, description: str | None) -> TargetMarket:
+    def create_target(
+        self,
+        *,
+        slug: str,
+        name: str,
+        description: str | None,
+    ) -> TargetMarket:
         return self.store.create_target(
             slug=slug,
             name=name,
@@ -585,7 +652,6 @@ class MarketWorkspaceService:
             seniority_scope=(seniority_scope or "").strip() or None,
             employment_type_scope=(employment_type_scope or "").strip() or None,
         )
-        # Resolve before persistence so an invalid profile/pack/raw URL never creates history.
         provisional = TargetMarketDefinitionVersion(
             id=-1,
             target_market_id=target_market_id,
@@ -623,7 +689,12 @@ class MarketWorkspaceService:
             candidate_source_job_ids=candidate_source_job_ids,
         )
 
-    def run(self, definition_id: int, *, controls: MarketRunControls) -> MarketRunResult:
+    def run(
+        self,
+        definition_id: int,
+        *,
+        controls: MarketRunControls,
+    ) -> MarketRunResult:
         coordinator = build_market_run_coordinator_with_budget(
             self.settings,
             request_budget=controls.request_budget,
@@ -637,32 +708,59 @@ class MarketWorkspaceService:
         definition_id: int | None = None,
         snapshot_id: int | None = None,
     ) -> MarketWorkspaceState:
-        targets = tuple(self.store.get_target(value) for value in self._ids("market_targets"))
-        targets = tuple(item for item in targets if item is not None)
+        explicit_target = target_id is not None
+        targets = tuple(
+            item
+            for value in self._ids("market_targets")
+            if (item := self.store.get_target(value)) is not None
+        )
         selected_target = self.store.get_target(target_id) if target_id is not None else None
-        if selected_target is None and targets:
-            selected_target = targets[0]
+        if explicit_target and selected_target is None:
+            raise LookupError(f"Unknown Market target {target_id}")
 
+        selected_snapshot = None
+        if snapshot_id is not None:
+            selected_snapshot = self.store.get_snapshot(snapshot_id)
+            if selected_snapshot is None:
+                raise LookupError(f"Unknown Market snapshot {snapshot_id}")
+            if (
+                definition_id is not None
+                and definition_id != selected_snapshot.target_definition_version_id
+            ):
+                raise MarketWorkspaceError(
+                    "snapshot_id and definition_id name different Market definitions"
+                )
+            definition_id = selected_snapshot.target_definition_version_id
+
+        selected_definition = None
         if definition_id is not None:
             selected_definition = self.store.get_definition_version(definition_id)
             if selected_definition is None:
                 raise LookupError(f"Unknown Market target definition {definition_id}")
-            if selected_target is None or selected_target.id != selected_definition.target_market_id:
-                selected_target = self.store.get_target(selected_definition.target_market_id)
-        else:
-            selected_definition = None
+            if (
+                explicit_target
+                and selected_target is not None
+                and selected_target.id != selected_definition.target_market_id
+            ):
+                raise MarketWorkspaceError(
+                    "target_id and definition_id name different Market targets"
+                )
+            selected_target = self.store.get_target(selected_definition.target_market_id)
+
+        if selected_target is None and targets:
+            selected_target = targets[0]
 
         definitions: tuple[TargetMarketDefinitionVersion, ...] = ()
         if selected_target is not None:
             definitions = tuple(
-                self.store.get_definition_version(value)
+                item
                 for value in self._ids(
                     "market_target_definition_versions",
                     where="target_market_id = ?",
                     params=(selected_target.id,),
                 )
+                if (item := self.store.get_definition_version(value)) is not None
             )
-            definitions = tuple(item for item in definitions if item is not None)
             if selected_definition is None and definitions:
                 selected_definition = definitions[0]
 
@@ -671,40 +769,43 @@ class MarketWorkspaceService:
         snapshots: tuple[MarketCorpusSnapshot, ...] = ()
         if selected_definition is not None:
             runs = tuple(
-                self.store.get_run(value)
+                item
                 for value in self._ids(
                     "market_research_runs",
                     where="target_definition_version_id = ?",
                     params=(selected_definition.id,),
                 )
+                if (item := self.store.get_run(value)) is not None
             )
-            runs = tuple(item for item in runs if item is not None)
             memberships = tuple(
-                self.store.get_membership(value)
+                item
                 for value in self._ids(
                     "market_job_memberships",
                     where="target_definition_version_id = ?",
                     params=(selected_definition.id,),
                 )
+                if (item := self.store.get_membership(value)) is not None
             )
-            memberships = tuple(item for item in memberships if item is not None)
             snapshots = tuple(
-                self.store.get_snapshot(value)
+                item
                 for value in self._ids(
                     "market_corpus_snapshots",
                     where="target_definition_version_id = ?",
                     params=(selected_definition.id,),
                 )
+                if (item := self.store.get_snapshot(value)) is not None
             )
-            snapshots = tuple(item for item in snapshots if item is not None)
 
-        selected_snapshot = None
-        if snapshot_id is not None:
-            selected_snapshot = self.store.get_snapshot(snapshot_id)
-            if selected_snapshot is None:
-                raise LookupError(f"Unknown Market snapshot {snapshot_id}")
-        elif snapshots:
+        if selected_snapshot is None and snapshots:
             selected_snapshot = snapshots[0]
+        if (
+            selected_snapshot is not None
+            and selected_definition is not None
+            and selected_snapshot.target_definition_version_id != selected_definition.id
+        ):
+            raise MarketWorkspaceError(
+                "Selected snapshot does not belong to the selected Market definition"
+            )
 
         members = (
             self.store.list_snapshot_members(selected_snapshot.id)
@@ -732,12 +833,21 @@ class MarketWorkspaceService:
         return run
 
     def snapshot_by_id(
-        self, snapshot_id: int
-    ) -> tuple[MarketCorpusSnapshot, tuple[MarketCorpusSnapshotMember, ...], MarketAggregateProfile | None]:
+        self,
+        snapshot_id: int,
+    ) -> tuple[
+        MarketCorpusSnapshot,
+        tuple[MarketCorpusSnapshotMember, ...],
+        MarketAggregateProfile | None,
+    ]:
         snapshot = self.store.get_snapshot(snapshot_id)
         if snapshot is None:
             raise LookupError(f"Unknown Market snapshot {snapshot_id}")
-        return snapshot, self.store.list_snapshot_members(snapshot_id), self._profile_for_snapshot(snapshot_id)
+        return (
+            snapshot,
+            self.store.list_snapshot_members(snapshot_id),
+            self._profile_for_snapshot(snapshot_id),
+        )
 
     def _profile_for_snapshot(self, snapshot_id: int) -> MarketAggregateProfile | None:
         ids = self._ids(
@@ -766,11 +876,11 @@ class MarketWorkspaceService:
             raise RuntimeError("Unsupported Market workspace table")
         self.store.initialize()
         clause = f" WHERE {where}" if where else ""
-        with closing(
-            sqlite3.connect(f"file:{Path(self._database_path).resolve()}?mode=ro", uri=True)
-        ) as connection:
+        database_path = Path(self._database_path).resolve()
+        with closing(sqlite3.connect(f"file:{database_path}?mode=ro", uri=True)) as connection:
             rows = connection.execute(
-                f"SELECT id FROM {table}{clause} ORDER BY id DESC", params
+                f"SELECT id FROM {table}{clause} ORDER BY id DESC",
+                params,
             ).fetchall()
         return tuple(int(row[0]) for row in rows)
 
