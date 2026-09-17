@@ -2,26 +2,10 @@
 
 **Status:** Active working checklist  
 **Date:** 2026-09-17  
-**Active working branch:** `main`  
-**Current-state reconciliation:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
+**Active branch:** `main`  
+**Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Foundation decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
-**I1 acceptance:** `docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`  
-**I2 acceptance:** `docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md`  
-**I3 acceptance:** `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`  
-**I4 acceptance:** `docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`  
-**I3 real-model evidence:** `docs/experiments/2026-09-17_market-i3-real-model-acceptance/README.md`  
-**Current product gate:** MARKET I1-I4 ACCEPTED / I5 NEXT  
-**Parallel portfolio gate:** MIT complete / GitHub metadata + screenshots + release + owner mastery pending
-
-Repository workflow:
-
-```text
-current work → main
-next work    → main
-```
-
-Do not create a branch unless the repository owner explicitly changes this rule.
+**Current product gate:** MARKET I1-I5 ACCEPTED / I6 NEXT
 
 Status vocabulary:
 
@@ -35,199 +19,156 @@ Status vocabulary:
 
 ---
 
-## A. Accepted foundation — CLOSED
+## A. Closed accepted substrate
 
-- [x] Jobinja discovery/acquisition/provenance/source-version foundation.
-- [x] `jobinja-detail-v2` parser and cautious lifecycle semantics.
-- [x] `english-projection-v2 / lm-studio-translation-v2`.
-- [x] English P1.6 `job-analysis-english-v20 / job-analysis-v5`.
-- [x] Capability `job-capability-intelligence-v9 / job-capability-intelligence-v5`.
 - [x] Phase 1 CLOSED.
 - [x] P2.1 Canonical Registry CLOSED.
 - [x] P2.2A Job Work Intelligence CLOSED.
 - [x] P2.2B-B1 CLOSED / NO-PROMOTION / DEFER.
+- [x] Market foundation Q1-Q12 PASS / first vertical slice authorized.
 
-Do not reopen B1 merely to manufacture promotion.
-
----
-
-## B. Market / Role-Family foundation — COMPLETE / PASS
-
-- [x] Q1–Q12 resolved.
-- [x] `FOUNDATION INVESTIGATION: PASS`.
-- [x] first vertical slice authorized.
-- [x] source-level membership separated from accepted-P1.6 semantic denominator.
-- [x] first-slice dispositions fixed to `core_match / adjacent_match / uncertain / excluded`.
-- [x] Capability/Work not mandatory first-slice dependencies.
-- [x] repost/new-ID automatic collapse deferred.
-- [x] semantic role-subfamily/report synthesis deferred from first slice.
+Do not reopen accepted historical work without a repeatable current contradiction.
 
 ---
 
-## C. Authorized first Market vertical slice — ACTIVE
+## B. Market first vertical slice
 
-```text
-TargetMarket
-+ immutable TargetMarketDefinitionVersion
-+ thin target-aware MarketResearchRun coordinator
-+ MarketJobMembership
-+ immutable MarketCorpusSnapshot + members
-+ deterministic MarketAggregateProfile
-+ thin browser/CLI workflow over the same services/state
-```
+### I1 — domain + persistence — ACCEPTED
 
-### C1 — I1 domain + SQLite persistence — ACCEPTED / CLOSED
-
-- [x] typed Market domain records.
-- [x] SQLite Market persistence/history.
-- [x] stable target vs immutable definition versions.
-- [x] run lifecycle + ledger persistence.
-- [x] exact-dependency immutable membership history.
+- [x] stable target + immutable definition versions.
+- [x] run lifecycle/ledger persistence.
+- [x] immutable exact-dependency memberships/corrections.
 - [x] immutable snapshot/member history.
-- [x] immutable aggregate-profile persistence.
-- [x] target-definition changes do not invalidate source/translation/P1.6.
-- [x] CI 1160 green through `pytest -W error`.
+- [x] immutable deterministic aggregate-profile storage.
+- [x] upstream source/translation/P1.6 not invalidated by target-definition changes.
 
-### C2 — I2 target-scoped source eligibility + affected-work planning — ACCEPTED / CLOSED
+Acceptance: `docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md`
 
-- [x] exact target candidate/source-state representation.
-- [x] deterministic current-active source eligibility.
-- [x] target-only missing-detail and refresh/repair selection.
-- [x] target-only translation and P1.6 affected-work planning.
-- [x] exact translation/P1.6 reuse/currentness.
-- [x] pending-current P1.6 preserved as pending-review.
-- [x] `failed refresh != disappearance` and `failed refresh != fresh evidence`.
-- [x] global-backlog spill regressions covered.
-- [x] CI 1167 green through `pytest -W error`.
+### I2 — target-scoped affected work — ACCEPTED
 
-### C3 — I3 membership qualification — ACCEPTED / CLOSED
+- [x] target-only source missing/refresh planning.
+- [x] target-only translation/P1.6 planning.
+- [x] no global-backlog budget spill.
+- [x] cautious lifecycle/freshness semantics.
+- [x] exact downstream currentness/reuse.
 
-- [x] deterministic constraints before model reasoning.
-- [x] bounded semantic role/work interpretation.
-- [x] exactly `core_match / adjacent_match / uncertain / excluded`.
-- [x] title/skill keywords alone cannot prove core membership.
-- [x] accepted P1.6 optional evidence, not a membership gate.
-- [x] pending P1.6 not consumed or regenerated.
-- [x] exact dependency identity + immutable correction history.
-- [x] provider/runtime/stale-dependency failures remain failures, not saved uncertainty.
-- [x] CI 1172 passed 608 tests under normal and warnings-as-errors gates.
+Acceptance: `docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md`
+
+### I3 — membership qualification — ACCEPTED
+
+- [x] deterministic constraints first.
+- [x] bounded semantic relevance only when needed.
+- [x] exactly core/adjacent/uncertain/excluded.
+- [x] title/skills alone cannot prove core.
+- [x] accepted P1.6 optional evidence, pending not a gate.
+- [x] exact dependency reuse and immutable corrections.
+- [x] repository CI 1172 green with 608 tests twice.
 - [x] bounded real-model evidence preserved.
-- [x] broad target: 7/8 expected outcomes overall; only `tGM0` disagreed.
-- [x] clarified target: 8/8 post-hoc boundary-calibration outcomes with model/prompt/evidence fixed.
-- [x] target-definition lesson recorded; no vacancy-specific prompt patch added.
+- [x] target-definition boundary lesson recorded without a vacancy-specific prompt patch.
 
-### C4 — I4 immutable snapshot construction — ACCEPTED / CLOSED
+Acceptance: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`
 
-Acceptance:
-`docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`
+### I4 — immutable snapshot construction — ACCEPTED
 
-- [x] snapshot requires `completed` or `completed_with_failures` Market run.
-- [x] exact I3 membership IDs are validated against run target definition and current I2 source state.
-- [x] stale source-version membership is rejected.
-- [x] superseded membership correction ancestor is rejected.
-- [x] one source job may contribute at most once to one snapshot.
-- [x] model membership must consume current translation and current accepted P1.6 when available.
-- [x] deterministic source-only membership remains source-only as membership identity.
-- [x] I4 derives semantic coverage; callers do not supply trusted coverage authority.
-- [x] `accepted / pending / missing / failed / rejected` coverage states are frozen explicitly.
-- [x] failed/rejected coverage is scoped to the current source/translation/P1.6 contract boundary.
-- [x] only `core_match` enters the primary source-level corpus.
-- [x] accepted-semantic core denominator remains narrower and explicit.
-- [x] pending/missing/failed/rejected never becomes zero semantic demand.
-- [x] historical snapshots remain immutable after later source/membership changes.
-- [x] CI 1182 passed Ruff and 617 tests under normal and warnings-as-errors gates.
+- [x] completed/nonfailed Market run required.
+- [x] exact current membership identities only.
+- [x] stale/superseded membership rejected.
+- [x] one source job at most once.
+- [x] semantic coverage derived as accepted/pending/missing/failed/rejected.
+- [x] core-only primary source corpus.
+- [x] historical snapshot immutability.
+- [x] CI 1182 green with 617 tests twice.
 
-### C5 — I5 deterministic aggregate profile — NEXT
+Acceptance: `docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`
 
-- [ ] calculate only from one immutable I4 snapshot; no live-current reconstruction.
-- [ ] explicit target/snapshot/run/evidence-quality header.
-- [ ] qualified core source-posting denominator.
-- [ ] accepted-current-P1.6 semantic sub-denominator.
-- [ ] preserve core/adjacent/uncertain/excluded and semantic-coverage counts from snapshot authority.
-- [ ] source-level employer breadth/concentration with explicit denominator semantics.
-- [ ] deterministic P1.6 requirement concept/type/strength support counts.
-- [ ] one posting contributes at most once per normalized concept support count.
-- [ ] distinct-employer support per semantic concept.
-- [ ] accepted responsibility/work evidence counts + exact drill-down without inventing role families.
-- [ ] reviewed Canonical Registry mappings may enrich where available; unmapped evidence remains visible.
-- [ ] explicit no-repost-adjustment limitation.
-- [ ] small-sample/concentration warnings where justified.
-- [ ] no model-authored counts, opaque scores, bands, trends, forecasts, or semantic subfamilies.
-- [ ] persist immutable deterministic profile through existing `market_aggregate_profiles` contract.
-- [ ] focused deterministic tests for denominator, dedup-within-posting, employer breadth and replay integrity.
+### I5 — deterministic aggregate profile — ACCEPTED
 
-### C6 — I6 browser + CLI thin workflow — AFTER I5
+- [x] aggregate reads one immutable I4 snapshot only.
+- [x] explicit source-level core and accepted-semantic denominators.
+- [x] exact historical source-detail employer/context authority.
+- [x] unknown employer remains explicit.
+- [x] accepted-semantic core only for requirement/responsibility prevalence.
+- [x] one-posting-at-most-once concept/responsibility support.
+- [x] requirement strength/depth and exact evidence drill-down.
+- [x] deterministic employer breadth/concentration.
+- [x] Canonical Registry enrichment only as-of snapshot time.
+- [x] later Registry review does not alter historical deterministic replay.
+- [x] no model-authored numeric values.
+- [x] explicit repost-adjustment limitation and sample/coverage warnings.
+- [x] immutable/idempotent aggregate persistence.
+- [x] CI 1189 green with 622 tests twice.
 
-- [ ] browser primary workflow.
-- [ ] same services/state for CLI.
-- [ ] one mutable Market operation at a time.
-- [ ] Market state remains local/private by default.
+Acceptance: `docs/working-memory/2026-09-17_MARKET_I5_DETERMINISTIC_AGGREGATE_PROFILE.md`
 
-### C7 — I7 bounded real acceptance — AFTER I6
+### I6 — thin browser + CLI Market workflow — NEXT
 
-- [ ] one representative real local target run.
-- [ ] verify acquisition bounds/noise, reuse, membership, denominators, evidence drill-down and partial success.
-- [ ] verify clarified target-definition semantics in a real repeated workflow.
-- [ ] run all applicable quality gates.
-- [ ] close first slice only after acceptance matrix passes.
+- [ ] expose target list/create.
+- [ ] expose immutable target-definition create/inspect.
+- [ ] expose run state/ledger/history.
+- [ ] expose snapshot/profile history.
+- [ ] render deterministic profile evidence-quality header and warnings.
+- [ ] render source/core vs accepted-semantic denominators.
+- [ ] render membership/semantic coverage counts.
+- [ ] render requirement/responsibility evidence drill-down.
+- [ ] CLI uses the same services/state as browser.
+- [ ] browser remains primary repeat-use surface.
+- [ ] preserve existing one-mutable-operation boundary.
+- [ ] add a thin coordinator only where needed to connect accepted stages; no generic workflow engine.
+- [ ] keep Market state local/private.
+- [ ] focused browser/CLI/service tests.
 
----
+### I7 — bounded real local acceptance — AFTER I6
 
-## D. First-slice invariants
-
-Already proven through I4:
-
-- [x] stable target identity vs immutable definition versions.
-- [x] target-definition changes do not invalidate generic upstream artifacts.
-- [x] target affected-work planning cannot fill from global backlog.
-- [x] failed refresh does not imply disappearance or freshness.
-- [x] source/translation/P1.6 currentness is exact-dependency aware.
-- [x] membership decisions are immutable and correction-aware.
-- [x] `uncertain` is a valid bounded membership outcome.
-- [x] target membership quality depends on sufficiently explicit target meaning.
-- [x] non-core membership dispositions remain outside the primary snapshot denominator.
-- [x] pending/missing/failed/rejected P1.6 remains explicit snapshot state rather than zero demand.
-- [x] only accepted-current P1.6 forms accepted-semantic snapshot coverage.
-- [x] point-in-time snapshot/member identity is immutable.
-
-Still to prove in I5+:
-
-- [ ] every aggregate percentage has recoverable denominator semantics.
-- [ ] one posting contributes at most once per concept-support count.
-- [ ] distinct-employer support/concentration is calculated deterministically.
-- [ ] first profile exposes `qualified source postings`, not unproven `unique demand units`.
-- [ ] browser/CLI use the same accepted services/state.
-- [ ] one real target run is useful and repeatable end-to-end.
+- [ ] one representative real target run.
+- [ ] verify acquisition bounds/noise visibility.
+- [ ] verify target-definition semantics.
+- [ ] verify unchanged rerun reuse.
+- [ ] verify snapshot/profile denominators and drill-down.
+- [ ] verify partial success.
+- [ ] close first slice only after the real acceptance matrix passes.
 
 ---
 
-## E. Explicitly deferred / not authorized
+## C. Permanent first-slice invariants
 
-- [-] another B1 model matrix.
+- [x] acquisition/search envelope != target membership truth.
+- [x] primary source corpus = core only.
+- [x] accepted P1.6 not required for membership.
+- [x] accepted-current P1.6 required for semantic prevalence.
+- [x] pending/missing/failed/rejected P1.6 != zero demand.
+- [x] target-definition meaning materially affects semantic classification.
+- [x] snapshot/profile history is point-in-time and immutable.
+- [x] aggregate numbers are deterministic application responsibilities.
+- [x] denominator language = qualified source postings.
+- [x] repost/new-ID collapse remains unimplemented and explicitly disclosed.
+
+---
+
+## D. Explicitly deferred / not authorized
+
+- [-] another B1 promotion/model matrix.
 - [-] P2.2C promoted responsibility families.
-- [-] P2.2D stable promoted role archetypes.
+- [-] P2.2D stable role archetypes.
 - [-] P1.6 auto-acceptance.
-- [-] first-slice Capability/Work gating.
-- [-] automatic repost/new-ID collapse.
-- [-] semantic role-subfamily synthesis in first slice.
-- [-] persisted model-generated Role-Family Intelligence Report in first slice.
-- [-] trend / emerging / forecasting.
+- [-] Capability/Work as first-slice gates.
+- [-] automatic repost/new-ID collapsing.
+- [-] semantic role-subfamily synthesis.
+- [-] model-generated Market report narrative.
+- [-] trend/emerging/forecasting.
 - [-] personal readiness/gap/scoring/recommendations.
 - [-] Market publication to `corpus/`.
 - [-] vector/RAG/graph/autonomous-agent infrastructure.
-- [-] generic multi-source/plugin framework before a real second source.
+- [-] generic second-source/plugin framework before a real source need.
 
 ---
 
-## F. Portfolio / release — PARALLEL
+## E. Parallel portfolio/release
 
-- [x] PR0–PR8 repository-side work complete.
-- [x] PR9-A repository/public audit complete.
-- [x] MIT license complete.
+- [x] MIT license.
+- [x] repository-side release/CV/interview package prepared.
 - [ ] GitHub description/topics.
 - [ ] real browser screenshots + privacy review.
 - [ ] intentional `v0.1.0` release.
-- [x] release/CV/interview package prepared.
 - [ ] owner mastery verification.
 
 ---
@@ -235,12 +176,10 @@ Still to prove in I5+:
 ## Exact next action
 
 ```text
-I5 only
-→ deterministic aggregate profile from one immutable I4 snapshot
-→ explicit source vs accepted-semantic denominators
-→ one-posting-at-most-once support semantics
-→ employer breadth/concentration + evidence drill-down
-→ persist exact profile through existing immutable store
-→ focused tests + state reconciliation
-→ only then proceed to I6
+I6 only
+→ thin browser + CLI Market workflow over accepted I1-I5 services/state
+→ no duplicate business logic
+→ focused UI/CLI/service tests
+→ state reconciliation
+→ then I7 bounded real local acceptance
 ```
