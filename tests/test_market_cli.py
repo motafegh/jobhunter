@@ -74,8 +74,16 @@ def test_main_entrypoint_routes_market_without_falling_through(monkeypatch):
     core_calls = []
     sync_calls = []
 
-    monkeypatch.setattr(app_entrypoint, "market_main", lambda arguments: routed.append(arguments) or 0)
-    monkeypatch.setattr(app_entrypoint, "core_main", lambda arguments: core_calls.append(arguments) or 0)
+    monkeypatch.setattr(
+        app_entrypoint,
+        "market_main",
+        lambda arguments: routed.append(arguments) or 0,
+    )
+    monkeypatch.setattr(
+        app_entrypoint,
+        "core_main",
+        lambda arguments: core_calls.append(arguments) or 0,
+    )
     monkeypatch.setattr(
         app_entrypoint,
         "_synchronize_public_corpus",
