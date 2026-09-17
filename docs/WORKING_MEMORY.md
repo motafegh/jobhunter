@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-17
+**Date:** 2026-09-17  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active working branch:** `main`  
-**Current product gate:** MARKET I1-I3 REPOSITORY ACCEPTED / I4 NEXT
+**Current product gate:** MARKET I1-I4 ACCEPTED / I5 NEXT  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -28,6 +28,7 @@ Accepted implementation records:
 docs/working-memory/2026-09-16_MARKET_I1_DOMAIN_AND_PERSISTENCE_IMPLEMENTATION.md
 docs/working-memory/2026-09-16_MARKET_I2_TARGET_SCOPED_AFFECTED_WORK_IMPLEMENTATION.md
 docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md
+docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md
 ```
 
 I3 real-model boundary evaluation:
@@ -38,7 +39,7 @@ Execution checklist:
 
 `docs/EXECUTION_TODO.md`
 
-Do not follow older `I1 NEXT` / `I2 NEXT`, open-B1, or pre-foundation instructions when they conflict with these current owners.
+Do not follow older `I1 NEXT` / `I2 NEXT` / `I3 NEXT` / `I4 NEXT`, open-B1, or pre-foundation instructions when they conflict with these current owners.
 
 ---
 
@@ -52,6 +53,7 @@ Capability:                 job-capability-intelligence-v9 / job-capability-inte
 Canonical Registry:         jobhunter-canonical-concept-registry-v1 / P2.1 CLOSED
 Work Intelligence:          job-work-intelligence-v2 / v2.0 / P2.2A CLOSED
 Public Corpus:              jobhunter-public-corpus-v1
+Market membership:          market-membership-v1 / market-membership-v1.0
 Market snapshot:            market-corpus-snapshot-v1
 Market aggregate storage:   market-aggregate-profile-v1
 ```
@@ -80,7 +82,7 @@ primary corpus = core_match only
 accepted P1.6 not required for source-level membership
 accepted P1.6 required for strong semantic prevalence
 Capability/Work optional, not gates
-missing/pending/failed P1.6 != zero demand
+missing/pending/failed/rejected P1.6 != zero demand
 repost/new-ID automatic collapse deferred
 use 'qualified source postings', not 'unique demand units'
 Market state local/private by default
@@ -88,218 +90,250 @@ Market state local/private by default
 
 Semantic role-subfamily synthesis, trends/forecasting, personal Market→You scoring, P2.2C/P2.2D promotion, and Market publication remain outside the first slice.
 
-A material I3 semantic lesson is now also frozen for this slice:
+I3 also established a material target-definition lesson:
 
-> `TargetMarketDefinitionVersion.membership_intent` must express the intended market boundary with enough precision for target-relative classification. A short role-family label is not always sufficient to distinguish core work from adjacent enabling work.
-
-Do not patch the membership prompt around individual vacancies when the unresolved distinction is actually missing from the target definition.
+> `TargetMarketDefinitionVersion.membership_intent` must state material core-vs-adjacent boundaries explicitly. Do not patch individual vacancies into the membership prompt when the missing distinction belongs to target meaning.
 
 ---
 
-## 4. I1 — ACCEPTED / CLOSED
+## 4. I1-I3 accepted summary
 
-I1 established:
+### I1 — domain + persistence
 
-```text
-market_targets
-market_target_definition_versions
-market_research_runs
-market_job_memberships
-market_corpus_snapshots
-market_corpus_snapshot_members
-market_aggregate_profiles
-```
-
-Key accepted behavior:
+Accepted:
 
 - stable target identity vs immutable definition versions;
+- run lifecycle + ledger history;
 - immutable exact-dependency membership history;
-- immutable snapshot/member history;
-- immutable deterministic aggregate-profile persistence;
-- target-definition changes do not invalidate generic source/translation/P1.6 artifacts.
+- immutable snapshot/member and aggregate-profile persistence;
+- target-definition changes do not invalidate source/translation/P1.6.
 
-Final technical evidence:
+Evidence:
 
 ```text
-head: f0cded55a9887c061898d0dcab7f5e6b10300d8e
-CI 1160 / 35108236384: PASS through pytest -W error
+head f0cded55a9887c061898d0dcab7f5e6b10300d8e
+CI 1160: PASS through pytest -W error
 ```
+
+### I2 — target-scoped affected work
+
+Accepted:
+
+- target-only missing-detail, refresh, translation and P1.6 planning;
+- no unused target budget spills into global backlog;
+- failed refresh neither freshens evidence nor proves disappearance;
+- exact translation/P1.6 reuse/currentness;
+- pending P1.6 remains pending review rather than regeneration.
+
+Evidence:
+
+```text
+head 2ada4e92207f694bb5b7a4cba8c17108a67a4863
+CI 1167: PASS through pytest -W error
+```
+
+### I3 — membership qualification
+
+Accepted:
+
+- deterministic constraints first;
+- bounded semantic classification into exactly core/adjacent/uncertain/excluded;
+- title/skills alone cannot establish core membership;
+- accepted P1.6 optional evidence, pending P1.6 not a gate;
+- exact dependency reuse and explicit immutable correction history;
+- invalid/stale/provider failures remain failures rather than stored uncertainty.
+
+Evidence:
+
+```text
+implementation 0eaf04109a57846aa6d0a920d0563f89a4dfb535
+CI 1172: 608 passed under normal and -W error runs
+```
+
+Real-model boundary evidence:
+
+```text
+broad target       7/8 expected outcomes overall; tGM0 sole miss
+clarified target   8/8 expected outcomes
+```
+
+The clarified result is post-hoc target-boundary calibration, not a population accuracy benchmark. The preserved evidence is under `docs/experiments/2026-09-17_market-i3-real-model-acceptance/`.
 
 ---
 
-## 5. I2 — ACCEPTED / CLOSED
+## 5. I4 — IMMUTABLE SNAPSHOT CONSTRUCTION — ACCEPTED / CLOSED
+
+Acceptance owner:
+
+`docs/working-memory/2026-09-17_MARKET_I4_IMMUTABLE_SNAPSHOT_CONSTRUCTION.md`
 
 Implementation:
 
 ```text
-src/jobhunter/job_detail_observations.py
-src/jobhunter/market_affected_work.py
-tests/test_market_affected_work.py
+src/jobhunter/market_snapshot_service.py
+tests/test_market_snapshot_service.py
 ```
 
-I2 adds one read-only target-scoped affected-work planner. It receives one immutable target definition and one already-discovered target candidate set; it never fills unused capacity from unrelated global backlog.
+I4 is a service-level assembly authority over the I1 immutable snapshot tables. The caller supplies exact I3 membership IDs from one completed Market run; I4 validates currentness and derives semantic coverage itself.
 
-### Source planning
+### Snapshot admission
 
-Per candidate it preserves:
+Allowed run states:
 
 ```text
-source identity/title/company
-lifecycle
-source status + selected/remaining action
-current parsed detail version ID when usable
-latest detail time
-latest observation outcome
-warnings
+completed
+completed_with_failures
 ```
 
-Source states:
+Rejected:
 
 ```text
-current
-missing_detail
-refresh_due
-invalid_current_detail
-expired
-removed
-ineligible_lifecycle
+running
+failed
 ```
 
-A source becomes eligible for I3 only when current parsed evidence exists, lifecycle is active/cautiously possibly-unavailable, and freshness is inside the current-active threshold.
+Every membership must:
 
-### Freshness rule
+- belong to the run target definition;
+- use `market-membership-v1`;
+- still have current I2 source eligibility;
+- name the current source detail version;
+- be the latest effective decision for its exact dependency/correction chain;
+- be the only membership for that source in the snapshot.
 
-I2 now distinguishes successful evidence from failed retries:
+For model memberships, the consumed translation and accepted-P1.6 identities must still match current state. A newly accepted current P1.6 therefore makes an older model membership without that dependency stale for new snapshot construction.
+
+Deterministic source-only membership remains source-only as membership identity; current semantic coverage is frozen separately and does not retroactively become a membership dependency.
+
+### Semantic coverage
+
+I4 derives and freezes:
 
 ```text
-latest successful parsed detail check
-→ otherwise current parsed detail fetched_at
+accepted
+pending
+missing
+failed
+rejected
 ```
 
-A failed check:
+Accepted/pending come from the current live exact-contract P1.6 artifact.
+
+Rejected history is matched to exact current source + translation + model/prompt/schema.
+
+Failed attempts are matched to current source/model/prompt/schema and must occur after creation of the current translation artifact, preventing stale failures from leaking across a newer translation dependency.
+
+If both failed and rejected current-processing evidence exists, the newest qualifying event determines the frozen state.
+
+`missing`, `failed`, `pending`, or `rejected` never means zero requirements/responsibilities.
+
+### Denominators frozen by I4
+
+Only `core_match` gets:
 
 ```text
-does not freshen evidence
-does not delete prior evidence
-does not imply disappearance
+included_in_primary_corpus = true
 ```
 
-An unchanged successful parsed check refreshes freshness without creating a new semantic version.
-
-### Translation / P1.6 planning
-
-Only source-ready target candidates may consume downstream budget.
-
-Translation states:
+Snapshot metadata freezes:
 
 ```text
-blocked_source
-current
-needed_selected
-needed_remaining
-unavailable_provider
+member_count
+disposition counts
+primary_core_postings
+semantic coverage counts
+core-only semantic coverage counts
+accepted_semantic_core_postings
+denominator_language = qualified source postings
+repost_adjustment = not_implemented
+membership + P1.6 contract identity
 ```
 
-P1.6 states:
+This metadata preserves evidence-quality and denominator authority. It is not yet the I5 Market aggregate profile.
 
-```text
-blocked_source
-blocked_translation
-current_accepted
-current_pending_review
-needed_selected
-needed_remaining
-unavailable_model
-```
+### Historical authority
 
-Exact current translation/P1.6 artifacts are reused. Pending current P1.6 remains pending review rather than being regenerated. A new semantic source version naturally invalidates old downstream currentness without deleting history.
+Snapshot/member rows remain immutable. A later source semantic version, membership decision, or snapshot does not mutate old snapshot identities or dispositions.
 
-### I2 regression boundary
+### I4 verification
 
-Tests explicitly prove:
+Focused tests cover:
 
-- missing-detail budget cannot spill into unrelated global backlog;
-- refresh budget cannot spill into unrelated global backlog;
-- translation/P1.6 budget cannot spill into unrelated global backlog;
-- target work can remain `remaining` even when unrelated global work exists;
-- failed refresh != disappearance;
-- lifecycle removed/expired exclusion remains deterministic;
-- exact dependency reuse/currentness is preserved.
+- all five P1.6 coverage states;
+- core-only primary inclusion;
+- correction/supersession;
+- stale source membership rejection;
+- newly accepted P1.6 invalidating older model membership;
+- deterministic source-only membership;
+- terminal-run requirement;
+- duplicate-source prevention;
+- failed-vs-rejected processing ordering;
+- historical snapshot immutability.
 
 Final technical evidence:
 
 ```text
-head: 2ada4e92207f694bb5b7a4cba8c17108a67a4863
-CI 1167 / 35123454023
+head 4b5e83134202d32ee167f499c3aca9cb43478f56
+CI 1182 / 35249049607
 Ruff: PASS
-pytest: PASS
-pytest -W error: PASS
+pytest: 617 passed
+pytest -W error: 617 passed
+conclusion: SUCCESS
 ```
 
-I2 is planning-only. Actual target discovery/source/model execution and persisted run-stage failures will be integrated later into the thin Market coordinator; I2 itself makes no network/model calls.
+No Jobinja network request or LM Studio generation was required for I4 acceptance.
 
 ---
 
-## 6. I3 — REPOSITORY ACCEPTED / REAL-MODEL BOUNDARY CHECK RECORDED
+## 6. Exact next action — I5 only
 
-I3 evidence owner:
+**I5 responsibility:** deterministic Market aggregate profile over one exact immutable I4 snapshot.
 
-`docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`
+The central rule is:
 
-Implementation commit:
+> I5 may read historical source/P1.6 evidence by the exact IDs frozen in the snapshot, but it must never reconstruct the corpus from today's current state.
 
-```text
-0eaf04109a57846aa6d0a920d0563f89a4dfb535
-```
+### I5 must produce
 
-Repository acceptance:
+At minimum:
 
 ```text
-CI 1172
-Ruff: PASS
-pytest: PASS — 608 passed
-pytest -W error: PASS — 608 passed
+target/definition/snapshot/run identity
+snapshot time and source/search scope
+core / adjacent / uncertain / excluded counts
+qualified core source-posting denominator
+accepted / pending / missing / failed / rejected core P1.6 coverage
+accepted-semantic core denominator
+raw source posting count
+repost-adjustment limitation
+distinct employer count
+largest-employer contribution/share
+freshness/lifecycle warnings and processing-state disclosure
 ```
 
-Membership qualification now composes fresh I2 eligibility with bounded interpretation,
-validated evidence refs, exact dependency reuse, and explicit immutable corrections.
-Pending/missing P1.6 is not a membership gate. `uncertain` is valid success; provider,
-stale-dependency, and invalid-reference failures do not become saved uncertainty.
+For accepted-semantic core members, I5 should deterministically aggregate P1.6 requirement/responsibility evidence with exact job/artifact drill-down.
 
-### Real-model evidence
+### I5 semantic support invariants
 
-Preserved at:
+- one source posting contributes at most once to one normalized concept-support count;
+- requirement strength support must remain explicit (`required / preferred / contextual / inferred`);
+- distinct-employer support must be calculated deterministically;
+- Registry mappings may enrich reviewed correspondences where already available, but unmapped source/P1.6 evidence remains valid;
+- no model may write counts, percentages, scores, or denominator values.
 
-`docs/experiments/2026-09-17_market-i3-real-model-acceptance/`
+### I5 explicit non-goals
 
-Using seven historical real postings plus one synthetic sparse case:
+Do not add:
 
-```text
-broad target definition       7/8 expected outcomes overall
-                              6/7 real vacancies
-sole disagreement             tGM0: core_match vs expected adjacent_match
-
-clarified target definition   8/8 expected outcomes
-```
-
-The clarified comparison changed only target meaning; model, prompt/schema, and vacancy evidence were held fixed. It was written after observing the baseline miss, so **8/8 is post-hoc boundary-calibration evidence, not a population accuracy estimate or blinded benchmark**.
-
-Product lesson:
-
-```text
-membership quality
-= target-definition quality
-+ source/derived evidence quality
-+ classifier contract/model behavior
-```
-
-Do not reopen I3 or add a `tGM0`-specific prompt rule. The boundary belongs in the immutable target definition when it matters.
-
-Immediate second calls reused persisted membership decisions and did not call the model again. That proves persistence reuse, not fresh-call model reproducibility.
-
-The provider is wired as a service factory; browser/CLI orchestration remains I6. I7 still owns bounded real target workflow acceptance and reuse.
-
-**Next: I4 immutable snapshot construction**, with current membership identities, explicit P1.6 coverage, core-only primary denominator, and preserved historical snapshots.
+- browser/CLI workflow yet;
+- role-subfamily clustering;
+- opaque importance scores;
+- core/common/specialized bands;
+- repost/new-ID collapsing;
+- trends/emerging/forecasting;
+- personal readiness/gap scoring;
+- new Capability/Work gates;
+- Market publication.
 
 ---
 
@@ -308,33 +342,16 @@ The provider is wired as a service factory; browser/CLI orchestration remains I6
 ```text
 I1  domain + persistence                         ACCEPTED
 I2  target source eligibility / affected work   ACCEPTED
-I3  membership qualification                    REPOSITORY ACCEPTED
-I4  snapshot construction                       NEXT
-I5  deterministic aggregate                     BLOCKED BY I4
+I3  membership qualification                    ACCEPTED
+I4  immutable snapshot construction             ACCEPTED
+I5  deterministic aggregate                     NEXT
 I6  browser + CLI                               BLOCKED BY I5
 I7  bounded real local acceptance               BLOCKED BY I6
 ```
 
 ---
 
-## 8. Stop lines during I4
-
-Do not:
-
-- implement aggregate calculation early;
-- build browser/report UI;
-- auto-accept P1.6;
-- make Capability/Work mandatory;
-- invent repost similarity thresholds;
-- promote membership to Canonical Registry/P2.2C/P2.2D;
-- add trends/emerging/forecasting;
-- add personal readiness/gap/scoring/recommendations;
-- publish Market state to `corpus/`;
-- add generic workflow/vector/RAG/graph/agent infrastructure.
-
----
-
-## 9. Parallel portfolio/release state
+## 8. Parallel portfolio/release state
 
 Still pending:
 
@@ -345,4 +362,4 @@ intentional v0.1.0 release
 owner mastery verification
 ```
 
-This does not change the I4 product frontier.
+This parallel track does not change the I5 product frontier.
