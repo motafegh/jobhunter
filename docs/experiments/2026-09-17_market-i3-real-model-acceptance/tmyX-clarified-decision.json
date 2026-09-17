@@ -1,0 +1,9 @@
+{
+  "disposition": "excluded",
+  "reason": "The role is centered on cybersecurity infrastructure assessment, hardening Windows Server and Active Directory, and managing security posture, which does not align with the primary focus of developing or improving AI/ML models or agents required by the target market.",
+  "evidence_refs": [
+    "p16:role_purpose:0",
+    "p16:responsibilities:2"
+  ],
+  "confidence": "high"
+}

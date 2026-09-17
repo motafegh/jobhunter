@@ -1,0 +1,10 @@
+{
+  "disposition": "excluded",
+  "reason": "The role is a Senior Network Security Engineer focused on designing, implementing, and managing enterprise-scale network security infrastructures, firewalls (NGFW), VPNs, and Zero Trust architecture. The core work described does not involve the development, evaluation, or improvement of AI/ML models or agents.",
+  "evidence_refs": [
+    "p16:responsibilities:0",
+    "p16:responsibilities:3",
+    "p16:responsibilities:4"
+  ],
+  "confidence": "high"
+}

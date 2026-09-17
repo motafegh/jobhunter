@@ -1,0 +1,9 @@
+{
+  "disposition": "excluded",
+  "reason": "The vacancy focuses on using AI for content creation, visual/video production, and website design, which falls under general content production rather than the primary development or evaluation of AI/ML models required by the target.",
+  "evidence_refs": [
+    "p16:requirements:3",
+    "english:description"
+  ],
+  "confidence": "high"
+}

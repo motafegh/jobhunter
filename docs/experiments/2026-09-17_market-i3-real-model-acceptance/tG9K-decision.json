@@ -1,0 +1,10 @@
+{
+  "disposition": "core_match",
+  "reason": "The role is centered on building, validating, and deploying ML/AI models to solve specific industrial problems in semiconductor manufacturing, such as yield optimization, process control (APC/SPC), and fault detection.",
+  "evidence_refs": [
+    "p16:responsibilities:0",
+    "p16:responsibilities:1",
+    "p16:responsibilities:2"
+  ],
+  "confidence": "high"
+}

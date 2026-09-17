@@ -1,0 +1,109 @@
+{
+  "target": {
+    "membership_intent": "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target.",
+    "include_hints": [],
+    "exclude_hints": [],
+    "geography_scope": null,
+    "work_arrangement_scope": null,
+    "seniority_scope": null,
+    "employment_type_scope": null
+  },
+  "evidence": {
+    "source:title": "کارشناس هوش مصنوعی",
+    "source:description": "مهارت تولید محتوا با ai خلاقیت در ساخت محتوای تصویری و ویدیویی طراحی سایت توانایی تولید محتوا تصویری تمام وقت و پاره وقت کار آموزش دادنیه برای ما مهم اخلاق و تعهد کاری شما می باشد. لطفا برای غیر حضوری رزومه نفرستید. (((((( لوکیشن :غرب تهران ))))))))) مزایا بیمه پارکینك فضای استراحت بن تخفیف ماهیانه پورسانت سفر کاری دو هفته در سال به کیش پاداش",
+    "source:skills": [
+      "هوش مصنوعی",
+      "تولید محتوا ویدئویی",
+      "شبکه های اجتماعی"
+    ],
+    "source:job_category": "تولید و مدیریت محتوا",
+    "source:location": "تهران",
+    "source:employment_type": "تمام وقت",
+    "source:minimum_experience": "مهم نیست",
+    "source:education": "مهم نیست",
+    "english:title": "Artificial Intelligence Expert",
+    "english:description": "Skills in content creation with AI, creativity in creating visual and video content, website design, ability to produce visual content full-time and part-time, the work is teachable. Ethics and your work commitment are important to us. Please do not send your resume for remote work. (Location: West Tehran) Benefits include insurance, parking, rest area, monthly discount, commission, business travel (two weeks a year to Kish), bonus.",
+    "english:skills": [
+      "Artificial Intelligence",
+      "Video content production",
+      "social networks"
+    ],
+    "english:job_category": "Content Production and Management",
+    "english:location": "Tehran",
+    "english:employment_type": "Full-time",
+    "english:minimum_experience": "it doesn't matter",
+    "english:education": "it doesn't matter",
+    "p16:requirements:0": {
+      "concept": "Artificial Intelligence",
+      "concept_type": "skill",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "Artificial Intelligence",
+      "rationale": "Structured skill requirement.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:1": {
+      "concept": "Video content production",
+      "concept_type": "skill",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "Video content production",
+      "rationale": "Structured skill requirement.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:2": {
+      "concept": "Social networks",
+      "concept_type": "tool",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "social networks",
+      "rationale": "Structured skill requirement.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:3": {
+      "concept": "Content creation with AI",
+      "concept_type": "skill",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "Skills in content creation with AI",
+      "rationale": "Explicit qualification list item.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:4": {
+      "concept": "Creativity in creating visual and video content",
+      "concept_type": "other",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "creativity in creating visual and video content",
+      "rationale": "Explicit qualification list item (trait).",
+      "requirement_type": "required"
+    },
+    "p16:requirements:5": {
+      "concept": "Website design",
+      "concept_type": "skill",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "website design",
+      "rationale": "Explicit qualification list item.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:6": {
+      "concept": "Visual content production",
+      "concept_type": "skill",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "ability to produce visual content full-time and part-time",
+      "rationale": "Explicit qualification list item, capturing scope/schedule as depth.",
+      "requirement_type": "required"
+    },
+    "p16:requirements:7": {
+      "concept": "Ethics and work commitment",
+      "concept_type": "other",
+      "confidence": "high",
+      "depth_signal": null,
+      "evidence": "Ethics and your work commitment are important to us.",
+      "rationale": "Explicitly stated that ethics and work commitment are important to the company.",
+      "requirement_type": "required"
+    }
+  }
+}

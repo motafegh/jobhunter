@@ -1,0 +1,15 @@
+{
+  "target": {
+    "membership_intent": "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target.",
+    "include_hints": [],
+    "exclude_hints": [],
+    "geography_scope": null,
+    "work_arrangement_scope": null,
+    "seniority_scope": null,
+    "employment_type_scope": null
+  },
+  "evidence": {
+    "source:title": "Technical team member",
+    "source:description": "Join our technical team. Detailed work scope will be discussed at interview."
+  }
+}

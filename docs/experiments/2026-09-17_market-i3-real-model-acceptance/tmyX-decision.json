@@ -1,0 +1,9 @@
+{
+  "disposition": "excluded",
+  "reason": "The vacancy focuses entirely on cybersecurity infrastructure, server hardening (Windows Server, Active Directory), vulnerability assessment, and security compliance using tools like PowerShell, with no evidence of applied AI or ML engineering work.",
+  "evidence_refs": [
+    "p16:role_purpose:0",
+    "english:description"
+  ],
+  "confidence": "high"
+}

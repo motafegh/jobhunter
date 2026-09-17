@@ -1,0 +1,9 @@
+{
+  "disposition": "core_match",
+  "reason": "The role centers entirely on building, optimizing, and evaluating core components of an AI system, including developing AI agents, RAG architectures, semantic layers, retrieval pipelines, and LLM performance frameworks over financial data.",
+  "evidence_refs": [
+    "english:description",
+    "source:description"
+  ],
+  "confidence": "high"
+}

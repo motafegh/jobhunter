@@ -1,0 +1,10 @@
+{
+  "disposition": "excluded",
+  "reason": "The vacancy describes a Backend Software Developer role focused on building APIs and software systems using Python/Django/FastAPI. While it requires the ability to use AI tools for development speed, this is framed as a productivity requirement, not as core Applied AI or ML engineering work.",
+  "evidence_refs": [
+    "p16:requirements:0",
+    "p16:requirements:1",
+    "english:title"
+  ],
+  "confidence": "high"
+}

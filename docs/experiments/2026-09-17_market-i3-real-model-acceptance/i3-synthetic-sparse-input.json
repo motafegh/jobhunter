@@ -1,0 +1,15 @@
+{
+  "target": {
+    "membership_intent": "Applied AI / ML engineering work",
+    "include_hints": [],
+    "exclude_hints": [],
+    "geography_scope": null,
+    "work_arrangement_scope": null,
+    "seniority_scope": null,
+    "employment_type_scope": null
+  },
+  "evidence": {
+    "source:title": "Technical team member",
+    "source:description": "Join our technical team. Detailed work scope will be discussed at interview."
+  }
+}

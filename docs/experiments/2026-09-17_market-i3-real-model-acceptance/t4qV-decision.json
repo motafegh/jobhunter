@@ -1,0 +1,10 @@
+{
+  "disposition": "excluded",
+  "reason": "The role is focused entirely on designing, implementing, and managing enterprise network security infrastructures (NGFWs, VPNs, Zero Trust, etc.), with no evidence of applied AI or ML engineering work.",
+  "evidence_refs": [
+    "p16:responsibilities:0",
+    "p16:responsibilities:3",
+    "p16:responsibilities:8"
+  ],
+  "confidence": "high"
+}

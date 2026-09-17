@@ -1,0 +1,11 @@
+{
+  "disposition": "excluded",
+  "reason": "The vacancy requires skills in content creation using AI, visual/video production, and website design. The core duties are focused on creative output and media production, rather than the substantive work of applied AI or ML system engineering.",
+  "evidence_refs": [
+    "p16:requirements:3",
+    "p16:requirements:4",
+    "p16:requirements:5",
+    "p16:requirements:6"
+  ],
+  "confidence": "high"
+}

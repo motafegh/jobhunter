@@ -1,0 +1,391 @@
+{
+  "head": "0eaf04109a57846aa6d0a920d0563f89a4dfb535",
+  "started_at": "2026-09-17T16:22:16.339587+00:00",
+  "model": {
+    "provider": "lm-studio-membership-v1",
+    "model": "gemma-4-e4b-it-ud",
+    "temperature": 0,
+    "seed": 0,
+    "max_tokens": 2048,
+    "context_length": 16384,
+    "validation_retries": 1
+  },
+  "refresh_after_hours": 2160,
+  "scope": "isolated historical source evidence; seven real jobs plus one synthetic sparse case",
+  "results": [
+    {
+      "job": "ta9l",
+      "expected": "core_match",
+      "synthetic": false,
+      "dependencies": {
+        "source": 25,
+        "translation": 40,
+        "analysis": null
+      },
+      "evidence_characters": 3197,
+      "membership": {
+        "id": 1,
+        "target_definition_version_id": 1,
+        "source_job_id": "ta9l",
+        "job_detail_version_id": 25,
+        "translation_artifact_id": 40,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "fc0e4ed36cb469e663acdf6163860a52f828709083ef9d7158fa138ddfe7bda3",
+        "disposition": "core_match",
+        "reason": "The role centers on building an AI-powered platform, requiring expertise in developing RAG systems, LLM agents, semantic search pipelines, and knowledge representation over complex datasets.",
+        "evidence_refs": [
+          "english:description",
+          "source:description"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:22:46.339165+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 29.93
+    },
+    {
+      "job": "tG9K",
+      "expected": "core_match",
+      "synthetic": false,
+      "dependencies": {
+        "source": 40,
+        "translation": 33,
+        "analysis": 36
+      },
+      "evidence_characters": 16763,
+      "membership": {
+        "id": 2,
+        "target_definition_version_id": 1,
+        "source_job_id": "tG9K",
+        "job_detail_version_id": 40,
+        "translation_artifact_id": 33,
+        "analysis_artifact_id": 36,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "c7666096ea6e7a8287ee8ced3c885df985966ec92ab5d754fa38ae4383d12741",
+        "disposition": "core_match",
+        "reason": "The role is centered on building, validating, and deploying ML/AI models to solve specific industrial problems in semiconductor manufacturing, such as yield optimization, process control (APC/SPC), and fault detection.",
+        "evidence_refs": [
+          "p16:responsibilities:0",
+          "p16:responsibilities:1",
+          "p16:responsibilities:2"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:02.129996+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 12.89
+    },
+    {
+      "job": "tGM0",
+      "expected": "adjacent_match",
+      "synthetic": false,
+      "dependencies": {
+        "source": 27,
+        "translation": 37,
+        "analysis": null
+      },
+      "evidence_characters": 9937,
+      "membership": {
+        "id": 3,
+        "target_definition_version_id": 1,
+        "source_job_id": "tGM0",
+        "job_detail_version_id": 27,
+        "translation_artifact_id": 37,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "3ea048c2d27d9a42838350fd420ef1a76cee2c66975e8776ae38ac9793dc8c24",
+        "disposition": "core_match",
+        "reason": "The role is explicitly within an Artificial Intelligence team, focusing on developing backend services and infrastructure specifically for intelligent systems, including integration with LLMs, Agents, and RAG.",
+        "evidence_refs": [
+          "english:description"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:11.688733+00:00"
+      },
+      "expected_match": false,
+      "reuse_ok": true,
+      "seconds": 9.59
+    },
+    {
+      "job": "t4jp",
+      "expected": "excluded",
+      "synthetic": false,
+      "dependencies": {
+        "source": 41,
+        "translation": 34,
+        "analysis": 37
+      },
+      "evidence_characters": 3690,
+      "membership": {
+        "id": 4,
+        "target_definition_version_id": 1,
+        "source_job_id": "t4jp",
+        "job_detail_version_id": 41,
+        "translation_artifact_id": 34,
+        "analysis_artifact_id": 37,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "13ce3eeca4be3fa473f314ea8b78c0131ee1a4108a2583aa70b75b7b22bb1bc1",
+        "disposition": "excluded",
+        "reason": "The vacancy requires skills in content creation using AI, visual/video production, and website design. The core duties are focused on creative output and media production, rather than the substantive work of applied AI or ML system engineering.",
+        "evidence_refs": [
+          "p16:requirements:3",
+          "p16:requirements:4",
+          "p16:requirements:5",
+          "p16:requirements:6"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:27.267706+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 12.55
+    },
+    {
+      "job": "tmBK",
+      "expected": "excluded",
+      "synthetic": false,
+      "dependencies": {
+        "source": 44,
+        "translation": 38,
+        "analysis": 39
+      },
+      "evidence_characters": 10640,
+      "membership": {
+        "id": 5,
+        "target_definition_version_id": 1,
+        "source_job_id": "tmBK",
+        "job_detail_version_id": 44,
+        "translation_artifact_id": 38,
+        "analysis_artifact_id": 39,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "264fbd74a96daf1c24759e2070ece8d0c1a3312ce8b1ac81ed12a6315c953054",
+        "disposition": "excluded",
+        "reason": "The vacancy describes a Backend Software Developer role focused on building APIs and software systems using Python/Django/FastAPI. While it requires the ability to use AI tools for development speed, this is framed as a productivity requirement, not as core Applied AI or ML engineering work.",
+        "evidence_refs": [
+          "english:title",
+          "p16:requirements:0",
+          "p16:requirements:1"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:38.114073+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 10.85
+    },
+    {
+      "job": "t4qV",
+      "expected": "excluded",
+      "synthetic": false,
+      "dependencies": {
+        "source": 30,
+        "translation": 20,
+        "analysis": 44
+      },
+      "evidence_characters": 15246,
+      "membership": {
+        "id": 6,
+        "target_definition_version_id": 1,
+        "source_job_id": "t4qV",
+        "job_detail_version_id": 30,
+        "translation_artifact_id": 20,
+        "analysis_artifact_id": 44,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "8853a655678ebc609cdcfbd55e749ef35cc830d8f48b0cdd7ca48924931c6670",
+        "disposition": "excluded",
+        "reason": "The role is focused entirely on designing, implementing, and managing enterprise network security infrastructures (NGFWs, VPNs, Zero Trust, etc.), with no evidence of applied AI or ML engineering work.",
+        "evidence_refs": [
+          "p16:responsibilities:0",
+          "p16:responsibilities:3",
+          "p16:responsibilities:8"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:47.541237+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 9.42
+    },
+    {
+      "job": "tmyX",
+      "expected": "excluded",
+      "synthetic": false,
+      "dependencies": {
+        "source": 35,
+        "translation": 24,
+        "analysis": 46
+      },
+      "evidence_characters": 9801,
+      "membership": {
+        "id": 7,
+        "target_definition_version_id": 1,
+        "source_job_id": "tmyX",
+        "job_detail_version_id": 35,
+        "translation_artifact_id": 24,
+        "analysis_artifact_id": 46,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "9da522fc5c0cdb741c086364fe51b5fceeab0ee1f60a70533bd83cdf5a5a2c63",
+        "disposition": "excluded",
+        "reason": "The vacancy focuses entirely on cybersecurity infrastructure, server hardening (Windows Server, Active Directory), vulnerability assessment, and security compliance using tools like PowerShell, with no evidence of applied AI or ML engineering work.",
+        "evidence_refs": [
+          "english:description",
+          "p16:role_purpose:0"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:23:56.610043+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 9.07
+    },
+    {
+      "job": "i3-synthetic-sparse",
+      "expected": "uncertain",
+      "synthetic": true,
+      "dependencies": {
+        "source": 47,
+        "translation": null,
+        "analysis": null
+      },
+      "evidence_characters": 143,
+      "membership": {
+        "id": 8,
+        "target_definition_version_id": 1,
+        "source_job_id": "i3-synthetic-sparse",
+        "job_detail_version_id": 47,
+        "translation_artifact_id": null,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "5701a8e07eedd3f1760162f2aa58a603931de0c8916349f20a22aa1bb8053116",
+        "disposition": "uncertain",
+        "reason": "The evidence is too vague; the title and description are generic and do not specify any work related to Applied AI or ML engineering.",
+        "evidence_refs": [
+          "source:description",
+          "source:title"
+        ],
+        "confidence": "low",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:24:07.555419+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 8.01
+    }
+  ],
+  "provider_calls": 8,
+  "completed_at": "2026-09-17T16:24:07.645246+00:00"
+}

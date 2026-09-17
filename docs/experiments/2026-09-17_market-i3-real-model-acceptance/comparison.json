@@ -1,0 +1,341 @@
+{
+  "base_head": "0eaf04109a57846aa6d0a920d0563f89a4dfb535",
+  "model": {
+    "provider": "lm-studio-membership-v1",
+    "model": "gemma-4-e4b-it-ud",
+    "temperature": 0,
+    "seed": 0,
+    "max_tokens": 2048,
+    "context_length": 16384,
+    "validation_retries": 1
+  },
+  "comparison": "only target definition changed; same model/prompt/evidence",
+  "target_version": 2,
+  "membership_intent": "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target.",
+  "refresh_after_hours": 2160,
+  "results": [
+    {
+      "job": "ta9l",
+      "expected": "core_match",
+      "synthetic": false,
+      "membership": {
+        "id": 9,
+        "target_definition_version_id": 2,
+        "source_job_id": "ta9l",
+        "job_detail_version_id": 25,
+        "translation_artifact_id": 40,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "6ad7e1b3f084feadcab869aad0d67c17faa15536f8040a909ade1b140cecc4d8",
+        "disposition": "core_match",
+        "reason": "The role centers entirely on building, optimizing, and evaluating core components of an AI system, including developing AI agents, RAG architectures, semantic layers, retrieval pipelines, and LLM performance frameworks over financial data.",
+        "evidence_refs": [
+          "english:description",
+          "source:description"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:24:50.865179+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 12.16
+    },
+    {
+      "job": "tG9K",
+      "expected": "core_match",
+      "synthetic": false,
+      "membership": {
+        "id": 10,
+        "target_definition_version_id": 2,
+        "source_job_id": "tG9K",
+        "job_detail_version_id": 40,
+        "translation_artifact_id": 33,
+        "analysis_artifact_id": 36,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "96824c002d05ec7dc45608c1983e1be44ac29838c3861d5eb0796dbb70ececc0",
+        "disposition": "core_match",
+        "reason": "The primary responsibilities involve building, validating, and applying ML/AI models to solve specific industrial problems like yield optimization and fault detection in semiconductor manufacturing, which directly matches the intent of applied AI/ML engineering.",
+        "evidence_refs": [
+          "p16:responsibilities:0",
+          "source:description"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:25:01.782921+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 10.94
+    },
+    {
+      "job": "tGM0",
+      "expected": "adjacent_match",
+      "synthetic": false,
+      "membership": {
+        "id": 11,
+        "target_definition_version_id": 2,
+        "source_job_id": "tGM0",
+        "job_detail_version_id": 27,
+        "translation_artifact_id": 37,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "9e7c4932f15fe974cb6b6525a08506a3a7442776db6f22a267b984840108101e",
+        "disposition": "adjacent_match",
+        "reason": "The primary focus of this role is developing scalable Backend services and system infrastructure for intelligent systems, which aligns with enabling/integrating AI services rather than being centered on the core development or evaluation of AI models themselves.",
+        "evidence_refs": [
+          "english:description"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:25:17.413437+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 12.69
+    },
+    {
+      "job": "t4jp",
+      "expected": "excluded",
+      "synthetic": false,
+      "membership": {
+        "id": 12,
+        "target_definition_version_id": 2,
+        "source_job_id": "t4jp",
+        "job_detail_version_id": 41,
+        "translation_artifact_id": 34,
+        "analysis_artifact_id": 37,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "07cb81c242920a12fbd5c23b4672d6e5a1260f50f3dc006ce5282be0063a9978",
+        "disposition": "excluded",
+        "reason": "The vacancy focuses on using AI for content creation, visual/video production, and website design, which falls under general content production rather than the primary development or evaluation of AI/ML models required by the target.",
+        "evidence_refs": [
+          "english:description",
+          "p16:requirements:3"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:25:25.972885+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 8.57
+    },
+    {
+      "job": "tmBK",
+      "expected": "excluded",
+      "synthetic": false,
+      "membership": {
+        "id": 13,
+        "target_definition_version_id": 2,
+        "source_job_id": "tmBK",
+        "job_detail_version_id": 44,
+        "translation_artifact_id": 38,
+        "analysis_artifact_id": 39,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "1d6938f64b3b9c28f7dde5e4a70ae4dd534cd4ebead693a14e09d965b18c9b54",
+        "disposition": "excluded",
+        "reason": "The vacancy primarily requires mastery of backend development technologies (Python/Django, DRF, FastAPI) and database management. While it mentions the ability to use AI to increase software development quality, this is framed as using AI tools for general software production, which the target explicitly excludes from being core.",
+        "evidence_refs": [
+          "english:description",
+          "p16:requirements:0",
+          "p16:requirements:1"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:25:39.732389+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 13.77
+    },
+    {
+      "job": "t4qV",
+      "expected": "excluded",
+      "synthetic": false,
+      "membership": {
+        "id": 14,
+        "target_definition_version_id": 2,
+        "source_job_id": "t4qV",
+        "job_detail_version_id": 30,
+        "translation_artifact_id": 20,
+        "analysis_artifact_id": 44,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "29848d7736d4d0f493f62df69ece7c980dddae18b494d5789ba3a711a64bfc7e",
+        "disposition": "excluded",
+        "reason": "The role is a Senior Network Security Engineer focused on designing, implementing, and managing enterprise-scale network security infrastructures, firewalls (NGFW), VPNs, and Zero Trust architecture. The core work described does not involve the development, evaluation, or improvement of AI/ML models or agents.",
+        "evidence_refs": [
+          "p16:responsibilities:0",
+          "p16:responsibilities:3",
+          "p16:responsibilities:4"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:25:53.954023+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 11.27
+    },
+    {
+      "job": "tmyX",
+      "expected": "excluded",
+      "synthetic": false,
+      "membership": {
+        "id": 15,
+        "target_definition_version_id": 2,
+        "source_job_id": "tmyX",
+        "job_detail_version_id": 35,
+        "translation_artifact_id": 24,
+        "analysis_artifact_id": 46,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "fd6623dd3a7d761a89ab9958548352b4b27cdb3f212e0f026f156d4e74c17e7e",
+        "disposition": "excluded",
+        "reason": "The role is centered on cybersecurity infrastructure assessment, hardening Windows Server and Active Directory, and managing security posture, which does not align with the primary focus of developing or improving AI/ML models or agents required by the target market.",
+        "evidence_refs": [
+          "p16:responsibilities:2",
+          "p16:role_purpose:0"
+        ],
+        "confidence": "high",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:26:08.461198+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 14.55
+    },
+    {
+      "job": "i3-synthetic-sparse",
+      "expected": "uncertain",
+      "synthetic": true,
+      "membership": {
+        "id": 16,
+        "target_definition_version_id": 2,
+        "source_job_id": "i3-synthetic-sparse",
+        "job_detail_version_id": 47,
+        "translation_artifact_id": null,
+        "analysis_artifact_id": null,
+        "classifier_contract_version": "market-membership-v1",
+        "classifier_method": "model",
+        "classifier_identity": {
+          "context_length": 16384,
+          "max_tokens": 2048,
+          "model": "gemma-4-e4b-it-ud",
+          "prompt": "market-membership-v1.0",
+          "prompt_sha256": "b3f41e0cbad1835f4717dcc7dea2ea565756cd5e4f807656f152f4a424a6084d",
+          "provider": "lm-studio-membership-v1",
+          "schema": "market-membership-v1",
+          "seed": 0,
+          "temperature": 0,
+          "validation_retries": 1
+        },
+        "dependency_fingerprint": "8606aed54e448fd3ff7539a70a4791a24d99f98d3858b6b874121c7fb017e94b",
+        "disposition": "uncertain",
+        "reason": "The evidence is extremely vague, only stating the candidate will join a 'technical team' and that the detailed scope will be discussed in an interview. There is no substantive information provided regarding AI/ML model development or engineering.",
+        "evidence_refs": [
+          "source:description",
+          "source:title"
+        ],
+        "confidence": "low",
+        "supersedes_membership_id": null,
+        "created_at": "2026-09-17T16:26:16.888783+00:00"
+      },
+      "expected_match": true,
+      "reuse_ok": true,
+      "seconds": 8.46
+    }
+  ],
+  "provider_calls": 8,
+  "completed_at": "2026-09-17T16:26:17.067380+00:00"
+}

@@ -1,0 +1,9 @@
+{
+  "disposition": "core_match",
+  "reason": "The role centers on building an AI-powered platform, requiring expertise in developing RAG systems, LLM agents, semantic search pipelines, and knowledge representation over complex datasets.",
+  "evidence_refs": [
+    "english:description",
+    "source:description"
+  ],
+  "confidence": "high"
+}

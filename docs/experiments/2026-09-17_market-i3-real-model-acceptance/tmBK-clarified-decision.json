@@ -1,0 +1,10 @@
+{
+  "disposition": "excluded",
+  "reason": "The vacancy primarily requires mastery of backend development technologies (Python/Django, DRF, FastAPI) and database management. While it mentions the ability to use AI to increase software development quality, this is framed as using AI tools for general software production, which the target explicitly excludes from being core.",
+  "evidence_refs": [
+    "p16:requirements:0",
+    "p16:requirements:1",
+    "english:description"
+  ],
+  "confidence": "high"
+}

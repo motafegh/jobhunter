@@ -1,0 +1,9 @@
+{
+  "disposition": "uncertain",
+  "reason": "The evidence is extremely vague, only stating the candidate will join a 'technical team' and that the detailed scope will be discussed in an interview. There is no substantive information provided regarding AI/ML model development or engineering.",
+  "evidence_refs": [
+    "source:description",
+    "source:title"
+  ],
+  "confidence": "low"
+}

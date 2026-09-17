@@ -1,0 +1,37 @@
+{
+  "target": {
+    "membership_intent": "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target.",
+    "include_hints": [],
+    "exclude_hints": [],
+    "geography_scope": null,
+    "work_arrangement_scope": null,
+    "seniority_scope": null,
+    "employment_type_scope": null
+  },
+  "evidence": {
+    "source:title": "Senior Applied AI Engineer",
+    "source:description": "Description : We're building an AI-powered financial intelligence platform that lets investors and analysts query complex financial data using natural language. Our system combines structured datasets, semantic search, knowledge representation, entity resolution, and agentic AI to deliver insights that traditionally require years of analyst experience. Responsibilities Build semantic layers and knowledge representations over financial databases. Develop AI agents and RAG systems using vector search and retrieval optimization. Design scalable pipelines for embeddings, indexing, retrieval, reranking, and context generation. Create evaluation, testing, and observability frameworks for LLM and agent performance. Implement entity resolution, semantic modeling, and text-to-SQL workflows over complex financial datasets. Required Qualifications Production experience with LLM frameworks, RAG architectures, and vector databases such as Qdrant. Deep understanding of retrieval, embeddings, reranking, and semantic search. Experience with agentic workflows, tool-calling, and AI system reliability. Experience with LangGraph, PydanticAI, or similar agent frameworks. Strong SQL and relational database expertise. Strong Python and software engineering skills.",
+    "source:skills": [
+      "هوش مصنوعی",
+      "Rag",
+      "SQL"
+    ],
+    "source:job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+    "source:location": "تهران",
+    "source:employment_type": "تمام وقت",
+    "source:minimum_experience": "سه تا شش سال",
+    "source:education": "کارشناسی",
+    "english:title": "Senior Applied AI Engineer",
+    "english:description": "Description : We're building an AI-powered financial intelligence platform that lets investors and analysts query complex financial data using natural language. Our system combines structured datasets, semantic search, knowledge representation, entity resolution, and agentic AI to deliver insights that traditionally require years of analyst experience. Responsibilities Build semantic layers and knowledge representations over financial databases. Develop AI agents and RAG systems using vector search and retrieval optimization. Design scalable pipelines for embeddings, indexing, retrieval, reranking, and context generation. Create evaluation, testing, and observability frameworks for LLM and agent performance. Implement entity resolution, semantic modeling, and text-to-SQL workflows over complex financial datasets. Required Qualifications Production experience with LLM frameworks, RAG architectures, and vector databases such as Qdrant. Deep understanding of retrieval, embeddings, reranking, and semantic search. Experience with agentic workflows, tool-calling, and AI system reliability. Experience with LangGraph, PydanticAI, or similar agent frameworks. Strong SQL and relational database expertise. Strong Python and software engineering skills.",
+    "english:skills": [
+      "Artificial Intelligence",
+      "Rag",
+      "SQL"
+    ],
+    "english:job_category": "Web, programming, and software",
+    "english:location": "Tehran",
+    "english:employment_type": "full time",
+    "english:minimum_experience": "three to six years",
+    "english:education": "Bachelor's degree"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "disposition": "core_match",
+  "reason": "The primary responsibilities involve building, validating, and applying ML/AI models to solve specific industrial problems like yield optimization and fault detection in semiconductor manufacturing, which directly matches the intent of applied AI/ML engineering.",
+  "evidence_refs": [
+    "source:description",
+    "p16:responsibilities:0"
+  ],
+  "confidence": "high"
+}

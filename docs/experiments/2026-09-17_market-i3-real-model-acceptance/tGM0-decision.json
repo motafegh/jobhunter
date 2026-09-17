@@ -1,0 +1,8 @@
+{
+  "disposition": "core_match",
+  "reason": "The role is explicitly within an Artificial Intelligence team, focusing on developing backend services and infrastructure specifically for intelligent systems, including integration with LLMs, Agents, and RAG.",
+  "evidence_refs": [
+    "english:description"
+  ],
+  "confidence": "high"
+}
