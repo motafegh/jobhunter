@@ -3,7 +3,7 @@
 **Status:** PR0 COMPLETE / EVIDENCE-BACKED AUDIT / NO CLEANUP IMPLEMENTED  
 **Date:** 2026-09-02  
 **Controlling track:** `docs/PORTFOLIO_READINESS_AND_PUBLIC_PRESENTATION_PLAN.md`  
-**Product-work boundary:** P2.2B-B1 remains paused at the machine-local `ta9l` P1.6 acceptance gate. This audit does not change semantic contracts, accepted artifacts, registry authority, or product behavior.
+**Product-work boundary at audit checkpoint:** P2.2B-B1 was paused at the machine-local `ta9l` P1.6 acceptance gate. That checkpoint is historical: B1 later closed NO-PROMOTION / DEFER, the Market foundation passed, and I1-I6 were repository-accepted. Current execution is I7 bounded real local acceptance. This audit does not change semantic contracts, accepted artifacts, registry authority, or product behavior.
 
 ---
 
