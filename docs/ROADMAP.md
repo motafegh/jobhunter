@@ -1,9 +1,12 @@
 # JobHunter Roadmap
 
 **Status:** Current strategic roadmap  
-**Date:** 2026-08-23
-**Scope:** Product delivery from the current Phase-1 state through sustained personal career intelligence  
-**Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and active phase plans control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution plans.
+**Date:** 2026-08-23  
+**Last reconciled:** 2026-09-18
+**Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
+**Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
+
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and Market I1-I6 are accepted/closed. The exact frontier is I7 bounded real local Market acceptance. Older `Active now`, `blocked`, and checkpoint sequences below are retained only where explicitly labeled historical.
 
 ---
 
@@ -119,7 +122,7 @@ Public corpus publication baseline:
 ```text
 Known/discovered jobs:       353
 Fetched/parsed job details:   43
-Current English projections:  20
+Current English projections:  21
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -141,9 +144,9 @@ Blueprint v6/v5 is implemented for research/inspection but is **deferred and non
 
 ### 3.3 Current semantic-quality position
 
-P1.6 v20/v5 and Capability v9/v5 are promoted/current on dense+sparse opposite-end anchors. Heterogeneous role-family validation is active before those promoted contracts are frozen as Phase-2 input.
+P1.6 v20/v5 and Capability v9/v5 are promoted/current. Heterogeneous role-family validation is closed across the accepted Python/software, network/security, and operations/platform anchors; those contracts are frozen accepted inputs unless a material defect/dependency change reopens them.
 
-Current order:
+Accepted heterogeneous closure order:
 
 ```text
 1. Python/software          ← accepted: tmBK P1.6 39 → Capability 13
@@ -161,7 +164,7 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
 
-Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 and P2.1 are accepted; P2.2A Job Work Intelligence semantic/product acceptance is active.
+Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. Market I1-I6 are repository-accepted; I7 bounded real local acceptance is the current frontier.
 
 ### 3.4 Current governance state
 
@@ -213,34 +216,38 @@ These rules apply across every roadmap stage.
 
 ---
 
-# Part I — Immediate current work
+# Part I — Accepted foundation history
 
 ## 5. Stage R0 — Reconcile, stabilize and finish Phase 1
 
 **Objective:** Establish one trustworthy, accepted end-to-end Jobinja source-to-market pipeline before expanding the product surface.
 
-**Status:** Active now.
+**Status:** CLOSED / ACCEPTED — historical foundation stage.
 
 ### 5.1 Documentation/state reconciliation
 
-Current-state documents must agree on:
+Current-state documents now agree on:
 
 ```text
 P1.6 English public:        v20/v5
 Capability public/current:  v9/v5
-Blueprint:                  deferred / non-authoritative / historical-v7-pinned
+Blueprint:                  deferred / non-authoritative / historical
 Public corpus:              operationally closed / remotely available
-Heterogeneous review:       active
-Phase 2:                    blocked
+Heterogeneous review:       CLOSED
+Phase 1:                    CLOSED / ACCEPTED
+P2.1:                       CLOSED / ACCEPTED
+P2.2A:                      CLOSED / ACCEPTED
+Market I1-I6:               ACCEPTED
+Current frontier:           I7 bounded real local acceptance
 ```
 
 Historical experiment/incident files remain historical and must not be rewritten as though they were current contracts.
 
-### 5.2 Current controlling Phase-1 sequence
+### 5.2 Historical Phase-1 closure sequence
 
-The exact execution order is controlled by `docs/IMPLEMENTATION_PLAN.md`, `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`, and `docs/EXECUTION_TODO.md`.
+The following sequence records the accepted Phase-1 path. It is not current execution routing; current routing comes from the current-state reconciliation and Market I7 protocol.
 
-Current high-level sequence:
+Historical high-level sequence:
 
 ```text
 rebuild/review tmBK P1.6
