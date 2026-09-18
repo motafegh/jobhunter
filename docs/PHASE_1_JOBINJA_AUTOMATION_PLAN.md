@@ -1,7 +1,8 @@
 # Phase 1 — Jobinja Workflow Automation Plan
 
-**Status:** Active implementation/acceptance plan  
-**Date:** 2026-08-23
+**Status:** CLOSED / ACCEPTED — HISTORICAL PHASE-1 IMPLEMENTATION AND ACCEPTANCE PLAN  
+**Date:** 2026-08-23  
+**Lifecycle reconciled:** 2026-09-18
 **Scope:** Phase 1  
 **Primary source:** Jobinja (`https://jobinja.ir/`)  
 **Branch policy:** Work directly on `main` unless the repository owner explicitly changes this rule or a concrete isolation need is agreed first.
@@ -12,7 +13,7 @@ This document is subordinate to:
 2. `docs/ROADMAP.md` for strategic sequencing;
 3. `docs/IMPLEMENTATION_PLAN.md` for product-level delivery order.
 
-`docs/EXECUTION_TODO.md` is the current working checklist. `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` is the focused sub-plan for the active semantic-quality acceptance tranche.
+This file preserves the accepted Phase-1 route. `docs/EXECUTION_TODO.md` and the current-state reconciliation own present-tense execution; `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md` is now a closed Phase-1 acceptance record.
 
 ---
 
@@ -434,7 +435,7 @@ Accepted real publication baseline:
 ```text
 Known/discovered jobs:       353
 Fetched/parsed job details:   43
-Current English projections:  20
+Current English projections:  21
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -511,7 +512,7 @@ The complete browser workflow now invokes the same `Phase1RunService` and format
 
 ---
 
-## 17. Current delivery state
+## 17. Final accepted Phase-1 delivery state
 
 | Increment | State |
 |---|---|
@@ -531,9 +532,9 @@ The complete browser workflow now invokes the same `Phase1RunService` and format
 
 ---
 
-## 18. Current exact execution order
+## 18. Historical Phase-1 closure execution order
 
-Do not restart historical semantic-calibration checklists. Continue from the actual repository state:
+Do not restart historical semantic-calibration checklists. The following was the Phase-1 closure handoff sequence:
 
 ```text
 1. preserve accepted heterogeneous chains: tmBK 39→13, t4qV 44→14, tmyX 46→15
@@ -542,7 +543,9 @@ Do not restart historical semantic-calibration checklists. Continue from the act
 4. preserve accepted partial-success semantics
 5. preserve accepted P1.7 report/run/browser behavior
 6. preserve the closed Phase-1 contract boundary
-7. begin focused P2.1 canonical concept registry work
+7. begin focused P2.1 canonical concept registry work — subsequently completed/accepted
+8. later P2.2A accepted; B1 closed no-promotion/defer; Market I1-I6 accepted
+9. current project route: I7 bounded real local acceptance
 ```
 
 The operational details live in `docs/EXECUTION_TODO.md`.
