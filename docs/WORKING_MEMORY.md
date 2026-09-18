@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-17  
+**Date:** 2026-09-18  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 NEXT  
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 PREPARED / LOCAL EXECUTION PENDING  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -25,6 +25,10 @@ Foundation decision:
 Latest accepted increment:
 
 `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
+
+Prepared I7 protocol:
+
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
 Execution checklist:
 
@@ -69,7 +73,7 @@ I3  membership qualification                ACCEPTED
 I4  immutable snapshot construction         ACCEPTED
 I5  deterministic aggregate profile         ACCEPTED
 I6  browser + CLI thin workflow             ACCEPTED
-I7  bounded real local acceptance           NEXT
+I7  bounded real local acceptance           PREPARED / LOCAL EXECUTION PENDING
 ```
 
 ### I1
@@ -184,6 +188,12 @@ pytest -W error 632 passed
 ## 4. Exact next responsibility — I7
 
 I7 is **real local acceptance**, not another architecture/implementation phase by default.
+
+The repository-side protocol is prepared at:
+
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
+
+No real local I7 run has been claimed yet.
 
 Use one small representative target with precise core-vs-adjacent meaning. Applied AI / ML Engineering is appropriate if its membership intent explicitly distinguishes direct AI/ML/model/agent/retrieval/system-behavior engineering from backend/platform work that primarily enables AI and from generic use of AI tools.
 
