@@ -29,7 +29,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
 
-The next authorized product increment is the first **target-scoped Market / Role-Family Intelligence vertical slice**. Its foundation investigation is complete; implementation begins with target/definition/run/membership/snapshot/profile domain and SQLite persistence. That target-scoped slice is **authorized but not yet implemented/accepted**.
+The first **target-scoped Market / Role-Family Intelligence vertical slice** is now implemented through I6: target/definition persistence, target-scoped affected-work planning, membership qualification, immutable snapshots, deterministic aggregate profiles, and shared browser/CLI workflow are repository-accepted. The remaining gate is **I7 bounded real local acceptance** against the owner's operational SQLite, real Jobinja acquisition, configured local model/provider path, browser, and CLI. Repository-side I7 preparation is complete; the real local run is still pending.
 
 ## Why the engineering is non-trivial
 
@@ -241,8 +241,8 @@ P2.1 Canonical Registry                 CLOSED
 P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
-Market first vertical slice             I1-I3 REPOSITORY ACCEPTED / INCOMPLETE
-Current exact increment                 I4 IMMUTABLE SNAPSHOT CONSTRUCTION
+Market first vertical slice             I1-I6 REPOSITORY ACCEPTED / I7 OPEN
+Current exact increment                 I7 BOUNDED REAL LOCAL ACCEPTANCE
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -250,7 +250,7 @@ Five heterogeneous accepted P1.6 → Capability chains currently serve as semant
 JobHunter does **not** currently claim:
 
 - semantic acceptance across every discovered job;
-- that the target-scoped Market first slice is already implemented or accepted;
+- end-to-end acceptance of the target-scoped Market first slice before I7 real local evidence passes;
 - repost/new-ID-adjusted `unique demand` statistics;
 - a complete canonical labor-market taxonomy;
 - arbitrary-web ingestion;
