@@ -1,11 +1,11 @@
 # JobHunter Semantic Quality Acceptance Plan
 
-**Status:** Active bounded acceptance plan  
+**Status:** CLOSED / ACCEPTED PHASE-1 SEMANTIC-QUALITY RECORD  
 **Date:** 2026-08-21  
-**Scope:** promoted P1.6 factual extraction, promoted Capability Intelligence, Review Snapshot current-chain verification, closed public-corpus availability, active heterogeneous semantic review, and the concluded Phase-1 Blueprint experiment  
+**Scope:** promoted P1.6 factual extraction, promoted Capability Intelligence, Review Snapshot current-chain verification, public-corpus availability, completed heterogeneous semantic review, and the concluded Phase-1 Blueprint experiment  
 **Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`, `docs/ROADMAP.md`, and product/domain/source/architecture constraints.
 
-This plan does not authorize corpus-wide Phase-2 taxonomy/Market-v2 work.
+This plan is retained as Phase-1 acceptance evidence. It does not route current execution; use the current-state reconciliation/TODO. Current project execution is Market I7 bounded real local acceptance.
 
 ## 1. Permanent acceptance principles
 
@@ -158,7 +158,7 @@ Current-chain status proves dependency currentness, not semantic acceptance.
 
 ## 5. SQ-1 — P1.6 factual coverage / obligation / depth
 
-**Status: PROMOTED / CLOSED AS PUBLIC CONTRACT; HETEROGENEOUS NON-REGRESSION ACTIVE.**
+**Status: PROMOTED / CLOSED AS PUBLIC CONTRACT; HETEROGENEOUS NON-REGRESSION CLOSED.**
 
 Dense accepted anchor:
 
@@ -192,7 +192,7 @@ Heterogeneous review may still reveal repeatable deterministic implementation de
 
 ## 6. SQ-2 — Capability Intelligence calibration
 
-**Status: PROMOTED / OPERATIONALLY CLOSED; HETEROGENEOUS NON-REGRESSION ACTIVE.**
+**Status: PROMOTED / OPERATIONALLY CLOSED; HETEROGENEOUS NON-REGRESSION CLOSED.**
 
 Accepted dense anchor:
 
@@ -292,7 +292,7 @@ Real operational proof:
 ```text
 Known/discovered jobs:       353
 Fetched/parsed job details:   43
-Current English projections:  20
+Current English projections:  21
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
