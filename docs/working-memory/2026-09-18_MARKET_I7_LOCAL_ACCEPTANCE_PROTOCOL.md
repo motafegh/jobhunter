@@ -27,7 +27,7 @@ Before mutation run:
     git status --short
     jobhunter --version
     jobhunter-corpus status
-    jobhunter market --config config/local.toml target list
+    jobhunter --config config/local.toml market target list
 
 Confirm LM Studio/provider readiness using the same local configuration already used by JobHunter.
 Do not switch models or prompt contracts merely to obtain a passing result.
@@ -55,7 +55,7 @@ This wording preserves the I3 real-model lesson. Do not patch individual vacanci
 
 ### Create only when no equivalent target exists
 
-    jobhunter market --config config/local.toml target create       --slug applied-ai-ml-engineering       --name "Applied AI / ML Engineering"       --description "Bounded I7 acceptance target for direct applied AI/ML engineering work."
+    jobhunter --config config/local.toml market target create --slug applied-ai-ml-engineering --name "Applied AI / ML Engineering" --description "Bounded I7 acceptance target for direct applied AI/ML engineering work."
 
 Save TARGET_ID.
 
@@ -63,7 +63,7 @@ Save TARGET_ID.
 
 Prefer a small explicit acquisition envelope rather than the broad whole profile for I7:
 
-    jobhunter market --config config/local.toml definition create TARGET_ID       --intent "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target."       --term "AI Engineer"       --term "Machine Learning Engineer"       --term "RAG"       --term "AI Agent"       --term "MLOps"       --include-hint "direct model, agent, retrieval, evaluation, or AI-system engineering"       --exclude-hint "generic software/content work that merely uses AI tools"
+    jobhunter --config config/local.toml market definition create TARGET_ID --intent "Applied AI / ML engineering where the primary work is developing, evaluating, or improving AI/ML models, agents, retrieval, or AI system behavior. Backend/API/database/infrastructure roles primarily enabling or integrating AI services are adjacent rather than core. Using AI tools for general software or content production does not qualify for this target." --term "AI Engineer" --term "Machine Learning Engineer" --term "RAG" --term "AI Agent" --term "MLOps" --include-hint "direct model, agent, retrieval, evaluation, or AI-system engineering" --exclude-hint "generic software/content work that merely uses AI tools"
 
 Save DEFINITION_ID, definition version, and fingerprint. If an exactly equivalent definition already
 exists, intentional reuse is correct.
@@ -88,7 +88,7 @@ These are acceptance controls, not new product defaults.
 
 Run before acquisition:
 
-    jobhunter market --config config/local.toml preview DEFINITION_ID       --request-budget 5       --search-limit 5       --default-max-pages 1       --missing-limit 4       --refresh-limit 2       --refresh-after-hours 168       --translation-limit 4       --analysis-limit 2       --membership-limit 8
+    jobhunter --config config/local.toml market preview DEFINITION_ID --request-budget 5 --search-limit 5 --default-max-pages 1 --missing-limit 4 --refresh-limit 2 --refresh-after-hours 168 --translation-limit 4 --analysis-limit 2 --membership-limit 8
 
 Verify exactly the intended five searches are selected, each is one page, the request budget is five,
 no unexpected profile/pack expansion appears, and preview itself does not mutate provider/runtime state.
@@ -99,7 +99,7 @@ If preview scope is wrong, stop before the run and repair only the owning defini
 
 Execute:
 
-    jobhunter market --config config/local.toml run DEFINITION_ID       --request-budget 5       --search-limit 5       --default-max-pages 1       --missing-limit 4       --refresh-limit 2       --refresh-after-hours 168       --translation-limit 4       --analysis-limit 2       --membership-limit 8
+    jobhunter --config config/local.toml market run DEFINITION_ID --request-budget 5 --search-limit 5 --default-max-pages 1 --missing-limit 4 --refresh-limit 2 --refresh-after-hours 168 --translation-limit 4 --analysis-limit 2 --membership-limit 8
 
 A non-zero exit because the run completed with bounded stage failures is evidence to inspect, not
 automatic proof that the product failed.
@@ -110,9 +110,9 @@ Capture run ID, status, snapshot ID, profile ID, candidate count, membership cou
 
 For the returned IDs:
 
-    jobhunter market --config config/local.toml run-show RUN_ID
-    jobhunter market --config config/local.toml snapshot-show SNAPSHOT_ID
-    jobhunter market --config config/local.toml show --definition-id DEFINITION_ID
+    jobhunter --config config/local.toml market run-show RUN_ID
+    jobhunter --config config/local.toml market snapshot-show SNAPSHOT_ID
+    jobhunter --config config/local.toml market show --definition-id DEFINITION_ID
 
 Verify the run ledger exposes discovery/request bounds and the selected/reused/completed/failed/remaining
 states for source, translation, P1.6, and membership where applicable.
