@@ -5,7 +5,7 @@
 
 P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
 
-The active quality sequence is controlled by `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
+The Phase-1 quality sequence is closed and preserved in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`. Present-tense execution routing comes from the current-state reconciliation/TODO; the current project frontier is Market I7 bounded real local acceptance.
 
 ---
 
@@ -135,7 +135,7 @@ reused
 
 Current analysis identity is versioned by source/model/prompt/schema and records the exact English translation dependency for English artifacts. Historical identities remain preserved rather than overwritten.
 
-A mechanically completed artifact is still a semantic-review candidate when the active acceptance gate requires manual review. A rejected candidate must not feed Capability.
+A mechanically completed artifact remains a semantic-review candidate wherever the current contract requires manual promotion/review. A rejected candidate must not feed Capability.
 
 ---
 
