@@ -1,11 +1,11 @@
 # P2.2 Responsibility, Work, and Role Intelligence Plan
 
-**Status:** APPROVED / CONTROLLING FOCUSED PLAN — P2.2A ACCEPTED / P2.2B NOT STARTED
+**Status:** CONTROLLING DURABLE P2.2 PLAN — P2.2A ACCEPTED / B1 CLOSED NO-PROMOTION-DEFER / P2.2C-D NOT AUTHORIZED
 **Date:** 2026-09-01
 **Scope:** P2.2 responsibility/work interpretation, selective responsibility/deliverable promotion, responsibility families, and role-archetype intelligence  
 **Authority:** Subordinate to `docs/PRODUCT_SPECIFICATION.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/SOURCE_POLICY.md`, `docs/ARCHITECTURE.md`, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
 **Previous gate:** P2.1 Canonical Concept Registry — CLOSED / ACCEPTED  
-**Current gate:** P2.2A Job Work Intelligence v2 — ACCEPTED / CLOSED; P2.2B DECISION NOT STARTED
+**Current lifecycle:** P2.2A Job Work Intelligence v2 — ACCEPTED / CLOSED; P2.2B-B1 — CLOSED / NO-PROMOTION / DEFER; P2.2C/P2.2D — NOT AUTHORIZED. Present-tense project execution is Market I7 bounded real local acceptance.
 
 ---
 
@@ -935,7 +935,7 @@ P2.2 does not authorize:
 
 ---
 
-## 20. Exact next action
+## 20. Historical transition after P2.2A and current disposition
 
 P2.2A is accepted and closed on `job-work-intelligence-v2 / job-work-intelligence-v2.0`.
 
@@ -944,10 +944,10 @@ Acceptance record:
 `docs/working-memory/2026-09-01_P2_2A_V2_REAL_LOCAL_ACCEPTANCE.md`
 
 ```text
-STOP at the P2.2A acceptance decision
-→ P2.2B remains unstarted
-→ require a separate focused decision before P2.2B work
+P2.2A accepted
+→ focused P2.2B-B1 decision executed
+→ B1 closed NO-PROMOTION / DEFER
+→ no P2.2C/P2.2D authorization created
 ```
 
-Do not continue prompt/model retries or infer authorization for P2.2B, Market v2, publication, or
-taxonomy expansion from P2.2A closure.
+The current project route is Market I7 bounded real local acceptance. Do not infer authorization for P2.2C/P2.2D, publication, or taxonomy expansion from P2.2A/B1 history.
