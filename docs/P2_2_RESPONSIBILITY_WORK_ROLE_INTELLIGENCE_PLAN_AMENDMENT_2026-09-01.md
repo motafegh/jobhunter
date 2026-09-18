@@ -453,7 +453,7 @@ This amendment and the completed P2.2A acceptance do **not** authorize:
 
 ---
 
-## 12. Acceptance outcome and exact next action
+## 12. Acceptance outcome and subsequent lifecycle
 
 The representation decision is approved, implemented, and accepted on:
 
@@ -468,9 +468,9 @@ P2.2A decision are recorded in:
 
 ```text
 P2.2A ACCEPTED / CLOSED
-→ STOP
-→ P2.2B decision NOT STARTED
+→ focused P2.2B-B1 decision later executed
+→ B1 CLOSED / NO-PROMOTION / DEFER
+→ P2.2C/P2.2D remain NOT AUTHORIZED
 ```
 
-No further representation-design or prompt/model action-authority trial is required. P2.2B work
-requires a separate focused decision.
+No further P2.2A representation-design or prompt/model action-authority trial is required. The current project route is Market I7 bounded real local acceptance; this amendment does not authorize later P2.2C/P2.2D work.
