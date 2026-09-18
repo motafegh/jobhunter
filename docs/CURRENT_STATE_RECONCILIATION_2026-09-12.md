@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-17  
+**Last reconciled:** 2026-09-18  
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -24,7 +24,7 @@ Market I3 membership qualification ACCEPTED / CLOSED
 Market I4 snapshot construction     ACCEPTED / CLOSED
 Market I5 aggregate profile         ACCEPTED / CLOSED
 Market I6 browser + CLI workflow    ACCEPTED / CLOSED
-Market I7 real local acceptance     NEXT / ACTIVE PRODUCT FRONTIER
+Market I7 real local acceptance     PREPARED / LOCAL EXECUTION PENDING
 First Market vertical slice         NOT END-TO-END ACCEPTED UNTIL I7
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
@@ -101,6 +101,10 @@ I7  bounded real local acceptance               NEXT
 Latest I6 acceptance owner:
 
 `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
+
+Prepared I7 execution protocol:
+
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
 Earlier accepted Market evidence remains applicable:
 
@@ -205,6 +209,10 @@ During integration, repository tests caught an accidental attempted drift in acc
 ## 7. Exact active frontier — I7 only
 
 I7 is the required **bounded real local acceptance** of the complete first Market vertical slice.
+
+Repository-side preparation is complete. The actual local run has **not** been claimed. Follow:
+
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
 Use one small representative target, preferably a well-specified Applied AI / ML Engineering definition whose core-vs-adjacent boundary is explicit.
 
