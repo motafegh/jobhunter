@@ -209,11 +209,11 @@ A future reopening requires a material change, for example:
 
 A reopened design must use a new prompt/schema identity and must not silently mutate v6/v5.
 
-## 10. Current next work
+## 10. Current disposition and project route
 
 Blueprint is **not** the active gate.
 
-Current accepted/public semantic work proceeds through:
+The accepted/public semantic authority chain proceeds through:
 
 ```text
 source
@@ -222,7 +222,7 @@ source
 → Capability v9/v5
 ```
 
-Heterogeneous validation order:
+Accepted heterogeneous validation order:
 
 ```text
 Python/software          ← tmBK accepted: P1.6 39 → Capability 13
@@ -230,4 +230,4 @@ network/security         ← t4qV accepted: P1.6 44 → Capability 14
 operations/platform      ← tmyX accepted: P1.6 46 → Capability 15
 ```
 
-Blueprint may be observed only as historical/research evidence. Do not generate or tune Blueprint as part of the current heterogeneous acceptance path.
+Blueprint may be observed only as historical/research evidence. Heterogeneous acceptance is closed; the current project route is Market I7 bounded real local acceptance. Do not generate or tune Blueprint merely because the active work has moved forward.
