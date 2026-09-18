@@ -120,15 +120,15 @@ Important current constraints:
 | [`../corpus/README.md`](../corpus/README.md) | deterministic repository-safe public corpus |
 | [`../review-snapshots/README.md`](../review-snapshots/README.md) | selected semantic-review/acceptance exports |
 
-## 6. Current amendments retained beside controlling documents
+## 6. Durable amendments retained beside controlling documents
 
-The 2026-08-26 governance reorientation remains part of the current authority chain:
+The 2026-08-26 governance reorientation remains part of the durable authority chain, while its old operational `next` wording is superseded by current routing:
 
 - [`ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md`](ROADMAP_AMENDMENT_2026-08-26_UTILITY_REASONING_AND_PROMOTION.md)
 - [`IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md`](IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md)
 - [`EXECUTION_TODO_AMENDMENT_2026-08-26_UTILITY_REASONING.md`](EXECUTION_TODO_AMENDMENT_2026-08-26_UTILITY_REASONING.md)
 
-They remain at stable paths until their durable rules are deliberately consolidated. Do not treat an amendment as a free-standing replacement for its parent.
+The roadmap/implementation amendments retain durable reasoning/promotion rules. The execution-TODO amendment is now explicitly historical for routing; its governance principles remain retained. Do not treat any amendment as a free-standing replacement for its parent or the current reconciliation/TODO.
 
 The current-state reconciliation is narrower: it supersedes obsolete present-tense status labels, not product meaning or strategic sequencing.
 
