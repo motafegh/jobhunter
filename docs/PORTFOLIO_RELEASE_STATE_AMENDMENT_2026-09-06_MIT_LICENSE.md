@@ -77,13 +77,13 @@ This amendment changes repository licensing/release readiness only.
 It does **not** authorize or change:
 
 ```text
-P2.2B-B1 product gate
+Market I7 acceptance outcome
 registry promotion
-P2.2C responsibility families
-Market v2
+P2.2C/P2.2D responsibility-family/archetype work
+later semantic Market report/subfamily synthesis
 personal readiness/scoring
 public-corpus publication rules
 semantic contracts
 ```
 
-The exact product frontier remains the machine-local `ta9l` English projection/P1.6 acceptance gate followed by the bounded final correspondence review against `tG9K`.
+The exact product frontier has since advanced: B1 closed NO-PROMOTION / DEFER, the Market foundation passed, and I1-I6 are repository-accepted. The current product frontier is I7 bounded real local acceptance.
