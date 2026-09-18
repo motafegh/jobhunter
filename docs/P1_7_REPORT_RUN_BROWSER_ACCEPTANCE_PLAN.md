@@ -2,7 +2,7 @@
 
 **Status:** Accepted / closed
 **Date:** 2026-08-23
-**Scope:** P1.7 only; Phase 2 remains blocked
+**Scope:** P1.7 only; historical Phase-1 closure record. Phase 2 later progressed; current routing is not controlled here.
 **Authority:** Subordinate to product/domain/source/architecture, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/PHASE_1_JOBINJA_AUTOMATION_PLAN.md`
 
 ## 1. Objective
