@@ -1,11 +1,14 @@
 # JobHunter Product Specification
 
 **Status:** Current product definition  
-**Date:** 2026-08-23
+**Date:** 2026-08-23  
+**Last reconciled:** 2026-09-18
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
+
+**Current execution bridge:** Phase 1, P2.1, and P2.2A are closed/accepted. The target-scoped Market first slice is repository-accepted through I6; I7 bounded real local acceptance is prepared and still pending. Present-tense execution routing comes from `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`, `docs/EXECUTION_TODO.md`, and `docs/WORKING_MEMORY.md`.
 
 ## 1. Purpose
 
@@ -82,7 +85,9 @@ The browser application and CLI currently support a substantial Jobinja-centered
 17. inspect long-running browser-operation state/results;
 18. generate selected Review Snapshots for semantic-review evidence;
 19. export/verify/status the complete repository-safe public corpus;
-20. use the repository public corpus for remote inspection and heterogeneous role selection without direct local SQLite access.
+20. use the repository public corpus for remote inspection and heterogeneous role selection without direct local SQLite access;
+21. create/version target markets and preview/run bounded target-scoped Market workflows;
+22. inspect target-specific memberships, immutable snapshots, deterministic aggregate profiles, run ledgers, and evidence through the shared browser/CLI state.
 
 Current semantic layers are not all at the same acceptance level:
 
@@ -90,7 +95,8 @@ Current semantic layers are not all at the same acceptance level:
 - Capability v9/v5 is promoted/current and operationally closed on those anchors;
 - heterogeneous role-family validation is closed across Python/software, network/security, and operations/platform anchors;
 - Blueprint v6/v5 remains experimental/deferred and non-authoritative;
-- Market, source/lifecycle, partial-success, and P1.7 gates are closed; Phase 1 is accepted.
+- Market truthfulness/source/lifecycle/partial-success/P1.7 Phase-1 gates are closed; Phase 1, P2.1, and P2.2A are accepted;
+- the target-scoped Market first slice is repository-accepted through I6; I7 real local acceptance remains the end-to-end closure gate.
 
 One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
@@ -188,7 +194,7 @@ tG9K → P1.6 artifact 36 → accepted/current
 t4jp → P1.6 artifact 37 → accepted/current
 ```
 
-Heterogeneous non-regression is active on materially different roles. Repeatable deterministic implementation defects are converted into regression tests; harmless model wording variation does not justify endless contract churn.
+Heterogeneous non-regression is closed across the accepted Python/software, network/security, and operations/platform anchors. Repeatable deterministic implementation defects remain regression-test material; harmless model wording variation does not justify endless contract churn.
 
 P1.6 is intentionally not the final Phase-2 fine-grained job capability requirement profile. It supplies accepted factual responsibilities/requirements/evidence that later canonical market intelligence can build on.
 
@@ -222,19 +228,15 @@ tG9K → P1.6 36 → Capability 11
 t4jp → P1.6 37 → Capability 12
 ```
 
-Capability is not yet used by current Market aggregation and is not yet authorized for corpus-wide Phase-2 profile generation.
+Capability remains an accepted per-job layer but is intentionally optional for the current Market first slice; it is not a mandatory Market membership or denominator gate.
 
-### 6.5 Market outputs — first implementation, not yet Phase-2 canonical market intelligence
+### 6.5 Market outputs — target-scoped first slice implemented through I6
 
-The current Market surface can aggregate accepted/current English P1.6 artifacts for bounded sample inspection. It may show:
+The current Market surface now supports stable target identity, immutable target-definition versions, bounded target-scoped acquisition/affected-work planning, semantic membership (`core_match / adjacent_match / uncertain / excluded`), immutable snapshots, deterministic aggregate profiles, and shared browser/CLI inspection over the same local SQLite authority.
 
-- analyzed sample size;
-- responsibility-claim counts;
-- concept/requirement prevalence by posting;
-- required/preferred/contextual/inferred posting counts;
-- search-effectiveness/provenance-related views.
+The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 bounded real local acceptance is still required before the slice is end-to-end accepted.
 
-This layer is **not yet** a reviewed canonical taxonomy, duplicate-adjusted market model or complete-labor-market claim.
+This layer is **not yet** a reviewed canonical role taxonomy, duplicate-adjusted mature market model, semantic role-subfamily report layer, or complete-labor-market claim.
 
 ### 6.6 Repository-safe public corpus and selected review exports
 
@@ -251,7 +253,7 @@ Accepted publication baseline:
 ```text
 Known/discovered jobs:       353
 Fetched/parsed job details:   43
-Current English projections:  20
+Current English projections:  21
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -555,19 +557,19 @@ The accepted heterogeneous reference order is:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1 and P2.1 are accepted; the active product gate is P2.2A Job Work Intelligence semantic/product acceptance.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. The active product gate is Market I7 bounded real local acceptance after repository acceptance of I1-I6.
 
 ### 10.4 Planned next product layers
 
-After Phase 1 acceptance:
+From the current Market-I7 frontier:
 
-1. canonical market taxonomy/responsibilities plus job-specific capability requirement/depth intelligence and role archetypes;
-2. one carefully selected second source and later minimal adapter abstraction;
-3. reviewed personal evidence model;
-4. gap/readiness/learning/action intelligence comparing detailed job expectations with personal evidence;
-5. application/interview/outcome workspace;
-6. sustained longitudinal operation/trends/backup;
-7. advanced evaluated retrieval/assistant/model-lab capabilities only where demonstrated useful.
+1. complete bounded real local acceptance of the first target-scoped Market slice;
+2. only after separate authorization, add semantic role-subfamily/report synthesis and selective promoted responsibility-family/archetype authority where evidence supports reuse;
+3. consider one carefully selected second source and only then a minimal adapter abstraction;
+4. build the reviewed personal evidence model;
+5. add gap/readiness/learning/action intelligence comparing Market evidence with reviewed personal evidence;
+6. add application/interview/outcome workspace and sustained longitudinal operation/trends/backup;
+7. add advanced evaluated retrieval/assistant/model-lab capabilities only where demonstrated useful.
 
 See `docs/ROADMAP.md`.
 
