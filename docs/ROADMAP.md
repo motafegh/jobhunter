@@ -6,7 +6,7 @@
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and Market I1-I6 are accepted/closed. The exact frontier is I7 bounded real local Market acceptance. Older `Active now`, `blocked`, and checkpoint sequences below are retained only where explicitly labeled historical.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and Market I1-I6 are accepted/closed. I7 real-local execution has occurred with outcome HOLD; the exact frontier is the bounded I7 closure follow-up. Older checkpoint sequences below are retained only where explicitly labeled historical.
 
 ---
 
@@ -120,9 +120,9 @@ t4jp → P1.6 artifact 37 → Capability artifact 12
 Public corpus publication baseline:
 
 ```text
-Known/discovered jobs:       353
-Fetched/parsed job details:   43
-Current English projections:  21
+Known/discovered jobs:       394
+Fetched/parsed job details:   51
+Current English projections:  27
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -164,7 +164,7 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
 
-Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. Market I1-I6 are repository-accepted; I7 bounded real local acceptance is the current frontier.
+Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. Market I1-I6 are repository-accepted; I7 was executed and is HOLD, with only bounded closure checks remaining.
 
 ### 3.4 Current governance state
 
@@ -238,7 +238,7 @@ Phase 1:                    CLOSED / ACCEPTED
 P2.1:                       CLOSED / ACCEPTED
 P2.2A:                      CLOSED / ACCEPTED
 Market I1-I6:               ACCEPTED
-Current frontier:           I7 bounded real local acceptance
+Current frontier:           I7 HOLD closure follow-up
 ```
 
 Historical experiment/incident files remain historical and must not be rewritten as though they were current contracts.

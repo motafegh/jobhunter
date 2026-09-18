@@ -1,0 +1,296 @@
+# Market I7 — Real Local Acceptance Result
+
+**Date:** 2026-09-18  
+**Status:** EXECUTED / HOLD  
+**Branch:** `main`  
+**Repository head carrying local-work publication:** `d1d2a952e53d980e699348abe3d5bfc8177a60c1`  
+**Final CI on that head:** run 1246 / 35386437630 — SUCCESS  
+**Protocol:** `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
+
+## Decision
+
+```text
+I7 RESULT: HOLD
+FIRST MARKET VERTICAL SLICE: REMAINS OPEN
+```
+
+This is not an I1-I6 architecture rejection. The real-local runs validated the target-scoped coordinator,
+bounded partial-success behavior, currentness/reuse mechanics, membership, source/semantic denominator
+separation, browser workflow, and privacy/publication boundary. The remaining gap is acceptance evidence:
+the live core snapshot had no accepted-current P1.6 member, so the accepted-semantic requirement/
+responsibility drill-down could not be exercised end to end. The captured handoff also did not retain
+the final post-rerun snapshot/profile identity + historical immutability comparison or a post-run SQLite
+integrity/foreign-key result.
+
+## Exact target and controls
+
+Target:
+
+```text
+target id:      1
+definition id:  1
+slug:           applied-ai-ml-engineering
+name:           Applied AI / ML Engineering
+```
+
+Membership intent preserved the I3 boundary: direct model/agent/retrieval/evaluation/AI-system work is
+core; backend/platform work primarily enabling AI is adjacent; generic use of AI tools is outside.
+
+Search envelope:
+
+```text
+AI Engineer
+Machine Learning Engineer
+RAG
+AI Agent
+MLOps
+```
+
+Each search was limited to one page.
+
+Frozen controls:
+
+```text
+request_budget       5
+search_limit         5
+default_max_pages    1
+missing_limit        4
+refresh_limit        2
+refresh_after_hours  168
+translation_limit    4
+analysis_limit       2
+membership_limit     8
+```
+
+The exact definition fingerprint was not retained in the sanitized handoff. The immutable definition ID,
+intent, terms and run controls were retained. This missing acceptance datum is one reason not to over-claim PASS.
+
+## Preflight / deterministic baseline
+
+Before the live run:
+
+- local operational SQLite existed;
+- pre-run SQLite integrity was reported clean and foreign-key checks were empty;
+- direct LM Studio access worked after bypassing an environment proxy path that had produced a misleading 503;
+- focused Market tests passed;
+- the complete deterministic suite passed with warnings-as-errors;
+- a pre-I7 SQLite backup was created under ignored local acceptance data.
+
+No operational SQLite, tokens, raw provider protocol or local acceptance logs are published here.
+
+## Run 1
+
+Run 1 completed as `completed_with_failures`.
+
+Observed product result:
+
+```text
+core source postings:             6
+accepted-semantic core postings:  0
+P1.6 failed attempts:             2
+P1.6 missing analyses:            4
+snapshot:                         created (snapshot 1)
+aggregate profile:                created (profile 1)
+```
+
+The important behavior was correct: source-level Market membership remained useful while P1.6 failures
+and missing semantic coverage stayed explicit. Missing semantic evidence did not become zero demand.
+
+Browser inspection of the first result exposed bounded I6 presentation gaps:
+
+- target/definition/run forms used weak/unhelpful controls;
+- membership rows did not expose reason/evidence;
+- aggregate rows did not expose the frozen claim evidence already stored in I5;
+- warning objects were not rendered through their message field.
+
+Those are presentation/inspection defects, not semantic-contract defects.
+
+## Bounded I6 repair discovered by I7
+
+The local agent repaired only the browser/evidence presentation boundary:
+
+```text
+src/jobhunter/web/static/app.css
+src/jobhunter/web/templates/market_workspace.html
+src/jobhunter/web/templates/market_snapshot.html
+tests/test_market_aggregate_service.py
+```
+
+The repair:
+
+- styles Market forms consistently;
+- exposes membership reason/evidence/dependency identity;
+- exposes immutable aggregate employer/source context;
+- exposes frozen P1.6 claim evidence for requirement/responsibility rows;
+- exposes all requirement-strength columns;
+- renders warning messages rather than dictionary representations.
+
+A regression test proves a historical Market snapshot continues to render its frozen P1.6/employer
+evidence after a later source version changes. HTML escaping is also covered.
+
+The pushed head passed CI 1246.
+
+## Run 2 — unchanged definition and controls
+
+Run 2 completed at 2026-09-18T19:27:14Z as `completed_with_failures`.
+
+Discovery:
+
+```text
+searches attempted: 5
+requests attempted: 5
+pages fetched:      5
+candidate jobs:     52
+known jobs:         52
+new jobs:           0
+discovery failures: 0
+```
+
+Source execution:
+
+```text
+attempted:     6
+succeeded:     6
+new versions:  5
+unchanged:     1
+failures:      0
+```
+
+This is consistent with bounded progression through remaining target-scoped missing/refresh work rather
+than a global backlog spill. The final affected-work plan still reported 39 missing and one refresh
+remaining, proving the run did not pretend target completion.
+
+Translation:
+
+```text
+attempted: 4
+completed: 2
+failed:    2
+stage-level reused: 0
+final affected-work current/reused translations: 9
+remaining: 3
+```
+
+The two failures were LM Studio timeouts. They remained explicit and did not roll back successful source
+or translation work. The final affected-work state demonstrates that already-current translations were
+recognized/reused rather than regenerated.
+
+P1.6:
+
+```text
+attempted:              2
+completed-or-reused:    1
+failed:                 1
+current accepted:       0
+current pending review: 1
+remaining:              8
+```
+
+The failure was an existing P1.6 v20 validation failure around dense source accounting/depth semantics.
+The validator failed closed. No validator weakening, vacancy-specific prompt patch or automatic semantic
+acceptance was introduced.
+
+Membership:
+
+```text
+eligible:  12
+selected:   8
+remaining:  4
+succeeded:  8
+failed:     0
+
+core_match:      6
+adjacent_match:  1
+excluded:        1
+```
+
+The membership service reuses exact dependency identities before model inference. The rerun ledger counts
+successful selected memberships but does not separately expose completed-vs-reused membership counts.
+
+## Browser / CLI
+
+Local browser inspection confirmed:
+
+- `/market/targets` was reachable;
+- repaired forms were usable at desktop and narrow viewport;
+- membership reason/evidence became visible;
+- snapshot 1 rendered the source/core and semantic-coverage state;
+- source drill-down to a job page worked.
+
+The first live snapshot had zero accepted-semantic core postings, so the newly repaired requirement/
+responsibility claim-evidence rows could only be regression-tested with deterministic fixtures, not
+demonstrated against accepted semantic evidence in the real I7 target.
+
+## Public corpus / privacy
+
+The governed upstream public projection legitimately advanced during the real Market work:
+
+```text
+known/discovered jobs:       394
+fetched/parsed details:       51
+current English projections: 27
+accepted English P1.6:         5
+accepted Capability:           5
+```
+
+Repository audit after publication found no occurrences under `corpus/` of:
+
+```text
+market_targets
+market_research_runs
+market_job_memberships
+market_corpus_snapshots
+market_aggregate_profiles
+127.0.0.1
+/home/motafeq
+configured local model identity
+```
+
+Market target/run/membership/snapshot/profile state therefore remains local/private.
+
+## Why HOLD instead of PASS
+
+PASS requires the complete real repeated-use path to be demonstrated.
+
+The following remain incomplete in the preserved evidence:
+
+1. accepted-semantic core denominator was zero, so live requirement/responsibility prevalence and frozen
+   P1.6 evidence drill-down were not exercised end to end;
+2. run 2 was terminal, but the sanitized handoff did not capture the second snapshot/profile identity
+   and a post-rerun comparison proving snapshot/profile 1 remained byte/identity-stable;
+3. pre-run SQLite integrity was clean, but the post-run integrity/foreign-key output was not retained;
+4. the immutable definition fingerprint was not retained in the sanitized handoff.
+
+These are acceptance-evidence gaps, not permission to weaken P1.6 or rebuild Market architecture.
+
+## Exact next responsibility
+
+Do only the remaining I7 closure work:
+
+```text
+review the one current pending P1.6 artifact using the normal semantic-review boundary
+→ accept only if genuinely valid; otherwise reject/preserve evidence
+→ obtain at least one accepted-current P1.6 core member without auto-acceptance or validator weakening
+→ inspect the resulting live requirement/responsibility aggregate + frozen evidence drill-down
+→ inspect run-2 snapshot/profile and prove run-1 snapshot/profile historical immutability
+→ run post-execution SQLite integrity + foreign-key check
+→ repeat privacy/publication check
+→ record PASS only if all remaining checks succeed
+```
+
+If a valid accepted-semantic core member cannot be obtained under the bounded target/provider conditions,
+preserve HOLD rather than manufacturing acceptance.
+
+## Stop lines
+
+While I7 is HOLD, do not start:
+
+- semantic role-subfamily synthesis;
+- trends/emerging/forecasting;
+- Market → You;
+- P2.2C/P2.2D promotion;
+- P1.6 auto-acceptance or validator weakening;
+- Capability/Work as mandatory Market gates;
+- repost-dedup authority;
+- Market-state public export;
+- new workflow/currentness/persistence infrastructure.

@@ -5,7 +5,7 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 PREPARED / LOCAL EXECUTION PENDING
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT
 
 Status vocabulary:
 
@@ -103,34 +103,37 @@ Acceptance: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLE
 - [x] Market tables remain local/private; only existing upstream public artifacts may sync.
 - [x] CI 1210 green: installed-entrypoint smoke, Ruff, 632 tests, 632 tests with warnings-as-errors.
 
-### I7 — bounded real local acceptance — PREPARED / LOCAL EXECUTION PENDING
+### I7 — bounded real local acceptance — EXECUTED / HOLD
 
 Protocol:
 
 `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
-Use one small representative target with explicit core-vs-adjacent meaning.
+Execution result:
 
-- [x] repository-side I7 protocol, bounded controls, evidence checklist, rerun check, SQLite integrity check and privacy check prepared.
-- [ ] confirm local runtime/SQLite/provider readiness without mutating operational state unnecessarily.
-- [ ] create/reuse one stable target and intentional immutable definition version.
-- [ ] preview the exact acquisition envelope and bounded controls.
-- [ ] run bounded real Jobinja discovery/acquisition.
-- [ ] inspect discovered candidate count/noise and confirm no global-backlog spill.
-- [ ] inspect source refresh outcomes and confirm failure does not imply disappearance.
-- [ ] inspect translation reuse/new work/failures.
-- [ ] inspect P1.6 accepted/pending/missing/failed/rejected coverage.
-- [ ] inspect membership decisions across core/adjacent/uncertain/excluded where present.
-- [ ] inspect run partial-success ledger.
-- [ ] inspect immutable snapshot membership/source/semantic identities.
-- [ ] inspect primary source denominator vs accepted-semantic denominator.
-- [ ] inspect deterministic requirement/responsibility aggregates and employer warnings.
-- [ ] drill down from Market evidence to exact source job/P1.6 evidence.
-- [ ] repeat unchanged run with bounded controls and verify meaningful reuse/currentness.
-- [ ] verify browser and CLI expose the same durable state.
-- [ ] verify Market tables/state remain local/private and are absent from public corpus export.
-- [ ] record real acceptance evidence and any defects.
-- [ ] PASS only if the complete first-slice path is correct/useful; otherwise repair the owning boundary and rerun.
+`docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
+
+- [x] local runtime/SQLite/provider readiness established and pre-run integrity was clean.
+- [x] stable Applied AI / ML target + immutable definition created.
+- [x] exact five-search / one-page / request-budget-five preview verified.
+- [x] two bounded real Jobinja runs completed with explicit partial-success state.
+- [x] discovery/acquisition remained target-scoped; rerun discovered 52 known candidates and zero new IDs.
+- [x] translation currentness/reuse was visible; final rerun plan reported 9 current translations reused.
+- [x] P1.6 pending/missing/failed coverage remained explicit and never became zero demand.
+- [x] membership completed without membership failures; rerun dispositions were 6 core / 1 adjacent / 1 excluded.
+- [x] run ledgers preserved partial failures rather than rolling back successful durable work.
+- [x] first immutable snapshot/profile existed and exposed 6 core / 0 accepted-semantic postings.
+- [x] browser usability/evidence presentation defect found during I7 was repaired and regression-tested.
+- [x] Market-local tables/paths/provider identity were absent from public corpus publication.
+- [x] final pushed head passed CI 1246.
+- [~] live accepted-semantic requirement/responsibility aggregate + evidence drill-down remains unexercised because accepted-semantic core denominator was zero.
+- [~] final post-rerun snapshot/profile existence and first-snapshot/profile immutability comparison was not retained in the sanitized handoff.
+- [~] post-run SQLite integrity/foreign-key output was not retained in the sanitized handoff.
+- [ ] review the current pending P1.6 artifact normally; never auto-accept it merely to close I7.
+- [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
+- [ ] verify second snapshot/profile and first snapshot/profile historical immutability after the rerun.
+- [ ] rerun post-execution SQLite integrity/foreign-key + privacy check.
+- [ ] change I7 to PASS only after those remaining checks succeed; otherwise preserve HOLD.
 
 ---
 
@@ -148,7 +151,7 @@ Use one small representative target with explicit core-vs-adjacent meaning.
 - [x] aggregate profiles reference one exact snapshot/contract.
 - [x] first slice says `qualified source postings`, not unproven unique demand.
 - [x] browser and CLI share state/service owners.
-- [ ] real local end-to-end acceptance still required before first-slice closure.
+- [~] real local acceptance executed; HOLD closure checks remain before first-slice closure.
 
 ---
 
@@ -182,11 +185,11 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-I7 local execution only
-→ follow the prepared I7 protocol
-→ bounded representative real local Market run
-→ inspect acquisition/reuse/membership/denominators/evidence/browser+CLI/privacy
-→ record acceptance evidence
-→ PASS or bounded repair
-→ close first Market vertical slice only from real evidence
+I7 HOLD closure follow-up only
+→ review pending P1.6 normally; accept only if semantically valid
+→ obtain an accepted-current P1.6 core member without weakening P1.6
+→ verify live semantic aggregate/evidence drill-down
+→ verify rerun snapshot/profile + old-snapshot immutability
+→ verify post-run SQLite integrity + privacy
+→ PASS and close first slice only if those checks succeed; otherwise keep HOLD
 ```

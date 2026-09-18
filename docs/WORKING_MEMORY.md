@@ -4,7 +4,7 @@
 **Date:** 2026-09-18  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 PREPARED / LOCAL EXECUTION PENDING  
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -26,9 +26,13 @@ Latest accepted increment:
 
 `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
 
-Prepared I7 protocol:
+Executed I7 protocol:
 
 `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
+
+I7 execution result:
+
+`docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
 
 Execution checklist:
 
@@ -73,7 +77,7 @@ I3  membership qualification                ACCEPTED
 I4  immutable snapshot construction         ACCEPTED
 I5  deterministic aggregate profile         ACCEPTED
 I6  browser + CLI thin workflow             ACCEPTED
-I7  bounded real local acceptance           PREPARED / LOCAL EXECUTION PENDING
+I7  bounded real local acceptance           EXECUTED / HOLD
 ```
 
 ### I1
@@ -185,66 +189,63 @@ pytest -W error 632 passed
 
 ---
 
-## 4. Exact next responsibility — I7
+## 4. Exact next responsibility — I7 HOLD closure follow-up
 
-I7 is **real local acceptance**, not another architecture/implementation phase by default.
+I7 real-local execution occurred on the owner's operational runtime.
 
-The repository-side protocol is prepared at:
+Protocol:
 
 `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
-No real local I7 run has been claimed yet.
+Sanitized result:
 
-Use one small representative target with precise core-vs-adjacent meaning. Applied AI / ML Engineering is appropriate if its membership intent explicitly distinguishes direct AI/ML/model/agent/retrieval/system-behavior engineering from backend/platform work that primarily enables AI and from generic use of AI tools.
+`docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
 
-I7 should be executed against the owner's actual local runtime and operational SQLite, with conservative bounded budgets.
-
-### I7 sequence
+Key evidence:
 
 ```text
-1. readiness/preflight
-2. create or intentionally reuse target identity
-3. create/reuse one precise immutable definition version
-4. preview exact target acquisition envelope
-5. run one small bounded target update
-6. inspect run ledger and failures
-7. inspect membership outcomes/evidence
-8. inspect immutable snapshot
-9. inspect source vs semantic denominators
-10. inspect deterministic aggregate + evidence drill-down
-11. inspect browser UX and same state through CLI
-12. repeat unchanged bounded run
-13. verify reuse/currentness and no unrelated backlog spill
-14. verify Market local-state privacy/publication boundary
-15. record PASS / repair / HOLD from actual evidence
+run 1: completed_with_failures
+snapshot/profile: created
+core source postings: 6
+accepted-semantic core postings: 0
+
+run 2: completed_with_failures
+candidate jobs: 52
+discovery: 5 searches / 5 requests / 5 pages / 0 new IDs
+source execution: 6 attempted / 6 succeeded / 5 new versions / 1 unchanged
+translation: 4 attempted / 2 completed / 2 failed
+final current translation reuse: 9
+P1.6: 2 attempted / 1 completed-or-reused / 1 failed
+final P1.6 state: 0 accepted / 1 pending-review
+membership: 12 eligible / 8 selected / 8 succeeded / 0 failed
+dispositions: 6 core / 1 adjacent / 1 excluded
+CI 1246: SUCCESS
 ```
 
-### Real evidence to capture
+The runs proved useful target-scoped progression, currentness/reuse, honest partial-success handling,
+membership separation, source-vs-semantic denominator honesty, and Market-publication privacy.
 
-At minimum preserve:
+During I7, browser inspection exposed presentation gaps in target forms, membership reason/evidence,
+and frozen aggregate evidence. The local agent repaired those surfaces, added a regression test proving
+historical snapshot evidence survives later source changes, and the final pushed head passed CI.
+
+Decision: **HOLD**. The live source corpus had no accepted-semantic core member, so the real workflow
+could not exercise accepted-P1.6 requirement/responsibility drill-down. The handoff also did not retain
+the final post-rerun snapshot/profile immutability comparison or a post-run SQLite integrity result.
+
+Next work is narrow:
 
 ```text
-Git head
-config-safe run controls (no secrets)
-target + definition id/version/fingerprint
-search count/request budget
-candidate count
-source/detail outcomes
-translation reused/completed/failed counts
-P1.6 current/pending/new/failed counts
-membership selected/remaining/succeeded/failed + disposition counts
-run status/ledger
-snapshot id/member counts
-core source denominator
-accepted-semantic denominator
-profile warnings/limitations
-representative evidence drill-down paths
-unchanged rerun results/reuse
-SQLite integrity / foreign-key check if practical
-browser screenshots only after privacy review
+review the pending P1.6 artifact normally
+→ accept only if it is semantically valid; otherwise preserve rejection/pending evidence
+→ establish at least one accepted-current P1.6 core member without weakening the contract
+→ verify live semantic aggregate/evidence drill-down through CLI + browser
+→ verify second snapshot/profile and first snapshot/profile immutability
+→ verify post-run SQLite integrity/foreign keys + privacy
+→ PASS only if all remaining checks succeed
 ```
 
-Do not commit operational SQLite, API tokens, local host paths, or private evidence dumps merely to preserve acceptance.
+No new Market architecture or later-scope feature is authorized by this HOLD.
 
 ---
 
@@ -293,9 +294,9 @@ If live evidence exposes a real defect, preserve the evidence and repair the sma
 Repository-safe public corpus baseline remains:
 
 ```text
-353 known/discovered jobs
-43 fetched/parsed details
-21 current English projections
+394 known/discovered jobs
+51 fetched/parsed details
+27 current English projections
 5 accepted/current English P1.6
 5 accepted/current Capability
 ```

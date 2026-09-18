@@ -3,7 +3,7 @@
 **Status:** PR9 repository-side release candidate package  
 **Date:** 2026-09-04  
 **Candidate release:** `v0.1.0` / package version `0.1.0` / alpha  
-**Product-development boundary:** Market I1-I6 are repository-accepted and I7 bounded real local acceptance remains pending. This portfolio package does not authorize or bypass I7 or authorize P2.2C/P2.2D.
+**Product-development boundary:** Market I1-I6 are repository-accepted; I7 real-local execution is complete with outcome HOLD. This portfolio package does not authorize bypassing the remaining I7 closure checks or authorize P2.2C/P2.2D.
 
 ---
 
@@ -64,14 +64,14 @@ The public repository additionally contains:
 ## 3. Current accepted public evidence baseline
 
 ```text
-Known/discovered Jobinja identities: 353
-Fetched/parsed job details:           43
-Current English projections:          21
+Known/discovered Jobinja identities: 394
+Fetched/parsed job details:           51
+Current English projections:          27
 Accepted English P1.6 artifacts:       5
 Accepted Capability artifacts:         5
 ```
 
-`353` means discovered identities, not 353 fully analyzed postings.
+`394` means discovered identities, not 394 fully analyzed postings.
 
 Accepted heterogeneous P1.6 → Capability anchors include:
 

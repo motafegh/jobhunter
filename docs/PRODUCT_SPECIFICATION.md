@@ -8,7 +8,7 @@
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, and P2.2A are closed/accepted. The target-scoped Market first slice is repository-accepted through I6; I7 bounded real local acceptance is prepared and still pending. Present-tense execution routing comes from `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`, `docs/EXECUTION_TODO.md`, and `docs/WORKING_MEMORY.md`.
+**Current execution bridge:** Phase 1, P2.1, and P2.2A are closed/accepted. The target-scoped Market first slice is repository-accepted through I6; I7 real-local execution has occurred with outcome HOLD. The first slice remains open only for the bounded closure checks recorded in the current-state/TODO/working-memory owners.
 
 ## 1. Purpose
 
@@ -234,7 +234,7 @@ Capability remains an accepted per-job layer but is intentionally optional for t
 
 The current Market surface now supports stable target identity, immutable target-definition versions, bounded target-scoped acquisition/affected-work planning, semantic membership (`core_match / adjacent_match / uncertain / excluded`), immutable snapshots, deterministic aggregate profiles, and shared browser/CLI inspection over the same local SQLite authority.
 
-The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 bounded real local acceptance is still required before the slice is end-to-end accepted.
+The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 real-local execution is complete but HOLD; the slice is not end-to-end accepted until the remaining live semantic-drill-down, rerun-immutability, and post-run integrity checks pass.
 
 This layer is **not yet** a reviewed canonical role taxonomy, duplicate-adjusted mature market model, semantic role-subfamily report layer, or complete-labor-market claim.
 
@@ -251,9 +251,9 @@ corpus/  → jobhunter-public-corpus-v1
 Accepted publication baseline:
 
 ```text
-Known/discovered jobs:       353
-Fetched/parsed job details:   43
-Current English projections:  21
+Known/discovered jobs:       394
+Fetched/parsed job details:   51
+Current English projections:  27
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
@@ -557,7 +557,7 @@ The accepted heterogeneous reference order is:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. The active product gate is Market I7 bounded real local acceptance after repository acceptance of I1-I6.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. The active product gate is the bounded Market I7 HOLD closure follow-up after repository acceptance of I1-I6 and completed real-local execution.
 
 ### 10.4 Planned next product layers
 

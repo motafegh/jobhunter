@@ -24,8 +24,8 @@ Market I3 membership qualification ACCEPTED / CLOSED
 Market I4 snapshot construction     ACCEPTED / CLOSED
 Market I5 aggregate profile         ACCEPTED / CLOSED
 Market I6 browser + CLI workflow    ACCEPTED / CLOSED
-Market I7 real local acceptance     PREPARED / LOCAL EXECUTION PENDING
-First Market vertical slice         NOT END-TO-END ACCEPTED UNTIL I7
+Market I7 real local acceptance     EXECUTED / HOLD
+First Market vertical slice         OPEN — I7 HOLD CLOSURE FOLLOW-UP
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
 
@@ -52,9 +52,9 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 353
-fetched/parsed detail jobs:      43
-current English projections:     21
+known/discovered Jobinja jobs: 394
+fetched/parsed detail jobs:      51
+current English projections:     27
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
@@ -95,7 +95,7 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded real local acceptance               NEXT
+I7  bounded real local acceptance               EXECUTED / HOLD
 ```
 
 Latest I6 acceptance owner:
@@ -206,39 +206,45 @@ During integration, repository tests caught an accidental attempted drift in acc
 
 ---
 
-## 7. Exact active frontier — I7 only
+## 7. Exact active frontier — I7 HOLD closure follow-up
 
-I7 is the required **bounded real local acceptance** of the complete first Market vertical slice.
+I7 real-local execution has occurred. Sanitized evidence and the decision are recorded at:
 
-Repository-side preparation is complete. The actual local run has **not** been claimed. Follow:
+`docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
 
-`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
-
-Use one small representative target, preferably a well-specified Applied AI / ML Engineering definition whose core-vs-adjacent boundary is explicit.
-
-I7 must verify on the owner's actual local runtime:
+Observed evidence:
 
 ```text
-target creation/versioning or intentional reuse
-→ exact search-scope preview
-→ bounded Jobinja acquisition
-→ candidate/noise inspection
-→ source/translation/P1.6 affected-work behavior
-→ membership core/adjacent/uncertain/excluded inspection
-→ immutable run ledger
-→ immutable snapshot
-→ source/core denominator display
-→ accepted-semantic denominator display
-→ requirement/responsibility evidence drill-down
-→ unchanged rerun reuse/currentness
-→ partial-success behavior where naturally encountered or safely injected
-→ privacy/publication boundary
-→ browser usability + CLI parity
+run 1                       completed_with_failures
+run 1 source denominator    6 core postings
+run 1 accepted-semantic     0
+run 2                       completed_with_failures
+run 2 candidates            52
+run 2 membership            6 core / 1 adjacent / 1 excluded; 0 failures
+run 2 translation           4 attempted / 2 completed / 2 failed
+final current translations  9 reused
+run 2 P1.6                  2 attempted / 1 completed-or-reused / 1 failed
+final accepted P1.6         0; one current pending-review artifact
+public corpus               394 discovered / 51 parsed / 27 English / 5 accepted P1.6 / 5 Capability
+CI                          run 1246 SUCCESS
 ```
 
-I7 may produce PASS, bounded repair work, or HOLD. Do not pre-commit to PASS.
+Outcome: **HOLD**. The evidence validates target-scoped progression, reuse/currentness mechanics,
+partial success, membership, honest source/semantic separation, browser repairs, and privacy. The live
+snapshot did not contain an accepted-semantic core posting, so accepted-P1.6 requirement/responsibility
+drill-down could not be verified end to end. The captured handoff also did not retain the final
+post-rerun snapshot/profile immutability comparison or a post-run SQLite integrity result.
 
-The first Market vertical slice is not end-to-end accepted until I7 evidence supports closure.
+Exact next responsibility:
+
+```text
+review the pending P1.6 artifact normally — accept only if semantically valid
+→ obtain at least one accepted-current P1.6 core member without weakening/auto-accepting P1.6
+→ verify live requirement/responsibility evidence drill-down in CLI/browser
+→ verify second snapshot/profile existence and first snapshot/profile immutability
+→ rerun SQLite integrity/foreign-key and privacy checks
+→ record PASS if those remaining checks pass; otherwise preserve HOLD
+```
 
 ---
 
@@ -267,8 +273,9 @@ If real evidence exposes a concrete correctness defect, repair only the owning b
 B1 CLOSED / DEFER
 → Market foundation PASS
 → I1-I6 ACCEPTED
-→ I7 NEXT
-→ first Market vertical slice closure only from real local acceptance evidence
+→ I7 EXECUTED / HOLD
+→ bounded I7 closure follow-up NEXT
+→ first Market vertical slice closes only after the remaining real-local checks pass
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.

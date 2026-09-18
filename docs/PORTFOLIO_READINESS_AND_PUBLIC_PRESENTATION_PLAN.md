@@ -3,7 +3,7 @@
 **Status:** ACTIVE / PR0–PR8 COMPLETE / PR9 REPOSITORY-SIDE PACKAGE COMPLETE / RELEASE + OWNER MASTERY PENDING  
 **Date:** 2026-09-06  
 **Scope:** Make the public JobHunter repository professional, understandable, demonstrable, maintainable and credible as a CV/portfolio project without weakening or rewriting accepted product semantics.  
-**Product-development boundary:** Product work is currently at Market I7 bounded real local acceptance after repository acceptance of I1-I6. Portfolio work does not authorize product-semantic changes, P2.2C/P2.2D promotion, or bypass of I7.
+**Product-development boundary:** Market I7 real-local execution is complete with outcome HOLD after repository acceptance of I1-I6. Portfolio work does not authorize bypassing the remaining I7 closure checks or starting P2.2C/P2.2D.
 
 ---
 

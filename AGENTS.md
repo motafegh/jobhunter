@@ -146,9 +146,9 @@ tmyX English P1.6 artifact 46 → Capability v9 artifact 15
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 353
-fetched/parsed detail jobs:      43
-current English projections:     21
+known/discovered Jobinja jobs: 394
+fetched/parsed detail jobs:      51
+current English projections:     27
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
@@ -165,9 +165,9 @@ P2.2D stable archetypes        LATER / NOT AUTHORIZED
 Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 
 Market foundation investigation PASS / COMPLETE
-Market first vertical slice     I1-I6 ACCEPTED / I7 REAL LOCAL ACCEPTANCE OPEN
+Market first vertical slice     I1-I6 ACCEPTED / I7 EXECUTED / HOLD
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            I7 bounded real local acceptance
+next exact increment            I7 HOLD closure follow-up
 ```
 
 B1 final evidence is retained at:
@@ -236,7 +236,7 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded local real acceptance + reuse rerun ← NEXT
+I7  bounded local real acceptance + reuse rerun EXECUTED / HOLD
 ```
 
 ### 5.1 I7 exact boundary
@@ -249,15 +249,17 @@ I7 protocol:
 
 `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
-I7 is real local acceptance, not another architecture/feature phase by default. Execute one
-small representative target against the owner's operational SQLite, real bounded Jobinja
-acquisition, configured local model/provider path, browser, and CLI. Capture exact run/snapshot/
-profile identities, affected-work reuse, membership dispositions, source versus accepted-semantic
-denominators, evidence drill-down, unchanged rerun behavior, SQLite integrity, and privacy/publication
-boundaries.
+I7 execution result:
 
-I7 may end PASS, BOUNDED REPAIR, or HOLD. Never claim local execution from repository/CI evidence,
-and never weaken deterministic tests or broaden product scope merely to obtain PASS.
+`docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
+
+I7 real-local execution has now occurred. The evidence supports the I1-I6 architecture, bounded
+partial-success behavior, target-scoped progression/reuse, membership, privacy, and browser workflow,
+but the acceptance outcome is **HOLD** rather than PASS. The live snapshots did not yet contain an
+accepted-semantic core posting, so accepted P1.6 requirement/responsibility drill-down was not exercised
+end to end; the captured handoff also did not preserve the final post-rerun snapshot/profile integrity
+comparison. Continue only the bounded I7 closure follow-up recorded in the result file. Do not broaden
+product scope or weaken semantic review to manufacture PASS.
 
 ### 5.2 First-slice settled rules
 

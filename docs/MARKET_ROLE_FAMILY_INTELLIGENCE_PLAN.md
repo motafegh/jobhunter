@@ -814,14 +814,18 @@ The first Market vertical slice is done only when:
 
 ```text
 I1-I6 repository acceptance complete
-→ I7 bounded real local acceptance
-→ follow the prepared I7 protocol on the owner's operational runtime
-→ record PASS / BOUNDED REPAIR / HOLD from actual evidence
-→ close the first slice only if I7 passes
+→ I7 real-local execution complete / HOLD
+→ complete only the bounded HOLD closure checks
+→ review pending P1.6 normally; never auto-accept
+→ verify live accepted-semantic drill-down + rerun snapshot immutability + post-run SQLite integrity
+→ record PASS only if those remaining checks succeed
+→ close the first slice only after PASS
 ```
 
-Latest repository-accepted increment: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
+Latest repository-accepted implementation increment: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
 
-Prepared I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
+I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
 
-Repository tests and the earlier I3 real-model boundary check do not substitute for I7 end-to-end local acceptance. Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope during I7.
+I7 execution result: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+
+Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope while I7 remains HOLD.

@@ -29,7 +29,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
 
-The first **target-scoped Market / Role-Family Intelligence vertical slice** is now implemented through I6: target/definition persistence, target-scoped affected-work planning, membership qualification, immutable snapshots, deterministic aggregate profiles, and shared browser/CLI workflow are repository-accepted. The remaining gate is **I7 bounded real local acceptance** against the owner's operational SQLite, real Jobinja acquisition, configured local model/provider path, browser, and CLI. Repository-side I7 preparation is complete; the real local run is still pending.
+The first **target-scoped Market / Role-Family Intelligence vertical slice** is implemented through I6 and has now undergone bounded I7 real-local execution. The run validated target-scoped acquisition/progression, explicit partial failures, membership, source-vs-semantic denominators, reuse, privacy boundaries, and the shared browser/CLI workflow. I7 is currently **HOLD**, not PASS: the live snapshot had no accepted-semantic core posting, so accepted-P1.6 requirement/responsibility drill-down was not exercised end to end, and the final post-rerun snapshot/profile integrity comparison was not captured. The first slice therefore remains open for one bounded closure follow-up rather than broader feature work.
 
 ## Why the engineering is non-trivial
 
@@ -111,13 +111,13 @@ Current committed baseline:
 
 | Public corpus state | Count |
 | --- | ---: |
-| Known/discovered jobs | 353 |
-| Fetched/parsed job details | 43 |
-| Current English projections | 21 |
+| Known/discovered jobs | 394 |
+| Fetched/parsed job details | 51 |
+| Current English projections | 27 |
 | Accepted English P1.6 artifacts | 5 |
 | Accepted Capability artifacts | 5 |
 
-`353` means known/discovered job identities, not 353 complete advertisements.
+`394` means known/discovered job identities, not 394 complete advertisements.
 
 A fresh clone can inspect the committed corpus without SQLite, Jobinja access, or LM Studio:
 
@@ -241,8 +241,8 @@ P2.1 Canonical Registry                 CLOSED
 P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
-Market first vertical slice             I1-I6 REPOSITORY ACCEPTED / I7 OPEN
-Current exact increment                 I7 BOUNDED REAL LOCAL ACCEPTANCE
+Market first vertical slice             I1-I6 REPOSITORY ACCEPTED / I7 EXECUTED / HOLD
+Current exact increment                 I7 HOLD CLOSURE FOLLOW-UP
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -250,7 +250,7 @@ Five heterogeneous accepted P1.6 → Capability chains currently serve as semant
 JobHunter does **not** currently claim:
 
 - semantic acceptance across every discovered job;
-- end-to-end acceptance of the target-scoped Market first slice before I7 real local evidence passes;
+- end-to-end acceptance of the target-scoped Market first slice while I7 remains HOLD;
 - repost/new-ID-adjusted `unique demand` statistics;
 - a complete canonical labor-market taxonomy;
 - arbitrary-web ingestion;
