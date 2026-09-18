@@ -1,9 +1,10 @@
 # Implementation Plan Amendment — Phase-2 Reasoning and Promotion
 
-**Status:** CONTROLLING IMPLEMENTATION-PLAN AMENDMENT  
+**Status:** CONTROLLING DURABLE IMPLEMENTATION AMENDMENT / PRESENT-TENSE ROUTING SUPERSEDED  
 **Date:** 2026-08-26  
 **Amends:** `docs/IMPLEMENTATION_PLAN.md` for Phase 2 and later analytical implementation  
-**Governed by:** `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
+**Governed by:** `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`  
+**Current-status note (2026-09-18):** The acceptance-tier and reasoning/promotion rules below remain controlling. Current execution routing is Market I7 bounded real local acceptance after repository acceptance of I1-I6; use the current-state reconciliation/TODO rather than this amendment for `next` work.
 
 ---
 
