@@ -36,11 +36,13 @@ For the current Market implementation stream, load at minimum after the stable d
 
 ```text
 docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
-docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md
 docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md
+docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md
+docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md
 ```
 
-The former Market foundation entry protocol is now executed/history, not the current next action.
+The former Market foundation entry protocol and broad research consolidation are executed/history.
+Load them only when a specific accepted design decision needs its earlier evidence.
 
 Historical phase plans remain evidence/history after their scope closes. Proposal/experiment/working-memory files do not override controlling product, domain, source, architecture, reasoning-policy, roadmap, implementation, current-state, or current focused decision owners.
 
@@ -163,9 +165,9 @@ P2.2D stable archetypes        LATER / NOT AUTHORIZED
 Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 
 Market foundation investigation PASS / COMPLETE
-Market first vertical slice     AUTHORIZED / ACTIVE IMPLEMENTATION FRONTIER
-Market I1-I3                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            I4 immutable snapshot construction
+Market first vertical slice     I1-I6 ACCEPTED / I7 REAL LOCAL ACCEPTANCE OPEN
+Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
+next exact increment            I7 bounded real local acceptance
 ```
 
 B1 final evidence is retained at:
@@ -230,27 +232,32 @@ Implementation order:
 ```text
 I1  domain models + SQLite persistence          ACCEPTED
 I2  target-scoped source eligibility / affected-work planning  ACCEPTED
-I3  membership qualification                    REPOSITORY ACCEPTED
-I4  immutable snapshot construction             ← NEXT
-I5  deterministic aggregate profile
-I6  browser + CLI thin workflow
-I7  bounded local real acceptance + reuse rerun
+I3  membership qualification                    ACCEPTED
+I4  immutable snapshot construction             ACCEPTED
+I5  deterministic aggregate profile             ACCEPTED
+I6  browser + CLI thin workflow                 ACCEPTED
+I7  bounded local real acceptance + reuse rerun ← NEXT
 ```
 
-### 5.1 I4 exact boundary
+### 5.1 I7 exact boundary
 
-I1 persistence, I2 affected-work planning, and I3 membership qualification have passed
-repository acceptance. I3 record:
+I1-I6 have passed repository acceptance. Latest accepted implementation record:
 
-`docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`
+`docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
 
-I3 fake-provider/HTTP tests do not establish real-model semantic adequacy. The complete
-first slice still requires I7 bounded local acceptance after I4-I6 are implemented.
+I7 protocol:
 
-I4 should build immutable snapshots from exact current memberships and explicit P1.6
-coverage states, keeping core/adjacent/uncertain/excluded separate. Preserve historical
-snapshots and source versus accepted-semantic denominators. Do not add aggregate
-calculation, browser/CLI orchestration, or report synthesis before their increments.
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
+
+I7 is real local acceptance, not another architecture/feature phase by default. Execute one
+small representative target against the owner's operational SQLite, real bounded Jobinja
+acquisition, configured local model/provider path, browser, and CLI. Capture exact run/snapshot/
+profile identities, affected-work reuse, membership dispositions, source versus accepted-semantic
+denominators, evidence drill-down, unchanged rerun behavior, SQLite integrity, and privacy/publication
+boundaries.
+
+I7 may end PASS, BOUNDED REPAIR, or HOLD. Never claim local execution from repository/CI evidence,
+and never weaken deterministic tests or broaden product scope merely to obtain PASS.
 
 ### 5.2 First-slice settled rules
 
