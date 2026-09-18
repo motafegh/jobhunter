@@ -1,11 +1,11 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-17  
+**Date:** 2026-09-18  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 PREPARED / LOCAL EXECUTION PENDING
 
 Status vocabulary:
 
@@ -103,10 +103,15 @@ Acceptance: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLE
 - [x] Market tables remain local/private; only existing upstream public artifacts may sync.
 - [x] CI 1210 green: installed-entrypoint smoke, Ruff, 632 tests, 632 tests with warnings-as-errors.
 
-### I7 — bounded real local acceptance — NEXT
+### I7 — bounded real local acceptance — PREPARED / LOCAL EXECUTION PENDING
+
+Protocol:
+
+`docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
 Use one small representative target with explicit core-vs-adjacent meaning.
 
+- [x] repository-side I7 protocol, bounded controls, evidence checklist, rerun check, SQLite integrity check and privacy check prepared.
 - [ ] confirm local runtime/SQLite/provider readiness without mutating operational state unnecessarily.
 - [ ] create/reuse one stable target and intentional immutable definition version.
 - [ ] preview the exact acquisition envelope and bounded controls.
@@ -177,7 +182,8 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-I7 only
+I7 local execution only
+→ follow the prepared I7 protocol
 → bounded representative real local Market run
 → inspect acquisition/reuse/membership/denominators/evidence/browser+CLI/privacy
 → record acceptance evidence
