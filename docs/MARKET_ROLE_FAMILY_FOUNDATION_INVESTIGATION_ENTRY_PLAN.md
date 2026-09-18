@@ -6,7 +6,8 @@
 **Branch:** `main`  
 **Controlling parent:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Research input:** `docs/working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`  
-**Final decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
+**Final decision:** `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`  
+**Current-route pointer:** Market I1-I6 are repository-accepted; I7 bounded real local acceptance is prepared/pending under `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
 
 ## 1. Lifecycle / execution result
 
@@ -21,7 +22,7 @@ FOUNDATION INVESTIGATION: PASS
 FIRST VERTICAL SLICE: AUTHORIZED
 ```
 
-The current next action is **not another investigation**. It is implementation increment **I1 — Market domain models + SQLite persistence**, under the exact scope and stop lines recorded in the final decision.
+At this protocol's closure checkpoint, the next action was **I1 — Market domain models + SQLite persistence**. That historical next action is complete through I6. The current project route is **I7 bounded real local acceptance**.
 
 This file remains a closed protocol/evidence record. The final decision owns current Q1–Q12 answers and implementation authorization.
 
@@ -300,7 +301,7 @@ I1 domain models + SQLite persistence
 → I7 bounded real local acceptance
 ```
 
-The current next action is **I1**.
+The closure-time next action was **I1**. I1-I6 are now repository-accepted; the current project route is **I7 bounded real local acceptance**.
 
 ---
 
@@ -336,7 +337,8 @@ research consolidation                 COMPLETE
 foundation investigation protocol      EXECUTED / CLOSED
 foundation investigation               PASS
 first vertical slice                   AUTHORIZED
-current next action                    I1 DOMAIN + SQLITE PERSISTENCE
+closure-time next action               I1 DOMAIN + SQLITE PERSISTENCE (COMPLETED)
+current project route                  I7 BOUNDED REAL LOCAL ACCEPTANCE
 ```
 
 For implementation details, use the final foundation decision rather than reopening this protocol.
