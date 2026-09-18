@@ -2,7 +2,7 @@
 
 **Status:** B1 CLOSED — NO-PROMOTION / DEFER (2026-09-14)
 **Date:** 2026-09-01  
-**Current-state reconciliation:** 2026-09-12  
+**Current-state reconciliation:** 2026-09-18  
 **Scope:** First bounded P2.2B responsibility-promotion increment after P2.2A closure  
 **Authority:** Subordinate to product/domain/source/architecture constraints, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md`, `docs/IMPLEMENTATION_PLAN.md`, and `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`
 
@@ -15,8 +15,9 @@ repairs are retained. This does not establish semantic incompatibility of the pa
 
 Evidence: `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`. The original execution
 protocol below remains historical evidence; its pre-local next actions are complete
-or deferred. The already-approved formal Market foundation investigation is next.
-Market implementation and promoted family/archetype work remain separately gated.
+or deferred. The Market foundation investigation has since passed, Market I1-I6 are
+repository-accepted, and the current frontier is I7 bounded real local acceptance.
+Promoted family/archetype work remains separately gated.
 
 ## 1. Decision
 
@@ -24,7 +25,7 @@ P2.2B is authorized only as a **selective responsibility-promotion pilot**.
 
 The first increment must reuse the accepted Canonical Registry contract unchanged unless a concrete eligible responsibility correspondence proves that the current contract cannot represent it safely.
 
-Current B1 flow:
+Original B1 flow at the pilot checkpoint (historical):
 
 ```text
 accepted/current P1.6 responsibilities
@@ -102,8 +103,8 @@ Selected additional evidence-bearing job:
 ta9l — Senior Applied AI Engineer — Mofid Securities
 source detail version: 25
 source state: parsed / active
-current committed English projection: none
-current accepted P1.6: none
+English projection at selection checkpoint: none (later projection 40 was created and retained)
+accepted P1.6 at selection checkpoint: none (final B1 still closed without an accepted ta9l P1.6)
 semantic sha256: cd9dbf6be622113836b951e9042c87798954fc01dea520ba08b090eae2b54fc6
 ```
 
@@ -144,7 +145,7 @@ ta9l: LLMs and agents; evaluation + testing + observability frameworks
 
 No ownership, deployment, or lifecycle strengthening is authorized.
 
-The repository-side preflight also confirmed that `ta9l` has no current committed English projection. The exact local execution packet is:
+At the repository-side preflight checkpoint, `ta9l` had no committed English projection. The historical local execution packet was:
 
 ```text
 docs/working-memory/2026-09-06_P2_2B_B1_TA9L_LOCAL_RUNTIME_PREFLIGHT.md
@@ -180,9 +181,9 @@ Do not add deliverable schema/mapping machinery speculatively.
 
 Reopen deliverable promotion only after a concrete repeated deliverable demonstrates downstream value and gives us an evidence-backed mapping identity to design around.
 
-## 8. `ta9l` P1.6 authority gate
+## 8. Original `ta9l` P1.6 authority gate — historical
 
-The selected `ta9l` source duty is **not eligible for mapping yet** because it lacks accepted/current P1.6 authority.
+At the original gate, the selected `ta9l` source duty was **not eligible for mapping yet** because it lacked accepted/current P1.6 authority. Final B1 execution never produced an acceptable ta9l P1.6, so no mapping was created.
 
 Before any registry mutation:
 
@@ -261,7 +262,7 @@ During B1:
 
 The already-completed Market research/preparation work does not violate this stop line; it remains design input only and is recorded separately.
 
-## 12. Exact next action
+## 12. Original exact next action — historical / completed or deferred
 
 Before any local execution, use the recorded preflight packet rather than repeating repository evidence selection:
 
@@ -278,4 +279,4 @@ local doctor / translation-provider status
 → B1 PASS or evidence-based NO-PROMOTION / DEFER
 ```
 
-After B1 closes, follow the current-state reconciliation and queued Market investigation route. Do not start P2.2C or Market implementation merely because B1 execution has ended.
+B1 is closed. The queued Market foundation investigation subsequently passed and I1-I6 were implemented/accepted. Current execution is I7 bounded real local acceptance under the current-state reconciliation. P2.2C/P2.2D remain separately unauthorized.
