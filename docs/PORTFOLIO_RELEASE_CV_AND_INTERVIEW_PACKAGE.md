@@ -3,7 +3,7 @@
 **Status:** PR9 repository-side release candidate package  
 **Date:** 2026-09-04  
 **Candidate release:** `v0.1.0` / package version `0.1.0` / alpha  
-**Product-development boundary:** P2.2B-B1 remains separately blocked on machine-local `ta9l` English projection/P1.6 acceptance. This portfolio package does not authorize or bypass that gate.
+**Product-development boundary:** Market I1-I6 are repository-accepted and I7 bounded real local acceptance remains pending. This portfolio package does not authorize or bypass I7 or authorize P2.2C/P2.2D.
 
 ---
 
@@ -46,7 +46,7 @@ bounded Jobinja acquisition
    ├─ Capability Intelligence v9
    ├─ Job Work Intelligence v2
    ├─ reviewed Canonical Registry mappings
-   └─ bounded Market/report read models
+   └─ target-scoped Market membership/snapshot/aggregate workflow
 ```
 
 Browser and CLI share the same application services and SQLite runtime/history authority.
@@ -66,7 +66,7 @@ The public repository additionally contains:
 ```text
 Known/discovered Jobinja identities: 353
 Fetched/parsed job details:           43
-Current English projections:          20
+Current English projections:          21
 Accepted English P1.6 artifacts:       5
 Accepted Capability artifacts:         5
 ```
