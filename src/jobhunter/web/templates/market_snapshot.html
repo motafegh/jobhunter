@@ -4,6 +4,18 @@
 {% block eyebrow %}Immutable qualified corpus and deterministic profile{% endblock %}
 {% block topbar_actions %}<a class="button secondary" href="/market/targets?definition_id={{ snapshot.target_definition_version_id }}&snapshot_id={{ snapshot.id }}">Back to target</a>{% endblock %}
 
+{% macro claim_evidence(row) %}
+<details>
+  <summary>Frozen claim evidence</summary>
+  {% for support in row.evidence %}
+    <p><a href="/jobs/{{ support.source_job_id }}">Current job {{ support.source_job_id }}</a> · Frozen P1.6 artifact #{{ support.analysis_artifact_id }} · Claim indexes (zero-based): {{ support.claim_indexes | join(', ') }}</p>
+    {% if support.strengths %}<p>Strengths: {{ support.strengths | join(', ') }}</p>{% endif %}
+    {% for statement in support.statements or [] %}<p>{{ statement }}</p>{% endfor %}
+    {% for quote in support.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}
+  {% endfor %}
+</details>
+{% endmacro %}
+
 {% block content %}
 {% set p = profile.profile if profile else none %}
 {% set corpus = p.corpus if p else none %}
@@ -36,19 +48,27 @@
 </section>
 
 <section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Source coverage</p><h2>Employers and source context</h2></div></div>
+  <p>{{ p.employers.distinct_known_employers }} known employers across {{ p.corpus.primary_core_postings }} core postings. {{ p.employers.unknown_employer_postings }} postings have unknown employer evidence.</p>
+  <p>Largest employer: {{ p.employers.largest_employer_postings }} core postings{% if p.employers.largest_employer_share_of_core is not none %} ({{ (p.employers.largest_employer_share_of_core * 100)|round(1) }}%){% endif %}.</p>
+  <details><summary>Frozen employer and source breakdown</summary><pre>{{ p.employers | tojson(indent=2) }}</pre><pre>{{ p.source_context | tojson(indent=2) }}</pre></details>
+</section>
+
+<section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Requirement demand</p><h2>Accepted semantic concepts</h2></div><span class="badge">N = {{ p.corpus.accepted_semantic_core_postings }}</span></div>
-  {% if p.requirements %}<div class="table-wrap"><table><thead><tr><th>Concept</th><th>Postings</th><th>Share</th><th>Required</th><th>Preferred</th><th>Employers</th></tr></thead><tbody>{% for row in p.requirements %}<tr><td><strong>{{ row.label }}</strong></td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.strength_postings.required }}</td><td>{{ row.strength_postings.preferred }}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic requirement evidence exists in the core denominator.</div>{% endif %}
+  <p class="muted">Strength counts may overlap when a posting states the same concept at multiple strengths.</p>
+  {% if p.requirements %}<div class="table-wrap"><table><thead><tr><th>Concept</th><th>Postings</th><th>Share</th><th>Required</th><th>Preferred</th><th>Contextual</th><th>Inferred</th><th>Employers</th></tr></thead><tbody>{% for row in p.requirements %}<tr><td><strong>{{ row.label }}</strong>{{ claim_evidence(row) }}</td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.strength_postings.required }}</td><td>{{ row.strength_postings.preferred }}</td><td>{{ row.strength_postings.contextual }}</td><td>{{ row.strength_postings.inferred }}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic requirement evidence exists in the core denominator.</div>{% endif %}
 </section>
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Work evidence</p><h2>Responsibilities</h2></div><span class="badge">No subfamily inference</span></div>
-  {% if p.responsibilities %}<div class="table-wrap"><table><thead><tr><th>Responsibility</th><th>Postings</th><th>Share</th><th>Employers</th></tr></thead><tbody>{% for row in p.responsibilities %}<tr><td><strong>{{ row.label }}</strong></td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic responsibility evidence exists in the core denominator.</div>{% endif %}
+  {% if p.responsibilities %}<div class="table-wrap"><table><thead><tr><th>Responsibility</th><th>Postings</th><th>Share</th><th>Employers</th></tr></thead><tbody>{% for row in p.responsibilities %}<tr><td><strong>{{ row.label }}</strong>{{ claim_evidence(row) }}</td><td>{{ row.postings }}</td><td>{% if row.share_of_accepted_semantic_core is not none %}{{ (row.share_of_accepted_semantic_core * 100)|round(1) }}%{% else %}—{% endif %}</td><td>{{ row.distinct_known_employers }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No accepted semantic responsibility evidence exists in the core denominator.</div>{% endif %}
 </section>
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Warnings and limitations</h2></div></div>
   <div class="guide-content">
-    {% for warning in p.warnings %}<p><strong>Warning:</strong> {{ warning }}</p>{% endfor %}
+    {% for warning in p.warnings %}<p><strong>Warning:</strong> {{ warning.message }}</p>{% endfor %}
     {% for limitation in p.limitations %}<p>{{ limitation }}</p>{% endfor %}
   </div>
 </section>

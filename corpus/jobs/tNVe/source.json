@@ -1,0 +1,47 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
+  "company_slug": "united-technologists",
+  "current_detail": {
+    "content_sha256": "2dc552ba86eaf1ef12df1168476494dd5b1f3785e04c535e5ec0126b68f8b3f8",
+    "fetched_at": "2026-09-18T19:10:27.941532+00:00",
+    "fields": {
+      "company": "فناوران متحد | United Technologists",
+      "company_description": "فناوران متحد یک شرکت دانش‌بنیان است که در زمینه‌ی طراحی و توسعه‌ی نرم‌افزار و سیستم‌های اطلاعاتی فعالیت می‌کند. تمرکز ما بر ایجاد و توسعه‌ی کسب‌وکارهای پلتفرمی و ارائه‌ی محصولات SaaS است که بتوانند در عمل، مشکلات واقعی را حل کنند و تجربه‌های ساده و قابل اتکا برای مشتریان بسازند. در فناوران متحد، تیمی از افراد باانگیزه و کنجکاو در کنار هم کار می‌کنند؛ افرادی که یادگیری مداوم، همکاری شفاف و ساخت محصولاتی با ارزش واقعی برایشان اهمیت دارد. ما محیطی فراهم کرده‌ایم که هر عضو تیم بتواند رشد کند، ایده‌هایش شنیده شود و نقش مؤثری در شکل‌گیری آینده‌ی پروژه‌ها داشته باشد.",
+      "date_posted": "2026-09-18",
+      "description": "فناوران متحد یک استارت‌آپ استودیوی نرم‌افزاری در حال رشد است که روی توسعه محصولات بین‌المللی در حوزه ERP، سیستم‌های اطلاعاتی فعالیت می‌کند. برای توسعه قابلیت‌های هوش مصنوعی یکی از محصولات اصلی شرکت، به دنبال یک Backend AI Engineer هستیم که در کنار دانش مناسب Backend، تجربه عملی در توسعه سیستم‌های مبتنی بر LLM، RAG و AI Agents داشته باشد. این موقعیت بیشتر از آنکه یک نقش تحقیقاتی Machine Learning باشد، یک نقش Applied AI + Backend Engineering است؛ یعنی تبدیل قابلیت‌های مدل‌های زبانی به featureهای واقعی، قابل‌اعتماد و قابل‌استفاده در محصول. مسئولیت‌ها طراحی و پیاده‌سازی AI Agentها و workflowهای مرتبط توسعه و Integration با TypeScript / Node.js و NestJS اتصال LLMها به APIها، دیتابیس‌ها و سرویس‌های داخلی پیاده‌سازی Tool / Function Calling و Structured Output طراحی و توسعه RAG و Knowledge Retrieval توسعه workflowهای چندمرحله‌ای و در صورت نیاز Multi-Agent Integration با Email، Ticketing و سایر بخش‌های سیستم پیاده‌سازی Permission، Human Approval، Logging و Tracing ارزیابی و بهبود کیفیت، Reliability، Latency و هزینه سیستم‌های AI مهارت‌های ضروری تسلط عملی مناسب به TypeScript و Node.js تجربه کار با NestJS، Express یا Framework مشابه درک مناسب از Backend، API و معماری سرویس‌ها تجربه عملی کار با API مدل‌های زبانی مانند OpenAI، Anthropic یا سرویس‌های مشابه تجربه واقعی در حداقل یک پروژه LLM Application، RAG یا AI Agent آشنایی عملی با Tool / Function Calling و Structured Output درک مفاهیم Embedding، Retrieval، Chunking و Context Management تجربه کار با دیتابیس‌های SQL یا NoSQL آشنایی با Git و توانایی Debug و حل مسئله به‌صورت مستقل امتیاز محسوب می‌شود تجربه توسعه سیستم‌های AI در محیط Production تجربه OpenAI Agents SDK، LangGraph، LangChain یا ابزارهای مشابه تجربه Multi-Agent Systems و LLM Evaluation آشنایی با Vector Search، Redis و Queue تجربه Integration با ERP، CRM، Email یا Ticketing Systems آشنایی با Docker، CI/CD، WebSocket یا Python تحصیلات مرتبط با علوم کامپیوتر یا مهندسی نرم‌افزار ویژگی‌های مورد انتظار دنبال فردی دقیق، مسئولیت‌پذیر و مستقل هستیم که بتواند مسئله را تحلیل کند، مستندات فنی را بخواند و صرفاً به ساخت یک Demo اکتفا نکند؛ بلکه به کیفیت، قابلیت اطمینان و رفتار سیستم در Production هم توجه داشته باشد. این موقعیت برای افرادی که تجربه آن‌ها در AI عمدتاً محدود به استفاده از ابزارهای آماده، Prompt Writing یا گذراندن دوره‌های آموزشی بدون تجربه پیاده‌سازی واقعی است، مناسب نیست. همچنین داشتن سابقه Data Science یا Machine Learning به‌تنهایی، بدون تجربه مناسب Backend و LLM Application، برای این موقعیت کافی نیست. شرایط همکاری پاره‌وقت و کاملاً ریموت ساعات همکاری با توافق طرفین امکان شروع همکاری در زمان کوتاه یک مزیت است امکان ادامه همکاری به‌صورت بلندمدت در صورت رضایت دوطرفه این همکاری شامل بیمه تامین اجتماعی، بیمه تکمیلی است در صورت وجود، لطفاً لینک GitHub، Demo، نمونه پروژه یا توضیح پروژه‌های مرتبط با LLM / RAG / Agents را همراه رزومه ارسال کنید. رزومه‌های منتخب برای ادامه بررسی از طریق ایمیل اطلاع‌رسانی خواهند شد.",
+      "education": "مهم نیست",
+      "employment_type": "پاره وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "Node.js",
+        "Rag",
+        "هوش مصنوعی"
+      ],
+      "title": "مهندس هوش مصنوعی کاربردی (LLM & AI Agents)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
+    "job_detail_version_id": 54,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
+    "semantic_sha256": "cfd6297563fd4c55e7f447123baaf19902c35c955b86834ccadb15f30d15dcc0",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-09-18T18:57:03.919001+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-09-18T19:10:10.831185+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tNVe",
+  "stage": "source",
+  "title_observed": "مهندس هوش مصنوعی کاربردی (LLM & AI Agents)"
+}

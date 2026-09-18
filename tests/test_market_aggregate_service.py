@@ -562,3 +562,54 @@ def test_unknown_employer_is_explicit_not_fabricated(h: Harness) -> None:
     assert "unknown_employer_evidence" in {
         item["code"] for item in profile["warnings"]
     }
+
+
+def test_browser_snapshot_exposes_frozen_claim_evidence(h: Harness) -> None:
+    from fastapi.testclient import TestClient
+
+    from jobhunter.config import Settings
+    from jobhunter.web.launcher import build_runtime_app
+
+    detail_id, translation_id = h.seed_source("web-evidence", company="Alpha")
+    analysis_id = h.analysis(
+        detail_id,
+        translation_id,
+        requirements=[requirement("Python", evidence="Use Python <safely>.")],
+        responsibilities=[responsibility("Evaluate retrieval quality.")],
+    )
+    membership = h.membership(
+        detail_id,
+        disposition="core_match",
+        translation_id=translation_id,
+        analysis_id=analysis_id,
+        identity="web-evidence",
+    )
+    snapshot = h.snapshot((MarketSnapshotMemberInput(
+        membership_id=membership.id,
+        semantic_coverage_status="accepted",
+        translation_artifact_id=translation_id,
+        analysis_artifact_id=analysis_id,
+        state={},
+    ),))
+    h.aggregate().build_profile(snapshot.id)
+    # Later source history must not replace the evidence shown by the frozen profile.
+    h.now += timedelta(days=1)
+    h.seed_source("web-evidence", company="Changed employer", version=2)
+    settings = Settings(
+        data_dir=h.database_path.parent,
+        database_path=h.database_path,
+        evidence_dir=h.database_path.parent / "evidence",
+    )
+    response = TestClient(build_runtime_app(settings)).get(
+        f"/market/snapshots/{snapshot.id}"
+    )
+    assert response.status_code == 200
+    assert f"Frozen P1.6 artifact #{analysis_id}" in response.text
+    assert "Claim indexes (zero-based): 0" in response.text
+    assert 'href="/jobs/web-evidence"' in response.text
+    assert "Use Python &lt;safely&gt;." in response.text
+    assert "Evaluate retrieval quality." in response.text
+    assert "Alpha" in response.text
+    assert "Changed employer" not in response.text
+    assert "Only 1 core postings are in this snapshot" in response.text
+    assert "&#39;code&#39;" not in response.text

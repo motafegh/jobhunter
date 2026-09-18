@@ -308,3 +308,13 @@ dd { margin: 4px 0 0; color: var(--text); }
   .bulk-toolbar { align-items: stretch; }
   .bulk-toolbar .field-help { width: 100%; }
 }
+
+/* Market forms use the same local controls as the existing workflow screens. */
+.market-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 16px; align-items: end; margin-top: 20px; }
+.market-form p { margin: 0; min-width: 0; }
+.market-form label { display: grid; gap: 6px; color: var(--muted); font-size: 12px; font-weight: 700; }
+.market-form label br { display: none; }
+.market-form input:not([type="hidden"]), .market-form textarea { width: 100%; min-height: 40px; border: 1px solid var(--border); background: #0d121d; color: var(--text); border-radius: 9px; padding: 10px 11px; font: inherit; }
+.market-form textarea { resize: vertical; }
+.market-form p:has(textarea) { grid-column: 1 / -1; }
+.market-form .button { justify-self: start; }

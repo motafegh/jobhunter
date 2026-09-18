@@ -1,0 +1,48 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/mft-zf/jobs/AUZE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+  "company_slug": "mft-zf",
+  "current_detail": {
+    "content_sha256": "3e60bc0efbe6694e46ded9529699debeb6180b4bdc413f1c284ab248be6fe10d",
+    "fetched_at": "2026-09-18T19:10:11.111288+00:00",
+    "fields": {
+      "company": "مجتمع فنی تهران نمایندگی زعفرانیه | MFT ZAFARANIYE",
+      "company_description": "مجتمع فنی تهران نمایندگی زعفرانیه با برخورداری از فضا و امکانات ویژه و همکاری با اساتید برتر به عنوان نمایندگی VIP مجتمع فنی در خدمت فراگیران می باشد. مجتمع فنی تهران برترین برند آموزشی کشور می باشد. برند مجتمع فنی تهران نمایندگی زعفرانیه برترین برند آموزشی کشور",
+      "date_posted": "2026-09-15",
+      "description": "مدرک تحصیلی مرتبط مسلط به PYTHON Data Analysis Machine Learning Deep Learning دارای سابقه تدریس علاقمند به تدریس و کار گروهی فن بیان بالا مسئولیت پذیر",
+      "education": "کارشناسی",
+      "employment_type": "پاره وقت",
+      "gender": "مهم نیست",
+      "job_category": "آموزش",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "سه تا شش سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "توافقی",
+      "skills": [
+        "هوش مصنوعی",
+        "پایتون",
+        "Data Analysis",
+        "Deep learning"
+      ],
+      "title": "مدرس هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/mft-zf/jobs/AUZE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+    "job_detail_version_id": 51,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/mft-zf/jobs/AUZE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+    "semantic_sha256": "23a26d27533dc3435b0c0a44f8378fb3228daa44866b13fbc0ee55778324077f",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-09-18T18:57:03.919001+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-09-18T19:09:56.752633+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "AUZE",
+  "stage": "source",
+  "title_observed": "مدرس هوش مصنوعی"
+}

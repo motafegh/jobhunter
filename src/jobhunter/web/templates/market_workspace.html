@@ -20,12 +20,12 @@
       <div class="search-plan-row"><span class="search-index">{{ target.id }}</span><div><strong><a href="/market/targets?target_id={{ target.id }}">{{ target.name }}</a></strong><small>{{ target.slug }}{% if target.description %} · {{ target.description }}{% endif %}</small></div>{% if state.selected_target and target.id == state.selected_target.id %}<span class="badge">Selected</span>{% endif %}</div>
     {% else %}<div class="empty-state">No Market target exists yet.</div>{% endfor %}
   </div>
-  <form method="post" action="/market/actions/target" class="guide-content">
+  <form method="post" action="/market/actions/target" class="market-form">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <p><label>Slug<br><input name="slug" required placeholder="applied-ai"></label></p>
     <p><label>Name<br><input name="name" required placeholder="Applied AI / ML Engineering"></label></p>
     <p><label>Description<br><input name="description" placeholder="Optional display description"></label></p>
-    <button type="submit">Create target</button>
+    <button class="button primary" type="submit">Create target</button>
   </form>
 </section>
 
@@ -39,7 +39,7 @@
     {% else %}<div class="empty-state">Create the first immutable definition for this target.</div>{% endfor %}
   </div>
 
-  <form method="post" action="/market/actions/definition" class="guide-content">
+  <form method="post" action="/market/actions/definition" class="market-form">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <input type="hidden" name="target_id" value="{{ state.selected_target.id }}">
     <p><label>Membership intent<br><textarea name="membership_intent" required rows="4" placeholder="Describe what is core, adjacent, and outside this target."></textarea></label></p>
@@ -52,7 +52,7 @@
     <p><label>Work arrangement scope<br><input name="work_arrangement_scope"></label></p>
     <p><label>Seniority scope<br><input name="seniority_scope"></label></p>
     <p><label>Employment type scope<br><input name="employment_type_scope"></label></p>
-    <button type="submit">Create immutable definition</button>
+    <button class="button primary" type="submit">Create immutable definition</button>
   </form>
 </section>
 {% endif %}
@@ -68,7 +68,7 @@
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Bounded refresh</p><h2>Run this target</h2></div><span class="badge">Single mutable operation</span></div>
   <p class="muted">Budgets are explicit. Remaining target work stays visible instead of spilling into unrelated global backlog. Market state remains local/private.</p>
-  <form method="post" action="/market/actions/run" class="guide-content">
+  <form method="post" action="/market/actions/run" class="market-form">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <input type="hidden" name="definition_id" value="{{ state.selected_definition.id }}">
     <p><label>Search request budget <input type="number" name="request_budget" min="1" max="500" value="{{ settings.jobinja_search_request_budget }}" required></label></p>
@@ -80,7 +80,7 @@
     <p><label>Translation limit <input type="number" name="translation_limit" min="0" max="50" value="{{ settings.translation_batch_limit }}" required></label></p>
     <p><label>P1.6 generation limit <input type="number" name="analysis_limit" min="0" max="20" value="{{ settings.analysis_batch_limit }}" required></label></p>
     <p><label>Membership limit <input type="number" name="membership_limit" min="0" max="50" value="20" required></label></p>
-    <button type="submit">Run bounded Market update</button>
+    <button class="button primary" type="submit">Run bounded Market update</button>
   </form>
 </section>
 
@@ -92,7 +92,7 @@
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Membership history</p><h2>Qualified evidence decisions</h2></div><span class="badge">{{ state.memberships|length }} records</span></div>
-  {% if state.memberships %}<div class="table-wrap"><table><thead><tr><th>Job</th><th>Disposition</th><th>Confidence</th><th>Source</th><th>P1.6</th></tr></thead><tbody>{% for item in state.memberships %}<tr><td><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a></td><td>{{ item.disposition }}</td><td>{{ item.confidence or '—' }}</td><td>v{{ item.job_detail_version_id }}</td><td>{{ item.analysis_artifact_id or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No membership decisions exist for this definition yet.</div>{% endif %}
+  {% if state.memberships %}<div class="table-wrap"><table><thead><tr><th>Job</th><th>Disposition</th><th>Confidence</th><th>Source</th><th>P1.6</th></tr></thead><tbody>{% for item in state.memberships %}<tr><td><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a></td><td>{{ item.disposition }}<details><summary>Reason and evidence · #{{ item.id }}</summary><p>{{ item.reason }}</p><p>Evidence references: {{ item.evidence_refs | join(", ") }}</p><p>English artifact: {{ item.translation_artifact_id or "—" }} · Classifier: {{ item.classifier_contract_version }}</p>{% if item.supersedes_membership_id %}<p>Supersedes membership #{{ item.supersedes_membership_id }}</p>{% endif %}</details></td><td>{{ item.confidence or '—' }}</td><td>v{{ item.job_detail_version_id }}</td><td>{{ item.analysis_artifact_id or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No membership decisions exist for this definition yet.</div>{% endif %}
 </section>
 {% endif %}
 {% endblock %}

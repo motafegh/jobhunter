@@ -1,0 +1,46 @@
+{
+  "canonical_url": "https://jobinja.ir/companies/homa-dental/jobs/tvz9/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AF%D9%86%D8%AF%D8%A7%D9%86%D9%BE%D8%B2%D8%B4%D9%83%DB%8C-%D9%87%D9%85%D8%A7",
+  "company_slug": "homa-dental",
+  "current_detail": {
+    "content_sha256": "82603ba996441aae75a6b810dfcadf3761cb9613a17b1e6f62b3533086e180e2",
+    "fetched_at": "2026-09-18T19:10:13.258235+00:00",
+    "fields": {
+      "company": "دندانپزشكی هما | Homa dental",
+      "company_description": "مركز دندانپزشكي هما",
+      "date_posted": "2026-08-31",
+      "description": "مسلط به سئو و GEO سايت نويسي حضور در مجموعه حداقل ٢ روز",
+      "education": "کارشناسی",
+      "employment_type": "پاره وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "کمتر از سه سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۴۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "GEO"
+      ],
+      "title": "متخصص هوش مصنوعی",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/homa-dental/jobs/tvz9/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AF%D9%86%D8%AF%D8%A7%D9%86%D9%BE%D8%B2%D8%B4%D9%83%DB%8C-%D9%87%D9%85%D8%A7",
+    "job_detail_version_id": 52,
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "requested_url": "https://jobinja.ir/companies/homa-dental/jobs/tvz9/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AF%D9%86%D8%AF%D8%A7%D9%86%D9%BE%D8%B2%D8%B4%D9%83%DB%8C-%D9%87%D9%85%D8%A7",
+    "semantic_sha256": "a1bda0c04362d7f421e3ad621dc55bfacfce0bda8caa2a0c6f35e4c449f2f717",
+    "status_code": 200
+  },
+  "first_seen_at": "2026-09-18T18:57:03.919001+00:00",
+  "language": "mixed",
+  "last_seen_at": "2026-09-18T19:09:56.752633+00:00",
+  "lifecycle_state": "active",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "source": "jobinja",
+  "source_job_id": "tvz9",
+  "stage": "source",
+  "title_observed": "متخصص هوش مصنوعی"
+}

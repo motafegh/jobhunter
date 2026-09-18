@@ -15,11 +15,11 @@
   },
   "counts": {
     "capabilities": 5,
-    "english_projections": 21,
-    "jobs": 353,
+    "english_projections": 27,
+    "jobs": 394,
     "p16_english": 5,
     "p16_original": 0,
-    "sources": 353
+    "sources": 394
   },
   "jobs": [
     {
@@ -69,6 +69,30 @@
         "source": true
       },
       "title": "کارشناس لینوکس"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": 45,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/mft-zf/jobs/AUZE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+      "company_slug": "mft-zf",
+      "job_detail_version_id": 51,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "23a26d27533dc3435b0c0a44f8378fb3228daa44866b13fbc0ee55778324077f",
+      "source_job_id": "AUZE",
+      "stages": {
+        "capability": false,
+        "english_projection": true,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی"
     },
     {
       "artifact_ids": {
@@ -341,6 +365,30 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/khanoumi/jobs/t47t/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-data-engineer-%D8%AF%D8%B1-%D8%AE%D8%A7%D9%86%D9%88%D9%85%DB%8C",
+      "company_slug": "khanoumi",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t47t",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Data Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/doctoreto-1/jobs/t499/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-engineer-%D8%AF%D8%B1-%D8%AF%DA%A9%D8%AA%D8%B1%D8%AA%D9%88",
       "company_slug": "doctoreto-1",
       "job_detail_version_id": null,
@@ -549,6 +597,30 @@
         "source": true
       },
       "title": "Python Developer (مشهد)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/radintech-1/jobs/t4Ev/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-machine-learning-engineer-%D8%AF%D8%B1-%D8%A8%DB%8C%DA%A9%D8%B1%D8%A7%D9%86-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D8%B1%D8%A7%D8%AF%DB%8C%D9%86",
+      "company_slug": "radintech-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t4Ev",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Machine Learning Engineer"
     },
     {
       "artifact_ids": {
@@ -885,6 +957,30 @@
         "source": true
       },
       "title": "متخصص هوش مصنوعی (AI-حوزه تولید محتوای ویدیو و عکس)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/jibimo/jobs/t4Pm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-devops-engineer-%D8%AF%D8%B1-%D8%AC%DB%8C%D8%A8%DB%8C-%D9%85%D9%88",
+      "company_slug": "jibimo",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t4Pm",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "DevOps Engineer"
     },
     {
       "artifact_ids": {
@@ -1349,6 +1445,30 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/pazhouhande-rah/jobs/t4uF/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-devops-engineer-%D8%AF%D8%B1-%D9%88%D8%A7%DB%8C%D8%A8",
+      "company_slug": "pazhouhande-rah",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t4uF",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "DevOps Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/digikala/jobs/t4wP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
       "company_slug": "digikala",
       "job_detail_version_id": 32,
@@ -1493,13 +1613,37 @@
         "p16_english": null,
         "p16_original": null
       },
-      "canonical_url": "https://jobinja.ir/companies/karno-11/jobs/t7Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%D9%86%D9%88",
-      "company_slug": "karno-11",
+      "canonical_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/t7AX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-managing-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%A2%D8%B3%D8%A7%DB%8C%D8%B4-%D9%85%D8%AF%D8%B1%D9%86",
+      "company_slug": "goldiran-asayesh",
       "job_detail_version_id": null,
       "language": "unknown",
       "lifecycle_state": "active",
       "parse_status": null,
       "semantic_sha256": null,
+      "source_job_id": "t7AX",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Managing Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/karno-11/jobs/t7Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%D9%86%D9%88",
+      "company_slug": "karno-11",
+      "job_detail_version_id": 53,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "cab7f76ec0abfc47bfe5a429097cef0ccf6bdd1dd414165e1c9bd5f1f12f2297",
       "source_job_id": "t7Ay",
       "stages": {
         "capability": false,
@@ -1517,14 +1661,14 @@
         "p16_english": null,
         "p16_original": null
       },
-      "canonical_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
-      "company_slug": "manzoumeh-hooshmand-pars",
+      "canonical_url": "https://jobinja.ir/companies/resana-1/jobs/t7RU/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%A8%D8%B1%D9%86%D8%A7%D9%85%D9%87-%D9%86%D9%88%DB%8C%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-agents-rag-%D8%AF%D8%B1-%D9%87%D9%86%D8%B1-%D9%85%D9%87%D9%86%D8%AF%D8%B3%DB%8C-%D8%B1%D8%B3%D8%A7%D9%86%D8%A7",
+      "company_slug": "resana-1",
       "job_detail_version_id": null,
       "language": "unknown",
       "lifecycle_state": "active",
       "parse_status": null,
       "semantic_sha256": null,
-      "source_job_id": "t7ck",
+      "source_job_id": "t7RU",
       "stages": {
         "capability": false,
         "english_projection": false,
@@ -1532,7 +1676,103 @@
         "p16_original": false,
         "source": true
       },
+      "title": "برنامه‌نویس هوش مصنوعی (AI agents & RAG)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/diba-parsian/jobs/t7Rf/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-data-engineer-%D8%AF%D8%B1-%D9%BE%DB%8C%D9%86%D9%88%D9%88%D8%A7-%DA%A9%D8%A7%D9%BE%DB%8C%D8%AA%D8%A7%D9%84",
+      "company_slug": "diba-parsian",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7Rf",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Data Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/applylink/jobs/t7Wg/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-software-engineer-%D8%AF%D8%B1-%D8%A7%D9%BE%D9%84%D8%A7%DB%8C-%D9%84%DB%8C%D9%86%DA%A9",
+      "company_slug": "applylink",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7Wg",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "AI Software Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": 42,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
+      "company_slug": "manzoumeh-hooshmand-pars",
+      "job_detail_version_id": 48,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "8aa02bcba09a1689787fa23821f95c975a5543ad6e01043db4e0ae9a795c9bcf",
+      "source_job_id": "t7ck",
+      "stages": {
+        "capability": false,
+        "english_projection": true,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
       "title": "مهندس هوش مصنوعی گفتار (Speech AI Engineer)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/zarebin-1/jobs/t7db/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-data-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D9%88-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%A2%D8%AF%DB%8C%D9%86",
+      "company_slug": "zarebin-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7db",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Data Engineer"
     },
     {
       "artifact_ids": {
@@ -1557,6 +1797,102 @@
         "source": true
       },
       "title": "مهندس هوش مصنوعی(اصفهان)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/kharazmi-modern-information-processing-technology/jobs/t7t0/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-audio-ai-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%B4-%D9%86%D9%88%DB%8C%D9%86-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D8%AE%D9%88%D8%A7%D8%B1%D8%B2%D9%85%DB%8C-%D9%81%D9%BE%D9%86%D8%A7",
+      "company_slug": "kharazmi-modern-information-processing-technology",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7t0",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior Audio AI Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/zarebin-1/jobs/t7uP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-devops-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D9%88-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D8%A2%D8%AF%DB%8C%D9%86",
+      "company_slug": "zarebin-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7uP",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "DevOps Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/neor-co/jobs/t7wl/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-engineer-%D8%AF%D8%B1-%D8%B1%D8%A7%D9%87%D8%A8%D8%B1%D8%AF-%DA%A9%D9%84%D8%A7%D9%86-%D8%AF%D8%A7%D8%AF%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D8%A7%DB%8C%D8%B1%D8%A7%D9%86%DB%8C%D8%A7%D9%86",
+      "company_slug": "neor-co",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7wl",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "AI Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/fanap/jobs/t7yK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-mlops-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%BE",
+      "company_slug": "fanap",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "t7yK",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "MLOps Engineer"
     },
     {
       "artifact_ids": {
@@ -3005,6 +3341,150 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/metacena/jobs/tN90/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-qa-engineer-%D8%AF%D8%B1-%D9%85%D8%AA%D8%A7-%D8%B3%DB%8C%D9%86%D8%A7",
+      "company_slug": "metacena",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tN90",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior QA Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
+      "company_slug": "united-technologists",
+      "job_detail_version_id": 54,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "cfd6297563fd4c55e7f447123baaf19902c35c955b86834ccadb15f30d15dcc0",
+      "source_job_id": "tNVe",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مهندس هوش مصنوعی کاربردی (LLM & AI Agents)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/mohandesimoj/jobs/tNVl/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-gpu-engineer-%D8%AF%D8%B1-%D9%85%D9%87%D9%86%D8%AF%D8%B3%DB%8C-%D9%85%D9%88%D8%AC",
+      "company_slug": "mohandesimoj",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tNVl",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "GPU Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/bioai-studio/jobs/tNW8/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-machine-learning-engineer-%D8%AF%D8%B1-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D8%B3%D8%A7%D8%B2%D8%A7%D9%86-%D8%A7%DB%8C%D8%AF%D9%87",
+      "company_slug": "bioai-studio",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tNW8",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Machine Learning Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/mft-zf/jobs/tNWy/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-machine-learning-with-python-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+      "company_slug": "mft-zf",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tNWy",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس Machine Learning with Python"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/turquoise-digital/jobs/tNbE/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-data-engineer-%D8%AF%D8%B1-%D9%81%DB%8C%D8%B1%D9%88%D8%B2%D9%87-%D8%AF%DB%8C%D8%AC%DB%8C%D8%AA%D8%A7%D9%84",
+      "company_slug": "turquoise-digital",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tNbE",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior Data Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/ako-fanavaran/jobs/tOVB/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%B4%D8%A8%DA%A9%D9%87-noc-%D9%BE%D8%B4%D8%AA%DB%8C%D8%A8%D8%A7%D9%86%DB%8C-%D9%81%D9%86%DB%8C-%D8%AF%D8%B1-%DA%AF%D8%B3%D8%AA%D8%B1%D8%B4-%D8%AF%D8%A7%D8%AF%D9%87-%D8%A2%DA%A9%D9%88%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86",
       "company_slug": "ako-fanavaran",
       "job_detail_version_id": null,
@@ -3069,6 +3549,30 @@
         "source": true
       },
       "title": "ادمین شبکه‌های اجتماعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/mft-zf/jobs/tUaS/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9-%D8%AF%D8%B1-%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%81%D9%86%DB%8C-%D8%AA%D9%87%D8%B1%D8%A7%D9%86-%D9%86%D9%85%D8%A7%DB%8C%D9%86%D8%AF%DA%AF%DB%8C-%D8%B2%D8%B9%D9%81%D8%B1%D8%A7%D9%86%DB%8C%D9%87",
+      "company_slug": "mft-zf",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tUaS",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی (گرافیک)"
     },
     {
       "artifact_ids": {
@@ -3817,21 +4321,21 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": null,
+        "english_projection": 43,
         "p16_english": null,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/kashani-academy/jobs/taOX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A2%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%DA%A9%D8%A7%D8%B4%D8%A7%D9%86%DB%8C",
       "company_slug": "kashani-academy",
-      "job_detail_version_id": null,
-      "language": "unknown",
+      "job_detail_version_id": 49,
+      "language": "mixed",
       "lifecycle_state": "active",
-      "parse_status": null,
-      "semantic_sha256": null,
+      "parse_status": "parsed",
+      "semantic_sha256": "f604674b7a3f410fece6c7f54c1e2b9d1de4fab3a4ffebedbd62dc41c32aaa20",
       "source_job_id": "taOX",
       "stages": {
         "capability": false,
-        "english_projection": false,
+        "english_projection": true,
         "p16_english": false,
         "p16_original": false,
         "source": true
@@ -4493,6 +4997,30 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/alienintellect/jobs/tanK/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-software-engineer-%D8%AF%D8%B1-%D8%A7%D9%84%DB%8C%D9%86-%D8%A7%DB%8C%D9%86%D8%AA%D9%84%DA%A9%D8%AA",
+      "company_slug": "alienintellect",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tanK",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior Software Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/summitalent/jobs/taoO/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-machine-learning-engineer-%D8%A2%D9%82%D8%A7-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B5%D9%88%D9%85%DB%8C-%D8%AA%D8%A7%D9%84%D9%86%D8%AA",
       "company_slug": "summitalent",
       "job_detail_version_id": null,
@@ -4821,6 +5349,294 @@
         "source": true
       },
       "title": "کارشناس it (مشهد)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/asia-free-higher-education-institute/jobs/tj38/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-llm-rag-ai-engineer-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D8%AD%D9%82%D9%88%D9%82-%D8%A2%D8%B3%DB%8C%D8%A7",
+      "company_slug": "asia-free-higher-education-institute",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tj38",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "LLM/RAG) AI Engineer-مشهد)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/asia-free-higher-education-institute/jobs/tj3D/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-data-engineer-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D8%AD%D9%82%D9%88%D9%82-%D8%A2%D8%B3%DB%8C%D8%A7",
+      "company_slug": "asia-free-higher-education-institute",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tj3D",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Data Engineer (مشهد)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/tadbirpardaz/jobs/tj4J/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-technical-operations-engineer-%D8%AF%D8%B1-%D8%AA%D8%AF%D8%A8%DB%8C%D8%B1-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2",
+      "company_slug": "tadbirpardaz",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tj4J",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Technical Operations Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vimond/jobs/tjMb/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AA%D9%86%DA%A9%D8%A7%D8%A8%D9%86-%D8%AF%D8%B1-%D9%88%DB%8C%D9%85%D9%88%D9%86%D8%AF",
+      "company_slug": "vimond",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjMb",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی (تنکابن)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/biomaze/jobs/tjT2/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-sre-engineer-%D8%AF%D8%B1-%D9%87%D9%88%D9%86%D8%A7%D9%85-%D9%BE%D8%B1%D8%AA%D9%88-%D8%A7%D9%86%D8%AF%DB%8C%D8%B4%D8%A7%D9%86-%D9%85%D8%A7%D8%B2",
+      "company_slug": "biomaze",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjT2",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "SRE Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vimond/jobs/tjTr/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%85%DB%8C%D8%A7%D9%86%D9%87-%D8%AF%D8%B1-%D9%88%DB%8C%D9%85%D9%88%D9%86%D8%AF",
+      "company_slug": "vimond",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjTr",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی (میانه)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vimond/jobs/tjTw/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%B3%D8%B1%D8%A7%D8%A8-%D8%AF%D8%B1-%D9%88%DB%8C%D9%85%D9%88%D9%86%D8%AF",
+      "company_slug": "vimond",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjTw",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی (سراب)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": 44,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/marbelin/jobs/tjgi/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-product-developer-%D8%AF%D8%B1-%D9%85%D8%A7%D8%B1%D8%A8%D9%84%DB%8C%D9%86",
+      "company_slug": "marbelin",
+      "job_detail_version_id": 50,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "ba0a7b5e65266e26bd4ddda4046f1480603c953098b81796d0dcccd080243f66",
+      "source_job_id": "tjgi",
+      "stages": {
+        "capability": false,
+        "english_projection": true,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "توسعه‌دهنده محصولات هوش مصنوعی (AI Product Developer)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/tosan/jobs/tjj9/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-soc-engineer-%D8%AF%D8%B1-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%B3%D8%A7%D9%85%D8%A7%D9%86%D9%87-%D9%87%D8%A7%DB%8C-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1%DB%8C-%D9%86%DA%AF%DB%8C%D9%86-%D8%AA%D9%88%D8%B3%D9%86",
+      "company_slug": "tosan",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjj9",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "SOC Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/hamoon-studio-ai/jobs/tjl0/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D8%A7%DB%8C%D8%AC%D9%86%D8%AA-%D9%87%D8%A7%DB%8C-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D9%88%D8%AF%DB%8C%D9%88-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%87%D8%A7%D9%85%D9%88%D9%86",
+      "company_slug": "hamoon-studio-ai",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjl0",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "متخصص ایجنت‌های هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/hamoon-studio-ai/jobs/tjlH/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D8%AF%D9%88%DB%8C%D9%86%DA%AF%D8%B1-%D9%88%DB%8C%D8%AF%DB%8C%D9%88-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B3%D8%AA%D9%88%D8%AF%DB%8C%D9%88-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%87%D8%A7%D9%85%D9%88%D9%86",
+      "company_slug": "hamoon-studio-ai",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjlH",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "تدوینگر ویدیو (هوش مصنوعی)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/ravi-novin-payam-sepidar/jobs/tjv4/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%B4%D8%A7%D9%88%D8%B1-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A7%DB%8C%D8%AF%D9%87-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D9%86%D9%88%DB%8C%D9%86-%D9%BE%DB%8C%D8%A7%D9%85-%D8%AF%D8%A7%D8%B1%D8%A7%D9%86",
+      "company_slug": "ravi-novin-payam-sepidar",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjv4",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مشاور هوش مصنوعی"
     },
     {
       "artifact_ids": {
@@ -5863,11 +6679,11 @@
       },
       "canonical_url": "https://jobinja.ir/companies/ahmaghan-atlas/jobs/tmNr/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%A7%D8%B1%D9%85%D8%BA%D8%A7%D9%86-%D8%A7%D8%B7%D9%84%D8%B3",
       "company_slug": "ahmaghan-atlas",
-      "job_detail_version_id": 6,
+      "job_detail_version_id": 55,
       "language": "mixed",
       "lifecycle_state": "active",
       "parse_status": "parsed",
-      "semantic_sha256": "795cb3960d837d127ea9e46cad1d3c28730d4bea79b4edc28f25c886ab2f93ff",
+      "semantic_sha256": "053bb9923a926ec65921bf58f70f317ca586f57c19bd03661932a2ef99b0109e",
       "source_job_id": "tmNr",
       "stages": {
         "capability": false,
@@ -8429,6 +9245,54 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/sayancard/jobs/tvAT/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%85%D8%AF%D9%84-%D9%87%D8%A7%DB%8C-%D8%B2%D8%A8%D8%A7%D9%86%DB%8C-%D8%A8%D8%B2%D8%B1%DA%AF-llm-%D8%AF%D8%B1-%D9%81%D8%B1%D8%A7%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D8%A2%D8%B1%D9%88%D9%86%D8%AF-%D8%A7%D9%85%DB%8C%D8%AF",
+      "company_slug": "sayancard",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvAT",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مهندس مدل های زبانی بزرگ (LLM)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/cheshmnavaz/jobs/tvCZ/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%B7%D8%B1%D8%A7%D8%AD-%DA%AF%D8%B1%D8%A7%D9%81%DB%8C%DA%A9-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%DA%AF%D8%B1%D9%88%D9%87-%D9%86%D9%85%D8%A7%D8%B3%D8%A7%D8%B2%D9%87-%D9%88-%D8%AA%D8%A7%D8%A8%D9%84%D9%88%D8%B3%D8%A7%D8%B2%D8%A7%D9%86-%D8%A2%D8%B1%D8%A7%D9%85%DB%8C",
+      "company_slug": "cheshmnavaz",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvCZ",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "طراح گرافیک (هوش مصنوعی)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/rashatech/jobs/tvLm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%D8%B1%D8%A8%D8%A7%D8%AA%DB%8C%DA%A9-%D8%AF%D8%B1-%D8%B1%D8%A7%D8%B4%D8%A7%D8%AA%DA%A9",
       "company_slug": "rashatech",
       "job_detail_version_id": null,
@@ -8445,6 +9309,78 @@
         "source": true
       },
       "title": "مدرس هوش مصنوعی و رباتیک"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": 41,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/ragham/jobs/tvMm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-agent-engineer-%D8%A2%D9%82%D8%A7-%D8%B4%DB%8C%D8%B1%D8%A7%D8%B2-%D8%AF%D8%B1-%D8%B1%D9%82%D9%85",
+      "company_slug": "ragham",
+      "job_detail_version_id": 47,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "286abb0ec6aa4a4f670e7ff36dc246fbf8c718ce4c8675ebcdf58a727133ff72",
+      "source_job_id": "tvMm",
+      "stages": {
+        "capability": false,
+        "english_projection": true,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "AI Agent Engineer (آقا-شیراز)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/savvy-tech/jobs/tvZY/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-augmented-backend-engineer-%D8%AF%D8%B1-%D8%B3%D9%88%DB%8C-%D8%AA%DA%A9",
+      "company_slug": "savvy-tech",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvZY",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "AI-Augmented Backend Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/aplotus-1/jobs/tvkF/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-ml-engineering-intern-data-mlops-%D8%AF%D8%B1-%D8%A2%DB%8C%D9%86%D8%AF%D9%87-%D9%BE%DA%98%D9%88%D9%87%D8%A7%D9%86-%D9%84%D9%88%D8%AA%D9%88%D8%B3",
+      "company_slug": "aplotus-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvkF",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "AI/ML Engineering Intern (Data & MLOps)"
     },
     {
       "artifact_ids": {
@@ -8469,6 +9405,54 @@
         "source": true
       },
       "title": "کارشناس هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/prowem/jobs/tvwt/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%AA%D9%88%D9%84%DB%8C%D8%AF-%D9%85%D8%AD%D8%AA%D9%88%D8%A7-%D8%A8%D8%A7-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-content-creator-%D8%AF%D8%B1-%D9%BE%D8%B1%D9%88%D9%88%D9%85",
+      "company_slug": "prowem",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tvwt",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارشناس تولید محتوا با هوش مصنوعی (AI Content Creator)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": 46,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/homa-dental/jobs/tvz9/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%AF%D9%86%D8%AF%D8%A7%D9%86%D9%BE%D8%B2%D8%B4%D9%83%DB%8C-%D9%87%D9%85%D8%A7",
+      "company_slug": "homa-dental",
+      "job_detail_version_id": 52,
+      "language": "mixed",
+      "lifecycle_state": "active",
+      "parse_status": "parsed",
+      "semantic_sha256": "a1bda0c04362d7f421e3ad621dc55bfacfce0bda8caa2a0c6f35e4c449f2f717",
+      "source_job_id": "tvz9",
+      "stages": {
+        "capability": false,
+        "english_projection": true,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "متخصص هوش مصنوعی"
     },
     {
       "artifact_ids": {
