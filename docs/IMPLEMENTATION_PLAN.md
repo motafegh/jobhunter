@@ -1,7 +1,10 @@
 # JobHunter Master Implementation Plan
 
 **Status:** Controlling product-level implementation plan  
-**Date:** 2026-08-23
+**Date:** 2026-08-23  
+**Last reconciled:** 2026-09-18
+
+**Current execution bridge:** Phase 1, P2.1, and P2.2A are accepted/closed. Market I1-I6 are repository-accepted; I7 bounded real local acceptance is prepared and pending. Historical Phase-1 gate sections below remain acceptance evidence, not current routing.
 
 ## 1. Purpose and authority
 
@@ -21,8 +24,8 @@ strategic sequencing
 IMPLEMENTATION_PLAN.md
 this file: controlling delivery order / gates
         ↓
-PHASE_1_JOBINJA_AUTOMATION_PLAN.md
-focused active plans
+CURRENT_STATE_RECONCILIATION_2026-09-12.md
+current focused plan / decision
         ↓
 EXECUTION_TODO.md
         ↓
@@ -62,8 +65,8 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 | Stage | Outcome | Status |
 |---|---|---|
 | M0 | Local Python/SQLite/LM Studio foundation | Accepted |
-| Phase 1 | Trustworthy Jobinja source→English→factual-analysis→first-Market workflow | Active |
-| Phase 2 | Canonical market intelligence and corpus-scale capability requirement profiles | Gated/planned |
+| Phase 1 | Trustworthy Jobinja source→English→factual-analysis→first-Market workflow | CLOSED / ACCEPTED |
+| Phase 2 | Canonical/analytical market intelligence and target-scoped Market workflows | ACTIVE — I1-I6 accepted / I7 local acceptance pending |
 | Phase 3 | Reviewed personal evidence and gap intelligence | Planned |
 | Phase 4 | Explainable decisions/action/application readiness | Planned |
 | Phase 5 | Sustained operation, trends, recovery, quality | Planned |
@@ -75,7 +78,7 @@ A bounded per-job semantic slice was intentionally implemented before Phase-1 cl
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
 - heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
 
-This does **not** authorize Phase-2 corpus-wide generation, taxonomy growth, Market-v2 aggregation, personal scoring, or authoritative Blueprint use.
+This does **not** authorize promoted P2.2C/P2.2D taxonomy growth, personal scoring, semantic role-subfamily/report synthesis beyond the current slice, or authoritative Blueprint use. The bounded target-scoped Market I1-I6 implementation is already accepted subject to I7 real local acceptance.
 
 ---
 
@@ -153,7 +156,7 @@ Historical prompt/runtime identities remain historical and must not be reused fo
 
 # Part I — Finish Phase 1
 
-## 6. Gate P1-A — Semantic-quality acceptance (active now)
+## 6. Gate P1-A — Semantic-quality acceptance (CLOSED / historical acceptance record)
 
 Detailed plan:
 
@@ -295,7 +298,7 @@ Accepted publication baseline:
 ```text
 Known/discovered jobs:       353
 Fetched/parsed job details:   43
-Current English projections:  20
+Current English projections:  21
 English P1.6:                  5
 Original P1.6:                 0
 Capabilities:                  5
