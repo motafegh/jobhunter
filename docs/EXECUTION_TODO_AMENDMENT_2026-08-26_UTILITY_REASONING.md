@@ -1,12 +1,13 @@
 # Execution TODO Amendment — Utility / Reasoning Governance
 
-**Status:** CURRENT OPERATIONAL AMENDMENT  
+**Status:** HISTORICAL OPERATIONAL AMENDMENT / DURABLE GOVERNANCE RULES RETAINED  
 **Date:** 2026-08-26  
 **Branch:** `main`  
 **Amends:** current Phase-2 portion of `docs/EXECUTION_TODO.md`  
-**Reason:** P2.1 closed before the utility/epistemic governance correction; the older checklist therefore says the next Phase-2 increment was not yet selected.
+**Reason:** P2.1 closed before the utility/epistemic governance correction; the older checklist therefore said the next Phase-2 increment was not yet selected.  
+**Superseded for operational routing:** `docs/EXECUTION_TODO.md` and `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`.
 
-This amendment is the current operational state until `docs/EXECUTION_TODO.md` is next consolidated.
+The governance principles in this amendment remain durable, but its P2.2 `next work` checklist is a historical checkpoint. Current execution is Market I7 bounded real local acceptance after acceptance of I1-I6.
 
 ---
 
@@ -41,7 +42,7 @@ This amendment is the current operational state until `docs/EXECUTION_TODO.md` i
 - [x] add Phase-2 implementation-plan amendment.
 - [x] add proposal refinement for responsibility/role intelligence.
 
-## C. Current next work — P2.2 DESIGN ONLY
+## C. Historical next work at the 2026-08-26 checkpoint — P2.2 DESIGN ONLY
 
 - [ ] write the focused P2.2 responsibility/deliverable/role-intelligence plan.
 - [ ] define exact input boundary from accepted/current P1.6 responsibility/work facts.
@@ -53,7 +54,7 @@ This amendment is the current operational state until `docs/EXECUTION_TODO.md` i
 - [ ] define minimum browser/CLI user value: materially faster comprehension than manual reading.
 - [ ] define appropriate Tier A/B/C acceptance according to `IMPLEMENTATION_PLAN_AMENDMENT_2026-08-26_REASONING_AND_PROMOTION.md`.
 
-Do not implement P2.2 code before the focused plan is reviewed.
+This was the checkpoint stop line before the focused P2.2 plan was reviewed. It is historical and does not block the later accepted P2.2A/Market implementation.
 
 ## D. Explicit non-actions
 
@@ -66,7 +67,7 @@ Do not implement P2.2 code before the focused plan is reviewed.
 - [ ] do **not** start durable personal readiness/scoring/recommendations.
 - [ ] do **not** reopen accepted Phase-1/P2.1 contracts without a material defect/dependency change.
 
-## E. Current governing files
+## E. Governing files at this checkpoint
 
 ```text
 AGENTS.md
