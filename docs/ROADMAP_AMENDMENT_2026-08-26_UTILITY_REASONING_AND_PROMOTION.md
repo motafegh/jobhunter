@@ -1,9 +1,10 @@
 # Roadmap Amendment — Utility, Reasoning, and Promotion in Phase 2+
 
-**Status:** CONTROLLING ROADMAP AMENDMENT  
+**Status:** CONTROLLING DURABLE ROADMAP AMENDMENT / PRESENT-TENSE ROUTING SUPERSEDED  
 **Date:** 2026-08-26  
 **Amends:** `docs/ROADMAP.md` for Phase 2 and later analytical delivery  
-**Governed by:** `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
+**Governed by:** `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`  
+**Current-status note (2026-09-18):** Durable reasoning/promotion rules below remain controlling. Present-tense execution routing comes from `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md` and the current Market plan; Phase 1/P2.1/P2.2A and Market I1-I6 are accepted, with I7 local acceptance pending.
 
 ---
 
