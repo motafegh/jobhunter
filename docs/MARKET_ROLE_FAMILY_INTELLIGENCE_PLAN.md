@@ -813,14 +813,15 @@ The first Market vertical slice is done only when:
 ## 19. Current exact next action
 
 ```text
-I1-I3 repository acceptance complete
-→ I4 immutable snapshot construction from current membership + coverage
-→ focused dependency/denominator/history tests
-→ reconcile implementation record/current state
-→ proceed to I5 only after I4 is coherent
+I1-I6 repository acceptance complete
+→ I7 bounded real local acceptance
+→ follow the prepared I7 protocol on the owner's operational runtime
+→ record PASS / BOUNDED REPAIR / HOLD from actual evidence
+→ close the first slice only if I7 passes
 ```
 
-I3 implementation and evidence: `docs/working-memory/2026-09-17_MARKET_I3_MEMBERSHIP_QUALIFICATION_IMPLEMENTATION.md`.
-Scripted semantic fixtures validate service mechanics, not real-model accuracy.
-I7 remains the real workflow and reuse acceptance gate after I4-I6.
-Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope.
+Latest repository-accepted increment: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
+
+Prepared I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
+
+Repository tests and the earlier I3 real-model boundary check do not substitute for I7 end-to-end local acceptance. Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope during I7.
