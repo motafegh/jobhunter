@@ -2,10 +2,10 @@
 
 **Status:** Bounded per-job Capability v9 promoted/current; heterogeneous non-regression closed
 **Date:** 2026-08-21  
-**Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/ROADMAP.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/PRODUCT_SPECIFICATION.md`, and the current Phase-1 gate  
-**Scope:** Record the accepted bounded Capability Intelligence architecture and the remaining heterogeneous acceptance required before Phase-2 corpus-scale capability-profile work. Despite this file's historical `PHASE_2_...` name, it does **not** authorize corpus-wide Phase-2 rollout before Phase-1 closure.
+**Authority:** Subordinate to `docs/IMPLEMENTATION_PLAN.md`, `docs/ROADMAP.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, and `docs/PRODUCT_SPECIFICATION.md`  
+**Scope:** Record the accepted bounded Capability Intelligence architecture and its completed heterogeneous non-regression evidence. Despite this file's historical `PHASE_2_...` name, it does not independently authorize later corpus-scale/profile/taxonomy work.
 
-The exact active quality sequence is defined in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`.
+Phase-1/heterogeneous acceptance is closed. Present-tense execution routing comes from the current-state reconciliation; the current project frontier is Market I7 bounded real local acceptance.
 
 ---
 
@@ -231,11 +231,11 @@ A legitimate local generation is not killed by an arbitrary read deadline after 
 
 ---
 
-## 10. Heterogeneous non-regression — active
+## 10. Heterogeneous non-regression — CLOSED / ACCEPTED
 
-Public promotion is closed, but the stack is not yet frozen as Phase-2 input. It must survive materially different role families.
+Public promotion and heterogeneous non-regression are closed. The stack is frozen as accepted downstream input unless a repeatable material defect or dependency change reopens it.
 
-Current order:
+Accepted closure order:
 
 ```text
 1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
@@ -256,7 +256,7 @@ For each role:
 9. classify any problem as deterministic defect, model limitation, or harmless non-authoritative variation;
 10. convert repeatable deterministic defects into regression tests.
 
-### Current heterogeneous position
+### Final heterogeneous position
 
 `tmBK` is accepted and closed: rejected artifact 38 never fed Capability; rebuilt P1.6 artifact 39 passed complete manual review; Capability artifact 13 then passed 16/16 requirement and 7/7 explicit-depth coverage without fabricated duties or role-level inflation.
 
@@ -305,7 +305,7 @@ Blueprint output is not automatically promoted into the canonical layer.
 - It is not personal readiness/gap scoring.
 - It is not application ranking or learning-plan generation.
 - It does not make Blueprint authoritative.
-- Current Market still aggregates accepted/current English P1.6, not Capability.
-- Heterogeneous semantic stability is still under active review.
+- The current target-scoped Market slice does not require Capability as a gate; strong semantic prevalence remains anchored to accepted/current P1.6.
+- Heterogeneous semantic stability is closed for the accepted bounded sample; broader future claims require their own evidence.
 
 Do not add vector/RAG infrastructure, agent orchestration, multi-model voting or corpus-wide generative profiles merely because Capability exists.
