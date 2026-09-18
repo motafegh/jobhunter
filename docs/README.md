@@ -35,8 +35,8 @@ P2.2D stable role archetypes        LATER
 
 Market research                     COMPLETE ENOUGH
 Market foundation investigation     PASS / COMPLETE
-Market first vertical slice         AUTHORIZED / ACTIVE FRONTIER
-Current exact increment             I4 immutable snapshot construction
+Market first vertical slice         I1-I6 ACCEPTED / I7 LOCAL ACCEPTANCE OPEN
+Current exact increment             I7 bounded real local acceptance
 Semantic report/subfamily synthesis DEFERRED FROM FIRST SLICE
 ```
 
@@ -45,11 +45,13 @@ Use these files for current execution:
 - [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay.
 - [`MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — current controlling Market product/implementation plan.
 - [`working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal `PASS / FIRST VERTICAL SLICE AUTHORIZED` decision and first-slice contract.
-- [`working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`](working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md) — prior research consolidated into `DECIDED / PROVISIONAL / OPEN / DEFERRED`.
+- [`working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`](working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md) — latest repository-accepted implementation increment.
+- [`working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`](working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md) — prepared real-local acceptance protocol.
+- [`working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`](working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md) — prior research/history; load only when a specific decision needs its evidence.
 - [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — current implementation checklist.
 - [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — rolling handoff/current-state memory.
 
-The exact next product action is **Market I4 — immutable snapshot construction**. Do not restart B1 or the foundation investigation.
+The exact next product action is **Market I7 — bounded real local acceptance**. I1-I6 are repository-accepted; the real local run is prepared but not yet claimed. Do not restart B1 or the foundation investigation.
 
 ## 3. Closed P2.2B and executed Market-foundation records
 
@@ -83,13 +85,13 @@ TargetMarket
 Implementation order:
 
 ```text
-I1 domain + SQLite persistence
-→ I2 target-scoped eligibility / affected-work planning
-→ I3 membership qualification
-→ I4 immutable snapshot
-→ I5 deterministic aggregate profile
-→ I6 browser + CLI
-→ I7 bounded local real acceptance
+I1 domain + SQLite persistence                         ACCEPTED
+→ I2 target-scoped eligibility / affected-work planning ACCEPTED
+→ I3 membership qualification                           ACCEPTED
+→ I4 immutable snapshot                                 ACCEPTED
+→ I5 deterministic aggregate profile                    ACCEPTED
+→ I6 browser + CLI                                      ACCEPTED
+→ I7 bounded local real acceptance                      NEXT
 ```
 
 Important current constraints:
