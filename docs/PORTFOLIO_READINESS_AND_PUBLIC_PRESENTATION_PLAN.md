@@ -3,7 +3,7 @@
 **Status:** ACTIVE / PR0–PR8 COMPLETE / PR9 REPOSITORY-SIDE PACKAGE COMPLETE / RELEASE + OWNER MASTERY PENDING  
 **Date:** 2026-09-06  
 **Scope:** Make the public JobHunter repository professional, understandable, demonstrable, maintainable and credible as a CV/portfolio project without weakening or rewriting accepted product semantics.  
-**Product-development boundary:** P2.2B-B1 remains locally blocked on `ta9l` English projection/P1.6 acceptance. Portfolio work does not authorize product-semantic changes, registry promotion or P2.2C.
+**Product-development boundary:** Product work is currently at Market I7 bounded real local acceptance after repository acceptance of I1-I6. Portfolio work does not authorize product-semantic changes, P2.2C/P2.2D promotion, or bypass of I7.
 
 ---
 
@@ -211,7 +211,7 @@ Verified:
 - no public claim inflation was identified in the primary reviewer path;
 - private/runtime publication boundaries remain explicit.
 
-Residual older status wording inside some large 2026-08-23 master documents is handled by `CURRENT_STATE_RECONCILIATION_2026-09-05.md`. Current operational status is explicit in the current governance/rolling-state surfaces.
+The large master/current documents were explicitly reconciled through 2026-09-18. Historical phase/experiment records retain checkpoint chronology but are labeled as historical/superseded for routing. Current operational status is controlled by the September 12 reconciliation plus the live Market/TODO/working-memory owners.
 
 ## 9. PR9-B — owner/external release blockers — PARTIAL
 
