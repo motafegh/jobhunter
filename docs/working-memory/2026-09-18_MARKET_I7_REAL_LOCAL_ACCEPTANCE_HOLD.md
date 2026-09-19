@@ -388,3 +388,46 @@ Owner review decision for artifact 48 → apply the supported rejection if confi
 normal generation/review → build a new point-in-time snapshot/profile → inspect
 live accepted-semantic requirement/responsibility evidence through CLI and browser
 → recheck integrity/privacy after those mutations. Keep I7 HOLD until that path passes.
+
+
+## 2026-09-19 — Incremental publication and operational rejection
+
+The owner authorized continued building/fixing and progressive commits/pushes.
+The history-preserving rejection repair and recovered evidence were published as
+`d761a4f` before starting the next coherent repair batch.
+
+After a local SQLite backup, the reviewed rejection of `t7ck` artifact 48 was
+applied through `AnalysisStore.review_current`. The archive preserves the semantic
+review reasons and original model evidence. The retained historical artifact is
+`rejected`; it is absent from current/reuse selection. Every row of both snapshots,
+their members and aggregate profiles remains unchanged. SQLite integrity is `ok`
+and foreign-key checks are empty. No semantic artifact was accepted.
+
+### Bounded evidence-preparation repair
+
+Replaying the exact projection exposed two deterministic contributing defects:
+
+- residual qualification accounting only covered decomposed recognized headings
+  and the tail after the last list. Headingless prose lost material between lists;
+- the pre-heading duty detector matched `to` within hyphenated text or crossed
+  sentence boundaries to candidate ability wording, imposing a spurious duty ledger.
+
+The owning helpers now preserve exact uncovered text from each detected list's
+sentence and restrict implicit duty detection to a same-sentence infinitive,
+excluding ability/capacity/experience qualification prefixes. No employer text is
+rewritten and no vacancy-specific prompt or technology list is introduced.
+
+For projection 42 the missing GPU/model-familiarity sentence remainder is now
+addressable and the false whole-paragraph duty checklist is absent. This is not a
+claim that all semantic issues are solved: shared optionality, complete semantic
+coverage and qualification-versus-duty assertions still require normal review.
+
+Focused regressions: 23 passed. Full strict-warning suite: 638 passed. Ruff and
+dependency checks passed. Read-only before/after helper comparisons on all five
+accepted public anchors found identical residual and duty plans; no anchors were
+regenerated or their review state changed.
+
+Next bounded live step: one current target-core posting with missing P1.6, using
+the existing configured model/contract, then inspect the candidate without auto-
+acceptance. No full acquisition rerun is needed for this evidence step. The provider
+models endpoint is reachable and lists the configured analysis model.

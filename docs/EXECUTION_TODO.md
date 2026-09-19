@@ -130,7 +130,7 @@ Execution result:
 - [x] recovered run-2 snapshot/profile 2 and proved snapshot-1/member/profile equality against both retained pre-rerun JSON captures on 2026-09-19.
 - [x] post-run operational SQLite integrity is `ok`; foreign-key check is empty (2026-09-19).
 - [x] inspected pending `t7ck` artifact 48: material coverage, optionality and qualification/duty defects; rejection recommended.
-- [ ] obtain the owner review decision and apply the supported rejection of artifact 48.
+- [x] applied the reviewed rejection of artifact 48 during the authorized continuation; backup, exact historical-row comparison and SQLite integrity checks passed.
 - [x] repaired rejection of a pending candidate referenced by an immutable Market snapshot; real-database-copy replay and 636 strict-warning tests passed.
 - [x] recovered immutable definition-1 fingerprint from operational SQLite.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.

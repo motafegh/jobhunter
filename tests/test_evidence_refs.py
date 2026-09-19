@@ -261,3 +261,20 @@ def test_responsibility_coverage_plan_tracks_exact_duty_clauses() -> None:
         "field:description:segment:1:clause:0": "Handle sensor data",
         "field:description:segment:1:clause:1": "build robust pipelines.",
     }
+
+
+
+def test_candidate_qualification_prose_does_not_manufacture_duty_coverage() -> None:
+    descriptions = [
+        "We are looking for an engineer specializing in Speech-to-Text models. "
+        "The candidate must have practical experience developing and evaluating models. "
+        "Proficiency in Python is essential. Familiarity with speech technologies is preferred.",
+        "We are looking for someone who has the ability to research and deploy speech models. "
+        "Practical experience with evaluation and familiarity with speech frameworks are valued. "
+        "The company develops speech applications for business customers.",
+        "We are looking for an engineer. Ability to research and test models is required. "
+        "Experience preparing models for production is an advantage. "
+        "The company builds speech products and offers a collaborative research environment.",
+    ]
+    for description in descriptions:
+        assert build_responsibility_coverage_plan({"description": description}) == {}

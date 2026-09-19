@@ -99,8 +99,18 @@ def residual_requirement_spans(analysis_fields: dict[str, Any]) -> list[str]:
     # matching item count as proof that the entire parent was accounted for.
     uncovered: list[str] = []
     plan = build_requirement_coverage_plan(analysis_fields)
-    for reference in decomposed_requirement_references(analysis_fields):
-        text = str(plan[reference]["text"])
+    parents = [
+        str(plan[reference]["text"])
+        for reference in decomposed_requirement_references(analysis_fields)
+    ]
+    # Headingless prose may have no coarse requirement reference. Each detected
+    # list still owns the rest of its exact sentence, including text between lists.
+    parents.extend(
+        match.group(0).strip()
+        for match in _SENTENCE_RE.finditer(description)
+        if any(span in match.group(0) for span in spans)
+    )
+    for text in dict.fromkeys(parents):
         parent_start = description.index(text)
         parent_end = parent_start + len(text)
         intervals: list[tuple[int, int]] = []

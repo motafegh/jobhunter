@@ -255,12 +255,11 @@ and profile exactly match both retained pre-rerun JSON captures. Operational SQL
 integrity/foreign-key and corpus privacy checks passed. Those evidence gaps are closed.
 
 Pending `t7ck` P1.6 artifact 48 has material coverage/optionality/qualification-to-duty
-errors and must not be accepted. Owner rejection decision remains pending. An isolated
+errors and was rejected during the authorized continuation; historical evidence remains intact. An isolated
 replay exposed a foreign-key failure when rejecting a candidate referenced by snapshot 2.
 A bounded `AnalysisStore` repair now retains rejected historical payloads while excluding
 them from current/reuse selection and allowing replacements. Real-database-copy replay,
-Ruff, dependency consistency, and all 636 tests with warnings-as-errors passed. Operational
-review state remains unchanged; the repair is local/uncommitted.
+Ruff, dependency consistency, and all 636 tests with warnings-as-errors passed. The repair was published as `d761a4f`; operational rejection passed with snapshot history unchanged.
 
 The remaining gate is a valid accepted-semantic core artifact and real CLI/browser
 semantic drill-down on a new snapshot, followed by post-mutation integrity/privacy checks.

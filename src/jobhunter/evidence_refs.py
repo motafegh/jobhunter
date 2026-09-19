@@ -41,7 +41,7 @@ _CANDIDATE_EXPERIENCE_RE = re.compile(
     re.I,
 )
 _CANDIDATE_DUTY_RE = re.compile(
-    r"\bwe\s+(?:are|'re)\s+(?:looking\s+for|seeking)\b.+\bto\s+[a-z]",
+    r"\bwe\s+(?:are|'re)\s+(?:looking\s+for|seeking)\b[^.!?\n]+?\s+to\s+[a-z]",
     re.I,
 )
 _NON_REQUIREMENT_VALUES = {
@@ -332,7 +332,10 @@ def build_responsibility_coverage_plan(fields: dict[str, Any]) -> dict[str, str]
         _long_text_segments_with_sections(description)
     ):
         if section_kind != "responsibilities" and not (
-            section_kind is None and _CANDIDATE_DUTY_RE.search(segment)
+            section_kind is None and any(
+                not re.search(r"\b(?:ability|capacity|experience)\b", match.group(0), re.I)
+                for match in _CANDIDATE_DUTY_RE.finditer(segment)
+            )
         ):
             continue
         segment_ref = f"field:description:segment:{index}"

@@ -242,3 +242,19 @@ def test_v15_does_not_turn_pure_schedule_logistics_into_capability() -> None:
     assert normalized["requirements"][3]["concept"] == "Full-time availability"
     with pytest.raises(AnalysisValidationError, match="schedule"):
         validate_v14_candidate_structured(normalized, _fields())
+
+
+
+def test_headingless_lists_keep_residual_qualifications_between_lists() -> None:
+    fields = {"description": (
+        "Proficiency in Python, Linux, and GPUs is essential, and familiarity with "
+        "speech models is an advantage. Experience in streaming audio, voice cloning, "
+        "and latency reduction is an important asset."
+    )}
+    residuals = residual_requirement_spans(fields)
+    assert "and GPUs is essential, and familiarity with speech models is an advantage." in residuals
+    assert "and latency reduction is an important asset." in residuals
+    assert all(text in fields["description"] for text in residuals)
+    assert len(residuals) == len(set(residuals))
+    _effective, _qualifications, references, plan = _v15_candidate_evidence_view(fields)
+    assert all(plan[reference]["obligation_hint"] is None for reference in references)
