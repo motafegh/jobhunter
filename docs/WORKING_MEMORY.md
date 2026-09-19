@@ -209,6 +209,9 @@ unchanged and post-attempt integrity/privacy checks passed.
 Next: define a bounded post-repair evaluation decision before further live generation.
 Accepted-semantic snapshot/profile and browser/CLI evidence remain required for PASS.
 
+Published repair: `94a14a1`; CI `35468478422` passed all gates. Both full local test
+modes passed 639 tests; the public corpus verified against all 394 jobs.
+
 ### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.

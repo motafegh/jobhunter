@@ -263,6 +263,14 @@ by a historical snapshot. Artifact 48 was reviewed and rejected for material sem
 snapshot evidence was preserved. Continue only the bounded I7 closure follow-up recorded in the result file. Do not broaden
 product scope or weaken semantic review to manufacture PASS.
 
+The selected `tvMm` generation was executed once on 2026-09-20 local time and failed
+validation (attempt 106); no candidate was persisted. A general v20 structured-skill
+prompt/payload ownership contradiction was repaired with 639 passing tests and green
+CI, but post-repair real-model acceptance is unproven. Before further generation,
+follow the bounded evaluation decision boundary in
+`docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md` rather than repeating
+the historical selected-case command. I7 remains HOLD.
+
 ### 5.2 First-slice settled rules
 
 Permanent for this slice unless implementation evidence exposes a concrete contradiction:

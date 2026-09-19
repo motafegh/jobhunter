@@ -78,3 +78,9 @@ post-repair evaluation decision; do not blindly repeat the previous next command
 Repair validation: **639 tests passed normally and 639 with warnings-as-errors**;
 Ruff passed. This establishes deterministic repair coverage, not post-repair
 real-model accuracy or accepted-semantic product completion.
+
+Published execution record: `4fe74d4`. Published repair: `94a14a1`.
+GitHub CI run `35468478422` passed all gates on the repair, including installed
+entrypoints, Ruff, normal tests and strict-warning tests. Public-corpus verification
+also passed against all 394 known jobs. Current routing documents preserve HOLD and
+the unexecuted post-repair real-model boundary.
