@@ -232,10 +232,38 @@ Decision remains **HOLD** only because the live target still lacks a genuinely v
 P1.6 core member. The real accepted-semantic Market aggregate/evidence drill-down therefore remains
 unexercised end to end.
 
+Selected closure candidate:
+
+```text
+source job:             tvMm
+title:                  AI Agent Engineer
+company:                Ragham
+current source detail:  47
+current English:        projection 41
+current accepted P1.6:  none
+prior live P1.6:        failed validation during I7 run 2
+```
+
+Why `tvMm`:
+
+- its source is unambiguously direct agent/LLM/RAG/system engineering under the target intent;
+- source and English projection are already current, so no discovery, refresh or translation work is needed;
+- its prior failure included false candidate-duty coverage on introductory qualification language, exactly one of the general deterministic defects repaired in `8c7fdb0`;
+- choosing an already-observed failure is more informative than cherry-picking a fresh easy vacancy.
+
+Supported bounded command path:
+
+```text
+jobhunter --config jobhunter.toml jobs analyze tvMm
+→ jobhunter --config jobhunter.toml jobs review-analysis tvMm status
+```
+
+Do not run `accept` until the complete candidate has been reviewed against the source/English projection.
+
 Exact next work:
 
 ```text
-one current target-core posting with missing P1.6
+tvMm targeted English P1.6 generation
 → one bounded generation using the existing configured model/contract
 → normal semantic review
 → accept only if genuinely valid

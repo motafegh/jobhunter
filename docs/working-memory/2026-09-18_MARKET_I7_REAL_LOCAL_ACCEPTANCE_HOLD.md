@@ -428,3 +428,30 @@ regenerated or their review state changed.
 
 Current bounded live step: select one current target-core posting with missing P1.6, generate once using
 the existing configured model/contract, and inspect the candidate without auto-acceptance. If and only if it is genuinely valid, accept it, build a new snapshot/profile, verify the live accepted-semantic requirement/responsibility drill-down in CLI and browser, then rerun post-mutation integrity/privacy checks. No full acquisition rerun is needed for this evidence step. The provider models endpoint is reachable and lists the configured analysis model.
+
+## 2026-09-19 — Selected semantic-closure candidate
+
+The next bounded live case is `tvMm` (AI Agent Engineer, Ragham), current source detail 47
+and English projection 41.
+
+Selection rationale:
+
+- the posting is direct AI Agent / agentic-system engineering under definition 1;
+- source and English projection already exist and are current, so the evidence step does not
+  require discovery, detail refresh, or translation;
+- the previous I7 run-2 P1.6 attempt failed rather than producing a review candidate;
+- that failure included false responsibility coverage on introductory candidate-qualification
+  language, one of the general deterministic defects fixed by `8c7fdb0`;
+- using the previously failing live case is a stronger closure test than selecting an easier new vacancy.
+
+Use the supported explicit-job path only:
+
+```text
+jobhunter --config jobhunter.toml jobs analyze tvMm
+jobhunter --config jobhunter.toml jobs review-analysis tvMm status
+```
+
+The first command performs only targeted P1.6 analysis for the current job; it does not run
+discovery, refresh, translation, or batch orchestration. The second is read-only inspection.
+Do not accept automatically. If the candidate is semantically invalid, reject/preserve the evidence
+and keep I7 HOLD rather than retrying until something passes.

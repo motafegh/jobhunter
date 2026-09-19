@@ -134,6 +134,7 @@ Execution result:
 - [x] repaired rejection of a pending candidate referenced by an immutable Market snapshot; real-database-copy replay and 636 strict-warning tests passed.
 - [x] fixed headingless qualification residual coverage and false implicit-duty detection; five accepted anchors were unchanged and the full strict-warning suite reached 638 passed.
 - [x] recovered immutable definition-1 fingerprint from operational SQLite.
+- [~] selected `tvMm` as the bounded closure candidate: active direct AI Agent Engineer, current English projection 41, prior P1.6 failure, and no accepted/current P1.6. Generate exactly once with the current contract, review normally, and accept only if genuinely valid.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -190,9 +191,9 @@ Portfolio work does not broaden I7 authorization.
 
 ```text
 I7 HOLD semantic-evidence closure only
-→ select one current target-core posting with missing P1.6
-→ generate once with the existing configured model/contract
-→ review normally; accept only if genuinely valid
+→ selected candidate: `tvMm` — AI Agent Engineer / Ragham
+→ run exactly one targeted English P1.6 generation; no discovery/refresh/translation batch
+→ review the resulting candidate normally; accept only if genuinely valid
 → if accepted, build a new snapshot/profile
 → verify live accepted-semantic aggregate + frozen requirement/responsibility evidence in CLI/browser
 → rerun post-mutation SQLite integrity/foreign-key + privacy checks
