@@ -815,17 +815,22 @@ The first Market vertical slice is done only when:
 ```text
 I1-I6 repository acceptance complete
 → I7 real-local execution complete / HOLD
-→ complete only the bounded HOLD closure checks
-→ review pending P1.6 normally; never auto-accept
-→ verify live accepted-semantic drill-down + rerun snapshot immutability + post-run SQLite integrity
-→ record PASS only if those remaining checks succeed
+→ snapshot/profile immutability + integrity/privacy closure checks COMPLETE
+→ artifact 48 reviewed/rejected; historical pending-rejection lifecycle repaired
+→ headingless qualification / false-duty evidence-preparation repair COMPLETE
+→ select one current target-core posting with missing P1.6
+→ generate once with the existing configured model/contract
+→ review normally; accept only if genuinely valid
+→ build a new snapshot/profile and verify live accepted-semantic CLI/browser drill-down
+→ rerun post-mutation integrity/privacy
+→ record PASS only if that path succeeds
 → close the first slice only after PASS
 ```
 
-Latest repository-accepted implementation increment: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
+I6 implementation baseline: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
 
 I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
 
-I7 execution result: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+Current I7 execution/closure record: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
 
-Do not restart B1/foundation investigation or add report/subfamily/trend/personal scope while I7 remains HOLD.
+Do not restart B1/foundation investigation, rerun full acquisition without need, or add report/subfamily/trend/personal scope while I7 remains HOLD.

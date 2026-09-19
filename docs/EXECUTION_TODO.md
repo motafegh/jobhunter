@@ -125,13 +125,14 @@ Execution result:
 - [x] first immutable snapshot/profile existed and exposed 6 core / 0 accepted-semantic postings.
 - [x] browser usability/evidence presentation defect found during I7 was repaired and regression-tested.
 - [x] Market-local tables/paths/provider identity were absent from public corpus publication.
-- [x] final pushed head passed CI 1246.
+- [x] initial I7 publication head passed CI 1246; closure-repair heads passed CI 1248 and CI 1249.
 - [~] live accepted-semantic requirement/responsibility aggregate + evidence drill-down remains unexercised because accepted-semantic core denominator was zero.
 - [x] recovered run-2 snapshot/profile 2 and proved snapshot-1/member/profile equality against both retained pre-rerun JSON captures on 2026-09-19.
 - [x] post-run operational SQLite integrity is `ok`; foreign-key check is empty (2026-09-19).
 - [x] inspected pending `t7ck` artifact 48: material coverage, optionality and qualification/duty defects; rejection recommended.
 - [x] applied the reviewed rejection of artifact 48 during the authorized continuation; backup, exact historical-row comparison and SQLite integrity checks passed.
 - [x] repaired rejection of a pending candidate referenced by an immutable Market snapshot; real-database-copy replay and 636 strict-warning tests passed.
+- [x] fixed headingless qualification residual coverage and false implicit-duty detection; five accepted anchors were unchanged and the full strict-warning suite reached 638 passed.
 - [x] recovered immutable definition-1 fingerprint from operational SQLite.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
@@ -188,11 +189,12 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-I7 HOLD closure follow-up only
-→ review pending P1.6 normally; accept only if semantically valid
-→ obtain an accepted-current P1.6 core member without weakening P1.6
-→ verify live semantic aggregate/evidence drill-down
-→ verify rerun snapshot/profile + old-snapshot immutability
-→ verify post-run SQLite integrity + privacy
-→ PASS and close first slice only if those checks succeed; otherwise keep HOLD
+I7 HOLD semantic-evidence closure only
+→ select one current target-core posting with missing P1.6
+→ generate once with the existing configured model/contract
+→ review normally; accept only if genuinely valid
+→ if accepted, build a new snapshot/profile
+→ verify live accepted-semantic aggregate + frozen requirement/responsibility evidence in CLI/browser
+→ rerun post-mutation SQLite integrity/foreign-key + privacy checks
+→ PASS and close the first slice only if those checks succeed; otherwise preserve HOLD
 ```

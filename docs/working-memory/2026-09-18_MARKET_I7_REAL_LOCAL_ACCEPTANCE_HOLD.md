@@ -339,10 +339,10 @@ and translation were inspected directly. Review found material issues:
 3. Practical experience and ability statements are converted into seven factual
    duties, contrary to the qualification-versus-duty boundary.
 
-Recommendation: reject this candidate; never promote it to manufacture I7 PASS.
-Operational artifact 48 remains pending until the owner's explicit review decision.
+Recommendation at this point: reject this candidate; never promote it to manufacture I7 PASS.
+At this stage of the 2026-09-19 follow-up, operational artifact 48 still remained pending until the owner's explicit review decision. That decision was subsequently applied in the incremental-publication section below.
 No model regeneration, model change, source reacquisition or semantic-validator
-weakening was performed in this follow-up.
+weakening was performed in this review step.
 
 ### Reproduced lifecycle defect and bounded repair
 
@@ -378,16 +378,15 @@ Validation:
 - Ruff and dependency consistency checks passed.
 
 The operational SQLite was not migrated or semantically mutated by these repair
-replays; all migration/rejection replays used temporary copies. Changes remain
-local/uncommitted, with no commit, push or publication performed.
+replays; all migration/rejection replays used temporary copies. At this intermediate point the repair was still local/uncommitted; it was subsequently published and then exercised operationally as recorded below.
 
-### Remaining exact work
+### Remaining exact work at that point
 
-Owner review decision for artifact 48 → apply the supported rejection if confirmed
+At this point the sequence was: owner review decision for artifact 48 → apply the supported rejection if confirmed
 → obtain a genuinely valid accepted-current core P1.6 artifact through bounded
 normal generation/review → build a new point-in-time snapshot/profile → inspect
 live accepted-semantic requirement/responsibility evidence through CLI and browser
-→ recheck integrity/privacy after those mutations. Keep I7 HOLD until that path passes.
+→ recheck integrity/privacy after those mutations. The artifact-48 rejection and lifecycle repair were subsequently completed below; the accepted-semantic proof path remains open.
 
 
 ## 2026-09-19 — Incremental publication and operational rejection
@@ -427,7 +426,5 @@ dependency checks passed. Read-only before/after helper comparisons on all five
 accepted public anchors found identical residual and duty plans; no anchors were
 regenerated or their review state changed.
 
-Next bounded live step: one current target-core posting with missing P1.6, using
-the existing configured model/contract, then inspect the candidate without auto-
-acceptance. No full acquisition rerun is needed for this evidence step. The provider
-models endpoint is reachable and lists the configured analysis model.
+Current bounded live step: select one current target-core posting with missing P1.6, generate once using
+the existing configured model/contract, and inspect the candidate without auto-acceptance. If and only if it is genuinely valid, accept it, build a new snapshot/profile, verify the live accepted-semantic requirement/responsibility drill-down in CLI and browser, then rerun post-mutation integrity/privacy checks. No full acquisition rerun is needed for this evidence step. The provider models endpoint is reachable and lists the configured analysis model.

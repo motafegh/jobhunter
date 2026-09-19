@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-18  
+**Last reconciled:** 2026-09-19  
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -206,64 +206,54 @@ During integration, repository tests caught an accidental attempted drift in acc
 
 ---
 
-## 7. Exact active frontier — I7 HOLD closure follow-up
+## 7. Exact active frontier — I7 HOLD semantic-evidence closure
 
-I7 real-local execution has occurred. Sanitized evidence and the decision are recorded at:
+I7 real-local execution has occurred. Sanitized evidence and the continuing decision record are at:
 
 `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
 
-Observed evidence:
+Current closed evidence:
 
 ```text
-run 1                       completed_with_failures
-run 1 source denominator    6 core postings
-run 1 accepted-semantic     0
-run 2                       completed_with_failures
-run 2 candidates            52
-run 2 membership            6 core / 1 adjacent / 1 excluded; 0 failures
-run 2 translation           4 attempted / 2 completed / 2 failed
-final current translations  9 reused
-run 2 P1.6                  2 attempted / 1 completed-or-reused / 1 failed
-final accepted P1.6         0; one current pending-review artifact
-public corpus               394 discovered / 51 parsed / 27 English / 5 accepted P1.6 / 5 Capability
-CI                          run 1246 SUCCESS
+target definition fingerprint      RECOVERED
+run-2 snapshot/profile             RECOVERED
+snapshot-1 historical immutability VERIFIED
+post-run SQLite integrity/FKs      VERIFIED
+public-corpus privacy boundary     VERIFIED
+artifact 48 semantic review        REJECTED
+historical pending-rejection FK    REPAIRED
+accepted public anchors            NON-REGRESSED
+latest strict suite                638 passed
+latest CI                          1249 SUCCESS
 ```
 
-Outcome: **HOLD**. The evidence validates target-scoped progression, reuse/currentness mechanics,
-partial success, membership, honest source/semantic separation, browser repairs, and privacy. The live
-snapshot did not contain an accepted-semantic core posting, so accepted-P1.6 requirement/responsibility
-drill-down could not be verified end to end. The captured handoff also did not retain the final
-post-rerun snapshot/profile immutability comparison or a post-run SQLite integrity result.
+The historical-pending rejection defect is fixed by retaining the rejected artifact payload/ID when
+an immutable Market snapshot references it while excluding that row from current/reuse selection.
+Operational rejection of `t7ck` artifact 48 succeeded with snapshot/member/profile history unchanged.
+
+The follow-up also fixed two general P1.6 evidence-preparation defects: headingless qualification text
+between detected lists is retained, and implicit-duty detection is restricted to same-sentence infinitive
+language without turning ability/capacity/experience qualifications into duties. All five accepted public
+anchors retained identical helper plans.
+
+I7 remains **HOLD** for one reason: no current target-core posting has yet produced a genuinely valid
+accepted-current P1.6 artifact in this live target, so the real accepted-semantic aggregate and frozen
+requirement/responsibility drill-down still have not been exercised end to end.
 
 Exact next responsibility:
 
 ```text
-review the pending P1.6 artifact normally — accept only if semantically valid
-→ obtain at least one accepted-current P1.6 core member without weakening/auto-accepting P1.6
-→ verify live requirement/responsibility evidence drill-down in CLI/browser
-→ verify second snapshot/profile existence and first snapshot/profile immutability
-→ rerun SQLite integrity/foreign-key and privacy checks
-→ record PASS if those remaining checks pass; otherwise preserve HOLD
+select one current target-core posting with missing P1.6
+→ generate once with the existing configured model/contract
+→ review the candidate normally; never auto-accept
+→ if genuinely valid, accept it
+→ build a new point-in-time Market snapshot/profile
+→ verify accepted-semantic requirement/responsibility aggregate + frozen evidence in CLI and browser
+→ rerun SQLite integrity/foreign-key + privacy checks after the mutation
+→ record I7 PASS only if that path succeeds; otherwise preserve HOLD
 ```
 
----
-
-### 2026-09-19 closure follow-up
-
-Definition fingerprint and snapshot/profile 2 were recovered. Snapshot 1, its members
-and profile exactly match both retained pre-rerun JSON captures. Operational SQLite
-integrity/foreign-key and corpus privacy checks passed. Those evidence gaps are closed.
-
-Pending `t7ck` P1.6 artifact 48 has material coverage/optionality/qualification-to-duty
-errors and was rejected during the authorized continuation; historical evidence remains intact. An isolated
-replay exposed a foreign-key failure when rejecting a candidate referenced by snapshot 2.
-A bounded `AnalysisStore` repair now retains rejected historical payloads while excluding
-them from current/reuse selection and allowing replacements. Real-database-copy replay,
-Ruff, dependency consistency, and all 636 tests with warnings-as-errors passed. The repair was published as `d761a4f`; operational rejection passed with snapshot history unchanged.
-
-The remaining gate is a valid accepted-semantic core artifact and real CLI/browser
-semantic drill-down on a new snapshot, followed by post-mutation integrity/privacy checks.
-Details are appended to `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+No full acquisition rerun is required merely to obtain this semantic evidence.
 
 ---
 

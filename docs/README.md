@@ -45,14 +45,14 @@ Use these files for current execution:
 - [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay.
 - [`MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — current controlling Market product/implementation plan.
 - [`working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal `PASS / FIRST VERTICAL SLICE AUTHORIZED` decision and first-slice contract.
-- [`working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`](working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md) — latest repository-accepted implementation increment.
+- [`working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`](working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md) — accepted I6 implementation baseline.
 - [`working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`](working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md) — executed real-local acceptance protocol.
 - [`working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`](working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md) — sanitized I7 execution evidence and HOLD decision.
 - [`working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`](working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md) — prior research/history; load only when a specific decision needs its evidence.
 - [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — current implementation checklist.
 - [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — rolling handoff/current-state memory.
 
-The exact next product action is the **bounded I7 HOLD closure follow-up**. Real-local I7 execution occurred and preserved useful evidence, but the first slice is not closed because accepted-semantic drill-down and the final post-rerun snapshot/profile integrity check were not fully demonstrated. Do not restart B1/foundation work or broaden into later Market scope.
+The exact next product action is the **bounded I7 HOLD semantic-evidence closure step**. The rerun snapshot/profile identities, historical immutability, definition fingerprint, SQLite integrity, privacy boundary, and artifact-48 rejection are now closed. The remaining gate is one genuinely valid accepted-current P1.6 core artifact, followed by a new snapshot/profile and real CLI/browser requirement/responsibility evidence drill-down. Do not restart B1/foundation work or broaden into later Market scope.
 
 ## 3. Closed P2.2B and executed Market-foundation records
 

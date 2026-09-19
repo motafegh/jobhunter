@@ -1,7 +1,7 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-18  
+**Date:** 2026-09-19  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT  
@@ -189,82 +189,64 @@ pytest -W error 632 passed
 
 ---
 
-## 4. Exact next responsibility — I7 HOLD closure follow-up
+## 4. Exact next responsibility — I7 HOLD semantic-evidence closure
 
-I7 real-local execution occurred on the owner's operational runtime.
+I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.
 
 Protocol:
 
 `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
-Sanitized result:
+Detailed continuing record:
 
 `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
 
-Key evidence:
+Current evidence:
 
 ```text
-run 1: completed_with_failures
-snapshot/profile: created
-core source postings: 6
-accepted-semantic core postings: 0
-
-run 2: completed_with_failures
-candidate jobs: 52
-discovery: 5 searches / 5 requests / 5 pages / 0 new IDs
-source execution: 6 attempted / 6 succeeded / 5 new versions / 1 unchanged
-translation: 4 attempted / 2 completed / 2 failed
-final current translation reuse: 9
-P1.6: 2 attempted / 1 completed-or-reused / 1 failed
-final P1.6 state: 0 accepted / 1 pending-review
-membership: 12 eligible / 8 selected / 8 succeeded / 0 failed
-dispositions: 6 core / 1 adjacent / 1 excluded
-CI 1246: SUCCESS
+run 1 / snapshot 1 / profile 1         preserved
+run 2 / snapshot 2 / profile 2         recovered
+snapshot-1 historical immutability     verified
+definition-1 fingerprint               recovered
+post-run SQLite integrity / FKs        ok / empty
+public-corpus privacy                   verified
+t7ck artifact 48                       reviewed + rejected
+historical pending-rejection FK defect repaired
+accepted public-anchor helper plans    unchanged
+latest full strict suite               638 passed
+latest CI                              1249 SUCCESS
 ```
 
-The runs proved useful target-scoped progression, currentness/reuse, honest partial-success handling,
-membership separation, source-vs-semantic denominator honesty, and Market-publication privacy.
+The rejection repair preserves a historically referenced pending artifact's exact payload/ID as
+`rejected` while excluding it from current/reuse selection and allowing a replacement. This keeps
+immutable Market history valid without treating rejected analysis as current evidence.
 
-During I7, browser inspection exposed presentation gaps in target forms, membership reason/evidence,
-and frozen aggregate evidence. The local agent repaired those surfaces, added a regression test proving
-historical snapshot evidence survives later source changes, and the final pushed head passed CI.
+The latest P1.6 evidence-preparation repair is also general rather than vacancy-specific:
 
-Decision: **HOLD**. The live source corpus had no accepted-semantic core member, so the real workflow
-could not exercise accepted-P1.6 requirement/responsibility drill-down. The handoff also did not retain
-the final post-rerun snapshot/profile immutability comparison or a post-run SQLite integrity result.
+- headingless qualification text between detected lists remains addressable;
+- implicit duty detection cannot cross sentence boundaries;
+- ability/capacity/experience qualification phrasing does not manufacture duties;
+- no accepted anchor changed under read-only before/after helper comparison.
 
-Next work is narrow:
+Decision remains **HOLD** only because the live target still lacks a genuinely valid accepted-current
+P1.6 core member. The real accepted-semantic Market aggregate/evidence drill-down therefore remains
+unexercised end to end.
+
+Exact next work:
 
 ```text
-review the pending P1.6 artifact normally
-→ accept only if it is semantically valid; otherwise preserve rejection/pending evidence
-→ establish at least one accepted-current P1.6 core member without weakening the contract
-→ verify live semantic aggregate/evidence drill-down through CLI + browser
-→ verify second snapshot/profile and first snapshot/profile immutability
-→ verify post-run SQLite integrity/foreign keys + privacy
-→ PASS only if all remaining checks succeed
+one current target-core posting with missing P1.6
+→ one bounded generation using the existing configured model/contract
+→ normal semantic review
+→ accept only if genuinely valid
+→ new point-in-time snapshot/profile
+→ real CLI/browser requirement + responsibility aggregate/evidence drill-down
+→ post-mutation SQLite integrity/FK + privacy checks
+→ PASS only if the complete path succeeds
 ```
 
-No new Market architecture or later-scope feature is authorized by this HOLD.
-
----
-
-### 2026-09-19 closure follow-up
-
-Definition fingerprint and snapshot/profile 2 were recovered. Snapshot 1, its members
-and profile exactly match both retained pre-rerun JSON captures. Operational SQLite
-integrity/foreign-key and corpus privacy checks passed. Those evidence gaps are closed.
-
-Pending `t7ck` P1.6 artifact 48 has material coverage/optionality/qualification-to-duty
-errors and was rejected during the authorized continuation; historical evidence remains intact. An isolated
-replay exposed a foreign-key failure when rejecting a candidate referenced by snapshot 2.
-A bounded `AnalysisStore` repair now retains rejected historical payloads while excluding
-them from current/reuse selection and allowing replacements. Real-database-copy replay,
-Ruff, dependency consistency, and all 636 tests with warnings-as-errors passed. The repair was published as `d761a4f`; operational rejection passed with snapshot history unchanged.
-
-The remaining gate is a valid accepted-semantic core artifact and real CLI/browser
-semantic drill-down on a new snapshot, followed by post-mutation integrity/privacy checks.
-Details are appended to `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+No full acquisition rerun, new Market architecture, prompt patch, model change, or validator weakening
+is authorized merely to close I7.
 
 ---
 

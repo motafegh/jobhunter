@@ -234,7 +234,7 @@ Capability remains an accepted per-job layer but is intentionally optional for t
 
 The current Market surface now supports stable target identity, immutable target-definition versions, bounded target-scoped acquisition/affected-work planning, semantic membership (`core_match / adjacent_match / uncertain / excluded`), immutable snapshots, deterministic aggregate profiles, and shared browser/CLI inspection over the same local SQLite authority.
 
-The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 real-local execution is complete but HOLD; the slice is not end-to-end accepted until the remaining live semantic-drill-down, rerun-immutability, and post-run integrity checks pass.
+The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 real-local execution is complete but HOLD. Rerun snapshot/profile immutability, definition identity, SQLite integrity and privacy checks are now verified; the remaining acceptance gate is one genuinely valid accepted-current P1.6 core member demonstrated through a new live semantic aggregate/evidence drill-down and post-mutation integrity/privacy checks.
 
 This layer is **not yet** a reviewed canonical role taxonomy, duplicate-adjusted mature market model, semantic role-subfamily report layer, or complete-labor-market claim.
 
