@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-18  
+**Date:** 2026-09-19
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
@@ -127,12 +127,15 @@ Execution result:
 - [x] Market-local tables/paths/provider identity were absent from public corpus publication.
 - [x] final pushed head passed CI 1246.
 - [~] live accepted-semantic requirement/responsibility aggregate + evidence drill-down remains unexercised because accepted-semantic core denominator was zero.
-- [~] final post-rerun snapshot/profile existence and first-snapshot/profile immutability comparison was not retained in the sanitized handoff.
-- [~] post-run SQLite integrity/foreign-key output was not retained in the sanitized handoff.
-- [ ] review the current pending P1.6 artifact normally; never auto-accept it merely to close I7.
+- [x] recovered run-2 snapshot/profile 2 and proved snapshot-1/member/profile equality against both retained pre-rerun JSON captures on 2026-09-19.
+- [x] post-run operational SQLite integrity is `ok`; foreign-key check is empty (2026-09-19).
+- [x] inspected pending `t7ck` artifact 48: material coverage, optionality and qualification/duty defects; rejection recommended.
+- [ ] obtain the owner review decision and apply the supported rejection of artifact 48.
+- [x] repaired rejection of a pending candidate referenced by an immutable Market snapshot; real-database-copy replay and 636 strict-warning tests passed.
+- [x] recovered immutable definition-1 fingerprint from operational SQLite.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
-- [ ] verify second snapshot/profile and first snapshot/profile historical immutability after the rerun.
-- [ ] rerun post-execution SQLite integrity/foreign-key + privacy check.
+- [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
+- [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
 - [ ] change I7 to PASS only after those remaining checks succeed; otherwise preserve HOLD.
 
 ---

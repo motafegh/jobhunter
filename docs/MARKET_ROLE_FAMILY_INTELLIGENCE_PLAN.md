@@ -1,8 +1,8 @@
 # JobHunter Market and Role-Family Intelligence Plan
 
-**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / I1-I6 REPOSITORY ACCEPTED / I7 LOCAL ACCEPTANCE OPEN
+**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / I1-I6 REPOSITORY ACCEPTED / I7 EXECUTED / HOLD
 **Original date:** 2026-09-06  
-**Last reconciled:** 2026-09-18
+**Last reconciled:** 2026-09-19
 **Branch:** `main`  
 **Scope:** Target-scoped market refresh → qualified evidence corpus → deterministic aggregate intelligence → later bounded semantic role-family synthesis/history → later reviewed personal comparison
 
@@ -34,10 +34,10 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded local real acceptance + reuse rerun ← NEXT
+I7  bounded local real acceptance + reuse rerun EXECUTED / HOLD
 ```
 
-This plan controls the long-term Market direction and the first vertical slice. I1-I6 are repository-accepted, but end-to-end first-slice completion remains **not accepted** until I7 real local evidence passes. The prepared I7 protocol is `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
+This plan controls the long-term Market direction and the first vertical slice. I1-I6 are repository-accepted, but end-to-end first-slice completion remains **not accepted** until I7 real local evidence passes. The executed I7 protocol is `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
 
 ---
 

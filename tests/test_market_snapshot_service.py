@@ -548,3 +548,101 @@ def test_old_snapshot_remains_exact_after_new_source_and_membership(h: Harness) 
             "UPDATE market_corpus_snapshot_members SET disposition = 'excluded' WHERE id = ?",
             (old_member.id,),
         )
+
+
+@pytest.mark.parametrize("legacy_schema", [False, True])
+def test_reject_pending_analysis_after_snapshot_preserves_history_and_allows_rebuild(
+    h: Harness, legacy_schema: bool,
+) -> None:
+    from jobhunter.market_aggregate_service import MarketAggregateService
+
+    detail_id, translation_id = h.seed_source("review-after-snapshot")
+    artifact_id = h.analysis(detail_id, translation_id, review_status="pending")
+    membership = h.membership(
+        detail_id, disposition="core_match", translation_id=translation_id,
+    )
+    snapshot = h.service().build_snapshot(
+        run_id=h.completed_run().id, membership_ids=(membership.id,),
+    )
+    aggregates = MarketAggregateService(
+        database_path=h.database_path, market_store=h.market,
+        analysis_store=h.analyses, clock=lambda: h.now,
+    )
+    profile = aggregates.build_profile(snapshot.snapshot.id).profile
+    if legacy_schema:
+        # Reproduce the deployed two-state schema, including an archived higher ID.
+        with sqlite3.connect(h.database_path) as connection:
+            table_sql = connection.execute(
+                "SELECT sql FROM sqlite_master WHERE name = 'job_analysis_artifacts'"
+            ).fetchone()[0]
+            index_sql = [row[0] for row in connection.execute(
+                "SELECT sql FROM sqlite_master WHERE type = 'index' "
+                "AND tbl_name = 'job_analysis_artifacts' AND sql IS NOT NULL"
+            )]
+            connection.executescript(
+                "BEGIN; CREATE TEMP TABLE saved_analysis AS SELECT * FROM job_analysis_artifacts;"
+                "DROP TABLE job_analysis_artifacts;"
+                + table_sql.replace("'pending', 'accepted', 'rejected'", "'pending', 'accepted'")
+                + "; INSERT INTO job_analysis_artifacts SELECT * FROM saved_analysis;"
+                "DROP TABLE saved_analysis;"
+                + ";".join(sql.replace(" AND semantic_review_status != 'rejected'", "")
+                           for sql in index_sql)
+                + "; UPDATE sqlite_sequence SET seq = 100 WHERE name = 'job_analysis_artifacts';"
+                "COMMIT;"
+            )
+    original = h.analyses.artifact_by_id(artifact_id)
+    h.now += timedelta(minutes=1)
+    h.analyses.review_current(
+        "review-after-snapshot", model=_MODEL, prompt_version=ENGLISH_PROMPT_VERSION,
+        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION, disposition="rejected",
+        reviewed_at=h.now, note="Qualification evidence incorrectly asserted as duties.",
+        translation_artifact_id=translation_id, require_translation_dependency=True,
+    )
+
+    retired = h.analyses.artifact_by_id(artifact_id)
+    assert retired.semantic_review_status == "rejected"
+    assert retired.analysis == original.analysis
+    assert retired.request_body == original.request_body
+    assert retired.raw_response == original.raw_response
+    assert h.analyses.latest_current("review-after-snapshot") is None
+    assert h.analyses.list_current() == ()
+    assert h.analyses.find_artifact(
+        job_detail_version_id=detail_id, translation_artifact_id=translation_id,
+        require_translation_dependency=True, model=_MODEL,
+        prompt_version=ENGLISH_PROMPT_VERSION, schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+    ) is None
+    assert h.market.get_snapshot(snapshot.snapshot.id) == snapshot.snapshot
+    assert h.market.list_snapshot_members(snapshot.snapshot.id) == snapshot.members
+    assert aggregates.build_profile(snapshot.snapshot.id).profile == profile
+
+    rejected_snapshot = h.service().build_snapshot(
+        run_id=h.completed_run().id, membership_ids=(membership.id,),
+    )
+    assert rejected_snapshot.members[0].semantic_coverage_status == "rejected"
+    assert rejected_snapshot.members[0].analysis_artifact_id is None
+    replacement_id = h.analysis(detail_id, translation_id, review_status="pending")
+    assert replacement_id > (100 if legacy_schema else artifact_id)
+    assert h.analyses.latest_current("review-after-snapshot").id == replacement_id
+    assert [a.id for a in h.analyses.list_current()] == [replacement_id]
+    with sqlite3.connect(h.database_path) as connection:
+        assert connection.execute("PRAGMA integrity_check").fetchone()[0] == "ok"
+        assert connection.execute("PRAGMA foreign_key_check").fetchall() == []
+
+
+def test_rejection_of_accepted_market_dependency_stays_blocked(h: Harness) -> None:
+    detail_id, translation_id = h.seed_source("accepted-history")
+    artifact_id = h.analysis(detail_id, translation_id, review_status="accepted")
+    membership = h.membership(
+        detail_id, disposition="core_match", translation_id=translation_id,
+        analysis_id=artifact_id,
+    )
+    h.service().build_snapshot(
+        run_id=h.completed_run().id, membership_ids=(membership.id,),
+    )
+    with pytest.raises(ValueError, match="durable Market downstream"):
+        h.analyses.review_current(
+            "accepted-history", model=_MODEL, prompt_version=ENGLISH_PROMPT_VERSION,
+            schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION, disposition="rejected",
+            reviewed_at=h.now, note="Accepted historical evidence must remain protected.",
+        )
+    assert h.analyses.latest_current("accepted-history").semantic_review_status == "accepted"

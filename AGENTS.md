@@ -257,8 +257,10 @@ I7 real-local execution has now occurred. The evidence supports the I1-I6 archit
 partial-success behavior, target-scoped progression/reuse, membership, privacy, and browser workflow,
 but the acceptance outcome is **HOLD** rather than PASS. The live snapshots did not yet contain an
 accepted-semantic core posting, so accepted P1.6 requirement/responsibility drill-down was not exercised
-end to end; the captured handoff also did not preserve the final post-rerun snapshot/profile integrity
-comparison. Continue only the bounded I7 closure follow-up recorded in the result file. Do not broaden
+end to end. The 2026-09-19 follow-up recovered snapshot/profile 2, verified snapshot-1
+historical immutability and SQLite integrity, and repaired rejection of pending P1.6 referenced
+by a historical snapshot. Artifact 48 has material semantic defects; its owner review decision
+is pending. Continue only the bounded I7 closure follow-up recorded in the result file. Do not broaden
 product scope or weaken semantic review to manufacture PASS.
 
 ### 5.2 First-slice settled rules

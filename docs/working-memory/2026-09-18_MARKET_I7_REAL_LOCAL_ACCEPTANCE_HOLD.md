@@ -1,7 +1,7 @@
 # Market I7 — Real Local Acceptance Result
 
 **Date:** 2026-09-18  
-**Status:** EXECUTED / HOLD  
+**Status:** EXECUTED / HOLD — 2026-09-19 closure follow-up below
 **Branch:** `main`  
 **Repository head carrying local-work publication:** `d1d2a952e53d980e699348abe3d5bfc8177a60c1`  
 **Final CI on that head:** run 1246 / 35386437630 — SUCCESS  
@@ -294,3 +294,97 @@ While I7 is HOLD, do not start:
 - repost-dedup authority;
 - Market-state public export;
 - new workflow/currentness/persistence infrastructure.
+
+
+## 2026-09-19 — Takeover, recovered closure evidence, and bounded review repair
+
+Fetched all remote refs/tags and fast-forwarded `main` from `d1d2a95` to
+`977af11f419dc0ef2540b2fadc121f5038321875`. No submodules were configured. The
+operational database was present; the existing default configuration selected it.
+The protocol's example `config/local.toml` was absent, so no replacement config was created.
+
+### Recovered operational evidence
+
+- Target 1 / definition 1 / version 1 fingerprint:
+  `4f77e7966b68cae9c4d2545212269f7b85482458ce30e51bee435bdd65400d9f`.
+- Run 1 → snapshot 1 → profile 1, profile SHA-256:
+  `99fef4bd178c854ba3397674a57b663610d1e5ff69d507f255abea75ece649df`.
+- Run 2 → snapshot 2 → profile 2, profile SHA-256:
+  `11ccfeffa8eb858b87436d749d13488c6a860557e1901a8e292e43417e22d9eb`.
+- Snapshot 1, all members, and profile 1 exactly match both retained pre-rerun
+  structured JSON captures. This closes the missing historical comparison; it is
+  comparison of parsed JSON values, not a claim about JSON whitespace bytes.
+- Snapshot 2 has 6 core, 1 adjacent and 1 excluded member. Its core semantic
+  coverage is 0 accepted, 1 pending, 4 missing and 1 failed.
+- Post-run operational SQLite: `integrity_check = ok`; `foreign_key_check = []`.
+- Public corpus scan found no Market table names, loopback address or local home
+  path. No corpus changes were made during this follow-up.
+
+These checks close the preserved-evidence gaps for definition identity, rerun
+snapshot/profile existence, snapshot-1 immutability and post-run SQLite integrity.
+They do not close the accepted-semantic drill-down gate.
+
+### Pending candidate review — do not accept
+
+The one pending candidate is `t7ck`, P1.6 artifact 48, source detail 48, English
+projection 42, with 18 requirements and 7 asserted responsibilities. Its source
+and translation were inspected directly. Review found material issues:
+
+1. Required GPU coverage and preferred familiarity with Whisper, wav2vec2, XTTS
+   and Chatterbox are absent from requirements.
+2. Streaming Audio, Real-Time Voice, VAD and Voice Cloning are asserted as required
+   even though the complete source sentence describes that experience as an
+   advantage. Latency reduction is marked contextual; the shared optionality is
+   not preserved across the sentence.
+3. Practical experience and ability statements are converted into seven factual
+   duties, contrary to the qualification-versus-duty boundary.
+
+Recommendation: reject this candidate; never promote it to manufacture I7 PASS.
+Operational artifact 48 remains pending until the owner's explicit review decision.
+No model regeneration, model change, source reacquisition or semantic-validator
+weakening was performed in this follow-up.
+
+### Reproduced lifecycle defect and bounded repair
+
+On a temporary SQLite backup, the normal rejection service failed with
+`IntegrityError: FOREIGN KEY constraint failed`: snapshot 2 member 8 references
+pending artifact 48, while the old rejection implementation deleted that artifact.
+The failed transaction rolled back, preserving the candidate and snapshot.
+
+The repair is owned by `AnalysisStore`:
+
+- archive the rejected candidate and retain its exact payload/ID when a historical
+  pending Market snapshot references it;
+- mark the retained row rejected and exclude it from current/reuse queries;
+- permit a replacement under the same source/translation/model/contract identity;
+- preserve frozen snapshot/member/profile state and retained attempt linkage;
+- keep accepted Market and Capability downstream rejection protection;
+- migrate the prior two-state schema with foreign-key validation and preserve the
+  autoincrement high-water mark so archived IDs cannot be reused.
+
+Unreferenced rejections retain the existing archive/delete behavior. This changes
+review lifecycle persistence only; it does not alter P1.6 extraction or acceptance
+semantics, nor I5 aggregate semantics.
+
+Validation:
+
+- focused baseline before repair: 35 passed with warnings-as-errors;
+- regression coverage exercises fresh and legacy schema, pending → rejected →
+  replacement, immutable old snapshot/profile, new rejected coverage, accepted
+  downstream protection, and foreign-key integrity;
+- repaired rejection replay on a copy of the real operational database passed;
+  every row in both historical snapshots, their members and profiles was unchanged;
+- full suite: **636 passed** normally and **636 passed** with warnings-as-errors;
+- Ruff and dependency consistency checks passed.
+
+The operational SQLite was not migrated or semantically mutated by these repair
+replays; all migration/rejection replays used temporary copies. Changes remain
+local/uncommitted, with no commit, push or publication performed.
+
+### Remaining exact work
+
+Owner review decision for artifact 48 → apply the supported rejection if confirmed
+→ obtain a genuinely valid accepted-current core P1.6 artifact through bounded
+normal generation/review → build a new point-in-time snapshot/profile → inspect
+live accepted-semantic requirement/responsibility evidence through CLI and browser
+→ recheck integrity/privacy after those mutations. Keep I7 HOLD until that path passes.

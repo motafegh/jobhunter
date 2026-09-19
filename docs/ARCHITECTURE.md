@@ -374,7 +374,7 @@ Important invariants:
 - evidence must validate against authoritative employer fields;
 - fresh English v20 artifacts remain `pending` until explicit semantic review;
 - pending candidates are inspectable but excluded from accepted downstream layers;
-- rejection archives local candidate evidence and removes the rejected artifact from current runtime state so the same contract can be rebuilt.
+- rejection archives local candidate evidence and removes it from current/reuse selection so the same contract can be rebuilt; when a historical pending Market snapshot references the candidate, its payload and ID remain retained with rejected review status, while the snapshot keeps its original point-in-time pending state.
 
 `src/jobhunter/analysis_current.py` is the current public routing boundary: English uses v20/v5 while original-language P1.6 remains on independently validated v9/v4.
 

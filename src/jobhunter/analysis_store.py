@@ -77,7 +77,7 @@ class AnalysisStore:
                     raw_response_json TEXT NOT NULL,
                     created_at TEXT NOT NULL,
                     semantic_review_status TEXT NOT NULL DEFAULT 'accepted'
-                        CHECK(semantic_review_status IN ('pending', 'accepted')),
+                        CHECK(semantic_review_status IN ('pending', 'accepted', 'rejected')),
                     semantic_reviewed_at TEXT,
                     semantic_review_note TEXT,
                     FOREIGN KEY(job_detail_version_id) REFERENCES job_detail_versions(id),
@@ -132,7 +132,7 @@ class AnalysisStore:
                 connection.execute(
                     "ALTER TABLE job_analysis_artifacts "
                     "ADD COLUMN semantic_review_status TEXT NOT NULL DEFAULT 'accepted' "
-                    "CHECK(semantic_review_status IN ('pending', 'accepted'))"
+                    "CHECK(semantic_review_status IN ('pending', 'accepted', 'rejected'))"
                 )
             if "semantic_reviewed_at" not in columns:
                 connection.execute(
@@ -151,7 +151,8 @@ class AnalysisStore:
         made a new projection for an unchanged source version silently reuse analysis
         derived from the previous projection. Partial unique indexes retain one
         original-language artifact per contract while preserving separately versioned
-        English dependencies.
+        English dependencies. Rejected pending candidates retained for historical
+        Market snapshots do not occupy a current contract identity.
         """
 
         with self._connect() as connection:
@@ -166,7 +167,13 @@ class AnalysisStore:
                 in normalized_sql
             )
 
-        if legacy_unique:
+            supports_rejection = "'rejected'" in normalized_sql
+            sequence = connection.execute(
+                "SELECT seq FROM sqlite_sequence WHERE name = 'job_analysis_artifacts'"
+            ).fetchone()
+            previous_sequence = int(sequence["seq"]) if sequence else 0
+
+        if legacy_unique or not supports_rejection:
             with self._connect() as connection:
                 connection.execute("PRAGMA foreign_keys=OFF")
                 connection.executescript(
@@ -184,7 +191,7 @@ class AnalysisStore:
                         raw_response_json TEXT NOT NULL,
                         created_at TEXT NOT NULL,
                         semantic_review_status TEXT NOT NULL DEFAULT 'accepted'
-                            CHECK(semantic_review_status IN ('pending', 'accepted')),
+                            CHECK(semantic_review_status IN ('pending', 'accepted', 'rejected')),
                         semantic_reviewed_at TEXT,
                         semantic_review_note TEXT,
                         FOREIGN KEY(job_detail_version_id) REFERENCES job_detail_versions(id),
@@ -206,9 +213,18 @@ class AnalysisStore:
                     DROP TABLE job_analysis_artifacts;
                     ALTER TABLE job_analysis_artifacts_dependency_v2
                         RENAME TO job_analysis_artifacts;
-                    COMMIT;
                     """
                 )
+                # Rebuilding must not reuse IDs of previously archived/deleted artifacts.
+                connection.execute(
+                    "UPDATE sqlite_sequence SET seq = MAX(seq, ?) "
+                    "WHERE name = 'job_analysis_artifacts'",
+                    (previous_sequence,),
+                )
+                violations = connection.execute("PRAGMA foreign_key_check").fetchall()
+                if violations:
+                    raise sqlite3.IntegrityError("Analysis migration broke foreign-key integrity")
+                connection.commit()
 
         with self._connect() as connection:
             connection.executescript(
@@ -217,14 +233,14 @@ class AnalysisStore:
                 ON job_analysis_artifacts(
                     job_detail_version_id, model, prompt_version, schema_version
                 )
-                WHERE translation_artifact_id IS NULL;
+                WHERE translation_artifact_id IS NULL AND semantic_review_status != 'rejected';
 
                 CREATE UNIQUE INDEX IF NOT EXISTS uq_analysis_english_dependency_contract
                 ON job_analysis_artifacts(
                     job_detail_version_id, translation_artifact_id,
                     model, prompt_version, schema_version
                 )
-                WHERE translation_artifact_id IS NOT NULL;
+                WHERE translation_artifact_id IS NOT NULL AND semantic_review_status != 'rejected';
 
                 CREATE INDEX IF NOT EXISTS idx_analysis_artifacts_version
                 ON job_analysis_artifacts(job_detail_version_id, id DESC);
@@ -249,7 +265,8 @@ class AnalysisStore:
                 FROM job_analysis_artifacts AS a
                 JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
                 JOIN job_postings AS p ON p.id = v.job_posting_id
-                WHERE a.job_detail_version_id = ? AND a.model = ?
+                WHERE a.semantic_review_status != 'rejected'
+                  AND a.job_detail_version_id = ? AND a.model = ?
                   AND a.prompt_version = ? AND a.schema_version = ?
                   AND (? = 0 OR a.translation_artifact_id = ?)
                 ORDER BY a.id DESC
@@ -385,7 +402,8 @@ class AnalysisStore:
                 FROM job_analysis_artifacts AS a
                 JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
                 JOIN job_postings AS p ON p.id = v.job_posting_id
-                WHERE p.source = 'jobinja' AND p.source_job_id = ?
+                WHERE a.semantic_review_status != 'rejected'
+                  AND p.source = 'jobinja' AND p.source_job_id = ?
                   AND v.id = (
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
@@ -434,7 +452,7 @@ class AnalysisStore:
                 FROM job_analysis_artifacts AS a
                 JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
                 JOIN job_postings AS p ON p.id = v.job_posting_id
-                WHERE p.source = 'jobinja'
+                WHERE a.semantic_review_status != 'rejected' AND p.source = 'jobinja'
                   AND v.id = (
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
@@ -445,7 +463,8 @@ class AnalysisStore:
                   AND (? = 0 OR a.semantic_review_status = 'accepted')
                   AND a.id = (
                       SELECT MAX(a2.id) FROM job_analysis_artifacts AS a2
-                      WHERE a2.job_detail_version_id = v.id
+                      WHERE a2.semantic_review_status != 'rejected'
+                        AND a2.job_detail_version_id = v.id
                         AND (? IS NULL OR a2.model = ?)
                         AND (? IS NULL OR a2.prompt_version = ?)
                         AND (? IS NULL OR a2.schema_version = ?)
@@ -554,6 +573,24 @@ class AnalysisStore:
                         "Cannot reject an analysis artifact with durable Capability downstream"
                     )
 
+            snapshot_table = connection.execute(
+                "SELECT 1 FROM sqlite_master WHERE type = 'table' "
+                "AND name = 'market_corpus_snapshot_members'"
+            ).fetchone()
+            snapshot_reference = None
+            if snapshot_table is not None:
+                snapshot_reference = connection.execute(
+                    "SELECT id FROM market_corpus_snapshot_members "
+                    "WHERE analysis_artifact_id = ? LIMIT 1",
+                    (artifact.id,),
+                ).fetchone()
+            if snapshot_reference is not None and (
+                artifact.semantic_review_status != SEMANTIC_REVIEW_PENDING
+            ):
+                raise ValueError(
+                    "Cannot reject an accepted analysis artifact with durable Market downstream"
+                )
+
             connection.execute(
                 """
                 INSERT INTO job_analysis_rejected_artifacts(
@@ -569,11 +606,22 @@ class AnalysisStore:
                 """,
                 (source_job_id, reviewed_at_text, normalized_note, artifact.id),
             )
-            connection.execute(
-                "UPDATE job_analysis_attempts SET artifact_id = NULL WHERE artifact_id = ?",
-                (artifact.id,),
-            )
-            connection.execute("DELETE FROM job_analysis_artifacts WHERE id = ?", (artifact.id,))
+            if snapshot_reference is not None:
+                # The snapshot freezes the pending coverage state. Keep its exact payload
+                # and FK identity, but retire the candidate from current/reuse queries.
+                connection.execute(
+                    "UPDATE job_analysis_artifacts SET semantic_review_status = 'rejected', "
+                    "semantic_reviewed_at = ?, semantic_review_note = ? WHERE id = ?",
+                    (reviewed_at_text, normalized_note, artifact.id),
+                )
+            else:
+                connection.execute(
+                    "UPDATE job_analysis_attempts SET artifact_id = NULL WHERE artifact_id = ?",
+                    (artifact.id,),
+                )
+                connection.execute(
+                    "DELETE FROM job_analysis_artifacts WHERE id = ?", (artifact.id,)
+                )
         return AnalysisReviewResult(
             source_job_id=source_job_id,
             artifact_id=artifact.id,

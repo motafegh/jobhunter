@@ -248,6 +248,26 @@ review the pending P1.6 artifact normally — accept only if semantically valid
 
 ---
 
+### 2026-09-19 closure follow-up
+
+Definition fingerprint and snapshot/profile 2 were recovered. Snapshot 1, its members
+and profile exactly match both retained pre-rerun JSON captures. Operational SQLite
+integrity/foreign-key and corpus privacy checks passed. Those evidence gaps are closed.
+
+Pending `t7ck` P1.6 artifact 48 has material coverage/optionality/qualification-to-duty
+errors and must not be accepted. Owner rejection decision remains pending. An isolated
+replay exposed a foreign-key failure when rejecting a candidate referenced by snapshot 2.
+A bounded `AnalysisStore` repair now retains rejected historical payloads while excluding
+them from current/reuse selection and allowing replacements. Real-database-copy replay,
+Ruff, dependency consistency, and all 636 tests with warnings-as-errors passed. Operational
+review state remains unchanged; the repair is local/uncommitted.
+
+The remaining gate is a valid accepted-semantic core artifact and real CLI/browser
+semantic drill-down on a new snapshot, followed by post-mutation integrity/privacy checks.
+Details are appended to `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+
+---
+
 ## 8. I7 stop lines
 
 During I7 do not:
