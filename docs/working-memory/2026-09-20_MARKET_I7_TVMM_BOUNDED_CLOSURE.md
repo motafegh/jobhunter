@@ -84,3 +84,58 @@ GitHub CI run `35468478422` passed all gates on the repair, including installed
 entrypoints, Ruff, normal tests and strict-warning tests. Public-corpus verification
 also passed against all 394 known jobs. Current routing documents preserve HOLD and
 the unexecuted post-repair real-model boundary.
+
+## Bounded post-repair evaluation decision
+
+The owner's continuation authorizes one post-repair `jobs analyze tvMm` command
+against the unchanged source 47 / projection 41 and existing configured model and
+v20/v5 contract. The only changed inference inputs are the published general
+structured-skill ownership correction. Existing runtime validation bounds remain.
+
+Evaluate two separate questions: whether absent structured-skill citations recur,
+and whether the complete result is valid enough for semantic review. A candidate
+must still pass source coverage, optionality, depth and qualification/duty review.
+A failed attempt ends this evaluation without another generation or vacancy switch.
+No acquisition, translation, model change, validator relaxation or automatic
+acceptance is included. Back up SQLite first; verify historical state, integrity
+and public-corpus privacy afterward.
+
+## Post-repair result and semantic review
+
+Attempt 107 completed and created pending artifact 49 with 10 responsibilities,
+15 requirements and no role-purpose claim. The absent structured-skill citation
+failure did not recur in this one case. Exact `Ai` and `Engineer` tags were injected
+by the application. This is bounded repair evidence, not general model accuracy.
+
+Complete source/projection/artifact review rejected artifact 49:
+
+1. Seven experience requirements incorrectly acquired `familiarity` depth:
+   LLM/API experience, Agent/workflow building, production Agents, Multi-Agent work,
+   real database/API integration, Docker/cloud experience, and AI product building.
+   The raw model response had null depth for all of them. Deterministic validation
+   inserted the first neighboring marker because all markers in each broad evidence
+   span had the same spelling. Repeated identical markers do not establish one
+   shared subject or scope.
+2. Requirement 12 turns the intended AI system's task execution/accounting-system
+   interaction into a required candidate skill. The source subject is the AI system;
+   the candidate's separate requirement is to build a reliable product Agent.
+
+The 10 responsibility statements are supported by the explicit duty passage;
+preferred experience remained preferred. These positive findings do not offset the
+material requirement/depth defects or establish complete requirement coverage.
+
+Rejection used the supported review command. Artifact 49 is archived as rejection 8
+and excluded from current reuse/export. Its raw response and persisted payload were
+also retained locally for diagnosis. No accepted semantic artifact, membership,
+snapshot or profile was created. Every Market table matches the pre-evaluation
+backup; SQLite integrity is `ok` and foreign-key checks are empty. The public corpus
+remains unchanged at 5 accepted English P1.6 artifacts.
+
+### Next bounded repair
+
+The repeated-identical-marker case belongs to v20 deterministic depth validation.
+Reject ambiguous automatic depth filling when multiple source markers occur, even
+when their spelling is identical. Preserve explicit model-supplied item-specific
+depth handling and historical validators. Cover the failure with offline regressions
+and replay the retained raw artifact without model calls. This does not resolve the
+separate semantic subject error. No further live generation belongs to this evaluation.
