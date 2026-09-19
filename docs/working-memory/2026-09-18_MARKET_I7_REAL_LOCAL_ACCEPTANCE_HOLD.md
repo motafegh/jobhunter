@@ -7,6 +7,12 @@
 **Final CI on that head:** run 1246 / 35386437630 — SUCCESS  
 **Protocol:** `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
 
+**Latest follow-up:** `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
+The selected `tvMm` generation below has been executed once and failed validation.
+No candidate was persisted. A general structured-skill prompt/payload contradiction
+was repaired offline; I7 remains HOLD. Do not repeat the historical generation
+instruction without a bounded post-repair evaluation decision.
+
 ## Decision
 
 ```text

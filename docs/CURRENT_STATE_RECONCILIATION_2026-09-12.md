@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-19  
+**Last reconciled:** 2026-09-20
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -240,17 +240,22 @@ I7 remains **HOLD** for one reason: no current target-core posting has yet produ
 accepted-current P1.6 artifact in this live target, so the real accepted-semantic aggregate and frozen
 requirement/responsibility drill-down still have not been exercised end to end.
 
+The selected `tvMm` follow-up was executed on 2026-09-20 local time. Attempt 106
+failed validation and produced no candidate. It exposed a v20 structured-skill
+prompt/payload contradiction, now repaired with an offline provider-boundary
+regression. A separate familiarity-depth normalization failure remains unresolved
+by live evidence. Every Market table remained unchanged and post-attempt SQLite
+integrity/privacy checks passed.
+
+Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
+
 Exact next responsibility:
 
 ```text
-select one current target-core posting with missing P1.6
-→ generate once with the existing configured model/contract
-→ review the candidate normally; never auto-accept
-→ if genuinely valid, accept it
-→ build a new point-in-time Market snapshot/profile
-→ verify accepted-semantic requirement/responsibility aggregate + frozen evidence in CLI and browser
-→ rerun SQLite integrity/foreign-key + privacy checks after the mutation
-→ record I7 PASS only if that path succeeds; otherwise preserve HOLD
+preserve the failed tvMm evidence and HOLD
+→ define a bounded post-repair evaluation decision before another live generation
+→ obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
+→ live accepted-semantic CLI/browser drill-down remains required for PASS
 ```
 
 No full acquisition rerun is required merely to obtain this semantic evidence.

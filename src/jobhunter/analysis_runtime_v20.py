@@ -322,7 +322,9 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
 
         payload_base = dict(kwargs.get("user_payload") or {})
         payload_base["analysis_fields"] = model_fields
-        payload_base["candidate_deterministic_requirement_references"] = deterministic_refs
+        # Deterministic IDs are bookkeeping, not model evidence. Retain them in
+        # request runtime metadata below, without inviting unsupported citations.
+        payload_base.pop("candidate_deterministic_requirement_references", None)
 
         structured_parts: list[dict[str, Any]] = []
         request_parts: list[dict[str, Any]] = []

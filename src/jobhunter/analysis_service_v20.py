@@ -58,7 +58,18 @@ P1.6 V20 CANDIDATE — SOURCE-LED BOUNDED SEMANTIC PARTITIONING:
   structured-skill, ontology, decomposition, responsibility, capacity, and fail-closed rule.
 """
 
-_ENGLISH_SYSTEM_PROMPT_V20 = _ENGLISH_SYSTEM_PROMPT_V19 + _V20_RULES
+# V20 moved structured skills into deterministic ownership. Keep historical
+# v18/v19 prompts intact, but remove their now-contradictory model ownership rule.
+_ENGLISH_SYSTEM_PROMPT_V20 = _ENGLISH_SYSTEM_PROMPT_V19.replace(
+    "- Top-level structured skills remain model-visible because concept_type can require semantic\n"
+    "  classification, but JobHunter supplies explicit non-excludable coverage IDs "
+    "for every skill so\n"
+    "  none may silently disappear.",
+    "- JobHunter owns top-level structured skill tags and adds their exact source facts after\n"
+    "  generation. They are absent from model-facing evidence and coverage. Do not reconstruct,\n"
+    "  classify, or cite absent structured skill tags. Extract description requirements only\n"
+    "  from the supplied coverage, even when they also mention a structured skill.",
+) + _V20_RULES
 _ANALYSIS_SCHEMA_V20 = deepcopy(_ANALYSIS_SCHEMA_V19)
 
 

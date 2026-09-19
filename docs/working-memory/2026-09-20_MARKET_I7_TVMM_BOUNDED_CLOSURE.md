@@ -56,3 +56,25 @@ rerun the selected case repeatedly or select another vacancy to manufacture PASS
 
 I7 remains HOLD: no accepted-semantic core artifact or new semantic snapshot/profile
 was created, and live accepted-semantic CLI/browser drill-down remains unexercised.
+
+## Completed bounded repair
+
+The v20 prompt now replaces the inherited model-owned structured-skill instruction
+with its actual deterministic ownership rule. Historical v18/v19 prompt values remain
+unchanged. Deterministic requirement references remain in local request runtime
+metadata but are omitted from model-facing input; they are not valid model evidence.
+
+An offline provider-boundary regression exercises real v20 partition preparation and
+merge validation with a stubbed inference call. It verifies that description
+requirements remain extractable, exact structured skill facts are injected once,
+deterministic IDs remain in runtime metadata, and invented skill references still
+fail evidence validation. This is a general ownership correction, not a vacancy
+rule, semantic validator change, or acceptance claim.
+
+No second live generation was performed. The remaining depth-normalization failure
+was not relaxed or treated as fixed. Before another live attempt, define a bounded
+post-repair evaluation decision; do not blindly repeat the previous next command.
+
+Repair validation: **639 tests passed normally and 639 with warnings-as-errors**;
+Ruff passed. This establishes deterministic repair coverage, not post-repair
+real-model accuracy or accepted-semantic product completion.

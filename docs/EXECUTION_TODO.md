@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-19
+**Date:** 2026-09-20
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
@@ -134,7 +134,8 @@ Execution result:
 - [x] repaired rejection of a pending candidate referenced by an immutable Market snapshot; real-database-copy replay and 636 strict-warning tests passed.
 - [x] fixed headingless qualification residual coverage and false implicit-duty detection; five accepted anchors were unchanged and the full strict-warning suite reached 638 passed.
 - [x] recovered immutable definition-1 fingerprint from operational SQLite.
-- [~] selected `tvMm` as the bounded closure candidate: active direct AI Agent Engineer, current English projection 41, prior P1.6 failure, and no accepted/current P1.6. Generate exactly once with the current contract, review normally, and accept only if genuinely valid.
+- [x] executed the one selected `tvMm` generation: attempt 106 failed validation; no candidate was persisted or accepted. See `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
+- [x] repaired the exposed v20 structured-skill prompt/payload ownership contradiction with an offline provider-boundary regression; historical prompts and strict evidence/depth validation remain unchanged.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -191,11 +192,9 @@ Portfolio work does not broaden I7 authorization.
 
 ```text
 I7 HOLD semantic-evidence closure only
-→ selected candidate: `tvMm` — AI Agent Engineer / Ragham
-→ run exactly one targeted English P1.6 generation; no discovery/refresh/translation batch
-→ review the resulting candidate normally; accept only if genuinely valid
-→ if accepted, build a new snapshot/profile
-→ verify live accepted-semantic aggregate + frozen requirement/responsibility evidence in CLI/browser
-→ rerun post-mutation SQLite integrity/foreign-key + privacy checks
-→ PASS and close the first slice only if those checks succeed; otherwise preserve HOLD
+→ selected tvMm attempt executed and failed; no candidate to review
+→ general structured-skill ownership contradiction repaired offline
+→ define a bounded post-repair evaluation decision before another live generation
+→ remaining depth-normalization/model reliability is not proven fixed
+→ accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
 ```

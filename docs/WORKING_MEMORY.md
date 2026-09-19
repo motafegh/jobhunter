@@ -1,7 +1,7 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-19  
+**Date:** 2026-09-20
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT  
@@ -189,7 +189,27 @@ pytest -W error 632 passed
 
 ---
 
-## 4. Exact next responsibility — I7 HOLD semantic-evidence closure
+## 4. Current frontier — I7 HOLD after selected-case execution
+
+The selected `tvMm` command below has now been executed once. Attempt 106 failed
+validation; no candidate was persisted or accepted. Do not follow the historical
+generation command below as an instruction to retry it.
+
+Current continuing record:
+
+`docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`
+
+The follow-up repaired a concrete general v20 instruction/payload contradiction:
+structured skills are application-owned but inherited instructions told the model
+to extract them. The current prompt and payload now match deterministic ownership;
+strict evidence/depth validators and historical prompts are preserved. The separate
+model depth-normalization failure is not proven fixed. Every Market table remained
+unchanged and post-attempt integrity/privacy checks passed.
+
+Next: define a bounded post-repair evaluation decision before further live generation.
+Accepted-semantic snapshot/profile and browser/CLI evidence remain required for PASS.
+
+### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.
 
@@ -260,7 +280,7 @@ jobhunter --config jobhunter.toml jobs analyze tvMm
 
 Do not run `accept` until the complete candidate has been reviewed against the source/English projection.
 
-Exact next work:
+Previous authorized work (the generation step was executed and failed):
 
 ```text
 tvMm targeted English P1.6 generation

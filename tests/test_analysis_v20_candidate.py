@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import pytest
 from pydantic import ValidationError
 
 from jobhunter.analysis_runtime_v20 import (
     _PARTITION_SIZE,
+    V20CandidateAnalysisProvider,
     _assert_partition_scope,
     _merge_partition_structured,
     _v20_deterministic_structured_skills,
@@ -12,6 +15,7 @@ from jobhunter.analysis_runtime_v20 import (
     _v20_requirement_partitions,
 )
 from jobhunter.analysis_service import AnalysisValidationError
+from jobhunter.analysis_service_v19 import _ENGLISH_SYSTEM_PROMPT_V19
 from jobhunter.analysis_service_v20 import (
     _ANALYSIS_SCHEMA_V20,
     _ENGLISH_SYSTEM_PROMPT_V20,
@@ -20,6 +24,7 @@ from jobhunter.analysis_service_v20 import (
 )
 from jobhunter.evidence_refs import build_field_evidence_catalog
 from jobhunter.inference.instructor_lm_studio_v20 import AnalysisRequirementV20
+from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 
 def _candidate(
@@ -118,6 +123,70 @@ def test_v20_materializes_structured_skills_without_model_restatement() -> None:
             ),
         },
     ]
+
+
+def test_v20_provider_keeps_deterministic_skills_out_of_model_evidence(monkeypatch) -> None:
+    fields = {"description": "Required skills: SQL", "skills": ["Python", "OOP"]}
+    calls = []
+
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v20.ensure_lm_studio_model_context",
+        lambda **kwargs: SimpleNamespace(
+            context_length=32768, action="reused", instance_id="offline-test"
+        ),
+    )
+
+    def complete_partition(**kwargs):
+        calls.append(kwargs)
+        payload = kwargs["user_payload"]
+        assert "candidate_deterministic_requirement_references" not in payload
+        assert "skills" not in payload["analysis_fields"]
+        assert "Top-level structured skills remain model-visible" not in kwargs["system_prompt"]
+        assert "JobHunter owns top-level structured skill tags" in kwargs["system_prompt"]
+        catalog = build_field_evidence_catalog(payload["analysis_fields"])
+        assert not any(ref.startswith("field:skills:") for ref in catalog)
+        # Invented skill references must still fail, despite the instruction repair.
+        with pytest.raises(ValidationError, match="Evidence must be"):
+            AnalysisRequirementV20.model_validate(
+                _requirement("Python", "field:skills:0", requirement_type="required"),
+                context=_context(payload["analysis_fields"]),
+            )
+        part = _empty_part()
+        part["requirements"] = [
+            _requirement("SQL", candidate["text"], requirement_type="required")
+            for candidate in kwargs["requirement_coverage_plan"].values()
+        ]
+        return StructuredInferenceResult(
+            model="offline-test", structured=part, request_body={}, raw_response={},
+            finish_reason="stop",
+        )
+
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v20.complete_analysis_partition_with_instructor_v20",
+        complete_partition,
+    )
+    provider = V20CandidateAnalysisProvider(
+        base_url="http://127.0.0.1:1234/v1", configured_model="offline-test",
+        api_token=None, timeout_seconds=10, max_retries=0,
+    )
+    result = provider._run_once(
+        kwargs={"user_payload": {"analysis_fields": fields}},
+        system_prompt=_ENGLISH_SYSTEM_PROMPT_V20,
+        original_fields=fields, effective_fields=fields,
+        qualification_refs=[], residual_refs=[], additional_plan={}, decomposed_refs=[],
+    )
+    assert calls
+    requirements = result.structured["requirements"]
+    for skill in fields["skills"]:
+        matches = [item for item in requirements if item["concept"] == skill]
+        assert len(matches) == 1
+        assert matches[0]["evidence"] == skill
+        assert matches[0]["requirement_type"] == "required"
+    assert any(item["concept"] == "SQL" for item in requirements)
+    assert result.request_body["runtime"]["p16_v20_deterministic_structured_skills"] == [
+        "field:skills:0", "field:skills:1"
+    ]
+    assert "Top-level structured skills remain model-visible" in _ENGLISH_SYSTEM_PROMPT_V19
 
 
 def test_v20_preserves_explicit_more_than_experience_bound() -> None:
