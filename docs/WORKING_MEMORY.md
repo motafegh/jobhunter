@@ -212,6 +212,14 @@ Accepted-semantic snapshot/profile and browser/CLI evidence remain required for 
 Published repair: `94a14a1`; CI `35468478422` passed all gates. Both full local test
 modes passed 639 tests; the public corpus verified against all 394 jobs.
 
+Subsequent bounded evaluation: `tvMm` attempt 107 produced artifact 49. Full review
+rejected it because deterministic validation borrowed repeated familiarity markers
+for seven experience requirements, and one claim assigned intended AI-system behavior
+to the candidate. A focused v20 repair now fails closed for repeated markers even
+when their wording is identical. Retained raw-response replay confirms the guard
+catches this case. Historical Market snapshots are unchanged; I7 is HOLD. The
+continuing record has the current evidence and stop line.
+
 ### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.

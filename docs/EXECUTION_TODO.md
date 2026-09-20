@@ -136,6 +136,8 @@ Execution result:
 - [x] recovered immutable definition-1 fingerprint from operational SQLite.
 - [x] executed the one selected `tvMm` generation: attempt 106 failed validation; no candidate was persisted or accepted. See `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 - [x] repaired the exposed v20 structured-skill prompt/payload ownership contradiction with an offline provider-boundary regression; historical prompts and strict evidence/depth validation remain unchanged.
+- [x] one bounded post-repair `tvMm` attempt created artifact 49; complete review rejected borrowed familiarity depth and an AI-system-behavior subject error.
+- [x] repaired repeated-identical depth-marker borrowing in v20 with regression and retained raw-response replay; artifact 49 stays rejected.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -192,9 +194,9 @@ Portfolio work does not broaden I7 authorization.
 
 ```text
 I7 HOLD semantic-evidence closure only
-→ selected tvMm attempt executed and failed; no candidate to review
-→ general structured-skill ownership contradiction repaired offline
-→ define a bounded post-repair evaluation decision before another live generation
-→ remaining depth-normalization/model reliability is not proven fixed
+→ post-repair tvMm artifact 49 reviewed and rejected; no candidate is current
+→ repeated-marker depth borrowing repaired and verified offline
+→ candidate subject-attribution and model reliability remain unproven
+→ define a new bounded evidence decision before further live generation
 → accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
 ```

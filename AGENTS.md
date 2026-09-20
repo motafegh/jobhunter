@@ -271,6 +271,13 @@ follow the bounded evaluation decision boundary in
 `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md` rather than repeating
 the historical selected-case command. I7 remains HOLD.
 
+The bounded post-repair `tvMm` attempt 107 produced artifact 49, which was reviewed
+and rejected for borrowed familiarity depth and candidate-versus-AI-system subject
+misattribution. V20 now fails closed when multiple identical depth markers appear
+in one broad evidence span. The 2026-09-20 closure record has the current evidence
+and stop line; do not infer that the repair authorizes automatic acceptance or
+unbounded model retries.
+
 ### 5.2 First-slice settled rules
 
 Permanent for this slice unless implementation evidence exposes a concrete contradiction:

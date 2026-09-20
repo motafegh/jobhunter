@@ -130,11 +130,13 @@ def _validate_depth_fields_v20(
     if depth_signal is None:
         if not source_matches:
             return None
-        distinct_source_markers = {_normalize(item[2]) for item in source_matches}
-        if len(distinct_source_markers) > 1:
+        # Equal words can still belong to different subjects in one broad
+        # evidence span. A missing item signal cannot borrow any of them.
+        if len(source_matches) > 1:
             raise ValueError(
                 "depth_signal is required when cited evidence contains multiple explicit employer "
-                "depth signals; provide the exact source phrase that applies to this concept"
+                "depth signals, including repeated wording; provide the exact source phrase "
+                "that applies to this concept"
             )
         return source_matches[0][2]
 

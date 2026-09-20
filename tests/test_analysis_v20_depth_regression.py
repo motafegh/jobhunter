@@ -185,6 +185,34 @@ def test_v20_preserves_item_specific_depth_inside_multi_signal_evidence(
     assert result.evidence == evidence
 
 
+def test_v20_rejects_depth_borrowing_from_repeated_familiarity_markers() -> None:
+    evidence = (
+        "Practical experience with language model APIs, familiarity with tool calling, "
+        "familiarity with retrieval, and familiarity with agent frameworks."
+    )
+    fields = {"description": evidence}
+    requirement = {
+        "concept": "Language model API experience",
+        "depth_signal": None,
+        "requirement_type": "required",
+        "concept_type": "experience",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "The source asks for practical experience.",
+    }
+
+    with pytest.raises(ValidationError, match="including repeated wording"):
+        AnalysisRequirementV20.model_validate(requirement, context=_context(fields))
+
+    requirement.update(
+        concept="Tool calling",
+        depth_signal="familiarity with tool calling",
+        concept_type="skill",
+    )
+    result = AnalysisRequirementV20.model_validate(requirement, context=_context(fields))
+    assert result.depth_signal == "familiarity"
+
+
 def test_v20_rejects_depth_guessing_for_multi_level_evidence() -> None:
     evidence = (
         "- Mastery of Python/Django - Familiarity with Linux operating system "

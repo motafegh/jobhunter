@@ -240,20 +240,21 @@ I7 remains **HOLD** for one reason: no current target-core posting has yet produ
 accepted-current P1.6 artifact in this live target, so the real accepted-semantic aggregate and frozen
 requirement/responsibility drill-down still have not been exercised end to end.
 
-The selected `tvMm` follow-up was executed on 2026-09-20 local time. Attempt 106
-failed validation and produced no candidate. It exposed a v20 structured-skill
-prompt/payload contradiction, now repaired with an offline provider-boundary
-regression. A separate familiarity-depth normalization failure remains unresolved
-by live evidence. Every Market table remained unchanged and post-attempt SQLite
-integrity/privacy checks passed.
+The selected `tvMm` follow-up began on 2026-09-20 local time. Attempt 106 exposed
+a v20 structured-skill prompt/payload contradiction, which was repaired. The one
+post-repair attempt 107 produced artifact 49; complete review rejected it for
+borrowed familiarity depth and a candidate-versus-AI-system subject error. V20
+now fails closed for repeated identical depth markers, with offline regression and
+retained raw-response replay. No accepted-semantic core member resulted. Market
+history and public-corpus privacy remained intact.
 
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
 Exact next responsibility:
 
 ```text
-preserve the failed tvMm evidence and HOLD
-→ define a bounded post-repair evaluation decision before another live generation
+preserve rejected tvMm artifact 49 evidence and HOLD
+→ define a new bounded evidence decision before further live generation
 → obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
 → live accepted-semantic CLI/browser drill-down remains required for PASS
 ```

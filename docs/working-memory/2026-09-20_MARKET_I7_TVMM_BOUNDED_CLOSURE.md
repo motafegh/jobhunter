@@ -139,3 +139,30 @@ when their spelling is identical. Preserve explicit model-supplied item-specific
 depth handling and historical validators. Cover the failure with offline regressions
 and replay the retained raw artifact without model calls. This does not resolve the
 separate semantic subject error. No further live generation belongs to this evaluation.
+
+## Deterministic depth repair and current stop line
+
+V20 no longer auto-fills null depth from an evidence span containing multiple
+depth markers, even when every marker uses the same word. The model must supply
+a source-exact item-specific phrase for an explicit depth claim. Historical v19
+and earlier validators are untouched. A focused regression covers repeated-marker
+rejection and preservation of a supplied scoped phrase.
+
+Read-only replay of artifact 49's retained raw model response found that all 12
+model-authored requirements cited broad spans with repeated markers while carrying
+null depth; all now fail before borrowing depth. This is fail-closed diagnostic
+evidence, not proof the model can generate a valid replacement. Read-only checks
+over the five accepted public anchors found no new validation failures. One
+historical `more than six years` result retains its existing separate lower-bound
+preservation behavior.
+
+Artifact 49 remains rejected. Its separate subject-attribution error is not fixed
+by this depth change. I7 remains HOLD with no accepted-semantic core posting.
+Further model attempts or a different vacancy require a new bounded evidence
+decision; this closure work stops at the reviewed rejection and deterministic repair.
+
+Repair gate: **640 passed with warnings-as-errors**, Ruff and dependency checks
+passed, and public-corpus verification passed for all 394 known jobs. Post-mutation
+SQLite integrity and foreign-key checks passed; every Market table still matches
+the pre-evaluation backup, and the corpus privacy scan found no Market or local
+host/path leakage. These checks do not change the I7 HOLD decision.
