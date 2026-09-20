@@ -143,6 +143,7 @@ Execution result:
 - [x] one bounded live check after that repair: `tvMm` attempt 108 failed depth-field validation after its allowed retry; no candidate was created. All seven Market tables matched the pre-run backup and SQLite integrity/foreign-key checks passed. The check is closed; I7 remains HOLD.
 - [x] audited all 27 current English projections offline: 14 of 111 requirement references across 13 jobs have multiple depth markers, including one successfully reviewed accepted anchor. No length-only or punctuation-only split is justified; retain the fail-closed validator.
 - [x] closed the explicit repeated-marker v20 guard gap: one `depth_signal` cannot combine two equal marker occurrences from different subjects. The five accepted P1.6 anchors validate read-only; 642 strict-warning tests pass. This does not resolve attempt 108 or I7 HOLD.
+- [x] diagnosed attempt 108 at exact item scope: broad v20 coverage references make some correct null depths indistinguishable from omitted applicable familiarity; eight of fourteen multi-marker references also need shared preferred context. The closure record specifies the versioned candidate evidence boundary; do not relax v20 or repeat the same command.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

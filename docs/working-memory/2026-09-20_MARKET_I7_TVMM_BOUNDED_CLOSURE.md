@@ -246,9 +246,10 @@ failed after the configured one validation retry; no candidate or accepted artif
 was created. The first provider response had three depth-field validation errors;
 the retry had twelve. In the latter, requirement items cited broad evidence spans
 with multiple explicit experience/depth markers but supplied no item-specific
-`depth_signal`. The v20 guard correctly refused to borrow a marker from another
-subject in the span. This is a model-output validity failure, not evidence that the
-source-span repair is wrong or a reason to relax the guard. Raw provider protocol
+`depth_signal`. The v20 guard refused to borrow a marker from another subject in
+the span. This was a validation failure; the later exact-scope diagnosis below
+separates model omissions from the broad-reference contract limitation. It is not
+evidence that the source-span repair is wrong or a reason to relax the guard. Raw provider protocol
 and the full error log remain local and are not publication material.
 
 Post-run SQLite `integrity_check` is `ok` and `foreign_key_check` is empty. Exact
@@ -296,3 +297,39 @@ This is a fail-closed source-integrity correction, not a solution for attempt
 public English P1.6 anchors validated read-only under the new guard. The full
 strict-warning suite passed 642 tests, and Ruff passed. No accepted artifact was
 regenerated or re-reviewed, no live model call was made, and I7 remains HOLD.
+
+### Exact-scope diagnosis for the remaining I7 blocker
+
+Read-only inspection of the retained attempt-108 responses and exact public
+projection found two distinct causes. The model omitted applicable `familiarity`
+for Tool Calling, RAG and Agentic Frameworks in the required list, and for
+Observability and Backend architecture in the preferred list. The model also
+returned null or non-depth `experience` phrases for concepts whose exact source
+wording expresses prior experience but no recognized technical-depth level. The
+v20 validator cannot distinguish these cases when every item cites the same
+420- or 1,414-character coverage reference. For example, `practical experience
+with LLMs and language model APIs in Python and/or TypeScript` validates with
+null depth as an exact item excerpt; citing its 420-character parent fails because
+that parent also contains three unrelated `familiarity` markers. Conversely, an
+exact `familiarity with Tool Calling / Function Calling` excerpt exposes the
+applicable depth. This diagnostic only evaluated existing source excerpts; it
+did not assemble or accept an artifact.
+
+Eight of the fourteen multi-marker references in the 27-projection audit also
+carry a preferred-obligation signal in their parent span. Narrowing those items
+to exact source excerpts often drops the shared preference phrase: in `tvMm`,
+`experience building Production-grade Agents` has no `advantage` wording by itself,
+while its parent says `It is an advantage if ...`. An item-level repair therefore
+needs both an exact claim excerpt for depth/subject scope and an independently
+traceable parent context for obligation and coverage. A punctuation or length
+split, or simply allowing null on a broad citation, cannot prove both.
+
+Next implementation decision: design a **versioned candidate** representation
+that keeps a parent coverage reference and a contiguous exact item excerpt as
+separate evidence, validates item depth only within the latter, and proves any
+inherited preferred strength from the former. Preserve the full coverage ledger,
+public v20/v5 artifacts, review promotion, and Market history. Test the same
+mixed-depth case, the accepted `tmBK` counterexample, preferred shared-context
+cases, and subject changes before a bounded live evaluation. Do not run the
+unchanged v20 `tvMm` command again; it cannot express this distinction. I7 HOLD
+remains the honest product result.
