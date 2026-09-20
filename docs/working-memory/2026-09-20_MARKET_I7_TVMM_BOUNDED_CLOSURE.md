@@ -280,3 +280,19 @@ and its reviewed artifact preserves the corresponding item-specific `Mastery`,
 fail-closed validator and rejects a length-only splitter. It does not establish a
 safe general parser change or make attempt 108 semantically valid. No new model
 call or operational-state mutation was made for this audit; I7 remains HOLD.
+
+### Explicit repeated-marker integrity repair
+
+A separate v20 validator gap remained after the null-signal repair: an explicitly
+supplied `depth_signal` containing two equal marker words could pass because the
+validator counted distinct spellings rather than occurrences. For example,
+`familiarity with tool calling, familiarity with retrieval` identifies two
+subjects even though both markers read `familiarity`. V20 now requires exactly one
+recognized marker occurrence in an explicit signal. It still accepts an exact
+single-marker subject-scoped excerpt. The regression covers both cases.
+
+This is a fail-closed source-integrity correction, not a solution for attempt
+108's missing item signals. All 85 requirements in the five accepted/current
+public English P1.6 anchors validated read-only under the new guard. The full
+strict-warning suite passed 642 tests, and Ruff passed. No accepted artifact was
+regenerated or re-reviewed, no live model call was made, and I7 remains HOLD.

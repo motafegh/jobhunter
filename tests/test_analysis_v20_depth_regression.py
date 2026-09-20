@@ -212,6 +212,12 @@ def test_v20_rejects_depth_borrowing_from_repeated_familiarity_markers() -> None
     result = AnalysisRequirementV20.model_validate(requirement, context=_context(fields))
     assert result.depth_signal == "familiarity"
 
+    requirement["depth_signal"] = (
+        "familiarity with tool calling, familiarity with retrieval"
+    )
+    with pytest.raises(ValidationError, match="one employer depth level"):
+        AnalysisRequirementV20.model_validate(requirement, context=_context(fields))
+
 
 def test_v20_rejects_depth_guessing_for_multi_level_evidence() -> None:
     evidence = (

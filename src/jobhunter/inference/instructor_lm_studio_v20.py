@@ -157,8 +157,9 @@ def _validate_depth_fields_v20(
             "duration: use depth_signal=null for that case and retain the source-supported "
             "context in the concept and evidence. Do not discard an explicit degree phrase."
         )
-    distinct_signal_markers = {_normalize(item[2]) for item in signal_matches}
-    if len(distinct_signal_markers) > 1:
+    # Repeated equal wording can still describe different subjects. The model
+    # must identify one source marker, not merely one unique marker spelling.
+    if len(signal_matches) > 1:
         raise ValueError(
             "depth_signal must identify one employer depth level for one requirement concept. "
             "Use an exact source excerpt containing only one explicit depth marker applying "
