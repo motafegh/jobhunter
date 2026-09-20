@@ -248,13 +248,20 @@ now fails closed for repeated identical depth markers, with offline regression a
 retained raw-response replay. No accepted-semantic core member resulted. Market
 history and public-corpus privacy remained intact.
 
+Further read-only inspection found the remaining subject error in a broad
+requirement coverage span that crosses company goals and application text. Four
+such spans appear across two of 27 current English projections; the current
+`allow_exclusion` path already permits correct semantic rejection. There is not
+enough representative evidence to promote a deterministic cutoff. I7 stays HOLD
+without another model attempt or a substitute vacancy.
+
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
 Exact next responsibility:
 
 ```text
 preserve rejected tvMm artifact 49 evidence and HOLD
-→ define a new bounded evidence decision before further live generation
+→ obtain representative source-backed section/subject evidence or naturally available valid accepted-semantic core evidence before another closure attempt
 → obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
 → live accepted-semantic CLI/browser drill-down remains required for PASS
 ```

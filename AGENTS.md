@@ -278,6 +278,14 @@ in one broad evidence span. The 2026-09-20 closure record has the current eviden
 and stop line; do not infer that the repair authorizes automatic acceptance or
 unbounded model retries.
 
+The remaining artifact-49 subject error was investigated across the 27 current
+English projections. Four broad requirement coverage spans in two jobs cross
+company-goal/application text, but the model-facing coverage already permits
+exclusion and no safe universal cutoff was established. Keep I7 HOLD pending
+representative source-backed section/subject design evidence or naturally available
+valid accepted-semantic core evidence; do not select a substitute vacancy merely
+to obtain PASS.
+
 ### 5.2 First-slice settled rules
 
 Permanent for this slice unless implementation evidence exposes a concrete contradiction:

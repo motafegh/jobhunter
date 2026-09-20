@@ -166,3 +166,32 @@ passed, and public-corpus verification passed for all 394 known jobs. Post-mutat
 SQLite integrity and foreign-key checks passed; every Market table still matches
 the pre-evaluation backup, and the corpus privacy scan found no Market or local
 host/path leakage. These checks do not change the I7 HOLD decision.
+
+## 2026-09-20 — Remaining subject error investigation
+
+Read-only inspection of artifact 49 and current evidence preparation located the
+remaining semantic error. The `Required skills` heading carries forward into one
+long translated section containing preferred qualifications, company/product goals
+and application instructions. Semicolon splitting yields a third candidate coverage
+span that begins with intended AI-system behavior. It has `allow_exclusion=True`:
+the model was allowed to say this span is not a candidate qualification, but instead
+turned system behavior into a candidate skill. The persisted review boundary caught
+the claim; the normal validator cannot establish the intended subject from exact
+text matching alone.
+
+A read-only scan of all 27 current English projections found four requirement
+coverage spans with company-goal or application transitions: two in `tvMm` and two
+in `tGc5`. This shows section-scope leakage can recur, but the observed text does
+not support one safe deterministic cutoff. For example, a company-goal sentence
+can still state a real candidate expectation, while application instructions
+usually do not. Cutting at one phrase or adding a vacancy-specific prompt would
+silently discard valid requirements in other postings.
+
+Decision for this bounded I7 continuation: no source or validator patch, no new
+model run and no replacement vacancy chosen for PASS. Artifact 49 stays rejected.
+The next material step needs a separate, source-backed design for section scope and
+subject attribution with representative positive and negative cases, or naturally
+available valid accepted-semantic evidence inside the same target workflow. Until
+then, the first Market slice remains I7 HOLD. The existing source-level Market view
+and honest missing-semantic denominator remain useful and correct within their
+declared authority.

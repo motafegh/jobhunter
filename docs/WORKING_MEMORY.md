@@ -220,6 +220,13 @@ when their wording is identical. Retained raw-response replay confirms the guard
 catches this case. Historical Market snapshots are unchanged; I7 is HOLD. The
 continuing record has the current evidence and stop line.
 
+The remaining subject error was investigated across all 27 current English
+projections. Four broad requirement coverage spans in two jobs cross company-goal
+or application text. Their `allow_exclusion` boundary already permits the model to
+reject non-qualifications; artifact 49 instead made a false candidate claim. No
+safe universal text cutoff was established. Keep I7 HOLD and require representative
+source-backed section/subject evidence before a design change or further live run.
+
 ### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.
