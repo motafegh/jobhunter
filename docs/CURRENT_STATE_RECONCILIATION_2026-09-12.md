@@ -255,6 +255,12 @@ such spans appear across two of 27 current English projections; the current
 enough representative evidence to promote a deterministic cutoff. I7 stays HOLD
 without another model attempt or a substitute vacancy.
 
+A subsequent bounded repair addressed only two source-backed span defects: a
+dependent `; to ...` clause retains its explicit subject, and `How to Apply:` ends
+requirement-section coverage. The five accepted anchor plans were unchanged in
+read-only comparison. This improves future evidence preparation but supplies no
+new accepted P1.6 core member, so I7 remains HOLD.
+
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
 Exact next responsibility:

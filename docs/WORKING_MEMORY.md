@@ -227,6 +227,12 @@ reject non-qualifications; artifact 49 instead made a false candidate claim. No
 safe universal text cutoff was established. Keep I7 HOLD and require representative
 source-backed section/subject evidence before a design change or further live run.
 
+The latest bounded source-span repair keeps dependent `; to ...` wording with its
+subject and ends requirements at an explicit `How to Apply:` heading. It changed
+the two reviewed affected plans (`tvMm` and `tGc5`) and left all five accepted
+anchor plans equal in read-only comparison. Artifact 49 remains rejected. This is
+evidence preparation, not semantic acceptance or I7 PASS.
+
 ### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.

@@ -79,6 +79,51 @@ def test_mixed_strength_stack_line_gets_clause_references() -> None:
     assert catalog["field:description:segment:0:clause:2"] == "some C / C++ helpful"
 
 
+def test_dependent_infinitive_keeps_its_explicit_subject() -> None:
+    fields = {
+        "description": (
+            "Required skills: Familiarity with Python; deployment is a plus. "
+            "Our goal is an assistant that can perform tasks; to inspect records, "
+            "choose tools, and report results."
+        )
+    }
+
+    catalog = build_field_evidence_catalog(fields)
+    plan = build_requirement_coverage_plan(fields)
+    assert catalog["field:description:segment:0:clause:0"] == (
+        "Familiarity with Python"
+    )
+    assert catalog["field:description:segment:0:clause:1"] == (
+        "deployment is a plus. Our goal is an assistant that can perform tasks; "
+        "to inspect records, choose tools, and report results."
+    )
+    assert "field:description:segment:0:clause:2" not in plan
+    assert plan["field:description:segment:0:clause:1"]["allow_exclusion"] is True
+
+    spaced = fields["description"].replace("tasks; to inspect", "tasks;   to inspect")
+    spaced_catalog = build_field_evidence_catalog({"description": spaced})
+    assert "tasks;   to inspect" in spaced_catalog["field:description:segment:0:clause:1"]
+
+
+def test_explicit_application_heading_ends_requirement_section() -> None:
+    fields = {
+        "description": (
+            "Required skills: Python and SQL. How to Apply: Send a resume and portfolio. "
+            "Required skills: Docker."
+        )
+    }
+
+    catalog = build_field_evidence_catalog(fields)
+    plan = build_requirement_coverage_plan(fields)
+    assert catalog["field:description:segment:0"] == "Python and SQL."
+    assert catalog["field:description:segment:1"] == "Send a resume and portfolio."
+    assert catalog["field:description:segment:2"] == "Docker."
+    assert set(plan) == {
+        "field:description:segment:0",
+        "field:description:segment:2",
+    }
+
+
 def test_reference_payload_is_sorted_and_includes_exact_text() -> None:
     payload = evidence_reference_payload({"field:z": "Z", "field:a": "A"})
 

@@ -195,3 +195,33 @@ available valid accepted-semantic evidence inside the same target workflow. Unti
 then, the first Market slice remains I7 HOLD. The existing source-level Market view
 and honest missing-semantic denominator remain useful and correct within their
 declared authority.
+
+## 2026-09-20 — Source-backed evidence-span repair
+
+The requested continuation supplied enough evidence for two narrow grammatical
+boundaries, without creating a general subject classifier. A dependent infinitive
+after a semicolon retains the preceding clause's subject and exact source spacing.
+An explicit `How to Apply:` heading ends the active requirement section; a later
+requirement heading can start a new section. Both rules operate on evidence spans,
+not extracted semantic claims, and preserve the complete source description.
+
+Representative cases were the `tvMm` product-intent sentence (`We want AI ...;
+to examine ...`) and `tGc5` application heading. Before the repair, `tvMm` placed
+the infinitive continuation in a separate required coverage reference and `tGc5`
+treated application instructions as requirement coverage. After the repair,
+`tvMm` retains the AI subject in one exact span (three requirement references
+become two), while `tGc5` removes the application segment from the requirement
+plan (22 references become 21). Synthetic regressions also cover independent
+semicolon qualifications, exact whitespace, application-section exclusion and
+re-entry through a later required-skills heading.
+
+Read-only before/after comparisons found identical requirement and responsibility
+plans for all five accepted public anchors. Every new plan text was checked as an
+exact substring of its source description. This reduces a repeatable source-scope
+failure, but it does not prove that a model will correctly assign every product
+goal or produce an acceptable P1.6 artifact. Artifact 49 remains rejected; I7
+remains HOLD, and no further live generation was used to manufacture a PASS.
+
+Verification: **642 tests passed with warnings-as-errors**, Ruff and dependency
+checks passed, and the complete 394-job public corpus verified. No operational
+SQLite or public-corpus state was changed by this evidence-span repair.

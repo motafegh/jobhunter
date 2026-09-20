@@ -139,6 +139,7 @@ Execution result:
 - [x] one bounded post-repair `tvMm` attempt created artifact 49; complete review rejected borrowed familiarity depth and an AI-system-behavior subject error.
 - [x] repaired repeated-identical depth-marker borrowing in v20 with regression and retained raw-response replay; artifact 49 stays rejected.
 - [x] inspected the remaining artifact-49 subject error across all 27 current English projections; four broad coverage spans in two jobs cross company-goal/application text. No safe deterministic cutoff or live retry is justified by this evidence.
+- [x] source-backed evidence-span repair keeps `; to ...` with its subject and ends requirement scope at explicit `How to Apply:`; five accepted anchor plans unchanged. This does not semantically accept artifact 49 or close I7.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

@@ -15,6 +15,7 @@ _SECTION_HEADING_RE = re.compile(
     r"you\s+will\s+be\s+responsible\s+for|"
     r"what\s+you(?:'|’)ll\s+do|what\s+we(?:'|’)re\s+looking\s+for|"
     r"technical\s+skill\s+stack|key\s+responsibilities|"
+    r"how\s+to\s+apply\s*:|"
     r"responsibilities(?=\s*(?::|-|include\b))|"
     r"(?-i:Responsibilities(?=\s+[A-Z][a-z]))|"
     r"requirements(?=\s*(?::|-))|"
@@ -174,7 +175,20 @@ def _long_text_segments(text: str) -> list[str]:
 def _segment_clauses(segment: str) -> list[str]:
     """Expose exact semicolon clauses when a single source bullet mixes requirement strength."""
 
-    clauses = [piece.strip() for piece in _CLAUSE_SEPARATOR_RE.split(segment) if piece.strip()]
+    clauses: list[str] = []
+    cursor = 0
+    for separator in _CLAUSE_SEPARATOR_RE.finditer(segment):
+        # A dependent infinitive continues the preceding clause's subject.
+        # Splitting "AI should act; to inspect records" loses who should act.
+        if re.match(r"to\s+[a-z]", segment[separator.end() :], re.I):
+            continue
+        piece = segment[cursor : separator.start()].strip()
+        if piece:
+            clauses.append(piece)
+        cursor = separator.end()
+    final = segment[cursor:].strip()
+    if final:
+        clauses.append(final)
     if len(clauses) <= 1:
         return []
     return clauses[:16]

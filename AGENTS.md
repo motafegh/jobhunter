@@ -286,6 +286,11 @@ representative source-backed section/subject design evidence or naturally availa
 valid accepted-semantic core evidence; do not select a substitute vacancy merely
 to obtain PASS.
 
+A bounded general evidence-span repair now keeps dependent `; to ...` wording
+with its subject and ends requirement scope at an explicit `How to Apply:`
+heading. All five accepted anchor plans were unchanged. This does not resolve
+the model's full subject-attribution reliability or change I7 HOLD.
+
 ### 5.2 First-slice settled rules
 
 Permanent for this slice unless implementation evidence exposes a concrete contradiction:
