@@ -260,3 +260,23 @@ check is closed. Do not repeat `tvMm`, switch vacancies/models, auto-accept, or
 weaken depth validation merely to obtain PASS. The next decision needs independent
 representative evidence of a generalizable semantic/evidence improvement or a
 naturally available valid accepted-current core artifact.
+
+### Offline depth-scope audit after attempt 108
+
+The source-span hypothesis was checked against all 27 current public English
+projections using the existing requirement coverage planner and v20 depth-marker
+recognizer. The planner emitted 111 requirement references. Fourteen references
+across 13 jobs contain multiple recognized depth markers; all fourteen are longer
+than 300 characters. `tvMm` contributes two such references (420 and 1,414
+characters), with repeated `familiarity` markers. Other shapes include hyphenated
+lists, period-delimited sentences, and comma-separated prose, so a single length
+cutoff or punctuation split would change evidence scope without proving the right
+subject for each marker.
+
+The accepted/current `tmBK` P1.6 is a counterexample to treating a broad span as
+inherently unworkable: its 305-character source list has seven recognized markers,
+and its reviewed artifact preserves the corresponding item-specific `Mastery`,
+`Familiarity`, and `Sufficient knowledge` values. This audit supports retaining the
+fail-closed validator and rejects a length-only splitter. It does not establish a
+safe general parser change or make attempt 108 semantically valid. No new model
+call or operational-state mutation was made for this audit; I7 remains HOLD.
