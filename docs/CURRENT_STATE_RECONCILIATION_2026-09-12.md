@@ -262,10 +262,17 @@ read-only comparison. This improves future evidence preparation but supplies no
 new accepted P1.6 core member, so I7 remains HOLD.
 
 The one bounded post-span-repair live check, `tvMm` attempt 108, failed after its
-allowed retry: the model omitted item-specific depth signals for requirements
-citing multiple explicit markers. No candidate was created. The depth guard was
+allowed retry on mixed-depth broad citations. No candidate was created. The depth guard was
 not relaxed; all seven Market tables matched the pre-run backup, and SQLite
 integrity and foreign-key checks passed. This check is closed with I7 still HOLD.
+
+Exact-source replay then distinguished omitted applicable familiarity from correct
+null depth on neighboring experience claims; v20's shared evidence reference
+cannot prove the item scope. Eight of fourteen mixed-marker corpus references also
+carry shared preferred context. A separate repeated-marker validation gap was
+repaired without changing accepted anchors. The next implementation needs a
+versioned candidate that keeps exact item evidence and parent coverage/strength
+context separately, with offline review before another bounded live evaluation.
 
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
@@ -273,7 +280,8 @@ Exact next responsibility:
 
 ```text
 preserve rejected tvMm artifact 49, failed attempt 108 evidence, and HOLD
-→ obtain independent representative evidence for a generalizable semantic improvement or naturally available valid accepted-semantic core evidence before another closure attempt
+→ implement and validate a versioned exact-item plus parent-context candidate boundary
+→ consider another bounded live evaluation only after offline corpus and accepted-anchor proof
 → obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
 → live accepted-semantic CLI/browser drill-down remains required for PASS
 ```

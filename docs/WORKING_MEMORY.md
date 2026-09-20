@@ -234,12 +234,15 @@ anchor plans equal in read-only comparison. Artifact 49 remains rejected. This i
 evidence preparation, not semantic acceptance or I7 PASS.
 
 One bounded live check of that repair has now run: `tvMm` attempt 108 failed after
-the allowed validation retry because the model omitted item-specific depth signals
-while citing spans with multiple explicit markers. No candidate was persisted.
+the allowed validation retry with mixed-depth broad references. No candidate was persisted.
 The v20 guard remained intact; all seven Market tables match the pre-run backup,
 and SQLite integrity and foreign-key checks pass. This check is closed. I7 remains
-HOLD pending independent evidence for a generalizable improvement or naturally
-available valid accepted-current core semantic evidence.
+HOLD. Subsequent exact-source diagnosis separated missing applicable familiarity
+from correct null depth for neighboring experience claims; the current broad
+reference cannot prove which is which. Eight of fourteen mixed-marker corpus
+references also carry shared preferred context. The next bounded implementation
+is a versioned candidate with separate exact item and parent coverage/obligation
+evidence, followed by offline anchor/corpus checks before any new live run.
 
 ### Previous selection and baseline (historical)
 

@@ -292,13 +292,22 @@ heading. All five accepted anchor plans were unchanged. This does not resolve
 the model's full subject-attribution reliability or change I7 HOLD.
 
 One bounded post-span-repair `tvMm` generation (attempt 108) failed after its
-allowed retry because the model omitted item-specific depth signals for broad
-evidence spans with multiple explicit markers. No candidate was created. The
+allowed retry on mixed-depth broad evidence citations. No candidate was created. The
 depth guard was preserved, all Market tables matched the pre-run backup, and
 SQLite integrity/foreign-key checks passed. This check is closed; do not repeat
 `tvMm` or switch vacancy/model to force I7 PASS. Continue only from independent
 evidence for a generalizable improvement or naturally available valid accepted-
 current core semantic evidence. I7 remains HOLD.
+
+The 27-projection offline audit and exact attempt-108 replay now show that v20's
+broad coverage reference conflates omitted applicable familiarity with correct
+null depth on neighboring experience claims; shared preferred wording is also
+lost by naive item splitting. A separate explicit repeated-marker validator gap
+was repaired with 642 passing strict-warning tests and read-only validation of
+all five accepted anchors. The next general implementation is a versioned
+candidate with separate exact item excerpts and parent coverage/obligation
+context. Prove it offline before another bounded live call. Keep public v20/v5,
+accepted artifacts, semantic review, Market history, and I7 HOLD intact.
 
 ### 5.2 First-slice settled rules
 
