@@ -261,13 +261,19 @@ requirement-section coverage. The five accepted anchor plans were unchanged in
 read-only comparison. This improves future evidence preparation but supplies no
 new accepted P1.6 core member, so I7 remains HOLD.
 
+The one bounded post-span-repair live check, `tvMm` attempt 108, failed after its
+allowed retry: the model omitted item-specific depth signals for requirements
+citing multiple explicit markers. No candidate was created. The depth guard was
+not relaxed; all seven Market tables matched the pre-run backup, and SQLite
+integrity and foreign-key checks passed. This check is closed with I7 still HOLD.
+
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
 Exact next responsibility:
 
 ```text
-preserve rejected tvMm artifact 49 evidence and HOLD
-→ obtain representative source-backed section/subject evidence or naturally available valid accepted-semantic core evidence before another closure attempt
+preserve rejected tvMm artifact 49, failed attempt 108 evidence, and HOLD
+→ obtain independent representative evidence for a generalizable semantic improvement or naturally available valid accepted-semantic core evidence before another closure attempt
 → obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
 → live accepted-semantic CLI/browser drill-down remains required for PASS
 ```

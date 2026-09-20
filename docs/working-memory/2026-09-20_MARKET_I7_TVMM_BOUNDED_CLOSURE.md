@@ -225,3 +225,38 @@ remains HOLD, and no further live generation was used to manufacture a PASS.
 Verification: **642 tests passed with warnings-as-errors**, Ruff and dependency
 checks passed, and the complete 394-job public corpus verified. No operational
 SQLite or public-corpus state was changed by this evidence-span repair.
+
+## Bounded live check after the source-span repair
+
+The source-span repair changes the exact evidence the existing model sees. One
+targeted `tvMm` generation is therefore authorized as validation of that change,
+not as a model/prompt matrix or a search for an easy passing vacancy. Use the
+unchanged source 47, English projection 41, configured model and v20/v5 contract.
+Back up SQLite before the command. The normal bounded validation retry belongs to
+this one command. Inspect any candidate against the complete original source and
+English projection, including depth, optionality, duties and the product-versus-
+candidate subject. Accept only if valid. A failed or materially invalid result
+ends this check; preserve HOLD and do not switch vacancy/model or keep retrying.
+
+### Result — 2026-09-20
+
+Operational SQLite was backed up before execution. The unchanged targeted command
+ran against source detail 47 and English projection 41 as analysis attempt 108. It
+failed after the configured one validation retry; no candidate or accepted artifact
+was created. The first provider response had three depth-field validation errors;
+the retry had twelve. In the latter, requirement items cited broad evidence spans
+with multiple explicit experience/depth markers but supplied no item-specific
+`depth_signal`. The v20 guard correctly refused to borrow a marker from another
+subject in the span. This is a model-output validity failure, not evidence that the
+source-span repair is wrong or a reason to relax the guard. Raw provider protocol
+and the full error log remain local and are not publication material.
+
+Post-run SQLite `integrity_check` is `ok` and `foreign_key_check` is empty. Exact
+row-content digests for all seven `market_%` tables match the pre-run backup,
+including both historical snapshots, their members, and profiles. I7 remains
+**HOLD**: there is still no accepted-semantic core posting, so the semantic
+snapshot/profile and CLI/browser drill-down cannot be claimed. This bounded live
+check is closed. Do not repeat `tvMm`, switch vacancies/models, auto-accept, or
+weaken depth validation merely to obtain PASS. The next decision needs independent
+representative evidence of a generalizable semantic/evidence improvement or a
+naturally available valid accepted-current core artifact.

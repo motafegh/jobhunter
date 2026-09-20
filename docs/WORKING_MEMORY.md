@@ -233,6 +233,14 @@ the two reviewed affected plans (`tvMm` and `tGc5`) and left all five accepted
 anchor plans equal in read-only comparison. Artifact 49 remains rejected. This is
 evidence preparation, not semantic acceptance or I7 PASS.
 
+One bounded live check of that repair has now run: `tvMm` attempt 108 failed after
+the allowed validation retry because the model omitted item-specific depth signals
+while citing spans with multiple explicit markers. No candidate was persisted.
+The v20 guard remained intact; all seven Market tables match the pre-run backup,
+and SQLite integrity and foreign-key checks pass. This check is closed. I7 remains
+HOLD pending independent evidence for a generalizable improvement or naturally
+available valid accepted-current core semantic evidence.
+
 ### Previous selection and baseline (historical)
 
 I7 real-local execution and the 2026-09-19 closure follow-up have now closed the non-semantic evidence gaps.

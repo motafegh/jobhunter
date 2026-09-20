@@ -140,6 +140,7 @@ Execution result:
 - [x] repaired repeated-identical depth-marker borrowing in v20 with regression and retained raw-response replay; artifact 49 stays rejected.
 - [x] inspected the remaining artifact-49 subject error across all 27 current English projections; four broad coverage spans in two jobs cross company-goal/application text. No safe deterministic cutoff or live retry is justified by this evidence.
 - [x] source-backed evidence-span repair keeps `; to ...` with its subject and ends requirement scope at explicit `How to Apply:`; five accepted anchor plans unchanged. This does not semantically accept artifact 49 or close I7.
+- [x] one bounded live check after that repair: `tvMm` attempt 108 failed depth-field validation after its allowed retry; no candidate was created. All seven Market tables matched the pre-run backup and SQLite integrity/foreign-key checks passed. The check is closed; I7 remains HOLD.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -199,6 +200,7 @@ I7 HOLD semantic-evidence closure only
 → post-repair tvMm artifact 49 reviewed and rejected; no candidate is current
 → repeated-marker depth borrowing repaired and verified offline
 → candidate subject-attribution and model reliability remain unproven
-→ I7 HOLD; require representative source-backed section/subject design evidence or naturally available valid accepted-semantic core evidence before another closure attempt
+→ source-span repair checked live once; attempt 108 failed item-specific depth validation and created no candidate
+→ I7 HOLD; require independent representative evidence of a generalizable semantic improvement or naturally available valid accepted-semantic core evidence before another closure attempt
 → accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
 ```

@@ -291,6 +291,15 @@ with its subject and ends requirement scope at an explicit `How to Apply:`
 heading. All five accepted anchor plans were unchanged. This does not resolve
 the model's full subject-attribution reliability or change I7 HOLD.
 
+One bounded post-span-repair `tvMm` generation (attempt 108) failed after its
+allowed retry because the model omitted item-specific depth signals for broad
+evidence spans with multiple explicit markers. No candidate was created. The
+depth guard was preserved, all Market tables matched the pre-run backup, and
+SQLite integrity/foreign-key checks passed. This check is closed; do not repeat
+`tvMm` or switch vacancy/model to force I7 PASS. Continue only from independent
+evidence for a generalizable improvement or naturally available valid accepted-
+current core semantic evidence. I7 remains HOLD.
+
 ### 5.2 First-slice settled rules
 
 Permanent for this slice unless implementation evidence exposes a concrete contradiction:
