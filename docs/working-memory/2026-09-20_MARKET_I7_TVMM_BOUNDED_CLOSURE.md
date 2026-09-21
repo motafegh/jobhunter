@@ -600,3 +600,35 @@ Review the complete merged result against every exact requirement and duty refer
 depth and obligation, candidate-versus-product subject, and the two headingless candidate-
 experience statements. Record the operational database digest before and after. A transport,
 validation, or semantic failure closes this evaluation without another model invocation.
+
+### Isolated-partition evaluation result
+
+The one authorized direct v21 invocation completed mechanically with 28 merged requirements,
+all eleven exact duties, no role-purpose claim and no exclusions. Both headingless candidate-
+experience references were represented, so the isolated partition corrected the prior complete
+omission. Familiarity depths were exact, preferred requirements remained preferred, the reliable-
+product requirement remained present, and no company/product subject leakage recurred.
+
+Complete semantic review still rejects the result:
+
+1. The first headingless statement says the candidate has `real experience in designing and
+   developing intelligent Agents and Agentic systems`. The result normalized that fact as a
+   generic `skill` named `Design and development ...`, losing the source-explicit experience
+   type, even though it separately classified API exposure as experience.
+2. The second statement is conjunctive. The result captured building an Agent and prior work with
+   LLMs, Tool Calling, memory, workflows, RAG and Orchestration, but omitted the final candidate
+   condition about enjoying building systems that understand goals, make decisions, use tools and
+   pursue a task to the end. Representing some facts from one parent reference currently satisfies
+   aggregate reference coverage, so validation did not expose this partial semantic omission.
+
+The operational SQLite SHA-256 remained exactly
+`de1d924e863e5e9a8b6515f4be0694d339666cc7f650716ab80670e988260df2`; integrity is `ok` and
+foreign-key checks are empty. The complete request/response evidence remains ignored local data at
+`data/local-acceptance/i7/v21-isolated-partition-evaluation.json`. No attempt, artifact, corpus or
+Market state was created.
+
+This evaluation is closed. Do not repeat it. The next general repair must preserve distinct
+source-explicit facts inside a compound headingless candidate statement rather than treating any
+one claim as coverage of the entire parent. It must also preserve explicit prior-experience type.
+Prove that boundary across the representative candidate-experience statements before another
+model call. Public/current P1.6 remains v20/v5 and I7 remains **HOLD**.
