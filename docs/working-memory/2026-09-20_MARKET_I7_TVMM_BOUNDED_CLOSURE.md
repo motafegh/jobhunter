@@ -558,3 +558,31 @@ transport regression remains clean.
 
 I7 remains **HOLD**. No accepted-semantic core posting exists, so the semantic Market
 snapshot/profile and accepted-semantic browser/CLI drill-down remain unexercised.
+
+### Headingless candidate-experience partition repair — 2026-09-21
+
+The retained post-ledger response exposed a generation-capacity problem rather than a
+coverage-validator defect. The `tvMm` plan had six requirement references in one partition,
+but three broad section references expanded into fourteen generated requirements and the same
+call also owned all eleven duties. The two explicit headingless candidate-experience references
+were last in that partition. Both responses represented the first and silently omitted the
+second; the unchanged whole-partition validator correctly rejected the omission.
+
+V21 now isolates references whose source kind is `candidate_experience` from dense section
+requirement partitions. These exact statements remain required and non-excludable, but they no
+longer compete with broad list decomposition or the first partition's duty output. V20 gained
+only a partition-selection hook and still selects its existing partition function, so public
+v20 routing and behavior are unchanged. The v21 prompt explicitly identifies a dedicated
+candidate-experience partition as mandatory source coverage.
+
+The permanent 27-projection transport regression now also proves exact partition membership,
+no duplicate reference assignment, and no mixing of candidate-experience references with other
+source kinds. The candidate ledger remains 170 requirement references and 100 responsibility
+references; isolated planning increases the bounded requirement-partition total from 38 to 43
+across the corpus. Five projections exercise the rule, including the two independent `tvMm`
+statements. Focused tests and the complete suite pass at **677 tests with warnings-as-errors**;
+Ruff and diff checks pass.
+
+This offline result repairs the identified source-attention boundary but does not prove model
+compliance or semantic acceptance. No model call, artifact, SQLite mutation, public routing
+change, or I7 status change was made in this increment.

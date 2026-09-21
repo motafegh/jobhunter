@@ -293,6 +293,11 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
     ) -> dict[str, str]:
         return build_responsibility_coverage_plan(model_fields)
 
+    def _requirement_partitions(
+        self, plan: dict[str, dict[str, Any]]
+    ) -> list[dict[str, dict[str, Any]]]:
+        return _v20_requirement_partitions(plan)
+
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
         return complete_analysis_partition_with_instructor_v20(**kwargs)
 
@@ -337,7 +342,7 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
             decomposed_refs=decomposed_refs,
             base_plan=self._requirement_coverage_plan(model_fields),
         )
-        requirement_partitions = _v20_requirement_partitions(complete_plan)
+        requirement_partitions = self._requirement_partitions(complete_plan)
         responsibility_plan = self._responsibility_coverage_plan(model_fields)
         if not requirement_partitions:
             requirement_partitions = [{}]

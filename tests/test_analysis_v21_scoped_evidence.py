@@ -7,7 +7,10 @@ from types import SimpleNamespace
 import pytest
 from pydantic import ValidationError
 
-from jobhunter.analysis_runtime_v21 import V21CandidateAnalysisProvider
+from jobhunter.analysis_runtime_v21 import (
+    V21CandidateAnalysisProvider,
+    _v21_requirement_partitions,
+)
 from jobhunter.analysis_service_v21 import (
     _ENGLISH_SYSTEM_PROMPT_V21,
     ENGLISH_PROMPT_VERSION,
@@ -598,6 +601,41 @@ def test_v21_tracks_explicit_headingless_candidate_experience(sentence: str) -> 
     ]
 
 
+def test_v21_isolates_headingless_candidate_experience_from_dense_sections() -> None:
+    plan = {
+        "section:0": {
+            "text": "Experience with Python, APIs, databases, and distributed systems.",
+            "source_kind": "requirement_section",
+            "obligation_hint": "required",
+            "allow_exclusion": True,
+        },
+        "candidate:0": {
+            "text": "We are looking for someone with experience building reliable services.",
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+        },
+        "candidate:1": {
+            "text": "If you have built an agent and worked with LLMs, you may be a fit.",
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+        },
+    }
+
+    partitions = _v21_requirement_partitions(plan)
+
+    assert [list(partition) for partition in partitions] == [
+        ["section:0"],
+        ["candidate:0", "candidate:1"],
+    ]
+    assert all(
+        {candidate["source_kind"] for candidate in partition.values()}
+        in ({"requirement_section"}, {"candidate_experience"})
+        for partition in partitions
+    )
+
+
 @pytest.mark.parametrize(
     "sentence",
     [
@@ -746,6 +784,7 @@ def test_v21_all_public_projection_ledgers_are_exact_and_transport_valid() -> No
         fields = json.loads(projection_path.read_text(encoding="utf-8"))["fields"]
         requirement_plan = build_requirement_coverage_plan_v21(fields)
         responsibility_plan = build_responsibility_coverage_plan_v21(fields)
+        requirement_partitions = _v21_requirement_partitions(requirement_plan)
         catalog = build_field_evidence_catalog(fields)
         candidate_catalog = {
             reference: str(candidate["text"])
@@ -763,6 +802,24 @@ def test_v21_all_public_projection_ledgers_are_exact_and_transport_valid() -> No
             for reference, text in candidate_catalog.items()
         )
         assert all(text.count("(") == text.count(")") for text in responsibility_plan.values())
+        partitioned_references = [
+            reference
+            for partition in requirement_partitions
+            for reference in partition
+        ]
+        assert set(partitioned_references) == set(requirement_plan)
+        assert len(partitioned_references) == len(set(partitioned_references))
+        assert all(
+            not (
+                "candidate_experience"
+                in {candidate.get("source_kind") for candidate in partition.values()}
+                and len(
+                    {candidate.get("source_kind") for candidate in partition.values()}
+                )
+                > 1
+            )
+            for partition in requirement_partitions
+        )
 
         merged_catalog = {**catalog, **candidate_catalog}
         _validated_partition_plan(

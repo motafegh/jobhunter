@@ -26,6 +26,9 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
   optionality wording that is outside a narrower item_excerpt; keep that item preferred.
 - item_excerpt is candidate validation evidence. JobHunter removes it before unchanged v5
   persistence; parent evidence and exact depth_signal remain the durable factual representation.
+- Explicit headingless candidate-experience references may be supplied in their own partition so
+  dense section decomposition and duty output cannot crowd them out. Every such supplied reference
+  is a mandatory candidate qualification and must be represented; it cannot be excluded.
 - Keep all inherited v20 coverage, source, subject, strength, ontology, and fail-closed rules.
 """
 

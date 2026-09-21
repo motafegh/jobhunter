@@ -156,6 +156,7 @@ Execution result:
 - [x] removed candidate requirement leakage from Benefits/Location/KPI/Tasks/application sections, preserved shared preferred list/group scope, and recovered/refined explicit Job Description/Tasks/headingless duties. The current 27-projection audit covers 170 requirement refs, 100 responsibility refs and 38 partitions with no collisions, duplicates, unbalanced parentheses or non-source spans; accepted v20/v5 artifacts remain untouched.
 - [x] promoted the complete 27-projection v21 exact-source/catalog/transport audit into a permanent offline regression.
 - [x] one post-ledger non-persistent v21 `tvMm` evaluation failed after its bounded retry: exact duties and repaired subject coverage held, but familiarity depth was omitted and retained-response replay after safe single-marker canonicalization still omits one non-excludable headingless candidate-experience statement. No candidate/state mutation; evaluation closed.
+- [x] isolated explicit headingless candidate-experience references from dense section/duty partitions in v21; the 27-projection regression preserves all 170 requirement refs without duplicates across 43 bounded partitions, and 677 strict-warning tests pass. Public v20 remains unchanged; real-model compliance is not yet proven.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -217,5 +218,6 @@ I7 HOLD semantic-evidence closure only
 → candidate subject-attribution and model reliability remain unproven
 → source-span repair checked live once; attempt 108 failed item-specific depth validation and created no candidate
 → I7 HOLD; require independent representative evidence of a generalizable semantic improvement or naturally available valid accepted-semantic core evidence before another closure attempt
+→ v21 now isolates mandatory headingless candidate experience from dense section decomposition and first-partition duties; offline corpus and full-suite gates pass
 → accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
 ```
