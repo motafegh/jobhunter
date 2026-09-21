@@ -508,3 +508,20 @@ Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, a
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
 duty coverage, but it did not produce an accepted-semantic core posting or exercise the
 accepted-semantic Market snapshot/profile and CLI/browser drill-down.
+
+### Bounded post-ledger evaluation decision — 2026-09-21
+
+Independent evidence now supports one new non-persistent v21 evaluation. The repair was
+derived from all 27 projections rather than another `tvMm`-specific prompt patch; 173
+requirement references, 100 responsibility references and 39 partitions pass the committed
+exact-source/catalog transport audit. The previous candidate's illegal exclusion fails
+closed on retained-response replay. Full local gates pass at 674 strict-warning tests, and
+pushed-head CI run `35640872667` is green.
+
+Run exactly one direct v21 provider evaluation against the unchanged public `tvMm` English
+projection and configured `gemma-4-e4b-it-ud` model. The provider's one bounded validation
+retry remains part of this single evaluation. Do not persist an attempt/artifact, change
+current v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept a mechanically
+valid result. Review the complete result against original source meaning, exact depth,
+obligation, headingless candidate experience, every duty, and candidate-versus-product
+subject. A failed or materially invalid result closes this evaluation without another call.

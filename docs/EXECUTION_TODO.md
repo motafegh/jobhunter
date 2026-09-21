@@ -155,6 +155,7 @@ Execution result:
 - [x] validated the v21 transport ledger across all 27 projections (165 requirement refs, 60 responsibility refs, 39 partitions, zero collisions/non-source spans) and repaired duty-list handling for dependent `including` modifiers, independent Oxford-comma final duties, and coordinated bare-gerund chains.
 - [x] removed candidate requirement leakage from Benefits/Location/KPI/Tasks/application sections, preserved shared preferred list/group scope, and recovered/refined explicit Job Description/Tasks/headingless duties. The repeated 27-projection audit covers 173 requirement refs, 100 responsibility refs and 39 partitions with no collisions, duplicates, unbalanced parentheses or non-source spans; accepted v20/v5 artifacts remain untouched.
 - [x] promoted the complete 27-projection v21 exact-source/catalog/transport audit into a permanent offline regression.
+- [~] one post-ledger non-persistent v21 `tvMm` evaluation authorized after green CI; complete semantic review is required and no persistence/current routing change is included.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
