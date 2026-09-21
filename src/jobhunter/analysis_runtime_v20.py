@@ -98,12 +98,17 @@ def _v20_complete_requirement_plan(
     *,
     additional_plan: dict[str, dict[str, Any]],
     decomposed_refs: list[str],
+    base_plan: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Build the exact model-owned coverage ledger before partitioning it."""
 
     plan = {
         reference: dict(candidate)
-        for reference, candidate in build_requirement_coverage_plan(model_fields).items()
+        for reference, candidate in (
+            base_plan
+            if base_plan is not None
+            else build_requirement_coverage_plan(model_fields)
+        ).items()
     }
     for reference in decomposed_refs:
         candidate = plan.get(reference)
@@ -278,6 +283,16 @@ def _merge_partition_structured(parts: list[dict[str, Any]]) -> dict[str, Any]:
 class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
     """Extract dense source-led coverage in bounded independent semantic partitions."""
 
+    def _requirement_coverage_plan(
+        self, model_fields: dict[str, Any]
+    ) -> dict[str, dict[str, Any]]:
+        return build_requirement_coverage_plan(model_fields)
+
+    def _responsibility_coverage_plan(
+        self, model_fields: dict[str, Any]
+    ) -> dict[str, str]:
+        return build_responsibility_coverage_plan(model_fields)
+
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
         return complete_analysis_partition_with_instructor_v20(**kwargs)
 
@@ -320,9 +335,10 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
             model_fields,
             additional_plan=additional_plan,
             decomposed_refs=decomposed_refs,
+            base_plan=self._requirement_coverage_plan(model_fields),
         )
         requirement_partitions = _v20_requirement_partitions(complete_plan)
-        responsibility_plan = build_responsibility_coverage_plan(model_fields)
+        responsibility_plan = self._responsibility_coverage_plan(model_fields)
         if not requirement_partitions:
             requirement_partitions = [{}]
 

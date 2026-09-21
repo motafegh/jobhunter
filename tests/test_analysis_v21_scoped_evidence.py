@@ -12,6 +12,14 @@ from jobhunter.analysis_service_v21 import (
     _ENGLISH_SYSTEM_PROMPT_V21,
     ENGLISH_PROMPT_VERSION,
 )
+from jobhunter.evidence_refs import (
+    build_requirement_coverage_plan,
+    build_responsibility_coverage_plan,
+)
+from jobhunter.evidence_refs_v21 import (
+    build_requirement_coverage_plan_v21,
+    build_responsibility_coverage_plan_v21,
+)
 from jobhunter.inference.instructor_lm_studio_v21 import (
     AnalysisRequirementV21,
     JobAnalysisResponseV21,
@@ -441,3 +449,85 @@ def test_v21_validates_all_current_accepted_anchor_requirements_read_only() -> N
             validated += 1
 
     assert validated == 85
+
+
+def test_v21_splits_mixed_obligation_sentences_and_stops_at_application() -> None:
+    fields = {
+        "description": (
+            "Requirements: Architecture experience is required. "
+            "It is an advantage if you have production Agent experience. "
+            "Our company builds accounting software. "
+            "To apply for collaboration, please send your resume. "
+            "A short portfolio is welcome."
+        )
+    }
+
+    accepted_plan = build_requirement_coverage_plan(fields)
+    candidate_plan = build_requirement_coverage_plan_v21(fields)
+
+    assert len(accepted_plan) == 1
+    assert [item["text"] for item in candidate_plan.values()] == [
+        "Architecture experience is required.",
+        "It is an advantage if you have production Agent experience.",
+        "Our company builds accounting software.",
+    ]
+    assert [item["obligation_hint"] for item in candidate_plan.values()] == [
+        "required",
+        "preferred",
+        "required",
+    ]
+    assert all(item["allow_exclusion"] is True for item in candidate_plan.values())
+
+    required_only = build_requirement_coverage_plan_v21(
+        {
+            "description": (
+                "Requirements: Python experience is required. "
+                "Interested parties, please send your resume and portfolio."
+            )
+        }
+    )
+    assert [item["text"] for item in required_only.values()] == [
+        "Python experience is required."
+    ]
+
+
+def test_v21_decomposes_repeated_gerund_duties_without_splitting_coordination() -> None:
+    fields = {
+        "description": (
+            "Responsibilities include designing production Agents, connecting Agents to APIs, "
+            "evaluating, debugging, and improving Agent performance, paying attention to cost "
+            "and reliability. Close collaboration with Product teams to ship AI features is "
+            "important. Practical experience matters more than degrees. "
+            "Requirements: Python."
+        )
+    }
+
+    accepted_plan = build_responsibility_coverage_plan(fields)
+    candidate_plan = build_responsibility_coverage_plan_v21(fields)
+
+    assert len(accepted_plan) == 1
+    assert list(candidate_plan.values()) == [
+        "include designing production Agents",
+        "connecting Agents to APIs",
+        "evaluating, debugging, and improving Agent performance",
+        "paying attention to cost and reliability.",
+        "Close collaboration with Product teams to ship AI features is important.",
+    ]
+    assert all("Practical experience" not in text for text in candidate_plan.values())
+
+
+def test_v21_requirement_planner_leaves_accepted_anchor_ledgers_unchanged() -> None:
+    for source_job_id in _ACCEPTED_ANCHORS:
+        fields = json.loads(
+            (
+                _REPOSITORY_ROOT
+                / "corpus"
+                / "jobs"
+                / source_job_id
+                / "english-projection.json"
+            ).read_text(encoding="utf-8")
+        )["fields"]
+
+        assert build_requirement_coverage_plan_v21(fields) == (
+            build_requirement_coverage_plan(fields)
+        )
