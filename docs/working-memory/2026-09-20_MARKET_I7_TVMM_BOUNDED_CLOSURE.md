@@ -673,3 +673,29 @@ shared `worked with` technology scope and the goal-directed system-building cond
 to all previously reviewed depth, obligation, duty and subject boundaries. Do not persist, change
 v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any transport, validation or
 semantic failure closes this evaluation without another invocation.
+
+### Compound-fact evaluation result
+
+The one authorized invocation failed after its bounded validation retry and created no candidate.
+Both retained candidate-partition responses represented all five exact `tvMm` checklist items,
+including the two explicit experience types, the complete shared `worked with` technology group,
+and the goal-directed system-building condition. The semantic omission exposed by the preceding
+evaluation did not recur.
+
+The responses nevertheless used each checklist item's exact text in both `evidence` and
+`item_excerpt`. V21 requires durable `evidence` to remain the supplied parent coverage text, so
+both non-excludable parent references appeared uncited and the validator rejected the partition.
+The retry recognized the parent IDs in its reasoning but repeated the same shape. This is an
+instruction/transport representation mismatch, not authorization to accept missing parent
+provenance or persist item excerpts as replacement evidence.
+
+SQLite remained byte-identical at
+`de1d924e863e5e9a8b6515f4be0694d339666cc7f650716ab80670e988260df2`; integrity is `ok` and
+foreign-key checks are empty. Raw protocol evidence remains ignored locally at
+`data/local-acceptance/i7/v21-compound-fact-evaluation.json`. This evaluation is closed.
+
+The next bounded repair is deterministic and candidate-only: when `evidence` and `item_excerpt`
+both equal one exact checklist item that maps to one unique supplied parent, restore that exact
+parent as durable evidence before normal validation. Ambiguous, reconstructed or unknown items
+must continue to fail closed. Prove the retained responses and negative cases offline before any
+new model call. Public/current v20/v5 and I7 HOLD remain unchanged.
