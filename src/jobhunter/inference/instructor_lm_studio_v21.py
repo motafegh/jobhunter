@@ -15,6 +15,7 @@ from jobhunter.evidence_refs import (
     evidence_mixes_english_optionality,
     has_english_optionality_signal,
 )
+from jobhunter.inference.instructor_lm_studio import _equivalent_source_excerpt
 from jobhunter.inference.instructor_lm_studio_v20 import (
     AnalysisRequirementV20,
     JobAnalysisResponseV20,
@@ -31,8 +32,10 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
 
     @model_validator(mode="after")
     def validate_requirement_semantics(self, info: ValidationInfo) -> Self:
-        if self.item_excerpt not in self.evidence:
+        canonical_item = _equivalent_source_excerpt(self.item_excerpt, self.evidence)
+        if canonical_item is None:
             raise ValueError("item_excerpt must be an exact contiguous source subspan of evidence")
+        self.item_excerpt = canonical_item
 
         if self.requirement_type == "inferred" and not self.rationale.strip():
             raise ValueError("Inferred requirements require a concise non-empty rationale")

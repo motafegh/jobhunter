@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -17,6 +19,22 @@ from jobhunter.inference.instructor_lm_studio_v21 import (
     persisted_v20_shape,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+_REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+_ACCEPTED_ANCHORS = ("tG9K", "t4jp", "tmBK", "t4qV", "tmyX")
+_TMBK_ITEM_EXCERPTS = {
+    "Python/Django": "Mastery of Python/Django",
+    "DRF, FastAPI": "Mastery of DRF, FastAPI",
+    "Git": "Familiarity with Git",
+    "Linux operating system": "Familiarity with Linux operating system",
+    "SQL and NoSQL databases": "Familiarity with SQL and NoSQL databases",
+    "Object-Oriented concepts, modular design": (
+        "Sufficient knowledge of Object-Oriented concepts, modular design"
+    ),
+    "Database Locking, Concurrency, and Transaction Management": (
+        "Familiarity with Database Locking, Concurrency, and Transaction Management"
+    ),
+}
 
 
 def _context(evidence: str, *, obligation: str = "required") -> dict[str, object]:
@@ -351,3 +369,34 @@ def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
     assert result is expected
     assert captured["response_model"] is JobAnalysisResponseV21
     assert captured["contract_version"] == "v21"
+
+
+def test_v21_validates_all_current_accepted_anchor_requirements_read_only() -> None:
+    validated = 0
+    for source_job_id in _ACCEPTED_ANCHORS:
+        job_dir = _REPOSITORY_ROOT / "corpus" / "jobs" / source_job_id
+        fields = json.loads(
+            (job_dir / "english-projection.json").read_text(encoding="utf-8")
+        )["fields"]
+        analysis = json.loads(
+            (job_dir / "p16-english.json").read_text(encoding="utf-8")
+        )["analysis"]
+        context = {
+            "analysis_mode": "english",
+            "analysis_fields": fields,
+            "evidence_catalog": {},
+            "requirement_coverage_plan": {},
+        }
+        for persisted in analysis["requirements"]:
+            item_excerpt = persisted["evidence"]
+            if source_job_id == "tmBK":
+                candidate_excerpt = _TMBK_ITEM_EXCERPTS.get(persisted["concept"])
+                if candidate_excerpt and candidate_excerpt in persisted["evidence"]:
+                    item_excerpt = candidate_excerpt
+            AnalysisRequirementV21.model_validate(
+                {**persisted, "item_excerpt": item_excerpt},
+                context=context,
+            )
+            validated += 1
+
+    assert validated == 85

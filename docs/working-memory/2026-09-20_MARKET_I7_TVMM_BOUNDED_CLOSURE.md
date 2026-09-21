@@ -366,3 +366,12 @@ requirements merge, and the returned persistable structure has the unchanged v5
 shape. A separate wrapper test proves response-model selection. This remains an
 offline candidate: there is no current service builder, CLI route, persistence,
 or live inference authorization yet.
+
+The accepted-anchor compatibility check now validates all 85 requirements from
+the five current public P1.6 anchors read-only under the candidate contract.
+Seventy-eight already have one evidence span suitable as the item excerpt; the
+seven `tmBK` requirements sharing its multi-depth list use the corresponding exact
+source list items. The replay exposed a casing edge (`CISCO` versus canonical
+source `Cisco`), so item excerpts now use the same exact-source equivalence rule
+as persisted evidence and retain the canonical parent substring. No accepted
+artifact, review status, prompt identity, or currentness state changed.
