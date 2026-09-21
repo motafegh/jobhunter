@@ -278,6 +278,12 @@ def _merge_partition_structured(parts: list[dict[str, Any]]) -> dict[str, Any]:
 class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
     """Extract dense source-led coverage in bounded independent semantic partitions."""
 
+    def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
+        return complete_analysis_partition_with_instructor_v20(**kwargs)
+
+    def _persistable_structured(self, structured: dict[str, Any]) -> dict[str, Any]:
+        return structured
+
     def _run_once(
         self,
         *,
@@ -350,7 +356,7 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
                 "responsibility_references": list(partition_responsibilities),
             }
 
-            result = complete_analysis_partition_with_instructor_v20(
+            result = self._complete_partition(
                 base_url=f"{self._base_url}/",
                 api_token=self._api_token,
                 timeout_seconds=self._timeout_seconds,
@@ -376,6 +382,7 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
                 finish_reasons.append(result.finish_reason)
 
         structured = _merge_partition_structured(structured_parts)
+        structured = self._persistable_structured(structured)
         structured = _materialize_v18_deterministic_requirements(structured, deterministic)
         structured, normalized_indexes = _normalize_v15_schedule_concepts(structured)
         structured = inject_decomposition_exclusions(structured, original_fields)

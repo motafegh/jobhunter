@@ -353,3 +353,16 @@ the unchanged v5 persistence shape. This proves the representation can express t
 needed distinction offline. It does not yet prove provider behavior, whole-artifact
 semantic quality, or authorize a live call. Public/current remains v20/v5 and I7
 remains HOLD.
+
+The isolated provider boundary is also implemented offline. V20 now exposes a
+private shared transport hook while its public wrapper still selects exactly
+`JobAnalysisResponseV20`; no current routing or identity changed. The v21 wrapper
+selects `JobAnalysisResponseV21`, adds an explicit request-runtime marker, and a
+v21 provider subclass reuses v20 partition construction, scope checks, deterministic
+fact injection, and merge logic. Candidate-only item excerpts are removed before
+the inherited v5 whole-artifact validators run. A stubbed provider-boundary test
+proves the v21 prompt/response identity reaches the partition, the two scoped
+requirements merge, and the returned persistable structure has the unchanged v5
+shape. A separate wrapper test proves response-model selection. This remains an
+offline candidate: there is no current service builder, CLI route, persistence,
+or live inference authorization yet.

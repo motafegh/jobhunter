@@ -1,13 +1,22 @@
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import pytest
 from pydantic import ValidationError
 
+from jobhunter.analysis_runtime_v21 import V21CandidateAnalysisProvider
+from jobhunter.analysis_service_v21 import (
+    _ENGLISH_SYSTEM_PROMPT_V21,
+    ENGLISH_PROMPT_VERSION,
+)
 from jobhunter.inference.instructor_lm_studio_v21 import (
     AnalysisRequirementV21,
     JobAnalysisResponseV21,
+    complete_analysis_partition_with_instructor_v21,
     persisted_v20_shape,
 )
+from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 
 def _context(evidence: str, *, obligation: str = "required") -> dict[str, object]:
@@ -222,3 +231,123 @@ def test_v21_candidate_scope_is_explicit_and_does_not_change_v5_shape() -> None:
 
     assert "item_excerpt" not in persisted["requirements"][0]
     assert "item_excerpt" in structured["requirements"][0]
+
+
+def test_v21_provider_boundary_uses_scoped_contract_and_returns_v5_shape(
+    monkeypatch,
+) -> None:
+    evidence = (
+        "practical experience with LLM APIs, familiarity with Tool Calling / Function Calling"
+    )
+    fields = {"description": "Requirements: " + evidence}
+    calls: list[dict[str, object]] = []
+
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v20.ensure_lm_studio_model_context",
+        lambda **kwargs: SimpleNamespace(
+            context_length=32768,
+            action="reused",
+            instance_id="offline-v21",
+        ),
+    )
+
+    def complete_partition(**kwargs):
+        calls.append(kwargs)
+        parent = next(iter(kwargs["requirement_coverage_plan"].values()))["text"]
+        return StructuredInferenceResult(
+            model="offline-v21",
+            structured={
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept="LLM API experience",
+                        evidence=parent,
+                        item_excerpt="practical experience with LLM APIs",
+                        depth_signal=None,
+                        concept_type="experience",
+                    ),
+                    _requirement(
+                        concept="Tool Calling / Function Calling",
+                        evidence=parent,
+                        item_excerpt="familiarity with Tool Calling / Function Calling",
+                        depth_signal="familiarity",
+                    ),
+                ],
+                "coverage_exclusions": [],
+            },
+            request_body={
+                "runtime": {"p16_v21_item_scoped_evidence": True},
+                "instructor": {"response_model": "JobAnalysisResponseV21"},
+            },
+            raw_response={"offline": True},
+            finish_reason="stop",
+        )
+
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v21.complete_analysis_partition_with_instructor_v21",
+        complete_partition,
+    )
+    provider = V21CandidateAnalysisProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="offline-v21",
+        api_token=None,
+        timeout_seconds=10,
+        max_retries=0,
+    )
+    result = provider._run_once(
+        kwargs={"user_payload": {"analysis_fields": fields}},
+        system_prompt=_ENGLISH_SYSTEM_PROMPT_V21,
+        original_fields=fields,
+        effective_fields=fields,
+        qualification_refs=[],
+        residual_refs=[],
+        additional_plan={},
+        decomposed_refs=[],
+    )
+
+    assert calls
+    assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v21-candidate"
+    assert "EXACT ITEM SCOPE WITH PARENT COVERAGE" in _ENGLISH_SYSTEM_PROMPT_V21
+    assert all("item_excerpt" not in item for item in result.structured["requirements"])
+    partition_request = result.request_body["partition_requests"][0]
+    assert partition_request["runtime"]["p16_v21_item_scoped_evidence"] is True
+    assert partition_request["instructor"]["response_model"] == "JobAnalysisResponseV21"
+
+
+def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
+    captured = {}
+    expected = StructuredInferenceResult(
+        model="offline-v21",
+        structured={},
+        request_body={},
+        raw_response={},
+        finish_reason="stop",
+    )
+
+    def shared_transport(**kwargs):
+        captured.update(kwargs)
+        return expected
+
+    monkeypatch.setattr(
+        "jobhunter.inference.instructor_lm_studio_v20."
+        "_complete_analysis_partition_with_instructor",
+        shared_transport,
+    )
+    result = complete_analysis_partition_with_instructor_v21(
+        base_url="http://127.0.0.1:1234/v1/",
+        api_token=None,
+        timeout_seconds=10,
+        network_retries=0,
+        selected_model="offline-v21",
+        system_prompt=_ENGLISH_SYSTEM_PROMPT_V21,
+        user_payload={"analysis_fields": {"description": "Requirements: Python"}},
+        max_tokens=1024,
+        seed=0,
+        requirement_coverage_plan={},
+        responsibility_coverage_plan={},
+    )
+
+    assert result is expected
+    assert captured["response_model"] is JobAnalysisResponseV21
+    assert captured["contract_version"] == "v21"

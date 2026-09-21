@@ -7,7 +7,7 @@ changing the accepted v20/v5 path.
 
 from __future__ import annotations
 
-from typing import Self
+from typing import Any, Self
 
 from pydantic import Field, ValidationInfo, model_validator
 
@@ -21,6 +21,7 @@ from jobhunter.inference.instructor_lm_studio_v20 import (
     _depth_matches,
     _validate_depth_fields_v20,
 )
+from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 
 class AnalysisRequirementV21(AnalysisRequirementV20):
@@ -70,6 +71,45 @@ class JobAnalysisResponseV21(JobAnalysisResponseV20):
     requirements: list[AnalysisRequirementV21] = Field()
 
 
+def complete_analysis_partition_with_instructor_v21(
+    *,
+    base_url: str,
+    api_token: str | None,
+    timeout_seconds: float,
+    network_retries: int,
+    selected_model: str,
+    system_prompt: str,
+    user_payload: dict[str, Any],
+    max_tokens: int,
+    seed: int,
+    requirement_coverage_plan: dict[str, dict[str, Any]],
+    responsibility_coverage_plan: dict[str, str],
+    validation_retries: int = 1,
+) -> StructuredInferenceResult:
+    """Run the isolated v21 response contract through the proven v20 transport."""
+
+    # Import the module so tests and later runtime wiring can replace the shared
+    # transport without hiding a second network implementation in this candidate.
+    from jobhunter.inference import instructor_lm_studio_v20 as v20
+
+    return v20._complete_analysis_partition_with_instructor(
+        base_url=base_url,
+        api_token=api_token,
+        timeout_seconds=timeout_seconds,
+        network_retries=network_retries,
+        selected_model=selected_model,
+        system_prompt=system_prompt,
+        user_payload=user_payload,
+        max_tokens=max_tokens,
+        seed=seed,
+        requirement_coverage_plan=requirement_coverage_plan,
+        responsibility_coverage_plan=responsibility_coverage_plan,
+        response_model=JobAnalysisResponseV21,
+        contract_version="v21",
+        validation_retries=validation_retries,
+    )
+
+
 def persisted_v20_shape(structured: dict[str, object]) -> dict[str, object]:
     """Remove candidate-only scope fields before any v5 persistence validation."""
 
@@ -89,5 +129,6 @@ def persisted_v20_shape(structured: dict[str, object]) -> dict[str, object]:
 __all__ = [
     "AnalysisRequirementV21",
     "JobAnalysisResponseV21",
+    "complete_analysis_partition_with_instructor_v21",
     "persisted_v20_shape",
 ]

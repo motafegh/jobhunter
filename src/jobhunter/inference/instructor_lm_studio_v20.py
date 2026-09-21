@@ -368,7 +368,7 @@ def _validated_partition_plan(
     return validated
 
 
-def complete_analysis_partition_with_instructor_v20(
+def _complete_analysis_partition_with_instructor(
     *,
     base_url: str,
     api_token: str | None,
@@ -381,6 +381,8 @@ def complete_analysis_partition_with_instructor_v20(
     seed: int,
     requirement_coverage_plan: dict[str, dict[str, Any]],
     responsibility_coverage_plan: dict[str, str],
+    response_model: type[JobAnalysisResponseV20],
+    contract_version: str,
     validation_retries: int = 1,
 ) -> StructuredInferenceResult:
     """Run one bounded semantic extraction partition with exact JobHunter coverage context."""
@@ -390,7 +392,7 @@ def complete_analysis_partition_with_instructor_v20(
     analysis_fields = user_payload.get("analysis_fields")
     if not isinstance(analysis_fields, dict):
         raise InferenceResponseError(
-            "P1.6 v20 Instructor partition requires dictionary analysis_fields"
+            f"P1.6 {contract_version} Instructor partition requires dictionary analysis_fields"
         )
 
     evidence_catalog = build_field_evidence_catalog(analysis_fields)
@@ -451,7 +453,7 @@ def complete_analysis_partition_with_instructor_v20(
     try:
         result, completion = client.create_with_completion(
             model=selected_model,
-            response_model=JobAnalysisResponseV20,
+            response_model=response_model,
             messages=messages,
             context={
                 "analysis_fields": analysis_fields,
@@ -467,11 +469,11 @@ def complete_analysis_partition_with_instructor_v20(
         )
     except (APIConnectionError, APITimeoutError) as exc:
         raise InferenceConnectionError(
-            f"Could not reach LM Studio for P1.6 v20 partition: {exc}"
+            f"Could not reach LM Studio for P1.6 {contract_version} partition: {exc}"
         ) from exc
     except Exception as exc:
         raise InferenceResponseError(
-            "Instructor could not produce a JobHunter-valid P1.6 v20 partition "
+            f"Instructor could not produce a JobHunter-valid P1.6 {contract_version} partition "
             f"after {validation_retries} bounded validation retries: {exc}"
         ) from exc
     finally:
@@ -500,12 +502,17 @@ def complete_analysis_partition_with_instructor_v20(
             "p16_v20_multi_signal_depth_guard": True,
             "p16_v20_effective_application_depth_normalization": True,
             "p16_v20_redundant_coverage_exclusion_filter": True,
+            **(
+                {"p16_v21_item_scoped_evidence": True}
+                if contract_version == "v21"
+                else {}
+            ),
         },
         "instructor": {
             "mode": "JSON_SCHEMA",
-            "response_model": "JobAnalysisResponseV20",
+            "response_model": response_model.__name__,
             "validation_retries": validation_retries,
-            "schema": JobAnalysisResponseV20.model_json_schema(),
+            "schema": response_model.model_json_schema(),
         },
     }
 
@@ -518,6 +525,41 @@ def complete_analysis_partition_with_instructor_v20(
     )
 
 
+def complete_analysis_partition_with_instructor_v20(
+    *,
+    base_url: str,
+    api_token: str | None,
+    timeout_seconds: float,
+    network_retries: int,
+    selected_model: str,
+    system_prompt: str,
+    user_payload: dict[str, Any],
+    max_tokens: int,
+    seed: int,
+    requirement_coverage_plan: dict[str, dict[str, Any]],
+    responsibility_coverage_plan: dict[str, str],
+    validation_retries: int = 1,
+) -> StructuredInferenceResult:
+    """Run the accepted v20 partition contract through the shared transport."""
+
+    return _complete_analysis_partition_with_instructor(
+        base_url=base_url,
+        api_token=api_token,
+        timeout_seconds=timeout_seconds,
+        network_retries=network_retries,
+        selected_model=selected_model,
+        system_prompt=system_prompt,
+        user_payload=user_payload,
+        max_tokens=max_tokens,
+        seed=seed,
+        requirement_coverage_plan=requirement_coverage_plan,
+        responsibility_coverage_plan=responsibility_coverage_plan,
+        response_model=JobAnalysisResponseV20,
+        contract_version="v20",
+        validation_retries=validation_retries,
+    )
+
+
 __all__ = [
     "AnalysisRequirementV20",
     "JobAnalysisResponseV20",
@@ -525,5 +567,6 @@ __all__ = [
     "_signal_is_scoped_concept",
     "_validate_depth_fields_v20",
     "_validated_partition_plan",
+    "_complete_analysis_partition_with_instructor",
     "complete_analysis_partition_with_instructor_v20",
 ]
