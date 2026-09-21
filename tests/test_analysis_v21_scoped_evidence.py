@@ -411,13 +411,26 @@ def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
         user_payload={"analysis_fields": {"description": "Requirements: Python"}},
         max_tokens=1024,
         seed=0,
-        requirement_coverage_plan={},
-        responsibility_coverage_plan={},
+        requirement_coverage_plan={
+            "field:description:segment:0:sentence:0": {
+                "text": "Python",
+                "source_kind": "requirement_section",
+                "obligation_hint": "required",
+                "allow_exclusion": True,
+            }
+        },
+        responsibility_coverage_plan={
+            "field:description:segment:1:item:0": "Build APIs"
+        },
     )
 
     assert result is expected
     assert captured["response_model"] is JobAnalysisResponseV21
     assert captured["contract_version"] == "v21"
+    assert captured["additional_evidence_catalog"] == {
+        "field:description:segment:0:sentence:0": "Python",
+        "field:description:segment:1:item:0": "Build APIs",
+    }
 
 
 def test_v21_validates_all_current_accepted_anchor_requirements_read_only() -> None:

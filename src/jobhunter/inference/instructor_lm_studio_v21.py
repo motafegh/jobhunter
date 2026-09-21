@@ -124,6 +124,11 @@ def complete_analysis_partition_with_instructor_v21(
     # transport without hiding a second network implementation in this candidate.
     from jobhunter.inference import instructor_lm_studio_v20 as v20
 
+    additional_evidence_catalog = {
+        reference: str(candidate.get("text") or "")
+        for reference, candidate in requirement_coverage_plan.items()
+    }
+    additional_evidence_catalog.update(responsibility_coverage_plan)
     return v20._complete_analysis_partition_with_instructor(
         base_url=base_url,
         api_token=api_token,
@@ -139,6 +144,7 @@ def complete_analysis_partition_with_instructor_v21(
         response_model=JobAnalysisResponseV21,
         contract_version="v21",
         validation_retries=validation_retries,
+        additional_evidence_catalog=additional_evidence_catalog,
     )
 
 

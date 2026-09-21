@@ -384,6 +384,7 @@ def _complete_analysis_partition_with_instructor(
     response_model: type[JobAnalysisResponseV20],
     contract_version: str,
     validation_retries: int = 1,
+    additional_evidence_catalog: dict[str, str] | None = None,
 ) -> StructuredInferenceResult:
     """Run one bounded semantic extraction partition with exact JobHunter coverage context."""
 
@@ -396,6 +397,20 @@ def _complete_analysis_partition_with_instructor(
         )
 
     evidence_catalog = build_field_evidence_catalog(analysis_fields)
+    for reference, text in (additional_evidence_catalog or {}).items():
+        if reference in evidence_catalog:
+            if evidence_catalog[reference] != text:
+                raise InferenceResponseError(
+                    f"P1.6 {contract_version} additional evidence collides with catalog: "
+                    f"{reference}"
+                )
+            continue
+        if not any(text in parent for parent in evidence_catalog.values()):
+            raise InferenceResponseError(
+                f"P1.6 {contract_version} additional evidence is not an exact source span: "
+                f"{reference}"
+            )
+        evidence_catalog[reference] = text
     model_evidence_catalog = _leaf_evidence_catalog(evidence_catalog)
     requirement_plan = _validated_partition_plan(
         requirement_coverage_plan,
