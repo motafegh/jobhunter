@@ -159,6 +159,7 @@ Execution result:
 - [x] isolated explicit headingless candidate-experience references from dense section/duty partitions in v21; the 27-projection regression preserves all 170 requirement refs without duplicates across 43 bounded partitions, and 677 strict-warning tests pass. Public v20 remains unchanged; real-model compliance is not yet proven.
 - [x] one non-persistent isolated-partition `tvMm` evaluation completed with both headingless references, exact depths and all duties, proving the partition repair; semantic review rejected loss of explicit experience type and partial omission inside the second compound candidate statement. SQLite remained byte-identical and no state was created.
 - [x] added exact compound-fact coverage within v21 candidate-experience parents and preserved source-explicit experience type; six representative parents across five jobs yield ten exact fact items, retained-response replay fails closed, 680 strict-warning tests and the 394-job corpus gate pass.
+- [~] one non-persistent compound-fact `tvMm` evaluation is authorized after pushed-head CI `35646299619`; close after the single invocation and full semantic review.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

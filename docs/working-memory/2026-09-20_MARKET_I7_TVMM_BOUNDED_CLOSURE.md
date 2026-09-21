@@ -660,3 +660,16 @@ generic skill.
 Validation passes at **680 tests with warnings-as-errors**, Ruff is clean, and the complete
 394-job public corpus verifies. No model call or operational-state mutation occurred in this
 repair. Public/current v20/v5 and I7 HOLD remain unchanged.
+
+### Bounded compound-fact evaluation decision
+
+The compound-fact repair is committed at `1f57a72`, and pushed-head CI run `35646299619`
+passed. This independent five-job evidence authorizes one direct non-persistent v21 invocation
+against the unchanged public `tvMm` projection and configured `gemma-4-e4b-it-ud` model. Existing
+provider validation correction is part of this single invocation.
+
+The result must preserve every exact candidate fact, including explicit experience type, the
+shared `worked with` technology scope and the goal-directed system-building condition, in addition
+to all previously reviewed depth, obligation, duty and subject boundaries. Do not persist, change
+v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any transport, validation or
+semantic failure closes this evaluation without another invocation.
