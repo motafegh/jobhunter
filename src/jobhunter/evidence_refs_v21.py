@@ -11,15 +11,33 @@ from jobhunter.evidence_refs import (
     has_english_optionality_signal,
 )
 
-_SENTENCE_RE = re.compile(r"[^.!?]+(?:[.!?]|$)")
 _APPLICATION_DIRECTIVE_RE = re.compile(
     r"^(?:to\s+apply\b[^.!?]*?\bplease\s+send\b|"
     r"interested\s+parties,?\s+please\s+send\b|"
-    r"please\s+send\s+your\s+(?:resume|cv)\b)",
+    r"please\s+(?:do\s+not\s+)?send\s+your\s+(?:resume|cv)\b|"
+    r"submit\s+(?:a|your)\s+(?:resume|cv)\b)",
+    re.I,
+)
+_APPLICATION_SECTION_START_RE = re.compile(
+    r"^(?:to\s+apply\b|interested\s+parties\b)", re.I
+)
+_CANDIDATE_SECTION_HEADING_RE = re.compile(
+    r"(?i)(?:\(\s*)?(?P<heading>skills\s+and\s+abilities|expected\s+skills|"
+    r"benefits(?:\s+(?:and\s+opportunities|of\s+collaboration))?|"
+    r"tasks|job\s+description|"
+    r"performance\s+indicators\s*\(kpis\)|(?:work\s+)?location)"
+    r"(?:\s*:|(?<=benefits)\s+include\b)"
+)
+_REQUIREMENT_REENTRY_HEADINGS = {"skills and abilities", "expected skills"}
+_ASTERISK_ITEM_RE = re.compile(r"(?:^|\s+)\*\s+")
+_PREFERRED_GROUP_START_RE = re.compile(r"(?:points\s+considered|advantages)\s*:", re.I)
+_APPLICATION_PREFERENCE_RE = re.compile(
+    r"\b(?:significant|positive|strong)\s+impact\s+on\s+(?:the\s+)?"
+    r"(?:resume|application|portfolio)\s+review\b",
     re.I,
 )
 _LIST_GERUND_RE = re.compile(
-    r"(?:^include\s+|,\s+(?:and\s+)?)(?P<verb>[A-Za-z]+ing)\b", re.I
+    r"(?:^include\s+|^|,\s+(?:and\s+)?)(?P<verb>[A-Za-z]+ing)\b", re.I
 )
 _BARE_GERUND_CHAIN_RE = re.compile(
     r"[A-Za-z]+ing(?:\s*,\s*[A-Za-z]+ing)*", re.I
@@ -42,14 +60,116 @@ _CANDIDATE_QUALIFICATION_RE = re.compile(
     r"have\s+worked\s+with)\b",
     re.I,
 )
+_CANDIDATE_DUTY_SECTION_RE = re.compile(
+    r"(?i)(?P<heading>job\s+description|tasks|responsibilities|qualifications|"
+    r"requirements|skills\s+and\s+abilities|expected\s+skills|required\s+skills|"
+    r"benefits(?:\s+(?:and\s+opportunities|of\s+collaboration))?|"
+    r"performance\s+indicators\s*\(kpis\)|(?:work\s+)?location)\s*:"
+)
+_DUTY_SECTION_HEADINGS = {"job description", "tasks", "responsibilities"}
 
 
 def _sentences(text: str) -> list[str]:
-    return [
-        match.group(0).strip()
-        for match in _SENTENCE_RE.finditer(text)
-        if match.group(0).strip()
-    ]
+    sentences: list[str] = []
+    cursor = 0
+    parenthesis_depth = 0
+    for index, character in enumerate(text):
+        if character == "(":
+            parenthesis_depth += 1
+        elif character == ")":
+            parenthesis_depth = max(0, parenthesis_depth - 1)
+        elif character in ".!?" and parenthesis_depth == 0:
+            sentence = text[cursor : index + 1].strip()
+            if sentence:
+                sentences.append(sentence)
+            cursor = index + 1
+    final = text[cursor:].strip()
+    if final:
+        sentences.append(final)
+    return sentences
+
+
+def has_candidate_optionality_signal(text: str) -> bool:
+    """Recognize explicit candidate-only preference wording beyond the v20 contract."""
+
+    return has_english_optionality_signal(text) or bool(_APPLICATION_PREFERENCE_RE.search(text))
+
+
+def _candidate_requirement_chunks(text: str) -> tuple[list[str], bool]:
+    """Keep exact requirement text while ending at candidate-only section boundaries."""
+
+    matches = list(_CANDIDATE_SECTION_HEADING_RE.finditer(text))
+    if not matches:
+        return [text], False
+
+    chunks: list[str] = []
+    cursor = 0
+    active = True
+    for match in matches:
+        before = text[cursor : match.start()].strip()
+        if active and before:
+            chunks.append(before)
+        heading = " ".join(match.group("heading").casefold().split())
+        active = heading in _REQUIREMENT_REENTRY_HEADINGS
+        cursor = match.end()
+    after = text[cursor:].strip()
+    if active and after:
+        chunks.append(after)
+    return chunks, True
+
+
+def _candidate_requirement_units(text: str) -> tuple[list[str], bool, bool]:
+    chunks, section_changed = _candidate_requirement_chunks(text)
+    units: list[str] = []
+    list_changed = False
+    for chunk in chunks:
+        items = [
+            item.strip()
+            for item in _ASTERISK_ITEM_RE.split(chunk)
+            if item.strip()
+        ]
+        if len(items) > 1:
+            units.extend(items)
+            list_changed = True
+        else:
+            units.extend(_sentences(chunk))
+    return units, section_changed or list_changed, list_changed
+
+
+def _coverage_group(reference: str) -> str:
+    return re.split(r":(?:clause|sentence|item):\d+", reference, maxsplit=1)[0]
+
+
+def _apply_preferred_group_scopes(
+    plan: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Carry an explicit preferred-list heading across later references in its group."""
+
+    result: dict[str, dict[str, Any]] = {}
+    preferred_groups: set[str] = set()
+    for reference, candidate in plan.items():
+        group = _coverage_group(reference)
+        text = str(candidate["text"])
+        heading = _PREFERRED_GROUP_START_RE.search(text)
+        if heading:
+            before = text[: heading.start()].strip()
+            after = text[heading.end() :].strip()
+            if before:
+                prefix = dict(candidate)
+                prefix["text"] = before
+                result[f"{reference}:required-prefix"] = prefix
+            if after:
+                preferred = dict(candidate)
+                preferred["text"] = after
+                preferred["obligation_hint"] = "preferred"
+                result[f"{reference}:preferred-group"] = preferred
+            preferred_groups.add(group)
+            continue
+        copied = dict(candidate)
+        if group in preferred_groups:
+            copied["obligation_hint"] = "preferred"
+        result[reference] = copied
+    return result
 
 
 def build_requirement_coverage_plan_v21(
@@ -60,27 +180,38 @@ def build_requirement_coverage_plan_v21(
     result: dict[str, dict[str, Any]] = {}
     for reference, candidate in build_requirement_coverage_plan(fields).items():
         text = str(candidate["text"])
-        sentences = _sentences(text)
-        flags = [has_english_optionality_signal(sentence) for sentence in sentences]
+        units, boundary_changed, list_units = _candidate_requirement_units(text)
+        flags = [has_candidate_optionality_signal(unit) for unit in units]
         has_application_boundary = any(
-            _APPLICATION_DIRECTIVE_RE.match(sentence) for sentence in sentences
+            _APPLICATION_DIRECTIVE_RE.match(unit) for unit in units
         )
         mixes_strength = any(flags) and not all(flags)
-        if len(sentences) < 2 or not (mixes_strength or has_application_boundary):
+        if not boundary_changed and (
+            len(units) < 2 or not (mixes_strength or has_application_boundary)
+        ):
             result[reference] = dict(candidate)
             continue
 
-        for index, sentence in enumerate(sentences):
+        preferred_list_tail = False
+        for index, sentence in enumerate(units):
             if _APPLICATION_DIRECTIVE_RE.match(sentence):
-                break
+                if _APPLICATION_SECTION_START_RE.match(sentence):
+                    break
+                continue
             scoped = dict(candidate)
             scoped["text"] = sentence
+            if list_units and has_candidate_optionality_signal(sentence):
+                preferred_list_tail = True
             scoped["obligation_hint"] = (
-                "preferred" if has_english_optionality_signal(sentence) else "required"
+                "preferred"
+                if has_candidate_optionality_signal(sentence) or preferred_list_tail
+                else "required"
             )
             if _EXPLICIT_CANDIDATE_REQUIREMENT_RE.search(sentence):
                 scoped["allow_exclusion"] = False
             result[f"{reference}:sentence:{index}"] = scoped
+
+    result = _apply_preferred_group_scopes(result)
     description = fields.get("description")
     if not isinstance(description, str):
         return result
@@ -116,6 +247,8 @@ def _gerund_list_items(sentence: str) -> list[str]:
         match
         for match in _LIST_GERUND_RE.finditer(sentence)
         if match.group("verb").casefold() != "including"
+        and sentence[: match.start("verb")].count("(")
+        == sentence[: match.start("verb")].count(")")
     ]
     if len(matches) < 3:
         return []
@@ -133,13 +266,30 @@ def _gerund_list_items(sentence: str) -> list[str]:
     if len(accepted) < 3:
         return []
     items: list[str] = []
+    prefix = sentence[: accepted[0].start()].strip(" ,")
+    if prefix:
+        items.append(prefix)
     for index, match in enumerate(accepted):
-        start = 0 if index == 0 else match.start("verb")
+        start = match.start("verb") if prefix or index > 0 else 0
         end = accepted[index + 1].start() if index + 1 < len(accepted) else len(sentence)
         item = sentence[start:end].strip(" ,")
         if item:
             items.append(item)
     return items
+
+
+def _candidate_duty_sections(text: str) -> list[str]:
+    matches = list(_CANDIDATE_DUTY_SECTION_RE.finditer(text))
+    sections: list[str] = []
+    for index, match in enumerate(matches):
+        heading = " ".join(match.group("heading").casefold().split())
+        if heading not in _DUTY_SECTION_HEADINGS:
+            continue
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        section = text[match.end() : end].strip()
+        if section:
+            sections.append(section)
+    return sections
 
 
 def build_responsibility_coverage_plan_v21(fields: dict[str, Any]) -> dict[str, str]:
@@ -162,10 +312,26 @@ def build_responsibility_coverage_plan_v21(fields: dict[str, Any]) -> dict[str, 
                 result[f"{reference}:sentence:{index}"] = sentence
                 continue
             break
+    description = fields.get("description")
+    if not isinstance(description, str):
+        return result
+    existing = set(result.values())
+    for section_index, section in enumerate(_candidate_duty_sections(description)):
+        for sentence_index, sentence in enumerate(_sentences(section)):
+            items = _gerund_list_items(sentence) or [sentence]
+            for item_index, item in enumerate(items):
+                if item in existing or any(item in parent for parent in existing):
+                    continue
+                result[
+                    f"field:description:v21:duty:{section_index}:"
+                    f"sentence:{sentence_index}:item:{item_index}"
+                ] = item
+                existing.add(item)
     return result
 
 
 __all__ = [
     "build_requirement_coverage_plan_v21",
     "build_responsibility_coverage_plan_v21",
+    "has_candidate_optionality_signal",
 ]

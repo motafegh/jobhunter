@@ -469,6 +469,33 @@ independent final `, and <gerund>` item, and preserves coordinated bare-gerund c
 such as `evaluating, debugging, and improving` as one action. Focused regressions cover
 both forms; v20 remains unchanged.
 
+The next all-projection semantic audit found candidate-only section leakage beyond the
+original `tvMm` case. Benefits, work-location, KPI and task text remained under inherited
+requirement sections in `t4EV`, `t4jp`, `tI1n`, `tGc5`, `tmW1` and `takb`; star-bulleted
+lists also lost shared preferred scope after an explicit `advantage` transition. V21 now
+tracks those exact section transitions, can resume at a later Skills/Expected Skills
+heading, splits star items, and carries list/group preference through later items. The
+`Points Considered` group in `tGc5` is therefore preferred across all seven clauses, and
+the `taOX` statement that work samples significantly affect resume review is represented
+as preferred rather than required. V21 validation recognizes that exact application-review
+preference signal. Application, benefits, location, KPI and task text no longer enters the
+candidate requirement ledger.
+
+This intentionally narrows the v21 candidate plan for accepted anchor `t4jp`, whose prior
+single reference included a remote-work resume instruction, location and benefits. Its
+accepted v20/v5 artifact, source evidence and currentness are untouched; the candidate now
+retains only the actual work/commitment requirements. Four other accepted-anchor candidate
+requirement plans remain unchanged.
+
+Candidate duty coverage now also recognizes explicit `Job Description:` and `Tasks:`
+sections, recovering 14 previously unledgered duty references across `t4EV`, `tI1n` and
+`tmW1`. The exact-span parser preserves parenthetical comma lists, keeps dependent
+modifiers attached, and retains a nominal action before a following gerund list. The
+repeated 27-projection transport audit now validates 173 requirement references, 80
+responsibility references and 39 partitions with zero ID collisions, duplicate texts,
+unknown references or non-source spans. No model call or operational-state mutation was
+made for these repairs.
+
 Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
 duty coverage, but it did not produce an accepted-semantic core posting or exercise the

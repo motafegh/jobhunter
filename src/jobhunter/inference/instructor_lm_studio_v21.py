@@ -14,8 +14,8 @@ from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.evidence_refs import (
     evidence_mixes_english_optionality,
-    has_english_optionality_signal,
 )
+from jobhunter.evidence_refs_v21 import has_candidate_optionality_signal
 from jobhunter.inference.instructor_lm_studio import _equivalent_source_excerpt
 from jobhunter.inference.instructor_lm_studio_v20 import (
     AnalysisRequirementV20,
@@ -79,8 +79,11 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
         if "preferred" in parent_hints and self.requirement_type != "preferred":
             raise ValueError("Preferred parent coverage requires preferred item strength")
         if self.requirement_type == "preferred" and not (
-            has_english_optionality_signal(self.item_excerpt)
-            or ("preferred" in parent_hints and has_english_optionality_signal(self.evidence))
+            has_candidate_optionality_signal(self.item_excerpt)
+            or (
+                "preferred" in parent_hints
+                and has_candidate_optionality_signal(self.evidence)
+            )
         ):
             raise ValueError("Preferred item needs exact source preference in item or parent")
 

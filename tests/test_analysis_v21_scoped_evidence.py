@@ -636,8 +636,44 @@ def test_v21_keeps_including_modifier_and_splits_final_independent_duty() -> Non
     ]
 
 
-def test_v21_requirement_planner_leaves_accepted_anchor_ledgers_unchanged() -> None:
-    for source_job_id in _ACCEPTED_ANCHORS:
+def test_v21_tracks_job_description_and_tasks_sections_as_duties() -> None:
+    fields = {
+        "description": (
+            "Job Description: Building assistants, connecting tools to APIs, designing "
+            "reliable workflows. Qualifications: Python. Tasks: Maintain services. "
+            "Document APIs. Benefits: Bonus."
+        )
+    }
+
+    plan = build_responsibility_coverage_plan_v21(fields)
+
+    assert list(plan.values()) == [
+        "Building assistants",
+        "connecting tools to APIs",
+        "designing reliable workflows.",
+        "Maintain services.",
+        "Document APIs.",
+    ]
+
+
+def test_v21_preserves_nominal_prefix_before_gerund_duty_list() -> None:
+    fields = {
+        "description": (
+            "Job Description: Design of automation services, building assistants, connecting "
+            "tools to APIs, testing workflows. Qualifications: Python."
+        )
+    }
+
+    assert list(build_responsibility_coverage_plan_v21(fields).values()) == [
+        "Design of automation services",
+        "building assistants",
+        "connecting tools to APIs",
+        "testing workflows.",
+    ]
+
+
+def test_v21_requirement_planner_preserves_unaffected_accepted_anchor_ledgers() -> None:
+    for source_job_id in set(_ACCEPTED_ANCHORS) - {"t4jp"}:
         fields = json.loads(
             (
                 _REPOSITORY_ROOT
@@ -651,3 +687,102 @@ def test_v21_requirement_planner_leaves_accepted_anchor_ledgers_unchanged() -> N
         assert build_requirement_coverage_plan_v21(fields) == (
             build_requirement_coverage_plan(fields)
         )
+
+
+def test_v21_removes_application_and_benefits_from_t4jp_candidate_ledger() -> None:
+    fields = json.loads(
+        (
+            _REPOSITORY_ROOT
+            / "corpus"
+            / "jobs"
+            / "t4jp"
+            / "english-projection.json"
+        ).read_text(encoding="utf-8")
+    )["fields"]
+
+    plan = build_requirement_coverage_plan_v21(fields)
+    texts = [item["text"] for item in plan.values()]
+
+    assert texts == [
+        (
+            "in content creation with AI, creativity in creating visual and video content, "
+            "website design, ability to produce visual content full-time and part-time, "
+            "the work is teachable."
+        ),
+        "Ethics and your work commitment are important to us.",
+    ]
+    assert all("resume" not in text.casefold() for text in texts)
+    assert all("benefits" not in text.casefold() for text in texts)
+
+
+def test_v21_stops_non_requirement_sections_and_preserves_list_optionality() -> None:
+    fields = {
+        "description": (
+            "Required skills: * Proficiency in Python * Familiarity with Linux is an advantage: "
+            "* Experience with Docker * Familiarity with Git "
+            "Performance Indicators (KPIs): * Tickets closed * Response time "
+            "Please send your resume and portfolio."
+        )
+    }
+
+    plan = build_requirement_coverage_plan_v21(fields)
+
+    assert [(item["text"], item["obligation_hint"]) for item in plan.values()] == [
+        ("Proficiency in Python", "required"),
+        ("Familiarity with Linux is an advantage:", "preferred"),
+        ("Experience with Docker", "preferred"),
+        ("Familiarity with Git", "preferred"),
+    ]
+
+
+def test_v21_propagates_explicit_preferred_group_heading_across_clauses() -> None:
+    fields = {
+        "description": (
+            "Qualifications: Core Python. Points Considered: Experience with Docker; "
+            "Familiarity with Linux; Experience with Git. Benefits of Collaboration: Bonus."
+        )
+    }
+
+    plan = build_requirement_coverage_plan_v21(fields)
+    grouped = [
+        item
+        for item in plan.values()
+        if "Docker" in item["text"] or "Linux" in item["text"] or "Git" in item["text"]
+    ]
+
+    assert len(grouped) == 3
+    assert {item["obligation_hint"] for item in grouped} == {"preferred"}
+    assert all("Benefits" not in item["text"] for item in plan.values())
+
+
+def test_v21_treats_portfolio_review_impact_as_preferred() -> None:
+    evidence = (
+        "Submitting samples of work has a significant impact on the resume review."
+    )
+    fields = {
+        "description": (
+            "Expected skills: Python. " + evidence
+        )
+    }
+
+    plan = build_requirement_coverage_plan_v21(fields)
+    candidate = next(item for item in plan.values() if item["text"] == evidence)
+    assert candidate["obligation_hint"] == "preferred"
+
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Work samples",
+            evidence=evidence,
+            item_excerpt=evidence,
+            depth_signal=None,
+            requirement_type="preferred",
+            concept_type="experience",
+        ),
+        context={
+            "analysis_mode": "english",
+            "analysis_fields": fields,
+            "evidence_catalog": {},
+            "requirement_coverage_plan": {"candidate": candidate},
+        },
+    )
+    assert result.requirement_type == "preferred"
