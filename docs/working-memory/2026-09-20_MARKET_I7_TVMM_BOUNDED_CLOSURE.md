@@ -333,3 +333,23 @@ mixed-depth case, the accepted `tmBK` counterexample, preferred shared-context
 cases, and subject changes before a bounded live evaluation. Do not run the
 unchanged v20 `tvMm` command again; it cannot express this distinction. I7 HOLD
 remains the honest product result.
+
+### V21 isolated scoped-evidence contract
+
+The first offline implementation of that boundary is now isolated in
+`AnalysisRequirementV21`; it is not routed to the current service or provider.
+Each candidate requirement retains the parent `evidence` used by the coverage
+ledger and adds one mandatory `item_excerpt` that must be an exact contiguous
+subspan. English depth validation runs against the item excerpt, while requirement
+strength may be proven either by explicit item wording or by the matching parent
+coverage hint plus its exact optionality wording. Missing applicable item depth,
+an excerpt outside its parent, and a required claim under preferred parent context
+all fail closed.
+
+Six focused tests cover the attempt-108 mixed experience/familiarity shape, omitted
+item depth, shared preferred context, invalid subject/excerpt scope, the accepted
+`tmBK` multi-depth list shape, and removal of candidate-only `item_excerpt` before
+the unchanged v5 persistence shape. This proves the representation can express the
+needed distinction offline. It does not yet prove provider behavior, whole-artifact
+semantic quality, or authorize a live call. Public/current remains v20/v5 and I7
+remains HOLD.
