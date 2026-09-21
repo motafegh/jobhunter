@@ -586,3 +586,17 @@ Ruff and diff checks pass.
 This offline result repairs the identified source-attention boundary but does not prove model
 compliance or semantic acceptance. No model call, artifact, SQLite mutation, public routing
 change, or I7 status change was made in this increment.
+
+### Bounded isolated-partition evaluation decision — 2026-09-21
+
+The general repair is committed at `0c77097` and pushed-head CI run `35643929027` passed.
+This authorizes exactly one direct, non-persistent v21 provider invocation against the unchanged
+public `tvMm` English projection and configured `gemma-4-e4b-it-ud` model. The provider's existing
+bounded validation correction remains part of that single invocation. The evaluation must not
+write an analysis attempt/artifact, change current v20/v5 routing, mutate SQLite, switch vacancy
+or model, or automatically accept a mechanically valid response.
+
+Review the complete merged result against every exact requirement and duty reference, source
+depth and obligation, candidate-versus-product subject, and the two headingless candidate-
+experience statements. Record the operational database digest before and after. A transport,
+validation, or semantic failure closes this evaluation without another model invocation.
