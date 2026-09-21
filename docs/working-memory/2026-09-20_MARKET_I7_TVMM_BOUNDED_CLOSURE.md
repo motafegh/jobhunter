@@ -632,3 +632,31 @@ source-explicit facts inside a compound headingless candidate statement rather t
 one claim as coverage of the entire parent. It must also preserve explicit prior-experience type.
 Prove that boundary across the representative candidate-experience statements before another
 model call. Public/current P1.6 remains v20/v5 and I7 remains **HOLD**.
+
+### Compound candidate-fact coverage repair
+
+V21 now derives an exact subclaim checklist inside every `candidate_experience` parent rather
+than treating any one extracted claim as coverage of the complete sentence. The splitter uses
+source-explicit candidate predicates and preserves coordinated lists: for example, the second
+`tvMm` parent requires separate exact coverage of building an Agent, the complete shared
+`worked with LLMs ... Orchestration` group, and the goal-directed system-building condition.
+Recruiting-result tails such as `then you might be the right fit` are not turned into facts.
+
+Each checklist item remains an exact contiguous subspan of its parent. Items that explicitly
+state prior applied exposure (`experience`, `built`, or `worked with`) also require
+`concept_type=experience`; ability, capability and motivation items retain semantic model
+classification. The checklist is supplied to the model and validated against exact returned
+`item_excerpt` values. It adds no deterministic requirement prose and does not relax parent
+coverage, evidence, depth or obligation validation.
+
+The representative corpus contains six candidate-experience parents across five jobs. They now
+yield ten exact fact items, seven with source-explicit experience type. The permanent 27-projection
+audit verifies that every item is unique within its parent and an exact source subspan. Read-only
+replay of the rejected isolated-partition response now fails for the omitted `real experience`
+Agent-design item, the unpreserved shared `worked with` group, and the omitted goal-directed
+system-building condition. A separate regression rejects converting exact experience into a
+generic skill.
+
+Validation passes at **680 tests with warnings-as-errors**, Ruff is clean, and the complete
+394-job public corpus verifies. No model call or operational-state mutation occurred in this
+repair. Public/current v20/v5 and I7 HOLD remain unchanged.

@@ -72,6 +72,26 @@ _CANDIDATE_QUALIFICATION_RE = re.compile(
     r"have\s+worked\s+with)\b",
     re.I,
 )
+_CANDIDATE_FACT_BOUNDARY_RE = re.compile(
+    r";\s+(?=someone\b)|"
+    r",\s+(?=(?:and\s+)?(?:have\s+(?:built|worked)\b|enjoy\s+building\b|"
+    r"but\s+has\s+real\s+experience\b))|"
+    r"\s+(?=and\s+have\s+(?:built|worked)\b)|"
+    r"\s+(?=who\s+can\b)",
+    re.I,
+)
+_CANDIDATE_FACT_START_RE = re.compile(
+    r"\b(?:real\s+experience\b|practical\s+experience\b|experience\b|"
+    r"ability\s+to\b|able\s+to\b|built\s+an?\b|worked\s+with\b|"
+    r"can\b|enjoy\s+building\b)",
+    re.I,
+)
+_CANDIDATE_RESULT_TAIL_RE = re.compile(
+    r",\s*(?:then\s+)?you\s+(?:might|may|could)\b.*$", re.I
+)
+_PRIOR_EXPOSURE_FACT_RE = re.compile(
+    r"\b(?:experience|experienced|built\s+an?|worked\s+with)\b", re.I
+)
 _CANDIDATE_DUTY_SECTION_RE = re.compile(
     r"(?i)(?P<heading>job\s+description|tasks|responsibilities|qualifications|"
     r"skills\s+and\s+minimum\s+requirements|requirements|"
@@ -125,6 +145,32 @@ def has_candidate_optionality_signal(text: str) -> bool:
     """Recognize explicit candidate-only preference wording beyond the v20 contract."""
 
     return has_english_optionality_signal(text) or bool(_APPLICATION_PREFERENCE_RE.search(text))
+
+
+def _candidate_fact_items(sentence: str) -> list[dict[str, str | None]]:
+    """Expose distinct exact candidate predicates inside one recruiting sentence."""
+
+    factual = _CANDIDATE_RESULT_TAIL_RE.sub("", sentence).strip()
+    parts = [
+        part.strip(" ,;")
+        for part in _CANDIDATE_FACT_BOUNDARY_RE.split(factual)
+        if part.strip(" ,;")
+    ]
+    items: list[dict[str, str | None]] = []
+    for part in parts:
+        start = _CANDIDATE_FACT_START_RE.search(part)
+        if start is None:
+            continue
+        excerpt = part[start.start() :].strip(" ,;.")
+        items.append(
+            {
+                "text": excerpt,
+                "required_concept_type": (
+                    "experience" if _PRIOR_EXPOSURE_FACT_RE.search(excerpt) else None
+                ),
+            }
+        )
+    return items
 
 
 def _candidate_requirement_chunks(text: str) -> tuple[list[str], bool]:
@@ -274,6 +320,11 @@ def build_requirement_coverage_plan_v21(
             "allow_exclusion": False,
         }
         existing_texts.append(sentence)
+    for candidate in result.values():
+        if candidate.get("source_kind") == "candidate_experience":
+            candidate["required_item_excerpts"] = _candidate_fact_items(
+                str(candidate["text"])
+            )
     return result
 
 

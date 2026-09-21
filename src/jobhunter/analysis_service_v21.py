@@ -29,6 +29,9 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
 - Explicit headingless candidate-experience references may be supplied in their own partition so
   dense section decomposition and duty output cannot crowd them out. Every such supplied reference
   is a mandatory candidate qualification and must be represented; it cannot be excluded.
+- When candidate_fact_coverage is supplied, represent every listed exact item_excerpt separately.
+  Use that exact excerpt rather than the whole parent or a narrower neighboring phrase. Preserve a
+  supplied required_concept_type=experience for explicit prior applied exposure.
 - Keep all inherited v20 coverage, source, subject, strength, ontology, and fail-closed rules.
 """
 

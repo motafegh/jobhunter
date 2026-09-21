@@ -435,9 +435,15 @@ def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
         requirement_coverage_plan={
             "field:description:segment:0:sentence:0": {
                 "text": "Python",
-                "source_kind": "requirement_section",
+                "source_kind": "candidate_experience",
                 "obligation_hint": "required",
                 "allow_exclusion": True,
+                "required_item_excerpts": [
+                    {
+                        "text": "Python",
+                        "required_concept_type": "experience",
+                    }
+                ],
             }
         },
         responsibility_coverage_plan={
@@ -448,6 +454,13 @@ def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
     assert result is expected
     assert captured["response_model"] is JobAnalysisResponseV21
     assert captured["contract_version"] == "v21"
+    assert captured["user_payload"]["candidate_fact_coverage"] == [
+        {
+            "parent_reference": "field:description:segment:0:sentence:0",
+            "item_excerpt": "Python",
+            "required_concept_type": "experience",
+        }
+    ]
     assert captured["additional_evidence_catalog"] == {
         "field:description:segment:0:sentence:0": "Python",
         "field:description:segment:1:item:0": "Build APIs",
@@ -591,14 +604,13 @@ def test_v21_explicit_candidate_requirement_cannot_be_excluded() -> None:
 def test_v21_tracks_explicit_headingless_candidate_experience(sentence: str) -> None:
     plan = build_requirement_coverage_plan_v21({"description": sentence})
 
-    assert list(plan.values()) == [
-        {
-            "text": sentence,
-            "source_kind": "candidate_experience",
-            "obligation_hint": "required",
-            "allow_exclusion": False,
-        }
-    ]
+    assert len(plan) == 1
+    candidate = next(iter(plan.values()))
+    assert candidate["text"] == sentence
+    assert candidate["source_kind"] == "candidate_experience"
+    assert candidate["obligation_hint"] == "required"
+    assert candidate["allow_exclusion"] is False
+    assert candidate["required_item_excerpts"]
 
 
 def test_v21_isolates_headingless_candidate_experience_from_dense_sections() -> None:
@@ -634,6 +646,102 @@ def test_v21_isolates_headingless_candidate_experience_from_dense_sections() -> 
         in ({"requirement_section"}, {"candidate_experience"})
         for partition in partitions
     )
+
+
+def test_v21_tracks_every_fact_inside_compound_candidate_experience() -> None:
+    sentence = (
+        "If you have built an Agent yourself to date, have worked with LLMs, Tool Calling, "
+        "memory, workflows, RAG, and Orchestration, and enjoy building systems that can "
+        "understand goals, make decisions, use tools, and pursue a task to the end, then you "
+        "might be the right fit for our team."
+    )
+    plan = build_requirement_coverage_plan_v21({"description": sentence})
+    candidate = next(iter(plan.values()))
+
+    assert candidate["required_item_excerpts"] == [
+        {
+            "text": "built an Agent yourself to date",
+            "required_concept_type": "experience",
+        },
+        {
+            "text": (
+                "worked with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration"
+            ),
+            "required_concept_type": "experience",
+        },
+        {
+            "text": (
+                "enjoy building systems that can understand goals, make decisions, use tools, "
+                "and pursue a task to the end"
+            ),
+            "required_concept_type": None,
+        },
+    ]
+
+
+def test_v21_rejects_partial_compound_candidate_fact_coverage() -> None:
+    sentence = (
+        "If you have built an Agent, have worked with LLMs and tools, and enjoy building "
+        "systems that pursue tasks to the end, then you may be a fit."
+    )
+    fields = {"description": sentence}
+    plan = build_requirement_coverage_plan_v21(fields)
+
+    with pytest.raises(ValidationError, match="candidate_item_coverage_missing"):
+        JobAnalysisResponseV21.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept="Agent building",
+                        evidence=sentence,
+                        item_excerpt="built an Agent",
+                        depth_signal=None,
+                        concept_type="experience",
+                    )
+                ],
+                "coverage_exclusions": [],
+            },
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": fields,
+                "evidence_catalog": {},
+                "requirement_coverage_plan": plan,
+                "responsibility_coverage_plan": {},
+            },
+        )
+
+
+def test_v21_preserves_explicit_candidate_experience_type() -> None:
+    sentence = "We are looking for someone with real experience in building AI Agents."
+    fields = {"description": sentence}
+    plan = build_requirement_coverage_plan_v21(fields)
+
+    with pytest.raises(ValidationError, match="candidate_item_concept_type_mismatch"):
+        JobAnalysisResponseV21.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept="Building AI Agents",
+                        evidence=sentence,
+                        item_excerpt="real experience in building AI Agents",
+                        depth_signal=None,
+                        concept_type="skill",
+                    )
+                ],
+                "coverage_exclusions": [],
+            },
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": fields,
+                "evidence_catalog": {},
+                "requirement_coverage_plan": plan,
+                "responsibility_coverage_plan": {},
+            },
+        )
 
 
 @pytest.mark.parametrize(
@@ -758,7 +866,7 @@ def test_v21_drops_partial_heading_fragments_from_duty_coverage() -> None:
 
 
 def test_v21_requirement_planner_preserves_unaffected_accepted_anchor_ledgers() -> None:
-    for source_job_id in set(_ACCEPTED_ANCHORS) - {"t4jp"}:
+    for source_job_id in set(_ACCEPTED_ANCHORS) - {"t4jp", "t4qV"}:
         fields = json.loads(
             (
                 _REPOSITORY_ROOT
@@ -802,6 +910,14 @@ def test_v21_all_public_projection_ledgers_are_exact_and_transport_valid() -> No
             for reference, text in candidate_catalog.items()
         )
         assert all(text.count("(") == text.count(")") for text in responsibility_plan.values())
+        for candidate in requirement_plan.values():
+            required_items = candidate.get("required_item_excerpts") or []
+            assert len({item["text"] for item in required_items}) == len(required_items)
+            assert all(item["text"] in candidate["text"] for item in required_items)
+            assert all(
+                item["required_concept_type"] in {None, "experience"}
+                for item in required_items
+            )
         partitioned_references = [
             reference
             for partition in requirement_partitions

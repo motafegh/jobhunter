@@ -103,6 +103,43 @@ class JobAnalysisResponseV21(JobAnalysisResponseV20):
 
     requirements: list[AnalysisRequirementV21] = Field()
 
+    @model_validator(mode="after")
+    def validate_candidate_fact_coverage(self, info: ValidationInfo) -> Self:
+        if (info.context or {}).get("analysis_mode") != "english":
+            return self
+        plan = (info.context or {}).get("requirement_coverage_plan") or {}
+        missing: list[str] = []
+        wrong_type: list[str] = []
+        for reference, candidate in plan.items():
+            if not isinstance(candidate, dict):
+                continue
+            parent = str(candidate.get("text") or "")
+            required_items = candidate.get("required_item_excerpts") or []
+            matching = [item for item in self.requirements if item.evidence == parent]
+            for required in required_items:
+                if not isinstance(required, dict):
+                    continue
+                excerpt = str(required.get("text") or "")
+                represented = [
+                    item
+                    for item in matching
+                    if " ".join(item.item_excerpt.split()).casefold()
+                    == " ".join(excerpt.split()).casefold()
+                ]
+                if not represented:
+                    missing.append(f"{reference}={excerpt}")
+                    continue
+                required_type = required.get("required_concept_type")
+                if required_type and not any(
+                    item.concept_type == required_type for item in represented
+                ):
+                    wrong_type.append(f"{reference}={excerpt}:{required_type}")
+        if missing:
+            raise ValueError("candidate_item_coverage_missing=" + repr(missing))
+        if wrong_type:
+            raise ValueError("candidate_item_concept_type_mismatch=" + repr(wrong_type))
+        return self
+
 
 def complete_analysis_partition_with_instructor_v21(
     *,
@@ -130,6 +167,17 @@ def complete_analysis_partition_with_instructor_v21(
         for reference, candidate in requirement_coverage_plan.items()
     }
     additional_evidence_catalog.update(responsibility_coverage_plan)
+    candidate_payload = dict(user_payload)
+    candidate_payload["candidate_fact_coverage"] = [
+        {
+            "parent_reference": reference,
+            "item_excerpt": required.get("text"),
+            "required_concept_type": required.get("required_concept_type"),
+        }
+        for reference, candidate in requirement_coverage_plan.items()
+        for required in candidate.get("required_item_excerpts") or []
+        if isinstance(required, dict)
+    ]
     return v20._complete_analysis_partition_with_instructor(
         base_url=base_url,
         api_token=api_token,
@@ -137,7 +185,7 @@ def complete_analysis_partition_with_instructor_v21(
         network_retries=network_retries,
         selected_model=selected_model,
         system_prompt=system_prompt,
-        user_payload=user_payload,
+        user_payload=candidate_payload,
         max_tokens=max_tokens,
         seed=seed,
         requirement_coverage_plan=requirement_coverage_plan,
