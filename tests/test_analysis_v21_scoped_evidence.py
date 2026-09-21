@@ -617,6 +617,25 @@ def test_v21_decomposes_repeated_gerund_duties_without_splitting_coordination() 
     assert all("Practical experience" not in text for text in candidate_plan.values())
 
 
+def test_v21_keeps_including_modifier_and_splits_final_independent_duty() -> None:
+    fields = {
+        "description": (
+            "Responsibilities include designing APIs, developing backend services, including "
+            "LLM integrations, implementing access controls, and preparing technical "
+            "documentation. Requirements: Python."
+        )
+    }
+
+    plan = build_responsibility_coverage_plan_v21(fields)
+
+    assert list(plan.values()) == [
+        "include designing APIs",
+        "developing backend services, including LLM integrations",
+        "implementing access controls",
+        "preparing technical documentation.",
+    ]
+
+
 def test_v21_requirement_planner_leaves_accepted_anchor_ledgers_unchanged() -> None:
     for source_job_id in _ACCEPTED_ANCHORS:
         fields = json.loads(

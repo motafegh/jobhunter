@@ -456,6 +456,19 @@ generic recruiting prose and application directives. The five accepted-anchor re
 plans remain unchanged. This is offline ledger evidence only; it does not reopen the closed
 model evaluation or establish semantic acceptance.
 
+Pushed-head GitHub CI run `35607767525` passed for the headingless-coverage change.
+A whole-public-projection transport audit then validated 165 candidate requirement
+references, 60 responsibility references and 39 bounded requirement partitions across
+all 27 English projections. Every candidate reference resolves to an exact source span;
+there are no conflicting IDs, duplicate texts, unknown references or non-source spans.
+The audit exposed two duty-list grammar edges. A dependent `including LLMs and Agents`
+modifier in `tGM0` was incorrectly split into a standalone duty, while Oxford-comma
+`and preparing technical documentation` in `t4qV` remained attached to the preceding
+duty. V21 now excludes dependent `including` modifiers as list anchors, recognizes an
+independent final `, and <gerund>` item, and preserves coordinated bare-gerund chains
+such as `evaluating, debugging, and improving` as one action. Focused regressions cover
+both forms; v20 remains unchanged.
+
 Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
 duty coverage, but it did not produce an accepted-semantic core posting or exercise the

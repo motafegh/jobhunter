@@ -18,7 +18,12 @@ _APPLICATION_DIRECTIVE_RE = re.compile(
     r"please\s+send\s+your\s+(?:resume|cv)\b)",
     re.I,
 )
-_LIST_GERUND_RE = re.compile(r"(?:^include\s+|,\s+)(?P<verb>[A-Za-z]+ing)\b", re.I)
+_LIST_GERUND_RE = re.compile(
+    r"(?:^include\s+|,\s+(?:and\s+)?)(?P<verb>[A-Za-z]+ing)\b", re.I
+)
+_BARE_GERUND_CHAIN_RE = re.compile(
+    r"[A-Za-z]+ing(?:\s*,\s*[A-Za-z]+ing)*", re.I
+)
 _COLLABORATION_DUTY_RE = re.compile(
     r"^(?:close\s+)?collaboration\s+with\b[^.!?]*\bto\s+[a-z]", re.I
 )
@@ -107,7 +112,11 @@ def build_requirement_coverage_plan_v21(
 def _gerund_list_items(sentence: str) -> list[str]:
     """Split a repeated gerund duty list while retaining coordinated verb phrases."""
 
-    matches = list(_LIST_GERUND_RE.finditer(sentence))
+    matches = [
+        match
+        for match in _LIST_GERUND_RE.finditer(sentence)
+        if match.group("verb").casefold() != "including"
+    ]
     if len(matches) < 3:
         return []
 
@@ -117,7 +126,7 @@ def _gerund_list_items(sentence: str) -> list[str]:
         between = sentence[previous.start("verb") : match.start()].strip(" ,")
         # "evaluating, debugging, and improving X" is one coordinated action:
         # a bare gerund before the next comma has no object and cannot stand alone.
-        if len(between.split()) < 2:
+        if len(between.split()) < 2 or _BARE_GERUND_CHAIN_RE.fullmatch(between):
             continue
         accepted.append(match)
 
