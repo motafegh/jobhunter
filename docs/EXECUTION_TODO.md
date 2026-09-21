@@ -147,6 +147,7 @@ Execution result:
 - [x] implemented the isolated v21 scoped-evidence response contract: parent coverage and exact item excerpts remain separate, item depth and inherited preferred strength fail closed, and candidate-only scope is removed before unchanged v5 persistence validation. Six focused offline cases pass; no runtime route or live call yet.
 - [x] implemented the isolated v21 provider boundary over the shared v20 transport/partition coordinator; typed response selection and candidate-scope stripping are covered by offline tests. Current v20 service/routing/persistence remain unchanged.
 - [x] validated all 85 requirements in the five accepted P1.6 anchors read-only under v21, including exact item excerpts for the seven shared-list `tmBK` claims and canonical source casing. No accepted artifact was regenerated.
+- [x] ran one non-persistent v21 `tvMm` evaluation after offline/CI gates: it failed with seven omitted familiarity depths and no artifact/state mutation. Added candidate-only source-proven leading-depth canonicalization plus a coordinated-list scope stop line; unchanged v20 remains current.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

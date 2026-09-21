@@ -7,6 +7,7 @@ changing the accepted v20/v5 path.
 
 from __future__ import annotations
 
+import re
 from typing import Any, Self
 
 from pydantic import Field, ValidationInfo, model_validator
@@ -23,6 +24,29 @@ from jobhunter.inference.instructor_lm_studio_v20 import (
     _validate_depth_fields_v20,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+
+def _canonicalize_scoped_leading_depth(
+    concept: str,
+    depth_signal: str | None,
+    item_excerpt: str,
+) -> tuple[str, str | None]:
+    """Move one source-proven leading marker out of a generated concept."""
+
+    if depth_signal is not None:
+        return concept, depth_signal
+    matches = _depth_matches(item_excerpt)
+    if len(matches) != 1:
+        return concept, depth_signal
+    marker = matches[0][2]
+    prefix = re.compile(
+        rf"^\s*{re.escape(marker)}(?:\s+(?:with|in|of))?\s+",
+        re.I,
+    )
+    scoped_concept = prefix.sub("", concept, count=1).strip(" ,;:-/")
+    if not scoped_concept or scoped_concept == concept:
+        return concept, depth_signal
+    return scoped_concept, marker
 
 
 class AnalysisRequirementV21(AnalysisRequirementV20):
@@ -60,6 +84,11 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
         ):
             raise ValueError("Preferred item needs exact source preference in item or parent")
 
+        self.concept, self.depth_signal = _canonicalize_scoped_leading_depth(
+            self.concept,
+            self.depth_signal,
+            self.item_excerpt,
+        )
         if self.depth_signal is None and _depth_matches(self.item_excerpt):
             raise ValueError("Explicit item depth must be supplied, not borrowed or omitted")
         self.depth_signal = _validate_depth_fields_v20(
@@ -132,6 +161,7 @@ def persisted_v20_shape(structured: dict[str, object]) -> dict[str, object]:
 __all__ = [
     "AnalysisRequirementV21",
     "JobAnalysisResponseV21",
+    "_canonicalize_scoped_leading_depth",
     "complete_analysis_partition_with_instructor_v21",
     "persisted_v20_shape",
 ]

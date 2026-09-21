@@ -127,6 +127,47 @@ def test_v21_rejects_omitted_depth_within_exact_item_scope() -> None:
         )
 
 
+def test_v21_canonicalizes_one_source_proven_leading_depth_wrapper() -> None:
+    evidence = "familiarity with Tool Calling / Function Calling"
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Familiarity with Tool Calling / Function Calling",
+            evidence=evidence,
+            item_excerpt=evidence,
+            depth_signal=None,
+        ),
+        context=_context(evidence),
+    )
+
+    assert result.concept == "Tool Calling / Function Calling"
+    assert result.depth_signal == "familiarity"
+
+
+def test_v21_requires_shared_marker_scope_for_coordinated_list_item() -> None:
+    evidence = "familiarity with RAG, Embedding, and Vector Databases"
+    with pytest.raises(ValidationError, match="concept contains familiarity"):
+        AnalysisRequirementV21.model_validate(
+            _requirement(
+                concept="Familiarity with Embedding",
+                evidence=evidence,
+                item_excerpt="Embedding",
+                depth_signal=None,
+            ),
+            context=_context(evidence),
+        )
+
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Embedding",
+            evidence=evidence,
+            item_excerpt=evidence,
+            depth_signal="familiarity",
+        ),
+        context=_context(evidence),
+    )
+    assert result.depth_signal == "familiarity"
+
+
 def test_v21_preserves_shared_preferred_parent_context() -> None:
     evidence = (
         "It is an advantage if you have experience building Production-grade Agents, "

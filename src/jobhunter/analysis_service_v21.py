@@ -13,6 +13,14 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
 - Decide depth_signal only from item_excerpt. Supply the exact applicable marker when the item has
   one. Use null when this exact item has no accepted depth marker, even if neighboring items in the
   parent have markers. Never borrow neighboring depth.
+- Keep depth wording out of concept. If the exact item starts with one source marker, JobHunter may
+  move that one marker from a generated leading wrapper such as "Familiarity with X" into
+  depth_signal and retain X as the concept.
+- When one leading marker scopes a coordinated list (for example "familiarity with RAG, Embedding,
+  and Vector Databases"), item_excerpt must retain that exact complete scoped phrase for every
+  separately emitted concept. Do not reconstruct "familiarity with Embedding" or cite bare
+  "Embedding" while claiming familiarity. The same exact group excerpt may support multiple
+  concepts when the employer grammar applies the shared marker to all of them.
 - Preserve obligation from the parent coverage hint. A preferred parent can supply shared
   optionality wording that is outside a narrower item_excerpt; keep that item preferred.
 - item_excerpt is candidate validation evidence. JobHunter removes it before unchanged v5

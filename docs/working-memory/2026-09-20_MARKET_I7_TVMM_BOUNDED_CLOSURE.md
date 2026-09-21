@@ -375,3 +375,25 @@ source list items. The replay exposed a casing edge (`CISCO` versus canonical
 source `Cisco`), so item excerpts now use the same exact-source equivalence rule
 as persisted evidence and retain the canonical parent substring. No accepted
 artifact, review status, prompt identity, or currentness state changed.
+
+### First non-persistent v21 evaluation and bounded repair
+
+After the offline provider and accepted-anchor gates passed CI, one v21 evaluation
+ran against the unchanged `tvMm` English projection without SQLite or corpus
+mutation. It failed after the configured validation retry and created no artifact.
+Both responses produced 14 requirement candidates. Seven source items with explicit
+`familiarity` still left `depth_signal` null; the generated concepts retained a
+leading `Familiarity with ...` wrapper. The second response also cited bare
+`Embedding` and `Vector Databases`, which loses the shared marker scope from
+`familiarity with RAG, Embedding, and Vector Databases`. Raw protocol and the full
+failure remain local.
+
+This result supports one general candidate-only correction. When an exact item
+excerpt contains exactly one recognized marker and the generated concept begins
+with that same marker, v21 may move the source-proven leading wrapper into
+`depth_signal` and retain the remaining subject as the concept. It does not infer
+markers for bare items. The v21 prompt now requires a complete shared-marker group
+excerpt for each separately emitted member of a coordinated list; reconstructed
+phrases and bare members claiming the shared depth still fail. Focused regressions
+cover both the safe normalization and the coordinated-list stop line. V20 remains
+unchanged and the failed evaluation is not semantic acceptance.
