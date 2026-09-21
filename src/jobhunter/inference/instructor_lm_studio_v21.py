@@ -31,7 +31,7 @@ def _canonicalize_scoped_leading_depth(
     depth_signal: str | None,
     item_excerpt: str,
 ) -> tuple[str, str | None]:
-    """Move one source-proven leading marker out of a generated concept."""
+    """Materialize one source-proven marker from an exact item scope."""
 
     if depth_signal is not None:
         return concept, depth_signal
@@ -44,9 +44,7 @@ def _canonicalize_scoped_leading_depth(
         re.I,
     )
     scoped_concept = prefix.sub("", concept, count=1).strip(" ,;:-/")
-    if not scoped_concept or scoped_concept == concept:
-        return concept, depth_signal
-    return scoped_concept, marker
+    return (scoped_concept if scoped_concept else concept), marker
 
 
 class AnalysisRequirementV21(AnalysisRequirementV20):

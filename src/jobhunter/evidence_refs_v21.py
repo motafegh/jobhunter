@@ -39,6 +39,11 @@ _APPLICATION_PREFERENCE_RE = re.compile(
     r"(?:resume|application|portfolio)\s+review\b",
     re.I,
 )
+_NON_CANDIDATE_SUBJECT_RE = re.compile(
+    r"^(?:our\s+company\s+is\s+(?:a|an|the)\b|our\s+goal\s+is\b|"
+    r"we\s+want\s+(?:ai|the\s+(?:system|product))\s+to\b)",
+    re.I,
+)
 _LIST_GERUND_RE = re.compile(
     r"(?:^include\s+|^|,\s+(?:and\s+)?)(?P<verb>[A-Za-z]+ing)\b", re.I
 )
@@ -221,6 +226,11 @@ def build_requirement_coverage_plan_v21(
 
         preferred_list_tail = False
         for index, sentence in enumerate(units):
+            if (
+                bool(candidate.get("allow_exclusion", False))
+                and _NON_CANDIDATE_SUBJECT_RE.match(sentence)
+            ):
+                continue
             if _APPLICATION_DIRECTIVE_RE.match(sentence):
                 if _APPLICATION_SECTION_START_RE.match(sentence):
                     break

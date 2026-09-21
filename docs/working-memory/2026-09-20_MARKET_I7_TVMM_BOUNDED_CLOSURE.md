@@ -498,7 +498,7 @@ verb chains and nominal actions before later gerunds. Only one responsibility re
 remains longer than 300 characters: `t4qV`'s single documentation duty with its exact
 equipment/technology scope.
 
-The repeated 27-projection transport audit now validates 173 requirement references, 100
+At this checkpoint, the repeated 27-projection transport audit validated 173 requirement references, 100
 responsibility references and 39 partitions with zero ID collisions, duplicate texts,
 unbalanced parenthetical spans, unknown references or non-source spans. No model call or
 operational-state mutation was made for these repairs. This complete public-projection
@@ -525,3 +525,36 @@ current v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept a me
 valid result. Review the complete result against original source meaning, exact depth,
 obligation, headingless candidate experience, every duty, and candidate-versus-product
 subject. A failed or materially invalid result closes this evaluation without another call.
+
+### Post-ledger evaluation result and retained-response closure
+
+The single authorized call failed after its bounded validation retry and created no
+candidate. Both provider responses supplied all eleven exact duty references, the required
+reliable-product capability and the first headingless Agent-design experience statement.
+The first response also supplied unsupported `practical experience` as technical depth.
+Both responses cited exact single-marker `familiarity with ...` item excerpts but left five
+corresponding depth fields null. The retry then reasoned incorrectly that familiarity was
+not an accepted depth signal. SQLite was byte-identical before and after the call; no
+attempt, artifact, corpus or Market state was created.
+
+Exact item scope supports one further deterministic candidate-only correction: when an
+item excerpt contains exactly one recognized depth marker, v21 now materializes that exact
+source marker even when the generated concept says `Working with X`. Marker-free and
+multi-marker excerpts remain fail-closed, and v20 is unchanged. Three independently scoped
+non-candidate sentences beginning `Our company is ...`, `Our goal is ...`, and `We want
+AI/the system/the product to ...` are also removed from candidate qualification coverage;
+a negative regression preserves explicit wording such as `Our company requires candidates
+to ...`.
+
+Read-only replay after these repairs rejects the first response for its unsupported
+`practical experience` depth. The retry response passes every item-depth, duty, subject and
+company/product-context check, but still fails one non-excludable coverage obligation: it
+omits the explicit headingless statement `If you have built an Agent ... have worked with
+LLMs, Tool Calling, memory, workflows, RAG, and Orchestration`. This is a real semantic
+coverage failure, not a bookkeeping defect. Do not run another model call, weaken that
+coverage, or hand-assemble a promoted artifact. Current whole-corpus candidate totals are
+170 requirement references, 100 responsibility references and 38 partitions; the committed
+transport regression remains clean.
+
+I7 remains **HOLD**. No accepted-semantic core posting exists, so the semantic Market
+snapshot/profile and accepted-semantic browser/CLI drill-down remain unexercised.

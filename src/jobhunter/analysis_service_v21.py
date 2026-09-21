@@ -14,8 +14,9 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
   one. Use null when this exact item has no accepted depth marker, even if neighboring items in the
   parent have markers. Never borrow neighboring depth.
 - Keep depth wording out of concept. If the exact item starts with one source marker, JobHunter may
-  move that one marker from a generated leading wrapper such as "Familiarity with X" into
-  depth_signal and retain X as the concept.
+  materialize that one marker into depth_signal even when the generated concept uses wording such
+  as "Working with X". If the concept itself starts with the same generated wrapper, JobHunter may
+  also remove that wrapper and retain X as the concept.
 - When one leading marker scopes a coordinated list (for example "familiarity with RAG, Embedding,
   and Vector Databases"), item_excerpt must retain that exact complete scoped phrase for every
   separately emitted concept. Do not reconstruct "familiarity with Embedding" or cite bare

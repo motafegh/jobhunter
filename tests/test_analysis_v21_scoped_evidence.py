@@ -123,14 +123,30 @@ def test_v21_distinguishes_null_experience_depth_from_neighbor_familiarity() -> 
     assert {item.evidence for item in response.requirements} == {evidence}
 
 
-def test_v21_rejects_omitted_depth_within_exact_item_scope() -> None:
+def test_v21_materializes_one_omitted_depth_within_exact_item_scope() -> None:
     evidence = "practical Python experience, familiarity with Linux and Git"
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Working with Linux and Git",
+            evidence=evidence,
+            item_excerpt="familiarity with Linux and Git",
+            depth_signal=None,
+        ),
+        context=_context(evidence),
+    )
+
+    assert result.concept == "Working with Linux and Git"
+    assert result.depth_signal == "familiarity"
+
+
+def test_v21_rejects_omitted_depth_from_multi_marker_item_scope() -> None:
+    evidence = "familiarity with Linux, familiarity with Git"
     with pytest.raises(ValidationError, match="Explicit item depth must be supplied"):
         AnalysisRequirementV21.model_validate(
             _requirement(
                 concept="Linux and Git",
                 evidence=evidence,
-                item_excerpt="familiarity with Linux and Git",
+                item_excerpt=evidence,
                 depth_signal=None,
             ),
             context=_context(evidence),
@@ -861,3 +877,26 @@ def test_v21_treats_portfolio_review_impact_as_preferred() -> None:
         },
     )
     assert result.requirement_type == "preferred"
+
+
+def test_v21_filters_explicit_company_and_product_subjects_only() -> None:
+    fields = {
+        "description": (
+            "Requirements: Python experience is required. "
+            "It is an advantage to know Docker. "
+            "Our company is a cloud platform for small businesses. "
+            "Our goal is to automate routine accounting tasks. "
+            "We want AI to examine records and choose tools. "
+            "Our company requires candidates to explain system tradeoffs."
+        )
+    }
+
+    texts = [
+        item["text"] for item in build_requirement_coverage_plan_v21(fields).values()
+    ]
+
+    assert texts == [
+        "Python experience is required.",
+        "It is an advantage to know Docker.",
+        "Our company requires candidates to explain system tradeoffs.",
+    ]
