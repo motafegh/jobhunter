@@ -6,6 +6,9 @@ import re
 from typing import Any
 
 from jobhunter.evidence_refs import (
+    _CANDIDATE_DUTY_RE,
+    _long_text_segments_with_sections,
+    _segment_clauses,
     build_requirement_coverage_plan,
     build_responsibility_coverage_plan,
     has_english_optionality_signal,
@@ -42,8 +45,12 @@ _LIST_GERUND_RE = re.compile(
 _BARE_GERUND_CHAIN_RE = re.compile(
     r"[A-Za-z]+ing(?:\s*,\s*[A-Za-z]+ing)*", re.I
 )
-_COLLABORATION_DUTY_RE = re.compile(
-    r"^(?:close\s+)?collaboration\s+with\b[^.!?]*\bto\s+[a-z]", re.I
+_LIST_ACTION_RE = re.compile(
+    r"(?:^|,\s+(?:and\s+)?)(?P<verb>design|build|connect|analyze|train|implement|"
+    r"develop|create|manage|maintain|prepare|review|research|use|provide|collaborate|"
+    r"participate|optimize|automate|document|evaluate|test|deploy|monitor|troubleshoot|"
+    r"configure)\b",
+    re.I,
 )
 _EXPLICIT_CANDIDATE_REQUIREMENT_RE = re.compile(
     r"\b(?:we\s+need\s+someone\s+who\s+can|the\s+candidate\s+must|"
@@ -62,11 +69,31 @@ _CANDIDATE_QUALIFICATION_RE = re.compile(
 )
 _CANDIDATE_DUTY_SECTION_RE = re.compile(
     r"(?i)(?P<heading>job\s+description|tasks|responsibilities|qualifications|"
-    r"requirements|skills\s+and\s+abilities|expected\s+skills|required\s+skills|"
+    r"skills\s+and\s+minimum\s+requirements|requirements|"
+    r"skills\s+and\s+abilities|expected\s+skills|required\s+skills|"
+    r"specialized\s+competencies|technical\s+skill\s+stack|nice[ -]to[ -]have|"
     r"benefits(?:\s+(?:and\s+opportunities|of\s+collaboration))?|"
     r"performance\s+indicators\s*\(kpis\)|(?:work\s+)?location)\s*:"
 )
 _DUTY_SECTION_HEADINGS = {"job description", "tasks", "responsibilities"}
+_RESPONSIBILITY_END_RE = re.compile(
+    r"(?i)(?:requirements?(?:\s+include)?|qualifications?|"
+    r"skills\s+and\s+minimum\s+requirements|skills\s+and\s+abilities|"
+    r"expected\s+skills|required\s+skills|"
+    r"specialized\s+competencies|technical\s+skill\s+stack|nice[ -]to[ -]have|"
+    r"seniority\s+level|expected\s+deliverables|"
+    r"benefits(?:\s+(?:and\s+opportunities|of\s+collaboration))?|"
+    r"performance\s+indicators\s*\(kpis\)|(?:work\s+)?location)"
+    r"(?:\s*:|\s+include\b|(?=\s+[A-Z]))"
+)
+_RESPONSIBILITY_QUALIFICATION_RE = re.compile(
+    r"^(?:practical\s+experience\b|we\s+are\s+not\s+looking\b|"
+    r"it\s+would\s+be\b|a\s+real\s+(?:github|repository|project|demo)\b)",
+    re.I,
+)
+_RESPONSIBILITY_HEADING_FRAGMENT_RE = re.compile(
+    r"^(?:expected|skills(?:\s+and(?:\s+minimum)?)?)$", re.I
+)
 
 
 def _sentences(text: str) -> list[str]:
@@ -278,6 +305,30 @@ def _gerund_list_items(sentence: str) -> list[str]:
     return items
 
 
+def _action_list_items(sentence: str) -> list[str]:
+    """Split a repeated source-explicit imperative/base-verb duty list."""
+
+    matches = [
+        match
+        for match in _LIST_ACTION_RE.finditer(sentence)
+        if sentence[: match.start("verb")].count("(")
+        == sentence[: match.start("verb")].count(")")
+    ]
+    if len(matches) < 3:
+        return []
+    items: list[str] = []
+    prefix = sentence[: matches[0].start()].strip(" ,")
+    if prefix:
+        items.append(prefix)
+    for index, match in enumerate(matches):
+        start = match.start("verb") if prefix or index > 0 else 0
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(sentence)
+        item = sentence[start:end].strip(" ,")
+        if item:
+            items.append(item)
+    return items
+
+
 def _candidate_duty_sections(text: str) -> list[str]:
     matches = list(_CANDIDATE_DUTY_SECTION_RE.finditer(text))
     sections: list[str] = []
@@ -292,41 +343,82 @@ def _candidate_duty_sections(text: str) -> list[str]:
     return sections
 
 
+def _duty_units(text: str) -> list[str]:
+    star_items = [item.strip() for item in _ASTERISK_ITEM_RE.split(text) if item.strip()]
+    sources = star_items if len(star_items) > 1 else _sentences(text)
+    units: list[str] = []
+    for source in sources:
+        clauses = _segment_clauses(source) or [source]
+        for clause in clauses:
+            units.extend(
+                _gerund_list_items(clause) or _action_list_items(clause) or [clause]
+            )
+    return units
+
+
+def _responsibility_units(text: str) -> list[str]:
+    boundary = _RESPONSIBILITY_END_RE.search(text)
+    scoped_text = text[: boundary.start()].strip() if boundary else text
+    units: list[str] = []
+    for sentence in _sentences(scoped_text):
+        if _RESPONSIBILITY_QUALIFICATION_RE.match(sentence):
+            break
+        units.extend(_duty_units(sentence))
+    return units
+
+
+def _responsibility_segment_kinds(description: str) -> dict[str, str | None]:
+    return {
+        f"field:description:segment:{index}": section_kind
+        for index, (_text, section_kind) in enumerate(
+            _long_text_segments_with_sections(description)
+        )
+    }
+
+
+def _base_reference(reference: str) -> str:
+    return re.split(r":(?:clause|sentence|item):\d+", reference, maxsplit=1)[0]
+
+
 def build_responsibility_coverage_plan_v21(fields: dict[str, Any]) -> dict[str, str]:
     """Expose each explicit item in repeated duty lists to candidate coverage."""
 
-    result: dict[str, str] = {}
-    for reference, text in build_responsibility_coverage_plan(fields).items():
-        sentences = _sentences(text)
-        if not sentences:
-            result[reference] = text
-            continue
-        items = _gerund_list_items(sentences[0])
-        if not items:
-            result[reference] = text
-            continue
-        for index, item in enumerate(items):
-            result[f"{reference}:item:{index}"] = item
-        for index, sentence in enumerate(sentences[1:], start=1):
-            if _COLLABORATION_DUTY_RE.match(sentence):
-                result[f"{reference}:sentence:{index}"] = sentence
-                continue
-            break
     description = fields.get("description")
     if not isinstance(description, str):
-        return result
+        return {}
+    segment_kinds = _responsibility_segment_kinds(description)
+    result: dict[str, str] = {}
+    for reference, text in build_responsibility_coverage_plan(fields).items():
+        section_kind = segment_kinds.get(_base_reference(reference))
+        if section_kind == "responsibilities":
+            units = _responsibility_units(text)
+        else:
+            units = [
+                sentence
+                for sentence in _sentences(text)
+                if any(
+                    not re.search(
+                        r"\b(?:ability|capacity|experience)\b", match.group(0), re.I
+                    )
+                    for match in _CANDIDATE_DUTY_RE.finditer(sentence)
+                )
+            ]
+        for index, item in enumerate(units):
+            if _RESPONSIBILITY_HEADING_FRAGMENT_RE.fullmatch(item.strip(" :")):
+                continue
+            result[f"{reference}:item:{index}"] = item
+
     existing = set(result.values())
     for section_index, section in enumerate(_candidate_duty_sections(description)):
-        for sentence_index, sentence in enumerate(_sentences(section)):
-            items = _gerund_list_items(sentence) or [sentence]
-            for item_index, item in enumerate(items):
-                if item in existing or any(item in parent for parent in existing):
-                    continue
-                result[
-                    f"field:description:v21:duty:{section_index}:"
-                    f"sentence:{sentence_index}:item:{item_index}"
-                ] = item
-                existing.add(item)
+        for item_index, item in enumerate(_duty_units(section)):
+            if _RESPONSIBILITY_HEADING_FRAGMENT_RE.fullmatch(item.strip(" :")):
+                continue
+            if item in existing or any(item in parent for parent in existing):
+                continue
+            result[
+                f"field:description:v21:duty:{section_index}:item:{item_index}"
+            ] = item
+            existing.add(item)
     return result
 
 

@@ -672,6 +672,35 @@ def test_v21_preserves_nominal_prefix_before_gerund_duty_list() -> None:
     ]
 
 
+def test_v21_splits_repeated_base_verb_duty_list() -> None:
+    fields = {
+        "description": (
+            "Responsibilities: Design and implement automation, build assistants, connect "
+            "tools to APIs, analyze results, and train users. Requirements: Python."
+        )
+    }
+
+    assert list(build_responsibility_coverage_plan_v21(fields).values()) == [
+        "Design and implement automation",
+        "build assistants",
+        "connect tools to APIs",
+        "analyze results",
+        "train users.",
+    ]
+
+
+def test_v21_drops_partial_heading_fragments_from_duty_coverage() -> None:
+    fields = {
+        "description": (
+            "Responsibilities: Build services. Skills and Minimum Requirements: Python."
+        )
+    }
+
+    assert list(build_responsibility_coverage_plan_v21(fields).values()) == [
+        "Build services."
+    ]
+
+
 def test_v21_requirement_planner_preserves_unaffected_accepted_anchor_ledgers() -> None:
     for source_job_id in set(_ACCEPTED_ANCHORS) - {"t4jp"}:
         fields = json.loads(

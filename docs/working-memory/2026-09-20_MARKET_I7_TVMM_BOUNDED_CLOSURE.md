@@ -488,13 +488,20 @@ retains only the actual work/commitment requirements. Four other accepted-anchor
 requirement plans remain unchanged.
 
 Candidate duty coverage now also recognizes explicit `Job Description:` and `Tasks:`
-sections, recovering 14 previously unledgered duty references across `t4EV`, `tI1n` and
-`tmW1`. The exact-span parser preserves parenthetical comma lists, keeps dependent
-modifiers attached, and retains a nominal action before a following gerund list. The
-repeated 27-projection transport audit now validates 173 requirement references, 80
+sections across `t4EV`, `tI1n` and `tmW1`. It ends responsibility scope at embedded
+qualification/benefit/deliverable headings, drops partial heading fragments left by the
+v20 parser, separates multi-sentence and semicolon duties, and keeps headingless candidate
+duties to the sentence that actually asserts work. Repeated source-explicit base-verb
+lists such as `design ..., build ..., connect ...` are independently ledgered. The
+exact-span parser preserves parenthetical comma lists, dependent modifiers, coordinated
+verb chains and nominal actions before later gerunds. Only one responsibility reference
+remains longer than 300 characters: `t4qV`'s single documentation duty with its exact
+equipment/technology scope.
+
+The repeated 27-projection transport audit now validates 173 requirement references, 100
 responsibility references and 39 partitions with zero ID collisions, duplicate texts,
-unknown references or non-source spans. No model call or operational-state mutation was
-made for these repairs.
+unbalanced parenthetical spans, unknown references or non-source spans. No model call or
+operational-state mutation was made for these repairs.
 
 Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
