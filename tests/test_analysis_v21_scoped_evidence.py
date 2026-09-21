@@ -13,6 +13,7 @@ from jobhunter.analysis_service_v21 import (
     ENGLISH_PROMPT_VERSION,
 )
 from jobhunter.evidence_refs import (
+    build_field_evidence_catalog,
     build_requirement_coverage_plan,
     build_responsibility_coverage_plan,
 )
@@ -20,6 +21,7 @@ from jobhunter.evidence_refs_v21 import (
     build_requirement_coverage_plan_v21,
     build_responsibility_coverage_plan_v21,
 )
+from jobhunter.inference.instructor_lm_studio_v20 import _validated_partition_plan
 from jobhunter.inference.instructor_lm_studio_v21 import (
     AnalysisRequirementV21,
     JobAnalysisResponseV21,
@@ -715,6 +717,50 @@ def test_v21_requirement_planner_preserves_unaffected_accepted_anchor_ledgers() 
 
         assert build_requirement_coverage_plan_v21(fields) == (
             build_requirement_coverage_plan(fields)
+        )
+
+
+def test_v21_all_public_projection_ledgers_are_exact_and_transport_valid() -> None:
+    projection_paths = sorted(
+        (_REPOSITORY_ROOT / "corpus" / "jobs").glob("*/english-projection.json")
+    )
+    assert len(projection_paths) == 27
+
+    for projection_path in projection_paths:
+        fields = json.loads(projection_path.read_text(encoding="utf-8"))["fields"]
+        requirement_plan = build_requirement_coverage_plan_v21(fields)
+        responsibility_plan = build_responsibility_coverage_plan_v21(fields)
+        catalog = build_field_evidence_catalog(fields)
+        candidate_catalog = {
+            reference: str(candidate["text"])
+            for reference, candidate in requirement_plan.items()
+        }
+        candidate_catalog.update(responsibility_plan)
+
+        assert len(set(candidate_catalog.values())) == len(candidate_catalog)
+        assert all(
+            reference not in catalog or catalog[reference] == text
+            for reference, text in candidate_catalog.items()
+        )
+        assert all(
+            reference in catalog or any(text in parent for parent in catalog.values())
+            for reference, text in candidate_catalog.items()
+        )
+        assert all(text.count("(") == text.count(")") for text in responsibility_plan.values())
+
+        merged_catalog = {**catalog, **candidate_catalog}
+        _validated_partition_plan(
+            requirement_plan,
+            merged_catalog,
+            label="requirement",
+        )
+        _validated_partition_plan(
+            {
+                reference: {"text": text}
+                for reference, text in responsibility_plan.items()
+            },
+            merged_catalog,
+            label="responsibility",
         )
 
 

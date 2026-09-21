@@ -501,7 +501,8 @@ equipment/technology scope.
 The repeated 27-projection transport audit now validates 173 requirement references, 100
 responsibility references and 39 partitions with zero ID collisions, duplicate texts,
 unbalanced parenthetical spans, unknown references or non-source spans. No model call or
-operational-state mutation was made for these repairs.
+operational-state mutation was made for these repairs. This complete public-projection
+transport check is now a committed regression rather than an ad hoc audit.
 
 Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
