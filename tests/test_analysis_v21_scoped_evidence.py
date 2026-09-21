@@ -470,6 +470,7 @@ def test_v21_splits_mixed_obligation_sentences_and_stops_at_application() -> Non
             "Requirements: Architecture experience is required. "
             "It is an advantage if you have production Agent experience. "
             "Our company builds accounting software. "
+            "This is why we need someone who can ship reliable production systems. "
             "To apply for collaboration, please send your resume. "
             "A short portfolio is welcome."
         )
@@ -483,13 +484,20 @@ def test_v21_splits_mixed_obligation_sentences_and_stops_at_application() -> Non
         "Architecture experience is required.",
         "It is an advantage if you have production Agent experience.",
         "Our company builds accounting software.",
+        "This is why we need someone who can ship reliable production systems.",
     ]
     assert [item["obligation_hint"] for item in candidate_plan.values()] == [
         "required",
         "preferred",
         "required",
+        "required",
     ]
-    assert all(item["allow_exclusion"] is True for item in candidate_plan.values())
+    assert [item["allow_exclusion"] for item in candidate_plan.values()] == [
+        True,
+        True,
+        True,
+        False,
+    ]
 
     required_only = build_requirement_coverage_plan_v21(
         {
@@ -502,6 +510,39 @@ def test_v21_splits_mixed_obligation_sentences_and_stops_at_application() -> Non
     assert [item["text"] for item in required_only.values()] == [
         "Python experience is required."
     ]
+
+
+def test_v21_explicit_candidate_requirement_cannot_be_excluded() -> None:
+    evidence = "This is why we need someone who can ship a reliable production system."
+    fields = {"description": "Requirements: " + evidence + " It is a plus to know Docker."}
+    plan = build_requirement_coverage_plan_v21(fields)
+    reference = next(
+        reference
+        for reference, candidate in plan.items()
+        if candidate["text"] == evidence
+    )
+
+    with pytest.raises(ValidationError, match="non_excludable_refs_illegally_excluded"):
+        JobAnalysisResponseV21.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [],
+                "coverage_exclusions": [
+                    {
+                        "evidence_reference": reference,
+                        "rationale": "Covered by preferred experience elsewhere.",
+                    }
+                ],
+            },
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": fields,
+                "evidence_catalog": {},
+                "requirement_coverage_plan": plan,
+                "responsibility_coverage_plan": {},
+            },
+        )
 
 
 def test_v21_decomposes_repeated_gerund_duties_without_splitting_coordination() -> None:

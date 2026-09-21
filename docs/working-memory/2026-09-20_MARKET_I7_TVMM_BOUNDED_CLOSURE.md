@@ -397,3 +397,58 @@ excerpt for each separately emitted member of a coordinated list; reconstructed
 phrases and bare members claiming the shared depth still fail. Focused regressions
 cover both the safe normalization and the coordinated-list stop line. V20 remains
 unchanged and the failed evaluation is not semantic acceptance.
+
+### 2026-09-21 — Candidate evidence-ledger evaluation
+
+A second non-persistent v21 evaluation completed mechanically after the leading-depth
+repair, but complete semantic review rejected it. Its one 1,265-character responsibility
+reference allowed nine generated duties to satisfy a list that also explicitly required
+attention to cost/latency/reliability/output quality and collaboration with Product and
+Backend. Its 1,414-character preferred requirement reference combined a required
+architecture/real-system statement, a preferred list, company/product goals and
+application instructions. This hid the required statement and assigned one preferred
+hint to unlike sentences. No artifact, attempt, SQLite row or public corpus state was
+created.
+
+The v21 candidate now owns a separate exact-span planner. Mixed-obligation requirement
+text is split into exact sentences, direct application instructions terminate candidate
+coverage, repeated gerund duty lists become independently mandatory items, and an
+explicit collaboration duty remains separate. The accepted v20 planner, prompt, service,
+artifact identity and persistence path are unchanged. All five accepted-anchor
+requirement plans remain byte-for-byte equal under the candidate planner. Read-only
+replay showed the rejected response left six new requirement references and all eleven
+duty references uncovered. The implementation was published in `91612d5` with 656
+strict-warning tests and complete 394-job corpus verification passing.
+
+The first attempted evaluation after that repair stopped during local provider preflight:
+the candidate-only reference IDs had not been added to the transport evidence catalog.
+No model request occurred, SQLite remained byte-identical and no validation retry was
+spent. The shared transport now accepts an optional exact-source catalog extension;
+only v21 supplies it, while v20's model-facing catalog remains unchanged. The regression
+proves v21 supplies sentence/item references through this boundary. This integration
+repair was published in `61dd926` after the same full gates passed.
+
+One bounded non-persistent evaluation then ran on the unchanged `tvMm` projection and
+configured `gemma-4-e4b-it-ud` model. It produced no role purpose, eleven responsibilities,
+sixteen requirements (including two deterministic source skill tags), and four coverage
+exclusions. Exact item scope corrected every previously observed familiarity/experience
+depth defect. All ten explicit duty-list items and the Product/Backend collaboration duty
+were present. Company context, the chatbot goal and intended AI-system behavior were
+correctly excluded rather than attributed to the candidate. SQLite was byte-identical
+before and after the call.
+
+The result is still **semantically rejected**. It excluded the explicit required source
+statement that the company needs someone who can move beyond idea/prototype stage and
+turn an Agent into a reliable real-product system, claiming preferred experience elsewhere
+covered it. That loses required obligation and exact candidate capability. The candidate
+planner now marks direct wording such as `we need someone who can`, `the candidate must`,
+`you must`, and `you will need to` non-excludable after sentence scoping. Read-only replay
+of the retained response fails specifically on that reference. No further model call is
+authorized by this evaluation; the opening candidate-experience prose also remains a
+separate coverage-design question that needs representative evidence rather than a
+vacancy-specific rule.
+
+Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
+I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and
+duty coverage, but it did not produce an accepted-semantic core posting or exercise the
+accepted-semantic Market snapshot/profile and CLI/browser drill-down.

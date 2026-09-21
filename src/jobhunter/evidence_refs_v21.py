@@ -22,6 +22,11 @@ _LIST_GERUND_RE = re.compile(r"(?:^include\s+|,\s+)(?P<verb>[A-Za-z]+ing)\b", re
 _COLLABORATION_DUTY_RE = re.compile(
     r"^(?:close\s+)?collaboration\s+with\b[^.!?]*\bto\s+[a-z]", re.I
 )
+_EXPLICIT_CANDIDATE_REQUIREMENT_RE = re.compile(
+    r"\b(?:we\s+need\s+someone\s+who\s+can|the\s+candidate\s+must|"
+    r"you\s+must|you\s+will\s+need\s+to)\b",
+    re.I,
+)
 
 
 def _sentences(text: str) -> list[str]:
@@ -58,6 +63,8 @@ def build_requirement_coverage_plan_v21(
             scoped["obligation_hint"] = (
                 "preferred" if has_english_optionality_signal(sentence) else "required"
             )
+            if _EXPLICIT_CANDIDATE_REQUIREMENT_RE.search(sentence):
+                scoped["allow_exclusion"] = False
             result[f"{reference}:sentence:{index}"] = scoped
     return result
 
