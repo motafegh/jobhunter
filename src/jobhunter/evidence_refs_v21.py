@@ -27,6 +27,16 @@ _EXPLICIT_CANDIDATE_REQUIREMENT_RE = re.compile(
     r"you\s+must|you\s+will\s+need\s+to)\b",
     re.I,
 )
+_CANDIDATE_SUBJECT_RE = re.compile(
+    r"\b(?:we\s+(?:are|'re)\s+looking\s+for|is\s+looking\s+to\s+attract|"
+    r"role\s+is\s+suitable\s+for\s+someone|if\s+you)\b",
+    re.I,
+)
+_CANDIDATE_QUALIFICATION_RE = re.compile(
+    r"\b(?:experience|experienced|ability\s+to|able\s+to|have\s+built|"
+    r"have\s+worked\s+with)\b",
+    re.I,
+)
 
 
 def _sentences(text: str) -> list[str]:
@@ -66,6 +76,31 @@ def build_requirement_coverage_plan_v21(
             if _EXPLICIT_CANDIDATE_REQUIREMENT_RE.search(sentence):
                 scoped["allow_exclusion"] = False
             result[f"{reference}:sentence:{index}"] = scoped
+    description = fields.get("description")
+    if not isinstance(description, str):
+        return result
+
+    existing_texts = [str(candidate["text"]) for candidate in result.values()]
+    for index, sentence in enumerate(_sentences(description)):
+        if _APPLICATION_DIRECTIVE_RE.match(sentence):
+            continue
+        if not (
+            _CANDIDATE_SUBJECT_RE.search(sentence)
+            and _CANDIDATE_QUALIFICATION_RE.search(sentence)
+        ):
+            continue
+        if any(
+            sentence in text or (len(text) >= 40 and text in sentence)
+            for text in existing_texts
+        ):
+            continue
+        result[f"field:description:v21:candidate:{index}"] = {
+            "text": sentence,
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+        }
+        existing_texts.append(sentence)
     return result
 
 

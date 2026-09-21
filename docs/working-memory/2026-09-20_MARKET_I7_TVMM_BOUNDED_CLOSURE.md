@@ -444,9 +444,17 @@ covered it. That loses required obligation and exact candidate capability. The c
 planner now marks direct wording such as `we need someone who can`, `the candidate must`,
 `you must`, and `you will need to` non-excludable after sentence scoping. Read-only replay
 of the retained response fails specifically on that reference. No further model call is
-authorized by this evaluation; the opening candidate-experience prose also remains a
-separate coverage-design question that needs representative evidence rather than a
-vacancy-specific rule.
+authorized by this evaluation.
+
+A subsequent read-only scan of all 27 current English projections found representative
+headingless candidate-experience statements in `t7ck`, `tGM0`, `taku` and `tvMm`.
+Their wording covers four general forms: looking for someone with an ability, looking to
+attract a role with experience, a role suitable for someone with practical experience,
+and conditional `if you have built/worked with` experience. V21 now adds those exact
+sentences as required, non-excludable candidate-experience references while rejecting
+generic recruiting prose and application directives. The five accepted-anchor requirement
+plans remain unchanged. This is offline ledger evidence only; it does not reopen the closed
+model evaluation or establish semantic acceptance.
 
 Public/current P1.6 remains v20/v5, no v21 artifact was persisted or promoted, and Market
 I7 remains **HOLD**. The candidate demonstrated a material improvement in exact depth and

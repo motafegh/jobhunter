@@ -151,6 +151,7 @@ Execution result:
 - [x] rejected a mechanically complete second v21 result: one broad responsibility span hid two duties and one broad preferred span hid required architecture/system-building wording. Added a candidate-only exact sentence/item ledger; accepted v20 and all five accepted-anchor requirement plans remain unchanged.
 - [x] repaired candidate reference registration after a no-model preflight failure; the optional transport catalog extension is supplied only by v21 and SQLite remained byte-identical.
 - [x] ran one bounded non-persistent scoped-ledger evaluation: exact depth and all 11 duties passed review, but the model excluded an explicit required reliable-product candidate capability. The result remains rejected; direct candidate-mandate sentences are now non-excludable and retained-response replay fails closed. No artifact or operational state was created.
+- [x] audited headingless candidate-experience wording across all 27 projections and added candidate-only exact coverage for four representative forms spanning `t7ck`, `tGM0`, `taku`, and `tvMm`; generic recruiting prose and application directives remain excluded, and accepted-anchor requirement plans remain unchanged.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

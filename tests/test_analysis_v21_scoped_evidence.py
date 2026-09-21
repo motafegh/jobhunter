@@ -503,7 +503,8 @@ def test_v21_splits_mixed_obligation_sentences_and_stops_at_application() -> Non
         {
             "description": (
                 "Requirements: Python experience is required. "
-                "Interested parties, please send your resume and portfolio."
+                "Interested parties, please send your resume and portfolio if you have "
+                "experience building production systems."
             )
         }
     )
@@ -543,6 +544,52 @@ def test_v21_explicit_candidate_requirement_cannot_be_excluded() -> None:
                 "responsibility_coverage_plan": {},
             },
         )
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        (
+            "We are looking for someone who has the ability to research, test, "
+            "fine-tune, and deploy speech models."
+        ),
+        (
+            "The company is looking to attract a Python Engineer with experience "
+            "developing backend services."
+        ),
+        (
+            "This role is suitable for someone with practical experience in web "
+            "application security who can test web services."
+        ),
+        (
+            "If you have built an Agent and have worked with LLMs and orchestration, "
+            "you may be the right fit."
+        ),
+    ],
+)
+def test_v21_tracks_explicit_headingless_candidate_experience(sentence: str) -> None:
+    plan = build_requirement_coverage_plan_v21({"description": sentence})
+
+    assert list(plan.values()) == [
+        {
+            "text": sentence,
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+        }
+    ]
+
+
+@pytest.mark.parametrize(
+    "sentence",
+    [
+        "We are looking forward to expanding our product next year.",
+        "This role is suitable for remote work.",
+        "If you enjoy building software, meet our team.",
+    ],
+)
+def test_v21_does_not_turn_generic_recruiting_prose_into_coverage(sentence: str) -> None:
+    assert build_requirement_coverage_plan_v21({"description": sentence}) == {}
 
 
 def test_v21_decomposes_repeated_gerund_duties_without_splitting_coordination() -> None:
