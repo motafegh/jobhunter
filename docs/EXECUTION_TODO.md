@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-20
+**Date:** 2026-09-22
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
@@ -219,14 +219,15 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-I7 HOLD semantic-evidence closure only
-→ post-repair tvMm artifact 49 reviewed and rejected; no candidate is current
-→ repeated-marker depth borrowing repaired and verified offline
-→ candidate subject-attribution and model reliability remain unproven
-→ source-span repair checked live once; attempt 108 failed item-specific depth validation and created no candidate
-→ I7 HOLD; require independent representative evidence of a generalizable semantic improvement or naturally available valid accepted-semantic core evidence before another closure attempt
-→ v21 now isolates mandatory headingless candidate experience from dense section decomposition and first-partition duties; offline corpus and full-suite gates pass
-→ accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
+P1.6 v21/v5 public/current promotion COMPLETE
+→ five accepted v20/v5 anchors remain accepted-only compatibility-current; do not mass-regenerate
+→ Market I7 remains HOLD
+→ next operational closure: use the normal current v21 path for the selected core case
+→ persist one candidate only through the normal service, review the complete artifact, accept only if genuinely valid
+→ build a new immutable Market snapshot/profile
+→ verify accepted-semantic requirement/responsibility drill-down in CLI + browser
+→ rerun SQLite integrity/FK and public/private boundary checks
+→ change I7 to PASS only if the complete path succeeds
 ```
 
 ### Final verification checkpoint — 2026-09-22
@@ -234,3 +235,14 @@ I7 HOLD semantic-evidence closure only
 - Prior-exposure guard: 687 strict-warning tests, Ruff, public corpus verification, and pushed implementation CI passed (`9c277f1`).
 - One non-persistent v21 tvMm result passed bounded manual source review (22 requirements, 11 duties); SQLite unchanged and integrity/FK checks clean.
 - Final testing complete; v21 remains experimental, public v20/v5 unchanged, I7 HOLD. Next decision is bounded integration/promotion review, not another same-case retry. See the final evaluation section of the current closure record.
+
+
+### P1.6 v21 promotion reconciliation — 2026-09-22
+
+- [x] public/current English routing now uses `job-analysis-english-v21 / job-analysis-v5`.
+- [x] accepted v20/v5 artifacts remain reusable only when already semantically accepted.
+- [x] pending/rejected v20 candidates do not satisfy v21 currentness.
+- [x] exact reused artifact prompt/schema identity is carried through the result and surfaced by CLI compatibility output.
+- [x] promotion regression coverage added for accepted-v20 reuse and pending-v20 rejection.
+- [x] CI run 1294 / `35753325406`: entrypoint smoke PASS, Ruff PASS, 690 pytest PASS, 690 warnings-as-errors PASS.
+- [~] I7 accepted-semantic live closure remains the only active first-slice gate.

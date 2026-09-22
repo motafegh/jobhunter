@@ -82,7 +82,8 @@ A current-chain artifact can still fail semantic review. A historical artifact c
 Current public contracts:
 
 ```text
-English P1.6: job-analysis-english-v20 / job-analysis-v5
+English P1.6 current generation: job-analysis-english-v21 / job-analysis-v5
+Accepted snapshot anchors below: exact v20/v5 artifacts retained through accepted-only compatibility
 Capability:   job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
 

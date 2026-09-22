@@ -1,6 +1,6 @@
 # Evidence-Backed Semantic Analysis
 
-**Status:** English P1.6 v20/v5 promoted/current; heterogeneous non-regression closed
+**Status:** English P1.6 v21/v5 promoted/current; accepted v20/v5 anchors compatibility-current
 **Date:** 2026-08-21
 
 P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
@@ -29,7 +29,7 @@ They are independent artifacts. Neither analysis uses the other language represe
 ```text
 current parsed source
 → english-projection-v2
-→ job-analysis-english-v20
+→ job-analysis-english-v21
 → job-analysis-v5 persisted schema
 ```
 
@@ -43,13 +43,13 @@ original source fields
 
 Current public routing is defined through `src/jobhunter/analysis_current.py`. Historical implementations remain versioned for reproducibility.
 
-Prompt/runtime or schema changes intentionally create distinct current/historical artifacts. Deterministic implementation hardening inside the promoted v20 semantic contract does not require a new prompt/schema identity unless the public contract itself materially changes.
+Prompt/runtime or schema changes intentionally create distinct current/historical artifacts. V21 is a deliberate prompt/runtime identity change because it adds exact item-scoped candidate evidence while preserving the v5 persisted schema. Accepted v20/v5 artifacts remain exact historical artifacts and are reusable under the current boundary only when already accepted.
 
 ---
 
-## 3. Current English v20 / schema-v5 behavior
+## 3. Current English v21 / schema-v5 behavior
 
-V20 is a source-led, partition-scoped factual extraction path built from lessons learned through the earlier v9→v19 iterations.
+V21 is the current source-led, partition-scoped factual extraction path. It retains the accepted v20/v5 factual substrate and v5 persistence shape, while adding exact item-level candidate evidence beneath durable parent coverage so depth, obligation, experience type, and compound facts can be validated without borrowing meaning from neighboring text.
 
 Current behavior includes:
 
@@ -72,7 +72,7 @@ Current behavior includes:
 - long local Instructor reads use no arbitrary read deadline after successful connection;
 - transport replay remains disabled and validation retry remains bounded.
 
-Heterogeneous review has additionally hardened v20 around several real software-posting shapes:
+The accepted v20 predecessor was additionally hardened around several real software-posting shapes, and v21 retains those protections:
 
 - `Sufficient knowledge` is accepted as explicit employer depth while plain `knowledge` remains non-depth;
 - one dense evidence segment may contain several different depth levels, and each requirement preserves its own exact level rather than inheriting the first marker;
@@ -141,7 +141,7 @@ A mechanically completed artifact remains a semantic-review candidate wherever t
 
 ## 6. Persisted English schema v5
 
-English v20 persists `job-analysis-v5`.
+English v21 persists `job-analysis-v5`. Candidate-only `item_excerpt` scope is removed before persistence; durable parent evidence remains exact. Accepted v20/v5 artifacts preserve their original prompt identity and are compatibility-current only when already accepted.
 
 ### Role purpose
 
@@ -345,7 +345,7 @@ LM Studio OpenAI-compatible API
         ↓
 Instructor JSON_SCHEMA mode
         ↓
-Pydantic v20 response models
+Pydantic v21 response models
         ├─ shape/type validation
         ├─ evidence-reference resolution context
         ├─ optionality/depth/concept rules
@@ -440,7 +440,7 @@ Capability v9 requires the accepted/current English P1.6 dependency selected by 
 
 ## 17. Current live acceptance state
 
-Public English P1.6 v20/v5 is promoted/current and has accepted dense+sparse opposite-end anchors:
+Public English P1.6 v21/v5 is promoted/current for new generation. The accepted dense+sparse and heterogeneous anchors listed below remain their exact v20/v5 artifacts and are accepted-only compatibility-current:
 
 ```text
 tG9K → artifact 36 → accepted/current
@@ -465,7 +465,7 @@ English projection:   38
 P1.6 contract:        v20/v5
 ```
 
-The first persisted candidate P1.6 artifact 38 was rejected because deterministic depth canonicalization propagated `Mastery` to unrelated concepts. Current v20 fixes that defect and the adjacent `Sufficient knowledge`, effective-AI-application and redundant-coverage-exclusion cases with regressions.
+The first persisted candidate P1.6 artifact 38 was rejected because deterministic depth canonicalization propagated `Mastery` to unrelated concepts. The accepted v20 predecessor fixed that defect and the adjacent `Sufficient knowledge`, effective-AI-application and redundant-coverage-exclusion cases with regressions; v21 retains those guards while adding item-scoped evidence.
 
 The rejected artifact did not feed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete manual review; Capability artifact 13 then passed 16/16 requirement coverage and 7/7 explicit-depth review. Python/software is closed.
 
