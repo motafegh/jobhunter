@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from types import SimpleNamespace
 
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT_VERSION
@@ -8,6 +10,10 @@ from jobhunter.analysis_service_v22 import (
     _ENGLISH_SYSTEM_PROMPT_V22,
     ENGLISH_PROMPT_VERSION,
 )
+from jobhunter.evidence_refs_v21 import (
+    build_requirement_coverage_plan_v21,
+    build_responsibility_coverage_plan_v21,
+)
 from jobhunter.inference.instructor_lm_studio_v22 import (
     AnalysisRequirementV22,
     JobAnalysisResponseV22,
@@ -15,6 +21,10 @@ from jobhunter.inference.instructor_lm_studio_v22 import (
     persisted_v20_shape,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+
+_REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+_ACCEPTED_ANCHORS = ("tG9K", "t4jp", "tmBK", "t4qV", "tmyX")
 
 
 def _context(
@@ -237,9 +247,67 @@ def test_v22_transport_selects_v22_response_model(monkeypatch) -> None:
         responsibility_coverage_plan={},
     )
 
-    assert result is expected
+    assert result.model == expected.model
+    assert result.structured == expected.structured
+    assert result.raw_response == expected.raw_response
+    assert result.finish_reason == expected.finish_reason
+    assert result.request_body["runtime"] == {
+        "p16_v21_item_scoped_evidence": True,
+        "p16_v22_ontology_abstention": True,
+    }
     assert captured["response_model"] is JobAnalysisResponseV22
     assert captured["contract_version"] == "v22"
+
+
+def test_v22_preserves_accepted_anchor_experience_types() -> None:
+    validated = 0
+    for source_job_id in _ACCEPTED_ANCHORS:
+        job_dir = _REPOSITORY_ROOT / "corpus" / "jobs" / source_job_id
+        fields = json.loads(
+            (job_dir / "english-projection.json").read_text(encoding="utf-8")
+        )["fields"]
+        requirements = json.loads(
+            (job_dir / "p16-english.json").read_text(encoding="utf-8")
+        )["analysis"]["requirements"]
+        for persisted in requirements:
+            if persisted["concept_type"] != "experience":
+                continue
+            result = AnalysisRequirementV22.model_validate(
+                {**persisted, "item_excerpt": persisted["evidence"]},
+                context={
+                    "analysis_mode": "english",
+                    "analysis_fields": fields,
+                    "evidence_catalog": {},
+                    "requirement_coverage_plan": {},
+                },
+            )
+            assert result.concept_type == "experience"
+            validated += 1
+
+    assert validated == 6
+
+
+def test_v22_preserves_v21_ledgers_across_all_public_projections() -> None:
+    provider = V22CandidateAnalysisProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="offline-v22",
+        api_token=None,
+        timeout_seconds=10,
+        max_retries=0,
+    )
+    projection_paths = sorted(
+        (_REPOSITORY_ROOT / "corpus" / "jobs").glob("*/english-projection.json")
+    )
+    assert len(projection_paths) == 27
+
+    for projection_path in projection_paths:
+        fields = json.loads(projection_path.read_text(encoding="utf-8"))["fields"]
+        assert provider._requirement_coverage_plan(fields) == (
+            build_requirement_coverage_plan_v21(fields)
+        )
+        assert provider._responsibility_coverage_plan(fields) == (
+            build_responsibility_coverage_plan_v21(fields)
+        )
 
 
 def test_v22_provider_keeps_v21_planning_and_v5_persistence(monkeypatch) -> None:

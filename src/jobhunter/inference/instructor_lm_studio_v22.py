@@ -126,7 +126,7 @@ def complete_analysis_partition_with_instructor_v22(
         for required in candidate.get("required_item_excerpts") or []
         if isinstance(required, dict)
     ]
-    return v20._complete_analysis_partition_with_instructor(
+    result = v20._complete_analysis_partition_with_instructor(
         base_url=base_url,
         api_token=api_token,
         timeout_seconds=timeout_seconds,
@@ -142,6 +142,18 @@ def complete_analysis_partition_with_instructor_v22(
         contract_version="v22",
         validation_retries=validation_retries,
         additional_evidence_catalog=additional_evidence_catalog,
+    )
+    request_body = dict(result.request_body)
+    runtime = dict(request_body.get("runtime") or {})
+    runtime["p16_v21_item_scoped_evidence"] = True
+    runtime["p16_v22_ontology_abstention"] = True
+    request_body["runtime"] = runtime
+    return StructuredInferenceResult(
+        model=result.model,
+        structured=result.structured,
+        request_body=request_body,
+        raw_response=result.raw_response,
+        finish_reason=result.finish_reason,
     )
 
 
