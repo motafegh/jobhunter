@@ -164,6 +164,53 @@ def test_v22_preserves_checklist_experience_when_model_cites_reference_id() -> N
     assert result.item_excerpt == item
 
 
+def test_v22_response_resolves_reference_before_experience_decision() -> None:
+    reference = "field:description:v21:candidate:1"
+    evidence = (
+        "if you have built an Agent yourself to date and can turn an Agent "
+        "into a reliable system in a real product"
+    )
+    experience_item = "built an Agent yourself to date"
+    capability_item = "turn an Agent into a reliable system in a real product"
+    context = _context(
+        evidence,
+        source_kind="candidate_experience",
+        required_item_excerpts=[
+            {"text": experience_item, "required_concept_type": "experience"},
+            {"text": capability_item, "required_concept_type": None},
+        ],
+    )
+    context["evidence_catalog"] = {reference: evidence}
+
+    response = JobAnalysisResponseV22.model_validate(
+        {
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [
+                _requirement(
+                    concept="Agent building",
+                    evidence=reference,
+                    item_excerpt=experience_item,
+                    concept_type="experience",
+                ),
+                _requirement(
+                    concept="Reliable Agent product delivery",
+                    evidence=reference,
+                    item_excerpt=capability_item,
+                    concept_type="experience",
+                ),
+            ],
+            "coverage_exclusions": [],
+        },
+        context=context,
+    )
+
+    by_excerpt = {item.item_excerpt: item for item in response.requirements}
+    assert by_excerpt[experience_item].concept_type == "experience"
+    assert by_excerpt[capability_item].concept_type == "other"
+    assert all(item.evidence == evidence for item in response.requirements)
+
+
 def test_v22_preserves_non_experience_ontology() -> None:
     evidence = "We need someone who can explain distributed system tradeoffs."
     item = "explain distributed system tradeoffs"
