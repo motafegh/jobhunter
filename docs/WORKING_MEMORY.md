@@ -4,7 +4,7 @@
 **Date:** 2026-09-22
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 NON-PERSISTENT EVALUATION NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVIDENCE-ALIAS REPAIR GATE
 **Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
@@ -417,7 +417,41 @@ Decision record:
 
 `docs/working-memory/2026-09-22_P16_V22_ONTOLOGY_ABSTENTION_CANDIDATE.md`
 
+### First v22 non-persistent evaluation result and repair
+
+The first authorized v22 provider evaluation failed closed before producing a merged candidate. SQLite
+remained byte-identical. The failure was not the intended capability-only abstention boundary. Instead,
+the new v22 requirement pre-validator read the model's raw evidence reference ID
+(`field:description:v21:candidate:1`) as if it were the source sentence. That caused the exact
+source-backed checklist item `built an Agent yourself to date` to be downgraded from
+`concept_type=experience` to `other` before inherited v21 exact-item validation, which then correctly
+reported `exact_item_concept_type_mismatch`.
+
+The first model generation itself classified that exact item as experience. The bounded retry reacted to
+the validator error and changed it to skill, which remained invalid because the exact checklist requires
+experience. No analysis attempt/artifact, review state, current routing, corpus export or Market state was
+created by this direct evaluation.
+
+The candidate implementation now resolves raw evidence aliases through the existing exact evidence
+catalog before applying ontology abstention. Added regressions cover both the individual requirement and
+the complete `JobAnalysisResponseV22` boundary:
+
+- explicit checklist experience cited by reference ID remains `experience`;
+- capability-only text cited by reference ID still abstains from unsupported `experience` to `other`;
+- inherited v21 exact-item coverage remains fail-closed.
+
+Repair implementation: `f5a14a1`; response-level regression: `8383bc7`.
+An intermediate repair CI exercised the resolver fix with Ruff + 702 normal tests + 702
+warnings-as-errors successfully before concurrency cancellation. The current-head response-level test
+still requires a clean pushed-head CI.
+
+A new post-repair non-persistent v22 evaluation is authorized **only if** the current pushed-head CI for
+this repair passes all gates. If that condition is satisfied, run exactly one evaluation against the
+unchanged `tvMm` projection/configured model with the same no-persistence/no-retry-beyond-provider
+boundaries. Any subsequent validation or semantic failure closes that repaired evaluation.
+
 ---
+
 
 ## 5. I7 decision rule
 

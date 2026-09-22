@@ -1,7 +1,7 @@
 # P1.6 v22 — ontology abstention candidate
 
 **Date:** 2026-09-22  
-**Status:** OFFLINE GATES PASSED / ONE NON-PERSISTENT EVALUATION AUTHORIZED  
+**Status:** FIRST EVALUATION CLOSED / EVIDENCE-ALIAS REPAIR UNDER CI GATE  
 **Current public English contract:** `job-analysis-english-v21 / job-analysis-v5`  
 **Candidate:** `job-analysis-english-v22 / job-analysis-v5`
 
@@ -124,3 +124,64 @@ PASS.
 
 A semantically valid result is evidence for a separate bounded v22 integration/promotion decision. It is
 not itself an accepted-current artifact and does not close Market I7.
+
+## First non-persistent evaluation result
+
+The one authorized evaluation was executed against the unchanged public `tvMm` English projection and
+configured model. It failed closed after the provider's bounded validation retry. SQLite was unchanged.
+
+The exact failure was:
+
+```text
+exact_item_concept_type_mismatch=[
+  'field:description:v21:candidate:1=built an Agent yourself to date:experience'
+]
+```
+
+Generation 1 had correctly emitted `concept_type=experience` for `built an Agent yourself to date`.
+The defect was in v22's own pre-validator: it compared the model's raw evidence reference ID with the
+candidate plan's source sentence before inherited evidence resolution. The lookup therefore missed the
+exact checklist item and downgraded the valid experience label to `other`. Inherited v21 coverage then
+correctly rejected the resulting mismatch.
+
+Generation 2 responded to that validation error by changing the item to `skill`; v21 again correctly
+rejected it because this exact checklist item is source-backed prior experience.
+
+No artifact or operational state was produced.
+
+## Evidence-alias repair
+
+V22 now resolves the raw evidence value through the existing exact evidence catalog using the same
+`_raw_evidence_text` boundary already owned by the earlier typed runtime before deciding whether
+`experience` is source-proven.
+
+This is a mechanical evidence-resolution repair, not a new ontology rule:
+
+```text
+raw evidence reference
+→ resolve exact source evidence
+→ check exact source-backed experience item / prior-exposure marker
+→ preserve explicit experience OR abstain capability-only experience to other
+```
+
+New regressions reproduce the live reference-ID shape at both requirement and full-response scope.
+
+Implementation: `f5a14a1`  
+Response-level regression: `8383bc7`
+
+An intermediate CI run exercised the resolver implementation with Ruff PASS, 702 tests PASS, and 702
+warnings-as-errors PASS; it was marked cancelled only after successful quality steps due workflow
+concurrency. The current-head response-level regression still requires a clean CI.
+
+## Conditional post-repair evaluation decision
+
+The original evaluation is closed. Do not treat the next call as an automatic retry.
+
+Exactly one new non-persistent v22 evaluation becomes authorized only if the current pushed-head repair
+CI passes all gates. That evaluation must use the unchanged `tvMm` projection, unchanged configured
+model, existing provider limits, no SQLite/service persistence, no artifact/review/current-routing/corpus
+mutation, and no vacancy/model switch.
+
+If the repaired evaluation fails transport, validation, coverage, or semantic review, close it without
+another invocation. If it passes complete semantic review, use that only as evidence for a separate v22
+promotion/integration decision; I7 remains HOLD until a later accepted-current persisted chain exists.

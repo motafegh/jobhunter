@@ -5,7 +5,7 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 NON-PERSISTENT EVALUATION NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVIDENCE-ALIAS REPAIR GATE
 
 Status vocabulary:
 
@@ -168,7 +168,9 @@ Execution result:
 - [x] implemented isolated v22 ontology-abstention candidate under distinct `job-analysis-english-v22` identity; unsupported `experience` typing is deterministically reduced to neutral `other` without changing concept/evidence/strength/depth/confidence. Current routing remains v21.
 - [x] v22 offline proof preserves all six accepted historical `experience` claims, keeps the exact v21 requirement/responsibility ledgers across all 27 English projections, retains v5 persistence shape, and marks v22 runtime provenance explicitly.
 - [x] CI run 1304 / `35761148349`: Ruff PASS, 701 tests PASS, 701 warnings-as-errors PASS.
-- [~] exactly one direct non-persistent v22 `tvMm` evaluation is authorized against the unchanged public English projection and configured model; no SQLite/artifact/corpus/current-routing mutation.
+- [x] first direct non-persistent v22 `tvMm` evaluation failed closed because v22 applied ontology abstention before resolving raw evidence IDs; SQLite remained unchanged and no artifact/state was created.
+- [x] repaired v22 to resolve evidence aliases through the existing exact evidence catalog before ontology abstention; added requirement-level and full-response regressions for the live `built an Agent yourself to date` failure shape.
+- [~] one post-repair non-persistent v22 `tvMm` evaluation becomes authorized only after current pushed-head CI is fully green; until then do not call the model.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -225,11 +227,12 @@ Portfolio work does not broaden I7 authorization.
 
 ```text
 P1.6 v21/v5 public/current remains unchanged
-→ isolated v22 ontology-abstention candidate OFFLINE GATES PASSED
-→ current routing remains v21; Market I7 remains HOLD
-→ run exactly one non-persistent v22 tvMm provider evaluation with the unchanged projection/model
+→ first v22 non-persistent evaluation CLOSED on evidence-alias implementation defect
+→ v22 alias-resolution repair + full-response regression committed; Market I7 remains HOLD
+→ wait for current pushed-head CI to pass all gates
+→ only then run exactly one new post-repair non-persistent v22 tvMm evaluation
 → review the complete structured result; no automatic persistence/acceptance/promotion
-→ if invalid or transport/validation fails, close the evaluation and preserve HOLD
+→ if invalid or transport/validation fails, close the repaired evaluation and preserve HOLD
 → if semantically valid, decide v22 promotion/integration separately before any persisted retry
 → only after a genuinely valid accepted-current core artifact exists: new immutable Market snapshot/profile
 → verify CLI/browser semantic drill-down + SQLite/FK + privacy boundaries
