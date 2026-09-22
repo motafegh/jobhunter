@@ -16,8 +16,8 @@ from typing import Any
 
 from pydantic import Field, ValidationInfo, model_validator
 
-from jobhunter.inference.instructor_lm_studio_v20 import _PRIOR_APPLIED_EXPOSURE_RE
 from jobhunter.inference.instructor_lm_studio_v19 import _raw_evidence_text
+from jobhunter.inference.instructor_lm_studio_v20 import _PRIOR_APPLIED_EXPOSURE_RE
 from jobhunter.inference.instructor_lm_studio_v21 import (
     AnalysisRequirementV21,
     JobAnalysisResponseV21,
