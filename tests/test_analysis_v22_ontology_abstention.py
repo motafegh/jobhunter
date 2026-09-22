@@ -133,6 +133,37 @@ def test_v22_preserves_exact_checklist_experience_type() -> None:
     assert result.concept_type == "experience"
 
 
+def test_v22_preserves_checklist_experience_when_model_cites_reference_id() -> None:
+    evidence = (
+        "if you have built an Agent yourself to date and worked with LLMs, "
+        "Tool Calling, memory, workflows, RAG, and Orchestration"
+    )
+    item = "built an Agent yourself to date"
+    reference = "field:description:v21:candidate:1"
+    context = _context(
+        evidence,
+        source_kind="candidate_experience",
+        required_item_excerpts=[
+            {"text": item, "required_concept_type": "experience"}
+        ],
+    )
+    context["evidence_catalog"] = {reference: evidence}
+
+    result = AnalysisRequirementV22.model_validate(
+        _requirement(
+            concept="Agent building",
+            evidence=reference,
+            item_excerpt=item,
+            concept_type="experience",
+        ),
+        context=context,
+    )
+
+    assert result.concept_type == "experience"
+    assert result.evidence == evidence
+    assert result.item_excerpt == item
+
+
 def test_v22_preserves_non_experience_ontology() -> None:
     evidence = "We need someone who can explain distributed system tradeoffs."
     item = "explain distributed system tradeoffs"

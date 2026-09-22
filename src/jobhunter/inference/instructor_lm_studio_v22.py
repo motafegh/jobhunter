@@ -17,6 +17,7 @@ from typing import Any
 from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.inference.instructor_lm_studio_v20 import _PRIOR_APPLIED_EXPOSURE_RE
+from jobhunter.inference.instructor_lm_studio_v19 import _raw_evidence_text
 from jobhunter.inference.instructor_lm_studio_v21 import (
     AnalysisRequirementV21,
     JobAnalysisResponseV21,
@@ -71,7 +72,7 @@ class AnalysisRequirementV22(AnalysisRequirementV21):
             return value
 
         item_excerpt = str(value.get("item_excerpt") or "")
-        evidence = str(value.get("evidence") or "")
+        evidence = _raw_evidence_text(value, info)
         plan = (info.context or {}).get("requirement_coverage_plan") or {}
         if _exact_item_is_source_proven_experience(
             item_excerpt=item_excerpt,
