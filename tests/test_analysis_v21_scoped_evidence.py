@@ -395,7 +395,7 @@ def test_v21_provider_boundary_uses_scoped_contract_and_returns_v5_shape(
     )
 
     assert calls
-    assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v21-candidate"
+    assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v21"
     assert "EXACT ITEM SCOPE WITH PARENT COVERAGE" in _ENGLISH_SYSTEM_PROMPT_V21
     assert all("item_excerpt" not in item for item in result.structured["requirements"])
     partition_request = result.request_body["partition_requests"][0]

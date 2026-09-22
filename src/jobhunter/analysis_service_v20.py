@@ -76,6 +76,10 @@ _ANALYSIS_SCHEMA_V20 = deepcopy(_ANALYSIS_SCHEMA_V19)
 class JobAnalysisServiceV20:
     """Persist isolated English P1.6 v20 artifacts under the v5 response schema."""
 
+    prompt_version = ENGLISH_PROMPT_VERSION
+    system_prompt = _ENGLISH_SYSTEM_PROMPT_V20
+    schema_name = "jobhunter_job_analysis_english_v20"
+
     def __init__(
         self,
         *,
@@ -108,7 +112,7 @@ class JobAnalysisServiceV20:
             job_detail_version_id=source.job_detail_version_id,
             attempted_at=attempted_at,
             model=self._model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
+            prompt_version=self.prompt_version,
             schema_version=ANALYSIS_SCHEMA_VERSION,
             outcome="failed",
             error=error,
@@ -131,7 +135,7 @@ class JobAnalysisServiceV20:
             translation_artifact_id=translation.id,
             require_translation_dependency=True,
             model=self._model,
-            prompt_version=ENGLISH_PROMPT_VERSION,
+            prompt_version=self.prompt_version,
             schema_version=ANALYSIS_SCHEMA_VERSION,
         )
         if existing is not None:
@@ -139,7 +143,7 @@ class JobAnalysisServiceV20:
                 job_detail_version_id=source.job_detail_version_id,
                 attempted_at=attempted_at,
                 model=self._model,
-                prompt_version=ENGLISH_PROMPT_VERSION,
+                prompt_version=self.prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
                 outcome="reused",
                 artifact_id=existing.id,
@@ -148,13 +152,13 @@ class JobAnalysisServiceV20:
 
         try:
             result = self._provider.complete_structured(
-                system_prompt=_ENGLISH_SYSTEM_PROMPT_V20,
+                system_prompt=self.system_prompt,
                 user_payload={
                     "source_job_id": source.source_job_id,
                     "analysis_mode": "english",
                     "analysis_fields": analysis_fields,
                 },
-                schema_name="jobhunter_job_analysis_english_v20",
+                schema_name=self.schema_name,
                 schema=_ANALYSIS_SCHEMA_V20,
                 model=self._model,
                 max_tokens=self._max_tokens,
@@ -171,7 +175,7 @@ class JobAnalysisServiceV20:
                 job_detail_version_id=source.job_detail_version_id,
                 translation_artifact_id=translation.id,
                 model=result.model,
-                prompt_version=ENGLISH_PROMPT_VERSION,
+                prompt_version=self.prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
                 analysis=analysis,
                 request_body=result.request_body,
@@ -183,7 +187,7 @@ class JobAnalysisServiceV20:
                 job_detail_version_id=source.job_detail_version_id,
                 attempted_at=attempted_at,
                 model=self._model,
-                prompt_version=ENGLISH_PROMPT_VERSION,
+                prompt_version=self.prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
                 outcome="completed",
                 artifact_id=artifact_id,
@@ -193,11 +197,11 @@ class JobAnalysisServiceV20:
                 translation_artifact_id=translation.id,
                 require_translation_dependency=True,
                 model=self._model,
-                prompt_version=ENGLISH_PROMPT_VERSION,
+                prompt_version=self.prompt_version,
                 schema_version=ANALYSIS_SCHEMA_VERSION,
             )
             if artifact is None:
-                raise RuntimeError("P1.6 v20 artifact disappeared after persistence")
+                raise RuntimeError(f"{self.prompt_version} artifact disappeared after persistence")
             return _result(artifact, outcome="completed", analysis_mode="english")
         except Exception as exc:
             self._record_failed_attempt(source=source, attempted_at=attempted_at, error=exc)

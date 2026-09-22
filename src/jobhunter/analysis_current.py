@@ -2,7 +2,7 @@
 
 Historical analysis implementations remain versioned in ``analysis_service`` and
 ``analysis_service_v*``. This module is the public-current boundary: English P1.6 uses the
-accepted v20/v5 path while original-language P1.6 remains on the independently validated v9/v4
+accepted v21/v5 path while original-language P1.6 remains on the independently validated v9/v4
 path.
 """
 
@@ -11,7 +11,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from jobhunter.analysis_runtime import build_job_analysis_service as build_v9_job_analysis_service
-from jobhunter.analysis_runtime_v20 import build_v20_candidate_analysis_service
+from jobhunter.analysis_runtime_v21 import build_v21_analysis_service
 from jobhunter.analysis_service import (
     ANALYSIS_SCHEMA_VERSION as V9_ANALYSIS_SCHEMA_VERSION,
 )
@@ -26,12 +26,12 @@ from jobhunter.analysis_service import (
 from jobhunter.analysis_service import (
     JobAnalysisService as JobAnalysisServiceV9,
 )
-from jobhunter.analysis_service_v20 import (
+from jobhunter.analysis_service_v21 import (
     ANALYSIS_SCHEMA_VERSION as ENGLISH_ANALYSIS_SCHEMA_VERSION,
 )
-from jobhunter.analysis_service_v20 import (
+from jobhunter.analysis_service_v21 import (
     ENGLISH_PROMPT_VERSION,
-    JobAnalysisServiceV20,
+    JobAnalysisServiceV21,
 )
 from jobhunter.config import Settings
 from jobhunter.inference import InferenceProviderError
@@ -47,14 +47,14 @@ class JobAnalysisService:
     def __init__(
         self,
         *,
-        english_service: JobAnalysisServiceV20,
+        english_service: JobAnalysisServiceV21,
         original_service: JobAnalysisServiceV9,
     ) -> None:
         self._english_service = english_service
         self._original_service = original_service
 
     def analyze_english_job(self, source_job_id: str) -> AnalysisJobResult:
-        """Build or reuse accepted English P1.6 v20/v5."""
+        """Build or reuse accepted English P1.6 v21/v5."""
 
         return self._english_service.analyze_english_job(source_job_id)
 
@@ -109,7 +109,7 @@ class JobAnalysisService:
         *,
         limit: int = 5,
     ) -> AnalysisBatchSummary:
-        """Run bounded accepted English P1.6 v20/v5."""
+        """Run bounded accepted English P1.6 v21/v5."""
 
         return self._run_mode(
             source_job_ids,
@@ -148,7 +148,7 @@ def build_job_analysis_service(settings: Settings) -> JobAnalysisService:
     """Build the current public P1.6 service without changing historical implementations."""
 
     return JobAnalysisService(
-        english_service=build_v20_candidate_analysis_service(settings),
+        english_service=build_v21_analysis_service(settings),
         original_service=build_v9_job_analysis_service(settings),
     )
 

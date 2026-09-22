@@ -1,4 +1,4 @@
-"""Offline runtime boundary for the isolated P1.6 v21 scoped-evidence candidate."""
+"""Runtime wiring for P1.6 v21 scoped-evidence analysis."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ from jobhunter.analysis_runtime_v20 import (
     V20CandidateAnalysisProvider,
     _v20_requirement_partitions,
 )
+from jobhunter.analysis_service_v21 import JobAnalysisServiceV21
+from jobhunter.config import Settings
 from jobhunter.evidence_refs_v21 import (
     build_requirement_coverage_plan_v21,
     build_responsibility_coverage_plan_v21,
@@ -69,3 +71,28 @@ class V21CandidateAnalysisProvider(V20CandidateAnalysisProvider):
 
 
 __all__ = ["V21CandidateAnalysisProvider", "_v21_requirement_partitions"]
+
+
+def build_v21_analysis_service(settings: Settings) -> JobAnalysisServiceV21:
+    """Build the same persisted service for CLI, browser and Market execution."""
+    from jobhunter.analysis_runtime import _translation_service
+    from jobhunter.analysis_store import AnalysisStore
+    from jobhunter.translation_store import TranslationStore
+
+    model = settings.effective_analysis_lm_studio_model()
+    if not model:
+        raise ValueError("No configured analysis model")
+    return JobAnalysisServiceV21(
+        source_store=TranslationStore(settings.database_path),
+        translation_service=_translation_service(settings),
+        analysis_store=AnalysisStore(settings.database_path),
+        provider=V21CandidateAnalysisProvider(
+            base_url=settings.lm_studio_base_url,
+            configured_model=model,
+            api_token=settings.lm_studio_api_token,
+            timeout_seconds=settings.inference_timeout_seconds,
+            max_retries=settings.inference_max_retries,
+        ),
+        model=model,
+        max_tokens=settings.analysis_max_tokens,
+    )

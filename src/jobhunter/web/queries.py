@@ -148,7 +148,11 @@ class WebRepository:
                           AND EXISTS (
                               SELECT 1 FROM job_analysis_artifacts AS a
                               WHERE a.job_detail_version_id = v.id
-                                AND a.prompt_version = ?
+                                AND (a.prompt_version = ?
+                                     OR (? = 'job-analysis-english-v21'
+                                         AND a.prompt_version = 'job-analysis-english-v20'
+                                         AND a.schema_version = 'job-analysis-v5'
+                                         AND a.semantic_review_status = 'accepted'))
                                 AND a.schema_version = ?
                                 AND (? IS NULL OR a.model = ?)
                                 AND a.semantic_review_status = 'accepted'
@@ -159,6 +163,7 @@ class WebRepository:
                 """,
                 (
                     self._translation_schema_version,
+                    self._analysis_prompt_version,
                     self._analysis_prompt_version,
                     self._analysis_schema_version,
                     self._analysis_model,
@@ -244,7 +249,11 @@ class WebRepository:
                     EXISTS (
                         SELECT 1 FROM job_analysis_artifacts AS aa
                         WHERE aa.job_detail_version_id = v.id
-                          AND aa.prompt_version = ?
+                          AND (aa.prompt_version = ?
+                               OR (? = 'job-analysis-english-v21'
+                                   AND aa.prompt_version = 'job-analysis-english-v20'
+                                   AND aa.schema_version = 'job-analysis-v5'
+                                   AND aa.semantic_review_status = 'accepted'))
                           AND aa.schema_version = ?
                           AND (? IS NULL OR aa.model = ?)
                           AND aa.semantic_review_status = 'accepted'
@@ -260,6 +269,7 @@ class WebRepository:
                 """,
                 (
                     self._translation_schema_version,
+                    self._analysis_prompt_version,
                     self._analysis_prompt_version,
                     self._analysis_schema_version,
                     self._analysis_model,

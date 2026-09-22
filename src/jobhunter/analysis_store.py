@@ -267,7 +267,11 @@ class AnalysisStore:
                 JOIN job_postings AS p ON p.id = v.job_posting_id
                 WHERE a.semantic_review_status != 'rejected'
                   AND a.job_detail_version_id = ? AND a.model = ?
-                  AND a.prompt_version = ? AND a.schema_version = ?
+                  AND (a.prompt_version = ?
+                       OR (? = 'job-analysis-english-v21'
+                           AND a.prompt_version = 'job-analysis-english-v20'
+                           AND a.schema_version = 'job-analysis-v5'
+                           AND a.semantic_review_status = 'accepted')) AND a.schema_version = ?
                   AND (? = 0 OR a.translation_artifact_id = ?)
                 ORDER BY a.id DESC
                 LIMIT 1
@@ -275,6 +279,7 @@ class AnalysisStore:
                 (
                     job_detail_version_id,
                     model,
+                    prompt_version,
                     prompt_version,
                     schema_version,
                     int(require_translation_dependency),
@@ -409,7 +414,11 @@ class AnalysisStore:
                       WHERE v2.job_posting_id = p.id
                   )
                   AND (? IS NULL OR a.model = ?)
-                  AND (? IS NULL OR a.prompt_version = ?)
+                  AND (? IS NULL OR a.prompt_version = ?
+                       OR (? = 'job-analysis-english-v21'
+                           AND a.prompt_version = 'job-analysis-english-v20'
+                           AND a.schema_version = 'job-analysis-v5'
+                           AND a.semantic_review_status = 'accepted'))
                   AND (? IS NULL OR a.schema_version = ?)
                   AND (? = 0 OR a.semantic_review_status = 'accepted')
                   AND (? = 0 OR a.translation_artifact_id = ?)
@@ -420,6 +429,7 @@ class AnalysisStore:
                     source_job_id,
                     model,
                     model,
+                    prompt_version,
                     prompt_version,
                     prompt_version,
                     schema_version,
@@ -458,7 +468,11 @@ class AnalysisStore:
                       WHERE v2.job_posting_id = p.id
                   )
                   AND (? IS NULL OR a.model = ?)
-                  AND (? IS NULL OR a.prompt_version = ?)
+                  AND (? IS NULL OR a.prompt_version = ?
+                       OR (? = 'job-analysis-english-v21'
+                           AND a.prompt_version = 'job-analysis-english-v20'
+                           AND a.schema_version = 'job-analysis-v5'
+                           AND a.semantic_review_status = 'accepted'))
                   AND (? IS NULL OR a.schema_version = ?)
                   AND (? = 0 OR a.semantic_review_status = 'accepted')
                   AND a.id = (
@@ -466,7 +480,11 @@ class AnalysisStore:
                       WHERE a2.semantic_review_status != 'rejected'
                         AND a2.job_detail_version_id = v.id
                         AND (? IS NULL OR a2.model = ?)
-                        AND (? IS NULL OR a2.prompt_version = ?)
+                        AND (? IS NULL OR a2.prompt_version = ?
+                             OR (? = 'job-analysis-english-v21'
+                                 AND a2.prompt_version = 'job-analysis-english-v20'
+                                 AND a2.schema_version = 'job-analysis-v5'
+                                 AND a2.semantic_review_status = 'accepted'))
                         AND (? IS NULL OR a2.schema_version = ?)
                         AND (? = 0 OR a2.semantic_review_status = 'accepted')
                   )
@@ -478,11 +496,13 @@ class AnalysisStore:
                     model,
                     prompt_version,
                     prompt_version,
+                    prompt_version,
                     schema_version,
                     schema_version,
                     int(accepted_only),
                     model,
                     model,
+                    prompt_version,
                     prompt_version,
                     prompt_version,
                     schema_version,

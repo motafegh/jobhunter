@@ -1,8 +1,12 @@
-"""Prompt identity for the isolated P1.6 v21 scoped-evidence candidate."""
+"""Versioned persisted P1.6 v21 scoped-evidence service."""
 
-from jobhunter.analysis_service_v20 import _ENGLISH_SYSTEM_PROMPT_V20
+from jobhunter.analysis_service_v20 import (
+    _ENGLISH_SYSTEM_PROMPT_V20,
+    ANALYSIS_SCHEMA_VERSION,
+    JobAnalysisServiceV20,
+)
 
-ENGLISH_PROMPT_VERSION = "job-analysis-english-v21-candidate"
+ENGLISH_PROMPT_VERSION = "job-analysis-english-v21"
 
 _V21_RULES = """
 
@@ -43,7 +47,17 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
 _ENGLISH_SYSTEM_PROMPT_V21 = _ENGLISH_SYSTEM_PROMPT_V20 + _V21_RULES
 
 __all__ = [
+    "ANALYSIS_SCHEMA_VERSION",
+    "JobAnalysisServiceV21",
     "ENGLISH_PROMPT_VERSION",
     "_ENGLISH_SYSTEM_PROMPT_V21",
     "_V21_RULES",
 ]
+
+
+class JobAnalysisServiceV21(JobAnalysisServiceV20):
+    """Persist scoped-evidence generation with its own identity and pending review."""
+
+    prompt_version = ENGLISH_PROMPT_VERSION
+    system_prompt = _ENGLISH_SYSTEM_PROMPT_V21
+    schema_name = "jobhunter_job_analysis_english_v21"
