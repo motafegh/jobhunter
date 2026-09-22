@@ -5,9 +5,9 @@ versioned ontology-abstention rule for unsupported experience classification.
 """
 
 from jobhunter.analysis_service_v21 import (
+    _ENGLISH_SYSTEM_PROMPT_V21,
     ANALYSIS_SCHEMA_VERSION,
     JobAnalysisServiceV21,
-    _ENGLISH_SYSTEM_PROMPT_V21,
 )
 
 ENGLISH_PROMPT_VERSION = "job-analysis-english-v22"

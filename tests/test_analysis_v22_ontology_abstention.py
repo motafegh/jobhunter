@@ -5,8 +5,8 @@ from types import SimpleNamespace
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT_VERSION
 from jobhunter.analysis_runtime_v22 import V22CandidateAnalysisProvider
 from jobhunter.analysis_service_v22 import (
-    ENGLISH_PROMPT_VERSION,
     _ENGLISH_SYSTEM_PROMPT_V22,
+    ENGLISH_PROMPT_VERSION,
 )
 from jobhunter.inference.instructor_lm_studio_v22 import (
     AnalysisRequirementV22,
