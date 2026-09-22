@@ -819,3 +819,31 @@ The owner's final-testing request authorizes one non-persistent invocation of th
 model against the unchanged tvMm projection, including existing bounded provider corrections.
 Full semantic review is required afterward. Any failure closes this check without another
 invocation; no persistence, model/vacancy switch, automatic acceptance, or I7 promotion.
+
+### Final bounded evaluation result (2026-09-22)
+
+Implementation commit `9c277f1` is pushed; CI run `35731623646` passed. The single
+non-persistent configured-model invocation completed with 22 requirements, 11 duties,
+no role-purpose assertions, and no coverage exclusions.
+
+Manual source comparison of the full merged result supports a PASS for this bounded
+experimental case: the reliable-product Agent claim is a capability, not invented prior
+experience; architecture knowledge and system-building experience remain separate;
+headingless API, Agent-building and worked-with experience are retained; the enjoyment
+claim retains the AI system as the subject of goal understanding and tool use. Required
+and preferred clauses, exact familiarity scope, framework alternatives, Python/TypeScript,
+all eleven duties, and the two structured skill tags are retained. Company aspirations
+and application instructions are not manufactured into duties or experience. This is
+case-level review evidence, not proof of general model reliability or v21 promotion.
+
+SQLite remained byte-identical at
+`de1d924e863e5e9a8b6515f4be0694d339666cc7f650716ab80670e988260df2`;
+integrity is `ok` and foreign-key checks are empty. Raw protocol remains ignored locally
+at `data/local-acceptance/i7/v21-final-guard-evaluation.json`. No runtime artifact,
+acceptance decision, corpus export, or Market state was created.
+
+Final testing is complete. Public/current v20/v5 remains unchanged and v21 remains
+experimental. I7 remains HOLD: this non-persistent candidate does not supply an
+accepted-current core artifact or the required snapshot/profile and CLI/browser proof.
+The next decision is whether the experimental contract is ready for bounded integration
+and promotion review; do not repeat this evaluation or automatically promote its output.

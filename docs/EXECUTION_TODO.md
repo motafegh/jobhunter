@@ -228,3 +228,9 @@ I7 HOLD semantic-evidence closure only
 → v21 now isolates mandatory headingless candidate experience from dense section decomposition and first-partition duties; offline corpus and full-suite gates pass
 → accepted-semantic snapshot/profile + CLI/browser proof still required for PASS
 ```
+
+### Final verification checkpoint — 2026-09-22
+
+- Prior-exposure guard: 687 strict-warning tests, Ruff, public corpus verification, and pushed implementation CI passed (`9c277f1`).
+- One non-persistent v21 tvMm result passed bounded manual source review (22 requirements, 11 duties); SQLite unchanged and integrity/FK checks clean.
+- Final testing complete; v21 remains experimental, public v20/v5 unchanged, I7 HOLD. Next decision is bounded integration/promotion review, not another same-case retry. See the final evaluation section of the current closure record.
