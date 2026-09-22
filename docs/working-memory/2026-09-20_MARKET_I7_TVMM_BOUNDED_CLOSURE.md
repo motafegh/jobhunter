@@ -770,3 +770,15 @@ items, one knowledge item and three items left to semantic classification.
 Validation passes at **684 tests with warnings-as-errors**, Ruff is clean, and the 394-job public
 corpus verifies. No model call or operational-state mutation occurred. Public/current v20/v5 and
 I7 HOLD remain unchanged.
+
+### Bounded mixed-fact evaluation decision
+
+The mixed-fact repair is committed at `8ef2cff`, and pushed-head CI run `35729332253` passed.
+One direct non-persistent v21 invocation is authorized against the unchanged public `tvMm`
+projection and configured `gemma-4-e4b-it-ud` model. Existing provider validation correction is
+part of this single invocation.
+
+Review the complete merged result for both exact mixed requirement items, all candidate facts and
+parent provenance, technical depth, obligation, duties, subject attribution and contradictions.
+Do not persist, change v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any
+transport, validation or semantic failure closes this evaluation without another invocation.
