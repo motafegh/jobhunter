@@ -76,7 +76,7 @@ The browser application and CLI currently support a substantial Jobinja-centered
 8. refresh/fetch missing or due job details;
 9. translate/repair one job or a bounded eligible queue using current translation-v2 rules;
 10. run the deterministic parser audit;
-11. run/reuse promoted evidence-backed English P1.6 v20 analysis for eligible jobs;
+11. run/reuse promoted evidence-backed English P1.6 v21 analysis for eligible jobs, while preserving accepted-only v20 compatibility reuse;
 12. inspect per-job responsibilities/requirements, exact evidence, requirement strength and explicit depth;
 13. run/reuse promoted bounded Capability Intelligence v9 above accepted/current English P1.6;
 14. inspect Capability source truth, grouping, source coverage/provenance and bounded reasoning;
@@ -91,7 +91,7 @@ The browser application and CLI currently support a substantial Jobinja-centered
 
 Current semantic layers are not all at the same acceptance level:
 
-- English P1.6 v20/v5 is promoted/current and accepted on dense+sparse opposite-end anchors;
+- English P1.6 v21/v5 is promoted/current for new generation; the five accepted v20/v5 artifacts remain accepted-only compatibility-current anchors and are not mass-regenerated;
 - Capability v9/v5 is promoted/current and operationally closed on those anchors;
 - heterogeneous role-family validation is closed across Python/software, network/security, and operations/platform anchors;
 - Blueprint v6/v5 remains experimental/deferred and non-authoritative;
@@ -161,7 +161,7 @@ The English corpus is derived convenience data and never replaces original emplo
 Current public English contract:
 
 ```text
-job-analysis-english-v20 / job-analysis-v5
+job-analysis-english-v21 / job-analysis-v5
 ```
 
 Current public original-language contract:
@@ -526,7 +526,7 @@ Current accepted/current foundations include:
 - `jobinja-detail-v2` and semantic source-version/check separation;
 - browser + CLI shared services;
 - current translation-v2 / English projection architecture;
-- promoted English P1.6 v20/v5 and original P1.6 v9/v4 routing;
+- promoted English P1.6 v21/v5 and original P1.6 v9/v4 routing, with accepted-only v20/v5 compatibility reuse;
 - promoted Capability Intelligence v9/v5;
 - Review Snapshot v1 current-chain routing;
 - deterministic repository-safe public corpus v1 and remote publication;

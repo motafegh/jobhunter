@@ -102,7 +102,7 @@ Current accepted/current foundations include:
 - deterministic `jobinja-detail-v2` parser and parser structural audit;
 - `lm-studio-translation-v2` / `english-projection-v2` current translation boundary;
 - browser Quick Add within the approved Jobinja source boundary;
-- promoted/current English P1.6 `job-analysis-english-v20 / job-analysis-v5`;
+- promoted/current English P1.6 `job-analysis-english-v21 / job-analysis-v5`, with accepted-only v20/v5 compatibility reuse;
 - independent original-language P1.6 `job-analysis-original-v9 / job-analysis-v4`;
 - promoted/current Capability Intelligence `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
 - Review Snapshot v1 current-chain routing;
@@ -144,7 +144,7 @@ Blueprint v6/v5 is implemented for research/inspection but is **deferred and non
 
 ### 3.3 Current semantic-quality position
 
-P1.6 v20/v5 and Capability v9/v5 are promoted/current. Heterogeneous role-family validation is closed across the accepted Python/software, network/security, and operations/platform anchors; those contracts are frozen accepted inputs unless a material defect/dependency change reopens them.
+P1.6 v21/v5 and Capability v9/v5 are promoted/current. The five accepted P1.6 anchor artifacts remain physically v20/v5 and compatibility-current without regeneration. Heterogeneous role-family validation is closed across the accepted Python/software, network/security, and operations/platform anchors; those accepted inputs remain frozen unless a material defect/dependency change reopens them.
 
 Accepted heterogeneous closure order:
 
@@ -229,7 +229,7 @@ These rules apply across every roadmap stage.
 Current-state documents now agree on:
 
 ```text
-P1.6 English public:        v20/v5
+P1.6 English public:        v21/v5
 Capability public/current:  v9/v5
 Blueprint:                  deferred / non-authoritative / historical
 Public corpus:              operationally closed / remotely available

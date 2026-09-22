@@ -2,7 +2,7 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-18
+**Last reconciled:** 2026-09-22
 
 **Current execution bridge:** Phase 1, P2.1, and P2.2A are accepted/closed. Market I1-I6 are repository-accepted; I7 real-local execution is complete with outcome HOLD, and only the bounded closure checks remain. Historical Phase-1 gate sections below remain acceptance evidence, not current routing.
 
@@ -73,7 +73,7 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 
 A bounded per-job semantic slice was intentionally implemented before Phase-1 closure to prove safe authority boundaries above P1.6. Its current dispositions are:
 
-- English P1.6 v20/v5: promoted/current and bounded-accepted on opposite-end dense/sparse anchors;
+- English P1.6 v21/v5: promoted/current for new generation; the accepted v20/v5 anchors remain accepted-only compatibility inputs;
 - Capability Intelligence v9/v5: promoted/current and operationally closed on the same accepted anchors;
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
 - heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
@@ -97,7 +97,7 @@ Current strong foundations include:
 - user triage separate from source truth;
 - hardened `english-projection-v2` architecture using `lm-studio-translation-v2`;
 - local LM Studio structured inference boundary;
-- promoted P1.6 v20/v5 factual extraction infrastructure;
+- promoted P1.6 v21/v5 factual extraction infrastructure with accepted-only v20/v5 compatibility reuse;
 - promoted Capability Intelligence v9/v5 with deterministic source truth and bounded model reasoning;
 - deferred/non-authoritative Blueprint v6/v5 experimental evidence;
 - first Market aggregation over accepted/current English P1.6;
@@ -122,7 +122,7 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6 prompt/runtime:  job-analysis-english-v20
+English P1.6 prompt/runtime:  job-analysis-english-v21
 English P1.6 schema:          job-analysis-v5
 Original P1.6 prompt/runtime: job-analysis-original-v9
 Original P1.6 schema:         job-analysis-v4
@@ -188,7 +188,7 @@ P1.6 is the strict factual substrate.
 Accepted public contract:
 
 ```text
-English:  job-analysis-english-v20 / job-analysis-v5
+English:  job-analysis-english-v21 / job-analysis-v5
 Original: job-analysis-original-v9 / job-analysis-v4
 ```
 
@@ -224,7 +224,7 @@ Permanent P1.6 invariants include:
 - unsupported facts remain omitted/rejected;
 - deterministic coverage/reconciliation may correct bookkeeping, but must not invent source semantics.
 
-The public contract remains promoted while heterogeneous validation probes for repeatable material defects. A defect found during heterogeneous review is fixed in the current v20 implementation with regression coverage; this does not automatically imply a new public prompt/schema version when the public semantic contract itself is unchanged.
+The public contract remains promoted while heterogeneous validation probes for repeatable material defects. Historical heterogeneous defects were fixed in the then-current v20 implementation with regression coverage. The later v21 promotion is a deliberate contract-identity change for exact item-scoped evidence, not a cosmetic renumbering; accepted v20 artifacts retain exact historical identity through accepted-only compatibility reuse.
 
 ### P1-A2 — Capability Intelligence v9 — promoted / operationally closed
 
@@ -347,7 +347,7 @@ P1.6 public contract:        v20/v5
 
 The first persisted `tmBK` P1.6 artifact 38 is **semantically rejected** and must not feed Capability. It was not published as an accepted corpus artifact and no Capability downstream was created.
 
-Acceptance is now an enforced state transition: fresh English v20 artifacts persist as `pending`; explicit review acceptance records time/note; rejection archives the complete local artifact and releases the current contract identity for rebuild. Capability, Market, browser accepted counts, and public-corpus export select accepted artifacts only. V20-specific depth phrases are held in a copied registry so current imports cannot alter historical validator behavior.
+At P1-A closure, fresh English v20 artifacts persisted as `pending`; explicit review acceptance recorded time/note, and rejection released the contract identity for rebuild. The same promotion boundary remains current for v21: fresh v21 artifacts are pending until explicit review, while accepted v20 artifacts are compatibility-readable without rewriting their identity. Capability, Market, browser accepted counts, and public-corpus export select accepted artifacts only. Historical v20 validator behavior remains version-isolated.
 
 Current live result:
 
