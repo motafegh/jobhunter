@@ -731,6 +731,28 @@ depth, obligation, duties, subject attribution and redundant or contradictory cl
 persist, change v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any transport,
 validation or semantic failure closes this evaluation without another invocation.
 
+### Mixed-fact evaluation result
+
+The one authorized invocation completed mechanically with 22 requirements, all eleven duties,
+no role-purpose claim and no exclusions. It correctly preserved `understanding the architecture`
+as knowledge and `real system building experience` as experience. All headingless candidate facts,
+parent provenance, familiarity depth, preferred strength, reliable-product wording, subject scope
+and duties also passed review. SQLite remained byte-identical at
+`de1d924e863e5e9a8b6515f4be0694d339666cc7f650716ab80670e988260df2`; integrity is `ok` and
+foreign-key checks are empty.
+
+Semantic review rejects one remaining claim. The source says `we need someone who can ... turn an
+Agent into a reliable system in a real product`, which is a required capability. The result labeled
+it `concept_type=experience` even though its exact item wording contains no prior applied exposure.
+V20's source-evidence guard covers preferred experience only; v21 exact item scope exposes that the
+same invariant is needed for required and contextual claims.
+
+No candidate, artifact, corpus or Market state was created. Raw protocol evidence remains ignored
+locally at `data/local-acceptance/i7/v21-mixed-fact-evaluation.json`. This evaluation is closed;
+do not repeat it. The next candidate-only repair must reject any experience type lacking either an
+exact checklist item explicitly typed as experience or an explicit prior-exposure marker in its
+own item excerpt. Public/current v20/v5 and I7 HOLD remain unchanged.
+
 ### Fact-parent evaluation result
 
 The one authorized invocation completed mechanically with 21 requirements, all eleven duties,

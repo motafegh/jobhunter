@@ -163,7 +163,7 @@ Execution result:
 - [x] added candidate-only unique exact item-to-parent restoration; retained real response replay now validates all five facts with durable parent evidence, ambiguous ownership still fails closed, and 682 strict-warning tests plus the 394-job corpus gate pass.
 - [x] one non-persistent fact-parent `tvMm` evaluation preserved all headingless facts, depths, strengths and duties but was semantically rejected because `understanding the architecture` and `real system building experience` collapsed into one knowledge claim. SQLite remained byte-identical; the evaluation is closed.
 - [x] extended v21 exact-item coverage to clear sentence-leading understanding/experience conjunctions; `tvMm` now requires separate knowledge and experience items, retained-response replay fails closed, and 684 strict-warning tests plus the 394-job corpus gate pass.
-- [~] one non-persistent mixed-fact `tvMm` evaluation is authorized after pushed-head CI `35729332253`; close after the single invocation and complete semantic review.
+- [x] one non-persistent mixed-fact `tvMm` evaluation preserved the mixed knowledge/experience facts and all prior boundaries but was rejected for labeling a source-stated reliable-product capability as experience without prior-exposure evidence. SQLite remained byte-identical; the evaluation is closed.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
