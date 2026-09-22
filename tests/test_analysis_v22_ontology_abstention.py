@@ -243,7 +243,7 @@ def test_v22_transport_selects_v22_response_model(monkeypatch) -> None:
 
 
 def test_v22_provider_keeps_v21_planning_and_v5_persistence(monkeypatch) -> None:
-    evidence = "We need someone who can ship a reliable Agent."
+    evidence = "Requirements: We need someone who can ship a reliable Agent."
     calls: list[dict[str, object]] = []
 
     monkeypatch.setattr(
