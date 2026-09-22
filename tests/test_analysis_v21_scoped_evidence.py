@@ -799,6 +799,98 @@ def test_v21_rejects_collapsed_mixed_understanding_and_experience() -> None:
         )
 
 
+def test_v21_rejects_required_capability_labeled_as_experience() -> None:
+    evidence = "We need someone who can turn an Agent into a reliable production system."
+
+    with pytest.raises(ValidationError, match="prior applied exposure in the exact item"):
+        AnalysisRequirementV21.model_validate(
+            _requirement(
+                concept="Reliable production Agent delivery",
+                evidence=evidence,
+                item_excerpt="turn an Agent into a reliable production system",
+                depth_signal=None,
+                concept_type="experience",
+            ),
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": {"description": evidence},
+                "evidence_catalog": {},
+                "requirement_coverage_plan": {
+                    "candidate": {
+                        "text": evidence,
+                        "source_kind": "requirement_section",
+                        "obligation_hint": "required",
+                        "allow_exclusion": False,
+                    }
+                },
+            },
+        )
+
+
+def test_v21_accepts_exact_item_explicitly_typed_as_experience() -> None:
+    evidence = "If you have built an Agent, you may be a fit."
+    item = "built an Agent"
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Agent building experience",
+            evidence=evidence,
+            item_excerpt=item,
+            depth_signal=None,
+            concept_type="experience",
+        ),
+        context={
+            "analysis_mode": "english",
+            "analysis_fields": {"description": evidence},
+            "evidence_catalog": {},
+            "requirement_coverage_plan": {
+                "candidate": {
+                    "text": evidence,
+                    "source_kind": "candidate_experience",
+                    "obligation_hint": "required",
+                    "allow_exclusion": False,
+                    "required_item_excerpts": [
+                        {"text": item, "required_concept_type": "experience"}
+                    ],
+                }
+            },
+        },
+    )
+
+    assert result.concept_type == "experience"
+
+
+def test_v21_accepts_working_with_as_exact_applied_exposure() -> None:
+    evidence = (
+        "It is an advantage if you have experience building Agents, working with "
+        "Multi-Agent systems."
+    )
+    result = AnalysisRequirementV21.model_validate(
+        _requirement(
+            concept="Multi-Agent system experience",
+            evidence=evidence,
+            item_excerpt="working with Multi-Agent systems",
+            depth_signal=None,
+            requirement_type="preferred",
+            concept_type="experience",
+        ),
+        context={
+            "analysis_mode": "english",
+            "analysis_fields": {"description": evidence},
+            "evidence_catalog": {},
+            "requirement_coverage_plan": {
+                "preferred": {
+                    "text": evidence,
+                    "source_kind": "requirement_section",
+                    "obligation_hint": "preferred",
+                    "allow_exclusion": True,
+                }
+            },
+        },
+    )
+
+    assert result.concept_type == "experience"
+
+
 def test_v21_restores_unique_candidate_fact_parent_evidence() -> None:
     sentence = "We are looking for someone with real experience in building AI Agents."
     item = "real experience in building AI Agents"
@@ -1185,7 +1277,7 @@ def test_v21_treats_portfolio_review_impact_as_preferred() -> None:
             item_excerpt=evidence,
             depth_signal=None,
             requirement_type="preferred",
-            concept_type="experience",
+            concept_type="other",
         ),
         context={
             "analysis_mode": "english",
@@ -1195,6 +1287,7 @@ def test_v21_treats_portfolio_review_impact_as_preferred() -> None:
         },
     )
     assert result.requirement_type == "preferred"
+    assert result.concept_type == "other"
 
 
 def test_v21_filters_explicit_company_and_product_subjects_only() -> None:

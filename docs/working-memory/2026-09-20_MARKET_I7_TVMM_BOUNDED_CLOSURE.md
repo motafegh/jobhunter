@@ -804,3 +804,18 @@ Review the complete merged result for both exact mixed requirement items, all ca
 parent provenance, technical depth, obligation, duties, subject attribution and contradictions.
 Do not persist, change v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any
 transport, validation or semantic failure closes this evaluation without another invocation.
+
+### Final prior-exposure guard verification (2026-09-22)
+
+The experimental v21 requirement validator now rejects experience classification without
+prior applied exposure in the exact item or an exact source-backed experience checklist item.
+The prompt states the same boundary. Regression cases preserve genuine built-Agent and
+working-with exposure while rejecting capability-only wording and work-sample requests.
+
+Final local gates: **687 tests passed with warnings-as-errors**, Ruff clean, and the
+394-job public corpus verification passed. Public/current v20/v5 is unchanged.
+
+The owner's final-testing request authorizes one non-persistent invocation of the configured
+model against the unchanged tvMm projection, including existing bounded provider corrections.
+Full semantic review is required afterward. Any failure closes this check without another
+invocation; no persistence, model/vacancy switch, automatic acceptance, or I7 promotion.

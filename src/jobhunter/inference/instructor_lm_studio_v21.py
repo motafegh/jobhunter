@@ -18,12 +18,15 @@ from jobhunter.evidence_refs import (
 from jobhunter.evidence_refs_v21 import has_candidate_optionality_signal
 from jobhunter.inference.instructor_lm_studio import _equivalent_source_excerpt
 from jobhunter.inference.instructor_lm_studio_v20 import (
+    _PRIOR_APPLIED_EXPOSURE_RE,
     AnalysisRequirementV20,
     JobAnalysisResponseV20,
     _depth_matches,
     _validate_depth_fields_v20,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+_WORKING_WITH_EXPOSURE_RE = re.compile(r"\bworking\s+with\b", re.I)
 
 
 def _canonicalize_scoped_leading_depth(
@@ -84,6 +87,25 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
             )
         ):
             raise ValueError("Preferred item needs exact source preference in item or parent")
+
+        exact_experience_item = any(
+            str(required.get("required_concept_type") or "") == "experience"
+            and " ".join(str(required.get("text") or "").split()).casefold()
+            == " ".join(self.item_excerpt.split()).casefold()
+            for candidate in plan.values()
+            if isinstance(candidate, dict) and candidate.get("text") == self.evidence
+            for required in candidate.get("required_item_excerpts") or []
+            if isinstance(required, dict)
+        )
+        if (
+            self.concept_type == "experience"
+            and not exact_experience_item
+            and _PRIOR_APPLIED_EXPOSURE_RE.search(self.item_excerpt) is None
+            and _WORKING_WITH_EXPOSURE_RE.search(self.item_excerpt) is None
+        ):
+            raise ValueError(
+                "concept_type=experience requires prior applied exposure in the exact item"
+            )
 
         self.concept, self.depth_signal = _canonicalize_scoped_leading_depth(
             self.concept,

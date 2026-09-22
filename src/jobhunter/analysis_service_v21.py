@@ -35,6 +35,8 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
 - Keep requirement evidence equal to exact_item_coverage.parent_reference's full supplied
   parent text. If evidence is instead the same exact unique checklist text as item_excerpt,
   JobHunter may restore its one source-proven parent; ambiguous or unknown items remain invalid.
+- concept_type=experience requires prior applied exposure in the exact item_excerpt or an exact
+  checklist item explicitly typed as experience. Do not turn a required capability into history.
 - Keep all inherited v20 coverage, source, subject, strength, ontology, and fail-closed rules.
 """
 
