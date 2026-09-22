@@ -22,7 +22,6 @@ from jobhunter.inference.instructor_lm_studio_v22 import (
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
-
 _REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 _ACCEPTED_ANCHORS = ("tG9K", "t4jp", "tmBK", "t4qV", "tmyX")
 
