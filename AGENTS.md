@@ -122,7 +122,7 @@ parser:                     jobinja-detail-v2
 translation provider:       lm-studio-translation-v2
 English projection:         english-projection-v2
 
-English P1.6 public:        job-analysis-english-v20 / job-analysis-v5
+English P1.6 public:        job-analysis-english-v21 / job-analysis-v5
 Original P1.6 public:       job-analysis-original-v9 / job-analysis-v4
 
 Capability public/current:  job-capability-intelligence-v9 / job-capability-intelligence-v5
@@ -142,6 +142,8 @@ tmBK English P1.6 artifact 39 → Capability v9 artifact 13
 t4qV English P1.6 artifact 44 → Capability v9 artifact 14
 tmyX English P1.6 artifact 46 → Capability v9 artifact 15
 ```
+
+Those five accepted anchor artifacts remain physically v20/v5 and are accepted-only compatibility inputs under the v21 current boundary. New English P1.6 generation uses v21/v5. Pending/rejected v20 candidates never satisfy v21 currentness, and exact artifact prompt/schema identity must remain visible when compatibility reuse occurs.
 
 Current repository-safe public corpus:
 
@@ -176,7 +178,7 @@ B1 final evidence is retained at:
 
 Do not reopen B1, select another responsibility pair, or force another `ta9l` P1.6 model/prompt matrix merely to manufacture a promotion. B1 created no responsibility concept/mappings.
 
-Do not reopen accepted P1.6 v20, Capability v9, P2.1, or P2.2A merely for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
+Do not regenerate or reopen the accepted v20/v5 P1.6 anchor artifacts merely because v21 is now current; their accepted-only compatibility is intentional. Do not reopen Capability v9, P2.1, or P2.2A for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ---
 
@@ -306,8 +308,9 @@ lost by naive item splitting. A separate explicit repeated-marker validator gap
 was repaired with 642 passing strict-warning tests and read-only validation of
 all five accepted anchors. The next general implementation is a versioned
 candidate with separate exact item excerpts and parent coverage/obligation
-context. Prove it offline before another bounded live call. Keep public v20/v5,
-accepted artifacts, semantic review, Market history, and I7 HOLD intact.
+context. That investigation produced v21, which is now the public/current English generation contract.
+Keep the accepted v20/v5 artifacts as accepted-only compatibility inputs, preserve semantic review
+and Market history, and keep I7 HOLD until the live accepted-semantic closure path passes.
 
 ### 5.2 First-slice settled rules
 

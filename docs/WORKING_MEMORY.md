@@ -1,10 +1,11 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-20
+**Date:** 2026-09-22
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT  
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — ACCEPTED-SEMANTIC CLOSURE NEXT
+**Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -190,6 +191,23 @@ pytest -W error 632 passed
 ---
 
 ## 4. Current frontier — I7 HOLD after selected-case execution
+
+### 2026-09-22 v21 promotion reconciliation
+
+The experimental v21 work has completed bounded promotion review and is now the public/current
+English P1.6 generation path. The v5 persisted schema and explicit semantic-review gate remain.
+The five accepted public anchors stay as their exact v20/v5 artifacts and are compatibility-current
+only because they are already accepted; pending/rejected v20 candidates are not current under v21.
+
+Promotion hardening carries exact artifact prompt/schema identity through `AnalysisJobResult`, so
+CLI output cannot label a reused v20 artifact as if it were physically v21. Regression coverage
+proves accepted-v20 reuse and pending-v20 non-reuse. CI run 1294 (`35753325406`) passed public
+entrypoint smoke, Ruff, 690 tests and 690 warnings-as-errors tests.
+
+This changes the current P1.6 generation contract, not the Market acceptance result. I7 remains
+HOLD until one real current-v21 core artifact is persisted, fully reviewed and accepted, then used
+by a new immutable snapshot/profile and exercised through CLI/browser semantic drill-down.
+
 
 The selected `tvMm` command below has now been executed once. Attempt 106 failed
 validation; no candidate was persisted or accepted. Do not follow the historical
@@ -411,3 +429,21 @@ owner mastery verification
 ```
 
 These do not change the I7 product frontier.
+
+
+## 9. Current handoff after v21 promotion
+
+```text
+repository current P1.6 generation   v21/v5
+accepted legacy compatibility        accepted v20/v5 only
+current accepted public anchors      5 (physical v20/v5 artifacts)
+Market I1-I6                         ACCEPTED
+Market I7                            HOLD
+next product action                  real accepted-semantic v21 closure
+```
+
+Do not repeat the non-persistent v21 tuning evaluations. The next meaningful run is the normal
+persisted current service path for the selected core case, followed by complete semantic review.
+Accept only if valid; then rebuild the point-in-time Market snapshot/profile and verify the real
+semantic evidence drill-down. If that path exposes a material defect, keep I7 HOLD and repair the
+smallest owning boundary.

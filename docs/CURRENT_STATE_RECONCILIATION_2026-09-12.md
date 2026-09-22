@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-20
+**Last reconciled:** 2026-09-22
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -39,7 +39,7 @@ Current first-slice contracts:
 ```text
 parser:                       jobinja-detail-v2
 translation:                  english-projection-v2 / lm-studio-translation-v2
-English P1.6:                 job-analysis-english-v20 / job-analysis-v5
+English P1.6:                 job-analysis-english-v21 / job-analysis-v5
 Capability:                   job-capability-intelligence-v9 / job-capability-intelligence-v5
 Canonical Registry:           jobhunter-canonical-concept-registry-v1
 Work Intelligence:            job-work-intelligence-v2 / job-work-intelligence-v2.0
@@ -58,6 +58,22 @@ current English projections:     27
 accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
+
+### P1.6 v21 promotion reconciliation — 2026-09-22
+
+English P1.6 v21/v5 is now the public/current generation and review contract. The five accepted
+public anchors remain their exact v20/v5 artifacts and are accepted-only compatibility-current;
+they are not regenerated merely to change prompt identity. Pending/rejected v20 candidates do not
+satisfy v21 currentness.
+
+The promotion boundary preserves exact lineage in CLI results, and regression coverage proves
+accepted v20 reuse while rejecting pending-v20 fallback. Repository CI run 1294
+(`35753325406`) passed entrypoint smoke, Ruff, 690 tests, and 690 warnings-as-errors tests.
+
+This promotion does not close Market I7. I7 remains HOLD until a genuinely valid v21 candidate
+for a core member is persisted, explicitly accepted, frozen into a new snapshot/profile, and
+verified through the real semantic CLI/browser drill-down plus post-mutation integrity/privacy
+checks.
 
 ---
 
