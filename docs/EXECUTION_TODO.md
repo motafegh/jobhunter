@@ -5,7 +5,7 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — CLOSURE FOLLOW-UP NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 NON-PERSISTENT EVALUATION NEXT
 
 Status vocabulary:
 
@@ -165,6 +165,10 @@ Execution result:
 - [x] extended v21 exact-item coverage to clear sentence-leading understanding/experience conjunctions; `tvMm` now requires separate knowledge and experience items, retained-response replay fails closed, and 684 strict-warning tests plus the 394-job corpus gate pass.
 - [x] one non-persistent mixed-fact `tvMm` evaluation preserved the mixed knowledge/experience facts and all prior boundaries but was rejected for labeling a source-stated reliable-product capability as experience without prior-exposure evidence. SQLite remained byte-identical; the evaluation is closed.
 - [x] executed the first normal persisted v21 `tvMm` path after promotion: generation failed closed after the bounded validation retry because the model twice labeled a capability-only exact item as prior experience; no current artifact exists and no semantic acceptance occurred. The retry did correct the two initial depth-signal errors, isolating the remaining failure to concept-type adherence. See `docs/working-memory/2026-09-22_MARKET_I7_V21_PERSISTED_RUNTIME_FAILURE.md`.
+- [x] implemented isolated v22 ontology-abstention candidate under distinct `job-analysis-english-v22` identity; unsupported `experience` typing is deterministically reduced to neutral `other` without changing concept/evidence/strength/depth/confidence. Current routing remains v21.
+- [x] v22 offline proof preserves all six accepted historical `experience` claims, keeps the exact v21 requirement/responsibility ledgers across all 27 English projections, retains v5 persistence shape, and marks v22 runtime provenance explicitly.
+- [x] CI run 1304 / `35761148349`: Ruff PASS, 701 tests PASS, 701 warnings-as-errors PASS.
+- [~] exactly one direct non-persistent v22 `tvMm` evaluation is authorized against the unchanged public English projection and configured model; no SQLite/artifact/corpus/current-routing mutation.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -220,16 +224,16 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-P1.6 v21/v5 public/current promotion COMPLETE
-→ five accepted v20/v5 anchors remain accepted-only compatibility-current; do not mass-regenerate
-→ first normal persisted v21 tvMm path EXECUTED / FAILED CLOSED
-→ no current v21 artifact exists; Market I7 remains HOLD
-→ do not blindly rerun tvMm, switch vacancy/model, weaken validation, or patch v21 prompt/runtime in place
-→ next bounded work: investigate whether the live failure is acceptable fail-closed model behavior or evidence requiring a new versioned candidate contract
-→ only after that decision may another live generation be authorized
-→ if a genuinely valid accepted-current core artifact is later obtained, build a new immutable Market snapshot/profile
-→ then verify accepted-semantic requirement/responsibility drill-down in CLI + browser, SQLite/FK integrity, and public/private boundaries
-→ change I7 to PASS only if the complete path succeeds
+P1.6 v21/v5 public/current remains unchanged
+→ isolated v22 ontology-abstention candidate OFFLINE GATES PASSED
+→ current routing remains v21; Market I7 remains HOLD
+→ run exactly one non-persistent v22 tvMm provider evaluation with the unchanged projection/model
+→ review the complete structured result; no automatic persistence/acceptance/promotion
+→ if invalid or transport/validation fails, close the evaluation and preserve HOLD
+→ if semantically valid, decide v22 promotion/integration separately before any persisted retry
+→ only after a genuinely valid accepted-current core artifact exists: new immutable Market snapshot/profile
+→ verify CLI/browser semantic drill-down + SQLite/FK + privacy boundaries
+→ change I7 to PASS only if the complete live chain succeeds
 ```
 
 ### Final verification checkpoint — 2026-09-22

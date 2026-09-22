@@ -4,7 +4,7 @@
 **Date:** 2026-09-22
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — PERSISTED V21 FAILURE REVIEW NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 NON-PERSISTENT EVALUATION NEXT
 **Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
@@ -364,6 +364,58 @@ Next bounded work is a design/evidence decision: determine whether this is accep
 Detailed record:
 
 `docs/working-memory/2026-09-22_MARKET_I7_V21_PERSISTED_RUNTIME_FAILURE.md`
+
+---
+
+## 4.2 Isolated v22 ontology-abstention candidate — 2026-09-22
+
+The persisted v21 failure exposed one narrow operational weakness: the configured model corrected two
+depth errors on retry but repeated an unsupported `concept_type=experience` label for the explicit
+capability `turn an Agent into a reliable system in a real product`. V21 correctly failed closed.
+
+A distinct v22 candidate now tests a fail-soft ontology boundary without weakening factual authority:
+
+```text
+explicit source-backed requirement
++ model says concept_type=experience
++ exact item does not prove prior applied exposure
+→ preserve the factual requirement
+→ preserve concept/evidence/strength/depth/confidence
+→ abstain from the unsupported ontology label as concept_type=other
+```
+
+V22 does not guess `skill`, `practice`, or another specific type. Explicit prior experience and
+source-backed checklist items typed as experience remain experience. It inherits the complete v21
+exact-item evidence/coverage planner and still strips candidate-only `item_excerpt` before the
+unchanged v5 persisted shape.
+
+Current public routing remains `job-analysis-english-v21 / job-analysis-v5`. V22 is isolated and
+has not created an artifact, changed currentness, or altered the five accepted compatibility anchors.
+
+Offline evidence:
+
+- representative capability-only experience mislabel normalizes to `other`;
+- explicit prior experience remains `experience`;
+- exact checklist experience remains `experience`;
+- non-experience ontology labels are untouched;
+- all six accepted historical experience claims remain unchanged under v22;
+- all 27 public English projections produce exactly the same requirement/responsibility ledgers as v21;
+- v22 transport records item-scoped evidence plus ontology-abstention runtime metadata;
+- CI run 1304 / `35761148349`: Ruff PASS, 701 tests PASS, 701 warnings-as-errors PASS.
+
+This evidence authorizes exactly one direct non-persistent v22 provider evaluation against the unchanged
+public `tvMm` English projection and the existing configured analysis model. The provider's bounded
+validation correction remains part of that single evaluation. Do not write an analysis attempt/artifact,
+change current routing, mutate SQLite, switch vacancy/model, or auto-promote a mechanically valid result.
+
+Review the complete result against source meaning, exact requirements, all eleven duties, obligation,
+depth, candidate-versus-product subject, headingless experience facts, mixed knowledge/experience, and
+the reliable-product capability. A failure closes the evaluation without another invocation. A semantic
+PASS would support a separate v22 promotion/integration decision; it would not itself close I7.
+
+Decision record:
+
+`docs/working-memory/2026-09-22_P16_V22_ONTOLOGY_ABSTENTION_CANDIDATE.md`
 
 ---
 
