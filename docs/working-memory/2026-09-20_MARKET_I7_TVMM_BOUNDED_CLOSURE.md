@@ -699,3 +699,22 @@ both equal one exact checklist item that maps to one unique supplied parent, res
 parent as durable evidence before normal validation. Ambiguous, reconstructed or unknown items
 must continue to fail closed. Prove the retained responses and negative cases offline before any
 new model call. Public/current v20/v5 and I7 HOLD remain unchanged.
+
+### Unique candidate fact-parent restoration
+
+V21 now restores durable parent evidence only when a generated requirement uses the same exact
+checklist item for both `evidence` and `item_excerpt` and that item belongs to exactly one supplied
+parent. The exact item remains candidate-only validation scope; the full source parent remains the
+persistable evidence. Unknown items, reconstructed wording and one item shared by multiple parents
+receive no repair and continue through normal fail-closed validation.
+
+Read-only replay of the first retained compound-fact response now validates all five candidate
+items with their two exact parents restored: four remain `concept_type=experience`, and the
+goal-directed system-building preference remains `other`. A negative regression with the same
+item under two parents proves that ambiguous ownership is not guessed. This resolves the observed
+transport-shape mismatch without generating any requirement, changing semantic classification or
+weakening coverage.
+
+Validation passes at **682 tests with warnings-as-errors**, Ruff is clean, and the 394-job public
+corpus verifies. No model call or operational-state mutation occurred in this repair. Public/current
+v20/v5 and I7 HOLD remain unchanged.

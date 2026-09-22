@@ -103,6 +103,59 @@ class JobAnalysisResponseV21(JobAnalysisResponseV20):
 
     requirements: list[AnalysisRequirementV21] = Field()
 
+    @model_validator(mode="before")
+    @classmethod
+    def restore_unique_candidate_fact_parents(
+        cls,
+        value: Any,
+        info: ValidationInfo,
+    ) -> Any:
+        """Restore durable parent evidence from one exact unambiguous fact item."""
+
+        if not isinstance(value, dict):
+            return value
+        requirements = value.get("requirements")
+        plan = (info.context or {}).get("requirement_coverage_plan") or {}
+        if not isinstance(requirements, list) or not isinstance(plan, dict):
+            return value
+
+        parents_by_item: dict[str, set[str]] = {}
+        for candidate in plan.values():
+            if not isinstance(candidate, dict):
+                continue
+            parent = str(candidate.get("text") or "")
+            for required in candidate.get("required_item_excerpts") or []:
+                if not isinstance(required, dict):
+                    continue
+                item = str(required.get("text") or "")
+                normalized = " ".join(item.split()).casefold()
+                if normalized:
+                    parents_by_item.setdefault(normalized, set()).add(parent)
+
+        normalized_requirements: list[Any] = []
+        changed = False
+        for requirement in requirements:
+            if not isinstance(requirement, dict):
+                normalized_requirements.append(requirement)
+                continue
+            evidence = str(requirement.get("evidence") or "")
+            item_excerpt = str(requirement.get("item_excerpt") or "")
+            normalized_evidence = " ".join(evidence.split()).casefold()
+            normalized_item = " ".join(item_excerpt.split()).casefold()
+            parents = parents_by_item.get(normalized_item, set())
+            if normalized_evidence == normalized_item and len(parents) == 1:
+                updated = dict(requirement)
+                updated["evidence"] = next(iter(parents))
+                normalized_requirements.append(updated)
+                changed = True
+            else:
+                normalized_requirements.append(requirement)
+        if not changed:
+            return value
+        normalized = dict(value)
+        normalized["requirements"] = normalized_requirements
+        return normalized
+
     @model_validator(mode="after")
     def validate_candidate_fact_coverage(self, info: ValidationInfo) -> Self:
         if (info.context or {}).get("analysis_mode") != "english":

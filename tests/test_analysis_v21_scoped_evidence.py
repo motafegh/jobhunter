@@ -744,6 +744,96 @@ def test_v21_preserves_explicit_candidate_experience_type() -> None:
         )
 
 
+def test_v21_restores_unique_candidate_fact_parent_evidence() -> None:
+    sentence = "We are looking for someone with real experience in building AI Agents."
+    item = "real experience in building AI Agents"
+    fields = {"description": sentence}
+    plan = build_requirement_coverage_plan_v21(fields)
+
+    result = JobAnalysisResponseV21.model_validate(
+        {
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [
+                _requirement(
+                    concept="AI Agent building experience",
+                    evidence=item,
+                    item_excerpt=item,
+                    depth_signal=None,
+                    concept_type="experience",
+                )
+            ],
+            "coverage_exclusions": [],
+        },
+        context={
+            "analysis_mode": "english",
+            "analysis_fields": fields,
+            "evidence_catalog": {
+                reference: candidate["text"] for reference, candidate in plan.items()
+            },
+            "requirement_coverage_plan": plan,
+            "responsibility_coverage_plan": {},
+        },
+    )
+
+    assert result.requirements[0].evidence == sentence
+    assert result.requirements[0].item_excerpt == item
+
+
+def test_v21_refuses_ambiguous_candidate_fact_parent_restoration() -> None:
+    parent_a = "We need someone with experience building APIs."
+    parent_b = "The candidate must have experience building APIs."
+    item = "experience building APIs"
+    plan = {
+        "candidate:0": {
+            "text": parent_a,
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+            "required_item_excerpts": [
+                {"text": item, "required_concept_type": "experience"}
+            ],
+        },
+        "candidate:1": {
+            "text": parent_b,
+            "source_kind": "candidate_experience",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+            "required_item_excerpts": [
+                {"text": item, "required_concept_type": "experience"}
+            ],
+        },
+    }
+
+    with pytest.raises(ValidationError, match="missing_non_excludable_requirement_refs"):
+        JobAnalysisResponseV21.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept="API building experience",
+                        evidence=item,
+                        item_excerpt=item,
+                        depth_signal=None,
+                        concept_type="experience",
+                    )
+                ],
+                "coverage_exclusions": [],
+            },
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": {"description": parent_a + " " + parent_b},
+                "evidence_catalog": {
+                    "candidate:0": parent_a,
+                    "candidate:1": parent_b,
+                },
+                "requirement_coverage_plan": plan,
+                "responsibility_coverage_plan": {},
+            },
+        )
+
+
 @pytest.mark.parametrize(
     "sentence",
     [

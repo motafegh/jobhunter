@@ -32,6 +32,9 @@ P1.6 V21 CANDIDATE — EXACT ITEM SCOPE WITH PARENT COVERAGE:
 - When candidate_fact_coverage is supplied, represent every listed exact item_excerpt separately.
   Use that exact excerpt rather than the whole parent or a narrower neighboring phrase. Preserve a
   supplied required_concept_type=experience for explicit prior applied exposure.
+- Keep requirement evidence equal to candidate_fact_coverage.parent_reference's full supplied
+  parent text. If evidence is instead the same exact unique checklist text as item_excerpt,
+  JobHunter may restore its one source-proven parent; ambiguous or unknown items remain invalid.
 - Keep all inherited v20 coverage, source, subject, strength, ontology, and fail-closed rules.
 """
 
