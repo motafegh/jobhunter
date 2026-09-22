@@ -4,7 +4,7 @@
 **Date:** 2026-09-22
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — ACCEPTED-SEMANTIC CLOSURE NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — PERSISTED V21 FAILURE REVIEW NEXT
 **Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
@@ -348,6 +348,22 @@ tvMm targeted English P1.6 generation
 
 No full acquisition rerun, new Market architecture, prompt patch, model change, or validator weakening
 is authorized merely to close I7.
+
+---
+
+## 4.1 Persisted v21 closure attempt — 2026-09-22
+
+After v21 promotion, the owner executed the normal persisted current-contract path for the selected core case `tvMm` using the tracked `jobhunter.toml`. Pre-run SQLite backup succeeded; `integrity_check` was `ok` and `foreign_key_check` was empty.
+
+The v21 generation failed closed after the configured bounded validation retry. The first generation had two invalid depth signals plus one capability-as-experience error. The correction generation fixed both depth errors but repeated the remaining error: the exact item `turn an Agent into a reliable system in a real product` was still labeled `concept_type=experience` despite containing no prior applied-exposure evidence. The validator correctly rejected it. No current English v21 artifact exists, so there is nothing to review or accept. The public corpus remained at 394 jobs / 27 English projections / 5 accepted English P1.6 / 5 capabilities.
+
+This does not by itself revoke v21 promotion: the contract failed closed exactly at a semantic authority boundary. It does show that the configured model's correction adherence is not reliable enough on this selected live case to close I7. Do not blindly rerun `tvMm`, switch vacancy/model to manufacture PASS, weaken the prior-exposure validator, or edit the v21 prompt/runtime in place. Architecture requires prompt/runtime changes to receive a distinct identity.
+
+Next bounded work is a design/evidence decision: determine whether this is acceptable fail-closed model behavior under v21 or whether a new versioned candidate contract is justified. No further live generation is authorized merely by this failure.
+
+Detailed record:
+
+`docs/working-memory/2026-09-22_MARKET_I7_V21_PERSISTED_RUNTIME_FAILURE.md`
 
 ---
 

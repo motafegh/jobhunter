@@ -164,6 +164,7 @@ Execution result:
 - [x] one non-persistent fact-parent `tvMm` evaluation preserved all headingless facts, depths, strengths and duties but was semantically rejected because `understanding the architecture` and `real system building experience` collapsed into one knowledge claim. SQLite remained byte-identical; the evaluation is closed.
 - [x] extended v21 exact-item coverage to clear sentence-leading understanding/experience conjunctions; `tvMm` now requires separate knowledge and experience items, retained-response replay fails closed, and 684 strict-warning tests plus the 394-job corpus gate pass.
 - [x] one non-persistent mixed-fact `tvMm` evaluation preserved the mixed knowledge/experience facts and all prior boundaries but was rejected for labeling a source-stated reliable-product capability as experience without prior-exposure evidence. SQLite remained byte-identical; the evaluation is closed.
+- [x] executed the first normal persisted v21 `tvMm` path after promotion: generation failed closed after the bounded validation retry because the model twice labeled a capability-only exact item as prior experience; no current artifact exists and no semantic acceptance occurred. The retry did correct the two initial depth-signal errors, isolating the remaining failure to concept-type adherence. See `docs/working-memory/2026-09-22_MARKET_I7_V21_PERSISTED_RUNTIME_FAILURE.md`.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -221,12 +222,13 @@ Portfolio work does not broaden I7 authorization.
 ```text
 P1.6 v21/v5 public/current promotion COMPLETE
 → five accepted v20/v5 anchors remain accepted-only compatibility-current; do not mass-regenerate
-→ Market I7 remains HOLD
-→ next operational closure: use the normal current v21 path for the selected core case
-→ persist one candidate only through the normal service, review the complete artifact, accept only if genuinely valid
-→ build a new immutable Market snapshot/profile
-→ verify accepted-semantic requirement/responsibility drill-down in CLI + browser
-→ rerun SQLite integrity/FK and public/private boundary checks
+→ first normal persisted v21 tvMm path EXECUTED / FAILED CLOSED
+→ no current v21 artifact exists; Market I7 remains HOLD
+→ do not blindly rerun tvMm, switch vacancy/model, weaken validation, or patch v21 prompt/runtime in place
+→ next bounded work: investigate whether the live failure is acceptable fail-closed model behavior or evidence requiring a new versioned candidate contract
+→ only after that decision may another live generation be authorized
+→ if a genuinely valid accepted-current core artifact is later obtained, build a new immutable Market snapshot/profile
+→ then verify accepted-semantic requirement/responsibility drill-down in CLI + browser, SQLite/FK integrity, and public/private boundaries
 → change I7 to PASS only if the complete path succeeds
 ```
 
