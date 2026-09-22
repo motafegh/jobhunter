@@ -718,3 +718,15 @@ weakening coverage.
 Validation passes at **682 tests with warnings-as-errors**, Ruff is clean, and the 394-job public
 corpus verifies. No model call or operational-state mutation occurred in this repair. Public/current
 v20/v5 and I7 HOLD remain unchanged.
+
+### Bounded fact-parent evaluation decision
+
+The unique fact-parent repair is committed at `011bd89`, and pushed-head CI run `35728174807`
+passed. One direct non-persistent v21 invocation is authorized against the unchanged public
+`tvMm` projection and configured `gemma-4-e4b-it-ud` model. Existing provider validation
+correction remains inside this single invocation.
+
+Review the complete merged result for all exact candidate facts and parent provenance, technical
+depth, obligation, duties, subject attribution and redundant or contradictory claims. Do not
+persist, change v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any transport,
+validation or semantic failure closes this evaluation without another invocation.
