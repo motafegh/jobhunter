@@ -234,7 +234,7 @@ P1.6 v21/v5 public/current promotion COMPLETE
 
 - Prior-exposure guard: 687 strict-warning tests, Ruff, public corpus verification, and pushed implementation CI passed (`9c277f1`).
 - One non-persistent v21 tvMm result passed bounded manual source review (22 requirements, 11 duties); SQLite unchanged and integrity/FK checks clean.
-- Final testing complete; v21 remains experimental, public v20/v5 unchanged, I7 HOLD. Next decision is bounded integration/promotion review, not another same-case retry. See the final evaluation section of the current closure record.
+- Pre-promotion final testing completed with v21 still experimental and public v20/v5 unchanged at that checkpoint. That checkpoint is now superseded by the v21 promotion reconciliation below; the retained evaluation evidence remains historical input.
 
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22

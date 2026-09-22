@@ -335,7 +335,7 @@ The first Python/software anchor is:
 tmBK — Python Developer
 source detail version:       44
 English projection artifact: 38
-P1.6 public contract:        v20/v5
+P1.6 artifact contract:      v20/v5 (accepted historical anchor)
 ```
 
 `tmBK` has already exposed several repeatable deterministic P1.6 edge cases:
@@ -374,7 +374,7 @@ For every heterogeneous role review:
 
 Repeatable deterministic failures become regression tests. Harmless model wording variation does not justify a contract change.
 
-**P1-A is done when:** promoted P1.6 v20 + Capability v9 remain semantically acceptable across the bounded heterogeneous sample with no unresolved repeatable material correctness defect. Blueprint is explicitly excluded from this Phase-1 acceptance requirement.
+**P1-A closure condition (historical):** promoted P1.6 v20 + Capability v9 remained semantically acceptable across the bounded heterogeneous sample with no unresolved repeatable material correctness defect. Blueprint was explicitly excluded from this Phase-1 acceptance requirement.
 
 ---
 
