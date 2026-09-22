@@ -730,3 +730,25 @@ Review the complete merged result for all exact candidate facts and parent prove
 depth, obligation, duties, subject attribution and redundant or contradictory claims. Do not
 persist, change v20/v5 routing, mutate SQLite, switch vacancy/model, or auto-accept. Any transport,
 validation or semantic failure closes this evaluation without another invocation.
+
+### Fact-parent evaluation result
+
+The one authorized invocation completed mechanically with 21 requirements, all eleven duties,
+no role-purpose claim and no exclusions. Both headingless candidate parents and all five exact
+candidate facts were preserved with correct parent evidence. Familiarity depth, preferred
+strength, reliable-product capability, candidate/product subject and duty coverage all passed
+complete review. SQLite remained byte-identical at
+`de1d924e863e5e9a8b6515f4be0694d339666cc7f650716ab80670e988260df2`; integrity is `ok` and
+foreign-key checks are empty.
+
+Semantic review still rejects the result because one normal requirement parent states two facts:
+`understanding the architecture` and `real system building experience`. The result merged both
+into one `knowledge` concept (`Understanding of architecture and real system building`), losing
+the explicit experience type. Parent-reference coverage alone does not prove complete preservation
+of heterogeneous facts inside that conjunction.
+
+No candidate, artifact, corpus or Market state was created. Raw protocol evidence remains ignored
+locally at `data/local-acceptance/i7/v21-fact-parent-evaluation.json`. This evaluation is closed;
+do not repeat it. The next repair must generalize exact item coverage to source-explicit mixed
+knowledge/experience conjunctions while preserving coordinated phrases and failing closed on
+ambiguous grammar. Public/current v20/v5 and I7 HOLD remain unchanged.
