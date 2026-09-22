@@ -188,9 +188,9 @@ class JobAnalysisResponseV21(JobAnalysisResponseV20):
                 ):
                     wrong_type.append(f"{reference}={excerpt}:{required_type}")
         if missing:
-            raise ValueError("candidate_item_coverage_missing=" + repr(missing))
+            raise ValueError("exact_item_coverage_missing=" + repr(missing))
         if wrong_type:
-            raise ValueError("candidate_item_concept_type_mismatch=" + repr(wrong_type))
+            raise ValueError("exact_item_concept_type_mismatch=" + repr(wrong_type))
         return self
 
 
@@ -221,7 +221,7 @@ def complete_analysis_partition_with_instructor_v21(
     }
     additional_evidence_catalog.update(responsibility_coverage_plan)
     candidate_payload = dict(user_payload)
-    candidate_payload["candidate_fact_coverage"] = [
+    candidate_payload["exact_item_coverage"] = [
         {
             "parent_reference": reference,
             "item_excerpt": required.get("text"),

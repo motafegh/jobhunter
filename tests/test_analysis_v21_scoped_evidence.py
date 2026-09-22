@@ -454,7 +454,7 @@ def test_v21_transport_wrapper_selects_v21_response_model(monkeypatch) -> None:
     assert result is expected
     assert captured["response_model"] is JobAnalysisResponseV21
     assert captured["contract_version"] == "v21"
-    assert captured["user_payload"]["candidate_fact_coverage"] == [
+    assert captured["user_payload"]["exact_item_coverage"] == [
         {
             "parent_reference": "field:description:segment:0:sentence:0",
             "item_excerpt": "Python",
@@ -687,7 +687,7 @@ def test_v21_rejects_partial_compound_candidate_fact_coverage() -> None:
     fields = {"description": sentence}
     plan = build_requirement_coverage_plan_v21(fields)
 
-    with pytest.raises(ValidationError, match="candidate_item_coverage_missing"):
+    with pytest.raises(ValidationError, match="exact_item_coverage_missing"):
         JobAnalysisResponseV21.model_validate(
             {
                 "role_purpose": [],
@@ -718,7 +718,7 @@ def test_v21_preserves_explicit_candidate_experience_type() -> None:
     fields = {"description": sentence}
     plan = build_requirement_coverage_plan_v21(fields)
 
-    with pytest.raises(ValidationError, match="candidate_item_concept_type_mismatch"):
+    with pytest.raises(ValidationError, match="exact_item_concept_type_mismatch"):
         JobAnalysisResponseV21.model_validate(
             {
                 "role_purpose": [],
@@ -730,6 +730,61 @@ def test_v21_preserves_explicit_candidate_experience_type() -> None:
                         item_excerpt="real experience in building AI Agents",
                         depth_signal=None,
                         concept_type="skill",
+                    )
+                ],
+                "coverage_exclusions": [],
+            },
+            context={
+                "analysis_mode": "english",
+                "analysis_fields": fields,
+                "evidence_catalog": {},
+                "requirement_coverage_plan": plan,
+                "responsibility_coverage_plan": {},
+            },
+        )
+
+
+def test_v21_tracks_mixed_understanding_and_experience_facts() -> None:
+    sentence = (
+        "understanding the architecture and real system building experience is more important "
+        "than the framework name."
+    )
+    plan = build_requirement_coverage_plan_v21(
+        {"description": "Requirements: " + sentence}
+    )
+    candidate = next(
+        item for item in plan.values() if item["text"] == sentence
+    )
+
+    assert candidate["required_item_excerpts"] == [
+        {
+            "text": "understanding the architecture",
+            "required_concept_type": "knowledge",
+        },
+        {
+            "text": "real system building experience",
+            "required_concept_type": "experience",
+        },
+    ]
+
+
+def test_v21_rejects_collapsed_mixed_understanding_and_experience() -> None:
+    sentence = "understanding architecture and production system experience is required."
+    fields = {"description": "Requirements: " + sentence}
+    plan = build_requirement_coverage_plan_v21(fields)
+
+    with pytest.raises(ValidationError, match="exact_item_coverage_missing"):
+        JobAnalysisResponseV21.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept="Architecture and production systems",
+                        evidence=sentence,
+                        item_excerpt=sentence,
+                        depth_signal=None,
+                        concept_type="knowledge",
                     )
                 ],
                 "coverage_exclusions": [],
@@ -1005,7 +1060,7 @@ def test_v21_all_public_projection_ledgers_are_exact_and_transport_valid() -> No
             assert len({item["text"] for item in required_items}) == len(required_items)
             assert all(item["text"] in candidate["text"] for item in required_items)
             assert all(
-                item["required_concept_type"] in {None, "experience"}
+                item["required_concept_type"] in {None, "experience", "knowledge"}
                 for item in required_items
             )
         partitioned_references = [

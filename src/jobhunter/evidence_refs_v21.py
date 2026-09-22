@@ -92,6 +92,13 @@ _CANDIDATE_RESULT_TAIL_RE = re.compile(
 _PRIOR_EXPOSURE_FACT_RE = re.compile(
     r"\b(?:experience|experienced|built\s+an?|worked\s+with)\b", re.I
 )
+_MIXED_KNOWLEDGE_EXPERIENCE_RE = re.compile(
+    r"^(?P<knowledge>(?:(?:good|deep|strong|complete)\s+)?understanding"
+    r"(?:\s+of)?\s+.+?)\s+and\s+"
+    r"(?P<experience>(?:(?:real|practical|professional|hands-on)\s+)?"
+    r".+?\bexperience)\s+(?=\b(?:is|are)\b)",
+    re.I,
+)
 _CANDIDATE_DUTY_SECTION_RE = re.compile(
     r"(?i)(?P<heading>job\s+description|tasks|responsibilities|qualifications|"
     r"skills\s+and\s+minimum\s+requirements|requirements|"
@@ -171,6 +178,24 @@ def _candidate_fact_items(sentence: str) -> list[dict[str, str | None]]:
             }
         )
     return items
+
+
+def _mixed_requirement_fact_items(text: str) -> list[dict[str, str | None]]:
+    """Split one explicit knowledge/experience conjunction with a clear predicate boundary."""
+
+    match = _MIXED_KNOWLEDGE_EXPERIENCE_RE.search(text.strip())
+    if match is None:
+        return []
+    return [
+        {
+            "text": match.group("knowledge").strip(),
+            "required_concept_type": "knowledge",
+        },
+        {
+            "text": match.group("experience").strip(),
+            "required_concept_type": "experience",
+        },
+    ]
 
 
 def _candidate_requirement_chunks(text: str) -> tuple[list[str], bool]:
@@ -325,6 +350,10 @@ def build_requirement_coverage_plan_v21(
             candidate["required_item_excerpts"] = _candidate_fact_items(
                 str(candidate["text"])
             )
+        else:
+            required_items = _mixed_requirement_fact_items(str(candidate["text"]))
+            if required_items:
+                candidate["required_item_excerpts"] = required_items
     return result
 
 

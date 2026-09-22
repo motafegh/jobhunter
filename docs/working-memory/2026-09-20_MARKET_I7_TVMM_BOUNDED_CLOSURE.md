@@ -752,3 +752,21 @@ locally at `data/local-acceptance/i7/v21-fact-parent-evaluation.json`. This eval
 do not repeat it. The next repair must generalize exact item coverage to source-explicit mixed
 knowledge/experience conjunctions while preserving coordinated phrases and failing closed on
 ambiguous grammar. Public/current v20/v5 and I7 HOLD remain unchanged.
+
+### Mixed knowledge/experience item repair
+
+V21 exact-item coverage now recognizes one bounded grammatical form: a sentence-leading
+`understanding ... and ... experience is/are ...` conjunction. It preserves the first exact span
+as `knowledge` and the second as `experience`. The rule does not split arbitrary comma lists or
+guess ownership when the two predicate boundaries are unclear.
+
+For `tvMm`, `understanding the architecture` and `real system building experience` are now two
+mandatory exact items under the unchanged parent reference. Read-only replay of the last completed
+section partition fails for the reviewed collapse into one knowledge claim. Synthetic positive and
+negative cases protect the type boundary and coordinated wording. Across the 27 public projections,
+the v21 plan now contains seven parents with twelve exact items: eight source-explicit experience
+items, one knowledge item and three items left to semantic classification.
+
+Validation passes at **684 tests with warnings-as-errors**, Ruff is clean, and the 394-job public
+corpus verifies. No model call or operational-state mutation occurred. Public/current v20/v5 and
+I7 HOLD remain unchanged.
