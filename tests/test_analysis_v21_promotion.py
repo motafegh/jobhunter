@@ -3,7 +3,6 @@ from __future__ import annotations
 from datetime import UTC, datetime
 from pathlib import Path
 
-from jobhunter.analysis_runtime_v21 import V21CandidateAnalysisProvider
 from jobhunter.analysis_service_v21 import (
     ANALYSIS_SCHEMA_VERSION,
     ENGLISH_PROMPT_VERSION,
@@ -93,7 +92,9 @@ def _record_analysis(
 
 class _NeverProvider:
     def complete_structured(self, **_kwargs):
-        raise AssertionError("accepted v20 compatibility artifact should be reused without inference")
+        raise AssertionError(
+            "accepted v20 compatibility artifact should be reused without inference"
+        )
 
 
 def test_v21_current_service_reuses_accepted_v20_artifact_with_exact_lineage(
