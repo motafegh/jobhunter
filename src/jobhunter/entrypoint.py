@@ -469,18 +469,32 @@ def _run_job_analysis(
         return 1
 
     if parsed.mode == "english":
-        prompt_version = ENGLISH_PROMPT_VERSION
-        schema_version = ENGLISH_ANALYSIS_SCHEMA_VERSION
+        current_prompt_version = ENGLISH_PROMPT_VERSION
+        current_schema_version = ENGLISH_ANALYSIS_SCHEMA_VERSION
         label = "English"
     else:
-        prompt_version = ORIGINAL_PROMPT_VERSION
-        schema_version = ORIGINAL_ANALYSIS_SCHEMA_VERSION
+        current_prompt_version = ORIGINAL_PROMPT_VERSION
+        current_schema_version = ORIGINAL_ANALYSIS_SCHEMA_VERSION
         label = "Original-language"
+    artifact_prompt_version = (
+        getattr(result, "prompt_version", None) or current_prompt_version
+    )
+    artifact_schema_version = (
+        getattr(result, "schema_version", None) or current_schema_version
+    )
     print(f"Outcome: {result.outcome}")
     print(f"{label} P1.6 for {result.source_job_id}")
     print(f"Artifact: {result.artifact_id}")
     print(f"Model: {result.model}")
-    print(f"Contract: {prompt_version} / {schema_version}")
+    if (
+        artifact_prompt_version == current_prompt_version
+        and artifact_schema_version == current_schema_version
+    ):
+        print(f"Contract: {artifact_prompt_version} / {artifact_schema_version}")
+    else:
+        print(f"Current contract: {current_prompt_version} / {current_schema_version}")
+        print(f"Artifact contract: {artifact_prompt_version} / {artifact_schema_version}")
+        print("Compatibility: accepted prior-contract artifact reused under the current contract.")
     print(f"Responsibilities: {result.responsibilities}")
     print(f"Requirements: {result.requirements}")
     print(f"Semantic review: {result.semantic_review_status}")

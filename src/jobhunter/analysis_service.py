@@ -240,6 +240,8 @@ class AnalysisJobResult:
     requirements: int
     analysis_mode: str
     semantic_review_status: str = "accepted"
+    prompt_version: str | None = None
+    schema_version: str | None = None
 
 
 @dataclass(frozen=True, slots=True)
@@ -787,6 +789,8 @@ def _result(
         requirements=len(artifact.analysis.get("requirements") or []),
         analysis_mode=analysis_mode,
         semantic_review_status=artifact.semantic_review_status,
+        prompt_version=artifact.prompt_version,
+        schema_version=artifact.schema_version,
     )
 
 
