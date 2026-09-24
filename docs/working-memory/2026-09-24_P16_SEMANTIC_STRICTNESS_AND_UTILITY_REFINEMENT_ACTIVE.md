@@ -49,12 +49,45 @@ Ability to perform complex engineering work and hands-on experience are often cl
 
 **Provisional direction:** Preserve explicit source truth and consequence-sensitive validation; revisit over-strict *classification, wording review, and whole-result failure granularity* rather than simply deleting guards. No particular code change, new contract, validator weakening, live generation, or I7 acceptance is decided here.
 
+## Issue R02 — Why the concrete `tvMm` v22 failures happened (source-backed, not yet a repair decision)
+
+### Primary evidence
+
+- [Existing v22 evaluation JSON, fixed commit 0c656fb](https://github.com/motafegh/jobhunter/blob/0c656fba8fe65b8ec6fa38a317a62c5301e7ed54/docs/experiments/2026-09-24_p16-v22-tvmm-case-evidence/evaluation-original.json): the `result.structured` output, both actual `request_body.partition_requests` including evidence catalogs/checklists, and both `raw_response.partitions` are embedded. `result.structured` is the validated/normalized provider result, **not** the untouched raw model result. The 27 validated requirements include 25 model-generated items and two deterministically added source skill tags (`Ai`, `Engineer`); eleven responsibilities are model-generated.
+- [Runner at that commit](https://github.com/motafegh/jobhunter/blob/0c656fba8fe65b8ec6fa38a317a62c5301e7ed54/docs/experiments/2026-09-24_p16-v22-tvmm-case-evidence/evaluation-runner.py): one direct evaluation; no persisted analysis artifact or Market mutation.
+- [Exact English posting](https://github.com/motafegh/jobhunter/blob/main/corpus/jobs/tvMm/english-projection.json), [v21 evidence planner as executed at effa861](https://github.com/motafegh/jobhunter/blob/effa8616af03f2c11674317e8daade654ac19c5f/src/jobhunter/evidence_refs_v21.py), [v22 prompt](https://github.com/motafegh/jobhunter/blob/effa8616af03f2c11674317e8daade654ac19c5f/src/jobhunter/analysis_service_v22.py), and [v22 normalization](https://github.com/motafegh/jobhunter/blob/effa8616af03f2c11674317e8daade654ac19c5f/src/jobhunter/inference/instructor_lm_studio_v22.py).
+
+### A. Disputed reliable-product experience label: separate model, normalization, and review causes
+
+**Observed:** The source says the person should be able to turn an Agent into a reliable system in a real product. The raw model wrote `Agent reliability in real product experience`, with `concept_type=experience`; validated v22 result changed the type to `other` without changing the wording or `required` strength. Source elsewhere explicitly seeks actual experience designing/building Agents and separately prefers production-grade Agents and demonstrable past work.
+
+**Mechanism:** The v22 prompt explicitly says ontology abstention changes *only* the label and to preserve `concept`. Its Python `mode=before` validator only changes `concept_type`, so any questionable implication in `concept` necessarily survives. The semantic reviewer interpreted the wording as asserting prior experience delivering that exact product-system result and rejected the complete candidate; user and assistant are reopening whether that short label is materially misleading rather than acceptable practical shorthand. The original model's internal reason for choosing the phrase cannot be established from a single output. A later lexical guard against preserving `experience` under type abstention catches this exact pattern but is not evidence that every such label is materially false.
+
+### B. Omitted preferred previous-Agent demonstration / GitHub-project-demo proof: upstream coverage gap
+
+**Observed:** The source says it would be a huge plus to show/explain a previously built Agent and values a real GitHub repository/sample project/demo. Both actual `requirement_coverage` partition lists omit this preference. Partition 2 carries the wording within the *broad, background* `field:description:segment:1` evidence text, but neither partition exposes a requirement-coverage reference for that particular preference. The v22 model therefore had access to the text in background evidence but was not directed to account for it as a candidate qualification; the final requirements omit it. Do not conflate the separate later `To apply ... please send ...` instruction with the earlier preferred proof-of-work qualification.
+
+**Code mechanism identified:** `build_requirement_coverage_plan_v21` extends base coverage by a narrow additional search requiring the same sentence to match both `_CANDIDATE_SUBJECT_RE` and `_CANDIDATE_QUALIFICATION_RE`. Neither `It would be a huge plus if you could show and explain...` nor `A real GitHub repository, sample project, or Demo is very valuable` matches that particular conjunction; the preference appears in the broad duties/intro description area rather than a recognized requirements checklist. This accounts for the absence from v21/v22 requirement planning in this recorded case. It does *not* prove a universal new detection rule is safe. Distinguish prior-work preference from mere application submission instructions across comparison jobs.
+
+### C. Overlapping entries: distinct source assertions and partitioning versus user-facing deduplication
+
+**Observed:** #1 (practical LLM/API experience) overlaps with #16/#19 (prior model-API/LLM exposure); #2 overlaps with #17/#18 (Agent design/building); #3 overlaps with #20 (tool calling familiarity versus having worked with it). The first group comes from the explicit skills/qualification passage in partition 1; the latter comes from introductory candidate sentences in partition 2, with distinct provenance and sometimes distinct strength/type/depth nuances. The two structured skill tags are extra deterministic entries. Source-led extraction and bounded partition accounting explain why multiple distinct records survive. They are not automatically identical or erroneous; no claim of an aggregate double-counting defect is established without inspecting its current deduplication logic.
+
+**Design question:** Can the job-facing experience group and higher-level synthesis consolidate overlapping concepts **while preserving separate source/evidence assertions, optionality and expertise distinctions**, without losing genuine different signals or inflating a count of independent expectations?
+
+### D. Why the whole candidate did not become accepted Market evidence
+
+**Observed:** The provider returned `validated_pending_semantic_review` after passing mechanical validation. The post-hoc semantic review rejected the full candidate for the contested wording, recording the separate preference coverage omission. This direct evaluation never persisted a P1.6 artifact. I7 requires a genuinely valid accepted-current core artifact and complete real semantic drill-down. It does not follow that every generated item was wrong or should be hidden from a clearly labeled candidate-level view.
+
+**Open policy question:** Which of these problems merits item correction, whole-artifact promotion rejection, or candidate-level warning/partial display? This is not solved by changing `concept_type` alone, weakening a validator, or rerunning a model. No broad model-capability conclusion follows from this one case.
+
 ## Discussion ledger
 
 | ID | Topic | Status | Next discussion |
 | --- | --- | --- | --- |
 | R01 | Capability ↔ experience ↔ demonstrable work overlap; ambiguous concept-label materiality; whole-analysis rejection | First discussion recorded; refinement proposals OPEN | Determine actual downstream consequences and the right claim/authority boundary |
-| R02+ | Additional strictness, failure, coverage, model, planner, and utility issues | NOT YET DISCUSSED | Add separate source-backed entries as the discussion continues |
+| R02 | `tvMm` source/result/planner/model/normalizer/review failure-layer diagnosis; omitted preference and overlapping entries | Evidence-backed findings recorded; refinements OPEN | Decide proportional treatment and whether source-backed preference coverage must be redesigned |
+| R03+ | Other strictness, failure, coverage, model, and utility issues | NOT YET DISCUSSED | Add separate source-backed entries as discussion continues |
 
 ## Change authorization boundary
 
