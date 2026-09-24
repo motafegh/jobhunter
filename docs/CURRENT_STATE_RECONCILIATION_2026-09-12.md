@@ -299,14 +299,14 @@ v21/v5 remains public/current; accepted v20 anchors retain compatibility
 → persisted v21 tvMm attempt CLOSED / failed ontology validation
 → isolated v22 candidate and evidence-alias repair implemented
 → exact-head CI 35764994184 on effa861 passed all quality gates
-→ one authorized post-repair non-persistent tvMm evaluation and complete source review
-→ any failure closes that evaluation; no automatic retry or vacancy/model switch
-→ semantic success supports a separate promotion/integration decision only
+→ authorized post-repair evaluation EXECUTED / SEMANTICALLY REJECTED
+→ unsafe type-only abstention repaired offline; preferred proof-of-work gap remains
+→ representative offline evidence and versioned design decision next; no new model call
 → live accepted-current persistence + snapshot/profile + CLI/browser proof still required
 ```
 
-Current evaluation owner:
-`docs/working-memory/2026-09-22_P16_V22_ONTOLOGY_ABSTENTION_CANDIDATE.md`.
+Current evaluation closure and next-work owner:
+`docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md`.
 Earlier v20/v21 implementation steps above are historical evidence, not new execution instructions.
 
 No full acquisition rerun is required merely to obtain this semantic evidence.

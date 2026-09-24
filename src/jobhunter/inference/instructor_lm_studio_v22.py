@@ -26,6 +26,7 @@ from jobhunter.inference.instructor_lm_studio_v21 import (
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _WORKING_WITH_EXPOSURE_RE = re.compile(r"\bworking\s+with\b", re.I)
+_EXPERIENCE_WORDING_RE = re.compile(r"\bexperience(?:d)?\b", re.I)
 
 
 def _exact_item_is_source_proven_experience(
@@ -80,6 +81,14 @@ class AnalysisRequirementV22(AnalysisRequirementV21):
             plan=plan if isinstance(plan, dict) else {},
         ):
             return value
+
+        # A type-only abstention is safe only when the displayed concept does not
+        # retain the unsupported experience assertion. Do not rewrite model prose
+        # into a different factual claim to make it pass.
+        if _EXPERIENCE_WORDING_RE.search(str(value.get("concept") or "")):
+            raise ValueError(
+                "Ontology abstention cannot preserve unsupported experience wording in concept"
+            )
 
         normalized = dict(value)
         normalized["concept_type"] = "other"

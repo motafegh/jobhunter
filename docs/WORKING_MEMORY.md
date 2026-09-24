@@ -1,10 +1,10 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-22
+**Date:** 2026-09-24
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVIDENCE-ALIAS REPAIR GATE
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVALUATION REJECTED / OFFLINE EVIDENCE NEXT
 **Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
@@ -549,3 +549,18 @@ No accepted artifact payload changes are involved.
 Market I7 remains HOLD. The next evidence is exactly one non-persistent v22 evaluation
 and complete semantic review; success alone does not authorize automatic acceptance
 or establish the live accepted-semantic Market chain.
+
+
+### Post-alias evaluation closed
+
+The authorized evaluation returned 27 requirements and all eleven duties, but complete review rejected
+unsupported experience wording left in the concept after v22 changed its type to `other`. It also
+identified omitted preferred proof-of-work evidence outside the current requirement ledger.
+SQLite and corpus stayed byte-identical; integrity/FKs were clean. A narrow v22 guard now rejects the
+unsafe type-only abstention, with exact retained-response replay and 708 strict-warning tests.
+
+This result supersedes the earlier conditional authorization: it has been consumed and is closed.
+No new model call, promotion, persistence or acceptance follows automatically. Continue only offline
+representative claim/section investigation and a versioned design decision; I7 remains HOLD.
+
+Current record: `docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md`.

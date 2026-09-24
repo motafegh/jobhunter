@@ -4,6 +4,9 @@ import json
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
+from pydantic import ValidationError
+
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT_VERSION
 from jobhunter.analysis_runtime_v22 import V22CandidateAnalysisProvider
 from jobhunter.analysis_service_v22 import (
@@ -108,6 +111,78 @@ def test_v22_preserves_explicit_prior_experience() -> None:
     )
 
     assert result.concept_type == "experience"
+
+
+@pytest.mark.parametrize(
+    ("concept", "use_reference"),
+    [
+        ("Reliable service operation experience", True),
+        ("Experience operating reliable services", False),
+        ("Experienced service operator", True),
+    ],
+)
+def test_v22_rejects_type_only_abstention_that_retains_experience_claim(
+    concept: str, use_reference: bool
+) -> None:
+    evidence = "We need someone who can operate reliable services."
+    reference = "field:description:requirement:0"
+    context = _context(evidence)
+    context["evidence_catalog"] = {reference: evidence}
+
+    with pytest.raises(ValidationError, match="unsupported experience wording in concept"):
+        JobAnalysisResponseV22.model_validate(
+            {
+                "role_purpose": [],
+                "responsibilities": [],
+                "requirements": [
+                    _requirement(
+                        concept=concept,
+                        evidence=reference if use_reference else evidence,
+                        item_excerpt="operate reliable services",
+                        concept_type="experience",
+                    )
+                ],
+                "coverage_exclusions": [],
+            },
+            context=context,
+        )
+
+
+def test_v22_preserves_source_backed_experience_wording_in_concept() -> None:
+    evidence = "We require experience operating reliable services."
+    result = AnalysisRequirementV22.model_validate(
+        _requirement(
+            concept="Experience operating reliable services",
+            evidence=evidence,
+            item_excerpt="experience operating reliable services",
+            concept_type="experience",
+        ),
+        context=_context(evidence),
+    )
+
+    assert result.concept == "Experience operating reliable services"
+    assert result.concept_type == "experience"
+
+
+def test_v22_rejects_retained_live_capability_as_experience_concept() -> None:
+    evidence = (
+        "This is why we need someone who can move beyond the idea and prototype stage "
+        "and turn an Agent into a reliable system in a real product."
+    )
+    reference = "field:description:segment:2:clause:1:sentence:5"
+    context = _context(evidence)
+    context["evidence_catalog"] = {reference: evidence}
+
+    with pytest.raises(ValidationError, match="unsupported experience wording in concept"):
+        AnalysisRequirementV22.model_validate(
+            _requirement(
+                concept="Agent reliability in real product experience",
+                evidence=reference,
+                item_excerpt="turn an Agent into a reliable system in a real product",
+                concept_type="experience",
+            ),
+            context=context,
+        )
 
 
 def test_v22_preserves_exact_checklist_experience_type() -> None:

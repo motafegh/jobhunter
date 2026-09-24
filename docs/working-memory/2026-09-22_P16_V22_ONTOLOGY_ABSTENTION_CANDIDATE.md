@@ -1,7 +1,7 @@
 # P1.6 v22 — ontology abstention candidate
 
 **Date:** 2026-09-22  
-**Status:** FIRST EVALUATION CLOSED / EVIDENCE-ALIAS REPAIR UNDER CI GATE  
+**Status:** POST-ALIAS EVALUATION CLOSED / SEMANTICALLY REJECTED
 **Current public English contract:** `job-analysis-english-v21 / job-analysis-v5`  
 **Candidate:** `job-analysis-english-v22 / job-analysis-v5`
 
@@ -185,3 +185,14 @@ mutation, and no vacancy/model switch.
 If the repaired evaluation fails transport, validation, coverage, or semantic review, close it without
 another invocation. If it passes complete semantic review, use that only as evidence for a separate v22
 promotion/integration decision; I7 remains HOLD until a later accepted-current persisted chain exists.
+
+
+## 2026-09-24 superseding outcome
+
+The conditional CI gate passed and the one authorized post-alias evaluation was executed.
+Mechanical validation succeeded; full source review rejected unsupported experience wording retained
+by type-only abstention and identified missing preferred proof-of-work coverage. The observed unsafe
+abstention now fails closed in v22 with offline replay and 708 strict-warning tests. This is not
+promotion or new live-evaluation authorization. I7 remains HOLD.
+
+Outcome and current stop line: `docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md`.

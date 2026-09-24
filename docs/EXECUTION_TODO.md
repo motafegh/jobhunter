@@ -1,11 +1,11 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-22
+**Date:** 2026-09-24
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVIDENCE-ALIAS REPAIR GATE
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVALUATION REJECTED / OFFLINE EVIDENCE NEXT
 
 Status vocabulary:
 
@@ -170,7 +170,9 @@ Execution result:
 - [x] CI run 1304 / `35761148349`: Ruff PASS, 701 tests PASS, 701 warnings-as-errors PASS.
 - [x] first direct non-persistent v22 `tvMm` evaluation failed closed because v22 applied ontology abstention before resolving raw evidence IDs; SQLite remained unchanged and no artifact/state was created.
 - [x] repaired v22 to resolve evidence aliases through the existing exact evidence catalog before ontology abstention; added requirement-level and full-response regressions for the live `built an Agent yourself to date` failure shape.
-- [~] one post-repair non-persistent v22 `tvMm` evaluation becomes authorized only after current pushed-head CI is fully green; until then do not call the model.
+- [x] exact-head CI 35764994184 passed; the one authorized post-alias v22 evaluation completed with 27 requirements and 11 duties, then was semantically rejected because type-only abstention retained unsupported experience wording. SQLite/corpus unchanged.
+- [x] v22 now rejects that unsafe abstention; retained-response replay isolates the error, the experience partition still passes, and 708 strict-warning tests pass.
+- [~] offline representative evidence/design for generated claim wording and omitted preferred proof-of-work coverage; no further live generation or v22 promotion is authorized by this repair. See `docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md`.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.
@@ -226,17 +228,13 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-P1.6 v21/v5 public/current remains unchanged
-→ first v22 non-persistent evaluation CLOSED on evidence-alias implementation defect
-→ v22 alias-resolution repair + full-response regression committed; Market I7 remains HOLD
-→ wait for current pushed-head CI to pass all gates
-→ only then run exactly one new post-repair non-persistent v22 tvMm evaluation
-→ review the complete structured result; no automatic persistence/acceptance/promotion
-→ if invalid or transport/validation fails, close the repaired evaluation and preserve HOLD
-→ if semantically valid, decide v22 promotion/integration separately before any persisted retry
-→ only after a genuinely valid accepted-current core artifact exists: new immutable Market snapshot/profile
-→ verify CLI/browser semantic drill-down + SQLite/FK + privacy boundaries
-→ change I7 to PASS only if the complete live chain succeeds
+public/current stays v21/v5 with accepted-only v20 compatibility
+→ post-alias v22 evaluation CLOSED / semantically rejected
+→ observed unsafe ontology abstention repaired offline; preferred proof-of-work gap remains
+→ representative offline claim/section evidence and versioned design decision NEXT
+→ no automatic retry, persisted generation, promotion, or vacancy/model switch
+→ accepted-current semantic evidence + immutable snapshot/profile + live drill-down still required
+→ preserve Market I7 HOLD
 ```
 
 ### Final verification checkpoint — 2026-09-22
