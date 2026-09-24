@@ -103,13 +103,17 @@ def _synchronize_public_corpus(arguments: Sequence[str]) -> None:
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Run established CLI; private diagnostic reads never synchronize public corpus."""
+    """Run established CLI; private diagnostics/review never synchronize public corpus."""
     arguments = list(argv if argv is not None else sys.argv[1:])
     tokens = _command_tokens(arguments)
     if tokens and tokens[0] == "diagnostics":
         from jobhunter.analysis_diagnostic_cli import main as diagnostics_main
 
         return diagnostics_main(tokens[1:], config_path=_config_path(arguments))
+    if tokens and tokens[0] == "item-review":
+        from jobhunter.analysis_item_review_cli import main as item_review_main
+
+        return item_review_main(tokens[1:], config_path=_config_path(arguments))
 
     market_arguments = _market_arguments(arguments)
     result = market_main(market_arguments) if market_arguments is not None else core_main(arguments)
