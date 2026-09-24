@@ -533,19 +533,19 @@ owner mastery verification
 These do not change the I7 product frontier.
 
 
-## 9. Current handoff after v21 promotion
+## 9. Current handoff — 2026-09-24 takeover
 
-```text
-repository current P1.6 generation   v21/v5
-accepted legacy compatibility        accepted v20/v5 only
-current accepted public anchors      5 (physical v20/v5 artifacts)
-Market I1-I6                         ACCEPTED
-Market I7                            HOLD
-next product action                  real accepted-semantic v21 closure
-```
+The fetched `main` matched `origin/main` at `effa861`. Exact-head CI run
+`35764994184` succeeded, including dependency consistency, entrypoint smoke,
+Ruff, normal tests and warnings-as-errors tests. The v22 post-repair evaluation
+condition is therefore satisfied. Follow section 4.2 and the v22 candidate decision,
+not the superseded instruction to repeat the persisted v21 command.
 
-Do not repeat the non-persistent v21 tuning evaluations. The next meaningful run is the normal
-persisted current service path for the selected core case, followed by complete semantic review.
-Accept only if valid; then rebuild the point-in-time Market snapshot/profile and verify the real
-semantic evidence drill-down. If that path exposes a material defect, keep I7 HOLD and repair the
-smallest owning boundary.
+Public/current routing stays v21/v5; all five accepted anchors retain their v20/v5
+identity. The local manifest's v21 current-contract metadata passed complete
+DB-to-corpus verification for 394 jobs and is being published as promotion reconciliation.
+No accepted artifact payload changes are involved.
+
+Market I7 remains HOLD. The next evidence is exactly one non-persistent v22 evaluation
+and complete semantic review; success alone does not authorize automatic acceptance
+or establish the live accepted-semantic Market chain.

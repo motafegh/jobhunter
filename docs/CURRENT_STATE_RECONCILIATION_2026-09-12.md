@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-22
+**Last reconciled:** 2026-09-24
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -292,15 +292,22 @@ context separately, with offline review before another bounded live evaluation.
 
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
-Exact next responsibility:
+Exact next responsibility (reconciled 2026-09-24):
 
 ```text
-preserve rejected tvMm artifact 49, failed attempt 108 evidence, and HOLD
-→ implement and validate a versioned exact-item plus parent-context candidate boundary
-→ consider another bounded live evaluation only after offline corpus and accepted-anchor proof
-→ obtain valid reviewed semantic evidence before new semantic snapshot/profile proof
-→ live accepted-semantic CLI/browser drill-down remains required for PASS
+v21/v5 remains public/current; accepted v20 anchors retain compatibility
+→ persisted v21 tvMm attempt CLOSED / failed ontology validation
+→ isolated v22 candidate and evidence-alias repair implemented
+→ exact-head CI 35764994184 on effa861 passed all quality gates
+→ one authorized post-repair non-persistent tvMm evaluation and complete source review
+→ any failure closes that evaluation; no automatic retry or vacancy/model switch
+→ semantic success supports a separate promotion/integration decision only
+→ live accepted-current persistence + snapshot/profile + CLI/browser proof still required
 ```
+
+Current evaluation owner:
+`docs/working-memory/2026-09-22_P16_V22_ONTOLOGY_ABSTENTION_CANDIDATE.md`.
+Earlier v20/v21 implementation steps above are historical evidence, not new execution instructions.
 
 No full acquisition rerun is required merely to obtain this semantic evidence.
 
