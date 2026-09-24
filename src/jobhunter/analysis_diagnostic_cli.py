@@ -10,8 +10,8 @@ import argparse
 import json
 import sqlite3
 import sys
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 from urllib.parse import quote
 
 from jobhunter.config import Settings
