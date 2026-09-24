@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any
 
+from jobhunter.analysis_failure_diagnostics import AnalysisFailureDiagnosticStore
 from jobhunter.analysis_runtime_v20 import (
     V20CandidateAnalysisProvider,
     _v20_requirement_partitions,
@@ -86,6 +87,7 @@ def build_v21_analysis_service(settings: Settings) -> JobAnalysisServiceV21:
         source_store=TranslationStore(settings.database_path),
         translation_service=_translation_service(settings),
         analysis_store=AnalysisStore(settings.database_path),
+        diagnostic_store=AnalysisFailureDiagnosticStore(settings.database_path),
         provider=V21CandidateAnalysisProvider(
             base_url=settings.lm_studio_base_url,
             configured_model=model,
