@@ -190,7 +190,8 @@ class AnalysisFailureDiagnosticStore:
             ):
                 if name not in columns:
                     connection.execute(
-                        f"ALTER TABLE job_analysis_failure_diagnostics ADD COLUMN {name} {definition}"
+                        "ALTER TABLE job_analysis_failure_diagnostics "
+                        f"ADD COLUMN {name} {definition}"
                     )
             # Older A1 records have no time identity. Start their finite
             # retention period at migration rather than claiming an invented age.
