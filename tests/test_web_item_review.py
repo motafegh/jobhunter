@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 from fastapi.testclient import TestClient
+from test_analysis_item_review import _candidate
 
 from jobhunter.analysis_item_review import AnalysisItemReviewStore
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.web.launcher import build_runtime_app
-from test_analysis_item_review import _candidate
 
 
 def test_browser_item_review_end_to_end_with_csrf(tmp_path):
@@ -60,5 +60,7 @@ def test_browser_item_review_end_to_end_with_csrf(tmp_path):
         )
         assert done.status_code == 303
         assert AnalysisItemReviewStore(database).is_complete(artifact_id)
-        assert AnalysisStore(database).artifact_by_id(artifact_id).semantic_review_status == "pending"
-        assert AnalysisStore(database).artifact_by_id(artifact_id).translation_artifact_id == projection_id
+        artifact = AnalysisStore(database).artifact_by_id(artifact_id)
+        assert artifact is not None
+        assert artifact.semantic_review_status == "pending"
+        assert artifact.translation_artifact_id == projection_id
