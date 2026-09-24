@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from contextlib import suppress
 from datetime import datetime
 
 from jobhunter.analysis_failure_diagnostics import (
@@ -101,12 +102,10 @@ class JobAnalysisServiceV21(JobAnalysisServiceV20):
             error=SafeFailure(describe_failure(error)),
         )
         if self._diagnostic_store is not None:
-            try:
+            # Private diagnostic capture must not mask the original failure or
+            # turn an unsuccessful attempt into an analysis artifact.
+            with suppress(Exception):
                 self._diagnostic_store.record_failure(attempt_id=attempt_id, error=error)
-            except Exception:
-                # Private diagnostic capture is best-effort; it must not mask the
-                # original failure or turn an unsuccessful attempt into an artifact.
-                pass
 
     def analyze_english_job(self, source_job_id: str):
         try:
