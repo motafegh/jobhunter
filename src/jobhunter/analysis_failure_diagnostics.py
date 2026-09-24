@@ -28,11 +28,18 @@ class FailureDescription:
 def describe_failure(error: Exception) -> FailureDescription:
     """Produce only application-authored strings safe for an ordinary attempt row."""
     if isinstance(error, InferenceConnectionError):
-        return FailureDescription("inference_connection_failed", "Local inference connection failed")
+        return FailureDescription(
+            "inference_connection_failed", "Local inference connection failed"
+        )
     if isinstance(error, InferenceResponseError):
-        return FailureDescription("inference_response_failed", "Structured inference failed; inspect private diagnostics")
+        return FailureDescription(
+            "inference_response_failed",
+            "Structured inference failed; inspect private diagnostics",
+        )
     if isinstance(error, sqlite3.IntegrityError):
-        return FailureDescription("storage_integrity_failed", "Analysis storage integrity check failed")
+        return FailureDescription(
+            "storage_integrity_failed", "Analysis storage integrity check failed"
+        )
     if isinstance(error, sqlite3.DatabaseError):
         return FailureDescription("storage_failed", "Analysis storage failed")
     if isinstance(error, (ValueError, TypeError)):
@@ -45,7 +52,7 @@ class SafeFailure(Exception):
 
     def __init__(self, description: FailureDescription) -> None:
         self.code = description.code
-        super().__init__(description.message)
+        super().__init__(f"{description.code}: {description.message}")
 
 
 def _completion_text(completion: Any) -> str | None:
@@ -53,14 +60,19 @@ def _completion_text(completion: Any) -> str | None:
     if isinstance(completion, str):
         return completion or None
     choices = (
-        completion.get("choices") if isinstance(completion, dict)
+        completion.get("choices")
+        if isinstance(completion, dict)
         else getattr(completion, "choices", None)
     )
     if not isinstance(choices, (list, tuple)) or not choices:
         return None
     first = choices[0]
     message = first.get("message") if isinstance(first, dict) else getattr(first, "message", None)
-    content = message.get("content") if isinstance(message, dict) else getattr(message, "content", None)
+    content = (
+        message.get("content")
+        if isinstance(message, dict)
+        else getattr(message, "content", None)
+    )
     return content if isinstance(content, str) and content else None
 
 
@@ -86,7 +98,8 @@ def _available_completions(error: Exception) -> list[tuple[int | None, str]]:
                 except (AttributeError, TypeError, ValueError):
                     continue
                 if text:
-                    result.append((number if type(number) is int and number > 0 else None, text))
+                    retry = number if type(number) is int and number > 0 else None
+                    result.append((retry, text))
             if result:
                 return result
         for attribute in ("last_completion", "raw_response"):
@@ -200,9 +213,15 @@ class AnalysisFailureDiagnosticStore:
                 attempt_id=int(row["attempt_id"]),
                 failure_code=str(row["failure_code"]),
                 failure_stage=str(row["failure_stage"]),
-                retry_number=(int(row["retry_number"]) if row["retry_number"] is not None else None),
+                retry_number=(
+                    int(row["retry_number"]) if row["retry_number"] is not None else None
+                ),
                 response_state=str(row["response_state"]),
-                completion_text=(str(row["completion_text"]) if row["completion_text"] is not None else None),
+                completion_text=(
+                    str(row["completion_text"])
+                    if row["completion_text"] is not None
+                    else None
+                ),
             )
             for row in rows
         )
