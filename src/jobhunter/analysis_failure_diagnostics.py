@@ -1,15 +1,15 @@
 """Private, non-authoritative diagnostics for unsuccessful P1.6 generation.
 
-This store is deliberately separate from job_analysis_artifacts. A captured
-completion is diagnostic text, never a valid requirement or a pending analysis.
-No exception string, model request, authorization header, or SDK create_kwargs
-is persisted by this module.
+Completions and model-valid partition fragments are never P1.6 artifacts.
+Do not persist arbitrary SDK exception strings, requests, headers or kwargs.
+Expired private payloads are removed during diagnostic store operations.
 """
 
 from __future__ import annotations
 
 import sqlite3
 from dataclasses import dataclass
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -17,6 +17,19 @@ from jobhunter.inference.base import InferenceConnectionError, InferenceResponse
 
 _MAX_CAPTURE_BYTES = 128 * 1024
 _MAX_RETRY_CAPTURES = 4
+_MAX_PARTITION_CAPTURES = 8
+_MAX_DIAGNOSTIC_ROWS = 500
+_RETENTION_DAYS = 14
+_ALLOWED_STAGES = {
+    "unclassified",
+    "provider",
+    "partition",
+    "whole_analysis",
+    "partition_inference",
+    "before_partition",
+    "after_partition",
+    "preceding_partition",
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,7 +99,7 @@ def _exception_chain(error: Exception) -> list[BaseException]:
 
 
 def _available_completions(error: Exception) -> list[tuple[int | None, str]]:
-    """Best-effort Instructor 1.x capture, without relying on exception __str__."""
+    """Best-effort Instructor 1.x capture without relying on exception __str__."""
     result: list[tuple[int | None, str]] = []
     for cause in _exception_chain(error):
         attempts = getattr(cause, "failed_attempts", None)
@@ -121,10 +134,14 @@ class FailureDiagnostic:
     retry_number: int | None
     response_state: str
     completion_text: str | None
+    partition_index: int | None = None
+    partition_total: int | None = None
+    payload_kind: str = "failed_completion"
+    created_at: str | None = None
 
 
 class AnalysisFailureDiagnosticStore:
-    """Append-only local capture linked to the existing analysis-attempt ledger."""
+    """Local attempt-linked capture, bounded by record count, payload size and age."""
 
     def __init__(self, database_path: Path) -> None:
         self._database_path = database_path
@@ -133,10 +150,12 @@ class AnalysisFailureDiagnosticStore:
         connection = sqlite3.connect(self._database_path)
         connection.row_factory = sqlite3.Row
         connection.execute("PRAGMA foreign_keys=ON")
+        connection.execute("PRAGMA secure_delete=ON")
         return connection
 
     def initialize(self) -> None:
-        # The caller has already created the attempt through AnalysisStore.
+        # The caller already created the attempt through AnalysisStore. The
+        # private diagnostic schema is not part of accepted/current selectors.
         with self._connect() as connection:
             connection.executescript(
                 """
@@ -157,6 +176,46 @@ class AnalysisFailureDiagnosticStore:
                 ON job_analysis_failure_diagnostics(attempt_id, id);
                 """
             )
+            columns = {
+                str(row["name"])
+                for row in connection.execute(
+                    "PRAGMA table_info(job_analysis_failure_diagnostics)"
+                )
+            }
+            for name, definition in (
+                ("partition_index", "INTEGER"),
+                ("partition_total", "INTEGER"),
+                ("payload_kind", "TEXT NOT NULL DEFAULT 'failed_completion'"),
+                ("created_at", "TEXT"),
+            ):
+                if name not in columns:
+                    connection.execute(
+                        f"ALTER TABLE job_analysis_failure_diagnostics ADD COLUMN {name} {definition}"
+                    )
+            # Older A1 records have no time identity. Start their finite
+            # retention period at migration rather than claiming an invented age.
+            connection.execute(
+                "UPDATE job_analysis_failure_diagnostics SET created_at = ? "
+                "WHERE created_at IS NULL",
+                (datetime.now(UTC).isoformat(),),
+            )
+            self._prune(connection)
+
+    @staticmethod
+    def _prune(connection: sqlite3.Connection) -> None:
+        cutoff = (datetime.now(UTC) - timedelta(days=_RETENTION_DAYS)).isoformat()
+        connection.execute(
+            "DELETE FROM job_analysis_failure_diagnostics WHERE created_at < ?",
+            (cutoff,),
+        )
+        connection.execute(
+            """DELETE FROM job_analysis_failure_diagnostics
+               WHERE id NOT IN (
+                   SELECT id FROM job_analysis_failure_diagnostics
+                   ORDER BY id DESC LIMIT ?
+               )""",
+            (_MAX_DIAGNOSTIC_ROWS,),
+        )
 
     def record_failure(
         self,
@@ -165,46 +224,78 @@ class AnalysisFailureDiagnosticStore:
         error: Exception,
         failure_stage: str = "unclassified",
     ) -> tuple[int, ...]:
-        """Retain available response text; never turn failed output into an artifact."""
+        """Retain only observed data; a failed attempt never creates a P1.6 artifact."""
         if attempt_id < 1:
             raise ValueError("attempt_id must reference a persisted failed attempt")
-        if failure_stage not in {"unclassified", "provider", "partition", "whole_analysis"}:
+        if failure_stage == "unclassified":
+            failure_stage = getattr(error, "_r05_failure_stage", failure_stage)
+        if failure_stage not in _ALLOWED_STAGES:
             raise ValueError("Unknown diagnostic failure stage")
         self.initialize()
         description = describe_failure(error)
+        index = getattr(error, "_r05_partition_index", None)
+        total = getattr(error, "_r05_partition_total", None)
+        index = index if type(index) is int and index > 0 else None
+        total = total if type(total) is int and total > 0 else None
+        if index is None or total is None or index > total:
+            index, total = None, None
         available = _available_completions(error)
-        records: list[tuple[int | None, str, str | None]] = []
-        if not available:
-            records.append((None, "unavailable", None))
-        for number, text in available:
-            if len(text.encode("utf-8")) > _MAX_CAPTURE_BYTES:
-                records.append((number, "oversize", None))
-            else:
-                records.append((number, "available", text))
+        # (retry, text, partition_index, partition_total, kind, stage)
+        captures: list[tuple[int | None, str | None, int | None, int | None, str, str]] = [
+            (retry, text, index, total, "failed_completion", failure_stage)
+            for retry, text in available
+        ]
+        if not captures:
+            captures.append((None, None, index, total, "failed_completion", failure_stage))
+        prior = getattr(error, "_r05_prior_partitions", ())
+        if isinstance(prior, (list, tuple)):
+            for part in prior[-_MAX_PARTITION_CAPTURES:]:
+                if (
+                    isinstance(part, (list, tuple))
+                    and len(part) == 3
+                    and type(part[0]) is int
+                    and type(part[1]) is int
+                    and 0 < part[0] <= part[1]
+                    and isinstance(part[2], str)
+                ):
+                    captures.append(
+                        (None, part[2], part[0], part[1],
+                         "model_validated_partition_structured", "preceding_partition")
+                    )
         ids: list[int] = []
+        now = datetime.now(UTC).isoformat()
         with self._connect() as connection:
-            for number, state, text in records:
+            for retry, text, part_index, part_total, kind, stage in captures:
+                if text is None:
+                    state, stored = "unavailable", None
+                elif len(text.encode("utf-8")) > _MAX_CAPTURE_BYTES:
+                    state, stored = "oversize", None
+                else:
+                    state, stored = "available", text
                 cursor = connection.execute(
                     """
                     INSERT INTO job_analysis_failure_diagnostics(
-                        attempt_id, failure_code, failure_stage,
-                        retry_number, response_state, completion_text
-                    ) VALUES (?, ?, ?, ?, ?, ?)
+                        attempt_id, failure_code, failure_stage, retry_number,
+                        response_state, completion_text, partition_index,
+                        partition_total, payload_kind, created_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
-                    (attempt_id, description.code, failure_stage, number, state, text),
+                    (
+                        attempt_id, description.code, stage, retry, state,
+                        stored, part_index, part_total, kind, now,
+                    ),
                 )
                 ids.append(int(cursor.lastrowid))
+            self._prune(connection)
         return tuple(ids)
 
     def list_for_attempt(self, attempt_id: int) -> tuple[FailureDiagnostic, ...]:
-        """Private inspection API; callers must not expose response text in public exports."""
+        """Private inspection API; never use in public corpus or candidate readers."""
         self.initialize()
         with self._connect() as connection:
             rows = connection.execute(
-                """
-                SELECT * FROM job_analysis_failure_diagnostics
-                WHERE attempt_id = ? ORDER BY id
-                """,
+                "SELECT * FROM job_analysis_failure_diagnostics "
+                "WHERE attempt_id = ? ORDER BY id",
                 (attempt_id,),
             ).fetchall()
         return tuple(
@@ -222,6 +313,16 @@ class AnalysisFailureDiagnosticStore:
                     if row["completion_text"] is not None
                     else None
                 ),
+                partition_index=(
+                    int(row["partition_index"])
+                    if row["partition_index"] is not None else None
+                ),
+                partition_total=(
+                    int(row["partition_total"])
+                    if row["partition_total"] is not None else None
+                ),
+                payload_kind=str(row["payload_kind"]),
+                created_at=str(row["created_at"]),
             )
             for row in rows
         )
