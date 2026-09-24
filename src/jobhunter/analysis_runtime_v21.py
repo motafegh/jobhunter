@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+from contextvars import ContextVar
 from typing import Any
 
 from jobhunter.analysis_failure_diagnostics import AnalysisFailureDiagnosticStore
@@ -21,12 +23,17 @@ from jobhunter.inference.instructor_lm_studio_v21 import (
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
+# Per invocation, never on a shared provider instance. Each value holds only
+# structured model-valid partition data, NOT a fully validated P1.6 artifact.
+_PARTITION_EVIDENCE: ContextVar[list[tuple[int, int, str]] | None] = ContextVar(
+    "v21_failure_partition_evidence", default=None
+)
+
 
 def _v21_requirement_partitions(
     plan: dict[str, dict[str, Any]],
 ) -> list[dict[str, dict[str, Any]]]:
     """Keep explicit headingless candidate experience out of dense section partitions."""
-
     section_plan = {
         reference: candidate
         for reference, candidate in plan.items()
@@ -46,10 +53,51 @@ def _v21_requirement_partitions(
 
 
 class V21CandidateAnalysisProvider(V20CandidateAnalysisProvider):
-    """Use v21 validation while returning the unchanged v5 persistable shape."""
+    """Use v21 validation and preserve bounded non-authoritative failure context."""
+
+    def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
+        token = _PARTITION_EVIDENCE.set([])
+        try:
+            return super()._run_once(**kwargs)
+        except Exception as exc:
+            # Scope/global checks occur in the parent, after a partition returns.
+            # Do not mislabel a model-valid partition as fully source-scope-valid.
+            completed = _PARTITION_EVIDENCE.get() or []
+            if not hasattr(exc, "_r05_failure_stage"):
+                exc._r05_failure_stage = (
+                    "after_partition" if completed else "before_partition"
+                )
+            exc._r05_prior_partitions = tuple(completed)
+            raise
+        finally:
+            _PARTITION_EVIDENCE.reset(token)
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
-        return complete_analysis_partition_with_instructor_v21(**kwargs)
+        partition = (kwargs.get("user_payload") or {}).get("analysis_partition") or {}
+        index = partition.get("index") if isinstance(partition, dict) else None
+        total = partition.get("total") if isinstance(partition, dict) else None
+        try:
+            result = complete_analysis_partition_with_instructor_v21(**kwargs)
+        except Exception as exc:
+            exc._r05_failure_stage = "partition_inference"
+            if type(index) is int and index > 0:
+                exc._r05_partition_index = index
+            if type(total) is int and total > 0:
+                exc._r05_partition_total = total
+            raise
+        completed = _PARTITION_EVIDENCE.get()
+        if (
+            completed is not None
+            and type(index) is int
+            and type(total) is int
+            and 0 < index <= total
+        ):
+            # This is normalized structured output, NOT the original model bytes,
+            # and has not yet passed the parent's partition-scope/global checks.
+            completed.append(
+                (index, total, json.dumps(result.structured, ensure_ascii=False))
+            )
+        return result
 
     def _requirement_coverage_plan(
         self, model_fields: dict[str, Any]
