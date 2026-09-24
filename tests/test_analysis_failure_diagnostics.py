@@ -61,7 +61,10 @@ def test_retry_completion_is_private_attempt_linked_diagnostic(diagnostic_databa
     assert record.completion_text == marker
     with sqlite3.connect(diagnostic_database) as connection:
         tables = {
-            row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")
+            row[0]
+            for row in connection.execute(
+                "SELECT name FROM sqlite_master WHERE type='table'"
+            )
         }
     assert "job_analysis_artifacts" not in tables
 
