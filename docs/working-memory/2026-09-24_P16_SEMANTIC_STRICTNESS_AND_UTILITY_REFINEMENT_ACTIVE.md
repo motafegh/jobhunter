@@ -81,13 +81,24 @@ Ability to perform complex engineering work and hands-on experience are often cl
 
 **Open policy question:** Which of these problems merits item correction, whole-artifact promotion rejection, or candidate-level warning/partial display? This is not solved by changing `concept_type` alone, weakening a validator, or rerunning a model. No broad model-capability conclusion follows from this one case.
 
+## Issue R03 — Source-preserving consolidation of overlapping qualifications
+
+**Discussion decision (2026-09-24):** User agreed with the proposed representation direction. Preserve separately extracted, source-backed statements and their inspectable evidence, but do not force the main job-analysis view to present every statement as an independent qualification. Present related statements in a smaller, intelligible set of qualification groups; expose their underlying evidence and preserve material distinctions, including required versus preferred, familiarity versus applied experience, specific tools/languages and broader scope. A user should be able to expand a group to inspect source statements and qualifiers.
+
+**Concrete `tvMm` examples:** Requirements #1/#16/#19 concern LLMs and model APIs but #1 names Python and/or TypeScript; #2/#17/#18 concern building and designing Agents at different levels of specificity; #3/#20 share tool-calling subject matter but distinguish familiarity from previous use. Grouping these subjects is a presentation/synthesis direction, **not** a claim that their contents, sources or depths are identical. Refer to the fixed [v22 evidence result](https://github.com/motafegh/jobhunter/blob/0c656fba8fe65b8ec6fa38a317a62c5301e7ed54/docs/experiments/2026-09-24_p16-v22-tvmm-case-evidence/evaluation-original.json).
+
+**Counting intent to investigate:** Separate prevalence across *qualified source postings* from the number of extracted statements within a single posting. Repeated employer wording must not, by itself, inflate the number of distinct market demands. Inspect the existing I5 per-posting concept deduplication and Registry/Capability treatment before claiming a counting defect or changing accepted Market semantics.
+
+**Not yet decided:** Whether groups are a derived read model, candidate semantic interpretation, or reviewed/promoted mapping; what grouping confidence, naming, materiality and lifecycle rules apply; whether and how an imperfect candidate analysis can be displayed; grouping versus canonical identity across postings; which existing feature already provides similar functionality; whether any P1.6 schema, acceptance, Market, Capability or UI code changes are warranted. Review existing owners and actual consumers before writing an implementation plan. No automatic merging of evidence records, source loss, obligation/depth weakening, or current acceptance-policy change is authorized.
+
 ## Discussion ledger
 
 | ID | Topic | Status | Next discussion |
 | --- | --- | --- | --- |
 | R01 | Capability ↔ experience ↔ demonstrable work overlap; ambiguous concept-label materiality; whole-analysis rejection | First discussion recorded; refinement proposals OPEN | Determine actual downstream consequences and the right claim/authority boundary |
 | R02 | `tvMm` source/result/planner/model/normalizer/review failure-layer diagnosis; omitted preference and overlapping entries | Evidence-backed findings recorded; refinements OPEN | Decide proportional treatment and whether source-backed preference coverage must be redesigned |
-| R03+ | Other strictness, failure, coverage, model, and utility issues | NOT YET DISCUSSED | Add separate source-backed entries as discussion continues |
+| R03 | Source-preserving grouping of related qualifications for the job-facing view | **User agreed on design direction**; mechanism and implementation OPEN | Inspect existing grouping/consumers, then specify safe display and counting boundaries |
+| R04+ | Other strictness, failure, coverage, model, and utility issues | NOT YET DISCUSSED | Add separate source-backed entries as discussion continues |
 
 ## Change authorization boundary
 
