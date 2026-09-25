@@ -45,7 +45,12 @@
           <p class="eyebrow">{% block eyebrow %}Local-first career intelligence{% endblock %}</p>
           <h1>{% block heading %}JobHunter{% endblock %}</h1>
         </div>
-        <div class="topbar-actions">{% block topbar_actions %}{% endblock %}</div>
+        <div class="topbar-actions">
+          {% if source_job_id is defined and english_analysis_artifact is defined and english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'pending' %}
+          <a class="button ghost" href="/jobs/{{ source_job_id }}/item-review">Review individual claims</a>
+          {% endif %}
+          {% block topbar_actions %}{% endblock %}
+        </div>
       </header>
       {% block content %}{% endblock %}
     </main>

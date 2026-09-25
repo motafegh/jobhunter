@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}P1.6 item review · JobHunter{% endblock %}
+{% block heading %}English analysis · item review{% endblock %}
+{% block eyebrow %}Job {{ source_job_id }} · candidate artifact {{ artifact.id }}{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/jobs/{{ source_job_id }}">Back to job details</a>{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Pending candidate · no automatic promotion</p><h2>Source-backed item review</h2></div><span class="badge {{ 'good' if review_complete else 'warn' }}">{{ 'Review completed' if review_complete else 'Review incomplete' }}</span></div>
+  {% if notice %}<p class="notice">{{ notice }}</p>{% endif %}
+  <p>Review each original claim against its cited source. A proposed correction is only an annotation: it never changes this candidate or becomes an accepted employer fact. Record source omissions separately. Unresolved material findings block whole-artifact acceptance once review has begun.</p>
+  <div class="artifact-meta"><span>{{ artifact.prompt_version }}</span><span>{{ artifact.schema_version }}</span><span>Source version {{ artifact.job_detail_version_id }}</span><span>English projection {{ artifact.translation_artifact_id }}</span></div>
+  {% if artifact.semantic_review_status != 'pending' %}<p class="notice">This artifact is {{ artifact.semantic_review_status }}. Historical review information is read-only.</p>{% else %}
+  <form method="post" action="/jobs/{{ source_job_id }}/item-review">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="artifact_id" value="{{ artifact.id }}"><input type="hidden" name="intent" value="begin">
+    <button class="button ghost" type="submit">Start complete-item review</button>
+  </form>{% endif %}
+</section>
+
+{% for kind, title in [('role_purpose', 'Role purpose'), ('responsibilities', 'Responsibilities'), ('requirements', 'Requirements')] %}
+<section class="panel analysis-panel">
+  <div class="panel-header"><h2>{{ title }}</h2><span class="badge">{{ artifact.analysis.get(kind, [])|length }} original claims</span></div>
+  {% for claim in artifact.analysis.get(kind, []) %}
+  {% set index = loop.index0 %}{% set recorded = latest.get((kind, index)) %}
+  <div class="claim-card">
+    <div class="claim-head"><strong>{{ claim.concept if kind == 'requirements' else claim.statement }}</strong><span class="badge {{ 'warn' if recorded and recorded.material else 'good' if recorded else '' }}">{{ recorded.finding if recorded else 'Not reviewed' }}</span></div>
+    <blockquote>{{ claim.evidence }}</blockquote>
+    {% if kind == 'requirements' %}<p class="job-meta">{{ claim.requirement_type }} · {{ claim.concept_type }}{% if claim.depth_signal %} · {{ claim.depth_signal }}{% endif %}</p>{% endif %}
+    {% if recorded %}<p class="muted">Review: {{ recorded.note }}</p>{% if recorded.proposed_text %}<p class="notice">Unapproved proposed correction: {{ recorded.proposed_text }}</p>{% endif %}{% endif %}
+    {% if artifact.semantic_review_status == 'pending' %}
+    <form method="post" action="/jobs/{{ source_job_id }}/item-review">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="artifact_id" value="{{ artifact.id }}"><input type="hidden" name="intent" value="item"><input type="hidden" name="kind" value="{{ kind }}"><input type="hidden" name="item_index" value="{{ index }}">
+      <label>Finding<select name="finding" required><option value="supported">Source supported</option><option value="needs_clarification">Needs clarification</option><option value="unsupported">Unsupported employer claim</option></select></label>
+      <label>Review reason<input name="note" required minlength="8" maxlength="2000" placeholder="Explain what source evidence supports or contradicts this claim"></label>
+      <label>Optional proposed correction<input name="proposed_text" maxlength="1000" placeholder="Proposed wording; never silently applied"></label>
+      <label><input type="checkbox" name="minor" value="true">Non-material interpretive uncertainty (not for unsupported employer facts)</label>
+      <button class="button ghost" type="submit">Record item finding</button>
+    </form>{% endif %}
+  </div>
+  {% else %}<p class="muted">No extracted claims in this section.</p>{% endfor %}
+</section>
+{% endfor %}
+
+<section class="panel analysis-panel"><h2>Source-coverage gaps</h2><p>Use exact wording from the current English projection. A missing statement is not a generated claim; an added wording proposal needs its own reviewed revision.</p>
+  {% for gap in gaps %}<div class="claim-card"><blockquote>{{ gap.source_excerpt }}</blockquote><span class="badge {{ 'warn' if gap.material else 'good' }}">{{ gap.finding }}</span><p>{{ gap.note }}</p>{% if gap.proposed_text %}<p>Unapproved addition: {{ gap.proposed_text }}</p>{% endif %}</div>{% else %}<p class="muted">No coverage-gap findings recorded. This does not prove complete source coverage.</p>{% endfor %}
+  {% if artifact.semantic_review_status == 'pending' %}
+  <form method="post" action="/jobs/{{ source_job_id }}/item-review">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="artifact_id" value="{{ artifact.id }}"><input type="hidden" name="intent" value="gap">
+    <label>Exact source excerpt<input name="source_excerpt" required maxlength="2000" placeholder="Copy source wording of the missing qualification"></label>
+    <label>Coverage finding<select name="finding"><option value="gap_open">Missing statement</option><option value="gap_dismissed">Dismiss earlier gap as mistaken/non-material</option></select></label>
+    <label>Reason<input name="note" required minlength="8" maxlength="2000"></label>
+    <label>Optional proposed addition<input name="proposed_text" maxlength="1000"></label>
+    <label><input type="checkbox" name="minor" value="true">Non-material omission</label>
+    <button class="button ghost" type="submit">Record source-coverage finding</button>
+  </form>
+  <form method="post" action="/jobs/{{ source_job_id }}/item-review">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}"><input type="hidden" name="artifact_id" value="{{ artifact.id }}"><input type="hidden" name="intent" value="finish">
+    <label>Coverage and completion note<input name="note" required minlength="8" maxlength="2000" placeholder="Confirm source was checked and unresolved material findings addressed"></label>
+    <button class="button primary" type="submit">Finish item review (does not accept analysis)</button>
+  </form>{% endif %}
+  {% if review_complete and artifact.semantic_review_status == 'pending' %}<p class="notice">All original items have a recorded finding and no material issue remains. Return to job details for the existing separate whole-artifact acceptance decision.</p>{% endif %}
+</section>
+{% endblock %}
