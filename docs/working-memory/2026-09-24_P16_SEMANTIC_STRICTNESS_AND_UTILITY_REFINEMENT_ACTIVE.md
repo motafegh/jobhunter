@@ -1,7 +1,7 @@
 # P1.6 semantic strictness and product-utility refinements — active discussion
 
 **Opened:** 2026-09-24  
-**Status:** ACTIVE DISCUSSION / FINDINGS AND PROPOSALS ONLY — NO IMPLEMENTATION APPROVAL  
+**Status:** ACTIVE DISCUSSION; R05 A1–A2/B IMPLEMENTED AND MERGED; R01–R04 REMAIN DISCUSSION / NO FURTHER IMPLEMENTATION APPROVAL  
 **Scope:** Evaluate whether current P1.6 generation, validation, review, and whole-result acceptance reject useful source-backed intelligence because of conceptual overlap or disproportionate strictness. Accumulate issues and jointly settle refinements before planning code changes.  
 **Working rule:** Record observations, source evidence, interpretations, options, decisions, and unresolved questions separately. Do not silently turn a discussion proposal into a controlling contract.
 
@@ -12,7 +12,7 @@
 - [2026-09-24 v22 post-alias evaluation closure](2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md): the immediate concrete example, its review outcome, and unresolved preferred-proof-of-work coverage.
 - [Rolling working memory](../WORKING_MEMORY.md) and [current-state reconciliation](../CURRENT_STATE_RECONCILIATION_2026-09-12.md): current operational status. This document is a subordinate discussion record and does not supersede them.
 
-**Unchanged operational baseline:** English P1.6 public/current = `job-analysis-english-v21 / job-analysis-v5`; v22 remains an isolated unpromoted candidate; Market I7 remains HOLD. Accepted anchors, semantic promotion rules, Market history, and the stop line on further live generation remain unchanged. No implementation, model call, new acceptance, or authorization to relax an existing gate follows from opening this file.
+**Operational baseline:** English P1.6 public/current = `job-analysis-english-v21 / job-analysis-v5`; v22 remains an isolated unpromoted candidate; Market I7 remains HOLD. Accepted anchors, semantic promotion rules, Market history, and the stop line on further live generation remain unchanged. R05 diagnostic capture and item-level review were explicitly authorized, implemented, and merged into `main` on 2026-09-25; no other implementation, model call, new semantic acceptance, or authorization to relax an existing gate follows from this file.
 
 ## Issue R01 — Overlap among capability, practical experience, and proof of ability
 
@@ -109,7 +109,7 @@ Ability to perform complex engineering work and hands-on experience are often cl
 | R02 | `tvMm` source/result/planner/model/normalizer/review failure-layer diagnosis; omitted preference and overlapping entries | Evidence-backed findings recorded; refinements OPEN | Decide proportional treatment and whether source-backed preference coverage must be redesigned |
 | R03 | Source-preserving grouping of related qualifications for the job-facing view | **User agreed on design direction**; mechanism and implementation OPEN | Inspect existing grouping/consumers, then specify safe display and counting boundaries |
 | R04 | Preferred proof-of-ability evidence versus required qualification and application instructions | **User agreed on design direction**; extraction/representation implementation OPEN | Inspect current schema/consumer ownership; evaluate representative real-posting counterexamples |
-| R05+ | Other strictness, failure, coverage, model, and utility issues | NOT YET DISCUSSED | Add separate source-backed entries as discussion continues |
+| R05 | Failure diagnostics + source-anchored item review and acceptance fence | **A1–A2/B implemented, CI green, merged to `main` 2026-09-25**; real-local verification outstanding; immutable corrected-revision promotion still separate | Perform bounded real-local verification before any revised-artifact promotion design; keep Market I7 HOLD |
 
 ## Change authorization boundary
 
