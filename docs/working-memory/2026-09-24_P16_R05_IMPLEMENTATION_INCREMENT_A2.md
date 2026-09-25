@@ -1,9 +1,9 @@
 # R05 implementation increment A2 — scoped failure diagnostics and local inspection
 
 **Date:** 2026-09-24  
-**Status:** IMPLEMENTED ON FEATURE BRANCH / CI GREEN / UNMERGED / REAL-LOCAL VERIFICATION OUTSTANDING  
+**Status:** MERGED TO `main` / CI GREEN / REAL-LOCAL VERIFICATION OUTSTANDING  
 **Branch:** `agent/r05-diagnostic-safety-2026-09-24`  
-**PR:** https://github.com/motafegh/jobhunter/pull/9  
+**PR:** https://github.com/motafegh/jobhunter/pull/9 — merged 2026-09-25 (`7a528ba28bd9b9c51233f2802794a367859b93e0`)  
 **Parents:** `2026-09-24_P16_R05_IMPLEMENTATION_INCREMENT_A1.md`, `2026-09-24_P16_R05_REVISION_DEPENDENCIES_AND_FAILURE_CAPTURE_FINDINGS.md`.
 
 ## Implemented
@@ -19,4 +19,4 @@ GitHub Actions CI #1333 on commit `244a39ac28eb39d95ba0fc9c56bbaa86fd97e19c` pas
 
 ## Authority and continuation
 
-No public semantic version, P1.6 accepted/current selector, original evidence, historical Market snapshot, Capability, Registry or public-corpus export was changed. PR #9 remains draft and unmerged. The next distinct feature increment is pending-artifact item-level review with original claim provenance and an acceptance-side guard against unresolved material annotations; corrective revisions/promotion remain separate until identity migration is explicitly designed and verified.
+No public semantic version, P1.6 accepted/current selector, original evidence, historical Market snapshot, Capability, Registry or public-corpus export was changed. PR #9 is merged into `main`. Pending-artifact item-level review was subsequently delivered in PR #10 and merged on 2026-09-25 (`99072e97ed47ee169d99fefaaea385ec3a45a6d6`). Corrective revisions/promotion remain separate until identity migration is explicitly designed and verified.
