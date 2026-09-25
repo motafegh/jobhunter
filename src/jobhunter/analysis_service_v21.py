@@ -1,10 +1,22 @@
 """Versioned persisted P1.6 v21 scoped-evidence service."""
 
+from __future__ import annotations
+
+from contextlib import suppress
+from datetime import datetime
+
+from jobhunter.analysis_failure_diagnostics import (
+    AnalysisFailureDiagnosticStore,
+    SafeFailure,
+    describe_failure,
+)
 from jobhunter.analysis_service_v20 import (
     _ENGLISH_SYSTEM_PROMPT_V20,
     ANALYSIS_SCHEMA_VERSION,
     JobAnalysisServiceV20,
 )
+from jobhunter.inference.base import InferenceConnectionError, InferenceResponseError
+from jobhunter.translation_store import TranslationSourceVersion
 
 ENGLISH_PROMPT_VERSION = "job-analysis-english-v21"
 
@@ -61,3 +73,44 @@ class JobAnalysisServiceV21(JobAnalysisServiceV20):
     prompt_version = ENGLISH_PROMPT_VERSION
     system_prompt = _ENGLISH_SYSTEM_PROMPT_V21
     schema_name = "jobhunter_job_analysis_english_v21"
+
+    def __init__(
+        self,
+        *args,
+        diagnostic_store: AnalysisFailureDiagnosticStore | None = None,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self._diagnostic_store = diagnostic_store
+
+    def _record_failed_attempt(
+        self,
+        *,
+        source: TranslationSourceVersion,
+        attempted_at: datetime,
+        error: Exception,
+    ) -> None:
+        # Existing attempt history remains canonical. Never persist str(error):
+        # Instructor may render full completions in its exception text.
+        attempt_id = self._analysis_store.record_attempt(
+            job_detail_version_id=source.job_detail_version_id,
+            attempted_at=attempted_at,
+            model=self._model,
+            prompt_version=self.prompt_version,
+            schema_version=ANALYSIS_SCHEMA_VERSION,
+            outcome="failed",
+            error=SafeFailure(describe_failure(error)),
+        )
+        if self._diagnostic_store is not None:
+            # Private diagnostic capture must not mask the original failure or
+            # turn an unsuccessful attempt into an analysis artifact.
+            with suppress(Exception):
+                self._diagnostic_store.record_failure(attempt_id=attempt_id, error=error)
+
+    def analyze_english_job(self, source_job_id: str):
+        try:
+            return super().analyze_english_job(source_job_id)
+        except InferenceConnectionError as exc:
+            raise InferenceConnectionError(describe_failure(exc).message) from None
+        except InferenceResponseError as exc:
+            raise InferenceResponseError(describe_failure(exc).message) from None
