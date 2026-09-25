@@ -1,9 +1,9 @@
 # R05 Increment B — pending-candidate item review
 
 **Date:** 2026-09-24  
-**Status:** IMPLEMENTED / CI GREEN ON FEATURE BRANCH / DRAFT PR / UNMERGED / REAL-LOCAL ACCEPTANCE OUTSTANDING  
+**Status:** MERGED TO `main` / CI GREEN / REAL-LOCAL ACCEPTANCE OUTSTANDING  
 **Branch:** `agent/r05-item-review-2026-09-24`  
-**Stacked PR:** https://github.com/motafegh/jobhunter/pull/10 (base A1–A2 PR #9).  
+**Merged PR:** https://github.com/motafegh/jobhunter/pull/10 — merged after A1–A2 PR #9 on 2026-09-25 (`99072e97ed47ee169d99fefaaea385ec3a45a6d6`).  
 **Parents:** `2026-09-24_P16_R05_ITEM_LEVEL_REVIEW_DIRECTION.md`, `2026-09-24_P16_R05_CORRECTION_LIFECYCLE_AND_PROPORTIONAL_GUARDS.md`, `2026-09-24_P16_R05_MINIMAL_RECORD_AND_DIAGNOSTIC_CAPTURE_DESIGN.md`, `2026-09-24_P16_R05_REVISION_DEPENDENCIES_AND_FAILURE_CAPTURE_FINDINGS.md`, `2026-09-24_P16_R05_IMPLEMENTATION_INCREMENT_A2.md`.
 
 ## Delivered
@@ -14,8 +14,8 @@ The existing CLI dispatches private `jobhunter --config config/local.toml item-r
 
 ## Verification
 
-GitHub Actions CI #1344, commit `4333a3bb3c1f1596c72aeb4caa22c7cfd95e3e9e`, passed entrypoint smoke, Ruff, full tests and full warnings-as-errors. No real-local user DB acceptance, reviewer usability session with representative `tvMm`, actual provider failure capture, or Market I7 acceptance was performed.
+GitHub Actions CI #1345, commit `b3091c891a5845d51fe4e32d1236a5c8cfa3685a`, passed entrypoint smoke, Ruff, full tests and full warnings-as-errors. No real-local user DB acceptance, reviewer usability session with representative `tvMm`, actual provider failure capture, or Market I7 acceptance was performed.
 
 ## Bounded continuation and stop line
 
-This is a review workflow, not automatic semantic fact repair. No reviewed new claim set or accepted revision is created. C requires an explicit immutable revision identity/current-selector and downstream-dependency migration across Capability, Registry mappings, Work, immutable Market snapshots and public corpus; preserve old accepted IDs and source/projection identities. The present PRs remain draft and unmerged pending local verification and review. The active public v21/v5 route and Market I7 HOLD are unchanged.
+This is a review workflow, not automatic semantic fact repair. No reviewed new claim set or accepted revision is created. C requires an explicit immutable revision identity/current-selector and downstream-dependency migration across Capability, Registry mappings, Work, immutable Market snapshots and public corpus; preserve old accepted IDs and source/projection identities. PRs #9 and #10 are merged into `main` by explicit user authorization on 2026-09-25. Real-local verification and reviewer usability acceptance remain outstanding. The active public v21/v5 route and Market I7 HOLD are unchanged.
