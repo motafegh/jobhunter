@@ -7,6 +7,8 @@
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED
 
+**Active owner-requested follow-up:** Finish same-target coverage beyond the bounded I7 acceptance sample; ten source-ready postings are qualified and translated, seven are core, and one core posting has accepted-current P1.6. See `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
+
 Status vocabulary:
 
 ```text

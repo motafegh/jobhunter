@@ -31,6 +31,8 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 
 The first **target-scoped Market / Role-Family Intelligence vertical slice** (I1-I7) has passed bounded real-local acceptance. Repeated target runs verified acquisition, membership, source-vs-semantic denominators, reuse, immutable snapshots, privacy, and shared browser/CLI read paths. Snapshot 6 contains six qualified core source postings, including one with explicitly accepted English P1.6 artifact 50 and frozen requirement/responsibility drill-down. These small samples do not establish broad-market prevalence. See the [I7 acceptance record](docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md).
 
+The owner-requested coverage follow-up has since qualified and translated all ten source-ready postings in this target; seven are core and one currently has accepted P1.6. Snapshot 8 preserves that state while per-job semantic review continues.
+
 ## Why the engineering is non-trivial
 
 The central design problem is not "call an LLM on a job description." It is deciding **what may become authoritative, what remains interpretation, and how every important claim stays recoverable to evidence**.
@@ -113,13 +115,13 @@ Current committed baseline:
 
 | Public corpus state | Count |
 | --- | ---: |
-| Known/discovered jobs | 410 |
+| Known/discovered jobs | 411 |
 | Fetched/parsed job details | 51 |
-| Current English projections | 27 |
+| Current English projections | 29 |
 | Accepted English P1.6 artifacts | 6 |
 | Accepted Capability artifacts | 5 |
 
-`410` means known/discovered job identities, not 410 complete advertisements.
+`411` means known/discovered job identities, not 411 complete advertisements.
 
 A fresh clone can inspect the committed corpus without SQLite, Jobinja access, or LM Studio:
 
@@ -244,7 +246,7 @@ P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
 Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
-Current exact increment                 Select next product increment under the Market plan
+Current exact increment                 Owner-requested I7 target coverage follow-up
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.

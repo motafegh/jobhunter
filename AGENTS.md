@@ -148,9 +148,9 @@ Those five accepted anchor artifacts remain physically v20/v5 and are accepted-o
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 410
+known/discovered Jobinja jobs: 411
 fetched/parsed detail jobs:      51
-current English projections:     27
+current English projections:     29
 accepted/current English P1.6:    6
 accepted/current Capability:      5
 ```
@@ -169,7 +169,7 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            Select next scoped Market product increment
+next exact increment            Owner-requested I7 target coverage follow-up
 ```
 
 B1 final evidence is retained at:

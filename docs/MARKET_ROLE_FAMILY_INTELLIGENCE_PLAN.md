@@ -817,7 +817,7 @@ I1-I6 repository acceptance complete
 → accepted v23/v5 tvMm artifact 50 frozen into Market snapshots 4-6
 → bounded real CLI/browser and reuse checks PASS
 → I7 PASS / first vertical slice CLOSED
-→ choose the next scoped product increment under this plan
+→ owner-requested same-target coverage follow-up ACTIVE, without enlarging the bounded I7 acceptance claim
 ```
 
 I6 implementation baseline: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.

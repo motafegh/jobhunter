@@ -32,7 +32,19 @@ backup remain under ignored `data/local-acceptance/i7/`. Public corpus changes
 contain only governed source observations and the completed English projection;
 Market target, run, membership, snapshot and profile state remains local.
 
-Next: retry only the missing `tNVe` translation through a bounded target run,
-then review current core P1.6 candidates one at a time against exact source
+Run 8 retried only the missing `tNVe` translation under the repaired transport.
+It completed with no stage failures, no source refresh or P1.6 generation, and
+ten of ten source-ready target postings now have current English projections.
+Membership again completed for all ten with seven core, one adjacent and two
+excluded. The new immutable snapshot/profile 8 retains one accepted-semantic
+core posting out of seven. The public corpus now has 29 current English
+projections; no Market-local state was published.
+
+Run 8 discovered one additional public source identity, bringing the corpus to
+411 known jobs, 51 parsed details, 29 current English projections, six accepted
+English P1.6 artifacts and five accepted Capability artifacts. Corpus
+verification passed at this checkpoint.
+
+Next: review current core P1.6 candidates one at a time against exact source
 evidence. Do not auto-accept model output or call this target semantically
 complete while any core posting remains missing/pending/rejected.

@@ -52,9 +52,9 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 410
+known/discovered Jobinja jobs: 411
 fetched/parsed detail jobs:      51
-current English projections:     27
+current English projections:     29
 accepted/current English P1.6:    6
 accepted/current Capability:      5
 ```
@@ -246,6 +246,13 @@ read paths, immutable history, SQLite integrity and corpus privacy passed. The s
 does not support broad-market prevalence. Final authority:
 `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
+Owner-requested same-target coverage is now in progress beyond that bounded
+sample. Runs 7-8 qualified all ten source-ready postings (seven core, one
+adjacent, two excluded) and completed current English projections for all ten.
+P1.6 remains accepted for only one core posting. Run 7's translation timeout was
+repaired at the transport boundary and run 8 completed its retry. Current
+follow-up: `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
+
 The rest of this section is the historical HOLD trail, retained to explain repairs.
 Its former present-tense next-work statements are superseded by the final decision.
 
@@ -365,7 +372,7 @@ B1 CLOSED / DEFER
 → I1-I6 ACCEPTED
 → v23/v5 artifact 50 explicitly accepted and frozen in Market snapshots 4-6
 → I7 PASS / bounded first Market vertical slice CLOSED
-→ choose the next scoped increment under the Market plan
+→ owner-requested same-target coverage follow-up ACTIVE (source membership and English complete; P1.6 review open)
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.

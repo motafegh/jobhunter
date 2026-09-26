@@ -6,6 +6,7 @@
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
 **Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
+**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; runs 7-8 qualified ten source-ready postings and translated all ten, with seven core and one accepted-semantic core posting. P1.6 review remains open.
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -38,6 +39,10 @@ I7 execution result:
 Final I7 decision (supersedes historical HOLD routing below):
 
 `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`
+
+Active same-target coverage follow-up:
+
+`docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`
 
 Execution checklist:
 
