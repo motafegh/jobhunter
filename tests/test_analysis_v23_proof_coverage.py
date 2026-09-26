@@ -42,7 +42,13 @@ def _proof(job_id: str):
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:
     tvmm = _proof("tvMm")
     assert len(tvmm) == 3
-    assert any("huge plus" in item["text"] for item in tvmm.values())
+    demonstration = next(item["text"] for item in tvmm.values()
+                         if "huge plus" in item["text"])
+    assert "What problem did the Agent solve?" in demonstration
+    assert "How did it make decisions?" in demonstration
+    assert "What Tools did it have access to?" in demonstration
+    assert "How did you manage Context and Memory?" in demonstration
+    assert "How did you measure the quality and cost of the system?" in demonstration
     assert any("repository, sample project, or Demo" in item["text"] for item in tvmm.values())
     assert len(_proof("tjgi")) == 1
     assert "real-world sample" in next(iter(_proof("tjgi").values()))["text"]
@@ -138,3 +144,18 @@ def test_v23_transport_keeps_v22_fact_guard_and_versioned_request(monkeypatch) -
          "required_concept_type": None}
     ]
     assert result.request_body["runtime"]["p16_v23_candidate_proof_coverage"] is True
+
+
+def test_proof_followup_questions_keep_exact_source_whitespace() -> None:
+    description = (
+        "It would be a plus if you could show a sample project: What did it do?\n"
+        "How did you evaluate it? A demo is very valuable."
+    )
+    proof = build_requirement_coverage_plan_v23({"description": description})
+    excerpts = [item["text"] for item in proof.values()
+                if item.get("source_kind") == "candidate_proof"]
+    assert excerpts[0] == (
+        "It would be a plus if you could show a sample project: What did it do?\n"
+        "How did you evaluate it?"
+    )
+    assert all(excerpt in description for excerpt in excerpts)

@@ -26,6 +26,37 @@ _APPLICATION_INSTRUCTION_RE = re.compile(
 )
 
 
+def _proof_sentences(bullet: str) -> list[str]:
+    """Keep an explicit demonstration request with its immediately following questions."""
+
+    sentences = _sentences(bullet)
+    result: list[str] = []
+    cursor = 0
+    index = 0
+    while index < len(sentences):
+        sentence = sentences[index]
+        start = bullet.find(sentence, cursor)
+        if start < 0:
+            raise ValueError("Proof sentence must remain an exact source substring")
+        end = start + len(sentence)
+        if (
+            ":" in sentence and sentence.endswith("?")
+            and _PROOF_CUE_RE.search(sentence)
+            and _PREFERENCE_CUE_RE.search(sentence)
+        ):
+            while index + 1 < len(sentences) and sentences[index + 1].endswith("?"):
+                index += 1
+                following = sentences[index]
+                following_start = bullet.find(following, end)
+                if following_start < 0:
+                    raise ValueError("Proof question must remain an exact source substring")
+                end = following_start + len(following)
+        result.append(bullet[start:end].strip())
+        cursor = end
+        index += 1
+    return result
+
+
 def build_requirement_coverage_plan_v23(
     fields: dict[str, Any],
 ) -> dict[str, dict[str, Any]]:
@@ -39,7 +70,7 @@ def build_requirement_coverage_plan_v23(
     existing = [str(item["text"]) for item in plan.values()]
     index = 0
     for bullet in description.split("•"):
-        for sentence in _sentences(bullet):
+        for sentence in _proof_sentences(bullet):
             text = sentence.strip()
             if not (
                 _PROOF_CUE_RE.search(text)
