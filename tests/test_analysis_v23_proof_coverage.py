@@ -5,6 +5,9 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+from pydantic import ValidationError
+
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
 from jobhunter.analysis_runtime_v23 import V23CandidateAnalysisProvider
 from jobhunter.analysis_service import _analysis_fields_for_english
@@ -14,8 +17,9 @@ from jobhunter.analysis_service_v23 import (
 )
 from jobhunter.evidence_refs_v21 import build_requirement_coverage_plan_v21
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
-from jobhunter.inference.instructor_lm_studio_v22 import JobAnalysisResponseV22
 from jobhunter.inference.instructor_lm_studio_v23 import (
+    AnalysisRequirementV23,
+    JobAnalysisResponseV23,
     complete_analysis_partition_with_instructor_v23,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
@@ -50,17 +54,15 @@ def test_explicit_proof_preferences_are_exact_and_preferred() -> None:
     assert "How did you manage Context and Memory?" in demonstration
     assert "How did you measure the quality and cost of the system?" in demonstration
     assert any("repository, sample project, or Demo" in item["text"] for item in tvmm.values())
-    assert len(_proof("tjgi")) == 1
-    assert "real-world sample" in next(iter(_proof("tjgi").values()))["text"]
-    for job_id in ("tvMm", "tjgi"):
-        description = _fields(job_id)["description"]
-        for item in _proof(job_id).values():
-            assert item["text"] in description
-            assert item["obligation_hint"] == "preferred"
-            assert item["allow_exclusion"] is False
-            assert item["required_item_excerpts"] == [
-                {"text": item["text"], "required_concept_type": None}
-            ]
+    assert _proof("tjgi") == {}  # "At least one" is qualification strength, not preference.
+    description = _fields("tvMm")["description"]
+    for item in tvmm.values():
+        assert item["text"] in description
+        assert item["obligation_hint"] == "preferred"
+        assert item["allow_exclusion"] is False
+        assert item["required_item_excerpts"] == [
+            {"text": item["text"], "required_concept_type": None}
+        ]
 
 
 def test_submission_only_cases_never_become_proof_requirements() -> None:
@@ -137,13 +139,49 @@ def test_v23_transport_keeps_v22_fact_guard_and_versioned_request(monkeypatch) -
             }
         }, responsibility_coverage_plan={},
     )
-    assert captured["response_model"] is JobAnalysisResponseV22
+    assert captured["response_model"] is JobAnalysisResponseV23
     assert captured["contract_version"] == "v23"
     assert captured["user_payload"]["exact_item_coverage"] == [
         {"parent_reference": "proof", "item_excerpt": "A demo is very valuable.",
          "required_concept_type": None}
     ]
     assert result.request_body["runtime"]["p16_v23_candidate_proof_coverage"] is True
+
+
+@pytest.mark.parametrize("job_id,needle", [
+    ("tvMm", "very valuable"),
+    ("tvMm", "more valuable"),
+])
+def test_v23_accepts_exact_source_preference_only_for_proof_ref(
+    job_id: str, needle: str,
+) -> None:
+    proof = _proof(job_id)
+    candidate = next(item for item in proof.values() if needle in item["text"])
+    excerpt = candidate["text"]
+    requirement = {
+        "concept": "Candidate work demonstration",
+        "depth_signal": None,
+        "requirement_type": "preferred",
+        "concept_type": "other",
+        "evidence": excerpt,
+        "item_excerpt": excerpt,
+        "confidence": "high",
+        "rationale": "Explicit source preference.",
+    }
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": _fields(job_id)["description"]},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"proof": candidate},
+    }
+    result = AnalysisRequirementV23.model_validate(requirement, context=context)
+    assert result.requirement_type == "preferred"
+
+    context["requirement_coverage_plan"] = {
+        "ordinary": {**candidate, "source_kind": "requirement_section"}
+    }
+    with pytest.raises(ValidationError, match="Preferred item needs exact"):
+        AnalysisRequirementV23.model_validate(requirement, context=context)
 
 
 def test_proof_followup_questions_keep_exact_source_whitespace() -> None:

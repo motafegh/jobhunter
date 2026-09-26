@@ -15,8 +15,7 @@ _PROOF_CUE_RE = re.compile(
 )
 _PREFERENCE_CUE_RE = re.compile(
     r"\b(?:huge\s+plus|plus\s+if|very\s+valuable|more\s+valuable|"
-    r"significant\s+impact|prioritized\s+for\s+review|"
-    r"having\s+at\s+least\s+one\s+real-world\s+sample)\b",
+    r"significant\s+impact|prioritized\s+for\s+review)\b",
     re.I,
 )
 _APPLICATION_INSTRUCTION_RE = re.compile(

@@ -2,14 +2,44 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
+
+from pydantic import Field
 
 from jobhunter.inference import instructor_lm_studio_v20 as v20
 from jobhunter.inference.instructor_lm_studio_v22 import (
+    AnalysisRequirementV22,
     JobAnalysisResponseV22,
     persisted_v20_shape,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+
+_PROOF_VALUE_PREFERENCE_RE = re.compile(r"\b(?:very|more)\s+valuable\b", re.I)
+
+
+class AnalysisRequirementV23(AnalysisRequirementV22):
+    """Recognize exact value preference only for versioned candidate-proof refs."""
+
+    def _has_exact_preference_signal(self, text: str, plan: dict[str, Any]) -> bool:
+        if super()._has_exact_preference_signal(text, plan):
+            return True
+        return bool(
+            _PROOF_VALUE_PREFERENCE_RE.search(text)
+            and any(
+                isinstance(candidate, dict)
+                and candidate.get("source_kind") == "candidate_proof"
+                and candidate.get("obligation_hint") == "preferred"
+                and candidate.get("text") == self.evidence
+                for candidate in plan.values()
+            )
+        )
+
+
+class JobAnalysisResponseV23(JobAnalysisResponseV22):
+    """V22 source-fact guards with scoped proof-preference recognition."""
+
+    requirements: list[AnalysisRequirementV23] = Field()
 
 
 def complete_analysis_partition_with_instructor_v23(
@@ -55,7 +85,7 @@ def complete_analysis_partition_with_instructor_v23(
         seed=seed,
         requirement_coverage_plan=requirement_coverage_plan,
         responsibility_coverage_plan=responsibility_coverage_plan,
-        response_model=JobAnalysisResponseV22,
+        response_model=JobAnalysisResponseV23,
         contract_version="v23",
         validation_retries=validation_retries,
         additional_evidence_catalog=additional_evidence_catalog,
@@ -76,6 +106,8 @@ def complete_analysis_partition_with_instructor_v23(
 
 
 __all__ = [
+    "AnalysisRequirementV23",
+    "JobAnalysisResponseV23",
     "complete_analysis_partition_with_instructor_v23",
     "persisted_v20_shape",
 ]

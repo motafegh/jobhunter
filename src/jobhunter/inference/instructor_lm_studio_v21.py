@@ -55,6 +55,11 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
 
     item_excerpt: str = Field(min_length=2)
 
+    def _has_exact_preference_signal(self, text: str, plan: dict[str, Any]) -> bool:
+        """Keep the v21 source-preference rule available to later versioned contracts."""
+
+        return has_candidate_optionality_signal(text)
+
     @model_validator(mode="after")
     def validate_requirement_semantics(self, info: ValidationInfo) -> Self:
         canonical_item = _equivalent_source_excerpt(self.item_excerpt, self.evidence)
@@ -80,10 +85,10 @@ class AnalysisRequirementV21(AnalysisRequirementV20):
         if "preferred" in parent_hints and self.requirement_type != "preferred":
             raise ValueError("Preferred parent coverage requires preferred item strength")
         if self.requirement_type == "preferred" and not (
-            has_candidate_optionality_signal(self.item_excerpt)
+            self._has_exact_preference_signal(self.item_excerpt, plan)
             or (
                 "preferred" in parent_hints
-                and has_candidate_optionality_signal(self.evidence)
+                and self._has_exact_preference_signal(self.evidence, plan)
             )
         ):
             raise ValueError("Preferred item needs exact source preference in item or parent")
