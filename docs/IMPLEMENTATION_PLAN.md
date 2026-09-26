@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-22
+**Last reconciled:** 2026-09-26
 
-**Current execution bridge:** Phase 1, P2.1, and P2.2A are accepted/closed. Market I1-I6 are repository-accepted; I7 real-local execution is complete with outcome HOLD, and only the bounded closure checks remain. Historical Phase-1 gate sections below remain acceptance evidence, not current routing.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. The next scoped product increment must be selected under the Market plan; historical gate sections below remain acceptance evidence, not current routing. I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ## 1. Purpose and authority
 
@@ -66,19 +66,19 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 |---|---|---|
 | M0 | Local Python/SQLite/LM Studio foundation | Accepted |
 | Phase 1 | Trustworthy Jobinja source→English→factual-analysis→first-Market workflow | CLOSED / ACCEPTED |
-| Phase 2 | Canonical/analytical market intelligence and target-scoped Market workflows | ACTIVE — I1-I6 accepted / I7 executed HOLD |
+| Phase 2 | Canonical/analytical market intelligence and target-scoped Market workflows | ACTIVE — bounded I1-I7 first slice accepted |
 | Phase 3 | Reviewed personal evidence and gap intelligence | Planned |
 | Phase 4 | Explainable decisions/action/application readiness | Planned |
 | Phase 5 | Sustained operation, trends, recovery, quality | Planned |
 
 A bounded per-job semantic slice was intentionally implemented before Phase-1 closure to prove safe authority boundaries above P1.6. Its current dispositions are:
 
-- English P1.6 v21/v5: promoted/current for new generation; the accepted v20/v5 anchors remain accepted-only compatibility inputs;
+- English P1.6 v23/v5: promoted/current for new generation; accepted v20/v5 and v21/v5 artifacts remain accepted-only compatibility inputs;
 - Capability Intelligence v9/v5: promoted/current and operationally closed on the same accepted anchors;
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
 - heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
 
-This does **not** authorize promoted P2.2C/P2.2D taxonomy growth, personal scoring, semantic role-subfamily/report synthesis beyond the current slice, or authoritative Blueprint use. The bounded target-scoped Market I1-I6 implementation is accepted; I7 execution is HOLD until the remaining closure checks pass.
+This does **not** authorize promoted P2.2C/P2.2D taxonomy growth, personal scoring, semantic role-subfamily/report synthesis beyond the current slice, or authoritative Blueprint use. The bounded target-scoped Market I1-I7 first slice is accepted; the next layer needs its own explicit scope and evidence.
 
 ---
 

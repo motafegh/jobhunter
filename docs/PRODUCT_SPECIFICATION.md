@@ -2,13 +2,13 @@
 
 **Status:** Current product definition  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-18
+**Last reconciled:** 2026-09-26
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, and P2.2A are closed/accepted. The target-scoped Market first slice is repository-accepted through I6; I7 real-local execution has occurred with outcome HOLD. The first slice remains open only for the bounded closure checks recorded in the current-state/TODO/working-memory owners.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded target-scoped Market I1-I7 first slice are closed/accepted. The first slice decision is `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; later Market interpretation needs its own scope and evidence.
 
 ## 1. Purpose
 
@@ -230,11 +230,11 @@ t4jp → P1.6 37 → Capability 12
 
 Capability remains an accepted per-job layer but is intentionally optional for the current Market first slice; it is not a mandatory Market membership or denominator gate.
 
-### 6.5 Market outputs — target-scoped first slice implemented through I6
+### 6.5 Market outputs — target-scoped first slice accepted through I7
 
 The current Market surface now supports stable target identity, immutable target-definition versions, bounded target-scoped acquisition/affected-work planning, semantic membership (`core_match / adjacent_match / uncertain / excluded`), immutable snapshots, deterministic aggregate profiles, and shared browser/CLI inspection over the same local SQLite authority.
 
-The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 real-local execution is complete but HOLD. Rerun snapshot/profile immutability, definition identity, SQLite integrity and privacy checks are now verified; the remaining acceptance gate is one genuinely valid accepted-current P1.6 core member demonstrated through a new live semantic aggregate/evidence drill-down and post-mutation integrity/privacy checks.
+The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 passed bounded real-local repeated-use acceptance with one genuinely reviewed and accepted P1.6 core member frozen into snapshots 4-6; CLI/rendered-browser semantic drill-down, snapshot immutability, SQLite integrity and privacy checks passed. Its one-posting semantic denominator does not establish broad-market prevalence.
 
 This layer is **not yet** a reviewed canonical role taxonomy, duplicate-adjusted mature market model, semantic role-subfamily report layer, or complete-labor-market claim.
 
@@ -557,7 +557,7 @@ The accepted heterogeneous reference order is:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, and P2.2A Job Work Intelligence are accepted/closed. The active product gate is the bounded Market I7 HOLD closure follow-up after repository acceptance of I1-I6 and completed real-local execution.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, P2.2A Job Work Intelligence, and the bounded Market I1-I7 first slice are accepted/closed. The next product increment needs a scoped decision under the Market plan.
 
 ### 10.4 Planned next product layers
 

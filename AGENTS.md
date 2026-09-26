@@ -167,9 +167,9 @@ P2.2D stable archetypes        LATER / NOT AUTHORIZED
 Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 
 Market foundation investigation PASS / COMPLETE
-Market first vertical slice     I1-I6 ACCEPTED / I7 EXECUTED / HOLD
+Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            I7 HOLD closure follow-up
+next exact increment            Select next scoped Market product increment
 ```
 
 B1 final evidence is retained at:
@@ -238,10 +238,21 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded local real acceptance + reuse rerun EXECUTED / HOLD
+I7  bounded local real acceptance + reuse rerun ACCEPTED / CLOSED
 ```
 
-### 5.1 I7 exact boundary
+### 5.1 I7 exact boundary and historical closure
+
+I7 passed bounded real-local acceptance on 2026-09-26. Runs 4-6 produced immutable
+snapshots/profiles with six core source postings and one accepted-semantic core posting.
+Artifact 50 supplied 25 exact requirements and 11 duties; CLI and rendered browser
+drill-down agreed, the unchanged rerun reused source/English/P1.6 evidence, and
+SQLite integrity/privacy checks passed. The denominator remains one accepted-semantic
+posting; no broad-market prevalence or later semantic layer was accepted. Current
+decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
+
+The following HOLD account records the historical failures and repairs that led to PASS;
+its old next-work instructions no longer control present-tense routing.
 
 I1-I6 have passed repository acceptance. Latest accepted implementation record:
 
@@ -315,8 +326,9 @@ and Market history, and keep I7 HOLD until the live accepted-semantic closure pa
 The 2026-09-26 complete non-persistent v23 `tvMm` result passed whole-artifact source review
 with 25 requirements and 11 duties. V23 is now the public/current English generation contract.
 The normal persisted artifact 50 exactly matched that reviewed result and was explicitly accepted.
-The next I7 step is a bounded source refresh under the existing 168-hour rule, then an
-accepted-semantic Market snapshot/profile plus CLI/browser drill-down. See
+The former next I7 step was a bounded source refresh under the existing 168-hour rule,
+then an accepted-semantic Market snapshot/profile plus CLI/browser drill-down. It was
+completed in runs 4-6. See
 `docs/working-memory/2026-09-26_MARKET_I7_ACCEPTED_CORE_AND_REUSE_REPAIR.md`.
 
 ### 5.2 First-slice settled rules

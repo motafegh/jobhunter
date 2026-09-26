@@ -29,7 +29,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
 
-The first **target-scoped Market / Role-Family Intelligence vertical slice** is implemented through I6 and has undergone bounded I7 real-local execution. That work validated target-scoped acquisition, partial failures, membership, source-vs-semantic denominators, reuse, privacy, and the shared browser/CLI workflow. I7 is still **HOLD**. A current core posting now has explicitly accepted English P1.6 artifact 50; the remaining gate is a fresh point-in-time Market snapshot/profile and accepted-semantic requirement/responsibility drill-down through CLI and browser, followed by integrity and privacy checks.
+The first **target-scoped Market / Role-Family Intelligence vertical slice** (I1-I7) has passed bounded real-local acceptance. Repeated target runs verified acquisition, membership, source-vs-semantic denominators, reuse, immutable snapshots, privacy, and shared browser/CLI read paths. Snapshot 6 contains six qualified core source postings, including one with explicitly accepted English P1.6 artifact 50 and frozen requirement/responsibility drill-down. These small samples do not establish broad-market prevalence. See the [I7 acceptance record](docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md).
 
 ## Why the engineering is non-trivial
 
@@ -243,8 +243,8 @@ P2.1 Canonical Registry                 CLOSED
 P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
-Market first vertical slice             I1-I6 REPOSITORY ACCEPTED / I7 EXECUTED / HOLD
-Current exact increment                 I7 HOLD CLOSURE FOLLOW-UP
+Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
+Current exact increment                 Select next product increment under the Market plan
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -252,7 +252,7 @@ Five heterogeneous accepted P1.6 → Capability chains currently serve as semant
 JobHunter does **not** currently claim:
 
 - semantic acceptance across every discovered job;
-- end-to-end acceptance of the target-scoped Market first slice while I7 remains HOLD;
+- broad-market representativeness from the bounded first-slice sample;
 - repost/new-ID-adjusted `unique demand` statistics;
 - a complete canonical labor-market taxonomy;
 - arbitrary-web ingestion;

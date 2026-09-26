@@ -5,7 +5,7 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 CASE REVIEW PASS / PERSISTED ACCEPTANCE NEXT
+**Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED
 
 Status vocabulary:
 
@@ -103,7 +103,17 @@ Acceptance: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLE
 - [x] Market tables remain local/private; only existing upstream public artifacts may sync.
 - [x] CI 1210 green: installed-entrypoint smoke, Ruff, 632 tests, 632 tests with warnings-as-errors.
 
-### I7 — bounded real local acceptance — EXECUTED / HOLD
+### I7 — bounded real local acceptance — ACCEPTED / CLOSED
+
+- [x] v23/v5 artifact 50 persisted and explicitly accepted after complete source review.
+- [x] runs 4-6 completed with immutable snapshots/profiles 4-6 and accepted-semantic evidence from one of six core source postings.
+- [x] unchanged run 6 reused current source/English/P1.6 evidence; remaining bounded work stayed visible.
+- [x] CLI and real rendered Edge browser route showed the same frozen source/semantic denominators and evidence.
+- [x] historical immutability, SQLite integrity/foreign keys, and public-corpus privacy verified.
+
+Final decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
+The checklist below records earlier HOLD-stage execution and is historical where its
+next-work wording conflicts with the final decision.
 
 Protocol:
 

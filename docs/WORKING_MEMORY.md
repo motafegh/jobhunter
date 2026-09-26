@@ -4,7 +4,7 @@
 **Date:** 2026-09-26
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 ARTIFACT 50 ACCEPTED / MARKET SNAPSHOT NEXT
+**Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
 **Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
@@ -34,6 +34,10 @@ Executed I7 protocol:
 I7 execution result:
 
 `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
+
+Final I7 decision (supersedes historical HOLD routing below):
+
+`docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`
 
 Execution checklist:
 
@@ -87,7 +91,7 @@ I3  membership qualification                ACCEPTED
 I4  immutable snapshot construction         ACCEPTED
 I5  deterministic aggregate profile         ACCEPTED
 I6  browser + CLI thin workflow             ACCEPTED
-I7  bounded real local acceptance           EXECUTED / HOLD
+I7  bounded real local acceptance           ACCEPTED / CLOSED
 ```
 
 ### I1
@@ -199,7 +203,10 @@ pytest -W error 632 passed
 
 ---
 
-## 4. Current frontier — I7 HOLD after selected-case execution
+## 4. Historical frontier — I7 HOLD after selected-case execution
+
+This section preserves the pre-acceptance investigation. Its old current/next-work
+wording is superseded by the final I7 PASS record linked above.
 
 ### 2026-09-22 v21 promotion reconciliation
 

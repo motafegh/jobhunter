@@ -1,6 +1,6 @@
 # JobHunter Market and Role-Family Intelligence Plan
 
-**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / I1-I6 REPOSITORY ACCEPTED / I7 EXECUTED / HOLD
+**Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / I1-I7 BOUNDED FIRST SLICE ACCEPTED
 **Original date:** 2026-09-06  
 **Last reconciled:** 2026-09-19
 **Branch:** `main`  
@@ -34,10 +34,10 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded local real acceptance + reuse rerun EXECUTED / HOLD
+I7  bounded local real acceptance + reuse rerun ACCEPTED / CLOSED
 ```
 
-This plan controls the long-term Market direction and the first vertical slice. I1-I6 are repository-accepted, but end-to-end first-slice completion remains **not accepted** until I7 real local evidence passes. The executed I7 protocol is `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
+This plan controls the long-term Market direction. I1-I7 are accepted for the bounded first vertical slice. The executed I7 protocol is `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`; its final decision is `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ---
 
@@ -810,27 +810,22 @@ The first Market vertical slice is done only when:
 
 ---
 
-## 19. Current exact next action
+## 19. Current routing after first-slice acceptance
 
 ```text
 I1-I6 repository acceptance complete
-→ I7 real-local execution complete / HOLD
-→ snapshot/profile immutability + integrity/privacy closure checks COMPLETE
-→ artifact 48 reviewed/rejected; historical pending-rejection lifecycle repaired
-→ headingless qualification / false-duty evidence-preparation repair COMPLETE
-→ selected tvMm generation EXECUTED / FAILED; no candidate persisted
-→ structured-skill prompt/payload ownership contradiction repaired offline
-→ bounded post-repair evaluation decision required before further live generation
-→ accepted-semantic snapshot/profile + live CLI/browser drill-down still required
-→ close the first slice only after PASS, preserving HOLD meanwhile
+→ accepted v23/v5 tvMm artifact 50 frozen into Market snapshots 4-6
+→ bounded real CLI/browser and reuse checks PASS
+→ I7 PASS / first vertical slice CLOSED
+→ choose the next scoped product increment under this plan
 ```
 
 I6 implementation baseline: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
 
 I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`.
 
-Current I7 execution/closure record: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
+Historical I7 HOLD record: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`.
 
-Latest selected-case result and repair: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
+Final I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
-Do not restart B1/foundation investigation, rerun full acquisition without need, or add report/subfamily/trend/personal scope while I7 remains HOLD.
+Future Market interpretation/report and personal scope require their own contracts and evidence; I7 acceptance does not pre-accept them.

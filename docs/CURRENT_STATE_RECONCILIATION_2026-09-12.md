@@ -24,8 +24,8 @@ Market I3 membership qualification ACCEPTED / CLOSED
 Market I4 snapshot construction     ACCEPTED / CLOSED
 Market I5 aggregate profile         ACCEPTED / CLOSED
 Market I6 browser + CLI workflow    ACCEPTED / CLOSED
-Market I7 real local acceptance     EXECUTED / HOLD
-First Market vertical slice         OPEN — I7 HOLD CLOSURE FOLLOW-UP
+Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
+First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Market → You                        LATER / NOT AUTHORIZED
 
@@ -84,9 +84,9 @@ anchors remain accepted-only compatibility-current with exact identities; any ac
 v21/v5 artifacts are also compatibility-current. Pending/rejected prior-contract
 candidates do not become v23 current. Normal persisted `tvMm` artifact 50 exactly
 matched the complete source-reviewed result and was explicitly accepted. I7 remains
-HOLD until that accepted current core artifact is exercised in a new Market
-snapshot/profile and real CLI/browser drill-down. See the 2026-09-26 accepted-core
-Market record.
+HOLD at that checkpoint. Runs 4-6 subsequently froze the artifact in new Market
+snapshots/profiles, verified CLI/rendered-browser drill-down and reuse, and closed I7
+with bounded PASS. See `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ---
 
@@ -124,7 +124,7 @@ I3  membership qualification                    ACCEPTED
 I4  immutable snapshot construction             ACCEPTED
 I5  deterministic aggregate profile             ACCEPTED
 I6  browser + CLI thin workflow                 ACCEPTED
-I7  bounded real local acceptance               EXECUTED / HOLD
+I7  bounded real local acceptance               PASS / CLOSED
 ```
 
 Latest I6 acceptance owner:
@@ -235,7 +235,19 @@ During integration, repository tests caught an accidental attempted drift in acc
 
 ---
 
-## 7. Exact active frontier — I7 HOLD semantic-evidence closure
+## 7. I7 final acceptance and historical HOLD evidence
+
+**Current decision:** I7 PASS for the bounded first vertical slice on 2026-09-26.
+Runs 4-6 preserved six qualified core source postings, one accepted-semantic core
+posting with frozen artifact-50 requirement/responsibility evidence, and exact
+source-versus-semantic denominators. Run 6 required no source refresh, translation,
+or analysis; remaining budget-limited work stayed explicit. CLI and rendered browser
+read paths, immutable history, SQLite integrity and corpus privacy passed. The sample
+does not support broad-market prevalence. Final authority:
+`docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
+
+The rest of this section is the historical HOLD trail, retained to explain repairs.
+Its former present-tense next-work statements are superseded by the final decision.
 
 I7 real-local execution has occurred. Sanitized evidence and the continuing decision record are at:
 
@@ -351,9 +363,9 @@ If real evidence exposes a concrete correctness defect, repair only the owning b
 B1 CLOSED / DEFER
 → Market foundation PASS
 → I1-I6 ACCEPTED
-→ I7 EXECUTED / HOLD
-→ bounded I7 closure follow-up NEXT
-→ first Market vertical slice closes only after the remaining real-local checks pass
+→ v23/v5 artifact 50 explicitly accepted and frozen in Market snapshots 4-6
+→ I7 PASS / bounded first Market vertical slice CLOSED
+→ choose the next scoped increment under the Market plan
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
