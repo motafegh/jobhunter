@@ -5,7 +5,7 @@
       "schema_version": "job-capability-intelligence-v5"
     },
     "p16_english": {
-      "prompt_version": "job-analysis-english-v21",
+      "prompt_version": "job-analysis-english-v23",
       "schema_version": "job-analysis-v5"
     },
     "p16_original": {

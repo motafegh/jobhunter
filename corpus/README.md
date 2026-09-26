@@ -60,11 +60,11 @@ Derived files contain only durable public-domain results and dependency identiti
 
 `english-projection.json` includes the current English projection, provider/model/schema identity, source hash, translated fields/document, segment provenance, and translation artifact ID.
 
-`p16-english.json` and `p16-original.json` include the selected public P1.6 artifact ID, dependency IDs, model/prompt/schema identity, and analysis payload. English files additionally carry the non-private semantic-review status. Under the v21 current boundary, an explicitly accepted v20/v5 artifact may remain the selected compatibility-current artifact and keeps its exact v20 identity. Review time/note remain local unless a deliberately selected Review Snapshot is committed.
+`p16-english.json` and `p16-original.json` include the selected public P1.6 artifact ID, dependency IDs, model/prompt/schema identity, and analysis payload. English files additionally carry the non-private semantic-review status. Under the v23 current boundary, an explicitly accepted v20/v5 or v21/v5 artifact may remain the selected compatibility-current artifact and keeps its exact historical identity. Review time/note remain local unless a deliberately selected Review Snapshot is committed.
 
 `capability.json` includes the current public Capability artifact ID, exact translation/P1.6 dependencies, model/prompt/schema identity, and capability intelligence.
 
-Fresh English v21 artifacts are local `pending` review candidates and do not appear here. They become public only after explicit semantic acceptance. Capability is also omitted unless it depends on that exact accepted English artifact. Rejection archives local model evidence but exports none of that archive or raw protocol state.
+Fresh English v23 artifacts are local `pending` review candidates and do not appear here. They become public only after explicit semantic acceptance. Capability is also omitted unless it depends on that exact accepted English artifact. Rejection archives local model evidence but exports none of that archive or raw protocol state.
 
 When the source changes, old downstream files are removed from the current corpus until those stages are successfully rebuilt for the new current source version. Previous committed states remain available through Git history.
 

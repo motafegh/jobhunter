@@ -5,7 +5,7 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 BOUNDED EVALUATION CLOSED / NO CANDIDATE
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 CASE REVIEW PASS / PERSISTED ACCEPTANCE NEXT
 
 Status vocabulary:
 
@@ -172,9 +172,11 @@ Execution result:
 - [x] repaired v22 to resolve evidence aliases through the existing exact evidence catalog before ontology abstention; added requirement-level and full-response regressions for the live `built an Agent yourself to date` failure shape.
 - [x] exact-head CI 35764994184 passed; the one authorized post-alias v22 evaluation completed with 27 requirements and 11 duties, then was semantically rejected because type-only abstention retained unsupported experience wording. SQLite/corpus unchanged.
 - [x] v22 now rejects that unsafe abstention; retained-response replay isolates the error, the experience partition still passes, and 708 strict-warning tests pass.
-- [~] offline representative evidence/design for generated claim wording and omitted preferred proof-of-work coverage; no further live generation or v22 promotion is authorized by this repair. See `docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md`.
+- [x] completed offline representative evidence/design for generated claim wording and omitted preferred proof-of-work coverage after the v22 repair. The 2026-09-24 no-generation stop line was superseded by the owner's corrected v23 evaluation request. See `docs/working-memory/2026-09-24_P16_V22_POST_ALIAS_EVALUATION_CLOSURE.md` and the v23 review below.
 - [x] isolated v23 preferred proof coverage, retained full source follow-up questions, and ran one non-persistent `tvMm` evaluation. Both allowed responses failed the inherited value-preference validator; no candidate or state mutation occurred. V23-only offline repair validates retained proof partitions, and the `tjgi` at-least-one sample was corrected from preferred to an uncovered required-strength case. The call is closed; see `docs/working-memory/2026-09-26_MARKET_I7_V23_OFFLINE_CANDIDATE_DECISION.md`.
-- [~] gather independent source-backed evidence for required proof-sample coverage or naturally available valid accepted-current core semantics before any further live I7 closure action.
+- [~] required proof-sample coverage in `tjgi` remains a separate offline design question; it does not block the source-reviewed `tvMm` core candidate path.
+- [x] owner-directed corrected v23 non-persistent `tvMm` evaluation passed complete manual source review: 25 requirements, 11 duties, three explicit proof preferences, no material semantic defects, and unchanged operational/public state. See `docs/working-memory/2026-09-26_MARKET_I7_V23_FULL_EVALUATION_REVIEW.md`.
+- [x] promote v23/v5 public routing with accepted-only v20/v21 compatibility and exact historical artifact identities; normal persisted candidate and Market drill-down remain next.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

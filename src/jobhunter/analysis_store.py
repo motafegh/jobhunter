@@ -268,8 +268,14 @@ class AnalysisStore:
                 WHERE a.semantic_review_status != 'rejected'
                   AND a.job_detail_version_id = ? AND a.model = ?
                   AND (a.prompt_version = ?
-                       OR (? = 'job-analysis-english-v21'
-                           AND a.prompt_version = 'job-analysis-english-v20'
+                       OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN a.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted')) AND a.schema_version = ?
                   AND (? = 0 OR a.translation_artifact_id = ?)
@@ -415,8 +421,14 @@ class AnalysisStore:
                   )
                   AND (? IS NULL OR a.model = ?)
                   AND (? IS NULL OR a.prompt_version = ?
-                       OR (? = 'job-analysis-english-v21'
-                           AND a.prompt_version = 'job-analysis-english-v20'
+                       OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN a.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted'))
                   AND (? IS NULL OR a.schema_version = ?)
@@ -469,8 +481,14 @@ class AnalysisStore:
                   )
                   AND (? IS NULL OR a.model = ?)
                   AND (? IS NULL OR a.prompt_version = ?
-                       OR (? = 'job-analysis-english-v21'
-                           AND a.prompt_version = 'job-analysis-english-v20'
+                       OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN a.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted'))
                   AND (? IS NULL OR a.schema_version = ?)
@@ -481,8 +499,14 @@ class AnalysisStore:
                         AND a2.job_detail_version_id = v.id
                         AND (? IS NULL OR a2.model = ?)
                         AND (? IS NULL OR a2.prompt_version = ?
-                             OR (? = 'job-analysis-english-v21'
-                                 AND a2.prompt_version = 'job-analysis-english-v20'
+                             OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN a2.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN a2.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                                  AND a2.schema_version = 'job-analysis-v5'
                                  AND a2.semantic_review_status = 'accepted'))
                         AND (? IS NULL OR a2.schema_version = ?)

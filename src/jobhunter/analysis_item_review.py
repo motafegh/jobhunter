@@ -130,10 +130,10 @@ class AnalysisItemReviewStore:
         if artifact is None or artifact.semantic_review_status != "pending":
             raise ValueError("Item review requires a persisted pending analysis artifact")
         if artifact.translation_artifact_id is None or (
-            artifact.prompt_version != "job-analysis-english-v21"
+            artifact.prompt_version not in {"job-analysis-english-v21", "job-analysis-english-v23"}
             or artifact.schema_version != "job-analysis-v5"
         ):
-            raise ValueError("Item review supports new English v21/v5 candidates only")
+            raise ValueError("Item review supports new English v21/v5 or v23/v5 candidates only")
         current = AnalysisStore(self._database_path).latest_current(
             artifact.source_job_id,
             model=artifact.model,

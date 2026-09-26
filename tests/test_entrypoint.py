@@ -203,7 +203,7 @@ def test_jobs_analyze_defaults_to_english_and_uses_targeted_service(monkeypatch,
     output = capsys.readouterr().out
     assert "English P1.6 for t4jp" in output
     assert "Artifact: 41" in output
-    assert "job-analysis-english-v21 / job-analysis-v5" in output
+    assert "job-analysis-english-v23 / job-analysis-v5" in output
     assert "Semantic review: pending" in output
     assert "review-analysis t4jp accept" in output
 
@@ -235,7 +235,7 @@ def test_jobs_analyze_labels_prior_contract_compatibility_reuse(monkeypatch, cap
     assert entrypoint.main(["jobs", "analyze", "tG9K"]) == 0
 
     output = capsys.readouterr().out
-    assert "Current contract: job-analysis-english-v21 / job-analysis-v5" in output
+    assert "Current contract: job-analysis-english-v23 / job-analysis-v5" in output
     assert "Artifact contract: job-analysis-english-v20 / job-analysis-v5" in output
     assert "accepted prior-contract artifact reused" in output
 

@@ -149,8 +149,14 @@ class WebRepository:
                               SELECT 1 FROM job_analysis_artifacts AS a
                               WHERE a.job_detail_version_id = v.id
                                 AND (a.prompt_version = ?
-                                     OR (? = 'job-analysis-english-v21'
-                                         AND a.prompt_version = 'job-analysis-english-v20'
+                                     OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN a.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                                          AND a.schema_version = 'job-analysis-v5'
                                          AND a.semantic_review_status = 'accepted'))
                                 AND a.schema_version = ?
@@ -250,8 +256,14 @@ class WebRepository:
                         SELECT 1 FROM job_analysis_artifacts AS aa
                         WHERE aa.job_detail_version_id = v.id
                           AND (aa.prompt_version = ?
-                               OR (? = 'job-analysis-english-v21'
-                                   AND aa.prompt_version = 'job-analysis-english-v20'
+                               OR (CASE ?
+                           WHEN 'job-analysis-english-v21'
+                           THEN aa.prompt_version = 'job-analysis-english-v20'
+                           WHEN 'job-analysis-english-v23'
+                           THEN aa.prompt_version IN (
+                               'job-analysis-english-v20',
+                               'job-analysis-english-v21')
+                           ELSE 0 END
                                    AND aa.schema_version = 'job-analysis-v5'
                                    AND aa.semantic_review_status = 'accepted'))
                           AND aa.schema_version = ?

@@ -354,7 +354,7 @@ def test_v22_persisted_shape_still_uses_v5_without_item_excerpt() -> None:
 
 def test_v22_has_distinct_identity_without_changing_current_routing() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v22"
-    assert CURRENT_PROMPT_VERSION == "job-analysis-english-v21"
+    assert CURRENT_PROMPT_VERSION == "job-analysis-english-v23"
     assert "ONTOLOGY ABSTENTION" in _ENGLISH_SYSTEM_PROMPT_V22
     assert "use concept_type=other" in _ENGLISH_SYSTEM_PROMPT_V22
 

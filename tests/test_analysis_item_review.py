@@ -48,7 +48,7 @@ def _candidate(tmp_path: Path) -> tuple[Path, int, int]:
     analysis_id = AnalysisStore(database).record_artifact(
         job_detail_version_id=detail.version_id,
         translation_artifact_id=result.artifact_id, model="model",
-        prompt_version="job-analysis-english-v21", schema_version="job-analysis-v5",
+        prompt_version="job-analysis-english-v23", schema_version="job-analysis-v5",
         analysis={
             "role_purpose": [], "responsibilities": [],
             "requirements": [{
@@ -65,7 +65,7 @@ def _candidate(tmp_path: Path) -> tuple[Path, int, int]:
 
 def _accept(database: Path, projection_id: int) -> None:
     AnalysisStore(database).review_current(
-        "review-b", model="model", prompt_version="job-analysis-english-v21",
+        "review-b", model="model", prompt_version="job-analysis-english-v23",
         schema_version="job-analysis-v5", translation_artifact_id=projection_id,
         require_translation_dependency=True, disposition="accepted",
         reviewed_at=datetime(2026, 9, 24, tzinfo=UTC),
@@ -147,7 +147,7 @@ def test_rejected_candidate_keeps_review_history_and_legacy_gate(tmp_path):
         note="Employer source evidence does not establish this claim",
     )
     AnalysisStore(database).review_current(
-        "review-b", model="model", prompt_version="job-analysis-english-v21",
+        "review-b", model="model", prompt_version="job-analysis-english-v23",
         schema_version="job-analysis-v5", translation_artifact_id=projection_id,
         require_translation_dependency=True, disposition="rejected",
         reviewed_at=datetime(2026, 9, 24, tzinfo=UTC),

@@ -39,7 +39,7 @@ Current first-slice contracts:
 ```text
 parser:                       jobinja-detail-v2
 translation:                  english-projection-v2 / lm-studio-translation-v2
-English P1.6:                 job-analysis-english-v21 / job-analysis-v5
+English P1.6:                 job-analysis-english-v23 / job-analysis-v5
 Capability:                   job-capability-intelligence-v9 / job-capability-intelligence-v5
 Canonical Registry:           jobhunter-canonical-concept-registry-v1
 Work Intelligence:            job-work-intelligence-v2 / job-work-intelligence-v2.0
@@ -59,9 +59,9 @@ accepted/current English P1.6:    5
 accepted/current Capability:      5
 ```
 
-### P1.6 v21 promotion reconciliation — 2026-09-22
+### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
 
-English P1.6 v21/v5 is now the public/current generation and review contract. The five accepted
+English P1.6 v21/v5 became the public/current generation and review contract at this checkpoint. The five accepted
 public anchors remain their exact v20/v5 artifacts and are accepted-only compatibility-current;
 they are not regenerated merely to change prompt identity. Pending/rejected v20 candidates do not
 satisfy v21 currentness.
@@ -70,10 +70,21 @@ The promotion boundary preserves exact lineage in CLI results, and regression co
 accepted v20 reuse while rejecting pending-v20 fallback. Repository CI run 1294
 (`35753325406`) passed entrypoint smoke, Ruff, 690 tests, and 690 warnings-as-errors tests.
 
-This promotion does not close Market I7. I7 remains HOLD until a genuinely valid v21 candidate
+This promotion did not close Market I7. I7 remains HOLD until a genuinely valid current candidate
 for a core member is persisted, explicitly accepted, frozen into a new snapshot/profile, and
 verified through the real semantic CLI/browser drill-down plus post-mutation integrity/privacy
 checks.
+
+### P1.6 v23 promotion reconciliation — 2026-09-26
+
+V23/v5 is the current English generation/review contract after complete source review
+of one non-persistent `tvMm` result. It adds explicit proof-of-work preference coverage
+and preserves the v22 fail-closed claim-wording boundary. The five accepted v20/v5
+anchors remain accepted-only compatibility-current with exact identities; any accepted
+v21/v5 artifacts are also compatibility-current. Pending/rejected prior-contract
+candidates do not become v23 current. I7 remains HOLD until a normal persisted
+current artifact is explicitly accepted and exercised in a new Market snapshot/profile
+and real CLI/browser drill-down. See the 2026-09-26 v23 complete evaluation review.
 
 ---
 
@@ -292,10 +303,10 @@ context separately, with offline review before another bounded live evaluation.
 
 Current record: `docs/working-memory/2026-09-20_MARKET_I7_TVMM_BOUNDED_CLOSURE.md`.
 
-Exact next responsibility (reconciled 2026-09-24):
+Historical next responsibility (reconciled 2026-09-24; superseded by v23 above):
 
 ```text
-v21/v5 remains public/current; accepted v20 anchors retain compatibility
+v21/v5 was public/current at this checkpoint; accepted v20 anchors retained compatibility
 → persisted v21 tvMm attempt CLOSED / failed ontology validation
 → isolated v22 candidate and evidence-alias repair implemented
 → exact-head CI 35764994184 on effa861 passed all quality gates

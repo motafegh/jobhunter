@@ -94,7 +94,7 @@ def test_accepted_anchor_plans_and_all_current_projection_sources_remain_stable(
         assert all(item["text"] in description for item in proof)
 
 
-def test_v23_proof_partition_is_separate_and_public_contract_stays_v21() -> None:
+def test_v23_proof_partition_is_separate_and_public_contract_is_v23() -> None:
     plan = build_requirement_coverage_plan_v23(_fields("tvMm"))
     provider = object.__new__(V23CandidateAnalysisProvider)
     partitions = provider._requirement_partitions(plan)
@@ -104,7 +104,7 @@ def test_v23_proof_partition_is_separate_and_public_contract_stays_v21() -> None
     assert all(not (set(partition) & proof_refs) or set(partition) == proof_refs
                for partition in partitions)
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v23"
-    assert CURRENT_PROMPT == "job-analysis-english-v21"
+    assert CURRENT_PROMPT == "job-analysis-english-v23"
     assert "candidate_proof" in _ENGLISH_SYSTEM_PROMPT_V23
 
 

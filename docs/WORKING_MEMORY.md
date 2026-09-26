@@ -1,11 +1,11 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-24
+**Date:** 2026-09-26
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V22 EVALUATION REJECTED / OFFLINE EVIDENCE NEXT
-**Current English P1.6:** `job-analysis-english-v21 / job-analysis-v5`; accepted v20/v5 artifacts are accepted-only compatibility inputs  
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 CASE REVIEW PASS / PERSISTED ACCEPTANCE NEXT
+**Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -398,8 +398,9 @@ source-backed checklist items typed as experience remain experience. It inherits
 exact-item evidence/coverage planner and still strips candidate-only `item_excerpt` before the
 unchanged v5 persisted shape.
 
-Current public routing remains `job-analysis-english-v21 / job-analysis-v5`. V22 is isolated and
-has not created an artifact, changed currentness, or altered the five accepted compatibility anchors.
+At this historical v22 checkpoint, public routing remained `job-analysis-english-v21 / job-analysis-v5`.
+V22 was isolated and had not created an artifact, changed currentness, or altered the five
+accepted compatibility anchors. The current routing at the top of this handoff is v23/v5.
 
 Offline evidence:
 

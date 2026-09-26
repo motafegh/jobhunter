@@ -94,14 +94,14 @@ The browser is server-rendered and intentionally shares the same service/data mo
 
 Current accepted/public contracts include:
 
-- English P1.6: `job-analysis-english-v21 / job-analysis-v5`;
+- English P1.6: `job-analysis-english-v23 / job-analysis-v5`;
 - original-language P1.6: `job-analysis-original-v9 / job-analysis-v4`;
 - Capability Intelligence: `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
 - Job Work Intelligence: `job-work-intelligence-v2 / v2.0`;
 - Canonical Registry: `jobhunter-canonical-concept-registry-v1`;
 - Public Corpus: `jobhunter-public-corpus-v1`.
 
-Accepted v20/v5 English P1.6 artifacts retain their exact historical identity and remain current-compatible only when explicitly accepted. New English generation/review uses v21/v5; pending or rejected v20 candidates do not satisfy v21 currentness. No accepted anchor is mass-regenerated merely because the public runtime advanced.
+Accepted v20/v5 and v21/v5 English P1.6 artifacts retain their exact historical identity and remain current-compatible only when explicitly accepted. New English generation/review uses v23/v5; pending or rejected prior-contract candidates do not satisfy v23 currentness. No accepted anchor is mass-regenerated merely because the public runtime advanced.
 
 Role Capability Blueprint v6 remains implemented as **experimental/historical research**, not an accepted current decision layer.
 

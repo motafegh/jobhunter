@@ -212,7 +212,7 @@ Translation
   projection:       english-projection-v2
 
 P1.6 factual extraction
-  English runtime:  job-analysis-english-v21
+  English runtime:  job-analysis-english-v23
   English schema:   job-analysis-v5
   Original runtime: job-analysis-original-v9
   Original schema:  job-analysis-v4

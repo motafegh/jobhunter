@@ -122,7 +122,7 @@ parser:                       jobinja-detail-v2
 translation provider:         lm-studio-translation-v2
 English projection:           english-projection-v2
 
-English P1.6 prompt/runtime:  job-analysis-english-v21
+English P1.6 prompt/runtime:  job-analysis-english-v23
 English P1.6 schema:          job-analysis-v5
 Original P1.6 prompt/runtime: job-analysis-original-v9
 Original P1.6 schema:         job-analysis-v4
@@ -188,7 +188,7 @@ P1.6 is the strict factual substrate.
 Accepted public contract:
 
 ```text
-English:  job-analysis-english-v21 / job-analysis-v5
+English:  job-analysis-english-v23 / job-analysis-v5
 Original: job-analysis-original-v9 / job-analysis-v4
 ```
 

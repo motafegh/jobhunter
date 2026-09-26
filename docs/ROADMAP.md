@@ -102,7 +102,7 @@ Current accepted/current foundations include:
 - deterministic `jobinja-detail-v2` parser and parser structural audit;
 - `lm-studio-translation-v2` / `english-projection-v2` current translation boundary;
 - browser Quick Add within the approved Jobinja source boundary;
-- promoted/current English P1.6 `job-analysis-english-v21 / job-analysis-v5`, with accepted-only v20/v5 compatibility reuse;
+- promoted/current English P1.6 `job-analysis-english-v23 / job-analysis-v5`, with accepted-only v20/v5 and v21/v5 compatibility reuse;
 - independent original-language P1.6 `job-analysis-original-v9 / job-analysis-v4`;
 - promoted/current Capability Intelligence `job-capability-intelligence-v9 / job-capability-intelligence-v5`;
 - Review Snapshot v1 current-chain routing;
