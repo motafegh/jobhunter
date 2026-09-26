@@ -28,7 +28,8 @@ _PARENTHETICAL_DEPTH_RE = re.compile(
     r"\((?:expert|proficient|advanced|intermediate|basic|beginner)\)", re.I
 )
 _OPTIONALITY_RE = re.compile(
-    r"\b(?:preferred|preference|plus|helpful|advantage|nice[ -]to[ -]have|optional)\b",
+    r"\b(?:preferred|preference|plus|helpful|advantage|nice[ -]to[ -]have|optional|"
+    r"(?:important|valuable|strong)\s+asset|considered\s+an?\s+asset)\b",
     re.I,
 )
 _GLOBAL_UNSPECIFIED_RE = re.compile(
@@ -377,15 +378,18 @@ def requirement_coverage_payload(
 ) -> list[dict[str, Any]]:
     """Return a deterministic model-facing coverage checklist."""
 
-    return [
-        {
+    payload: list[dict[str, Any]] = []
+    for reference in sorted(plan):
+        item = {
             "id": reference,
             "source_kind": plan[reference]["source_kind"],
             "obligation_hint": plan[reference]["obligation_hint"],
             "allow_exclusion": plan[reference]["allow_exclusion"],
         }
-        for reference in sorted(plan)
-    ]
+        if isinstance(plan[reference].get("obligation_context"), str):
+            item["obligation_context"] = plan[reference]["obligation_context"]
+        payload.append(item)
+    return payload
 
 
 def build_field_evidence_catalog(fields: dict[str, Any]) -> dict[str, str]:

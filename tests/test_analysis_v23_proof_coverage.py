@@ -9,12 +9,17 @@ import pytest
 from pydantic import ValidationError
 
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
-from jobhunter.analysis_runtime_v23 import V23CandidateAnalysisProvider
+from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
+from jobhunter.analysis_runtime_v23 import (
+    V23CandidateAnalysisProvider,
+    _scoped_preferred_qualification_plan,
+)
 from jobhunter.analysis_service import _analysis_fields_for_english
 from jobhunter.analysis_service_v23 import (
     _ENGLISH_SYSTEM_PROMPT_V23,
     ENGLISH_PROMPT_VERSION,
 )
+from jobhunter.evidence_refs import requirement_coverage_payload
 from jobhunter.evidence_refs_v21 import build_requirement_coverage_plan_v21
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 from jobhunter.inference.instructor_lm_studio_v23 import (
@@ -41,6 +46,47 @@ def _proof(job_id: str):
         for ref, item in build_requirement_coverage_plan_v23(_fields(job_id)).items()
         if item.get("source_kind") == "candidate_proof"
     }
+
+
+def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:
+    fields = _fields("t7ck")
+    _effective, refs, _residuals, additional = _v15_candidate_evidence_view(fields)
+    scoped = _scoped_preferred_qualification_plan(fields, additional)
+    by_text = {item["text"]: item for ref, item in scoped.items() if ref in refs}
+
+    assert by_text["Proficiency in Python"]["obligation_hint"] == "required"
+    for text in ("Experience in Streaming Audio", "Real-Time Voice", "VAD", "Voice Cloning"):
+        assert by_text[text]["obligation_hint"] == "preferred"
+        assert by_text[text]["obligation_context"].endswith("an important asset.")
+    assert any(
+        entry.get("obligation_context", "").endswith("an important asset.")
+        for entry in requirement_coverage_payload(scoped)
+    )
+
+    item = by_text["Real-Time Voice"]
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": fields["description"]},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"item": item},
+    }
+    requirement = {
+        "concept": "Real-Time Voice",
+        "depth_signal": None,
+        "requirement_type": "preferred",
+        "concept_type": "skill",
+        "evidence": "Real-Time Voice",
+        "item_excerpt": "Real-Time Voice",
+        "confidence": "high",
+        "rationale": "Exact qualification in a preferred source sentence.",
+    }
+    assert AnalysisRequirementV23.model_validate(
+        requirement, context=context
+    ).requirement_type == "preferred"
+    with pytest.raises(ValidationError, match="Preferred parent coverage"):
+        AnalysisRequirementV23.model_validate(
+            {**requirement, "requirement_type": "required"}, context=context
+        )
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

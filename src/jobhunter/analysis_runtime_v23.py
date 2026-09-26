@@ -2,12 +2,14 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from jobhunter.analysis_runtime_v20 import _v20_requirement_partitions
 from jobhunter.analysis_runtime_v21 import V21CandidateAnalysisProvider
 from jobhunter.analysis_service_v23 import JobAnalysisServiceV23
 from jobhunter.config import Settings
+from jobhunter.evidence_refs_v21 import _sentences, has_candidate_optionality_signal
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 from jobhunter.inference.instructor_lm_studio_v23 import (
     complete_analysis_partition_with_instructor_v23,
@@ -18,6 +20,13 @@ from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
     """Keep proof preferences in their own bounded model partition."""
+
+    def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
+        kwargs = dict(kwargs)
+        kwargs["additional_plan"] = _scoped_preferred_qualification_plan(
+            kwargs["original_fields"], kwargs["additional_plan"]
+        )
+        return super()._run_once(**kwargs)
 
     def _requirement_coverage_plan(
         self, model_fields: dict[str, Any]
@@ -47,6 +56,41 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
 
     def _persistable_structured(self, structured: dict[str, Any]) -> dict[str, Any]:
         return dict(persisted_v20_shape(structured))
+
+
+_PREFERRED_SENTENCE_END_RE = re.compile(
+    r"\b(?:is|are)\s+(?:considered\s+)?(?:an?\s+)?"
+    r"(?:(?:important|valuable|strong)\s+)?(?:asset|advantage|plus)\s*[.!?]?$",
+    re.I,
+)
+_REQUIRED_CUE_RE = re.compile(r"\b(?:essential|required|must|mandatory|necessary)\b", re.I)
+
+
+def _scoped_preferred_qualification_plan(
+    fields: dict[str, Any], plan: dict[str, dict[str, Any]]
+) -> dict[str, dict[str, Any]]:
+    """Carry an unambiguous sentence-level preference to its exact list items."""
+
+    description = fields.get("description")
+    if not isinstance(description, str):
+        return plan
+    sentences = [
+        sentence for sentence in _sentences(description)
+        if _PREFERRED_SENTENCE_END_RE.search(sentence)
+        and has_candidate_optionality_signal(sentence)
+        and not _REQUIRED_CUE_RE.search(sentence)
+    ]
+    result = {reference: dict(candidate) for reference, candidate in plan.items()}
+    for candidate in result.values():
+        if candidate.get("source_kind") != "candidate_qualification_item":
+            continue
+        item = str(candidate.get("text") or "")
+        parents = [sentence for sentence in sentences if item and item in sentence]
+        if len(parents) != 1:
+            continue
+        candidate["obligation_hint"] = "preferred"
+        candidate["obligation_context"] = parents[0]
+    return result
 
 
 def build_v23_analysis_service(settings: Settings) -> JobAnalysisServiceV23:

@@ -24,6 +24,22 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
     def _has_exact_preference_signal(self, text: str, plan: dict[str, Any]) -> bool:
         if super()._has_exact_preference_signal(text, plan):
             return True
+        if any(
+            isinstance(candidate, dict)
+            and candidate.get("source_kind") == "candidate_qualification_item"
+            and candidate.get("obligation_hint") == "preferred"
+            and candidate.get("text") == self.evidence
+            and candidate.get("text") == text
+            and isinstance(candidate.get("obligation_context"), str)
+            and candidate["text"] in candidate["obligation_context"]
+            and re.search(
+                r"\b(?:important\s+asset|considered\s+an?\s+(?:asset|advantage)|"
+                r"(?:an?\s+)?advantage|(?:an?\s+)?plus)\b",
+                candidate["obligation_context"], re.I,
+            )
+            for candidate in plan.values()
+        ):
+            return True
         return bool(
             _PROOF_VALUE_PREFERENCE_RE.search(text)
             and any(

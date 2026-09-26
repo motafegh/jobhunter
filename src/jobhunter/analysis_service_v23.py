@@ -28,6 +28,10 @@ P1.6 V23 CANDIDATE — CLAIM WORDING AND PROOF OF ABILITY:
   experience requirements. Application instructions about sending a resume or links
   are not additional qualifications. Do not extract requirements from such instructions.
 - Preserve every inherited strict source, strength, depth and full-coverage rule.
+- For a candidate qualification list item with an explicit preferred
+  obligation_context, that context is the exact source sentence establishing
+  preference for the listed item. Keep the item itself as exact evidence and
+  classify it preferred; do not use the context to infer extra requirements.
 """
 
 _ENGLISH_SYSTEM_PROMPT_V23 = _ENGLISH_SYSTEM_PROMPT_V21 + _V23_RULES

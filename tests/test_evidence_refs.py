@@ -3,8 +3,17 @@ from jobhunter.evidence_refs import (
     build_requirement_coverage_plan,
     build_responsibility_coverage_plan,
     evidence_reference_payload,
+    has_english_optionality_signal,
     requirement_coverage_payload,
 )
+
+
+def test_important_asset_marks_source_preference() -> None:
+    assert has_english_optionality_signal(
+        "Experience in streaming audio and voice cloning is an important asset."
+    )
+    assert has_english_optionality_signal("Production experience is considered an asset.")
+    assert not has_english_optionality_signal("The company maintains an asset registry.")
 
 
 def test_long_bullet_description_gets_exact_segment_references() -> None:

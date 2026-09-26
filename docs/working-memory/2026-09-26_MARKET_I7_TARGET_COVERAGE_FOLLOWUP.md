@@ -108,3 +108,17 @@ the previously missing `t7ck` practical STT/TTS experience sentence and changes
 no other projection plan. It does not generate or accept an artifact; the
 preferred-list strength defect remains to be resolved before a new `t7ck`
 attempt. Ruff and all 748 strict-warning tests passed.
+
+The list-strength investigation found that the English optionality recognizer
+missed "important asset" and that old exact comma-item references carried a
+hard-coded required hint even when their full source sentence made the entire
+list preferred. The current v23 runtime now carries an exact preferred
+sentence context only when a qualification-list sentence ends in an explicit
+asset/advantage/plus cue and contains no required/essential/must cue. Its item
+evidence remains exact; the preferred hint and source context are supplied to
+the model and checked by the v23 response validator. On the 29 current
+projections, this affects only the four `t7ck` speech items and two `tI1n`
+items; no accepted anchor is changed. A mixed essential-plus-advantage sentence
+remains unmodified. The model still has to produce a valid complete artifact,
+and human semantic review still controls acceptance. Ruff and all 750
+strict-warning tests passed.
