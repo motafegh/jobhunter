@@ -64,7 +64,8 @@ _EXPLICIT_CANDIDATE_REQUIREMENT_RE = re.compile(
 )
 _CANDIDATE_SUBJECT_RE = re.compile(
     r"\b(?:we\s+(?:are|'re)\s+looking\s+for|is\s+looking\s+to\s+attract|"
-    r"role\s+is\s+suitable\s+for\s+someone|if\s+you)\b",
+    r"role\s+is\s+suitable\s+for\s+someone|if\s+you|"
+    r"(?:the\s+)?desired\s+(?:individual|candidate|applicant)\s+must)\b",
     re.I,
 )
 _CANDIDATE_QUALIFICATION_RE = re.compile(

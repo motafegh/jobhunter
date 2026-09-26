@@ -100,3 +100,11 @@ minimum. Lower-bound and range behavior stays as before. This is a general
 source-polarity correction; it does not repair artifact 51, the omitted STT/TTS
 experience sentence, or preferred-list misclassification. Ruff and all 747
 strict-warning tests passed.
+
+The exact v21/v23 source planner now recognizes an explicit "desired
+candidate/individual/applicant must" qualification sentence as non-excludable
+candidate-experience coverage. On the current 29 English projections this adds
+the previously missing `t7ck` practical STT/TTS experience sentence and changes
+no other projection plan. It does not generate or accept an artifact; the
+preferred-list strength defect remains to be resolved before a new `t7ck`
+attempt. Ruff and all 748 strict-warning tests passed.

@@ -87,6 +87,28 @@ def _requirement(
     }
 
 
+def test_v21_requires_explicit_desired_candidate_experience_sentence() -> None:
+    sentence = (
+        "The desired candidate must have practical experience in developing and "
+        "evaluating speech models for Persian."
+    )
+    plan = build_requirement_coverage_plan_v21(
+        {"description": "We build voice software. " + sentence}
+    )
+
+    matches = [
+        item for item in plan.values()
+        if item.get("source_kind") == "candidate_experience"
+    ]
+    assert len(matches) == 1
+    assert matches[0]["text"] == sentence
+    assert matches[0]["obligation_hint"] == "required"
+    assert matches[0]["required_item_excerpts"] == [{
+        "text": "practical experience in developing and evaluating speech models for Persian",
+        "required_concept_type": "experience",
+    }]
+
+
 def test_v21_distinguishes_null_experience_depth_from_neighbor_familiarity() -> None:
     evidence = (
         "practical experience with LLMs and language model APIs in Python and/or TypeScript, "
