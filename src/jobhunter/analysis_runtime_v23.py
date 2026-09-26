@@ -1,4 +1,4 @@
-"""Explicit, non-public P1.6 v23 candidate runtime."""
+"""Current P1.6 v23 provider and service wiring."""
 
 from __future__ import annotations
 
@@ -50,7 +50,8 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
 
 
 def build_v23_analysis_service(settings: Settings) -> JobAnalysisServiceV23:
-    """Build explicitly; public-current v21 routing remains untouched."""
+    """Build the shared current English service with local failure diagnostics."""
+    from jobhunter.analysis_failure_diagnostics import AnalysisFailureDiagnosticStore
     from jobhunter.analysis_runtime import _translation_service
     from jobhunter.analysis_store import AnalysisStore
     from jobhunter.translation_store import TranslationStore
@@ -62,6 +63,7 @@ def build_v23_analysis_service(settings: Settings) -> JobAnalysisServiceV23:
         source_store=TranslationStore(settings.database_path),
         translation_service=_translation_service(settings),
         analysis_store=AnalysisStore(settings.database_path),
+        diagnostic_store=AnalysisFailureDiagnosticStore(settings.database_path),
         provider=V23CandidateAnalysisProvider(
             base_url=settings.lm_studio_base_url,
             configured_model=model,

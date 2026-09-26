@@ -177,6 +177,7 @@ Execution result:
 - [~] required proof-sample coverage in `tjgi` remains a separate offline design question; it does not block the source-reviewed `tvMm` core candidate path.
 - [x] owner-directed corrected v23 non-persistent `tvMm` evaluation passed complete manual source review: 25 requirements, 11 duties, three explicit proof preferences, no material semantic defects, and unchanged operational/public state. See `docs/working-memory/2026-09-26_MARKET_I7_V23_FULL_EVALUATION_REVIEW.md`.
 - [x] promote v23/v5 public routing with accepted-only v20/v21 compatibility and exact historical artifact identities; normal persisted candidate and Market drill-down remain next.
+- [x] first normal v23 `tvMm` attempt 110 exposed inherited old-plan persistence mismatch after generation; no artifact was created. Versioned v23 persistence now uses its exact model-facing plan, retained full-result replay and 740 strict-warning tests pass, and the public corpus verifies. See the v23 promotion reconciliation.
 - [ ] obtain at least one semantically valid accepted-current P1.6 core member and verify live semantic drill-down.
 - [x] verified second snapshot/profile and first snapshot/profile historical immutability after the rerun.
 - [x] verified post-execution SQLite integrity/foreign-key + privacy checks; repeat after future operational mutations.

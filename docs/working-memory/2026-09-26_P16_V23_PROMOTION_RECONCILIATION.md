@@ -31,3 +31,24 @@ Next real gate: normal persisted v23 `tvMm` analysis, actual artifact review and
 explicit acceptance only if it is source-valid, then new immutable Market
 snapshot/profile with accepted-semantic requirement/responsibility drill-down
 in CLI and browser, followed by operational integrity and privacy checks.
+
+## Persisted path repair before the next run
+
+The first normal CLI `tvMm` analysis under v23 recorded failed attempt **110** and
+no artifact. Its model result reached the service, but the inherited persistence
+function rebuilt the much older v14/base coverage plan and demanded reference
+`field:description:segment:2:clause:1`, which the v23 model-facing planner had
+already replaced with exact item references. This was a real integration defect,
+not semantic rejection. Pre-run SQLite backup is ignored locally; integrity was
+`ok` with zero foreign-key violations.
+
+V23 now persists coverage from its own exact requirement planner and the inherited
+v21 responsibility planner. Every mandatory ref must be cited; prohibited proof
+exclusions fail closed; structured skill tags retain deterministic coverage;
+work refs must be purpose or responsibility. The historical v20 persistence path
+is unchanged. The current service now also configures private failure diagnostics
+as v21 did. Read-only replay of the reviewed full 25-requirement/11-duty result
+through both v23 persistence and v17 source validation passes. A separate public
+source regression constructs the full `tvMm` ledger and rejects missing or
+excluded proof. Ruff PASS, **740 warnings-as-errors tests PASS**, public corpus
+verification PASS for 394 jobs. Attempt 110 remains failed and is not promoted.

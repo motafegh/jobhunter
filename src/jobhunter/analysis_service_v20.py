@@ -118,6 +118,13 @@ class JobAnalysisServiceV20:
             error=error,
         )
 
+    def _persist_analysis(
+        self, structured: dict, analysis_fields: dict
+    ) -> dict:
+        """Keep historical v20 persistence unless a later contract owns its ledger."""
+
+        return _persisted_analysis_v14(structured, analysis_fields)
+
     def analyze_english_job(self, source_job_id: str) -> AnalysisJobResult:
         source = self._source_store.latest_source_version(source_job_id)
         if source is None:
@@ -164,7 +171,7 @@ class JobAnalysisServiceV20:
                 max_tokens=self._max_tokens,
             )
             validate_v17_candidate_structured(result.structured, analysis_fields)
-            analysis = _persisted_analysis_v14(result.structured, analysis_fields)
+            analysis = self._persist_analysis(result.structured, analysis_fields)
             _validate_evidence_v17(analysis, analysis_fields)
         except Exception as exc:
             self._record_failed_attempt(source=source, attempted_at=attempted_at, error=exc)
