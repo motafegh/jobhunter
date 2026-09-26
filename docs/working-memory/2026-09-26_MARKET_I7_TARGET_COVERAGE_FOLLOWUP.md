@@ -93,3 +93,10 @@ mandatory coverage. These are two general correctness defects: omitted
 candidate-qualified prose and polarity loss in structured duration. Address
 them independently, preserving rejected artifact 51 and the accepted anchors;
 do not retry `t7ck` on an unchanged contract or count it as semantic coverage.
+
+The deterministic duration path now retains the full `less than three years`
+upper bracket and records it as contextual rather than a required three-year
+minimum. Lower-bound and range behavior stays as before. This is a general
+source-polarity correction; it does not repair artifact 51, the omitted STT/TTS
+experience sentence, or preferred-list misclassification. Ruff and all 747
+strict-warning tests passed.

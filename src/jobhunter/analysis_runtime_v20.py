@@ -35,6 +35,7 @@ _EXPERIENCE_BOUND_PREFIX_RE = re.compile(
     r"^(?:more\s+than|over|greater\s+than|at\s+least|minimum(?:\s+of)?)\s+",
     re.I,
 )
+_EXPERIENCE_UPPER_BOUND_PREFIX_RE = re.compile(r"^(?:less\s+than|under|below)\s+", re.I)
 
 
 def _normalize(value: str) -> str:
@@ -78,7 +79,7 @@ def _v20_deterministic_structured_skills(
 def _v20_preserve_experience_bound(
     deterministic: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    """Retain an explicit lower-bound modifier around a deterministic years extent."""
+    """Preserve duration polarity; an upper bracket is no minimum requirement."""
 
     result: list[dict[str, Any]] = []
     for item in deterministic:
@@ -89,6 +90,13 @@ def _v20_preserve_experience_bound(
             prefix = evidence[: -len(depth)].strip() if depth and evidence.endswith(depth) else ""
             if prefix and _EXPERIENCE_BOUND_PREFIX_RE.fullmatch(prefix + " "):
                 updated["depth_signal"] = evidence
+            elif prefix and _EXPERIENCE_UPPER_BOUND_PREFIX_RE.fullmatch(prefix + " "):
+                updated["depth_signal"] = evidence
+                updated["requirement_type"] = "contextual"
+                updated["rationale"] = (
+                    "The structured source field states an experience bracket, not a "
+                    "minimum number of years."
+                )
         result.append(updated)
     return result
 

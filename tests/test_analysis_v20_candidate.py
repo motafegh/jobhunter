@@ -211,6 +211,22 @@ def test_v20_preserves_explicit_more_than_experience_bound() -> None:
     assert result[1]["depth_signal"] == "three to six years"
 
 
+def test_v20_does_not_turn_upper_experience_bracket_into_required_minimum() -> None:
+    result = _v20_preserve_experience_bound(
+        [{
+            "concept": "Professional experience",
+            "concept_type": "experience",
+            "depth_signal": "three years",
+            "evidence": "less than three years",
+            "requirement_type": "required",
+        }]
+    )
+
+    assert result[0]["depth_signal"] == "less than three years"
+    assert result[0]["requirement_type"] == "contextual"
+    assert "not a minimum" in result[0]["rationale"]
+
+
 def test_v20_dense_coverage_is_partitioned_without_losing_any_reference() -> None:
     plan: dict[str, dict] = {}
     for index in range(6):
