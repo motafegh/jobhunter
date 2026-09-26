@@ -861,6 +861,33 @@ class MarketStore:
             ).fetchone()
         return _snapshot(row) if row else None
 
+    def latest_nonempty_snapshot_source_ids(
+        self, target_definition_version_id: int
+    ) -> tuple[str, ...]:
+        """Carry forward known target members when a later search page shifts."""
+
+        self.initialize()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT s.id
+                FROM market_corpus_snapshots AS s
+                WHERE s.target_definition_version_id = ?
+                  AND EXISTS (
+                      SELECT 1 FROM market_corpus_snapshot_members AS sm
+                      WHERE sm.snapshot_id = s.id
+                  )
+                ORDER BY s.id DESC
+                LIMIT 1
+                """,
+                (target_definition_version_id,),
+            ).fetchone()
+        if row is None:
+            return ()
+        return tuple(dict.fromkeys(
+            member.source_job_id for member in self.list_snapshot_members(int(row["id"]))
+        ))
+
     def list_snapshot_members(
         self,
         snapshot_id: int,

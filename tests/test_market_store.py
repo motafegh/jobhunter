@@ -427,6 +427,23 @@ def test_snapshot_freezes_membership_and_p16_coverage_without_zero_filling(
     assert by_job["pending"].semantic_coverage_status == "pending"
     assert by_job["missing"].semantic_coverage_status == "missing"
     assert by_job["missing"].analysis_artifact_id is None
+    assert store.latest_nonempty_snapshot_source_ids(definition.id) == (
+        "core", "pending", "missing",
+    )
+
+    later_run = store.start_run(definition.id, controls={}, started_at=_NOW)
+    store.record_snapshot(
+        target_definition_version_id=definition.id,
+        run_id=later_run.id,
+        freshness_rule="current-active",
+        source_scope={"source": "jobinja"},
+        metadata={},
+        members=(),
+        created_at=_NOW,
+    )
+    assert store.latest_nonempty_snapshot_source_ids(definition.id) == (
+        "core", "pending", "missing",
+    )
 
     with pytest.raises(MarketStoreError, match="already has an immutable snapshot"):
         store.record_snapshot(

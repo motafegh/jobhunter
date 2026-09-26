@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-24
+**Last reconciled:** 2026-09-26
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -52,10 +52,10 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 394
+known/discovered Jobinja jobs: 410
 fetched/parsed detail jobs:      51
 current English projections:     27
-accepted/current English P1.6:    5
+accepted/current English P1.6:    6
 accepted/current Capability:      5
 ```
 
@@ -75,16 +75,18 @@ for a core member is persisted, explicitly accepted, frozen into a new snapshot/
 verified through the real semantic CLI/browser drill-down plus post-mutation integrity/privacy
 checks.
 
-### P1.6 v23 promotion reconciliation — 2026-09-26
+### P1.6 v23 promotion and accepted core analysis — 2026-09-26
 
 V23/v5 is the current English generation/review contract after complete source review
 of one non-persistent `tvMm` result. It adds explicit proof-of-work preference coverage
 and preserves the v22 fail-closed claim-wording boundary. The five accepted v20/v5
 anchors remain accepted-only compatibility-current with exact identities; any accepted
 v21/v5 artifacts are also compatibility-current. Pending/rejected prior-contract
-candidates do not become v23 current. I7 remains HOLD until a normal persisted
-current artifact is explicitly accepted and exercised in a new Market snapshot/profile
-and real CLI/browser drill-down. See the 2026-09-26 v23 complete evaluation review.
+candidates do not become v23 current. Normal persisted `tvMm` artifact 50 exactly
+matched the complete source-reviewed result and was explicitly accepted. I7 remains
+HOLD until that accepted current core artifact is exercised in a new Market
+snapshot/profile and real CLI/browser drill-down. See the 2026-09-26 accepted-core
+Market record.
 
 ---
 

@@ -36,9 +36,14 @@ class FakeSettings:
 
 
 class FakeMarketStore:
-    def __init__(self, definition):
+    def __init__(self, definition, previous_ids=()):
         self.definition = definition
         self.finished = None
+        self.previous_ids = previous_ids
+
+    def latest_nonempty_snapshot_source_ids(self, definition_id):
+        assert definition_id == self.definition.id
+        return self.previous_ids
 
     def get_definition_version(self, definition_id):
         return self.definition if definition_id == self.definition.id else None
@@ -205,15 +210,16 @@ def _definition(*, catalog_version="fixture-v1"):
     )
 
 
-def _coordinator(job_ids, *, fail_job=None):
+def _coordinator(job_ids, *, fail_job=None, previous_ids=()):
     definition = _definition()
-    market = FakeMarketStore(definition)
+    market = FakeMarketStore(definition, previous_ids)
     memberships = FakeMemberships(fail_job=fail_job)
     snapshots = FakeSnapshots()
+    source_ready = tuple(dict.fromkeys((*previous_ids, *job_ids)))
     coordinator = MarketRunCoordinator(
         settings=FakeSettings(),
         market_store=market,
-        planner=FakePlanner(job_ids),
+        planner=FakePlanner(source_ready),
         discovery_service=FakeDiscovery(job_ids),
         detail_batch=NeverRun(),
         translation_service=NeverRun(),
@@ -278,6 +284,28 @@ def test_market_run_preserves_partial_success_when_one_membership_fails():
     assert result.run.status == MarketRunStatus.COMPLETED_WITH_FAILURES
     assert market.finished.ledger["stages"]["membership"]["failed"] == 1
     assert any(value.startswith("membership:b:") for value in result.failures)
+
+
+def test_market_run_carries_forward_prior_members_when_search_pages_shift():
+    coordinator, market, memberships, snapshots = _coordinator(
+        ("new", "old-b"), previous_ids=("old-a", "old-b"),
+    )
+
+    result = coordinator.run(
+        3,
+        controls=MarketRunControls(
+            missing_limit=0, refresh_limit=0, translation_limit=0,
+            analysis_limit=0, membership_limit=3,
+        ),
+    )
+
+    assert result.candidate_ids == ("old-a", "old-b", "new")
+    assert memberships.calls == ["old-a", "old-b", "new"]
+    assert snapshots.membership_ids == result.membership_ids
+    discovery = market.finished.ledger["stages"]["discovery"]
+    assert discovery["candidate_jobs"] == 2
+    assert discovery["carried_forward_source_jobs"] == 2
+    assert discovery["target_candidate_jobs"] == 3
 
 
 def test_market_run_controls_reject_unbounded_membership_budget():

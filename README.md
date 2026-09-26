@@ -29,7 +29,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
 
-The first **target-scoped Market / Role-Family Intelligence vertical slice** is implemented through I6 and has now undergone bounded I7 real-local execution. The run validated target-scoped acquisition/progression, explicit partial failures, membership, source-vs-semantic denominators, reuse, privacy boundaries, and the shared browser/CLI workflow. I7 is currently **HOLD**, not PASS: the live snapshot had no accepted-semantic core posting, so accepted-P1.6 requirement/responsibility drill-down was not exercised end to end. The 2026-09-19 follow-up recovered the rerun snapshot/profile identities, verified historical immutability and SQLite integrity, and repaired rejection of pending analyses referenced by historical snapshots. The remaining gate is valid accepted semantic evidence and its live CLI/browser drill-down.
+The first **target-scoped Market / Role-Family Intelligence vertical slice** is implemented through I6 and has undergone bounded I7 real-local execution. That work validated target-scoped acquisition, partial failures, membership, source-vs-semantic denominators, reuse, privacy, and the shared browser/CLI workflow. I7 is still **HOLD**. A current core posting now has explicitly accepted English P1.6 artifact 50; the remaining gate is a fresh point-in-time Market snapshot/profile and accepted-semantic requirement/responsibility drill-down through CLI and browser, followed by integrity and privacy checks.
 
 ## Why the engineering is non-trivial
 
@@ -113,13 +113,13 @@ Current committed baseline:
 
 | Public corpus state | Count |
 | --- | ---: |
-| Known/discovered jobs | 394 |
+| Known/discovered jobs | 410 |
 | Fetched/parsed job details | 51 |
 | Current English projections | 27 |
-| Accepted English P1.6 artifacts | 5 |
+| Accepted English P1.6 artifacts | 6 |
 | Accepted Capability artifacts | 5 |
 
-`394` means known/discovered job identities, not 394 complete advertisements.
+`410` means known/discovered job identities, not 410 complete advertisements.
 
 A fresh clone can inspect the committed corpus without SQLite, Jobinja access, or LM Studio:
 

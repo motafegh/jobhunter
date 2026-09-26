@@ -1,0 +1,403 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "understanding the architecture and real system building experience is more important to us than the name of the Framework.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "This is why we need someone who can move beyond the idea and prototype stage and turn an Agent into a reliable system in a real product.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "We are looking for an AI Agent Engineer; someone who has not just worked with the APIs of language models, but has real experience in designing and developing intelligent Agents and Agentic systems.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "If you have built an Agent yourself to date, have worked with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration, and enjoy building systems that can understand goals, make decisions, use tools, and pursue a task to the end, then you might be the right fit for our team.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "It would be a huge plus if you could show and explain one of the Agents you have previously built: What problem did the Agent solve? How did it make decisions? What Tools did it have access to? How did you manage Context and Memory? If the Agent made a mistake, how did you detect and correct it? How did you measure the quality and cost of the system?",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "A real GitHub repository, sample project, or Demo is very valuable.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "In this role, a real project you have built is more valuable to us than several pages of a resume.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ai",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Engineer",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "LLMs and language model APIs in Python and/or TypeScript",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "Decomposition of dense requirement clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "AI Agents or Agentic Workflows",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "Decomposition of dense requirement clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Tool Calling / Function Calling",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "Decomposition of dense requirement clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "RAG, Embedding, and Vector Databases",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "Decomposition of dense requirement clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "include practical experience with LLMs and language model APIs in Python and/or TypeScript, experience building AI Agents or Agentic Workflows, familiarity with Tool Calling / Function Calling, familiarity with RAG, Embedding, and Vector Databases, familiarity with one or more Agentic Frameworks such as: LangGraph, LangChain, OpenAI Agents SDK, CrewAI, AutoGen, or similar tools. You don't need to know all these tools",
+        "rationale": "Decomposition of dense requirement clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Understanding the architecture",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "understanding the architecture and real system building experience is more important to us than the name of the Framework.",
+        "rationale": "Directly supported by exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Real system building experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "understanding the architecture and real system building experience is more important to us than the name of the Framework.",
+        "rationale": "Directly supported by exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Building Production-grade Agents",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Working with Multi-Agent systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Connecting Agents to real databases and APIs",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "LLM system Observability and Evaluation",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Docker and Cloud services",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Backend and service architectures",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Building AI products, not just prototypes",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It is an advantage if you have experience building Production-grade Agents, working with Multi-Agent systems, having experience connecting Agents to real databases and APIs, familiarity with LLM system Observability and Evaluation, experience working with Docker and Cloud services, familiarity with Backend and service architectures, and experience building AI products, not just prototypes.",
+        "rationale": "Decomposition of preferred list.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Turning an Agent into a reliable system in a real product",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "This is why we need someone who can move beyond the idea and prototype stage and turn an Agent into a reliable system in a real product.",
+        "rationale": "Directly supported by required clause.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience with language model APIs",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "We are looking for an AI Agent Engineer; someone who has not just worked with the APIs of language models, but has real experience in designing and developing intelligent Agents and Agentic systems.",
+        "rationale": "Directly derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience designing and developing intelligent Agents and Agentic systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "We are looking for an AI Agent Engineer; someone who has not just worked with the APIs of language models, but has real experience in designing and developing intelligent Agents and Agentic systems.",
+        "rationale": "Directly derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience building an Agent",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "If you have built an Agent yourself to date, have worked with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration, and enjoy building systems that can understand goals, make decisions, use tools, and pursue a task to the end, then you might be the right fit for our team.",
+        "rationale": "Directly derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "If you have built an Agent yourself to date, have worked with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration, and enjoy building systems that can understand goals, make decisions, use tools, and pursue a task to the end, then you might be the right fit for our team.",
+        "rationale": "Directly derived from exact item coverage listing multiple required components.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Enjoying building systems that can understand goals, make decisions, use tools, and pursue a task to the end",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "If you have built an Agent yourself to date, have worked with LLMs, Tool Calling, memory, workflows, RAG, and Orchestration, and enjoy building systems that can understand goals, make decisions, use tools, and pursue a task to the end, then you might be the right fit for our team.",
+        "rationale": "Directly derived from exact item coverage describing a desired trait/enjoyment.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Demonstration of Agent building experience",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "It would be a huge plus if you could show and explain one of the Agents you have previously built: What problem did the Agent solve? How did it make decisions? What Tools did it have access to? How did you manage Context and Memory? If the Agent made a mistake, how did you detect and correct it? How did you measure the quality and cost of the system?",
+        "rationale": "The item excerpt explicitly states it is a 'huge plus' to show and explain prior Agent building experience, classifying it as a preferred proof-of-ability.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Provision of project samples",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "A real GitHub repository, sample project, or Demo is very valuable.",
+        "rationale": "The item excerpt states that a real GitHub repository, sample project, or Demo is 'very valuable', indicating a preferred proof of work.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Prior built project demonstration",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "In this role, a real project you have built is more valuable to us than several pages of a resume.",
+        "rationale": "The item excerpt emphasizes that a real project built is 'more valuable', establishing a strong preference for demonstrated experience over traditional credentials.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Ai",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ai",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Engineer",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Engineer",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "include designing and developing usable AI Agents in the product",
+        "statement": "Designing and developing usable AI Agents in the product"
+      },
+      {
+        "confidence": "high",
+        "evidence": "designing the architecture of Agentic and Multi-Agent systems",
+        "statement": "Designing the architecture of Agentic and Multi-Agent systems"
+      },
+      {
+        "confidence": "high",
+        "evidence": "connecting Agents to tools, APIs, databases, and internal services",
+        "statement": "Connecting Agents to tools, APIs, databases, and internal services"
+      },
+      {
+        "confidence": "high",
+        "evidence": "implementing Tool Calling / Function Calling with LLMs",
+        "statement": "Implementing Tool Calling / Function Calling with LLMs"
+      },
+      {
+        "confidence": "high",
+        "evidence": "designing Prompts / Context",
+        "statement": "Designing Prompts / Context"
+      },
+      {
+        "confidence": "high",
+        "evidence": "implementing Memory and managing Context",
+        "statement": "Implementing Memory and managing Context"
+      },
+      {
+        "confidence": "high",
+        "evidence": "developing RAG and Knowledge-based systems",
+        "statement": "Developing RAG and Knowledge-based systems"
+      },
+      {
+        "confidence": "high",
+        "evidence": "designing multi-step and reliable workflows",
+        "statement": "Designing multi-step and reliable workflows"
+      },
+      {
+        "confidence": "high",
+        "evidence": "evaluating, debugging, and improving Agent performance",
+        "statement": "Evaluating, debugging, and improving Agent performance"
+      },
+      {
+        "confidence": "high",
+        "evidence": "paying attention to cost, Latency, Reliability, and output quality.",
+        "statement": "Paying attention to cost, Latency, Reliability, and output quality."
+      },
+      {
+        "confidence": "high",
+        "evidence": "Close collaboration with the Product and Backend teams to turn AI capabilities into real products is what is very important to us.",
+        "statement": "Close collaboration with the Product and Backend teams to turn AI capabilities into real products is what is very important to us."
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "responsibility",
+        "evidence": "include designing and developing usable AI Agents in the product"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "designing the architecture of Agentic and Multi-Agent systems"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "connecting Agents to tools, APIs, databases, and internal services"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "implementing Tool Calling / Function Calling with LLMs"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "designing Prompts / Context"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "implementing Memory and managing Context"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "developing RAG and Knowledge-based systems"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "designing multi-step and reliable workflows"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "evaluating, debugging, and improving Agent performance"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "paying attention to cost, Latency, Reliability, and output quality."
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Close collaboration with the Product and Backend teams to turn AI capabilities into real products is what is very important to us."
+      }
+    ],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 50,
+  "created_at": "2026-09-26T17:29:44.431961+00:00",
+  "job_detail_version_id": 47,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v23",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tvMm",
+  "stage": "p16_english",
+  "translation_artifact_id": 41
+}

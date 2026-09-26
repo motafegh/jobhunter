@@ -4,7 +4,7 @@
 **Date:** 2026-09-26
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
-**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 CASE REVIEW PASS / PERSISTED ACCEPTANCE NEXT
+**Current product gate:** MARKET I1-I6 ACCEPTED / I7 EXECUTED / HOLD — V23 ARTIFACT 50 ACCEPTED / MARKET SNAPSHOT NEXT
 **Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending

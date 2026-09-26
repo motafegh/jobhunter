@@ -148,10 +148,10 @@ Those five accepted anchor artifacts remain physically v20/v5 and are accepted-o
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 394
+known/discovered Jobinja jobs: 410
 fetched/parsed detail jobs:      51
 current English projections:     27
-accepted/current English P1.6:    5
+accepted/current English P1.6:    6
 accepted/current Capability:      5
 ```
 
@@ -313,10 +313,11 @@ Keep the accepted v20/v5 artifacts as accepted-only compatibility inputs, preser
 and Market history, and keep I7 HOLD until the live accepted-semantic closure path passes.
 
 The 2026-09-26 complete non-persistent v23 `tvMm` result passed whole-artifact source review
-with 25 requirements and 11 duties. V23 is now the public/current English generation contract;
-the next live step is one normal persisted v23 candidate, exact artifact review, and only then
+with 25 requirements and 11 duties. V23 is now the public/current English generation contract.
+The normal persisted artifact 50 exactly matched that reviewed result and was explicitly accepted.
+The next I7 step is a bounded source refresh under the existing 168-hour rule, then an
 accepted-semantic Market snapshot/profile plus CLI/browser drill-down. See
-`docs/working-memory/2026-09-26_MARKET_I7_V23_FULL_EVALUATION_REVIEW.md`.
+`docs/working-memory/2026-09-26_MARKET_I7_ACCEPTED_CORE_AND_REUSE_REPAIR.md`.
 
 ### 5.2 First-slice settled rules
 

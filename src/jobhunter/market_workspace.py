@@ -338,7 +338,12 @@ class MarketRunCoordinator:
 
         try:
             discovery = self._discovery.run(preview.searches)
-            candidate_ids = discovery.discovered_job_ids
+            carried_forward_ids = self._market.latest_nonempty_snapshot_source_ids(
+                target_definition_version_id
+            )
+            candidate_ids = tuple(dict.fromkeys(
+                (*carried_forward_ids, *discovery.discovered_job_ids)
+            ))
             failures.extend(f"discovery: {item}" for item in discovery.failures)
             ledger["stages"]["discovery"] = {
                 "searches_attempted": discovery.searches_attempted,
@@ -346,6 +351,8 @@ class MarketRunCoordinator:
                 "request_budget": discovery.request_budget,
                 "pages_fetched": discovery.pages_fetched,
                 "candidate_jobs": discovery.unique_jobs,
+                "carried_forward_source_jobs": len(carried_forward_ids),
+                "target_candidate_jobs": len(candidate_ids),
                 "new_jobs": discovery.new_jobs,
                 "known_jobs": discovery.known_jobs,
                 "failures": len(discovery.failures),
