@@ -34,3 +34,24 @@ it is not spliced into a candidate or accepted. The next check is one
 non-public v24 evaluation on an isolated copy of operational SQLite, followed
 by full source review if a candidate validates. A structurally valid response
 does not authorize automatic semantic acceptance or public promotion.
+
+## Isolated evaluation result
+
+The one isolated `tmvA` v24 evaluation ran against a private SQLite copy and
+failed closed at copied attempt 113. The corrected plan contained all eight
+non-excludable qualification items and no duplicate broad parents. Its first
+partition advanced, then an exact coordinated list — `Familiarity with API,
+Webhook, and service connections` — failed the inherited item-depth guard.
+The first response placed the shared `Familiarity` marker on the bare
+`Webhook` and `and service connections` item excerpts; the correction instead
+used those bare item names as depth signals. Neither is an exact explicit
+depth marker in the individual item excerpt. The source sentence and the
+model response are retained privately; no fragment was promoted, and no
+operational analysis, Market row or public projection changed. The copied
+SQLite passed integrity and foreign-key checks.
+
+This result does not justify spreading the shared depth marker across bare
+neighboring items or weakening v21/v23 item-depth validation. V24 stays
+isolated/non-public. Other current core jobs may be reviewed independently
+under the public v23 contract while the shared-scope representation is
+investigated from source-backed cases.

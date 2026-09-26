@@ -73,3 +73,8 @@ historical core classification from snapshots 1-8.
 Run 9 discovery raised the repository-safe known identity count to 412;
 public-corpus verification passed with 51 details, 29 English projections,
 six accepted English P1.6 artifacts and five accepted Capability artifacts.
+
+The isolated v24 `tmvA` evaluation then failed closed on shared familiarity
+scope across exact list items. No operational artifact was created; the
+versioned candidate stays non-public. The exact result and stop line are in
+`docs/working-memory/2026-09-27_MARKET_I7_V24_QUALIFICATION_OWNERSHIP_DECISION.md`.
