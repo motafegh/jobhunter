@@ -7,6 +7,7 @@ from datetime import UTC, datetime
 from types import SimpleNamespace
 
 import pytest
+from instructor.core.exceptions import FailedAttempt, InstructorRetryException
 
 from jobhunter.analysis_failure_diagnostics import (
     AnalysisFailureDiagnosticStore,
@@ -67,6 +68,32 @@ def test_retry_completion_is_private_attempt_linked_diagnostic(diagnostic_databa
             )
         }
     assert "job_analysis_artifacts" not in tables
+
+
+def test_installed_instructor_retry_fields_are_captured(diagnostic_database):
+    """Keep capture aligned with the installed provider exception contract."""
+    completion = _completion("TEST_ONLY_PROVIDER_COMPLETION")
+    retry = InstructorRetryException(
+        "validation failed",
+        n_attempts=2,
+        total_usage=0,
+        failed_attempts=[
+            FailedAttempt(
+                attempt_number=2,
+                exception=ValueError("invalid structured output"),
+                completion=completion,
+            )
+        ],
+    )
+    failure = InferenceResponseError("untrusted provider detail")
+    failure.__cause__ = retry
+
+    store = AnalysisFailureDiagnosticStore(diagnostic_database)
+    store.record_failure(attempt_id=7, error=failure)
+    diagnostic = store.list_for_attempt(7)[0]
+    assert diagnostic.retry_number == 2
+    assert diagnostic.response_state == "available"
+    assert diagnostic.completion_text == "TEST_ONLY_PROVIDER_COMPLETION"
 
 
 def test_missing_and_oversize_completion_are_explicit(diagnostic_database):
