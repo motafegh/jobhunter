@@ -48,3 +48,11 @@ verification passed at this checkpoint.
 Next: review current core P1.6 candidates one at a time against exact source
 evidence. Do not auto-accept model output or call this target semantically
 complete while any core posting remains missing/pending/rejected.
+
+2026-09-27 continuation: the first normal v23 `tmvA` P1.6 attempt 112 failed
+closed with no artifact. Retained diagnostic responses cited exact qualification
+items, while the runtime also demanded the same broad sentence references in
+a different partition. The distinct v24 candidate and bounded evaluation
+decision are recorded at
+`docs/working-memory/2026-09-27_MARKET_I7_V24_QUALIFICATION_OWNERSHIP_DECISION.md`.
+Public v23 remains current pending real semantic review.
