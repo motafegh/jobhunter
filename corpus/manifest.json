@@ -3559,11 +3559,11 @@
       },
       "canonical_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
       "company_slug": "united-technologists",
-      "job_detail_version_id": 54,
+      "job_detail_version_id": 56,
       "language": "mixed",
       "lifecycle_state": "active",
       "parse_status": "parsed",
-      "semantic_sha256": "cfd6297563fd4c55e7f447123baaf19902c35c955b86834ccadb15f30d15dcc0",
+      "semantic_sha256": "13e50c452a4428c6efceac5c7b434d60853d1088b0dc43bc07efcaa6b50a934a",
       "source_job_id": "tNVe",
       "stages": {
         "capability": false,
