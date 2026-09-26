@@ -78,3 +78,18 @@ The isolated v24 `tmvA` evaluation then failed closed on shared familiarity
 scope across exact list items. No operational artifact was created; the
 versioned candidate stays non-public. The exact result and stop line are in
 `docs/working-memory/2026-09-27_MARKET_I7_V24_QUALIFICATION_OWNERSHIP_DECISION.md`.
+
+Normal public v23 analysis of core posting `t7ck` persisted pending artifact
+51. Full source review rejected it. The posting explicitly requires practical
+experience developing, fine-tuning, evaluating and optimizing STT/TTS models,
+especially for Persian; artifact 51 omitted that requirement. It promoted
+Streaming Audio, Real-Time Voice, VAD and Voice Cloning from an "important
+asset" to required, and demoted preferred Latency reduction to contextual.
+The deterministic structured-field path also turned `less than three years`
+into a required `three years` depth, reversing the source bound. No rejected
+claim became accepted P1.6 or a public corpus artifact. Source-plan inspection
+found that v23 did not expose the central practical-experience sentence as
+mandatory coverage. These are two general correctness defects: omitted
+candidate-qualified prose and polarity loss in structured duration. Address
+them independently, preserving rejected artifact 51 and the accepted anchors;
+do not retry `t7ck` on an unchanged contract or count it as semantic coverage.
