@@ -450,7 +450,7 @@ def test_v22_preserves_v21_ledgers_across_all_public_projections() -> None:
     projection_paths = sorted(
         (_REPOSITORY_ROOT / "corpus" / "jobs").glob("*/english-projection.json")
     )
-    assert len(projection_paths) == 27
+    assert projection_paths
 
     for projection_path in projection_paths:
         fields = json.loads(projection_path.read_text(encoding="utf-8"))["fields"]

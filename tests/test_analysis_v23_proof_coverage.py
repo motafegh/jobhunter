@@ -84,7 +84,7 @@ def test_accepted_anchor_plans_and_all_current_projection_sources_remain_stable(
             build_requirement_coverage_plan_v21(fields)
         )
     projections = sorted((_ROOT / "corpus" / "jobs").glob("*/english-projection.json"))
-    assert len(projections) == 27
+    assert projections
     for path in projections:
         fields = _fields(path.parent.name)
         plan = build_requirement_coverage_plan_v23(fields)

@@ -48,9 +48,11 @@ def _provider(handler) -> LMStudioTranslationProvider:
 def test_local_translation_client_does_not_trust_proxy_environment(monkeypatch) -> None:
     real_client = httpx.Client
     trust_env_values: list[object] = []
+    timeouts: list[httpx.Timeout] = []
 
     def client(*args, **kwargs):
         trust_env_values.append(kwargs.get("trust_env"))
+        timeouts.append(kwargs["timeout"])
         return real_client(*args, **kwargs)
 
     monkeypatch.setattr(lm_studio_module.httpx, "Client", client)
@@ -68,6 +70,37 @@ def test_local_translation_client_does_not_trust_proxy_environment(monkeypatch) 
 
     assert provider.list_models() == ("only-model",)
     assert trust_env_values == [False]
+    assert timeouts[0].connect == 10.0
+    assert timeouts[0].read == 30.0
+
+
+def test_local_translation_completion_has_no_read_deadline(monkeypatch) -> None:
+    real_client = httpx.Client
+    timeouts: list[httpx.Timeout] = []
+
+    def client(*args, **kwargs):
+        timeouts.append(kwargs["timeout"])
+        return real_client(*args, **kwargs)
+
+    monkeypatch.setattr(lm_studio_module.httpx, "Client", client)
+    source = "متن نمونه"
+    provider = LMStudioTranslationProvider(
+        base_url="http://127.0.0.1:1234/v1",
+        configured_model="local-model",
+        timeout_seconds=30,
+        max_retries=0,
+        transport=httpx.MockTransport(
+            lambda request: _response(request, source, "Sample text")
+        ),
+    )
+
+    result = provider.translate_texts((source,), source_language="fa", target_language="en")
+    assert result.texts == ("Sample text",)
+    assert len(timeouts) == 1
+    assert timeouts[0].connect == 10.0
+    assert timeouts[0].read is None
+    assert timeouts[0].write == 30.0
+    assert timeouts[0].pool == 30.0
 
 
 def test_lm_studio_translation_uses_content_ids_and_isolates_segments() -> None:

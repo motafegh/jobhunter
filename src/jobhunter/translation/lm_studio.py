@@ -99,13 +99,23 @@ class LMStudioTranslationProvider:
         if self._api_token:
             headers["Authorization"] = f"Bearer {self._api_token}"
 
+        # A local model may take longer than the connection deadline to generate
+        # a complete translation. Keep discovery bounded, but do not time out a
+        # connected completion while its response is still being generated.
+        timeout = httpx.Timeout(
+            connect=min(self._timeout_seconds, 10.0),
+            read=None if path == "chat/completions" else self._timeout_seconds,
+            write=self._timeout_seconds,
+            pool=self._timeout_seconds,
+        )
+
         last_connection_error: httpx.HTTPError | None = None
         for attempt in range(self._max_retries + 1):
             try:
                 with httpx.Client(
                     base_url=self._base_url,
                     headers=headers,
-                    timeout=self._timeout_seconds,
+                    timeout=timeout,
                     transport=self._transport,
                     trust_env=False,
                 ) as client:
