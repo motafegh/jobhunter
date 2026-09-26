@@ -45,6 +45,15 @@ I3 real-model evidence:
 
 Do not follow older `I1-I6 NEXT`, open-B1, or pre-foundation instructions when they conflict with these current owners.
 
+2026-09-26 continuation: R05 sidecar migration passed on a private copy of the operational
+SQLite without changing analysis or Market history; installed Instructor retry fields
+are now regression-tested. No pending v21 candidate exists in that local database, so
+real item-review acceptance is still outstanding. See
+`docs/working-memory/2026-09-26_R05_LOCAL_COMPATIBILITY_CHECK.md`.
+The R03/R04 offline source and consumer audit is at
+`docs/working-memory/2026-09-26_P16_R03_R04_OFFLINE_SOURCE_AND_CONSUMER_AUDIT.md`.
+Neither checkpoint changes Market I7 HOLD or authorizes another model retry.
+
 ---
 
 ## 2. Frozen first-slice rules
