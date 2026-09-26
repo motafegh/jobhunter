@@ -148,7 +148,7 @@ Those five accepted anchor artifacts remain physically v20/v5 and are accepted-o
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 411
+known/discovered Jobinja jobs: 412
 fetched/parsed detail jobs:      51
 current English projections:     29
 accepted/current English P1.6:    6

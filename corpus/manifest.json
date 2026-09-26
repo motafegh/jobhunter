@@ -16,10 +16,10 @@
   "counts": {
     "capabilities": 5,
     "english_projections": 29,
-    "jobs": 411,
+    "jobs": 412,
     "p16_english": 6,
     "p16_original": 0,
-    "sources": 411
+    "sources": 412
   },
   "jobs": [
     {
@@ -5829,6 +5829,30 @@
         "source": true
       },
       "title": "SRE Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vimond/jobs/tjTV/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AF%D8%B1%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%85%D8%B1%D9%86%D8%AF-%D8%AF%D8%B1-%D9%88%DB%8C%D9%85%D9%88%D9%86%D8%AF",
+      "company_slug": "vimond",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tjTV",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "مدرس هوش مصنوعی(مرند)"
     },
     {
       "artifact_ids": {

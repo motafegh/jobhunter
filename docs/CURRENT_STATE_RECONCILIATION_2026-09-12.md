@@ -52,7 +52,7 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 411
+known/discovered Jobinja jobs: 412
 fetched/parsed detail jobs:      51
 current English projections:     29
 accepted/current English P1.6:    6
@@ -252,6 +252,12 @@ adjacent, two excluded) and completed current English projections for all ten.
 P1.6 remains accepted for only one core posting. Run 7's translation timeout was
 repaired at the transport boundary and run 8 completed its retry. Current
 follow-up: `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
+
+Subsequent source review corrected `taOX` from core to adjacent with immutable
+membership record 15. Run/snapshot/profile 9 now has six core, two adjacent,
+two excluded, one accepted-semantic core, one failed v23 core attempt and four
+missing core analyses. Snapshot 8 is unchanged. V24 qualification ownership is
+an isolated candidate under evaluation; v23 remains public/current.
 
 The rest of this section is the historical HOLD trail, retained to explain repairs.
 Its former present-tense next-work statements are superseded by the final decision.

@@ -31,7 +31,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 
 The first **target-scoped Market / Role-Family Intelligence vertical slice** (I1-I7) has passed bounded real-local acceptance. Repeated target runs verified acquisition, membership, source-vs-semantic denominators, reuse, immutable snapshots, privacy, and shared browser/CLI read paths. Snapshot 6 contains six qualified core source postings, including one with explicitly accepted English P1.6 artifact 50 and frozen requirement/responsibility drill-down. These small samples do not establish broad-market prevalence. See the [I7 acceptance record](docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md).
 
-The owner-requested coverage follow-up has since qualified and translated all ten source-ready postings in this target; seven are core and one currently has accepted P1.6. Snapshot 8 preserves that state while per-job semantic review continues.
+The owner-requested coverage follow-up has since qualified and translated all ten source-ready postings in this target. Source review corrected one membership, so snapshot 9 now has six core, two adjacent and two excluded postings; one core posting has accepted P1.6. Per-job semantic review continues.
 
 ## Why the engineering is non-trivial
 
@@ -115,13 +115,13 @@ Current committed baseline:
 
 | Public corpus state | Count |
 | --- | ---: |
-| Known/discovered jobs | 411 |
+| Known/discovered jobs | 412 |
 | Fetched/parsed job details | 51 |
 | Current English projections | 29 |
 | Accepted English P1.6 artifacts | 6 |
 | Accepted Capability artifacts | 5 |
 
-`411` means known/discovered job identities, not 411 complete advertisements.
+`412` means known/discovered job identities, not 412 complete advertisements.
 
 A fresh clone can inspect the committed corpus without SQLite, Jobinja access, or LM Studio:
 

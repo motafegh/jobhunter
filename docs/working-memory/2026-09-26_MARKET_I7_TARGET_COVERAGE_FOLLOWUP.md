@@ -56,3 +56,20 @@ a different partition. The distinct v24 candidate and bounded evaluation
 decision are recorded at
 `docs/working-memory/2026-09-27_MARKET_I7_V24_QUALIFICATION_OWNERSHIP_DECISION.md`.
 Public v23 remains current pending real semantic review.
+
+The same-target source review also corrected `taOX` membership from
+high-confidence core (record 4) to medium-confidence adjacent (new immutable
+record 15). Its principal duties deploy AI tools across departments, automate
+internal work, train staff, and improve content, sales, support and
+administration; custom assistant setup is one task. Against definition 1's
+primary AI-system-development intent, adjacent is the bounded interpretation.
+The repository correction service passed a private-copy dry run, then wrote
+record 15 with exact English and original-source description references.
+Snapshot/profile 9 froze ten members as six core, two adjacent and two
+excluded, with one accepted-semantic core, one failed v23 core attempt and four
+missing core analyses. Snapshot 8 remained byte-identical after correction;
+SQLite integrity and foreign keys passed. This correction does not erase the
+historical core classification from snapshots 1-8.
+Run 9 discovery raised the repository-safe known identity count to 412;
+public-corpus verification passed with 51 details, 29 English projections,
+six accepted English P1.6 artifacts and five accepted Capability artifacts.
