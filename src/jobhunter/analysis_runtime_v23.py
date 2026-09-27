@@ -23,8 +23,10 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
 
     def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
         kwargs = dict(kwargs)
+        base_plan = self._requirement_coverage_plan(kwargs["effective_fields"])
         kwargs["additional_plan"] = _scoped_preferred_qualification_plan(
-            kwargs["original_fields"], kwargs["additional_plan"]
+            kwargs["original_fields"],
+            _remove_duplicate_residual_ownership(kwargs["additional_plan"], base_plan),
         )
         return super()._run_once(**kwargs)
 
@@ -91,6 +93,27 @@ def _scoped_preferred_qualification_plan(
         candidate["obligation_hint"] = "preferred"
         candidate["obligation_context"] = parents[0]
     return result
+
+
+def _remove_duplicate_residual_ownership(
+    additional: dict[str, dict[str, Any]], base: dict[str, dict[str, Any]]
+) -> dict[str, dict[str, Any]]:
+    """One non-excludable candidate fact owns an identical residual sentence."""
+
+    owned = {
+        str(candidate.get("text") or "")
+        for candidate in base.values()
+        if candidate.get("source_kind") == "candidate_experience"
+        and candidate.get("allow_exclusion") is False
+    }
+    return {
+        reference: dict(candidate)
+        for reference, candidate in additional.items()
+        if not (
+            candidate.get("source_kind") == "candidate_residual_sentence"
+            and candidate.get("text") in owned
+        )
+    }
 
 
 def build_v23_analysis_service(settings: Settings) -> JobAnalysisServiceV23:

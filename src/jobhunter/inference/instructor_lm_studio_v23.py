@@ -26,15 +26,22 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
             return True
         if any(
             isinstance(candidate, dict)
-            and candidate.get("source_kind") == "candidate_qualification_item"
+            and candidate.get("source_kind") in {
+                "candidate_qualification_item", "requirement_section"
+            }
             and candidate.get("obligation_hint") == "preferred"
             and candidate.get("text") == self.evidence
             and candidate.get("text") == text
             and isinstance(candidate.get("obligation_context"), str)
-            and candidate["text"] in candidate["obligation_context"]
+            and (
+                candidate.get("source_kind") == "requirement_section"
+                or candidate["text"] in candidate["obligation_context"]
+            )
             and re.search(
                 r"\b(?:important\s+asset|considered\s+an?\s+(?:asset|advantage)|"
-                r"(?:an?\s+)?advantage|(?:an?\s+)?plus)\b",
+                r"(?:an?\s+)?advantage|(?:an?\s+)?plus|score\s+is\s+given\s+for|"
+                r"points?\s+(?:are\s+also\s+)?awarded\s+for|preferred|"
+                r"nice[ -]to[ -]have)\b",
                 candidate["obligation_context"], re.I,
             )
             for candidate in plan.values()

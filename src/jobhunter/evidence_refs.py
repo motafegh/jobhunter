@@ -14,7 +14,11 @@ _SECTION_HEADING_RE = re.compile(
     r"(?:this|the)\s+(?:position|role)\s+(?:will\s+be|is)\s+responsible\s+for|"
     r"you\s+will\s+be\s+responsible\s+for|"
     r"what\s+you(?:'|’)ll\s+do|what\s+we(?:'|’)re\s+looking\s+for|"
-    r"technical\s+skill\s+stack|key\s+responsibilities|"
+    r"technical\s+skill\s+stack|(?:key|main)\s+responsibilities|"
+    r"eligibility\s+requirements\s+include|essential\s+skills\s+include|"
+    r"expected\s+competencies\s+include|required\s+technical\s+skills|"
+    r"desired\s+qualities|(?:points?\s+(?:are\s+also\s+)?awarded|score\s+is\s+given)\s+for|"
+    r"collaboration\s+terms|working\s+conditions|"
     r"how\s+to\s+apply\s*:|"
     r"responsibilities(?=\s*(?::|-|include\b))|"
     r"(?-i:Responsibilities(?=\s+[A-Z][a-z]))|"
@@ -46,6 +50,7 @@ _CANDIDATE_DUTY_RE = re.compile(
     r"\bwe\s+(?:are|'re)\s+(?:looking\s+for|seeking)\b[^.!?\n]+?\s+to\s+[a-z]",
     re.I,
 )
+_CANDIDATE_PARAGRAPH_RE = re.compile(r"^we\s+(?:are|'re)\s+looking\s+for\s+someone\b", re.I)
 _NON_REQUIREMENT_VALUES = {
     "it doesn't matter",
     "doesn't matter",
@@ -93,6 +98,7 @@ def _heading_kind(heading: str) -> str | None:
     if normalized in {
         "what you'll do",
         "key responsibilities",
+        "main responsibilities",
         "responsibilities",
         "this position will be responsible for",
         "this position is responsible for",
@@ -124,9 +130,17 @@ def _heading_kind(heading: str) -> str | None:
         "requirements",
         "qualifications",
         "specialized competencies",
+        "eligibility requirements include",
+        "essential skills include",
+        "expected competencies include",
+        "required technical skills",
         "skills",
     }:
         return "requirements"
+    if normalized == "desired qualities":
+        return "candidate_qualities"
+    if normalized in {"points awarded for", "points are also awarded for", "score is given for"}:
+        return "preferred_requirements"
     return None
 
 
@@ -153,12 +167,16 @@ def _long_text_segments_with_sections(text: str) -> list[tuple[str, str | None]]
     section_kind: str | None = None
     for match in matches:
         for piece in _split_segment_text(text[cursor : match.start()]):
+            if section_kind == "preferred_requirements" and _CANDIDATE_PARAGRAPH_RE.match(piece):
+                section_kind = None
             segments.append((piece, section_kind))
         section_kind = _heading_kind(match.group(0).strip())
         # Optionality must remain in the exact evidence span so downstream validators can
         # independently verify that preferred strength came from the employer source.
         cursor = match.start() if section_kind == "preferred_requirements" else match.end()
     for piece in _split_segment_text(text[cursor:]):
+        if section_kind == "preferred_requirements" and _CANDIDATE_PARAGRAPH_RE.match(piece):
+            section_kind = None
         segments.append((piece, section_kind))
     return segments[:80]
 
@@ -274,7 +292,9 @@ def build_requirement_coverage_plan(fields: dict[str, Any]) -> dict[str, dict[st
     requirement_segments = [
         (index, segment, section_kind)
         for index, (segment, section_kind) in enumerate(segments)
-        if section_kind in {"requirements", "preferred_requirements", "technical_stack"}
+        if section_kind in {
+            "requirements", "preferred_requirements", "technical_stack", "candidate_qualities"
+        }
         or (section_kind is None and _CANDIDATE_EXPERIENCE_RE.search(segment))
     ]
     has_global_unspecified = any(
@@ -319,7 +339,10 @@ def build_requirement_coverage_plan(fields: dict[str, Any]) -> dict[str, dict[st
                     or has_english_optionality_signal(item_text)
                 ):
                     obligation_hint = "preferred"
-                elif section_kind == "technical_stack" and has_global_unspecified:
+                elif (
+                    section_kind == "candidate_qualities"
+                    or section_kind == "technical_stack" and has_global_unspecified
+                ):
                     obligation_hint = "contextual"
                 else:
                     obligation_hint = "required"

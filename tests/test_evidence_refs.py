@@ -1,4 +1,5 @@
 from jobhunter.evidence_refs import (
+    _long_text_segments_with_sections,
     build_field_evidence_catalog,
     build_requirement_coverage_plan,
     build_responsibility_coverage_plan,
@@ -14,6 +15,38 @@ def test_important_asset_marks_source_preference() -> None:
     )
     assert has_english_optionality_signal("Production experience is considered an asset.")
     assert not has_english_optionality_signal("The company maintains an asset registry.")
+
+
+def test_plain_market_headings_keep_duties_requirements_and_preferences_separate() -> None:
+    description = (
+        "Main responsibilities • Build agents • Evaluate results "
+        "Desired Qualities • Learn quickly "
+        "Required technical skills • Python • API integration "
+        "Score is given for • Production deployment • Docker "
+        "Collaboration Terms • Fully remote"
+    )
+    segments = _long_text_segments_with_sections(description)
+
+    assert [kind for _text, kind in segments] == [
+        "responsibilities", "responsibilities", "candidate_qualities",
+        "requirements", "requirements", "preferred_requirements",
+        "preferred_requirements", "preferred_requirements", None,
+    ]
+
+
+def test_preferred_section_ends_at_new_candidate_paragraph() -> None:
+    description = (
+        "Responsibilities include building agents.\n"
+        "Essential skills include Python and backend experience.\n"
+        "Points are also awarded for production deployments.\n"
+        "We are looking for someone who reads documentation.\n"
+        "Working conditions are remote."
+    )
+    segments = _long_text_segments_with_sections(description)
+
+    assert [kind for _text, kind in segments] == [
+        "responsibilities", "requirements", "preferred_requirements", None, None,
+    ]
 
 
 def test_long_bullet_description_gets_exact_segment_references() -> None:

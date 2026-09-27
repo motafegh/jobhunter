@@ -5,6 +5,11 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from jobhunter.evidence_refs import (
+    _SECTION_HEADING_RE,
+    _heading_kind,
+    has_english_optionality_signal,
+)
 from jobhunter.evidence_refs_v21 import _sentences, build_requirement_coverage_plan_v21
 
 _PROOF_CUE_RE = re.compile(
@@ -65,6 +70,23 @@ def build_requirement_coverage_plan_v23(
     description = fields.get("description")
     if not isinstance(description, str):
         return plan
+
+    headings = list(_SECTION_HEADING_RE.finditer(description))
+    for candidate in plan.values():
+        if (
+            candidate.get("source_kind") != "requirement_section"
+            or candidate.get("obligation_hint") != "preferred"
+        ):
+            continue
+        text = str(candidate.get("text") or "")
+        if not text or has_english_optionality_signal(text):
+            continue
+        positions = [match.start() for match in re.finditer(re.escape(text), description)]
+        if len(positions) != 1:
+            continue
+        prior = [heading for heading in headings if heading.end() <= positions[0]]
+        if prior and _heading_kind(prior[-1].group(0).strip()) == "preferred_requirements":
+            candidate["obligation_context"] = prior[-1].group(0).strip()
 
     existing = [str(item["text"]) for item in plan.values()]
     index = 0

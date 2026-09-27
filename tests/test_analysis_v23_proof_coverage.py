@@ -12,6 +12,7 @@ from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
 from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
 from jobhunter.analysis_runtime_v23 import (
     V23CandidateAnalysisProvider,
+    _remove_duplicate_residual_ownership,
     _scoped_preferred_qualification_plan,
 )
 from jobhunter.analysis_service import _analysis_fields_for_english
@@ -87,6 +88,53 @@ def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:
         AnalysisRequirementV23.model_validate(
             {**requirement, "requirement_type": "required"}, context=context
         )
+
+
+def test_v23_keeps_preferred_heading_context_for_separate_bullets() -> None:
+    fields = _fields("tjgi")
+    plan = build_requirement_coverage_plan_v23(fields)
+    candidate = next(
+        item for item in plan.values()
+        if item["text"] == "Experience building AI Agents or LLM-based tools"
+    )
+    assert candidate["obligation_hint"] == "preferred"
+    assert candidate["obligation_context"] == "Score is given for"
+    requirement = {
+        "concept": "Building AI Agents or LLM-based tools",
+        "depth_signal": None,
+        "requirement_type": "preferred",
+        "concept_type": "experience",
+        "evidence": candidate["text"],
+        "item_excerpt": candidate["text"],
+        "confidence": "high",
+        "rationale": "Source heading gives this item preference strength.",
+    }
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": fields["description"]},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"preferred_item": candidate},
+    }
+    assert AnalysisRequirementV23.model_validate(
+        requirement, context=context
+    ).requirement_type == "preferred"
+
+
+def test_v23_exact_candidate_fact_owns_identical_residual_sentence() -> None:
+    fields = _fields("t7ck")
+    effective, _quals, residuals, additional = _v15_candidate_evidence_view(fields)
+    base = build_requirement_coverage_plan_v23(effective)
+    filtered = _remove_duplicate_residual_ownership(additional, base)
+
+    assert len(residuals) == 4
+    assert len([ref for ref in residuals if ref in filtered]) == 3
+    removed = next(ref for ref in residuals if ref not in filtered)
+    assert "ability to research, test" in additional[removed]["text"]
+    assert any(
+        item["text"] == additional[removed]["text"]
+        and item["allow_exclusion"] is False
+        for item in base.values()
+    )
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

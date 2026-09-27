@@ -31,7 +31,9 @@ P1.6 V23 CANDIDATE — CLAIM WORDING AND PROOF OF ABILITY:
 - For a candidate qualification list item with an explicit preferred
   obligation_context, that context is the exact source sentence establishing
   preference for the listed item. Keep the item itself as exact evidence and
-  classify it preferred; do not use the context to infer extra requirements.
+  classify it preferred. Set item_excerpt to the exact text of that item's
+  cited evidence reference; never copy the full obligation_context into
+  item_excerpt. Do not use the context to infer extra requirements.
 """
 
 _ENGLISH_SYSTEM_PROMPT_V23 = _ENGLISH_SYSTEM_PROMPT_V21 + _V23_RULES

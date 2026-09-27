@@ -101,6 +101,8 @@ source-polarity correction; it does not repair artifact 51, the omitted STT/TTS
 experience sentence, or preferred-list misclassification. Ruff and all 747
 strict-warning tests passed.
 
+
+
 The exact v21/v23 source planner now recognizes an explicit "desired
 candidate/individual/applicant must" qualification sentence as non-excludable
 candidate-experience coverage. On the current 29 English projections this adds
@@ -122,3 +124,30 @@ items; no accepted anchor is changed. A mixed essential-plus-advantage sentence
 remains unmodified. The model still has to produce a valid complete artifact,
 and human semantic review still controls acceptance. Ruff and all 750
 strict-warning tests passed.
+
+Bounded post-repair `t7ck` attempt 114 failed closed after its allowed
+correction. Both retained private responses classified the four asset-list
+items as preferred, but cited each exact qualification-item reference while
+placing the entire parent sentence in `item_excerpt`; exact item validation
+rejected all four. No candidate was persisted. The response also treated the
+source's required ability to research/test/fine-tune/deploy speech models as
+contextual under a duplicate residual reference. The v23 prompt now states
+that `obligation_context` establishes strength only and `item_excerpt` must
+match the exact cited item. A non-excludable candidate-fact reference now owns
+an identical residual sentence, removing that conflicting second demand; an
+offline audit found only the `t7ck` sentence affected among 29 projections.
+This is a bounded general evidence-ownership correction, not an acceptance of
+the failed response.
+
+The source section planner also now recognizes plain `Main responsibilities`,
+`Essential skills include`, `Required technical skills`, `Desired Qualities`,
+`Score is given for`, `Points are also awarded for`, and related explicit
+headings. It resets a preferred section when a new candidate paragraph or
+working-conditions heading begins. In current core examples, `tjgi` now has
+nine explicit duty references and 19 descriptive requirement/quality references
+instead of essentially no text coverage; `tNVe` has ten duty references and
+the explicit essential/preferred sections; `t7Ay` gains its explicit eligibility
+and competency sections. Preferred bullet items retain their exact evidence
+and an exact source-heading context for strength validation. The model must
+still account for each source item; none of these postings was auto-accepted.
+Ruff and all 754 strict-warning tests passed.
