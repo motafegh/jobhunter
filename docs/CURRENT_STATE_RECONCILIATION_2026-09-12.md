@@ -52,10 +52,10 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 416
+known/discovered Jobinja jobs: 417
 fetched/parsed detail jobs:      51
 current English projections:     29
-accepted/current English P1.6:    8
+accepted/current English P1.6:    9
 accepted/current Capability:      5
 ```
 
@@ -265,11 +265,14 @@ coverage, preferred-list strength and structured experience-bound handling.
 Run/snapshot/profile 10 retains six core, two adjacent and two excluded source
 postings. Two core postings now have accepted-current P1.6; one core has a
 failed analysis attempt and three are missing. Snapshot 9 remains historical.
-The repository-safe corpus has 416 known identities, 51 parsed details, 29
-English projections, eight accepted English P1.6 artifacts and five accepted
-Capability artifacts. Run/snapshot/profile 11 has six core source postings,
-three with accepted-current P1.6; two have failed analysis attempts and one
-is missing. Same-target semantic coverage remains an active owner follow-up;
+The repository-safe corpus has 417 known identities, 51 parsed details, 29
+English projections, nine accepted English P1.6 artifacts and five accepted
+Capability artifacts. Run/snapshot/profile 13 has six core source postings,
+four with accepted-current P1.6; two have failed analysis attempts. Run 12
+created an empty snapshot when its zero refresh budget met stale source details;
+run 13 refreshed the ten target details and restored a populated current snapshot.
+The coordinator now reports this no-membership condition without publishing a
+replacement empty snapshot. Same-target semantic coverage remains an active owner follow-up;
 the bounded I7 first-slice PASS remains intact.
 
 The rest of this section is the historical HOLD trail, retained to explain repairs.

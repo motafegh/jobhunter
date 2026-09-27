@@ -329,6 +329,7 @@ class MarketRunCoordinator:
         )
         failures: list[str] = []
         membership_ids: list[int] = []
+        had_prior_members = False
         candidate_ids: tuple[str, ...] = ()
         ledger: dict[str, Any] = {
             "target_definition_version_id": target_definition_version_id,
@@ -341,6 +342,7 @@ class MarketRunCoordinator:
             carried_forward_ids = self._market.latest_nonempty_snapshot_source_ids(
                 target_definition_version_id
             )
+            had_prior_members = bool(carried_forward_ids)
             candidate_ids = tuple(dict.fromkeys(
                 (*carried_forward_ids, *discovery.discovered_job_ids)
             ))
@@ -424,6 +426,11 @@ class MarketRunCoordinator:
             membership_ids.extend(membership_stage["membership_ids"])
             failures.extend(membership_stage["failure_messages"])
             ledger["stages"]["membership"] = membership_stage["ledger"]
+            if had_prior_members and not membership_ids:
+                failures.append(
+                    "snapshot/profile: no qualified memberships in this run; "
+                    "check source freshness, membership budget, and stage failures"
+                )
             ledger["failures"] = failures
 
             run = self._market.finish_run(
@@ -451,15 +458,16 @@ class MarketRunCoordinator:
 
         snapshot_result: MarketSnapshotBuildResult | None = None
         profile_result: MarketAggregateBuildResult | None = None
-        try:
-            snapshot_result = self._snapshots.build_snapshot(
-                run_id=run.id,
-                membership_ids=tuple(membership_ids),
-                refresh_after_hours=controls.refresh_after_hours,
-            )
-            profile_result = self._aggregates.build_profile(snapshot_result.snapshot.id)
-        except Exception as exc:
-            failures.append(f"snapshot/profile: {type(exc).__name__}: {exc}")
+        if not had_prior_members or membership_ids:
+            try:
+                snapshot_result = self._snapshots.build_snapshot(
+                    run_id=run.id,
+                    membership_ids=tuple(membership_ids),
+                    refresh_after_hours=controls.refresh_after_hours,
+                )
+                profile_result = self._aggregates.build_profile(snapshot_result.snapshot.id)
+            except Exception as exc:
+                failures.append(f"snapshot/profile: {type(exc).__name__}: {exc}")
 
         return MarketRunResult(
             run=run,

@@ -1,0 +1,445 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "less than three years",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to independently advance the project and bring it to a conclusion",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Problem-solving skills and finding answers through research and documentation",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Professional use of AI tools for programming",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Fast learning, accountability, follow-up, and time management",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to clearly explain decisions and technical solutions",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Having at least one real-world sample, even in the form of a personal project",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Programming experience with at least one of Python or JavaScript/TypeScript",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with Backend, Frontend, and databases",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with API, Webhook, Git, and code version control",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Experience using Claude Code, Codex, Cursor, or similar tools",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Experience building AI Agents or LLM-based tools",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with MCP, n8n, or similar automation tools",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "General familiarity with RAG and Vector Database",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with Docker, Linux, or cloud services",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Experience deploying projects and having GitHub or an online demo",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ai",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "typescript",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Programming experience with at least one of Python or JavaScript/TypeScript",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Programming experience with at least one of Python or JavaScript/TypeScript",
+        "rationale": "Directly listed as a required programming experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Backend, Frontend, and databases",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with Backend, Frontend, and databases",
+        "rationale": "Directly listed as a required familiarity.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+        "rationale": "Directly listed as a required familiarity.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "API, Webhook, Git, and code version control",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with API, Webhook, Git, and code version control",
+        "rationale": "Directly listed as a required familiarity.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience using Claude Code, Codex, Cursor, or similar tools",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience using Claude Code, Codex, Cursor, or similar tools",
+        "rationale": "Directly listed as a required experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+        "rationale": "Directly listed as a required familiarity.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience building AI Agents or LLM-based tools",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience building AI Agents or LLM-based tools",
+        "rationale": "Explicitly preferred ('Score is given for').",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "MCP, n8n, or similar automation tools",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with MCP, n8n, or similar automation tools",
+        "rationale": "Explicitly preferred ('Score is given for').",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "RAG and Vector Database",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "General familiarity with RAG and Vector Database",
+        "rationale": "Directly supported by requirement coverage segment.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Docker, Linux, or cloud services",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with Docker, Linux, or cloud services",
+        "rationale": "Directly supported by requirement coverage segment.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Experience deploying projects and having GitHub or an online demo",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience deploying projects and having GitHub or an online demo",
+        "rationale": "Directly supported by requirement coverage segment explicitly mentioning experience.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Practical solutions from problems and ideas",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Understanding main components of software products",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Independent project advancement and conclusion",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to independently advance the project and bring it to a conclusion",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Problem solving",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Problem-solving skills and finding answers through research and documentation",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Research and documentation for problem solving",
+        "concept_type": "practice",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Problem-solving skills and finding answers through research and documentation",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Programming with AI tools",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Professional use of AI tools for programming",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Fast learning, accountability, follow-up, and time management",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Fast learning, accountability, follow-up, and time management",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Explaining technical solutions",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to clearly explain decisions and technical solutions",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Real-world sample or personal project",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Having at least one real-world sample, even in the form of a personal project",
+        "rationale": "Directly supported by the requirement coverage segment.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Professional experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "less than three years",
+        "evidence": "less than three years",
+        "rationale": "The structured source field states an experience bracket, not a minimum number of years.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ai",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ai",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "typescript",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "typescript",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Python",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "Transforming initial ideas and needs into actionable prototypes and real products",
+        "statement": "Transforming initial ideas and needs into actionable prototypes and real products"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Designing the overall project structure and selecting a suitable technical solution",
+        "statement": "Designing project structure and selecting technical solutions"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Building applications, AI-based tools, and AI Agents",
+        "statement": "Building applications, AI-based tools, and AI Agents"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Connecting AI models and various services via API",
+        "statement": "Connecting AI models and services via API"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Developing and fixing Backend and Frontend parts of the projects",
+        "statement": "Developing and fixing Backend and Frontend parts of projects"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Researching and finding solutions for technical challenges",
+        "statement": "Researching and finding solutions for technical challenges"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Testing, debugging, and delivering projects to usable outputs",
+        "statement": "Testing, debugging, and delivering projects to usable outputs"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Maintaining and developing product features after release",
+        "statement": "Maintaining and developing product features after release"
+      },
+      {
+        "confidence": "high",
+        "evidence": "Providing regular and transparent reports on the progress of projects",
+        "statement": "Providing regular and transparent reports on project progress"
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "responsibility",
+        "evidence": "Transforming initial ideas and needs into actionable prototypes and real products"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Designing the overall project structure and selecting a suitable technical solution"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Building applications, AI-based tools, and AI Agents"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Connecting AI models and various services via API"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Developing and fixing Backend and Frontend parts of the projects"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Researching and finding solutions for technical challenges"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Testing, debugging, and delivering projects to usable outputs"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Maintaining and developing product features after release"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "Providing regular and transparent reports on the progress of projects"
+      }
+    ],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 60,
+  "created_at": "2026-09-27T17:56:13.042716+00:00",
+  "job_detail_version_id": 50,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v23",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tjgi",
+  "stage": "p16_english",
+  "translation_artifact_id": 44
+}

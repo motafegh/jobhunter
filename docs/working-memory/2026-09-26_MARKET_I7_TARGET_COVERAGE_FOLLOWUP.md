@@ -377,3 +377,29 @@ semantic review remains required before promotion. The same normalization
 also converts a split `at least one of` language claim back into the exact
 disjunction. This versioned current contract softens a repeated model
 wording failure rather than rejecting an otherwise useful candidate.
+
+The next bounded configured Gemma run produced `tjgi` artifact 60 (nine duties,
+25 requirements). Full source review accepted it: the required Python or
+JavaScript/TypeScript choice, preferred Docker/Linux/cloud and GitHub/online-demo
+choices, contextual qualities, and upper-bound `less than three years` wording
+were retained without turning qualification into unsupported duties. The
+curated review snapshot is `review-snapshots/jobs/tjgi.json`.
+
+Run 12 discovered one additional source identity but selected zero source-ready
+postings: all ten target details had crossed the configured 24-hour refresh
+threshold, and the run's refresh budget was zero. It published an empty
+snapshot/profile 12. This is an execution/budget failure, not evidence that
+the target has no postings. A bounded run 13 refreshed the ten target details,
+reused their unchanged memberships and semantic artifacts, and completed with
+no failures. Snapshot/profile 13 has ten members: six core, two adjacent, two
+excluded. Four of six core postings have accepted-current P1.6 (`tvMm`, `t7ck`,
+`tNVe`, `tjgi`); `tmvA` and `t7Ay` retain failed analysis attempts. SQLite
+integrity and foreign keys passed, and public-corpus verification passed at
+417 known jobs, 51 details, 29 English projections, nine accepted English P1.6,
+and five accepted Capability artifacts. Historical snapshot 12 remains intact.
+
+The coordinator now marks a rerun with no qualified memberships as completed
+with failures and leaves the previous populated snapshot current, rather than
+publishing a new empty snapshot. The explicit cause stays in the run ledger.
+An initial target with no prior populated snapshot can still record an empty
+initial snapshot.

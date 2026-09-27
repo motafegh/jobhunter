@@ -16,10 +16,10 @@
   "counts": {
     "capabilities": 5,
     "english_projections": 29,
-    "jobs": 416,
-    "p16_english": 8,
+    "jobs": 417,
+    "p16_english": 9,
     "p16_original": 0,
-    "sources": 416
+    "sources": 417
   },
   "jobs": [
     {
@@ -1613,7 +1613,7 @@
         "p16_english": null,
         "p16_original": null
       },
-      "canonical_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/t7AX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-managing-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%A2%D8%B3%D8%A7%DB%8C%D8%B4-%D9%85%D8%AF%D8%B1%D9%86",
+      "canonical_url": "https://jobinja.ir/companies/goldiran-asayesh/jobs/t7AX/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-managing-engineer-%D8%AF%D8%B1-%DA%AF%D9%84%D8%AF%DB%8C%D8%B1%D8%A7%D9%86-%D8%AA%DA%A9",
       "company_slug": "goldiran-asayesh",
       "job_detail_version_id": null,
       "language": "unknown",
@@ -1989,6 +1989,30 @@
         "source": true
       },
       "title": "NLP-AI Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/digiexpress/jobs/tEWd/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-qa-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%D8%A7%DA%A9%D8%B3%D9%BE%D8%B1%D8%B3",
+      "company_slug": "digiexpress",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tEWd",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior QA Engineer"
     },
     {
       "artifact_ids": {
@@ -6002,7 +6026,7 @@
       "artifact_ids": {
         "capability": null,
         "english_projection": 44,
-        "p16_english": null,
+        "p16_english": 60,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/marbelin/jobs/tjgi/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-product-developer-%D8%AF%D8%B1-%D9%85%D8%A7%D8%B1%D8%A8%D9%84%DB%8C%D9%86",
@@ -6016,7 +6040,7 @@
       "stages": {
         "capability": false,
         "english_projection": true,
-        "p16_english": false,
+        "p16_english": true,
         "p16_original": false,
         "source": true
       },

@@ -1,0 +1,563 @@
+{
+  "capability_intelligence": null,
+  "configured_models": {
+    "analysis": "gemma-4-e4b-it-ud",
+    "blueprint": "gemma-4-12b-it-qat",
+    "capability": "gemma-4-e2b-it"
+  },
+  "english_analysis": {
+    "analysis": {
+      "coverage": [
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "less than three years",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Ability to independently advance the project and bring it to a conclusion",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Problem-solving skills and finding answers through research and documentation",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Professional use of AI tools for programming",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Fast learning, accountability, follow-up, and time management",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Ability to clearly explain decisions and technical solutions",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Having at least one real-world sample, even in the form of a personal project",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Programming experience with at least one of Python or JavaScript/TypeScript",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with Backend, Frontend, and databases",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with API, Webhook, Git, and code version control",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Experience using Claude Code, Codex, Cursor, or similar tools",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Experience building AI Agents or LLM-based tools",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with MCP, n8n, or similar automation tools",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "General familiarity with RAG and Vector Database",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Familiarity with Docker, Linux, or cloud services",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Experience deploying projects and having GitHub or an online demo",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Artificial Intelligence",
+          "rationale": "Deterministic structured source skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Ai",
+          "rationale": "Deterministic structured source skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "typescript",
+          "rationale": "Deterministic structured source skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Python",
+          "rationale": "Deterministic structured source skill coverage."
+        }
+      ],
+      "requirements": [
+        {
+          "concept": "Programming experience with at least one of Python or JavaScript/TypeScript",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Programming experience with at least one of Python or JavaScript/TypeScript",
+          "rationale": "Directly listed as a required programming experience.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Backend, Frontend, and databases",
+          "concept_type": "knowledge",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with Backend, Frontend, and databases",
+          "rationale": "Directly listed as a required familiarity.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with frameworks and environments such as Next.js, FastAPI, Node.js, or similar",
+          "rationale": "Directly listed as a required familiarity.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "API, Webhook, Git, and code version control",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with API, Webhook, Git, and code version control",
+          "rationale": "Directly listed as a required familiarity.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Experience using Claude Code, Codex, Cursor, or similar tools",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Experience using Claude Code, Codex, Cursor, or similar tools",
+          "rationale": "Directly listed as a required experience.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+          "concept_type": "knowledge",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with language models and concepts like AI Agent, Tool Calling, Context, and Memory",
+          "rationale": "Directly listed as a required familiarity.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Experience building AI Agents or LLM-based tools",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Experience building AI Agents or LLM-based tools",
+          "rationale": "Explicitly preferred ('Score is given for').",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "MCP, n8n, or similar automation tools",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with MCP, n8n, or similar automation tools",
+          "rationale": "Explicitly preferred ('Score is given for').",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "RAG and Vector Database",
+          "concept_type": "knowledge",
+          "confidence": "high",
+          "depth_signal": "familiarity",
+          "evidence": "General familiarity with RAG and Vector Database",
+          "rationale": "Directly supported by requirement coverage segment.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Docker, Linux, or cloud services",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": "Familiarity",
+          "evidence": "Familiarity with Docker, Linux, or cloud services",
+          "rationale": "Directly supported by requirement coverage segment.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Experience deploying projects and having GitHub or an online demo",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Experience deploying projects and having GitHub or an online demo",
+          "rationale": "Directly supported by requirement coverage segment explicitly mentioning experience.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Practical solutions from problems and ideas",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Understanding main components of software products",
+          "concept_type": "knowledge",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ability to convert problems and ideas into practical solutions and understanding the main components of software products",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Independent project advancement and conclusion",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ability to independently advance the project and bring it to a conclusion",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Problem solving",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Problem-solving skills and finding answers through research and documentation",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Research and documentation for problem solving",
+          "concept_type": "practice",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Problem-solving skills and finding answers through research and documentation",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Programming with AI tools",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Professional use of AI tools for programming",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Fast learning, accountability, follow-up, and time management",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Fast learning, accountability, follow-up, and time management",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Explaining technical solutions",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ability to clearly explain decisions and technical solutions",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Real-world sample or personal project",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Having at least one real-world sample, even in the form of a personal project",
+          "rationale": "Directly supported by the requirement coverage segment.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Professional experience",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": "less than three years",
+          "evidence": "less than three years",
+          "rationale": "The structured source field states an experience bracket, not a minimum number of years.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Artificial Intelligence",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Artificial Intelligence",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Ai",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Ai",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "typescript",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "typescript",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Python",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Python",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        }
+      ],
+      "responsibilities": [
+        {
+          "confidence": "high",
+          "evidence": "Transforming initial ideas and needs into actionable prototypes and real products",
+          "statement": "Transforming initial ideas and needs into actionable prototypes and real products"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Designing the overall project structure and selecting a suitable technical solution",
+          "statement": "Designing project structure and selecting technical solutions"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Building applications, AI-based tools, and AI Agents",
+          "statement": "Building applications, AI-based tools, and AI Agents"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Connecting AI models and various services via API",
+          "statement": "Connecting AI models and services via API"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Developing and fixing Backend and Frontend parts of the projects",
+          "statement": "Developing and fixing Backend and Frontend parts of projects"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Researching and finding solutions for technical challenges",
+          "statement": "Researching and finding solutions for technical challenges"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Testing, debugging, and delivering projects to usable outputs",
+          "statement": "Testing, debugging, and delivering projects to usable outputs"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Maintaining and developing product features after release",
+          "statement": "Maintaining and developing product features after release"
+        },
+        {
+          "confidence": "high",
+          "evidence": "Providing regular and transparent reports on the progress of projects",
+          "statement": "Providing regular and transparent reports on project progress"
+        }
+      ],
+      "responsibility_coverage": [
+        {
+          "disposition": "responsibility",
+          "evidence": "Transforming initial ideas and needs into actionable prototypes and real products"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Designing the overall project structure and selecting a suitable technical solution"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Building applications, AI-based tools, and AI Agents"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Connecting AI models and various services via API"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Developing and fixing Backend and Frontend parts of the projects"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Researching and finding solutions for technical challenges"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Testing, debugging, and delivering projects to usable outputs"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Maintaining and developing product features after release"
+        },
+        {
+          "disposition": "responsibility",
+          "evidence": "Providing regular and transparent reports on the progress of projects"
+        }
+      ],
+      "role_purpose": []
+    },
+    "artifact_id": 60,
+    "created_at": "2026-09-27T17:56:13.042716+00:00",
+    "job_detail_version_id": 50,
+    "model": "gemma-4-e4b-it-ud",
+    "prompt_version": "job-analysis-english-v23",
+    "schema_version": "job-analysis-v5",
+    "semantic_review_note": "Reviewed complete Persian source, English projection, all 25 requirements and 9 explicit duties: Python OR JavaScript/TypeScript minimum remains disjunctive, preferred Docker/Linux/cloud and GitHub OR demo alternatives remain exact, desired qualities stay contextual, upper experience bracket stays contextual, and no unsupported employer work was found.",
+    "semantic_review_status": "accepted",
+    "semantic_reviewed_at": "2026-09-27T17:58:40.615763+00:00",
+    "translation_artifact_id": 44
+  },
+  "english_projection": {
+    "artifact_id": 44,
+    "created_at": "2026-09-18T19:00:23.539833+00:00",
+    "fields": {
+      "company": "Marbelin | Marbelin",
+      "company_description": "Marblein Tools Jewelry Company",
+      "date_posted": "2026-09-15",
+      "description": "We are looking for a creative, persistent, and results-oriented programmer who is interested in building Artificial Intelligence-based products and can transform ideas into real, usable tools and applications. The focus of this position is on product development, implementing ideas, building AI Agents, connecting various services, and professionally using AI in the development process. We do not expect complete mastery of all technologies in this field; problem-solving ability, fast learning, selecting appropriate solutions, and delivering the project to a result are more important to us. Main responsibilities • Transforming initial ideas and needs into actionable prototypes and real products • Designing the overall project structure and selecting a suitable technical solution • Building applications, AI-based tools, and AI Agents • Connecting AI models and various services via API • Developing and fixing Backend and Frontend parts of the projects • Researching and finding solutions for technical challenges • Testing, debugging, and delivering projects to usable outputs • Maintaining and developing product features after release • Providing regular and transparent reports on the progress of projects Desired Qualities • Ability to convert problems and ideas into practical solutions and understanding the main components of software products • Ability to independently advance the project and bring it to a conclusion • Problem-solving skills and finding answers through research and documentation • Professional use of AI tools for programming • Fast learning, accountability, follow-up, and time management • Ability to clearly explain decisions and technical solutions • Having at least one real-world sample, even in the form of a personal project • Required technical skills • Programming experience with at least one of Python or JavaScript/TypeScript • Familiarity with Backend, Frontend, and databases • Familiarity with frameworks and environments such as Next.js, FastAPI, Node.js, or similar • Familiarity with API, Webhook, Git, and code version control • Experience using Claude Code, Codex, Cursor, or similar tools • Familiarity with language models and concepts like AI Agent, Tool Calling, Context, and Memory Score is given for • Experience building AI Agents or LLM-based tools • Familiarity with MCP, n8n, or similar automation tools • General familiarity with RAG and Vector Database • Familiarity with Docker, Linux, or cloud services • Experience deploying projects and having GitHub or an online demo Collaboration Terms • Full-time and long-term; combination of office presence and remote work • Office location: West Tehran • Base monthly salary from 30 million Tomans, along with bonuses and commissions • Working on real projects and growth opportunities simultaneously with product development Please send your resume, portfolio link or GitHub, a description of your exact responsibilities in a project, the AI tools used, expected salary, and availability to start. Practical samples are prioritized for review.",
+      "education": "It doesn't matter",
+      "employment_type": "full time",
+      "gender": "It doesn't matter",
+      "job_category": "Web, programming, and software",
+      "location": "Tehran",
+      "military_service": "It doesn't matter",
+      "minimum_experience": "less than three years",
+      "salary": "from 30,000,000 Tomans",
+      "skills": [
+        "Artificial Intelligence",
+        "Ai",
+        "typescript",
+        "Python"
+      ],
+      "title": "AI Product Developer",
+      "valid_through": null
+    },
+    "job_detail_version_id": 50,
+    "model": "gemma-4-e2b-it",
+    "native_segment_count": 4,
+    "provider": "lm-studio-translation-v2",
+    "schema_version": "english-projection-v2",
+    "segment_provenance": {
+      "company": "translated",
+      "company_description": "translated",
+      "date_posted": "native",
+      "description": "translated",
+      "education": "translated",
+      "employment_type": "translated",
+      "gender": "translated",
+      "job_category": "translated",
+      "location": "translated",
+      "military_service": "translated",
+      "minimum_experience": "translated",
+      "salary": "translated",
+      "skills[0]": "translated",
+      "skills[1]": "native",
+      "skills[2]": "native",
+      "skills[3]": "native",
+      "title": "translated"
+    },
+    "source_language": "mixed",
+    "source_semantic_sha256": "ba0a7b5e65266e26bd4ddda4046f1480603c953098b81796d0dcccd080243f66",
+    "target_language": "en",
+    "translated_segment_count": 13,
+    "translation_sha256": "46b8745855991f565115b86940e458e660a70d90ea88455399cfadebe3ecefd7"
+  },
+  "original_analysis": null,
+  "role_capability_blueprint": null,
+  "snapshot_schema_version": "job-review-snapshot-v1",
+  "source": {
+    "canonical_url": "https://jobinja.ir/companies/marbelin/jobs/tjgi/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-product-developer-%D8%AF%D8%B1-%D9%85%D8%A7%D8%B1%D8%A8%D9%84%DB%8C%D9%86",
+    "content_sha256": "169b660d432bb49fe42c5510813e9ab4d5c125d5d4e7b9a1a6c71706bc5205a3",
+    "evidence_path": "data/evidence/jobinja/job-pages/tjgi-b6bc37fb84/20260918T185731.168079Z_detail_169b660d432b.html",
+    "fetched_at": "2026-09-18T18:57:31.168079+00:00",
+    "fields": {
+      "company": "ماربلین | Marbelin",
+      "company_description": "شرکت زیور آلات ماربلین",
+      "date_posted": "2026-09-15",
+      "description": "ما به‌دنبال یک برنامه‌نویس خلاق، پیگیر و نتیجه‌گرا هستیم که به ساخت محصولات مبتنی بر هوش مصنوعی علاقه داشته باشد و بتواند ایده‌ها را به ابزارها و برنامه‌های واقعی و قابل‌استفاده تبدیل کند. تمرکز این موقعیت روی ساخت محصول، پیاده‌سازی ایده‌ها، ساخت AI Agent، اتصال سرویس‌های مختلف و استفاده حرفه‌ای از هوش مصنوعی در فرایند توسعه است. انتظار نداریم به تمام تکنولوژی‌های این حوزه تسلط کامل داشته باشید؛ توانایی حل مسئله، یادگیری سریع، انتخاب راه‌حل مناسب و رساندن پروژه به نتیجه برای ما اهمیت بیشتری دارد. مسئولیت‌های اصلی • تبدیل ایده‌ها و نیازهای اولیه به نمونه قابل‌اجرا و محصول واقعی • طراحی ساختار کلی پروژه و انتخاب راه‌حل فنی متناسب با نیاز • ساخت اپلیکیشن‌ها، ابزارهای مبتنی بر هوش مصنوعی و AI Agent • اتصال مدل‌های هوش مصنوعی و سرویس‌های مختلف از طریق API • توسعه و اصلاح بخش‌های Backend و Frontend پروژه‌ها • تحقیق و پیدا کردن راه‌حل برای چالش‌های فنی • تست، رفع خطا و رساندن پروژه‌ها به خروجی قابل‌استفاده • نگهداری و توسعه قابلیت‌های محصولات پس از انتشار • ارائه گزارش منظم و شفاف از روند انجام پروژه‌ها ویژگی‌های موردنظر • توانایی تبدیل مسئله و ایده به راه‌حل عملی و درک اجزای اصلی محصول نرم‌افزاری • توانایی پیش‌بردن مستقل پروژه و به‌نتیجه‌رساندن آن • مهارت حل مسئله و پیدا کردن پاسخ از طریق تحقیق و مستندات • استفاده حرفه‌ای از ابزارهای هوش مصنوعی برای برنامه‌نویسی • یادگیری سریع، مسئولیت‌پذیری، پیگیری و مدیریت زمان • توانایی توضیح شفاف تصمیم‌ها و راه‌حل‌های فنی • داشتن حداقل یک نمونه‌کار واقعی، حتی در قالب پروژه شخصی مهارت‌های فنی موردنیاز • تجربه برنامه‌نویسی با حداقل یکی از زبان‌های Python یا JavaScript/TypeScript • آشنایی با Backend، Frontend و پایگاه داده • آشنایی با فریم‌ورک‌ها و محیط‌هایی مانند Next.js، FastAPI، Node.js یا موارد مشابه • آشنایی با API، Webhook، Git و مدیریت نسخه کد • تجربه استفاده از Claude Code، Codex، Cursor یا ابزارهای مشابه • آشنایی با مدل‌های زبانی و مفاهیم AI Agent، Tool Calling، Context و Memory امتیاز محسوب می‌شود • تجربه ساخت AI Agent یا ابزار مبتنی بر LLM • آشنایی با MCP، n8n یا ابزارهای اتوماسیون مشابه • آشنایی کلی با RAG و Vector Database • آشنایی با Docker، Linux یا سرویس‌های ابری • تجربه Deploy کردن پروژه و داشتن GitHub یا دموی آنلاین شرایط همکاری • تمام‌وقت و بلندمدت؛ ترکیبی از حضور در دفتر و دورکاری • محل دفتر: غرب تهران • حقوق پایه ماهانه از ۳۰ میلیون تومان، به‌همراه پاداش و پورسانت • فعالیت روی پروژه‌های واقعی و فرصت رشد هم‌زمان با توسعه محصولات لطفاً همراه رزومه، لینک نمونه‌کار یا GitHub، توضیح مسئولیت دقیق خود در یک پروژه، ابزارهای AI مورد استفاده، حقوق مورد انتظار و زمان آمادگی برای شروع را ارسال کنید. نمونه‌کار عملی در اولویت بررسی است.",
+      "education": "مهم نیست",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "کمتر از سه سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۳۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "Ai",
+        "typescript",
+        "Python"
+      ],
+      "title": "توسعه‌دهنده محصولات هوش مصنوعی (AI Product Developer)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/marbelin/jobs/tjgi/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%D9%85%D8%AD%D8%B5%D9%88%D9%84%D8%A7%D8%AA-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-product-developer-%D8%AF%D8%B1-%D9%85%D8%A7%D8%B1%D8%A8%D9%84%DB%8C%D9%86",
+    "first_seen_at": "2026-09-18T18:57:03.919001+00:00",
+    "job_detail_version_id": 50,
+    "last_seen_at": "2026-09-27T18:02:28.007679+00:00",
+    "lifecycle_state": "active",
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "ba0a7b5e65266e26bd4ddda4046f1480603c953098b81796d0dcccd080243f66",
+    "source_job_id": "tjgi",
+    "status_code": 200,
+    "title_observed": "توسعه‌دهنده محصولات هوش مصنوعی (AI Product Developer)"
+  },
+  "source_job_id": "tjgi",
+  "status": {
+    "blueprint_is_current_chain": false,
+    "capability_intelligence_present": false,
+    "capability_is_current_chain": false,
+    "english_analysis_present": true,
+    "english_analysis_semantic_review": "accepted",
+    "english_projection_present": true,
+    "original_analysis_present": false,
+    "role_capability_blueprint_present": false,
+    "translation_matches_english_analysis": true
+  }
+}
