@@ -78,6 +78,26 @@ def test_v24_is_isolated_from_public_v23_identity() -> None:
     assert CURRENT_PROMPT == "job-analysis-english-v23"
 
 
+def test_v24_persistence_uses_the_generation_ownership_plan(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    fields = json.loads(
+        (_ROOT / "corpus/jobs/tmvA/english-projection.json").read_text(encoding="utf-8")
+    )["fields"]
+    captured = {}
+
+    def fake_persist(structured, analysis_fields, *, requirement_plan):
+        captured["plan"] = requirement_plan
+        return structured
+
+    monkeypatch.setattr(
+        "jobhunter.analysis_service_v24.persisted_analysis_v23", fake_persist
+    )
+    service = object.__new__(JobAnalysisServiceV24)
+    assert service._persist_analysis({}, fields) == {}
+    assert captured["plan"] == persisted_qualification_plan(fields)
+
+
 def test_v24_partition_uses_distinct_contract_identity(monkeypatch: pytest.MonkeyPatch) -> None:
     calls = []
 

@@ -1,14 +1,19 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-26
+**Date:** 2026-09-27
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
 **Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
-**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; snapshot 10 has ten qualified and translated postings, six core and two accepted-semantic core postings. P1.6 review remains open; v24 is isolated/non-public.
+**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; snapshot 13 has ten qualified and translated postings, six core and four accepted-semantic core postings. P1.6 review remains open for `tmvA` and `t7Ay`; v24 is isolated/non-public.
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
+
+Earlier fail-closed depth instructions in this rolling history describe
+particular rejected claims, not a permanent requirement to reject a grounded
+job reading for optional non-degree metadata. The current P1.6 boundary in
+`AGENTS.md` and the utility reasoning policy governs this distinction.
 
 ## 1. Read this first
 

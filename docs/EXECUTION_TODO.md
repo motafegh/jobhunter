@@ -1,13 +1,13 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-26
+**Date:** 2026-09-27
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED
 
-**Active owner-requested follow-up:** Finish same-target coverage beyond the bounded I7 acceptance sample; ten source-ready postings are qualified and translated, six are core after reviewed membership correction, and one core posting has accepted-current P1.6. V24 remains an isolated candidate. See `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
+**Active owner-requested follow-up:** Finish same-target coverage beyond the bounded I7 acceptance sample; snapshot 13 has ten qualified and translated postings, six core after reviewed membership correction, and four core postings with accepted-current P1.6. `tmvA` and `t7Ay` remain uncovered; v24 remains an isolated candidate. See `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
 
 Status vocabulary:
 

@@ -376,11 +376,11 @@ Important invariants:
   satisfies a vacancy's prior-experience request;
 - unsupported role purpose is omitted;
 - evidence must validate against authoritative employer fields;
-- fresh English v21 artifacts remain `pending` until explicit semantic review;
+- fresh English v23 artifacts remain `pending` until explicit semantic review;
 - pending candidates are inspectable but excluded from accepted downstream layers;
 - rejection archives local candidate evidence and removes it from current/reuse selection so the same contract can be rebuilt; when a historical pending Market snapshot references the candidate, its payload and ID remain retained with rejected review status, while the snapshot keeps its original point-in-time pending state.
 
-`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v21/v5 while original-language P1.6 remains on independently validated v9/v4. Explicitly accepted v20/v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected v20 candidates do not cross the v21 current boundary.
+`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v23/v5 while original-language P1.6 remains on independently validated v9/v4. Explicitly accepted v20/v5 and v21/v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected older candidates do not cross the v23 current boundary.
 
 ---
 

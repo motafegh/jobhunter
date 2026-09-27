@@ -97,7 +97,7 @@ Current strong foundations include:
 - user triage separate from source truth;
 - hardened `english-projection-v2` architecture using `lm-studio-translation-v2`;
 - local LM Studio structured inference boundary;
-- promoted P1.6 v21/v5 factual extraction infrastructure with accepted-only v20/v5 compatibility reuse;
+- promoted P1.6 v23/v5 factual extraction infrastructure with accepted-only v20/v5 and v21/v5 compatibility reuse;
 - promoted Capability Intelligence v9/v5 with deterministic source truth and bounded model reasoning;
 - deferred/non-authoritative Blueprint v6/v5 experimental evidence;
 - first Market aggregation over accepted/current English P1.6;
