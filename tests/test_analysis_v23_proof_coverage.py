@@ -25,6 +25,7 @@ from jobhunter.evidence_refs_v21 import build_requirement_coverage_plan_v21
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 from jobhunter.inference.instructor_lm_studio_v23 import (
     AnalysisRequirementV23,
+    AnalysisResponsibilityV23,
     JobAnalysisResponseV23,
     complete_analysis_partition_with_instructor_v23,
 )
@@ -233,6 +234,47 @@ def test_v23_points_preference_applies_only_to_its_exact_item() -> None:
             {**requirement, "item_excerpt": parent["required_item_excerpts"][0]["text"]},
             context=context,
         )
+
+
+def test_v23_preserves_explicit_condition_on_employer_work() -> None:
+    evidence = (
+        "developing multi-step workflows, and if necessary, Multi-Agent Integration "
+        "with Email, Ticketing, and other system modules"
+    )
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": _fields("tNVe")["description"]},
+        "evidence_catalog": {},
+        "responsibility_coverage_plan": {"duty": evidence},
+    }
+    claim = {
+        "statement": (
+            "Develop multi-step workflows and Multi-Agent Integration "
+            "with Email and Ticketing"
+        ),
+        "evidence": evidence,
+        "confidence": "high",
+    }
+    with pytest.raises(ValidationError, match="preserve explicit source condition"):
+        AnalysisResponsibilityV23.model_validate(claim, context=context)
+    accepted = AnalysisResponsibilityV23.model_validate(
+        {
+            **claim,
+            "statement": (
+                "Develop multi-step workflows and, if necessary, Multi-Agent "
+                "Integration with Email and Ticketing"
+            ),
+        },
+        context=context,
+    )
+    assert "if necessary" in accepted.statement
+    AnalysisResponsibilityV23.model_validate(
+        {**claim, "evidence": "developing multi-step workflows"},
+        context={
+            **context,
+            "responsibility_coverage_plan": {"duty": "developing multi-step workflows"},
+        },
+    )
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

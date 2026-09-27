@@ -28,6 +28,9 @@ P1.6 V23 CANDIDATE — CLAIM WORDING AND PROOF OF ABILITY:
   experience requirements. Application instructions about sending a resume or links
   are not additional qualifications. Do not extract requirements from such instructions.
 - Preserve every inherited strict source, strength, depth and full-coverage rule.
+- For responsibilities, retain explicit conditions such as "if necessary" or
+  "when needed" in the statement. Do not turn conditional work into an
+  unconditional duty.
 - For a candidate qualification list item with an explicit preferred
   obligation_context, that context is the exact source sentence establishing
   preference for the listed item. Keep the item itself as exact evidence and

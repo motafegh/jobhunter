@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import re
-from typing import Any
+from typing import Any, Self
 
-from pydantic import Field
+from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.inference import instructor_lm_studio_v20 as v20
+from jobhunter.inference.instructor_lm_studio import AnalysisClaim
 from jobhunter.inference.instructor_lm_studio_v22 import (
     AnalysisRequirementV22,
     JobAnalysisResponseV22,
@@ -19,6 +20,29 @@ _PROOF_VALUE_PREFERENCE_RE = re.compile(r"\b(?:very|more)\s+valuable\b", re.I)
 _ITEM_POINTS_PREFERENCE_RE = re.compile(
     r"\b(?:is|are)\s+considered\s+(?:an?\s+)?points?\.?$", re.I
 )
+_CONDITIONAL_WORK_RE = re.compile(
+    r"\b(?:if|when|where|as)\s+(?:necessary|needed|applicable|appropriate|required)\b",
+    re.I,
+)
+_CONDITIONAL_STATEMENT_RE = re.compile(
+    r"\b(?:if|when|where|as)\s+(?:necessary|needed|applicable|appropriate|required)\b|"
+    r"\b(?:optional(?:ly)?|conditional(?:ly)?|potential(?:ly)?|may)\b",
+    re.I,
+)
+
+
+class AnalysisResponsibilityV23(AnalysisClaim):
+    """Keep an explicit source condition on extracted employer work."""
+
+    @model_validator(mode="after")
+    def retain_source_condition(self, info: ValidationInfo) -> Self:
+        if (
+            (info.context or {}).get("analysis_mode") == "english"
+            and _CONDITIONAL_WORK_RE.search(self.evidence)
+            and not _CONDITIONAL_STATEMENT_RE.search(self.statement)
+        ):
+            raise ValueError("Responsibility statement must preserve explicit source condition")
+        return self
 
 
 class AnalysisRequirementV23(AnalysisRequirementV22):
@@ -67,6 +91,7 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
 class JobAnalysisResponseV23(JobAnalysisResponseV22):
     """V22 source-fact guards with scoped proof-preference recognition."""
 
+    responsibilities: list[AnalysisResponsibilityV23] = Field(max_length=16)
     requirements: list[AnalysisRequirementV23] = Field()
 
 

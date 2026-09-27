@@ -273,3 +273,16 @@ ends in `is/are considered point(s)`; it does not transfer that cue to the
 neighboring TypeScript, framework, or other essential items in the broad
 parent. A focused positive/negative source test covers that boundary. The
 next check remains one bounded generation and full source review.
+
+That generation persisted pending `tNVe` artifact 55 with all ten essential
+and seven preferred exact qualification items represented, plus the required
+candidate prior experience and structured skills. Source review found one
+material duty error: the statement made Multi-Agent Integration with Email and
+Ticketing unconditional, while both source and English evidence say `if
+necessary`. Artifact 55 was explicitly rejected; no Market snapshot or public
+corpus acceptance changed. V23 now instructs the model to retain explicit
+conditional work wording, and its responsibility validator rejects an
+unconditional statement when the exact cited work evidence contains `if
+necessary`, `when needed` or equivalent narrow conditions. A source-backed
+positive/negative test covers this case. One bounded new generation may test
+this general guard, followed by whole-artifact source review.
