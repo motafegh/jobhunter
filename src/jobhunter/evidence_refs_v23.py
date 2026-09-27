@@ -32,8 +32,9 @@ _APPLICATION_INSTRUCTION_RE = re.compile(
 _QUALIFICATION_ITEM_START_RE = re.compile(
     r"(?:^|,\s+)(?P<item>(?:(?:practical|real-world|professional|hands-on|"
     r"specialized|proficient|a\s+good|a\s+relevant)\s+)?"
-    r"(?:experience|understanding|familiarity|mastery|ability|knowledge|"
-    r"educational\s+background)\b|and\s+the\s+ability\b)",
+    r"(?:experience|understanding|familiarity|mastery|proficiency|ability|knowledge|"
+    r"educational\s+background)\b|(?:and\s+)?the\s+ability\b|"
+    r"(?:and\s+)?a\s+relevant\s+educational\s+background\b)",
     re.I,
 )
 _EXPLICIT_EXPERIENCE_ITEM_RE = re.compile(
@@ -41,22 +42,35 @@ _EXPLICIT_EXPERIENCE_ITEM_RE = re.compile(
 )
 
 
-def _dense_experience_items(
-    text: str, derived_qualifications: set[str]
-) -> list[dict[str, str]]:
-    """Require exact prior-exposure items inside a multi-qualification source list."""
+_PREFERRED_LIST_PREFIX_RE = re.compile(
+    r"^(?:points?\s+(?:are\s+also\s+)?awarded|score\s+is\s+given)\s+for\s+",
+    re.I,
+)
 
-    matches = list(_QUALIFICATION_ITEM_START_RE.finditer(text))
-    items: list[dict[str, str]] = []
+
+def _dense_qualification_items(
+    text: str, derived_qualifications: set[str]
+) -> list[dict[str, str | None]]:
+    """Require each exact item in a dense source qualification list."""
+
+    prefix = _PREFERRED_LIST_PREFIX_RE.match(text)
+    scope = text[prefix.end() :] if prefix else text
+    matches = list(_QUALIFICATION_ITEM_START_RE.finditer(scope))
+    if len(matches) < 3:
+        return []
+    items: list[dict[str, str | None]] = []
     for index, match in enumerate(matches):
         start = match.start("item")
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
-        item = text[start:end].strip(" ,.")
-        if not _EXPLICIT_EXPERIENCE_ITEM_RE.match(item):
-            continue
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(scope)
+        item = scope[start:end].strip(" ,.")
         if item.casefold() in derived_qualifications:
             continue
-        items.append({"text": item, "required_concept_type": "experience"})
+        items.append({
+            "text": item,
+            "required_concept_type": (
+                "experience" if _EXPLICIT_EXPERIENCE_ITEM_RE.match(item) else None
+            ),
+        })
     return items if len(items) >= 2 else []
 
 
@@ -110,7 +124,7 @@ def build_requirement_coverage_plan_v23(
             candidate.get("source_kind") == "requirement_section"
             and not candidate.get("required_item_excerpts")
         ):
-            items = _dense_experience_items(
+            items = _dense_qualification_items(
                 str(candidate.get("text") or ""), derived_qualifications
             )
             if items:

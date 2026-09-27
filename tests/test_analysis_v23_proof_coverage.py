@@ -161,7 +161,7 @@ def test_v23_separates_required_criteria_from_hiring_priority() -> None:
     )
 
 
-def test_v23_dense_lists_require_exact_prior_experience_items() -> None:
+def test_v23_dense_lists_require_every_exact_qualification_item() -> None:
     plan = build_requirement_coverage_plan_v23(_fields("tNVe"))
     essential = next(
         item for item in plan.values()
@@ -173,20 +173,33 @@ def test_v23_dense_lists_require_exact_prior_experience_items() -> None:
     )
 
     assert [item["text"] for item in essential["required_item_excerpts"]] == [
+        "practical mastery of TypeScript and Node.js",
         "experience working with NestJS, Express, or similar frameworks",
+        "a good understanding of Backend, APIs, and service architecture",
         "practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services",
         "real-world experience in at least one LLM Application, RAG, or AI Agent project",
+        "practical familiarity with Tool / Function Calling and Structured Output",
+        "understanding of Embedding, Retrieval, Chunking, and Context Management",
+        "familiarity with SQL or NoSQL databases",
+        "familiarity with Git",
+        "and the ability to debug and solve problems independently are considered points",
     ]
     assert [item["text"] for item in preferred["required_item_excerpts"]] == [
+        "experience developing AI systems in a Production environment",
         "experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools",
         "experience with Multi-Agent Systems and LLM Evaluation",
+        "familiarity with Vector Search, Redis, and Queue",
         "experience integrating with ERP, CRM, Email, or Ticketing Systems",
+        "familiarity with Docker, CI/CD, WebSocket, or Python",
+        "and a relevant educational background in Computer Science or Software Engineering",
     ]
-    assert all(
-        item["required_concept_type"] == "experience"
-        for parent in (essential, preferred)
-        for item in parent["required_item_excerpts"]
-    )
+    for parent in (essential, preferred):
+        assert all(item["text"] in parent["text"] for item in parent["required_item_excerpts"])
+        for item in parent["required_item_excerpts"]:
+            expected_type = "experience" if item["text"].startswith((
+                "experience ", "practical experience ", "real-world experience "
+            )) else None
+            assert item["required_concept_type"] == expected_type
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

@@ -241,3 +241,23 @@ qualification-list items already represented elsewhere are not duplicated,
 and accepted anchor plans are unchanged. Artifact 53 remains rejected. Ruff
 and all 762 strict-warning tests passed. One bounded `tNVe` generation can
 test the stronger item contract, followed by whole-artifact semantic review.
+
+That bounded generation persisted pending `tNVe` artifact 54. The full
+source/artifact review rejected it: the model retained the three protected
+prior-experience items but omitted other material qualifications, including
+TypeScript/Node practical mastery, backend/API architecture understanding,
+independent debugging, production AI experience, Vector Search/Redis/Queue,
+Docker/CI/CD/WebSocket/Python familiarity, and preferred education. A broad
+parent citation still satisfied mechanical coverage, so the earlier repair
+was too narrow. Artifact 54 is rejected and is not semantic authority.
+
+The v23 source plan now supplies a separate exact mandatory item excerpt for
+each recognizable qualification in a dense list. An explicit experience item
+continues to require experience ontology; knowledge, skill, ability, and
+education items retain their own unrestricted concept type. On `tNVe`, the
+essential and preferred lists yield ten and seven exact items respectively.
+The item text remains an exact English projection substring, already-derived
+qualification items are not duplicated, and all five accepted anchor plans
+remain unchanged. Focused coverage tests, Ruff, and all 762 strict-warning
+tests passed. One new bounded generation may now test this general coverage
+repair; it still requires whole-artifact source review before acceptance.
