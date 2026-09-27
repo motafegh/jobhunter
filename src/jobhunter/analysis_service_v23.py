@@ -16,6 +16,9 @@ P1.6 V23 CANDIDATE — CLAIM WORDING AND PROOF OF ABILITY:
 - A concept must express only the meaning supported by its exact item_excerpt. Never use
   "experience" or another prior-work assertion in a concept for an ability-only item,
   regardless of concept_type. An advanced ability does not establish previous delivery.
+- Preserve source alternatives in every qualification concept. If the item says
+  X or Y, retain both as alternatives; do not silently require Y, remove X,
+  or turn an example into the only acceptable option.
 - Use concept_type=experience only for exact prior applied exposure. If a capability is
   explicit but its exact item does not establish prior exposure, describe the capability
   itself accurately and use an appropriate non-experience concept type. Do not rely on

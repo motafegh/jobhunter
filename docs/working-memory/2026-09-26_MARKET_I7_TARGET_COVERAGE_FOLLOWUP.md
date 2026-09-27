@@ -320,3 +320,14 @@ all following exact item obligations. An audit of the 29 current projections
 found this heading-only defect only in `tjgi`; all accepted anchor plans are
 unchanged. No failed response was persisted or accepted. One bounded `tjgi`
 generation can now test the corrected plan.
+
+The corrected configured-model `tjgi` generation persisted pending artifact
+57 with nine duties and 28 requirements. Full Persian/English source review
+rejected it: the preferred source says deployment experience and `GitHub or an
+online demo`, while its concept retained only an online demonstration and
+made that alternative sound obligatory. V23 now explicitly asks the model to
+preserve `or` alternatives in every qualification concept, not only in proof
+requests. No validator was weakened, and artifact 57 remains rejected. A
+separate owner-requested MiMo 9B comparison used an isolated SQLite copy;
+its result and non-promotion decision are recorded in
+`docs/experiments/2026-09-27_MARKET_I7_MIMO_9B_ISOLATED_COMPARISON.md`.
