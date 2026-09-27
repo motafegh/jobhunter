@@ -363,3 +363,17 @@ partition. It retains the raw model response and records the dropped count in
 private runtime metadata. Assigned duties and their coverage remain subject
 to the existing validators, so this adjustment cannot add fabricated work or
 make a missing listed duty pass. A focused test exercises the filter.
+
+The post-filter `tjgi` run persisted pending artifact 59. Full source review
+rejected it because two preferred concepts lost explicit alternatives:
+`Docker, Linux, or cloud services` became an and-list, and `deploying projects
+and having GitHub or an online demo` became deployment alone. The v23 response
+normalizer now uses the short exact source item as the concept for explicit
+`or` alternatives, stripping only a leading depth cue such as `Familiarity
+with`. This preserves source choices without another model pass and keeps the
+original raw response private for inspection. The existing exact evidence,
+strength, depth and source-identity validators still apply, and whole-artifact
+semantic review remains required before promotion. The same normalization
+also converts a split `at least one of` language claim back into the exact
+disjunction. This versioned current contract softens a repeated model
+wording failure rather than rejecting an otherwise useful candidate.

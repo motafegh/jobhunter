@@ -272,11 +272,41 @@ def test_v23_keeps_at_least_one_language_alternative() -> None:
     assert AnalysisRequirementV23.model_validate(
         requirement, context=context
     ).requirement_type == "required"
-    with pytest.raises(ValidationError, match="preserve at-least-one source alternatives"):
-        AnalysisRequirementV23.model_validate(
-            {**requirement, "concept": "Programming experience with Python"},
-            context=context,
-        )
+    normalized = AnalysisRequirementV23.model_validate(
+        {**requirement, "concept": "Programming experience with Python"},
+        context=context,
+    )
+    assert normalized.concept == parent["text"]
+
+
+def test_v23_source_alternative_fallback_keeps_preferred_choices() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("tjgi"))
+    cases = (
+        ("Familiarity with Docker, Linux, or cloud services", "Docker, Linux, and cloud services",
+         "Docker, Linux, or cloud services"),
+        ("Experience deploying projects and having GitHub or an online demo",
+         "Deploying projects", "Experience deploying projects and having GitHub or an online demo"),
+    )
+    for source, model_concept, expected in cases:
+        parent = next(item for item in plan.values() if item["text"] == source)
+        context = {
+            "analysis_mode": "english",
+            "analysis_fields": {"description": _fields("tjgi")["description"]},
+            "evidence_catalog": {},
+            "requirement_coverage_plan": {"parent": parent},
+        }
+        requirement = {
+            "concept": model_concept,
+            "depth_signal": "Familiarity" if source.startswith("Familiarity") else None,
+            "requirement_type": "preferred",
+            "concept_type": "tool" if source.startswith("Familiarity") else "experience",
+            "evidence": source,
+            "item_excerpt": source,
+            "confidence": "high",
+            "rationale": "Exact preferred source item.",
+        }
+        normalized = AnalysisRequirementV23.model_validate(requirement, context=context)
+        assert normalized.concept == expected
 
 
 def test_v23_preserves_explicit_condition_on_employer_work() -> None:

@@ -30,6 +30,21 @@ _CONDITIONAL_STATEMENT_RE = re.compile(
     re.I,
 )
 _ONE_OF_ALTERNATIVES_RE = re.compile(r"\bat\s+least\s+one\s+of\b[^.!?\n]*\bor\b", re.I)
+_ALTERNATIVE_DEPTH_PREFIX_RE = re.compile(
+    r"^(?:(?:general|practical|initial|basic|strong|relative)\s+)?"
+    r"(?:familiarity\s+with|mastery\s+of|proficiency\s+in)\s+",
+    re.I,
+)
+
+
+def _source_alternative_concept(item: str) -> str | None:
+    """Use a short exact source item when model prose loses explicit alternatives."""
+
+    source = item.strip(" ,.")
+    if not re.search(r"\bor\b", source, re.I) or len(source) > 180 or "\n" in source:
+        return None
+    concept = _ALTERNATIVE_DEPTH_PREFIX_RE.sub("", source, count=1).strip()
+    return concept if concept and re.search(r"\bor\b", concept, re.I) else None
 
 
 class AnalysisResponsibilityV23(AnalysisClaim):
@@ -48,6 +63,19 @@ class AnalysisResponsibilityV23(AnalysisClaim):
 
 class AnalysisRequirementV23(AnalysisRequirementV22):
     """Recognize exact value preference only for versioned candidate-proof refs."""
+
+    @model_validator(mode="before")
+    @classmethod
+    def preserve_source_alternatives(cls, value: Any) -> Any:
+        if not isinstance(value, dict):
+            return value
+        item = value.get("item_excerpt")
+        if not isinstance(item, str):
+            return value
+        concept = _source_alternative_concept(item)
+        if concept is None or concept == value.get("concept"):
+            return value
+        return {**value, "concept": concept}
 
     @model_validator(mode="after")
     def retain_disjunctive_minimum(self, info: ValidationInfo) -> Self:
