@@ -55,7 +55,7 @@ Repository-safe public corpus baseline remains:
 known/discovered Jobinja jobs: 416
 fetched/parsed detail jobs:      51
 current English projections:     29
-accepted/current English P1.6:    7
+accepted/current English P1.6:    8
 accepted/current Capability:      5
 ```
 
@@ -266,9 +266,11 @@ Run/snapshot/profile 10 retains six core, two adjacent and two excluded source
 postings. Two core postings now have accepted-current P1.6; one core has a
 failed analysis attempt and three are missing. Snapshot 9 remains historical.
 The repository-safe corpus has 416 known identities, 51 parsed details, 29
-English projections, seven accepted English P1.6 artifacts and five accepted
-Capability artifacts. Same-target semantic coverage remains an active owner
-follow-up; the bounded I7 first-slice PASS remains intact.
+English projections, eight accepted English P1.6 artifacts and five accepted
+Capability artifacts. Run/snapshot/profile 11 has six core source postings,
+three with accepted-current P1.6; two have failed analysis attempts and one
+is missing. Same-target semantic coverage remains an active owner follow-up;
+the bounded I7 first-slice PASS remains intact.
 
 The rest of this section is the historical HOLD trail, retained to explain repairs.
 Its former present-tense next-work statements are superseded by the final decision.

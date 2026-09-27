@@ -1,0 +1,347 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "three to six years",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "To develop the artificial intelligence capabilities of one of the company's main products, we are looking for a Backend AI Engineer who possesses suitable Backend knowledge along with practical experience in developing LLM, RAG, and AI Agents-based systems.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Node.js",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Rag",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "TypeScript and Node.js",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "mastery",
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "NestJS or Express frameworks",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Backend, APIs, and service architecture",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "LLM APIs (OpenAI, Anthropic, or similar services)",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "LLM Application, RAG, or AI Agent project",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Tool / Function Calling and Structured Output",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Embedding, Retrieval, Chunking, and Context Management",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "SQL or NoSQL databases",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Git",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Problem solving and debugging independently",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical mastery of TypeScript and Node.js, experience working with NestJS, Express, or similar frameworks, a good understanding of Backend, APIs, and service architecture, practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services, real-world experience in at least one LLM Application, RAG, or AI Agent project, practical familiarity with Tool / Function Calling and Structured Output, understanding of Embedding, Retrieval, Chunking, and Context Management, familiarity with SQL or NoSQL databases, familiarity with Git, and the ability to debug and solve problems independently are considered points.",
+        "rationale": "The source states this is 'considered points' within a required section.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "AI systems development in Production environment",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "OpenAI Agents SDK, LangGraph, or LangChain tools",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Multi-Agent Systems and LLM Evaluation",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Vector Search, Redis, and Queue",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "ERP, CRM, Email, or Ticketing Systems integration",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Docker, CI/CD, WebSocket, or Python",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Computer Science or Software Engineering background",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Points are also awarded for experience developing AI systems in a Production environment, experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools, experience with Multi-Agent Systems and LLM Evaluation, familiarity with Vector Search, Redis, and Queue, experience integrating with ERP, CRM, Email, or Ticketing Systems, familiarity with Docker, CI/CD, WebSocket, or Python, and a relevant educational background in Computer Science or Software Engineering.",
+        "rationale": "Derived from exact item coverage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Experience with LLM development systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "To develop the artificial intelligence capabilities of one of the company's main products, we are looking for a Backend AI Engineer who possesses suitable Backend knowledge along with practical experience in developing LLM, RAG, and AI Agents-based systems.",
+        "rationale": "Extracted from the required experience listed in the candidate qualification item.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience with RAG development systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "To develop the artificial intelligence capabilities of one of the company's main products, we are looking for a Backend AI Engineer who possesses suitable Backend knowledge along with practical experience in developing LLM, RAG, and AI Agents-based systems.",
+        "rationale": "Extracted from the required experience listed in the candidate qualification item.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience with AI Agents development systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "To develop the artificial intelligence capabilities of one of the company's main products, we are looking for a Backend AI Engineer who possesses suitable Backend knowledge along with practical experience in developing LLM, RAG, and AI Agents-based systems.",
+        "rationale": "Extracted from the required experience listed in the candidate qualification item.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Professional experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "three to six years",
+        "evidence": "three to six years",
+        "rationale": "JobHunter deterministically materialized the structured minimum-experience field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Node.js",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Node.js",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Rag",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Rag",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "include designing and implementing AI Agents and related workflows",
+        "statement": "include designing and implementing AI Agents and related workflows"
+      },
+      {
+        "confidence": "high",
+        "evidence": "developing integration with TypeScript / Node.js and NestJS",
+        "statement": "developing integration with TypeScript / Node.js and NestJS"
+      },
+      {
+        "confidence": "high",
+        "evidence": "connecting LLMs to APIs, databases, and internal services",
+        "statement": "connecting LLMs to APIs, databases, and internal services"
+      },
+      {
+        "confidence": "high",
+        "evidence": "implementing Tool / Function Calling and Structured Output",
+        "statement": "implementing Tool / Function Calling and Structured Output"
+      },
+      {
+        "confidence": "high",
+        "evidence": "developing RAG and Knowledge Retrieval",
+        "statement": "developing RAG and Knowledge Retrieval"
+      },
+      {
+        "confidence": "high",
+        "evidence": "developing multi-step workflows, and if necessary, Multi-Agent Integration with Email, Ticketing, and other system modules",
+        "statement": "developing multi-step workflows, and if necessary, Multi-Agent Integration with Email, Ticketing, and other system modules"
+      },
+      {
+        "confidence": "high",
+        "evidence": "implementing Permission, Human Approval, Logging, and Tracing",
+        "statement": "implementing Permission, Human Approval, Logging, and Tracing"
+      },
+      {
+        "confidence": "high",
+        "evidence": "evaluating and improving the quality, reliability, latency, and cost of AI systems.",
+        "statement": "evaluating and improving the quality, reliability, latency, and cost of AI systems."
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "responsibility",
+        "evidence": "include designing and implementing AI Agents and related workflows"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "developing integration with TypeScript / Node.js and NestJS"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "connecting LLMs to APIs, databases, and internal services"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "implementing Tool / Function Calling and Structured Output"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "developing RAG and Knowledge Retrieval"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "developing multi-step workflows, and if necessary, Multi-Agent Integration with Email, Ticketing, and other system modules"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "implementing Permission, Human Approval, Logging, and Tracing"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "evaluating and improving the quality, reliability, latency, and cost of AI systems."
+      }
+    ],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 56,
+  "created_at": "2026-09-27T13:18:12.024768+00:00",
+  "job_detail_version_id": 56,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v23",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tNVe",
+  "stage": "p16_english",
+  "translation_artifact_id": 48
+}

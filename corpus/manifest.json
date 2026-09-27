@@ -17,7 +17,7 @@
     "capabilities": 5,
     "english_projections": 29,
     "jobs": 416,
-    "p16_english": 7,
+    "p16_english": 8,
     "p16_original": 0,
     "sources": 416
   },
@@ -3626,7 +3626,7 @@
       "artifact_ids": {
         "capability": null,
         "english_projection": 48,
-        "p16_english": null,
+        "p16_english": 56,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/united-technologists/jobs/tNVe/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%A9%D8%A7%D8%B1%D8%A8%D8%B1%D8%AF%DB%8C-llm-ai-agents-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D9%85%D8%AA%D8%AD%D8%AF",
@@ -3640,7 +3640,7 @@
       "stages": {
         "capability": false,
         "english_projection": true,
-        "p16_english": false,
+        "p16_english": true,
         "p16_original": false,
         "source": true
       },

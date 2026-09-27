@@ -286,3 +286,26 @@ unconditional statement when the exact cited work evidence contains `if
 necessary`, `when needed` or equivalent narrow conditions. A source-backed
 positive/negative test covers this case. One bounded new generation may test
 this general guard, followed by whole-artifact source review.
+
+The guarded generation persisted `tNVe` artifact 56. Complete Persian-source,
+English-projection, requirement and duty review found the ten essential list
+items, seven preferred list items, separate candidate practical AI-system
+experience, structured skills and experience bracket, and all eight explicit
+work duties. The Multi-Agent Integration duty retains `if necessary`. The
+points wording on independent debugging is ambiguous across the flattened
+source boundary; the artifact keeps that claim contextual rather than
+asserting it as a required qualification. No unsupported employer duty or
+materially omitted qualification was found. Artifact 56 was explicitly
+accepted; artifacts 53-55 remain rejected and attempt 123 remains a failed
+inference. The curated `tNVe` review snapshot and accepted public P1.6 were
+exported, while Market tables remain local.
+
+Market run 11 reused the same target definition and five one-page searches
+with no detail refresh, translation, or analysis budget. It completed with ten
+qualified memberships and no failures. Immutable snapshot/profile 11 has six
+core, two adjacent and two excluded source postings; accepted-current core
+semantic coverage is three of six, with two failed and one missing. Snapshot
+10 remains historical. The public corpus contains 416 known identities, 51
+details, 29 English projections, eight accepted P1.6 and five accepted
+Capability artifacts; verification passed. Remaining core semantic work is
+`tmvA`, `t7Ay` and `tjgi`.
