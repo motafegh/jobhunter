@@ -309,3 +309,14 @@ semantic coverage is three of six, with two failed and one missing. Snapshot
 details, 29 English projections, eight accepted P1.6 and five accepted
 Capability artifacts; verification passed. Remaining core semantic work is
 `tmvA`, `t7Ay` and `tjgi`.
+
+Normal configured-model `tjgi` attempt 126 failed closed after its allowed
+correction. The v21 source planner had emitted the bare preferred-list heading
+`Score is given for` as a separate qualification coverage reference. The five
+following preferred items already had exact references and heading context,
+so extracting or excluding the heading would be artificial. The v23 plan now
+removes only a standalone preferred heading with no candidate fact, retaining
+all following exact item obligations. An audit of the 29 current projections
+found this heading-only defect only in `tjgi`; all accepted anchor plans are
+unchanged. No failed response was persisted or accepted. One bounded `tjgi`
+generation can now test the corrected plan.

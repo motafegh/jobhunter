@@ -46,6 +46,11 @@ _PREFERRED_LIST_PREFIX_RE = re.compile(
     r"^(?:points?\s+(?:are\s+also\s+)?awarded|score\s+is\s+given)\s+for\s+",
     re.I,
 )
+_PREFERRED_HEADING_ONLY_RE = re.compile(
+    r"^(?:points?\s+(?:are\s+also\s+)?awarded\s+for|"
+    r"score\s+is\s+given\s+for|bonus\s+skills\s+include)\s*[:.]?$",
+    re.I,
+)
 
 
 def _dense_qualification_items(
@@ -111,6 +116,14 @@ def build_requirement_coverage_plan_v23(
     """Add only explicit preferred proof; retain all v21 source and skill rules."""
 
     plan = build_requirement_coverage_plan_v21(fields)
+    plan = {
+        reference: candidate
+        for reference, candidate in plan.items()
+        if not (
+            candidate.get("source_kind") == "requirement_section"
+            and _PREFERRED_HEADING_ONLY_RE.fullmatch(str(candidate.get("text") or "").strip())
+        )
+    }
     description = fields.get("description")
     if not isinstance(description, str):
         return plan

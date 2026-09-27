@@ -162,6 +162,17 @@ def test_v23_separates_required_criteria_from_hiring_priority() -> None:
     )
 
 
+def test_v23_preferred_heading_is_context_not_a_qualification() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("tjgi"))
+    assert not any(item["text"] == "Score is given for" for item in plan.values())
+    preferred = [
+        item for item in plan.values()
+        if item.get("obligation_context") == "Score is given for"
+    ]
+    assert len(preferred) == 5
+    assert all(item["obligation_hint"] == "preferred" for item in preferred)
+
+
 def test_v23_dense_lists_require_every_exact_qualification_item() -> None:
     plan = build_requirement_coverage_plan_v23(_fields("tNVe"))
     essential = next(
