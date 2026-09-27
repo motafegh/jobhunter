@@ -35,7 +35,9 @@ _OPTIONALITY_RE = re.compile(
     r"\b(?:preferred|preference|plus|helpful|advantage|nice[ -]to[ -]have|optional|"
     r"(?:important|valuable|strong)\s+asset|considered\s+an?\s+asset|"
     r"prioritized\s+(?:in\s+(?:the\s+)?(?:recruitment|hiring|selection)\s+process|"
-    r"for\s+(?:review|consideration)))\b",
+    r"for\s+(?:review|consideration))|"
+    r"(?:will\s+be\s+)?considered\s+in\s+(?:the\s+)?"
+    r"(?:evaluation|selection|recruitment)\s+process)\b",
     re.I,
 )
 _GLOBAL_UNSPECIFIED_RE = re.compile(

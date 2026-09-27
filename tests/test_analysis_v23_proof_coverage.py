@@ -154,6 +154,11 @@ def test_v23_separates_required_criteria_from_hiring_priority() -> None:
         )
         for item in relevant
     )
+    assert any(
+        "Submitting samples of work" in item["text"]
+        and item["obligation_hint"] == "preferred"
+        for item in plan.values()
+    )
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

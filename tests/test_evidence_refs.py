@@ -25,6 +25,15 @@ def test_hiring_priority_marks_exact_source_preference() -> None:
     assert not has_english_optionality_signal("Prioritize security in production systems.")
 
 
+def test_optional_work_samples_considered_in_evaluation_are_preferred() -> None:
+    assert has_english_optionality_signal(
+        "Submitted work samples will be considered in the evaluation process."
+    )
+    assert not has_english_optionality_signal(
+        "Required test results are considered in system evaluation."
+    )
+
+
 def test_plain_market_headings_keep_duties_requirements_and_preferences_separate() -> None:
     description = (
         "Main responsibilities • Build agents • Evaluate results "

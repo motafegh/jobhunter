@@ -192,3 +192,13 @@ the same paragraph. An offline audit found this exact new phrase only in
 `t7Ay` among 29 current projections. Ruff and all 758 strict-warning tests
 passed. Another bounded generation is justified by the repaired strength
 boundary; the failed completion remains diagnostic only.
+
+The next bounded `t7Ay` attempt 118 failed closed on another strength cue,
+not on source fabrication: both private responses preserved the alternatives
+of work samples, implemented projects, research activity, GitHub projects or
+LLM system experience as a preferred evaluation signal, while the inherited
+validator did not recognize "will be considered in the evaluation process."
+The explicit evaluation-process cue is now recognized; the planner marks this
+sentence preferred separately from required qualifications. Across 29 current
+English projections, only `t7Ay` contains this cue. The responses remain
+non-authoritative failures. Ruff and all 759 strict-warning tests passed.
