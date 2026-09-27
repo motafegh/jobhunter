@@ -261,3 +261,15 @@ qualification items are not duplicated, and all five accepted anchor plans
 remain unchanged. Focused coverage tests, Ruff, and all 762 strict-warning
 tests passed. One new bounded generation may now test this general coverage
 repair; it still requires whole-artifact source review before acceptance.
+
+The first generation under all-item coverage failed closed on attempt 123
+after its bounded correction. Both private completions classified the exact
+last qualification, "and the ability to debug and solve problems independently
+are considered points," as preferred. The English projection and Persian
+source both contain the explicit points cue, but the v23 exact-item strength
+guard did not recognize that sentence ending. No artifact was created. The
+v23 guard now permits preferred strength only when the exact `item_excerpt`
+ends in `is/are considered point(s)`; it does not transfer that cue to the
+neighboring TypeScript, framework, or other essential items in the broad
+parent. A focused positive/negative source test covers that boundary. The
+next check remains one bounded generation and full source review.

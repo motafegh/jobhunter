@@ -16,6 +16,9 @@ from jobhunter.inference.instructor_lm_studio_v22 import (
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _PROOF_VALUE_PREFERENCE_RE = re.compile(r"\b(?:very|more)\s+valuable\b", re.I)
+_ITEM_POINTS_PREFERENCE_RE = re.compile(
+    r"\b(?:is|are)\s+considered\s+(?:an?\s+)?points?\.?$", re.I
+)
 
 
 class AnalysisRequirementV23(AnalysisRequirementV22):
@@ -23,6 +26,8 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
 
     def _has_exact_preference_signal(self, text: str, plan: dict[str, Any]) -> bool:
         if super()._has_exact_preference_signal(text, plan):
+            return True
+        if text == self.item_excerpt and _ITEM_POINTS_PREFERENCE_RE.search(text):
             return True
         if any(
             isinstance(candidate, dict)

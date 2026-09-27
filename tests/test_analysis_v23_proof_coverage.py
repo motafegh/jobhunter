@@ -202,6 +202,39 @@ def test_v23_dense_lists_require_every_exact_qualification_item() -> None:
             assert item["required_concept_type"] == expected_type
 
 
+def test_v23_points_preference_applies_only_to_its_exact_item() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("tNVe"))
+    parent = next(
+        item for item in plan.values()
+        if item["text"].startswith("practical mastery of TypeScript")
+    )
+    assert parent["obligation_hint"] == "required"
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": _fields("tNVe")["description"]},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"parent": parent},
+    }
+    requirement = {
+        "concept": "independent debugging",
+        "depth_signal": None,
+        "requirement_type": "preferred",
+        "concept_type": "skill",
+        "evidence": parent["text"],
+        "item_excerpt": parent["required_item_excerpts"][-1]["text"],
+        "confidence": "high",
+        "rationale": "The exact item says it is considered points.",
+    }
+    assert AnalysisRequirementV23.model_validate(
+        requirement, context=context
+    ).requirement_type == "preferred"
+    with pytest.raises(ValidationError, match="Preferred item needs exact source preference"):
+        AnalysisRequirementV23.model_validate(
+            {**requirement, "item_excerpt": parent["required_item_excerpts"][0]["text"]},
+            context=context,
+        )
+
+
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:
     tvmm = _proof("tvMm")
     assert len(tvmm) == 3
