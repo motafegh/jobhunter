@@ -37,7 +37,8 @@ _OPTIONALITY_RE = re.compile(
     r"prioritized\s+(?:in\s+(?:the\s+)?(?:recruitment|hiring|selection)\s+process|"
     r"for\s+(?:review|consideration))|"
     r"(?:will\s+be\s+)?considered\s+in\s+(?:the\s+)?"
-    r"(?:evaluation|selection|recruitment)\s+process)\b",
+    r"(?:evaluation|selection|recruitment)\s+process|"
+    r"(?:points?\s+(?:are\s+also\s+)?awarded|score\s+is\s+given)\s+for)\b",
     re.I,
 )
 _GLOBAL_UNSPECIFIED_RE = re.compile(

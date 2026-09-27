@@ -109,6 +109,20 @@ def test_v21_requires_explicit_desired_candidate_experience_sentence() -> None:
     }]
 
 
+def test_v21_keeps_nodejs_and_capitalized_modules_inside_source_duties() -> None:
+    projection = json.loads(
+        (_REPOSITORY_ROOT / "corpus/jobs/tNVe/english-projection.json").read_text()
+    )
+    plan = build_responsibility_coverage_plan_v21(projection["fields"])
+    duties = list(plan.values())
+
+    assert len(duties) == 8
+    assert any("Node.js and NestJS" in duty for duty in duties)
+    assert any("Email, Ticketing, and other system modules" in duty for duty in duties)
+    assert any("Permission, Human Approval, Logging, and Tracing" in duty for duty in duties)
+    assert all(not duty.startswith("js and") for duty in duties)
+
+
 def test_v21_distinguishes_null_experience_depth_from_neighbor_familiarity() -> None:
     evidence = (
         "practical experience with LLMs and language model APIs in Python and/or TypeScript, "

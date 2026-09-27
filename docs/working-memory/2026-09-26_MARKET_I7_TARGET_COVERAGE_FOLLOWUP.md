@@ -213,3 +213,16 @@ contract, not a reason to weaken the validator or treat the generated fragment
 as accepted. No artifact was persisted. `t7Ay` remains uncovered while a
 general source-backed representation for mixed knowledge and prior experience
 is investigated; other core postings can proceed independently.
+
+Normal v23 `tNVe` attempt 120 failed closed before persistence. Both private
+responses treated the seven items under the exact "Points are also awarded
+for" section as preferred, but the inherited optionality recognizer did not
+accept that heading as a strength signal. It now does. Independent source-plan
+review found `Node.js` split at its internal period and capitalized module
+names `Ticketing`, `Logging` and `Tracing` mistaken for gerund duty verbs. The
+general v21 sentence and duty splitter now keeps an internal dotted token
+intact and does not split capitalized mid-sentence module names as actions.
+`tNVe` now has eight intact duty references instead of ten fragments; all
+five accepted anchor duty plans remain byte-equivalent in the offline check.
+No failed response became an artifact. Ruff and all 761 strict-warning tests
+passed. A fresh bounded `tNVe` generation can use the repaired source plan.

@@ -34,6 +34,13 @@ def test_optional_work_samples_considered_in_evaluation_are_preferred() -> None:
     )
 
 
+def test_points_awarded_heading_is_explicit_preference() -> None:
+    assert has_english_optionality_signal(
+        "Points are also awarded for production experience and Docker familiarity."
+    )
+    assert has_english_optionality_signal("Score is given for production deployments.")
+
+
 def test_plain_market_headings_keep_duties_requirements_and_preferences_separate() -> None:
     description = (
         "Main responsibilities • Build agents • Evaluate results "

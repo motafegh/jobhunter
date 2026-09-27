@@ -138,7 +138,15 @@ def _sentences(text: str) -> list[str]:
             parenthesis_depth += 1
         elif character == ")":
             parenthesis_depth = max(0, parenthesis_depth - 1)
-        elif character in ".!?" and parenthesis_depth == 0:
+        elif (
+            character in ".!?"
+            and parenthesis_depth == 0
+            and (
+                character != "."
+                or index + 1 == len(text)
+                or text[index + 1].isspace()
+            )
+        ):
             sentence = text[cursor : index + 1].strip()
             if sentence:
                 sentences.append(sentence)
@@ -365,6 +373,7 @@ def _gerund_list_items(sentence: str) -> list[str]:
         match
         for match in _LIST_GERUND_RE.finditer(sentence)
         if match.group("verb").casefold() != "including"
+        and (match.start("verb") == 0 or match.group("verb")[0].islower())
         and sentence[: match.start("verb")].count("(")
         == sentence[: match.start("verb")].count(")")
     ]
