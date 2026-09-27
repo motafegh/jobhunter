@@ -151,3 +151,21 @@ and competency sections. Preferred bullet items retain their exact evidence
 and an exact source-heading context for strength validation. The model must
 still account for each source item; none of these postings was auto-accepted.
 Ruff and all 754 strict-warning tests passed.
+
+One bounded post-correction public v23 `t7ck` run persisted pending artifact
+52. Complete review against the Persian source and English projection found
+the required practical STT/TTS development, fine-tuning, evaluation and
+optimization experience (especially Persian), the required speech-model
+research/test/fine-tune/deploy ability, essential named stack, preferred
+speech technologies/model familiarity/latency/Open Source production exposure,
+and the exact contextual `less than three years` bracket. No unsupported
+employer duty was present. Artifact 52 was explicitly accepted; artifact 51
+remains rejected. The public corpus now includes seven accepted English P1.6
+artifacts. Market run 10 used the same five one-page searches and no source
+refresh, translation or analysis budget; all ten memberships qualified, with
+no failures. Immutable snapshot/profile 10 has six core, two adjacent and two
+excluded source postings; accepted-current semantic core coverage is two of
+six, with one failed and three missing. The run discovered four more source
+identities, bringing the public corpus to 416 known jobs. Public-corpus
+verification passed. Remaining core coverage is `tmvA`, `tjgi`, `t7Ay` and
+`tNVe`; none is silently counted as zero demand.

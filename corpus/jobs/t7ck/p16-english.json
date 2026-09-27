@@ -1,0 +1,219 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "less than three years",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Bachelor's degree",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "The desired individual must have practical experience in developing, Fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models, especially for the Persian language.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "We are looking for someone who is not just an API consumer but has the ability to research, test, Fine-tune, and Deploy Speech models.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "speech processing",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Pytorch",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Proficiency",
+        "evidence": "Proficiency in Python",
+        "rationale": "Directly stated as a required proficiency.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "PyTorch",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "PyTorch",
+        "rationale": "Directly listed as a required technology.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Hugging Face",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Hugging Face",
+        "rationale": "Directly listed as a required technology.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Linux",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Linux",
+        "rationale": "Directly listed as a required technology.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Streaming Audio",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience in Streaming Audio",
+        "rationale": "Listed as an 'important asset' (preferred).",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Real-Time Voice",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Real-Time Voice",
+        "rationale": "Listed as an 'important asset' (preferred).",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "VAD",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "VAD",
+        "rationale": "Listed as an 'important asset' (preferred).",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Voice Cloning",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Voice Cloning",
+        "rationale": "Listed as an 'important asset' (preferred).",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "GPU",
+        "concept_type": "tool",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "and GPU is essential, and familiarity with models such as Whisper, wav2vec2, XTTS, Chatterbox, and similar technologies is considered an advantage.",
+        "rationale": "Extracted mandatory requirement from residual sentence R0.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Models (Whisper, wav2vec2, XTTS, Chatterbox, etc.)",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "and GPU is essential, and familiarity with models such as Whisper, wav2vec2, XTTS, Chatterbox, and similar technologies is considered an advantage.",
+        "rationale": "Extracted preferred familiarity requirement from residual sentence R0.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Latency reduction",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "and Latency reduction is an important asset.",
+        "rationale": "Extracted preferred asset requirement from residual sentence R1.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Open Source model preparation for production environment",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience working with Open Source models and preparing them for a Production environment is considered a special advantage.",
+        "rationale": "Extracted preferred advantage requirement from residual sentence R3.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Practical experience in developing, fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models for the Persian language",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "The desired individual must have practical experience in developing, Fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models, especially for the Persian language.",
+        "rationale": "Directly extracted from required experience coverage item.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Researching, testing, fine-tuning, and deploying Speech models",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "We are looking for someone who is not just an API consumer but has the ability to research, test, Fine-tune, and Deploy Speech models.",
+        "rationale": "Directly extracted from required ability coverage item, normalized as a skill.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Professional experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": "less than three years",
+        "evidence": "less than three years",
+        "rationale": "The structured source field states an experience bracket, not a minimum number of years.",
+        "requirement_type": "contextual"
+      },
+      {
+        "concept": "Bachelor's degree",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Bachelor's degree",
+        "rationale": "JobHunter deterministically materialized the structured education field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "speech processing",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "speech processing",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [],
+    "responsibility_coverage": [],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 52,
+  "created_at": "2026-09-27T12:17:44.255595+00:00",
+  "job_detail_version_id": 48,
+  "model": "gemma-4-e4b-it-ud",
+  "prompt_version": "job-analysis-english-v23",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "t7ck",
+  "stage": "p16_english",
+  "translation_artifact_id": 42
+}

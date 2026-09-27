@@ -1,0 +1,334 @@
+{
+  "capability_intelligence": null,
+  "configured_models": {
+    "analysis": "gemma-4-e4b-it-ud",
+    "blueprint": "gemma-4-12b-it-qat",
+    "capability": "gemma-4-e2b-it"
+  },
+  "english_analysis": {
+    "analysis": {
+      "coverage": [
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "less than three years",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Bachelor's degree",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "The desired individual must have practical experience in developing, Fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models, especially for the Persian language.",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "We are looking for someone who is not just an API consumer but has the ability to research, test, Fine-tune, and Deploy Speech models.",
+          "rationale": "A persisted requirement cites this exact v23 coverage input."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Artificial Intelligence",
+          "rationale": "Deterministic structured source skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "speech processing",
+          "rationale": "Deterministic structured source skill coverage."
+        },
+        {
+          "disposition": "extracted_requirement",
+          "evidence": "Pytorch",
+          "rationale": "Deterministic structured source skill coverage."
+        }
+      ],
+      "requirements": [
+        {
+          "concept": "Python",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": "Proficiency",
+          "evidence": "Proficiency in Python",
+          "rationale": "Directly stated as a required proficiency.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "PyTorch",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "PyTorch",
+          "rationale": "Directly listed as a required technology.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Hugging Face",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Hugging Face",
+          "rationale": "Directly listed as a required technology.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Linux",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Linux",
+          "rationale": "Directly listed as a required technology.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Streaming Audio",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Experience in Streaming Audio",
+          "rationale": "Listed as an 'important asset' (preferred).",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Real-Time Voice",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Real-Time Voice",
+          "rationale": "Listed as an 'important asset' (preferred).",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "VAD",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "VAD",
+          "rationale": "Listed as an 'important asset' (preferred).",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Voice Cloning",
+          "concept_type": "other",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Voice Cloning",
+          "rationale": "Listed as an 'important asset' (preferred).",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "GPU",
+          "concept_type": "tool",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "and GPU is essential, and familiarity with models such as Whisper, wav2vec2, XTTS, Chatterbox, and similar technologies is considered an advantage.",
+          "rationale": "Extracted mandatory requirement from residual sentence R0.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Models (Whisper, wav2vec2, XTTS, Chatterbox, etc.)",
+          "concept_type": "knowledge",
+          "confidence": "high",
+          "depth_signal": "familiarity",
+          "evidence": "and GPU is essential, and familiarity with models such as Whisper, wav2vec2, XTTS, Chatterbox, and similar technologies is considered an advantage.",
+          "rationale": "Extracted preferred familiarity requirement from residual sentence R0.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Latency reduction",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "and Latency reduction is an important asset.",
+          "rationale": "Extracted preferred asset requirement from residual sentence R1.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Open Source model preparation for production environment",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Experience working with Open Source models and preparing them for a Production environment is considered a special advantage.",
+          "rationale": "Extracted preferred advantage requirement from residual sentence R3.",
+          "requirement_type": "preferred"
+        },
+        {
+          "concept": "Practical experience in developing, fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models for the Persian language",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "The desired individual must have practical experience in developing, Fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models, especially for the Persian language.",
+          "rationale": "Directly extracted from required experience coverage item.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Researching, testing, fine-tuning, and deploying Speech models",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "We are looking for someone who is not just an API consumer but has the ability to research, test, Fine-tune, and Deploy Speech models.",
+          "rationale": "Directly extracted from required ability coverage item, normalized as a skill.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Professional experience",
+          "concept_type": "experience",
+          "confidence": "high",
+          "depth_signal": "less than three years",
+          "evidence": "less than three years",
+          "rationale": "The structured source field states an experience bracket, not a minimum number of years.",
+          "requirement_type": "contextual"
+        },
+        {
+          "concept": "Bachelor's degree",
+          "concept_type": "education",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Bachelor's degree",
+          "rationale": "JobHunter deterministically materialized the structured education field.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "Artificial Intelligence",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "Artificial Intelligence",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        },
+        {
+          "concept": "speech processing",
+          "concept_type": "skill",
+          "confidence": "high",
+          "depth_signal": null,
+          "evidence": "speech processing",
+          "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+          "requirement_type": "required"
+        }
+      ],
+      "responsibilities": [],
+      "responsibility_coverage": [],
+      "role_purpose": []
+    },
+    "artifact_id": 52,
+    "created_at": "2026-09-27T12:17:44.255595+00:00",
+    "job_detail_version_id": 48,
+    "model": "gemma-4-e4b-it-ud",
+    "prompt_version": "job-analysis-english-v23",
+    "schema_version": "job-analysis-v5",
+    "semantic_review_note": "Reviewed artifact 52 against current Persian source and English projection: required practical STT/TTS development, fine-tuning, evaluation and optimization experience, especially Persian, and required speech-model research/test/fine-tune/deploy ability are present; essential Python/PyTorch/Hugging Face/Linux/GPU are represented; named-model familiarity, Streaming Audio, Real-Time Voice, VAD, Voice Cloning, latency reduction and Open Source production experience remain preferred; less-than-three-years remains an exact contextual bracket; no employer duties were invented. Exact evidence and complete coverage are acceptable.",
+    "semantic_review_status": "accepted",
+    "semantic_reviewed_at": "2026-09-27T12:20:40.081301+00:00",
+    "translation_artifact_id": 42
+  },
+  "english_projection": {
+    "artifact_id": 42,
+    "created_at": "2026-09-18T18:58:42.191935+00:00",
+    "fields": {
+      "company": "Smart System Pars | Manzoumeh, Hooshmand Pars",
+      "company_description": "We are a technology-driven group active in the field of artificial intelligence and the development of AI-based products, and we work on designing and developing smart solutions for businesses. Our work environment is project-oriented, research-oriented, and based on solving real problems, and team members will have the opportunity to work directly on the development and preparation of artificial intelligence technologies for use in real products and Production environments.",
+      "date_posted": "2026-08-18",
+      "description": "We are looking for a Speech AI engineer specializing in the field of STT and TTS for our AI team development. The desired individual must have practical experience in developing, Fine-tuning, evaluating, and optimizing Speech-to-Text and Text-to-Speech models, especially for the Persian language. Proficiency in Python, PyTorch, Hugging Face, Linux, and GPU is essential, and familiarity with models such as Whisper, wav2vec2, XTTS, Chatterbox, and similar technologies is considered an advantage. Experience in Streaming Audio, Real-Time Voice, VAD, Voice Cloning, and Latency reduction is an important asset. We are looking for someone who is not just an API consumer but has the ability to research, test, Fine-tune, and Deploy Speech models. Experience working with Open Source models and preparing them for a Production environment is considered a special advantage.",
+      "education": "Bachelor's degree",
+      "employment_type": "full time",
+      "gender": "It doesn't matter",
+      "job_category": "Web, programming, and software",
+      "location": "Tehran",
+      "military_service": "It doesn't matter",
+      "minimum_experience": "less than three years",
+      "salary": "from 50,000,000 Tomans",
+      "skills": [
+        "Artificial Intelligence",
+        "speech processing",
+        "Pytorch"
+      ],
+      "title": "Speech AI Engineer",
+      "valid_through": null
+    },
+    "job_detail_version_id": 48,
+    "model": "gemma-4-e2b-it",
+    "native_segment_count": 2,
+    "provider": "lm-studio-translation-v2",
+    "schema_version": "english-projection-v2",
+    "segment_provenance": {
+      "company": "translated",
+      "company_description": "translated",
+      "date_posted": "native",
+      "description": "translated",
+      "education": "translated",
+      "employment_type": "translated",
+      "gender": "translated",
+      "job_category": "translated",
+      "location": "translated",
+      "military_service": "translated",
+      "minimum_experience": "translated",
+      "salary": "translated",
+      "skills[0]": "translated",
+      "skills[1]": "translated",
+      "skills[2]": "native",
+      "title": "translated"
+    },
+    "source_language": "mixed",
+    "source_semantic_sha256": "8aa02bcba09a1689787fa23821f95c975a5543ad6e01043db4e0ae9a795c9bcf",
+    "target_language": "en",
+    "translated_segment_count": 14,
+    "translation_sha256": "72baa6627a6549380d9dd6f02bd24d1f31b23d2feb7321d60d3ac1ccb6a9250c"
+  },
+  "original_analysis": null,
+  "role_capability_blueprint": null,
+  "snapshot_schema_version": "job-review-snapshot-v1",
+  "source": {
+    "canonical_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
+    "content_sha256": "008e0ea3412dcaae50c7bef14f2b4255ca88d79dbee4de0a897792e1fdde322d",
+    "evidence_path": "data/evidence/jobinja/job-pages/t7ck-3adfebf367/20260918T185726.357545Z_detail_008e0ea3412d.html",
+    "fetched_at": "2026-09-18T18:57:26.357545+00:00",
+    "fields": {
+      "company": "منظومه هوشمند پارس | Manzoumeh, Hooshmand Pars",
+      "company_description": "ما یک مجموعه فناوری‌محور فعال در حوزه هوش مصنوعی و توسعه محصولات مبتنی بر AI هستیم و روی طراحی و توسعه راهکارهای هوشمند برای کسب‌وکارها کار می‌کنیم. محیط کاری ما پروژه‌محور، تحقیق‌محور و مبتنی بر حل مسائل واقعی است و اعضای تیم فرصت کار مستقیم روی توسعه و آماده‌سازی فناوری‌های هوش مصنوعی برای استفاده در محصولات واقعی و محیط Production را خواهند داشت.",
+      "date_posted": "2026-08-18",
+      "description": "ما برای توسعه تیم هوش مصنوعی خود به دنبال یک مهندس Speech AI متخصص در حوزه STT و TTS هستیم. فرد موردنظر باید تجربه عملی در توسعه، Fine-tune، ارزیابی و بهینه‌سازی مدل‌های Speech-to-Text و Text-to-Speech، به‌خصوص برای زبان فارسی، داشته باشد. تسلط به Python، PyTorch، Hugging Face، Linux و GPU ضروری است و آشنایی با مدل‌هایی مانند Whisper، wav2vec2، XTTS، Chatterbox و تکنولوژی‌های مشابه مزیت محسوب می‌شود. تجربه در Streaming Audio، Real-Time Voice، VAD، Voice Cloning و کاهش Latency امتیاز مهمی است. ما به دنبال فردی هستیم که صرفاً مصرف‌کننده API نباشد و توانایی تحقیق، تست، Fine-tune و Deploy کردن مدل‌های Speech را داشته باشد. تجربه کار با مدل‌های Open Source و آماده‌سازی آن‌ها برای محیط Production امتیاز ویژه محسوب می‌شود.",
+      "education": "کارشناسی",
+      "employment_type": "تمام وقت",
+      "gender": "مهم نیست",
+      "job_category": "وب،‌ برنامه‌نویسی و نرم‌افزار",
+      "language": "mixed",
+      "location": "تهران",
+      "military_service": "مهم‌ نیست",
+      "minimum_experience": "کمتر از سه سال",
+      "parser_version": "jobinja-detail-v2",
+      "salary": "از ۵۰,۰۰۰,۰۰۰ تومان",
+      "skills": [
+        "هوش مصنوعی",
+        "پردازش گفتار",
+        "Pytorch"
+      ],
+      "title": "مهندس هوش مصنوعی گفتار (Speech AI Engineer)",
+      "valid_through": null
+    },
+    "final_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
+    "first_seen_at": "2026-08-23T15:47:05.455899+00:00",
+    "job_detail_version_id": 48,
+    "last_seen_at": "2026-09-27T12:21:14.057654+00:00",
+    "lifecycle_state": "active",
+    "parse_status": "parsed",
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "8aa02bcba09a1689787fa23821f95c975a5543ad6e01043db4e0ae9a795c9bcf",
+    "source_job_id": "t7ck",
+    "status_code": 200,
+    "title_observed": "مهندس هوش مصنوعی گفتار (Speech AI Engineer)"
+  },
+  "source_job_id": "t7ck",
+  "status": {
+    "blueprint_is_current_chain": false,
+    "capability_intelligence_present": false,
+    "capability_is_current_chain": false,
+    "english_analysis_present": true,
+    "english_analysis_semantic_review": "accepted",
+    "english_projection_present": true,
+    "original_analysis_present": false,
+    "role_capability_blueprint_present": false,
+    "translation_matches_english_analysis": true
+  }
+}

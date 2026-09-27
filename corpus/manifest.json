@@ -16,10 +16,10 @@
   "counts": {
     "capabilities": 5,
     "english_projections": 29,
-    "jobs": 412,
-    "p16_english": 6,
+    "jobs": 416,
+    "p16_english": 7,
     "p16_original": 0,
-    "sources": 412
+    "sources": 416
   },
   "jobs": [
     {
@@ -1730,7 +1730,7 @@
       "artifact_ids": {
         "capability": null,
         "english_projection": 42,
-        "p16_english": null,
+        "p16_english": 52,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/manzoumeh-hooshmand-pars/jobs/t7ck/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%DA%AF%D9%81%D8%AA%D8%A7%D8%B1-speech-ai-engineer-%D8%AF%D8%B1-%D9%85%D9%86%D8%B8%D9%88%D9%85%D9%87-%D9%87%D9%88%D8%B4%D9%85%D9%86%D8%AF-%D9%BE%D8%A7%D8%B1%D8%B3",
@@ -1744,7 +1744,7 @@
       "stages": {
         "capability": false,
         "english_projection": true,
-        "p16_english": false,
+        "p16_english": true,
         "p16_original": false,
         "source": true
       },
@@ -2005,6 +2005,54 @@
       "parse_status": null,
       "semantic_sha256": null,
       "source_job_id": "tEYu",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Senior Network Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/digikala/jobs/tEe2/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-digital-system-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+      "company_slug": "digikala",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tEe2",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Digital System Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/soshyant-1/jobs/tEeW/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-network-engineer-%D8%AF%D8%B1-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%DA%AF%D8%B1%D9%88%D9%87-%D9%81%D8%A7%D8%B1%D8%A7%D8%A8%DB%8C",
+      "company_slug": "soshyant-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tEeW",
       "stages": {
         "capability": false,
         "english_projection": false,
@@ -3717,6 +3765,30 @@
         "source": true
       },
       "title": "مهندس هوش مصنوعی AI Engineer (LLM-دورکاری)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/mabna-dp/jobs/tNlp/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-software-engineer-%D8%AF%D8%B1-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%B4-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D9%85%D8%A7%D9%84%DB%8C-%D9%85%D8%A8%D9%86%D8%A7",
+      "company_slug": "mabna-dp",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tNlp",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Software Engineer"
     },
     {
       "artifact_ids": {
@@ -9429,6 +9501,30 @@
         "source": true
       },
       "title": "برنامه‌نویس Flutter (بابلسر)"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/turquoise-partners-1/jobs/tpub/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%A2%D9%85%D9%88%D8%B2-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D9%88-%D8%B9%D9%84%D9%85-%D8%AF%D8%A7%D8%AF%D9%87-ai-data-science-intern-%D8%AF%D8%B1-%D8%B3%D8%A8%D8%AF%DA%AF%D8%B1%D8%AF%D8%A7%D9%86-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D9%81%DB%8C%D8%B1%D9%88%D8%B2%D9%87",
+      "company_slug": "turquoise-partners-1",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tpub",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارآموز هوش مصنوعی و علم داده (AI & Data Science Intern)"
     },
     {
       "artifact_ids": {

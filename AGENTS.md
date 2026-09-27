@@ -148,10 +148,10 @@ Those five accepted anchor artifacts remain physically v20/v5 and are accepted-o
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 412
+known/discovered Jobinja jobs: 416
 fetched/parsed detail jobs:      51
 current English projections:     29
-accepted/current English P1.6:    6
+accepted/current English P1.6:    7
 accepted/current Capability:      5
 ```
 
@@ -242,6 +242,12 @@ I7  bounded local real acceptance + reuse rerun ACCEPTED / CLOSED
 ```
 
 ### 5.1 I7 exact boundary and historical closure
+
+The owner-requested same-target coverage follow-up is still active. Snapshot
+10 has ten qualified and translated postings, six core, and two core postings
+with accepted-current P1.6. Four core postings need semantic coverage; do not
+infer zero demand from their missing or failed analyses. The bounded I7 PASS
+below remains valid for its original first-slice scope.
 
 I7 passed bounded real-local acceptance on 2026-09-26. Runs 4-6 produced immutable
 snapshots/profiles with six core source postings and one accepted-semantic core posting.

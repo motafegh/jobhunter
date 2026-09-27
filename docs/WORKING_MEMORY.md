@@ -6,7 +6,7 @@
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
 **Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
-**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; snapshot 9 has ten qualified and translated postings, six core and one accepted-semantic core. P1.6 review remains open; v24 is isolated/non-public.
+**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; snapshot 10 has ten qualified and translated postings, six core and two accepted-semantic core postings. P1.6 review remains open; v24 is isolated/non-public.
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
