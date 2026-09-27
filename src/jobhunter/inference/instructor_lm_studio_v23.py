@@ -29,6 +29,7 @@ _CONDITIONAL_STATEMENT_RE = re.compile(
     r"\b(?:optional(?:ly)?|conditional(?:ly)?|potential(?:ly)?|may)\b",
     re.I,
 )
+_ONE_OF_ALTERNATIVES_RE = re.compile(r"\bat\s+least\s+one\s+of\b[^.!?\n]*\bor\b", re.I)
 
 
 class AnalysisResponsibilityV23(AnalysisClaim):
@@ -47,6 +48,17 @@ class AnalysisResponsibilityV23(AnalysisClaim):
 
 class AnalysisRequirementV23(AnalysisRequirementV22):
     """Recognize exact value preference only for versioned candidate-proof refs."""
+
+    @model_validator(mode="after")
+    def retain_disjunctive_minimum(self, info: ValidationInfo) -> Self:
+        if (
+            (info.context or {}).get("analysis_mode") == "english"
+            and self.requirement_type == "required"
+            and _ONE_OF_ALTERNATIVES_RE.search(self.item_excerpt)
+            and not re.search(r"\bor\b|\bat\s+least\s+one\b", self.concept, re.I)
+        ):
+            raise ValueError("Required concept must preserve at-least-one source alternatives")
+        return self
 
     def _has_exact_preference_signal(self, text: str, plan: dict[str, Any]) -> bool:
         if super()._has_exact_preference_signal(text, plan):

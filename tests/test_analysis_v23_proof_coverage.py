@@ -247,6 +247,38 @@ def test_v23_points_preference_applies_only_to_its_exact_item() -> None:
         )
 
 
+def test_v23_keeps_at_least_one_language_alternative() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("tjgi"))
+    parent = next(
+        item for item in plan.values()
+        if item["text"].startswith("Programming experience with at least one of")
+    )
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": _fields("tjgi")["description"]},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"parent": parent},
+    }
+    requirement = {
+        "concept": "Programming experience with Python or JavaScript/TypeScript",
+        "depth_signal": None,
+        "requirement_type": "required",
+        "concept_type": "experience",
+        "evidence": parent["text"],
+        "item_excerpt": parent["text"],
+        "confidence": "high",
+        "rationale": "At least one of the source languages is required.",
+    }
+    assert AnalysisRequirementV23.model_validate(
+        requirement, context=context
+    ).requirement_type == "required"
+    with pytest.raises(ValidationError, match="preserve at-least-one source alternatives"):
+        AnalysisRequirementV23.model_validate(
+            {**requirement, "concept": "Programming experience with Python"},
+            context=context,
+        )
+
+
 def test_v23_preserves_explicit_condition_on_employer_work() -> None:
     evidence = (
         "developing multi-step workflows, and if necessary, Multi-Agent Integration "

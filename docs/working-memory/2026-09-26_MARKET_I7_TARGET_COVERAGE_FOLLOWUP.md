@@ -331,3 +331,23 @@ requests. No validator was weakened, and artifact 57 remains rejected. A
 separate owner-requested MiMo 9B comparison used an isolated SQLite copy;
 its result and non-promotion decision are recorded in
 `docs/experiments/2026-09-27_MARKET_I7_MIMO_9B_ISOLATED_COMPARISON.md`.
+
+The next configured-model `tjgi` request was interrupted before a response or
+artifact because Gemma had been reloaded with insufficient GPU offload after
+the MiMo trial. LM Studio reported about 5.4 generated tokens/second, while
+the 8 GiB GPU showed only about 2.7 GiB used. The process exited on SIGINT;
+no review candidate was persisted. Reloading Gemma at 16K context with
+`lms load gemma-4-e4b-it-ud --context-length 16384 --gpu max -y` raised GPU
+use to about 4.7 GiB. A 160-token probe then completed in 2.7 seconds, and
+the next full run showed about 90% GPU utilization. This was a local runtime
+placement issue, distinct from semantic model correctness.
+
+The faster bounded run persisted pending `tjgi` artifact 58 with nine duties
+and 38 requirements. Full source review rejected it: the source requires
+programming experience in **at least one of** Python or
+JavaScript/TypeScript, but the artifact split them into two required
+experience claims. That changes an alternative into a conjunction. The v23
+prompt now directs one alternative claim, and the exact-item validator rejects
+a required concept that drops `or`/`at least one` when the cited item states
+that disjunctive minimum. This guard is source-backed and leaves the other
+technical and preferred items untouched. Artifact 58 remains rejected.
