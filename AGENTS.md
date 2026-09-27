@@ -394,12 +394,22 @@ P1.6 is the strict factual substrate:
 - remain restrained on sparse postings;
 - keep obligation strength and technical depth separate;
 - never spread one depth adjective across neighboring technologies;
+- treat `depth_signal` as optional source-explicit degree metadata: if an exact
+  item has no independently supported degree, retain the grounded requirement
+  and exact source wording with null depth instead of failing the whole artifact;
+- keep source-requested prior experience distinct from knowledge and from any
+  unreviewed claim about the user's own projects or employment;
 - preserve optional/contextual wording;
 - uncertain source claims remain contextual/unknown rather than forced;
 - structured source skills cannot silently disappear;
 - qualification wording must not fabricate job duties.
 
 Recent B1 repairs strengthened source coverage/depth handling but do not authorize regeneration of accepted anchors without a real defect.
+Historical instructions to preserve a depth guard refer to rejecting an
+unsupported asserted degree. They do not require rejecting a grounded
+requirement merely because optional degree metadata is absent or malformed;
+normalize that metadata to unknown when the source item has no explicit
+item-scoped degree and the claim remains otherwise valid.
 
 ### Capability Intelligence v9
 

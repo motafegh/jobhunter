@@ -15,6 +15,7 @@ from jobhunter.analysis_runtime_v24 import (
 )
 from jobhunter.analysis_service_v24 import ENGLISH_PROMPT_VERSION, JobAnalysisServiceV24
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
+from jobhunter.evidence_refs_v24 import persisted_qualification_plan
 from jobhunter.inference.instructor_lm_studio_v24 import (
     complete_analysis_partition_with_instructor_v24,
 )
@@ -36,6 +37,7 @@ def test_v24_exact_items_own_three_redundant_tmvA_sentences() -> None:
     }
     assert redundant <= build_requirement_coverage_plan_v23(effective).keys()
     assert redundant.isdisjoint(plan)
+    assert persisted_qualification_plan(fields) == plan
     complete = _v20_complete_requirement_plan(
         effective,
         additional_plan=additional,

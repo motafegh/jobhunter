@@ -2,59 +2,19 @@
 
 from __future__ import annotations
 
-import re
-from collections import Counter
 from typing import Any
 
 from jobhunter.analysis_runtime_v23 import V23CandidateAnalysisProvider
 from jobhunter.analysis_service_v24 import JobAnalysisServiceV24
 from jobhunter.config import Settings
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
+from jobhunter.evidence_refs_v24 import (
+    exact_qualification_item_plan as _exact_qualification_item_plan,
+)
 from jobhunter.inference.instructor_lm_studio_v24 import (
     complete_analysis_partition_with_instructor_v24,
 )
 from jobhunter.inference.lm_studio import StructuredInferenceResult
-
-
-def _source_words(text: str) -> Counter[str]:
-    return Counter(re.findall(r"[^\W_]+", text.casefold()))
-
-
-def _exact_qualification_item_plan(
-    plan: dict[str, dict[str, Any]], model_fields: dict[str, Any]
-) -> dict[str, dict[str, Any]]:
-    """Remove a redundant broad sentence only when exact item spans own every word.
-
-    Older derived qualification items remain mandatory in the complete plan.
-    This resolves duplicate evidence ownership before model partitioning; it does
-    not create a fact, alter an obligation, or relax item validation.
-    """
-
-    values = model_fields.get("__candidate_qualification_evidence")
-    if not isinstance(values, list):
-        return plan
-    result = dict(plan)
-    for reference, parent in plan.items():
-        if parent.get("source_kind") != "requirement_section":
-            continue
-        if not parent.get("allow_exclusion"):
-            continue
-        if parent.get("obligation_hint") not in (None, "required"):
-            continue
-        parent_text = str(parent.get("text") or "")
-        children = [
-            value
-            for value in values
-            if isinstance(value, str)
-            and value.strip()
-            and value.casefold() in parent_text.casefold()
-        ]
-        if not children:
-            continue
-        child_words = sum((_source_words(value) for value in children), Counter())
-        if child_words and child_words == _source_words(parent_text):
-            result.pop(reference)
-    return result
 
 
 class V24CandidateAnalysisProvider(V23CandidateAnalysisProvider):

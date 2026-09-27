@@ -50,6 +50,73 @@ def _proof(job_id: str):
     }
 
 
+def test_v23_drops_non_degree_depth_without_dropping_mixed_source_claim() -> None:
+    evidence = (
+        "specialized knowledge and practical experience in Model Context Protocol (MCP)"
+    )
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": evidence},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"item": {"text": evidence, "obligation_hint": "required"}},
+    }
+    claim = AnalysisRequirementV23.model_validate({
+        "concept": "specialized knowledge and practical experience in MCP",
+        "depth_signal": "specialized knowledge and practical experience",
+        "requirement_type": "required",
+        "concept_type": "experience",
+        "evidence": evidence,
+        "item_excerpt": evidence,
+        "confidence": "high",
+        "rationale": "The source explicitly asks for both knowledge and experience.",
+    }, context=context)
+    assert claim.depth_signal is None
+    assert "knowledge and practical experience" in claim.concept
+
+
+def test_v23_drops_borrowed_list_depth_but_retains_explicit_item_depth() -> None:
+    evidence = "Familiarity with API, Webhook, and service connections"
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": evidence},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {"item": {"text": "Webhook", "obligation_hint": "required"}},
+    }
+    base = {
+        "concept": "Webhook",
+        "depth_signal": "Familiarity",
+        "requirement_type": "required",
+        "concept_type": "tool",
+        "evidence": evidence,
+        "item_excerpt": "Webhook",
+        "confidence": "high",
+        "rationale": "Exact listed item.",
+    }
+    assert AnalysisRequirementV23.model_validate(base, context=context).depth_signal is None
+    with pytest.raises(ValidationError, match="exact contiguous excerpt"):
+        AnalysisRequirementV23.model_validate(
+            {**base, "depth_signal": "expert"}, context=context
+        )
+    explicit = {**base, "concept": "API", "item_excerpt": "Familiarity with API"}
+    context["requirement_coverage_plan"] = {
+        "item": {"text": "Familiarity with API", "obligation_hint": "required"}
+    }
+    assert AnalysisRequirementV23.model_validate(
+        explicit, context=context
+    ).depth_signal == "Familiarity"
+
+
+def test_v23_dense_ability_list_does_not_merge_three_distinct_items() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    parent = plan["field:description:segment:4"]
+    items = [item["text"] for item in parent["required_item_excerpts"]]
+    assert len(items) == 5
+    assert items[1].startswith("the ability to analyze problems")
+    assert items[2].startswith("interest and the ability for continuous learning")
+    assert items[3].startswith("teamwork skills and participation")
+    assert all(item in parent["text"] for item in items)
+
+
 def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:
     fields = _fields("t7ck")
     _effective, refs, _residuals, additional = _v15_candidate_evidence_view(fields)

@@ -1,9 +1,11 @@
 """Isolated P1.6 v24 candidate with one exact qualification ownership rule."""
 
+from jobhunter.analysis_persistence_v23 import persisted_analysis_v23
 from jobhunter.analysis_service_v23 import (
     _ENGLISH_SYSTEM_PROMPT_V23,
     JobAnalysisServiceV23,
 )
+from jobhunter.evidence_refs_v24 import persisted_qualification_plan
 
 ENGLISH_PROMPT_VERSION = "job-analysis-english-v24"
 
@@ -28,6 +30,13 @@ class JobAnalysisServiceV24(JobAnalysisServiceV23):
     prompt_version = ENGLISH_PROMPT_VERSION
     system_prompt = _ENGLISH_SYSTEM_PROMPT_V24
     schema_name = "jobhunter_job_analysis_english_v24"
+
+    def _persist_analysis(self, structured: dict, analysis_fields: dict) -> dict:
+        return persisted_analysis_v23(
+            structured,
+            analysis_fields,
+            requirement_plan=persisted_qualification_plan(analysis_fields),
+        )
 
 
 __all__ = [

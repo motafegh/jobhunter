@@ -275,6 +275,14 @@ The coordinator now reports this no-membership condition without publishing a
 replacement empty snapshot. Same-target semantic coverage remains an active owner follow-up;
 the bounded I7 first-slice PASS remains intact.
 
+The 2026-09-27 depth-authority refinement keeps source-quoted non-degree
+knowledge/experience and shared-list wording in the requirement while setting
+unsupported item-level `depth_signal` metadata to null. This follows the
+utility policy's soft-uncertainty rule; fabricated source claims still fail.
+The v24 exact-item ownership candidate now uses the same plan in generation
+and persistence. Neither change alone accepts the remaining two core analyses;
+their live candidate review remains explicit.
+
 The rest of this section is the historical HOLD trail, retained to explain repairs.
 Its former present-tense next-work statements are superseded by the final decision.
 

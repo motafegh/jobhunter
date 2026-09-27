@@ -33,7 +33,8 @@ _QUALIFICATION_ITEM_START_RE = re.compile(
     r"(?:^|,\s+)(?P<item>(?:(?:practical|real-world|professional|hands-on|"
     r"specialized|proficient|a\s+good|a\s+relevant)\s+)?"
     r"(?:experience|understanding|familiarity|mastery|proficiency|ability|knowledge|"
-    r"educational\s+background)\b|(?:and\s+)?the\s+ability\b|"
+    r"educational\s+background)\b|interest\s+and\s+the\s+ability\b|"
+    r"teamwork\s+skills\b|(?:and\s+)?the\s+ability\b|"
     r"(?:and\s+)?a\s+relevant\s+educational\s+background\b)",
     re.I,
 )

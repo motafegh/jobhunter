@@ -370,6 +370,10 @@ Important invariants:
 - qualifications do not become duties;
 - contextual tools do not become required expertise without evidence;
 - one adjective/depth statement is not spread across neighboring concepts;
+- a malformed or unscoped model depth value can be normalized to unknown when
+  the exact source item, concept, obligation and evidence remain grounded;
+  this does not erase an explicit source degree or imply that knowledge alone
+  satisfies a vacancy's prior-experience request;
 - unsupported role purpose is omitted;
 - evidence must validate against authoritative employer fields;
 - fresh English v21 artifacts remain `pending` until explicit semantic review;

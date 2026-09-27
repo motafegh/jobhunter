@@ -8,7 +8,11 @@ from typing import Any, Self
 from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.inference import instructor_lm_studio_v20 as v20
-from jobhunter.inference.instructor_lm_studio import AnalysisClaim
+from jobhunter.inference.instructor_lm_studio import (
+    AnalysisClaim,
+    _equivalent_source_excerpt,
+)
+from jobhunter.inference.instructor_lm_studio_v20 import _depth_matches
 from jobhunter.inference.instructor_lm_studio_v22 import (
     AnalysisRequirementV22,
     JobAnalysisResponseV22,
@@ -72,10 +76,24 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
         item = value.get("item_excerpt")
         if not isinstance(item, str):
             return value
+        # A depth field describes an explicit degree in this exact item. Prior
+        # experience and knowledge remain in the concept/evidence even when the
+        # item contains no separate proficiency degree. Discard only a model
+        # supplied non-degree excerpt; source and concept validation still run.
+        signal = value.get("depth_signal")
+        normalized = value
+        if (
+            isinstance(signal, str)
+            and signal.strip()
+            and not _depth_matches(item)
+            and _equivalent_source_excerpt(signal, str(value.get("evidence") or ""))
+            is not None
+        ):
+            normalized = {**value, "depth_signal": None}
         concept = _source_alternative_concept(item)
-        if concept is None or concept == value.get("concept"):
-            return value
-        return {**value, "concept": concept}
+        if concept is None or concept == normalized.get("concept"):
+            return normalized
+        return {**normalized, "concept": concept}
 
     @model_validator(mode="after")
     def retain_disjunctive_minimum(self, info: ValidationInfo) -> Self:

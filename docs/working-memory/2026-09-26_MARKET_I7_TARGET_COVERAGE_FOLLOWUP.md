@@ -403,3 +403,39 @@ with failures and leaves the previous populated snapshot current, rather than
 publishing a new empty snapshot. The explicit cause stays in the run ledger.
 An initial target with no prior populated snapshot can still record an empty
 initial snapshot.
+
+The owner identified disproportionate depth strictness in the two remaining
+core cases. The controlling utility policy already classifies over-gating as
+a product failure, but older Phase-1/roadmap examples and P1.6 prompt wording
+were being treated as a blanket instruction to reject an entire grounded
+candidate for malformed optional depth metadata. Current v23 now sets a
+source-quoted, non-degree `depth_signal` to null when the exact item contains
+no explicit degree. The requirement concept, source evidence, obligation,
+prior-experience ontology, and coverage still validate; a degree absent from
+the source still fails. `tmvA` additionally needs v24's separate exact-item
+ownership plan, whose generation/persistence parity is now repaired in the
+isolated candidate. Architecture, reasoning policy, roadmap, AGENTS and prompt
+wording now state the narrower boundary. These repairs do not themselves
+promote a model result.
+
+The first bounded `t7Ay` run after the depth refinement (attempt 132) passed
+the previous mixed-depth point but failed whole-partition validation twice.
+Its retained responses actually listed all five source qualifications in the
+long expected-competencies sentence. The v23 dense-list planner had merged
+three neighboring items into one mandatory exact excerpt because it did not
+recognize `interest and the ability` or `teamwork skills` as item starts.
+Those two general boundaries are now recognized, preserving five exact
+source items rather than a false combined item. Attempt 132 remains a failed
+diagnostic response, not a candidate or accepted artifact.
+
+Root-cause audit: `PRODUCT_SPECIFICATION.md` and the utility reasoning policy
+already prioritize useful bounded intelligence and soft interpretive
+uncertainty; `SOURCE_POLICY.md` requires provenance, not a non-null depth field.
+The over-gating came from older Phase-1 examples in `ROADMAP.md` and
+`WORKING_MEMORY.md`, repeated as an unqualified inherited strict-depth rule in
+the v23 prompt and enforced by the v20/v21 item-depth validators. Separately,
+the v23 dense-list planner and v24 generation/persistence plans disagreed
+about coverage ownership. The updated AGENTS, architecture, policy, roadmap,
+prompt, planner and regression tests now distinguish unsupported source facts
+from removable depth metadata and duplicate coverage bookkeeping. Historical
+failure records remain evidence, not current instructions to keep these defects.

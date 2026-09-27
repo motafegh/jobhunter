@@ -249,6 +249,7 @@ multiple plausible archetypes
 small semantic sample
 weakly supported work implication
 incomplete technical scope
+uncertain or shared depth wording within a grounded qualification
 ```
 
 Preferred behavior:
@@ -260,6 +261,15 @@ uncertainty
 ```
 
 Do **not** automatically convert interpretive uncertainty into a feature blocker.
+For job-level extraction, a failed optional depth/ontology field should not
+discard a grounded source requirement when the field can be safely set to
+unknown while retaining the exact wording, obligation and evidence. Reject
+unsupported employer claims and invented personal history; do not require
+each coordinated list item to repeat a shared source qualifier verbatim.
+Prior applied experience can support an inference of knowledge, but a
+knowledge requirement alone does not prove past practice. A personal project
+may later be valid evidence of experience when the user actually supplies and
+reviews it; the system must not invent one to satisfy an employer request.
 
 ---
 

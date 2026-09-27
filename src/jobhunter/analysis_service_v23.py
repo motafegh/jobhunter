@@ -32,7 +32,10 @@ P1.6 V23 CANDIDATE — CLAIM WORDING AND PROOF OF ABILITY:
 - Keep proof-of-ability preferences separate from substantive technical ability and
   experience requirements. Application instructions about sending a resume or links
   are not additional qualifications. Do not extract requirements from such instructions.
-- Preserve every inherited strict source, strength, depth and full-coverage rule.
+- Preserve source, strength and full-coverage rules. Depth is an optional
+  source-explicit degree field: if the exact item has no independently stated
+  degree, use null depth while retaining its full concept and exact evidence.
+  Do not borrow a degree from a neighboring item or invent prior experience.
 - For responsibilities, retain explicit conditions such as "if necessary" or
   "when needed" in the statement. Do not turn conditional work into an
   unconditional duty.

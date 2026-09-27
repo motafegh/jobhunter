@@ -14,11 +14,15 @@ def _key(text: str) -> str:
 
 
 def persisted_analysis_v23(
-    structured: dict[str, Any], analysis_fields: dict[str, Any]
+    structured: dict[str, Any],
+    analysis_fields: dict[str, Any],
+    *,
+    requirement_plan: dict[str, dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Resolve v23 references without silently reverting to an older coverage plan."""
 
-    requirement_plan = build_requirement_coverage_plan_v23(analysis_fields)
+    if requirement_plan is None:
+        requirement_plan = build_requirement_coverage_plan_v23(analysis_fields)
     responsibility_plan = build_responsibility_coverage_plan_v21(analysis_fields)
     requirements = structured.get("requirements") or []
     responsibilities = structured.get("responsibilities") or []

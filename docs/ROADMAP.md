@@ -162,6 +162,11 @@ The first Python/software anchor `tmBK` has already exposed useful repeatable de
 - treating `Ability to effectively use AI ...` as application wording rather than technical depth;
 - filtering only redundant coverage exclusions that contradict positive extraction of the same reference.
 
+These historical fail-closed examples protect against publishing an unsupported
+degree on the wrong subject. They do not require rejecting an otherwise
+grounded requirement when non-degree or shared-scope model depth metadata can
+be removed and the exact source wording remains visible.
+
 The first persisted `tmBK` P1.6 artifact 38 was semantically rejected and never fed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete source/depth review, and Capability artifact 13 then passed complete coverage and source-truth review. Python/software is closed.
 
 Network/security `t4qV` is accepted on P1.6 44 → Capability 14 after a general certification/credential ontology clarification; artifacts 40-43 remain rejected/archived evidence. Operations/platform `tmyX` is accepted on P1.6 46 → Capability 15 after general heading-boundary, pre-heading duty-coverage, and non-depth ability/skill fixes. Heterogeneous validation, Market truthfulness, source/lifecycle, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, P2.2A Job Work Intelligence, and the bounded Market I1-I7 first slice are accepted/closed.

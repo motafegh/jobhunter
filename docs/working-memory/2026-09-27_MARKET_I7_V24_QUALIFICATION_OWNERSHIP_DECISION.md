@@ -55,3 +55,15 @@ neighboring items or weakening v21/v23 item-depth validation. V24 stays
 isolated/non-public. Other current core jobs may be reviewed independently
 under the public v23 contract while the shared-scope representation is
 investigated from source-backed cases.
+
+## 2026-09-27 authority refinement
+
+The inherited item-depth validator made optional degree metadata an artifact
+blocker even when the source requirement itself was grounded. Current v23 now
+normalizes a model-supplied, source-quoted `depth_signal` to null when the exact
+item has no explicit degree; the concept, item, source evidence, strength and
+experience ontology still validate. For the `tmvA` coordinated list, bare
+`Webhook` and `and service connections` items therefore no longer need to
+repeat the shared `Familiarity` marker. A fabricated degree absent from the
+source still fails. V24 remains isolated; its generation and persistence now
+reconstruct the same exact-item ownership plan before a new live evaluation.
