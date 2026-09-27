@@ -114,6 +114,28 @@ def test_v22_preserves_explicit_prior_experience() -> None:
 
 
 @pytest.mark.parametrize(
+    "item",
+    [
+        "work history in AI projects",
+        "track record of professional activity in designing AI systems",
+    ],
+)
+def test_v22_preserves_explicit_prior_work_phrases(item: str) -> None:
+    evidence = f"The candidate has a {item}."
+    result = AnalysisRequirementV22.model_validate(
+        _requirement(
+            concept="Experience in AI systems",
+            evidence=evidence,
+            item_excerpt=item,
+            concept_type="experience",
+        ),
+        context=_context(evidence),
+    )
+
+    assert result.concept_type == "experience"
+
+
+@pytest.mark.parametrize(
     ("concept", "use_reference"),
     [
         ("Reliable service operation experience", True),

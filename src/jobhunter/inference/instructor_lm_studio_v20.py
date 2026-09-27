@@ -62,7 +62,8 @@ from jobhunter.inference.lm_studio import StructuredInferenceResult
 _VAGUE_PREFERENCE_EXTENT_RE = re.compile(r"^some$", re.I)
 _PRIOR_APPLIED_EXPOSURE_RE = re.compile(
     r"\b(?:experience|experienced|hands?[ -]on|years?|worked|working background|"
-    r"prior background|background|practical exposure|applied exposure)\b",
+    r"prior background|background|practical exposure|applied exposure|"
+    r"work history|track record of professional activity)\b",
     re.I,
 )
 _EFFECTIVE_APPLICATION_RE = re.compile(

@@ -169,3 +169,15 @@ six, with one failed and three missing. The run discovered four more source
 identities, bringing the public corpus to 416 known jobs. Public-corpus
 verification passed. Remaining core coverage is `tmvA`, `tjgi`, `t7Ay` and
 `tNVe`; none is silently counted as zero demand.
+
+Normal v23 `t7Ay` attempt 116 failed closed at its first partition after one
+allowed correction; no artifact was created. Both retained responses used
+experience concepts for exact source phrases "work history in AI projects"
+and "track record of professional activity in designing and implementing LLM
+and Agentic AI systems." The inherited prior-applied-exposure validator had
+not recognized those explicit prior-work phrases, so it rejected both as
+unsupported ontology. The general guard now recognizes exactly `work history`
+and `track record of professional activity`, while continuing to reject
+ability-only text as prior experience. Ruff and all 756 strict-warning tests
+passed. A new `t7Ay` check is justified by this validator correction; the
+failed response itself is not a candidate or acceptance evidence.
