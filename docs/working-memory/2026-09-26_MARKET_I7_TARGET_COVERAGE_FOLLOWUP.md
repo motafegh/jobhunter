@@ -181,3 +181,14 @@ and `track record of professional activity`, while continuing to reject
 ability-only text as prior experience. Ruff and all 756 strict-warning tests
 passed. A new `t7Ay` check is justified by this validator correction; the
 failed response itself is not a candidate or acceptance evidence.
+
+The bounded post-guard `t7Ay` attempt 117 again failed closed with no artifact.
+Both private responses correctly treated a source-explicit prior professional
+track record as preferred, but the validator did not recognize "will be
+prioritized in the recruitment process" as optionality. The general
+source-preference recognizer now includes that narrow hiring-priority phrase,
+and the v21/v23 planner separates it from the preceding required criteria in
+the same paragraph. An offline audit found this exact new phrase only in
+`t7Ay` among 29 current projections. Ruff and all 758 strict-warning tests
+passed. Another bounded generation is justified by the repaired strength
+boundary; the failed completion remains diagnostic only.

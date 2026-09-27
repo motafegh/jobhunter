@@ -137,6 +137,25 @@ def test_v23_exact_candidate_fact_owns_identical_residual_sentence() -> None:
     )
 
 
+def test_v23_separates_required_criteria_from_hiring_priority() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    relevant = [
+        item for item in plan.values()
+        if "most important criteria" in item["text"].lower()
+        or "prioritized in the recruitment process" in item["text"]
+    ]
+
+    assert len(relevant) == 2
+    assert {item["obligation_hint"] for item in relevant} == {"required", "preferred"}
+    assert all(
+        not (
+            "most important criteria" in item["text"].lower()
+            and "prioritized in the recruitment process" in item["text"]
+        )
+        for item in relevant
+    )
+
+
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:
     tvmm = _proof("tvMm")
     assert len(tvmm) == 3

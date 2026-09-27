@@ -17,6 +17,14 @@ def test_important_asset_marks_source_preference() -> None:
     assert not has_english_optionality_signal("The company maintains an asset registry.")
 
 
+def test_hiring_priority_marks_exact_source_preference() -> None:
+    assert has_english_optionality_signal(
+        "Candidates with a track record will be prioritized in the recruitment process."
+    )
+    assert has_english_optionality_signal("Projects are prioritized for review.")
+    assert not has_english_optionality_signal("Prioritize security in production systems.")
+
+
 def test_plain_market_headings_keep_duties_requirements_and_preferences_separate() -> None:
     description = (
         "Main responsibilities • Build agents • Evaluate results "

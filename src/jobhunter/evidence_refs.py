@@ -33,7 +33,9 @@ _PARENTHETICAL_DEPTH_RE = re.compile(
 )
 _OPTIONALITY_RE = re.compile(
     r"\b(?:preferred|preference|plus|helpful|advantage|nice[ -]to[ -]have|optional|"
-    r"(?:important|valuable|strong)\s+asset|considered\s+an?\s+asset)\b",
+    r"(?:important|valuable|strong)\s+asset|considered\s+an?\s+asset|"
+    r"prioritized\s+(?:in\s+(?:the\s+)?(?:recruitment|hiring|selection)\s+process|"
+    r"for\s+(?:review|consideration)))\b",
     re.I,
 )
 _GLOBAL_UNSPECIFIED_RE = re.compile(
