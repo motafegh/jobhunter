@@ -5,6 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from jobhunter.analysis_service_v11 import qualification_list_spans
 from jobhunter.evidence_refs import (
     _SECTION_HEADING_RE,
     _heading_kind,
@@ -28,6 +29,35 @@ _APPLICATION_INSTRUCTION_RE = re.compile(
     r"interested\s+parties)\b",
     re.I,
 )
+_QUALIFICATION_ITEM_START_RE = re.compile(
+    r"(?:^|,\s+)(?P<item>(?:(?:practical|real-world|professional|hands-on|"
+    r"specialized|proficient|a\s+good|a\s+relevant)\s+)?"
+    r"(?:experience|understanding|familiarity|mastery|ability|knowledge|"
+    r"educational\s+background)\b|and\s+the\s+ability\b)",
+    re.I,
+)
+_EXPLICIT_EXPERIENCE_ITEM_RE = re.compile(
+    r"^(?:(?:practical|real-world|professional|hands-on)\s+)?experience\b", re.I
+)
+
+
+def _dense_experience_items(
+    text: str, derived_qualifications: set[str]
+) -> list[dict[str, str]]:
+    """Require exact prior-exposure items inside a multi-qualification source list."""
+
+    matches = list(_QUALIFICATION_ITEM_START_RE.finditer(text))
+    items: list[dict[str, str]] = []
+    for index, match in enumerate(matches):
+        start = match.start("item")
+        end = matches[index + 1].start() if index + 1 < len(matches) else len(text)
+        item = text[start:end].strip(" ,.")
+        if not _EXPLICIT_EXPERIENCE_ITEM_RE.match(item):
+            continue
+        if item.casefold() in derived_qualifications:
+            continue
+        items.append({"text": item, "required_concept_type": "experience"})
+    return items if len(items) >= 2 else []
 
 
 def _proof_sentences(bullet: str) -> list[str]:
@@ -72,7 +102,19 @@ def build_requirement_coverage_plan_v23(
         return plan
 
     headings = list(_SECTION_HEADING_RE.finditer(description))
+    derived_qualifications = {
+        value.strip().casefold() for value in qualification_list_spans(fields)
+    }
     for candidate in plan.values():
+        if (
+            candidate.get("source_kind") == "requirement_section"
+            and not candidate.get("required_item_excerpts")
+        ):
+            items = _dense_experience_items(
+                str(candidate.get("text") or ""), derived_qualifications
+            )
+            if items:
+                candidate["required_item_excerpts"] = items
         if (
             candidate.get("source_kind") != "requirement_section"
             or candidate.get("obligation_hint") != "preferred"

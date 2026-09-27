@@ -161,6 +161,34 @@ def test_v23_separates_required_criteria_from_hiring_priority() -> None:
     )
 
 
+def test_v23_dense_lists_require_exact_prior_experience_items() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("tNVe"))
+    essential = next(
+        item for item in plan.values()
+        if item["text"].startswith("practical mastery of TypeScript")
+    )
+    preferred = next(
+        item for item in plan.values()
+        if item["text"].startswith("Points are also awarded for")
+    )
+
+    assert [item["text"] for item in essential["required_item_excerpts"]] == [
+        "experience working with NestJS, Express, or similar frameworks",
+        "practical experience working with LLM APIs such as OpenAI, Anthropic, or similar services",
+        "real-world experience in at least one LLM Application, RAG, or AI Agent project",
+    ]
+    assert [item["text"] for item in preferred["required_item_excerpts"]] == [
+        "experience with OpenAI Agents SDK, LangGraph, LangChain, or similar tools",
+        "experience with Multi-Agent Systems and LLM Evaluation",
+        "experience integrating with ERP, CRM, Email, or Ticketing Systems",
+    ]
+    assert all(
+        item["required_concept_type"] == "experience"
+        for parent in (essential, preferred)
+        for item in parent["required_item_excerpts"]
+    )
+
+
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:
     tvmm = _proof("tvMm")
     assert len(tvmm) == 3

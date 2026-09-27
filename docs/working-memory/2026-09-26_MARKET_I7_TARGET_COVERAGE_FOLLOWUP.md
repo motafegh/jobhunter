@@ -226,3 +226,18 @@ intact and does not split capitalized mid-sentence module names as actions.
 five accepted anchor duty plans remain byte-equivalent in the offline check.
 No failed response became an artifact. Ruff and all 761 strict-warning tests
 passed. A fresh bounded `tNVe` generation can use the repaired source plan.
+
+The repaired `tNVe` run persisted pending artifact 53 with eight intact duties
+and 22 requirements. Complete source review rejected it: essential prior
+experience working with NestJS/Express and practical experience using LLM APIs
+were reduced to tool mentions; preferred prior experience with OpenAI Agents
+SDK/LangGraph/LangChain was likewise reduced to tool names. Those omissions
+materially change career-readiness evidence, despite mechanically valid
+coverage and generally correct strengths. The v23 planner now gives repeated
+explicit prior-experience phrases in dense qualification lists their own exact
+mandatory item excerpts and requires `concept_type=experience` for each.
+This source-backed rule affects current `tNVe` and `tGM0` dense sections;
+qualification-list items already represented elsewhere are not duplicated,
+and accepted anchor plans are unchanged. Artifact 53 remains rejected. Ruff
+and all 762 strict-warning tests passed. One bounded `tNVe` generation can
+test the stronger item contract, followed by whole-artifact semantic review.
