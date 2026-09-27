@@ -5,7 +5,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from jobhunter.analysis_runtime_v20 import _v20_requirement_partitions
+from jobhunter.analysis_runtime_v20 import _normalize, _v20_requirement_partitions
 from jobhunter.analysis_runtime_v21 import V21CandidateAnalysisProvider
 from jobhunter.analysis_service_v23 import JobAnalysisServiceV23
 from jobhunter.config import Settings
@@ -54,7 +54,34 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
         return partitions
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
-        return complete_analysis_partition_with_instructor_v23(**kwargs)
+        result = complete_analysis_partition_with_instructor_v23(**kwargs)
+        allowed = {
+            _normalize(text)
+            for text in kwargs["responsibility_coverage_plan"].values()
+        }
+        structured = dict(result.structured)
+        dropped = 0
+        for field in ("role_purpose", "responsibilities"):
+            claims = list(structured[field])
+            structured[field] = [
+                claim for claim in claims
+                if _normalize(str(claim["evidence"])) in allowed
+            ]
+            dropped += len(claims) - len(structured[field])
+        if not dropped:
+            return result
+
+        request_body = dict(result.request_body)
+        runtime = dict(request_body.get("runtime") or {})
+        runtime["p16_v23_dropped_unassigned_work_claims"] = dropped
+        request_body["runtime"] = runtime
+        return StructuredInferenceResult(
+            model=result.model,
+            structured=structured,
+            request_body=request_body,
+            raw_response=result.raw_response,
+            finish_reason=result.finish_reason,
+        )
 
     def _persistable_structured(self, structured: dict[str, Any]) -> dict[str, Any]:
         return dict(persisted_v20_shape(structured))

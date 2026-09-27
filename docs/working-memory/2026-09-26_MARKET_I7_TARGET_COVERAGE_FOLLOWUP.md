@@ -351,3 +351,15 @@ prompt now directs one alternative claim, and the exact-item validator rejects
 a required concept that drops `or`/`at least one` when the cited item states
 that disjunctive minimum. This guard is source-backed and leaves the other
 technical and preferred items untouched. Artifact 58 remains rejected.
+
+The first post-guard `tjgi` run did not persist an artifact. The model
+returned a source-grounded role-purpose/work claim from the recruiting
+introduction outside its assigned duty partition, while the explicit nine
+duty references remained assigned to their own ledger. The inherited v20
+partition scope assertion rejected the whole run. At the owner's request to
+reduce disproportionate strictness, v23 now drops only extra role-purpose or
+responsibility claims whose exact evidence is outside the current duty
+partition. It retains the raw model response and records the dropped count in
+private runtime metadata. Assigned duties and their coverage remain subject
+to the existing validators, so this adjustment cannot add fabricated work or
+make a missing listed duty pass. A focused test exercises the filter.
