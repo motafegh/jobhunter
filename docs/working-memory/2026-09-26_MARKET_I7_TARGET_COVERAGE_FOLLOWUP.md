@@ -202,3 +202,14 @@ The explicit evaluation-process cue is now recognized; the planner marks this
 sentence preferred separately from required qualifications. Across 29 current
 English projections, only `t7Ay` contains this cue. The responses remain
 non-authoritative failures. Ruff and all 759 strict-warning tests passed.
+
+The next bounded `t7Ay` attempt 119 failed closed after its allowed correction.
+Both retained responses combined the source phrase "specialized knowledge and
+practical experience" into one `depth_signal` for the MCP knowledge/experience
+claim. The accepted depth ontology treats prior exposure as distinct from a
+proficiency degree or duration, and no exact single recognized depth marker
+is present in that compound phrase. This is model nonadherence to the depth
+contract, not a reason to weaken the validator or treat the generated fragment
+as accepted. No artifact was persisted. `t7Ay` remains uncovered while a
+general source-backed representation for mixed knowledge and prior experience
+is investigated; other core postings can proceed independently.
