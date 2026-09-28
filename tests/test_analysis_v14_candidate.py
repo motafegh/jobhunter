@@ -10,6 +10,7 @@ from jobhunter.analysis_runtime_v15 import (
 from jobhunter.analysis_service import AnalysisValidationError
 from jobhunter.analysis_service_v13 import inject_decomposition_exclusions
 from jobhunter.analysis_service_v14 import (
+    _SENTENCE_RE,
     ENGLISH_PROMPT_VERSION,
     _persisted_analysis_v14,
     qualification_list_spans,
@@ -132,6 +133,17 @@ def test_v14_residual_spans_preserve_remaining_exact_sentences() -> None:
             "(Location: West Tehran) Benefits include insurance, parking, rest area, "
             "monthly discount, commission, business travel."
         ),
+    ]
+
+
+def test_v14_sentence_boundary_keeps_abbreviation_before_comma() -> None:
+    source = (
+        "Individuals who only know ChatGPT, N8N, etc., casually are not suitable. "
+        "We need people who build systems."
+    )
+    assert [match.group(0).strip() for match in _SENTENCE_RE.finditer(source)] == [
+        "Individuals who only know ChatGPT, N8N, etc., casually are not suitable.",
+        "We need people who build systems.",
     ]
 
 

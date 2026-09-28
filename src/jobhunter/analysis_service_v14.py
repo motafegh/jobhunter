@@ -39,7 +39,10 @@ from jobhunter.translation_store import TranslationStore
 ENGLISH_PROMPT_VERSION = "job-analysis-english-v14"
 PROMPT_VERSION = ENGLISH_PROMPT_VERSION
 
-_SENTENCE_RE = re.compile(r"[^.!?]+(?:[.!?]|$)")
+# A period inside a token or before punctuation (for example ``etc.,``) is
+# source text, not a sentence boundary. Keep the full exact sentence available
+# to downstream evidence references and item-excerpt validation.
+_SENTENCE_RE = re.compile(r"(?:[^.!?]|[.!?](?!\s|$))+(?:[.!?]|$)")
 _ABILITY_WRAPPER_RE = re.compile(r"^ability\s+to\b", re.I)
 _SCHEDULE_IN_CONCEPT_RE = re.compile(r"\b(?:full[ -]?time|part[ -]?time)\b", re.I)
 

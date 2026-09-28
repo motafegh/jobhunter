@@ -477,3 +477,25 @@ no explicit item list is attached. The residual planner then drops its
 duplicate child references. Both attempt-134 completions validate against the
 corrected preferred partition in private offline replay. This repairs a false
 failure; no attempt-134 artifact was persisted or silently accepted.
+
+The one live `t7Ay` check after that fix (attempt 135) no longer failed on
+paragraph-versus-sentence ownership. Both allowed completions omitted the
+first exact preferred sentence about work history in AI projects; they did
+retain the separate sample-work and professional-track-record sentences.
+This is a genuine remaining model coverage omission. No artifact was created,
+the public corpus remains at nine accepted-current English P1.6 analyses,
+and the operational database passed integrity and foreign-key checks. Do not
+repeat the unchanged prompt/model configuration merely to sample a lucky
+completion. A general preferred-claim capture design needs to preserve each
+explicit source sentence and its obligation without inventing personal work
+history or making a missing analysis count as zero market demand.
+
+The isolated v24 `tmvA` evaluation after duplicate removal advanced past the
+earlier malformed-JSON failure, but its second completion failed exact excerpt
+validation. The model quoted the whole source sentence about casual use of
+ChatGPT/N8N, while the inherited v14 residual splitter had ended that reference
+at `etc.` and put `, casually are not suitable...` into another fragment. The
+quoted source sentence itself was exact; the split reference was wrong. The
+general splitter now treats punctuation followed immediately by another
+nonspace character as internal text, preserving `etc.,` and similar cases.
+The candidate run was isolated, and no operational artifact was created.
