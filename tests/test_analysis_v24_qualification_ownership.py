@@ -38,7 +38,12 @@ def test_v24_exact_items_own_three_redundant_tmvA_sentences() -> None:
     }
     assert redundant <= build_requirement_coverage_plan_v23(effective).keys()
     assert redundant.isdisjoint(plan)
-    assert persisted_qualification_plan(fields) == plan
+    persisted = persisted_qualification_plan(fields)
+    assert set(plan) <= set(persisted)
+    assert "field:__candidate_residual_requirement_evidence:12" in persisted
+    assert persisted["field:__candidate_residual_requirement_evidence:12"]["text"] == (
+        "Location: Early Yousef Abad (near Fatemi), Tehran."
+    )
     complete = _v20_complete_requirement_plan(
         effective,
         additional_plan=additional,

@@ -6,7 +6,17 @@ import re
 from collections import Counter
 from typing import Any
 
-from jobhunter.analysis_service_v11 import qualification_list_spans
+from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
+from jobhunter.analysis_runtime_v18 import _v18_structured_partition
+from jobhunter.analysis_runtime_v20 import (
+    _v20_complete_requirement_plan,
+    _v20_deterministic_structured_skills,
+)
+from jobhunter.analysis_runtime_v23 import (
+    _remove_duplicate_residual_ownership,
+    _scoped_preferred_qualification_plan,
+)
+from jobhunter.analysis_service_v13 import decomposed_requirement_references
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 
 
@@ -47,11 +57,28 @@ def exact_qualification_item_plan(
 
 
 def persisted_qualification_plan(fields: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    """Reconstruct the same exact-item ownership from immutable source fields."""
+    """Reconstruct the complete generation ledger from immutable source fields."""
 
-    return exact_qualification_item_plan(
-        build_requirement_coverage_plan_v23(fields),
-        {"__candidate_qualification_evidence": qualification_list_spans(fields)},
+    effective, _qualification_refs, _residual_refs, additional = (
+        _v15_candidate_evidence_view(fields)
+    )
+    effective_base = exact_qualification_item_plan(
+        build_requirement_coverage_plan_v23(effective), effective
+    )
+    additional = _scoped_preferred_qualification_plan(
+        fields, _remove_duplicate_residual_ownership(additional, effective_base)
+    )
+    model_fields, _deterministic, _owned = _v18_structured_partition(fields, effective)
+    model_fields, _skills, _skill_refs = _v20_deterministic_structured_skills(
+        model_fields
+    )
+    return _v20_complete_requirement_plan(
+        model_fields,
+        additional_plan=additional,
+        decomposed_refs=decomposed_requirement_references(fields),
+        base_plan=exact_qualification_item_plan(
+            build_requirement_coverage_plan_v23(model_fields), model_fields
+        ),
     )
 
 

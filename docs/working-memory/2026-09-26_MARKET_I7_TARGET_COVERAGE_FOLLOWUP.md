@@ -520,3 +520,14 @@ requirement claims for both v23 and isolated v24 while preserving each raw
 completion and recording the drop count. Each partition still must satisfy
 its own coverage ledger, and no cross-partition output is promoted as an
 assigned claim. No operational artifact was created by the isolated trial.
+
+The next isolated v24 run passed the model and whole-artifact generation gates
+but failed at persistence: the candidate excluded a valid location-only
+residual reference, while v24 persistence reconstructed only its base section
+plan and therefore called that residual reference unknown. This was a
+generation/persistence ledger mismatch, not evidence fabrication. V24
+persistence now rebuilds the complete generation plan from the same immutable
+source fields, including qualification items, residual sentences, exact-item
+ownership, deterministic field removal, and decomposed references. A focused
+test checks the previously missing location reference. No artifact was
+persisted from the failed isolated run.
