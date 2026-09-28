@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
+from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
 from jobhunter.analysis_runtime_v28 import V28CandidateAnalysisProvider
+from jobhunter.analysis_service_v13 import decomposed_requirement_references
 from jobhunter.analysis_service_v28 import ENGLISH_PROMPT_VERSION
 from jobhunter.evidence_refs_v28 import persisted_qualification_plan_v28
 
@@ -20,7 +22,8 @@ def _fields(job: str) -> dict:
 
 
 def test_t7Ay_dense_required_residual_has_eight_exact_items() -> None:
-    plan = persisted_qualification_plan_v28(_fields("t7Ay"))
+    fields = _fields("t7Ay")
+    plan = persisted_qualification_plan_v28(fields)
     residual = plan["field:__candidate_residual_requirement_evidence:0"]
     items = residual["required_item_excerpts"]
     assert len(items) == 8
@@ -29,6 +32,12 @@ def test_t7Ay_dense_required_residual_has_eight_exact_items() -> None:
     assert any("Prompt Engineering" in item["text"] for item in items)
     assert any("Python programming" in item["text"] for item in items)
     assert any("APIs and Backend" in item["text"] for item in items)
+    effective, _, _, additional = _v15_candidate_evidence_view(fields)
+    provider = object.__new__(V28CandidateAnalysisProvider)
+    generation = provider._inherited_additional_plan(
+        effective, additional, decomposed_requirement_references(fields)
+    )
+    assert generation["field:__candidate_residual_requirement_evidence:0"] == residual
 
 
 def test_tmvA_trait_statement_is_one_exact_source_fact() -> None:

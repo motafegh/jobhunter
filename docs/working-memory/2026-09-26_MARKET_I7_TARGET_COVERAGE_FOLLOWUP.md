@@ -701,3 +701,13 @@ Generation and persistence use the same item ledger. Across all 29 current
 projections, this adds a dense item ledger only to `t7Ay`; the trait-quote
 rule matches `tmvA` and one other general trait list in `tGc5`. V28 is not
 public/current and has no accepted artifact.
+
+The first isolated MiMo v28 `t7Ay` run exposed a generation/persistence
+ledger mismatch before artifact creation. Persistence correctly required the
+eight residual items; generation inherited the required parent before that
+parent's deterministic decomposition was applied, so it still presented the
+residual as excludable. The model excluded it and persistence rejected the
+candidate. V27's generation planner now removes decomposed parents before
+inheriting obligation, and a regression test compares the exact generation
+residual with the v28 persistence residual. No artifact was created or
+promoted by the failed run. One changed isolated v28 check is justified.

@@ -25,16 +25,30 @@ class V27CandidateAnalysisProvider(V26CandidateAnalysisProvider):
 
     def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
         kwargs = dict(kwargs)
-        original_base = build_requirement_coverage_plan_v23(kwargs["effective_fields"])
-        current_base = self._requirement_coverage_plan(kwargs["effective_fields"])
-        complete_for_ownership = {**current_base, **kwargs["additional_plan"]}
+        kwargs["additional_plan"] = self._inherited_additional_plan(
+            kwargs["effective_fields"],
+            kwargs["additional_plan"],
+            kwargs["decomposed_refs"],
+        )
+        return super()._run_once(**kwargs)
+
+    def _inherited_additional_plan(
+        self,
+        effective_fields: dict[str, Any],
+        additional_plan: dict[str, dict[str, Any]],
+        decomposed_refs: list[str],
+    ) -> dict[str, dict[str, Any]]:
+        original_base = build_requirement_coverage_plan_v23(effective_fields)
+        current_base = self._requirement_coverage_plan(effective_fields)
+        complete_for_ownership = {**current_base, **additional_plan}
+        for reference in decomposed_refs:
+            complete_for_ownership.pop(reference, None)
         owned = inherit_decomposed_required_residuals(
             complete_for_ownership, original_base
         )
-        kwargs["additional_plan"] = self._prepare_inherited_additional_plan({
-            ref: owned[ref] for ref in kwargs["additional_plan"]
+        return self._prepare_inherited_additional_plan({
+            ref: owned[ref] for ref in additional_plan
         })
-        return super()._run_once(**kwargs)
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
         refs = list(kwargs["requirement_coverage_plan"])
