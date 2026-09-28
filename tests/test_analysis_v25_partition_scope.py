@@ -8,6 +8,10 @@ from jobhunter.analysis_runtime_v14 import _v14_candidate_evidence_view
 from jobhunter.analysis_runtime_v20 import _v20_complete_requirement_plan
 from jobhunter.analysis_runtime_v25 import V25CandidateAnalysisProvider
 from jobhunter.analysis_service_v25 import ENGLISH_PROMPT_VERSION
+from jobhunter.evidence_refs_v25 import (
+    persisted_qualification_plan_v25,
+    remove_heading_duplicate_residuals,
+)
 from jobhunter.inference.instructor_lm_studio_v25 import (
     AnalysisRequirementV25,
     JobAnalysisResponseV25,
@@ -52,12 +56,30 @@ def test_t7Ay_explicit_prior_work_preferences_are_retained_as_source_quotes() ->
     )
     refs, claims = provider._source_quoted_requirements(plan)
     assert "field:description:segment:3:sentence:1" in refs
-    assert len(refs) == len(claims) == 2
+    assert len(refs) == len(claims) == 3
     for reference, claim in zip(refs, claims, strict=True):
         assert claim["concept"] == claim["evidence"] == plan[reference]["text"]
         assert claim["requirement_type"] == "preferred"
-        assert claim["concept_type"] == "experience"
+        assert claim["concept_type"] in {"experience", "other"}
         assert claim["depth_signal"] is None
+    proof = "field:description:segment:3:sentence:2"
+    assert proof in refs
+    assert claims[refs.index(proof)]["concept_type"] == "other"
+    assert proof in persisted_qualification_plan_v25(fields)
+
+
+def test_heading_only_residual_is_removed_from_generation_and_persistence() -> None:
+    fields = json.loads(
+        (_ROOT / "corpus/jobs/t7Ay/english-projection.json").read_text(encoding="utf-8")
+    )["fields"]
+    residual = "field:__candidate_residual_requirement_evidence:3"
+    plan = persisted_qualification_plan_v25(fields)
+    assert residual not in plan
+    assert "field:description:segment:4" in plan
+    assert remove_heading_duplicate_residuals(
+        {"x": {"source_kind": "candidate_residual_sentence", "text": "Knowledge of X"}},
+        {"y": {"source_kind": "requirement_section", "text": "X"}},
+    ) == {"x": {"source_kind": "candidate_residual_sentence", "text": "Knowledge of X"}}
 
 
 def test_source_quote_requires_explicit_preference_and_prior_work() -> None:

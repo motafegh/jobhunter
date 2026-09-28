@@ -601,3 +601,19 @@ remain. Both retained completions' three offending claims pass this narrow
 normalization offline; the second full partition response passes offline
 coverage validation. This does not prove a complete artifact, so one changed
 v25 live check is the next bounded step.
+
+That changed check produced pending `t7Ay` artifact 61 on a private database
+copy (36 requirements, no duties). Whole-source review rejected it: the
+expected-competencies paragraph and its heading-prefixed residual made five
+facts appear twice, and the model split alternative proof submissions into
+several independent preferred demand items. The artifact was explicitly
+rejected in the copy and never promoted to operational Market coverage. V25
+now removes a residual only when its only extra text is a recognized
+qualification heading and the body exactly matches an existing requirement
+section with no stronger residual obligation. It carries a preferred
+disjunctive proof-submission sentence as one exact, untyped source quote so
+alternatives are not counted as independent demand. Generation and persistence
+use the same pruned ledger. The 29-projection offline audit found two
+heading-only residuals (`t7Ay`, `tI1n`) and four exact source quotes across
+`t7Ay` and `taOX`; no coverage reference was lost or duplicated in a v25
+partition. A fresh v25 result still needs complete source review.

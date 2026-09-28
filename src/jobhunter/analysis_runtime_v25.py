@@ -9,6 +9,7 @@ from jobhunter.analysis_runtime_v23 import _filter_unassigned_partition_claims
 from jobhunter.analysis_runtime_v24 import V24CandidateAnalysisProvider
 from jobhunter.analysis_service_v25 import JobAnalysisServiceV25
 from jobhunter.config import Settings
+from jobhunter.evidence_refs_v25 import remove_heading_duplicate_residuals
 from jobhunter.inference.instructor_lm_studio_v24 import (
     complete_analysis_partition_with_instructor_v24,
 )
@@ -20,6 +21,7 @@ _EXPLICIT_PRIOR_WORK_RE = re.compile(
     r"\b(?:work history|track record|prior (?:work |project )?experience)\b",
     re.I,
 )
+_PROOF_SUBMISSION_RE = re.compile(r"\b(?:submitting|providing|sharing)\b", re.I)
 _PARTITION_SIZE = 8
 
 
@@ -79,6 +81,14 @@ def _v25_requirement_partitions(
 
 
 class V25CandidateAnalysisProvider(V24CandidateAnalysisProvider):
+    def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
+        kwargs = dict(kwargs)
+        base = self._requirement_coverage_plan(kwargs["effective_fields"])
+        kwargs["additional_plan"] = remove_heading_duplicate_residuals(
+            kwargs["additional_plan"], base
+        )
+        return super()._run_once(**kwargs)
+
     def _source_quoted_requirements(
         self, plan: dict[str, dict[str, Any]]
     ) -> tuple[list[str], list[dict[str, Any]]]:
@@ -88,11 +98,16 @@ class V25CandidateAnalysisProvider(V24CandidateAnalysisProvider):
         claims: list[dict[str, Any]] = []
         for reference, candidate in plan.items():
             evidence = str(candidate.get("text") or "")
+            prior_work = bool(_EXPLICIT_PRIOR_WORK_RE.search(evidence))
+            proof_alternatives = bool(
+                _PROOF_SUBMISSION_RE.search(evidence)
+                and re.search(r"\bor\b", evidence, re.I)
+            )
             if (
                 candidate.get("source_kind") != "requirement_section"
                 or candidate.get("obligation_hint") != "preferred"
                 or candidate.get("required_item_excerpts")
-                or not _EXPLICIT_PRIOR_WORK_RE.search(evidence)
+                or not (prior_work or proof_alternatives)
             ):
                 continue
             references.append(reference)
@@ -101,12 +116,12 @@ class V25CandidateAnalysisProvider(V24CandidateAnalysisProvider):
                     "concept": evidence,
                     "depth_signal": None,
                     "requirement_type": "preferred",
-                    "concept_type": "experience",
+                    "concept_type": "experience" if prior_work else "other",
                     "evidence": evidence,
                     "confidence": "high",
                     "rationale": (
-                        "Exact employer preference for prior work; no candidate history "
-                        "or depth is inferred."
+                        "Exact employer preference retained as one source fact; "
+                        "no candidate history or depth is inferred."
                     ),
                 }
             )
