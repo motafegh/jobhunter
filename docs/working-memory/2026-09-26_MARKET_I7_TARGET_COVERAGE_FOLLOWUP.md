@@ -644,3 +644,21 @@ counterexample is covered by a regression test. Generation and persistence
 share the same versioned ledger. Across 29 current English projections, the
 mixed-clause split affects only `t7Ay`, and the two context exclusions affect
 only `tmvA`. No v26 artifact has been accepted or made public/current yet.
+
+The bounded v26 Gemma `tmvA` trial produced a pending 31-requirement,
+seven-duty artifact on a private copy. It correctly excluded the negative
+casual-use and salary context, but whole-source review rejected it for
+strengthening `relative mastery` to unqualified `mastery`, omitting the
+explicit `young` qualifier, and fragmenting broad trait/context wording into
+separate demand items. No operational state was changed.
+
+The owner-requested MiMo 9B comparison on the same v26 `tmvA` contract failed
+before candidate persistence. Its final partition contained only location and
+working-hours references, and both allowed completions correctly excluded
+both. An inherited whole-job rich-source empty-output guard nevertheless
+rejected this per-partition result. The guard now accepts an empty partition
+only when it has no assigned duties and every assigned requirement reference
+is either context-only or explicitly excludable and actually excluded. Dense
+coverage validation still checks those exclusions, and an offline replay of
+both retained MiMo completions now passes. A changed bounded MiMo evaluation
+is justified; the failed run supplied no model-quality verdict.

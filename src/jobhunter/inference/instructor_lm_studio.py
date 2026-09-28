@@ -195,6 +195,26 @@ def _leaf_evidence_catalog(catalog: dict[str, str]) -> dict[str, str]:
     }
 
 
+def _empty_partition_is_fully_excluded(value: object, context: dict[str, object]) -> bool:
+    """An empty per-call extraction is valid when every assigned source fact is context."""
+
+    plan = context.get("requirement_coverage_plan")
+    if not isinstance(plan, dict) or not plan:
+        return False
+    if context.get("responsibility_coverage_plan"):
+        return False
+    exclusions = getattr(value, "coverage_exclusions", [])
+    excluded = {item.evidence_reference for item in exclusions}
+    return all(
+        isinstance(candidate, dict)
+        and (
+            candidate.get("obligation_hint") == "context_only"
+            or (candidate.get("allow_exclusion") and reference in excluded)
+        )
+        for reference, candidate in plan.items()
+    )
+
+
 def _validate_depth_fields(
     concept: str, depth_signal: str | None, evidence: str
 ) -> str | None:
@@ -362,6 +382,7 @@ class JobAnalysisResponse(_StrictModel):
             and _source_is_information_rich(fields)
             and not self.responsibilities
             and not self.requirements
+            and not _empty_partition_is_fully_excluded(self, context)
         ):
             raise ValueError(
                 "Information-rich job fields cannot be accepted with both responsibilities "

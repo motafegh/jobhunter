@@ -16,6 +16,7 @@ from __future__ import annotations
 from pydantic import Field, ValidationInfo, model_validator
 
 from jobhunter.inference.instructor_lm_studio import (
+    _empty_partition_is_fully_excluded,
     _normalize,
     _source_is_information_rich,
 )
@@ -71,6 +72,7 @@ class JobAnalysisResponseV17(JobAnalysisResponseV14):
             and _source_is_information_rich(fields)
             and not self.responsibilities
             and not self.requirements
+            and not _empty_partition_is_fully_excluded(self, context)
         ):
             raise ValueError(
                 "Information-rich job fields cannot be accepted with both responsibilities "

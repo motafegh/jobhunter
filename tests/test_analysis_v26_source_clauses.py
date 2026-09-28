@@ -3,10 +3,13 @@
 import json
 from pathlib import Path
 
+import pytest
+
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
 from jobhunter.analysis_runtime_v26 import V26CandidateAnalysisProvider
 from jobhunter.analysis_service_v26 import ENGLISH_PROMPT_VERSION
 from jobhunter.evidence_refs_v26 import persisted_qualification_plan_v26
+from jobhunter.inference.instructor_lm_studio_v25 import JobAnalysisResponseV25
 
 _ROOT = Path(__file__).resolve().parents[1]
 
@@ -56,3 +59,31 @@ def test_tmvA_negative_and_salary_context_stay_out_of_positive_demand() -> None:
 def test_v26_is_isolated_from_public_contract() -> None:
     assert CURRENT_PROMPT == "job-analysis-english-v23"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v26"
+
+
+def test_rich_source_all_excluded_context_partition_is_valid() -> None:
+    fields = _fields("tmvA")
+    full = persisted_qualification_plan_v26(fields)
+    refs = [
+        "field:__candidate_residual_requirement_evidence:12",
+        "field:__candidate_residual_requirement_evidence:13",
+    ]
+    plan = {ref: full[ref] for ref in refs}
+    response = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [],
+        "coverage_exclusions": [
+            {"evidence_reference": ref, "rationale": "Work logistics, not a qualification."}
+            for ref in refs
+        ],
+    }
+    context = {"analysis_mode": "english", "analysis_fields": fields,
+               "requirement_coverage_plan": plan, "responsibility_coverage_plan": {}}
+    accepted = JobAnalysisResponseV25.model_validate(response, context=context)
+    assert len(accepted.coverage_exclusions) == 2
+    with pytest.raises(ValueError):
+        JobAnalysisResponseV25.model_validate(
+            {**response, "coverage_exclusions": response["coverage_exclusions"][:1]},
+            context=context,
+        )
