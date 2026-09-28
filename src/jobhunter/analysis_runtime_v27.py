@@ -18,6 +18,11 @@ from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 
 class V27CandidateAnalysisProvider(V26CandidateAnalysisProvider):
+    def _prepare_inherited_additional_plan(
+        self, plan: dict[str, dict[str, Any]]
+    ) -> dict[str, dict[str, Any]]:
+        return plan
+
     def _run_once(self, **kwargs: Any) -> StructuredInferenceResult:
         kwargs = dict(kwargs)
         original_base = build_requirement_coverage_plan_v23(kwargs["effective_fields"])
@@ -26,9 +31,9 @@ class V27CandidateAnalysisProvider(V26CandidateAnalysisProvider):
         owned = inherit_decomposed_required_residuals(
             complete_for_ownership, original_base
         )
-        kwargs["additional_plan"] = {
+        kwargs["additional_plan"] = self._prepare_inherited_additional_plan({
             ref: owned[ref] for ref in kwargs["additional_plan"]
-        }
+        })
         return super()._run_once(**kwargs)
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:

@@ -683,3 +683,21 @@ the model labels the named tool. An audit of 29 current projections finds
 required-residual inheritance for `t7Ay` and four `ta9l` references only;
 the closed B1 case is not being regenerated. V27 is still isolated and has
 no accepted artifact.
+
+MiMo v27 on `tmvA` generated 21 requirements and seven duties, but one
+requirement attached an AI process-automation skill to the exact source
+sentence `Young, motivated, committed, goal-oriented, and creative.` This
+false concept/evidence correspondence was rejected in the private copy.
+MiMo v27 on `t7Ay` generated 20 requirements, but its single citation to a
+704-character required residual omitted seven other explicit qualification
+clauses. Both artifacts were rejected; a non-excludable broad span alone
+does not guarantee complete item coverage.
+
+The isolated v28 candidate uses the already existing exact dense-item parser
+to require all eight source clauses inside that `t7Ay` residual. It also
+carries short, explicit personal-trait lists as verbatim source facts so a
+model cannot attach an unrelated technical skill to the same evidence.
+Generation and persistence use the same item ledger. Across all 29 current
+projections, this adds a dense item ledger only to `t7Ay`; the trait-quote
+rule matches `tmvA` and one other general trait list in `tGc5`. V28 is not
+public/current and has no accepted artifact.
