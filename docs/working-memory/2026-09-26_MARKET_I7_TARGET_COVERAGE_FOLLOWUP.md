@@ -439,3 +439,29 @@ about coverage ownership. The updated AGENTS, architecture, policy, roadmap,
 prompt, planner and regression tests now distinguish unsupported source facts
 from removable depth metadata and duplicate coverage bookkeeping. Historical
 failure records remain evidence, not current instructions to keep these defects.
+
+The next bounded public v23 `t7Ay` run (attempt 133) advanced past the
+corrected five-item dense list, then failed both allowed completions because
+the model omitted two genuine preferred source references: the work-history
+and sample-work paragraph, and the later professional LLM/Agentic-AI track
+record preference. The retained responses contained no claim or exclusion for
+either reference. This is an actual model coverage omission, not a depth-guard
+failure or duplicate planner demand. No artifact was persisted. Preserve the
+preferred facts and avoid another unchanged full rerun; a separate preferred
+partition or source-quoted bounded fallback would require its own design and
+review.
+
+An isolated v24 `tmvA` trial on a private SQLite copy then failed before
+semantic validation: the retained completion ended inside an unfinished JSON
+string while emitting many exclusions for duplicate residual and logistical
+references. It created no operational artifact or Market state; both copied
+and operational SQLite passed integrity/foreign-key checks. The v23 provider
+had been asking the model to account twice for ten source-exact sentences
+already owned by the base requirement ledger. It now removes a residual
+reference whenever an identical non-context base reference owns the text.
+The separate preferred references are also placed in their own bounded
+partition so they cannot be crowded out by dense required/contextual work.
+Across 29 current projections this exact-duplicate reduction affects five
+jobs (`t7Ay`, `t4jp`, `tI1n`, `t4EV`, `tmvA`); accepted artifact identities and
+stored source facts are unchanged. This is a planner and response-size repair,
+not proof that the next model completion or semantic review will pass.

@@ -117,6 +117,39 @@ def test_v23_dense_ability_list_does_not_merge_three_distinct_items() -> None:
     assert all(item in parent["text"] for item in items)
 
 
+def test_v23_does_not_repeat_exact_requirement_sentences_as_residual_work() -> None:
+    fields = _fields("tmvA")
+    _effective, _refs, _residuals, additional = _v15_candidate_evidence_view(fields)
+    base = build_requirement_coverage_plan_v23(fields)
+    filtered = _remove_duplicate_residual_ownership(additional, base)
+    removed = [
+        item for ref, item in additional.items()
+        if ref not in filtered and item["source_kind"] == "candidate_residual_sentence"
+    ]
+    assert len(removed) == 10
+    assert all(
+        any(candidate["text"] == item["text"] for candidate in base.values())
+        for item in removed
+    )
+    assert any(
+        item["text"].startswith("Note: Individuals")
+        for item in filtered.values()
+    )
+
+
+def test_v23_gives_preferred_source_claims_a_separate_small_partition() -> None:
+    plan = build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    provider = object.__new__(V23CandidateAnalysisProvider)
+    parts = provider._requirement_partitions(plan)
+    preferred = [
+        part for part in parts
+        if any(item.get("obligation_hint") == "preferred" for item in part.values())
+    ]
+    assert len(preferred) == 1
+    assert len(preferred[0]) == 2
+    assert all(item["obligation_hint"] == "preferred" for item in preferred[0].values())
+
+
 def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:
     fields = _fields("t7ck")
     _effective, refs, _residuals, additional = _v15_candidate_evidence_view(fields)

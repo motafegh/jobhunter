@@ -39,13 +39,20 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
         self, plan: dict[str, dict[str, Any]]
     ) -> list[dict[str, dict[str, Any]]]:
         partitions: list[dict[str, dict[str, Any]]] = []
-        for source_kind in ("standard", "candidate_experience", "candidate_proof"):
+        for source_kind in (
+            "standard", "preferred", "candidate_experience", "candidate_proof"
+        ):
             subset = {
                 ref: candidate
                 for ref, candidate in plan.items()
                 if (
                     (source_kind == "standard" and candidate.get("source_kind") not in
-                     {"candidate_experience", "candidate_proof"})
+                     {"candidate_experience", "candidate_proof"}
+                     and candidate.get("obligation_hint") != "preferred")
+                    or (source_kind == "preferred"
+                        and candidate.get("source_kind") not in
+                        {"candidate_experience", "candidate_proof"}
+                        and candidate.get("obligation_hint") == "preferred")
                     or candidate.get("source_kind") == source_kind
                 )
             }
@@ -125,13 +132,14 @@ def _scoped_preferred_qualification_plan(
 def _remove_duplicate_residual_ownership(
     additional: dict[str, dict[str, Any]], base: dict[str, dict[str, Any]]
 ) -> dict[str, dict[str, Any]]:
-    """One non-excludable candidate fact owns an identical residual sentence."""
+    """A source-exact requirement reference owns an identical residual sentence."""
 
     owned = {
         str(candidate.get("text") or "")
         for candidate in base.values()
-        if candidate.get("source_kind") == "candidate_experience"
-        and candidate.get("allow_exclusion") is False
+        if candidate.get("source_kind") != "structured_skill"
+        and candidate.get("obligation_hint") != "context_only"
+        and str(candidate.get("text") or "")
     }
     return {
         reference: dict(candidate)
