@@ -9,12 +9,13 @@ import pytest
 from pydantic import ValidationError
 
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
+from jobhunter.analysis_persistence_v23 import replay_v23_requirement_plan
 from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
 from jobhunter.analysis_runtime_v23 import (
     V23CandidateAnalysisProvider,
     _remove_duplicate_residual_ownership,
     _scoped_preferred_qualification_plan,
-    _split_exact_preferred_section_sentences,
+    _split_exact_section_sentences,
 )
 from jobhunter.analysis_service import _analysis_fields_for_english
 from jobhunter.analysis_service_v23 import (
@@ -163,8 +164,9 @@ def test_v23_does_not_repeat_exact_requirement_sentences_as_residual_work() -> N
 
 
 def test_v23_gives_preferred_source_claims_a_separate_small_partition() -> None:
-    plan = _split_exact_preferred_section_sentences(
-        build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    effective = _v15_candidate_evidence_view(_fields("t7Ay"))[0]
+    plan = _split_exact_section_sentences(
+        build_requirement_coverage_plan_v23(effective), effective
     )
     provider = object.__new__(V23CandidateAnalysisProvider)
     parts = provider._requirement_partitions(plan)
@@ -179,8 +181,9 @@ def test_v23_gives_preferred_source_claims_a_separate_small_partition() -> None:
 
 def test_v23_preferred_paragraph_uses_exact_sentence_owners() -> None:
     fields = _fields("t7Ay")
-    base = build_requirement_coverage_plan_v23(fields)
-    plan = _split_exact_preferred_section_sentences(base)
+    effective = _v15_candidate_evidence_view(fields)[0]
+    base = build_requirement_coverage_plan_v23(effective)
+    plan = _split_exact_section_sentences(base, effective)
     parent_ref = "field:description:segment:3"
     assert parent_ref not in plan
     children = [
@@ -199,6 +202,19 @@ def test_v23_preferred_paragraph_uses_exact_sentence_owners() -> None:
         for item in filtered.values()
         if item["source_kind"] == "candidate_residual_sentence"
     )
+
+
+def test_v23_persistence_replays_exact_sentence_and_residual_ownership() -> None:
+    preferred = replay_v23_requirement_plan(_fields("t7Ay"))
+    assert "field:description:segment:3" not in preferred
+    assert "field:description:segment:3:sentence:1" in preferred
+    assert "field:description:segment:3:sentence:2" in preferred
+
+    required = replay_v23_requirement_plan(_fields("tmvA"))
+    assert "field:description:segment:4" not in required
+    assert "field:description:segment:4:sentence:1" in required
+    assert "field:description:segment:4:sentence:2" in required
+    assert "field:__candidate_residual_requirement_evidence:12" in required
 
 
 def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:

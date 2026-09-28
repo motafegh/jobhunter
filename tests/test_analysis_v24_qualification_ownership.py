@@ -39,6 +39,12 @@ def test_v24_exact_items_own_three_redundant_tmvA_sentences() -> None:
     }
     assert redundant <= build_requirement_coverage_plan_v23(effective).keys()
     assert redundant.isdisjoint(plan)
+    duplicate_parent = "field:description:segment:4"
+    assert duplicate_parent not in plan
+    assert {
+        f"{duplicate_parent}:sentence:1",
+        f"{duplicate_parent}:sentence:2",
+    } <= plan.keys()
     persisted = persisted_qualification_plan(fields)
     assert set(plan) <= set(persisted)
     assert "field:__candidate_residual_requirement_evidence:12" in persisted

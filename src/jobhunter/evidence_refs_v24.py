@@ -15,6 +15,7 @@ from jobhunter.analysis_runtime_v20 import (
 from jobhunter.analysis_runtime_v23 import (
     _remove_duplicate_residual_ownership,
     _scoped_preferred_qualification_plan,
+    _split_exact_section_sentences,
 )
 from jobhunter.analysis_service_v13 import decomposed_requirement_references
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
@@ -62,8 +63,11 @@ def persisted_qualification_plan(fields: dict[str, Any]) -> dict[str, dict[str, 
     effective, _qualification_refs, _residual_refs, additional = (
         _v15_candidate_evidence_view(fields)
     )
-    effective_base = exact_qualification_item_plan(
-        build_requirement_coverage_plan_v23(effective), effective
+    effective_base = _split_exact_section_sentences(
+        exact_qualification_item_plan(
+            build_requirement_coverage_plan_v23(effective), effective
+        ),
+        effective,
     )
     additional = _scoped_preferred_qualification_plan(
         fields, _remove_duplicate_residual_ownership(additional, effective_base)
@@ -76,8 +80,11 @@ def persisted_qualification_plan(fields: dict[str, Any]) -> dict[str, dict[str, 
         model_fields,
         additional_plan=additional,
         decomposed_refs=decomposed_requirement_references(fields),
-        base_plan=exact_qualification_item_plan(
-            build_requirement_coverage_plan_v23(model_fields), model_fields
+        base_plan=_split_exact_section_sentences(
+            exact_qualification_item_plan(
+                build_requirement_coverage_plan_v23(model_fields), model_fields
+            ),
+            model_fields,
         ),
     )
 

@@ -11,6 +11,46 @@ from jobhunter.evidence_refs_v21 import build_responsibility_coverage_plan_v21
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 
 
+def replay_v23_requirement_plan(fields: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    """Rebuild the full v23 generation ledger before durable coverage review."""
+
+    # Deferred imports avoid a service/runtime cycle while preserving the
+    # same source-only planner functions used during generation.
+    from jobhunter.analysis_runtime_v15 import _v15_candidate_evidence_view
+    from jobhunter.analysis_runtime_v18 import _v18_structured_partition
+    from jobhunter.analysis_runtime_v20 import (
+        _v20_complete_requirement_plan,
+        _v20_deterministic_structured_skills,
+    )
+    from jobhunter.analysis_runtime_v23 import (
+        _remove_duplicate_residual_ownership,
+        _scoped_preferred_qualification_plan,
+        _split_exact_section_sentences,
+    )
+
+    effective, _qualifications, _residuals, additional = (
+        _v15_candidate_evidence_view(fields)
+    )
+    effective_base = _split_exact_section_sentences(
+        build_requirement_coverage_plan_v23(effective), effective
+    )
+    additional = _scoped_preferred_qualification_plan(
+        fields, _remove_duplicate_residual_ownership(additional, effective_base)
+    )
+    model_fields, _deterministic, _owned = _v18_structured_partition(fields, effective)
+    model_fields, _skills, _skill_refs = _v20_deterministic_structured_skills(
+        model_fields
+    )
+    return _v20_complete_requirement_plan(
+        model_fields,
+        additional_plan=additional,
+        decomposed_refs=decomposed_requirement_references(fields),
+        base_plan=_split_exact_section_sentences(
+            build_requirement_coverage_plan_v23(model_fields), model_fields
+        ),
+    )
+
+
 def _key(text: str) -> str:
     return " ".join(text.replace("\u200c", " ").split()).casefold()
 
@@ -24,7 +64,7 @@ def persisted_analysis_v23(
     """Resolve v23 references without silently reverting to an older coverage plan."""
 
     if requirement_plan is None:
-        requirement_plan = build_requirement_coverage_plan_v23(analysis_fields)
+        requirement_plan = replay_v23_requirement_plan(analysis_fields)
     original_plan = build_requirement_coverage_plan(analysis_fields)
     decomposed = {
         reference: original_plan[reference]

@@ -33,8 +33,8 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
     def _requirement_coverage_plan(
         self, model_fields: dict[str, Any]
     ) -> dict[str, dict[str, Any]]:
-        return _split_exact_preferred_section_sentences(
-            build_requirement_coverage_plan_v23(model_fields)
+        return _split_exact_section_sentences(
+            build_requirement_coverage_plan_v23(model_fields), model_fields
         )
 
     def _requirement_partitions(
@@ -129,21 +129,26 @@ def _filter_unassigned_partition_claims(
     )
 
 
-def _split_exact_preferred_section_sentences(
-    plan: dict[str, dict[str, Any]],
+def _split_exact_section_sentences(
+    plan: dict[str, dict[str, Any]], model_fields: dict[str, Any]
 ) -> dict[str, dict[str, Any]]:
-    """Give each sentence of a preferred section one exact coverage owner."""
+    """Replace a duplicate broad section only when residuals own every sentence."""
 
+    residuals = model_fields.get("__candidate_residual_requirement_evidence")
+    residual_texts = {
+        text for text in residuals if isinstance(text, str)
+    } if isinstance(residuals, list) else set()
     result: dict[str, dict[str, Any]] = {}
     for reference, candidate in plan.items():
         text = str(candidate.get("text") or "")
         sentences = _sentences(text)
         if (
             candidate.get("source_kind") != "requirement_section"
-            or candidate.get("obligation_hint") != "preferred"
+            or candidate.get("obligation_hint") not in {"required", "preferred"}
             or len(sentences) < 2
             or " ".join(sentences) != text
             or candidate.get("required_item_excerpts")
+            or not all(sentence in residual_texts for sentence in sentences)
         ):
             result[reference] = dict(candidate)
             continue

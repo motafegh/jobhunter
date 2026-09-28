@@ -7,6 +7,7 @@ from typing import Any
 from jobhunter.analysis_runtime_v23 import (
     V23CandidateAnalysisProvider,
     _filter_unassigned_partition_claims,
+    _split_exact_section_sentences,
 )
 from jobhunter.analysis_service_v24 import JobAnalysisServiceV24
 from jobhunter.config import Settings
@@ -26,8 +27,11 @@ class V24CandidateAnalysisProvider(V23CandidateAnalysisProvider):
     def _requirement_coverage_plan(
         self, model_fields: dict[str, Any]
     ) -> dict[str, dict[str, Any]]:
-        return _exact_qualification_item_plan(
-            build_requirement_coverage_plan_v23(model_fields), model_fields
+        return _split_exact_section_sentences(
+            _exact_qualification_item_plan(
+                build_requirement_coverage_plan_v23(model_fields), model_fields
+            ),
+            model_fields,
         )
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:

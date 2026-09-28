@@ -541,3 +541,19 @@ only source-proven decomposed parent references, requires their deterministic
 exclusion, and records them as `decomposed_requirement` rather than as a
 non-requirement. Unknown model exclusions remain invalid. The isolated run
 created no artifact before this repair.
+
+The final bounded isolated v24 check produced pending artifact 61 (23
+requirements, seven duties). Whole-source review found a material duplicate:
+the two-sentence candidate note was represented as one broad requirement and
+again as two exact-sentence requirements. That would inflate job-level demand
+counts, so artifact 61 was explicitly rejected in the private evaluation copy;
+it was never published, accepted, or inserted into operational Market state.
+The planner now assigns each exact sentence as the sole owner only when every
+sentence already exists in the residual ledger and the complete parent text
+reconstructs losslessly. An offline audit across all 29 current English
+projections finds exactly two affected paragraphs: the earlier `t7Ay`
+preferred paragraph and this `tmvA` required note. No further model retry is
+justified without a fresh bounded evaluation decision and source review.
+V23 persistence also now replays its complete generation ledger from immutable
+source fields, so a future valid `t7Ay` candidate can carry those exact
+sentence owners and residual references through durable coverage validation.
