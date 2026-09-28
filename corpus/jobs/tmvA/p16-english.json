@@ -1,0 +1,420 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Young, motivated, committed, goal-oriented, and creative.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Practical experience in designing agents, chatbots, or automation.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Relative mastery of Prompt Engineering and Workflow design.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Experience working with n8n or similar tools.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Initial familiarity with JavaScript or Python is an advantage.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Product sense, a learner, an executor, and a problem-solver.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ability to turn an organizational need into a usable MVP.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with Automation and Workflow.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "If the individual has experience in sales and marketing, it is considered a significant advantage.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "excluded_non_requirement",
+        "evidence": "Note: Individuals who only know how to use ChatGPT, N8N, CLOUD, etc., casually are not suitable for this position.",
+        "rationale": "Source states an insufficiency/exclusion, not an independent positive qualification."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "We are looking for an individual or a team that can actually build systems and automate tasks.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Collaboration Type: On-site – Full-time.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with LLMs such as ChatGPT, Claude, Gemini, and Perplexity or open-source models",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with concepts like RAG",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Embedding",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Vector Database",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "and Knowledge Base",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Familiarity with API",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Webhook",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "and service connections",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "excluded_non_requirement",
+        "evidence": "Location: Early Yousef Abad (near Fatemi), Tehran.",
+        "rationale": "The supplied sentence states a location, which is work-arrangement logistics rather than a candidate career qualification or duty."
+      },
+      {
+        "disposition": "excluded_non_requirement",
+        "evidence": "Working Hours: Saturday to Wednesday, 9:30 AM to 5:30 PM.",
+        "rationale": "The supplied sentence states working hours, which is work-arrangement logistics rather than a candidate career qualification or duty."
+      },
+      {
+        "disposition": "excluded_non_requirement",
+        "evidence": "Salary and Benefits: Paid in USD based on experience and capabilities, regularly on the first day of every Persian month.",
+        "rationale": "Source states compensation context, not candidate eligibility."
+      },
+      {
+        "disposition": "decomposed_requirement",
+        "evidence": "Young, motivated, committed, goal-oriented, and creative. Practical experience in designing agents, chatbots, or automation. Familiarity with LLMs such as ChatGPT, Claude, Gemini, and Perplexity or open-source models. Relative mastery of Prompt Engineering and Workflow design. Familiarity with concepts like RAG, Embedding, Vector Database, and Knowledge Base. Experience working with n8n or similar tools. Familiarity with API, Webhook, and service connections. Initial familiarity with JavaScript or Python is an advantage. Product sense, a learner, an executor, and a problem-solver. Ability to turn an organizational need into a usable MVP. Familiarity with Automation and Workflow. If the individual has experience in sales and marketing, it is considered a significant advantage.",
+        "rationale": "JobHunter deterministically decomposed this coarse requirement span into exact item-level qualification requirements."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Ai",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "LLMs such as ChatGPT, Claude, Gemini, and Perplexity or open-source models",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with LLMs such as ChatGPT, Claude, Gemini, and Perplexity or open-source models",
+        "rationale": "Structured candidate qualification item explicitly framed as familiarity.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Practical experience in designing agents, chatbots, or automation",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Practical experience in designing agents, chatbots, or automation.",
+        "rationale": "Explicit practical experience requirement for agent, chatbot, and automation design.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Automation and Workflow.",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with Automation and Workflow.",
+        "rationale": "Explicit familiarity requirement for automation and workflow design.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Prompt Engineering and Workflow design",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Relative mastery",
+        "evidence": "Relative mastery of Prompt Engineering and Workflow design.",
+        "rationale": "Explicit relative-mastery requirement for prompt engineering and workflow design.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience working with n8n or similar tools",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Experience working with n8n or similar tools.",
+        "rationale": "Explicit experience requirement for n8n or similar automation tools.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to turn an organizational need into a usable MVP.",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ability to turn an organizational need into a usable MVP.",
+        "rationale": "Explicit ability requirement for translating organizational needs into usable minimum viable products.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "We are looking for an individual or a team that can actually build systems and automate tasks",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "We are looking for an individual or a team that can actually build systems and automate tasks.",
+        "rationale": "Explicit required qualification for building systems and automating tasks, with casual users of ChatGPT, N8N, CLOUD explicitly noted as not suitable.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Collaboration Type: On-site – Full-time.",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Collaboration Type: On-site – Full-time.",
+        "rationale": "Explicit required collaboration type and employment arrangement stated in the source.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "RAG concepts",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with concepts like RAG",
+        "rationale": "The supplied required qualification item explicitly states familiarity with concepts like RAG.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Embedding",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Embedding",
+        "rationale": "The supplied required qualification item explicitly lists Embedding as a candidate qualification.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Vector Database",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Vector Database",
+        "rationale": "The supplied required qualification item explicitly lists Vector Database as a candidate qualification.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Knowledge Base",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "and Knowledge Base",
+        "rationale": "The supplied required qualification item explicitly lists Knowledge Base as a candidate qualification.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "API",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Familiarity",
+        "evidence": "Familiarity with API",
+        "rationale": "The supplied required qualification item explicitly states familiarity with API.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Webhook",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Webhook",
+        "rationale": "The supplied required qualification item explicitly lists Webhook as a candidate qualification.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Service Connections",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "and service connections",
+        "rationale": "The supplied required qualification item explicitly lists service connections as a candidate qualification.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Sales and marketing experience",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "If the individual has experience in sales and marketing, it is considered a significant advantage.",
+        "rationale": "The source explicitly frames prior applied exposure as an advantage.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "JavaScript or Python is an advantage",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Initial familiarity",
+        "evidence": "Initial familiarity with JavaScript or Python is an advantage.",
+        "rationale": "The source explicitly frames initial familiarity as an advantage; alternatives are preserved.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Python",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ai",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Ai",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Young, motivated, committed, goal-oriented, and creative.",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Young, motivated, committed, goal-oriented, and creative.",
+        "rationale": "Exact employer candidate-trait list, without technical inference.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Product sense, a learner, an executor, and a problem-solver.",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Product sense, a learner, an executor, and a problem-solver.",
+        "rationale": "Exact employer candidate-trait list, without technical inference.",
+        "requirement_type": "required"
+      }
+    ],
+    "responsibilities": [
+      {
+        "confidence": "high",
+        "evidence": "Design and implement AI-based solutions for process automation",
+        "statement": "Design and implement AI-based solutions for process automation."
+      },
+      {
+        "confidence": "high",
+        "evidence": "build Chatbots and smart assistants for customer responses",
+        "statement": "Build chatbots and smart assistants for customer responses."
+      },
+      {
+        "confidence": "high",
+        "evidence": "connect AI tools to CRM, email, and internal systems",
+        "statement": "Connect AI tools to CRM, email, and internal systems."
+      },
+      {
+        "confidence": "high",
+        "evidence": "design intelligent Agents to perform various tasks across departments",
+        "statement": "Design intelligent agents to perform various tasks across departments."
+      },
+      {
+        "confidence": "high",
+        "evidence": "analyze data",
+        "statement": "Analyze data."
+      },
+      {
+        "confidence": "high",
+        "evidence": "provide smart reports",
+        "statement": "Provide smart reports."
+      },
+      {
+        "confidence": "high",
+        "evidence": "train and optimize the use of AI in various company units.",
+        "statement": "Train and optimize the use of AI in various company units."
+      }
+    ],
+    "responsibility_coverage": [
+      {
+        "disposition": "responsibility",
+        "evidence": "Design and implement AI-based solutions for process automation"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "build Chatbots and smart assistants for customer responses"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "connect AI tools to CRM, email, and internal systems"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "design intelligent Agents to perform various tasks across departments"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "analyze data"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "provide smart reports"
+      },
+      {
+        "disposition": "responsibility",
+        "evidence": "train and optimize the use of AI in various company units."
+      }
+    ],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 61,
+  "created_at": "2026-09-28T18:18:45.759622+00:00",
+  "job_detail_version_id": 8,
+  "model": "mimo-v2.6-distill-qwen-9b",
+  "prompt_version": "job-analysis-english-v28",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "tmvA",
+  "stage": "p16_english",
+  "translation_artifact_id": 25
+}

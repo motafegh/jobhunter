@@ -1,6 +1,7 @@
 # Market I7 target-coverage follow-up
 
-**Date:** 2026-09-26
+**Started:** 2026-09-26
+**Closed:** 2026-09-28
 
 The bounded I7 first-slice PASS remains valid. The owner requested additional
 coverage of the same target beyond that accepted sample. This record tracks the
@@ -753,6 +754,26 @@ translation dependencies still match, including across model IDs; their
 stored model/prompt identities remain visible. Pending and rejected prior
 artifacts are not compatible. The same-target read-only affected-work preview
 reports both formerly missing jobs as accepted-current with reused English
-projections and zero analysis work. This is operational job-level coverage;
-the immutable Market snapshot/profile and shared browser/CLI follow-up remain
-to be checked before claiming full target coverage.
+projections and zero analysis work.
+
+Market runs 14 and 15 then completed under the existing definition with five
+bounded searches, 168-hour source freshness, and zero new source/translation/
+analysis work budgets. Each run had 56 discovered/carried target candidates,
+ten qualified memberships, zero reported failures, and an immutable snapshot
+and deterministic profile. Snapshot 14 and unchanged-rerun snapshot 15 each
+have six core, two adjacent, and two excluded members. All six core members
+have accepted-current P1.6; the two newly covered members reference exact
+artifacts 61 and 62. The four non-core members remain outside the accepted-
+semantic denominator; their missing P1.6 is not zero demand.
+
+The rerun reused identical member and analysis artifact IDs. The profile
+content is identical apart from the new snapshot/run IDs and timestamps; its
+hash therefore changes as expected. CLI `snapshot-show` and the rendered
+local browser route both show the six-of-six denominator and frozen evidence
+for artifacts 61 and 62. SQLite integrity returned `ok`, foreign-key check
+returned no rows, and public-corpus verification passed with 420 known jobs,
+29 current English projections, 11 accepted-current English analyses, and
+five current Capabilities. Market target/membership/snapshot/profile state
+remains local. The owner-requested same-target I7 coverage follow-up is
+complete for this bounded target; no broad-market prevalence, role subfamily,
+trend, or personal readiness claim follows from these ten postings.

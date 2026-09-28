@@ -1,7 +1,7 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Last reconciled:** 2026-09-26
+**Last reconciled:** 2026-09-28
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-05.md`
@@ -39,7 +39,7 @@ Current first-slice contracts:
 ```text
 parser:                       jobinja-detail-v2
 translation:                  english-projection-v2 / lm-studio-translation-v2
-English P1.6:                 job-analysis-english-v23 / job-analysis-v5
+English P1.6:                 job-analysis-english-v30 / job-analysis-v5
 Capability:                   job-capability-intelligence-v9 / job-capability-intelligence-v5
 Canonical Registry:           jobhunter-canonical-concept-registry-v1
 Work Intelligence:            job-work-intelligence-v2 / job-work-intelligence-v2.0
@@ -52,10 +52,10 @@ Public Corpus:                jobhunter-public-corpus-v1
 Repository-safe public corpus baseline remains:
 
 ```text
-known/discovered Jobinja jobs: 417
+known/discovered Jobinja jobs: 420
 fetched/parsed detail jobs:      51
 current English projections:     29
-accepted/current English P1.6:    9
+accepted/current English P1.6:    11
 accepted/current Capability:      5
 ```
 
@@ -402,7 +402,7 @@ B1 CLOSED / DEFER
 → I1-I6 ACCEPTED
 → v23/v5 artifact 50 explicitly accepted and frozen in Market snapshots 4-6
 → I7 PASS / bounded first Market vertical slice CLOSED
-→ owner-requested same-target coverage follow-up ACTIVE (source membership and English complete; P1.6 review open)
+→ owner-requested same-target coverage follow-up COMPLETE (snapshots 14-15; six of six core P1.6 accepted-current)
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.

@@ -5,7 +5,7 @@
       "schema_version": "job-capability-intelligence-v5"
     },
     "p16_english": {
-      "prompt_version": "job-analysis-english-v23",
+      "prompt_version": "job-analysis-english-v30",
       "schema_version": "job-analysis-v5"
     },
     "p16_original": {
@@ -16,10 +16,10 @@
   "counts": {
     "capabilities": 5,
     "english_projections": 29,
-    "jobs": 417,
-    "p16_english": 9,
+    "jobs": 420,
+    "p16_english": 11,
     "p16_original": 0,
-    "sources": 417
+    "sources": 420
   },
   "jobs": [
     {
@@ -1634,7 +1634,7 @@
       "artifact_ids": {
         "capability": null,
         "english_projection": 47,
-        "p16_english": null,
+        "p16_english": 62,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/karno-11/jobs/t7Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%D9%86%D9%88",
@@ -1648,7 +1648,7 @@
       "stages": {
         "capability": false,
         "english_projection": true,
-        "p16_english": false,
+        "p16_english": true,
         "p16_original": false,
         "source": true
       },
@@ -1901,6 +1901,30 @@
         "p16_english": null,
         "p16_original": null
       },
+      "canonical_url": "https://jobinja.ir/companies/aya-business-school/jobs/tE92/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A2%D9%85%D9%88%D8%B2%D8%B4%DA%AF%D8%A7%D9%87-%D9%81%D9%86%DB%8C-%D9%88-%D8%AD%D8%B1%D9%81%D9%87-%D8%A7%DB%8C-%D8%B9%D9%84%D9%88%DB%8C",
+      "company_slug": "aya-business-school",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tE92",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "کارشناس هوش مصنوعی"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
       "canonical_url": "https://jobinja.ir/companies/snappbox/jobs/tEA1/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-devops-engineer-%D8%AF%D8%B1-%D8%A7%D8%B3%D9%86%D9%BE-%D8%A8%D8%A7%DA%A9%D8%B3",
       "company_slug": "snappbox",
       "job_detail_version_id": null,
@@ -2085,6 +2109,54 @@
         "source": true
       },
       "title": "Senior Network Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/vasl/jobs/tEgm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-data-engineer-%D8%AF%D8%B1-%D9%85%D8%AF%DB%8C%D8%B1%DB%8C%D8%AA-%D9%81%D9%86%D8%A7%D9%88%D8%B1%DB%8C-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D9%88-%D8%A7%D8%B1%D8%AA%D8%A8%D8%A7%D8%B7%D8%A7%D8%AA-%D9%88%D8%B5%D9%84",
+      "company_slug": "vasl",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tEgm",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "Data Engineer"
+    },
+    {
+      "artifact_ids": {
+        "capability": null,
+        "english_projection": null,
+        "p16_english": null,
+        "p16_original": null
+      },
+      "canonical_url": "https://jobinja.ir/companies/netrix/jobs/tEzi/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-sysops-engineer-%D8%AF%D8%B1-%D8%B4%DA%A9%D9%86",
+      "company_slug": "netrix",
+      "job_detail_version_id": null,
+      "language": "unknown",
+      "lifecycle_state": "active",
+      "parse_status": null,
+      "semantic_sha256": null,
+      "source_job_id": "tEzi",
+      "stages": {
+        "capability": false,
+        "english_projection": false,
+        "p16_english": false,
+        "p16_original": false,
+        "source": true
+      },
+      "title": "SysOps Engineer"
     },
     {
       "artifact_ids": {
@@ -8210,7 +8282,7 @@
       "artifact_ids": {
         "capability": null,
         "english_projection": 25,
-        "p16_english": null,
+        "p16_english": 61,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/solevrage/jobs/tmvA/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-%D8%AF%D8%B1-%D8%A7%DA%A9%D8%A7%D8%AF%D9%85%DB%8C-%D9%85%D8%A7%D9%84%DB%8C-%D8%A8%D8%AE%D8%B4%DB%8C-%D9%BE%D9%88%D8%B1",
@@ -8224,7 +8296,7 @@
       "stages": {
         "capability": false,
         "english_projection": true,
-        "p16_english": false,
+        "p16_english": true,
         "p16_original": false,
         "source": true
       },

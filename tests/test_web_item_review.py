@@ -12,7 +12,9 @@ from jobhunter.web.launcher import build_runtime_app
 
 
 def test_browser_item_review_end_to_end_with_csrf(tmp_path):
-    database, artifact_id, projection_id = _candidate(tmp_path, prompt_version="job-analysis-english-v30")
+    database, artifact_id, projection_id = _candidate(
+        tmp_path, prompt_version="job-analysis-english-v30"
+    )
     settings = Settings(
         data_dir=tmp_path, database_path=database,
         evidence_dir=tmp_path / "evidence",

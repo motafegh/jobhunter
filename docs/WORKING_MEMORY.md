@@ -1,12 +1,12 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-27
+**Date:** 2026-09-28
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
-**Current English P1.6:** `job-analysis-english-v23 / job-analysis-v5`; accepted v20/v5 and v21/v5 artifacts are accepted-only compatibility inputs
-**Owner-requested follow-up:** Same-target coverage after bounded I7 PASS; snapshot 13 has ten qualified and translated postings, six core and four accepted-semantic core postings. P1.6 review remains open for `tmvA` and `t7Ay`; v24 is isolated/non-public.
+**Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts are accepted-only compatibility inputs with exact dependencies
+**Owner-requested follow-up:** Same-target coverage completed in snapshots 14-15: ten qualified members, six core, six accepted-semantic core. `tmvA` artifact 61 and `t7Ay` artifact 62 were source-reviewed and accepted. Immutable reuse rerun, CLI/browser, SQLite, and public-corpus verification passed.
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -417,7 +417,7 @@ unchanged v5 persisted shape.
 
 At this historical v22 checkpoint, public routing remained `job-analysis-english-v21 / job-analysis-v5`.
 V22 was isolated and had not created an artifact, changed currentness, or altered the five
-accepted compatibility anchors. The current routing at the top of this handoff is v23/v5.
+accepted compatibility anchors. The current routing at the top of this handoff is v30/v5.
 
 Offline evidence:
 

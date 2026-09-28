@@ -1,0 +1,331 @@
+{
+  "analysis": {
+    "coverage": [
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "holding a university degree in Artificial Intelligence at the Master's or Ph.D. level",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "preferably graduates from reputable universities, especially those in Tehran such as Tehran University, Sharif University of Technology, Amirkabir University, University of Science and Industry, Shahid Beheshti University, Tarbiat Modares, and Science and Research University.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Having a work history in AI projects, especially in the fields of LLM, RAG, AI Agent, and MCP, will be considered a special advantage.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Submitting samples of work, implemented projects, research activities, GitHub projects, or experience in developing and deploying LLM-based systems will be considered in the evaluation process.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "The most important criteria for this job position will be specialized education in Artificial Intelligence, along with practical experience in the fields of LLM, RAG, Agent, and MCP.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Individuals with a track record of professional activity in designing and implementing LLM and Agentic AI systems will be prioritized in the recruitment process.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Proficiency in concepts and technologies related to Large Language Models (LLM)",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "practical experience in designing and implementing RAG (Retrieval-Augmented Generation) systems",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "experience in designing and developing AI Agents and Agentic AI",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "A persisted requirement cites this exact v23 coverage input."
+      },
+      {
+        "disposition": "decomposed_requirement",
+        "evidence": "Proficiency in concepts and technologies related to Large Language Models (LLM), practical experience in designing and implementing RAG (Retrieval-Augmented Generation) systems, experience in designing and developing AI Agents and Agentic AI, specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "JobHunter deterministically decomposed this coarse requirement span into exact item-level qualification requirements."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Artificial Intelligence",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Python",
+        "rationale": "Deterministic structured source skill coverage."
+      },
+      {
+        "disposition": "extracted_requirement",
+        "evidence": "Pytorch",
+        "rationale": "Deterministic structured source skill coverage."
+      }
+    ],
+    "requirements": [
+      {
+        "concept": "Large Language Model concepts and technologies",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "Proficiency",
+        "evidence": "Proficiency in concepts and technologies related to Large Language Models (LLM)",
+        "rationale": "Structured required qualification item; exact evidence states proficiency in LLM concepts and technologies.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Practical experience designing and implementing RAG systems",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "practical experience in designing and implementing RAG (Retrieval-Augmented Generation) systems",
+        "rationale": "Structured required qualification item; exact evidence states practical experience in designing and implementing RAG systems.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Experience designing and developing AI Agents and Agentic AI",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "experience in designing and developing AI Agents and Agentic AI",
+        "rationale": "Structured required qualification item; exact evidence states experience in designing and developing AI Agents and Agentic AI.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers MCP knowledge and practical experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Prompt Engineering and methods for optimizing interaction with language models",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "mastery",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers prompt engineering mastery.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Tool Calling/Function Calling, connecting language models to various services and systems",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers tool calling and integration.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Embedding, Vector Database, and Semantic Search",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers embedding and vector search.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "knowledge of the Python programming language",
+        "concept_type": "knowledge",
+        "confidence": "high",
+        "depth_signal": "proficient",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt states proficient knowledge of Python.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to develop AI-related services",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers developing AI-related services.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "designing and developing APIs and Backend services",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": "familiarity",
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers API and backend service design.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "specialized knowledge and practical experience in Model Context Protocol (MCP) and designing and implementing MCP Server/MCP Client, mastery of Prompt Engineering and methods for optimizing interaction with language models, familiarity with Tool Calling/Function Calling, connecting language models to various services and systems, familiarity with Embedding, Vector Database, and Semantic Search, proficient knowledge of the Python programming language, and the ability to develop AI-related services, familiarity with designing and developing APIs and Backend services, the ability to study and analyze technical documentation and specialized articles, and applying new technologies in the field of AI.",
+        "rationale": "Residual required sentence; exact item excerpt covers technical documentation analysis and applying new AI technologies.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to transform AI concepts and technologies into practical and usable solutions in real-world environments",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "Requirement section decomposed by exact_item_coverage; item excerpt is the narrowest supported span.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to analyze problems and select appropriate architecture and technology for LLM-based solutions",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "Requirement section decomposed by exact_item_coverage; item excerpt is the narrowest supported span.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Interest and ability for continuous learning in the field of modern AI technologies",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "Requirement section decomposed by exact_item_coverage; item excerpt is the narrowest supported span.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Teamwork skills and participation in the design and development of software products",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "Requirement section decomposed by exact_item_coverage; item excerpt is the narrowest supported span.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Ability to document technical aspects and provide proposed solutions",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "the ability to transform AI concepts and technologies into practical and usable solutions in real-world environments, the ability to analyze problems and select appropriate architecture and technology for LLM-based solutions, interest and the ability for continuous learning in the field of modern AI technologies, teamwork skills and participation in the design and development of software products, and the ability to document technical aspects and provide proposed solutions.",
+        "rationale": "Requirement section decomposed by exact_item_coverage; item excerpt is the narrowest supported span.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Specialized education in Artificial Intelligence, along with practical experience in LLM, RAG, Agent, and MCP",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "The most important criteria for this job position will be specialized education in Artificial Intelligence, along with practical experience in the fields of LLM, RAG, Agent, and MCP.",
+        "rationale": "Requirement section; exact evidence states the most important criteria are specialized AI education plus practical experience.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Master's degree",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Master's degree",
+        "rationale": "JobHunter deterministically materialized the structured education field.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Artificial Intelligence",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Artificial Intelligence",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Python",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Python",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Pytorch",
+        "concept_type": "skill",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Pytorch",
+        "rationale": "JobHunter deterministically materialized the structured source skill tag.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "Having a work history in AI projects, especially in the fields of LLM, RAG, AI Agent, and MCP, will be considered a special advantage.",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Having a work history in AI projects, especially in the fields of LLM, RAG, AI Agent, and MCP, will be considered a special advantage.",
+        "rationale": "Exact employer preference retained as one source fact; no candidate history or depth is inferred.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Submitting samples of work, implemented projects, research activities, GitHub projects, or experience in developing and deploying LLM-based systems will be considered in the evaluation process.",
+        "concept_type": "other",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Submitting samples of work, implemented projects, research activities, GitHub projects, or experience in developing and deploying LLM-based systems will be considered in the evaluation process.",
+        "rationale": "Exact employer preference retained as one source fact; no candidate history or depth is inferred.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "Individuals with a track record of professional activity in designing and implementing LLM and Agentic AI systems will be prioritized in the recruitment process.",
+        "concept_type": "experience",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "Individuals with a track record of professional activity in designing and implementing LLM and Agentic AI systems will be prioritized in the recruitment process.",
+        "rationale": "Exact employer preference retained as one source fact; no candidate history or depth is inferred.",
+        "requirement_type": "preferred"
+      },
+      {
+        "concept": "holding a university degree in Artificial Intelligence at the Master's or Ph.D. level",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "holding a university degree in Artificial Intelligence at the Master's or Ph.D. level",
+        "rationale": "Exact employer qualification clause preserves its own obligation and alternatives.",
+        "requirement_type": "required"
+      },
+      {
+        "concept": "preferably graduates from reputable universities, especially those in Tehran such as Tehran University, Sharif University of Technology, Amirkabir University, University of Science and Industry, Shahid Beheshti University, Tarbiat Modares, and Science and Research University.",
+        "concept_type": "education",
+        "confidence": "high",
+        "depth_signal": null,
+        "evidence": "preferably graduates from reputable universities, especially those in Tehran such as Tehran University, Sharif University of Technology, Amirkabir University, University of Science and Industry, Shahid Beheshti University, Tarbiat Modares, and Science and Research University.",
+        "rationale": "Exact employer qualification clause preserves its own obligation and alternatives.",
+        "requirement_type": "preferred"
+      }
+    ],
+    "responsibilities": [],
+    "responsibility_coverage": [],
+    "role_purpose": []
+  },
+  "analysis_schema_version": "job-analysis-v5",
+  "artifact_id": 62,
+  "created_at": "2026-09-28T18:29:33.340705+00:00",
+  "job_detail_version_id": 53,
+  "model": "mimo-v2.6-distill-qwen-9b",
+  "prompt_version": "job-analysis-english-v30",
+  "schema_version": "jobhunter-public-corpus-v1",
+  "semantic_review_status": "accepted",
+  "source_job_id": "t7Ay",
+  "stage": "p16_english",
+  "translation_artifact_id": 47
+}

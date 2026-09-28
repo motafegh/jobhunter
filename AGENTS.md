@@ -122,7 +122,7 @@ parser:                     jobinja-detail-v2
 translation provider:       lm-studio-translation-v2
 English projection:         english-projection-v2
 
-English P1.6 public:        job-analysis-english-v23 / job-analysis-v5
+English P1.6 public:        job-analysis-english-v30 / job-analysis-v5
 Original P1.6 public:       job-analysis-original-v9 / job-analysis-v4
 
 Capability public/current:  job-capability-intelligence-v9 / job-capability-intelligence-v5
@@ -143,15 +143,15 @@ t4qV English P1.6 artifact 44 → Capability v9 artifact 14
 tmyX English P1.6 artifact 46 → Capability v9 artifact 15
 ```
 
-Those five accepted anchor artifacts remain physically v20/v5 and are accepted-only compatibility inputs under the v23 current boundary. New English P1.6 generation uses v23/v5. Accepted v21/v5 artifacts are also compatibility inputs; pending/rejected prior candidates never satisfy v23 currentness. Exact artifact prompt/schema identity must remain visible when compatibility reuse occurs.
+Those five accepted anchor artifacts remain physically v20/v5 and are accepted-only compatibility inputs under the v30 current boundary. New English P1.6 generation uses v30/v5. Accepted v21/v5, v23/v5, and v28/v5 artifacts are also compatibility inputs across model identities when exact source/translation dependencies match; pending/rejected prior candidates never satisfy v30 currentness. Exact artifact prompt/schema identity must remain visible when compatibility reuse occurs.
 
 Current repository-safe public corpus:
 
 ```text
-known/discovered Jobinja jobs: 417
+known/discovered Jobinja jobs: 420
 fetched/parsed detail jobs:      51
 current English projections:     29
-accepted/current English P1.6:    9
+accepted/current English P1.6:    11
 accepted/current Capability:      5
 ```
 
@@ -169,7 +169,7 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            Owner-requested I7 target coverage follow-up
+next exact increment            I7 target coverage complete; later Market scope not yet authorized
 ```
 
 B1 final evidence is retained at:
@@ -178,7 +178,7 @@ B1 final evidence is retained at:
 
 Do not reopen B1, select another responsibility pair, or force another `ta9l` P1.6 model/prompt matrix merely to manufacture a promotion. B1 created no responsibility concept/mappings.
 
-Do not regenerate or reopen the accepted v20/v5 P1.6 anchor artifacts merely because v23 is now current; their accepted-only compatibility is intentional. Do not reopen Capability v9, P2.1, or P2.2A for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
+Do not regenerate or reopen the accepted v20/v5 P1.6 anchor artifacts merely because v30 is now current; their accepted-only compatibility is intentional. Do not reopen Capability v9, P2.1, or P2.2A for harmless non-authoritative wording variation. Reopen only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency.
 
 ---
 
@@ -243,11 +243,13 @@ I7  bounded local real acceptance + reuse rerun ACCEPTED / CLOSED
 
 ### 5.1 I7 exact boundary and historical closure
 
-The owner-requested same-target coverage follow-up is still active. Snapshot
-13 has ten qualified and translated postings, six core, and four core postings
-with accepted-current P1.6. Two core postings need semantic coverage; do not
-infer zero demand from their missing or failed analyses. The bounded I7 PASS
-below remains valid for its original first-slice scope.
+The owner-requested same-target coverage follow-up is complete. Snapshots 14
+and 15 each have ten qualified members, six core postings, and six accepted-
+semantic core postings. The unchanged rerun reused the same member and P1.6
+artifact identities; the deterministic profile and rendered browser/CLI
+drill-down agree. Historical failed attempts remain local evidence and do not
+mean zero demand. The bounded I7 PASS below remains valid for its original
+first-slice scope.
 
 I7 passed bounded real-local acceptance on 2026-09-26. Runs 4-6 produced immutable
 snapshots/profiles with six core source postings and one accepted-semantic core posting.

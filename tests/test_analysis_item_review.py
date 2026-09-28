@@ -16,7 +16,9 @@ from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
 
-def _candidate(tmp_path: Path, *, prompt_version: str = "job-analysis-english-v23") -> tuple[Path, int, int]:
+def _candidate(
+    tmp_path: Path, *, prompt_version: str = "job-analysis-english-v23"
+) -> tuple[Path, int, int]:
     database = tmp_path / "jobhunter.sqlite3"
     now = datetime(2026, 9, 24, tzinfo=UTC)
     source = JobHunterStore(database)

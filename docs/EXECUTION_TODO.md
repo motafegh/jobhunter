@@ -1,13 +1,13 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-27
+**Date:** 2026-09-28
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED
 
-**Active owner-requested follow-up:** Finish same-target coverage beyond the bounded I7 acceptance sample; snapshot 13 has ten qualified and translated postings, six core after reviewed membership correction, and four core postings with accepted-current P1.6. `tmvA` and `t7Ay` remain uncovered; v24 remains an isolated candidate. See `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
+**Owner-requested follow-up:** Completed for this bounded target in snapshots 14-15: ten qualified members, six core, six accepted-current P1.6. The second run reused the same member and analysis identities. See `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`.
 
 Status vocabulary:
 
@@ -112,6 +112,7 @@ Acceptance: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLE
 - [x] unchanged run 6 reused current source/English/P1.6 evidence; remaining bounded work stayed visible.
 - [x] CLI and real rendered Edge browser route showed the same frozen source/semantic denominators and evidence.
 - [x] historical immutability, SQLite integrity/foreign keys, and public-corpus privacy verified.
+- [x] owner-requested coverage follow-up: source-reviewed `tmvA` and `t7Ay` artifacts 61 and 62 accepted with exact dependency identity; v30 public routing and accepted-only compatibility; Market runs 14-15 completed without failures with six-of-six core semantic coverage and unchanged reuse; CLI/browser drill-down, SQLite integrity, and public corpus verified.
 
 Final decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 The checklist below records earlier HOLD-stage execution and is historical where its
@@ -138,7 +139,7 @@ Execution result:
 - [x] browser usability/evidence presentation defect found during I7 was repaired and regression-tested.
 - [x] Market-local tables/paths/provider identity were absent from public corpus publication.
 - [x] initial I7 publication head passed CI 1246; closure-repair heads passed CI 1248 and CI 1249.
-- [~] live accepted-semantic requirement/responsibility aggregate + evidence drill-down remains unexercised because accepted-semantic core denominator was zero.
+- [x] live accepted-semantic requirement/responsibility aggregate + evidence drill-down exercised in bounded I7 acceptance and again with six-of-six core coverage in snapshots 14-15.
 - [x] recovered run-2 snapshot/profile 2 and proved snapshot-1/member/profile equality against both retained pre-rerun JSON captures on 2026-09-19.
 - [x] post-run operational SQLite integrity is `ok`; foreign-key check is empty (2026-09-19).
 - [x] inspected pending `t7ck` artifact 48: material coverage, optionality and qualification/duty defects; rejection recommended.
