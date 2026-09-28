@@ -711,3 +711,17 @@ candidate. V27's generation planner now removes decomposed parents before
 inheriting obligation, and a regression test compares the exact generation
 residual with the v28 persistence residual. No artifact was created or
 promoted by the failed run. One changed isolated v28 check is justified.
+
+The corrected MiMo v28 `t7Ay` run persisted a 26-requirement pending
+candidate with all eight dense residual items and both education clauses.
+Whole-source review rejected three single-category labels: one source item
+explicitly combined specialized knowledge with practical experience, another
+combined education with practical experience, and a `knowledge of Python`
+item was typed as a tool. The facts and exact evidence remained present.
+MiMo v28 `tmvA` produced 22 grounded requirements and seven exact duties and
+passed whole-source review in a **private evaluation copy only**; it is not
+operational accepted-current coverage. The isolated v29 response contract
+now abstains to `other` for a source-exact mixed knowledge/experience or
+education/experience item, and labels an explicit `knowledge of X` item as
+knowledge even when X names a tool. No public routing or Market state has
+changed yet.
