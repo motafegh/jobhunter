@@ -15,6 +15,10 @@ from jobhunter.inference.instructor_lm_studio_v24 import (
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _SENTENCE_REF_RE = re.compile(r"^(.*):sentence:\d+$")
+_EXPLICIT_PRIOR_WORK_RE = re.compile(
+    r"\b(?:work history|track record|prior (?:work |project )?experience)\b",
+    re.I,
+)
 _PARTITION_SIZE = 8
 
 
@@ -74,6 +78,39 @@ def _v25_requirement_partitions(
 
 
 class V25CandidateAnalysisProvider(V24CandidateAnalysisProvider):
+    def _source_quoted_requirements(
+        self, plan: dict[str, dict[str, Any]]
+    ) -> tuple[list[str], list[dict[str, Any]]]:
+        """Retain an explicit preferred prior-work fact when no inference is needed."""
+
+        references: list[str] = []
+        claims: list[dict[str, Any]] = []
+        for reference, candidate in plan.items():
+            evidence = str(candidate.get("text") or "")
+            if (
+                candidate.get("source_kind") != "requirement_section"
+                or candidate.get("obligation_hint") != "preferred"
+                or candidate.get("required_item_excerpts")
+                or not _EXPLICIT_PRIOR_WORK_RE.search(evidence)
+            ):
+                continue
+            references.append(reference)
+            claims.append(
+                {
+                    "concept": evidence,
+                    "depth_signal": None,
+                    "requirement_type": "preferred",
+                    "concept_type": "experience",
+                    "evidence": evidence,
+                    "confidence": "high",
+                    "rationale": (
+                        "Exact employer preference for prior work; no candidate history "
+                        "or depth is inferred."
+                    ),
+                }
+            )
+        return references, claims
+
     def _requirement_partitions(
         self, plan: dict[str, dict[str, Any]]
     ) -> list[dict[str, dict[str, Any]]]:

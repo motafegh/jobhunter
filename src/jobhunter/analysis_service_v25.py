@@ -14,6 +14,9 @@ P1.6 V25 SOURCE-GROUPED PARTITIONS:
 - This call may cite only the evidence references supplied in its evidence_references.
 - Account for every assigned requirement_coverage reference once, by a grounded
   claim or a justified exclusion when exclusion is allowed.
+- Explicit preferred prior-work sentences carried as exact source quotations
+  are outside this call's ledger. Do not invent candidate history or re-extract
+  them from another reference.
 """
 
 

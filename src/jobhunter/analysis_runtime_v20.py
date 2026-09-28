@@ -312,6 +312,12 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
     def _persistable_structured(self, structured: dict[str, Any]) -> dict[str, Any]:
         return structured
 
+    def _source_quoted_requirements(
+        self, plan: dict[str, dict[str, Any]]
+    ) -> tuple[list[str], list[dict[str, Any]]]:
+        """Optional versioned exact-source carry; older contracts remain unchanged."""
+        return [], []
+
     def _run_once(
         self,
         *,
@@ -350,6 +356,15 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
             decomposed_refs=decomposed_refs,
             base_plan=self._requirement_coverage_plan(model_fields),
         )
+        quoted_refs, quoted_requirements = self._source_quoted_requirements(complete_plan)
+        for reference in quoted_refs:
+            if reference not in complete_plan:
+                raise AnalysisValidationError(
+                    f"P1.6 source-quoted requirement is outside coverage plan: {reference}"
+                )
+            del complete_plan[reference]
+        deterministic.extend(quoted_requirements)
+        deterministic_refs.extend(quoted_refs)
         requirement_partitions = self._requirement_partitions(complete_plan)
         responsibility_plan = self._responsibility_coverage_plan(model_fields)
         if not requirement_partitions:

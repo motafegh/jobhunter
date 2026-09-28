@@ -34,6 +34,51 @@ def test_tmvA_source_siblings_share_one_partition() -> None:
     assert max(map(len, partitions)) <= 8
 
 
+def test_t7Ay_explicit_prior_work_preferences_are_retained_as_source_quotes() -> None:
+    fields = json.loads(
+        (_ROOT / "corpus/jobs/t7Ay/english-projection.json").read_text(encoding="utf-8")
+    )["fields"]
+    effective, _, _, additional = _v14_candidate_evidence_view(fields)
+    provider = object.__new__(V25CandidateAnalysisProvider)
+    plan = _v20_complete_requirement_plan(
+        effective,
+        additional_plan=additional,
+        decomposed_refs=[],
+        base_plan=provider._requirement_coverage_plan(effective),
+    )
+    refs, claims = provider._source_quoted_requirements(plan)
+    assert "field:description:segment:3:sentence:1" in refs
+    assert len(refs) == len(claims) == 2
+    for reference, claim in zip(refs, claims, strict=True):
+        assert claim["concept"] == claim["evidence"] == plan[reference]["text"]
+        assert claim["requirement_type"] == "preferred"
+        assert claim["concept_type"] == "experience"
+        assert claim["depth_signal"] is None
+
+
+def test_source_quote_requires_explicit_preference_and_prior_work() -> None:
+    provider = object.__new__(V25CandidateAnalysisProvider)
+    plan = {
+        "preferred-history": {
+            "text": "Prior work experience in AI is an advantage.",
+            "source_kind": "requirement_section",
+            "obligation_hint": "preferred",
+        },
+        "required-history": {
+            "text": "Prior work experience in AI is required.",
+            "source_kind": "requirement_section",
+            "obligation_hint": "required",
+        },
+        "preferred-knowledge": {
+            "text": "Knowledge of AI is an advantage.",
+            "source_kind": "requirement_section",
+            "obligation_hint": "preferred",
+        },
+    }
+    refs, _claims = provider._source_quoted_requirements(plan)
+    assert refs == ["preferred-history"]
+
+
 def test_v25_model_sees_only_assigned_evidence(monkeypatch) -> None:
     captured = {}
 

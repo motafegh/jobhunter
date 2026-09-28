@@ -579,5 +579,11 @@ only its assigned exact evidence references while validation retains the
 complete source catalog. An offline audit of all 29 current English
 projections found no lost, repeated, or over-limit coverage reference; the
 `tmvA` sentence pair now shares one partition. V25 is not public/current and
-has no accepted artifact yet. The separate `t7Ay` preferred-claim omission
-still needs a general source-fact recovery design and bounded evaluation.
+has no accepted artifact yet. V25 also carries explicit preferred prior-work
+sentences directly from their exact source wording as candidate requirements,
+with preferred strength, prior-experience type, and unknown depth. This avoids
+asking the model to echo a fact it omitted twice. The rule is general and
+source-scoped; it does not assert any history of the JobHunter user. An offline
+audit found two eligible sentences among the 29 current projections, both in
+`t7Ay`. Persistence and whole-source semantic review remain required before
+any artifact can be accepted or used as Market semantic coverage.
