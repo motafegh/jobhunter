@@ -499,3 +499,13 @@ quoted source sentence itself was exact; the split reference was wrong. The
 general splitter now treats punctuation followed immediately by another
 nonspace character as internal text, preserving `etc.,` and similar cases.
 The candidate run was isolated, and no operational artifact was created.
+
+The next isolated v24 trial reached whole-artifact validation. Its first
+completion failed because one source-grounded concept retained the literal
+`Ability to ...` wrapper while the model labeled it as a normalized capability;
+the permitted corrective completion then cited eight requirements outside
+their assigned partition. No candidate was persisted. V23 now preserves a
+grounded literal ability statement while abstaining from an unsupported
+normalized capability type (`other`), analogous to its experience-type
+abstention. The source excerpt, obligation, and evidence still validate. This
+removes a style/type-only blocker without weakening source or partition scope.

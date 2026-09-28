@@ -75,6 +75,30 @@ def test_v23_drops_non_degree_depth_without_dropping_mixed_source_claim() -> Non
     assert "knowledge and practical experience" in claim.concept
 
 
+def test_v23_preserves_source_ability_wording_without_forcing_capability_type() -> None:
+    evidence = "We need someone with the ability to build systems and automate tasks."
+    context = {
+        "analysis_mode": "english",
+        "analysis_fields": {"description": evidence},
+        "evidence_catalog": {},
+        "requirement_coverage_plan": {
+            "item": {"text": evidence, "obligation_hint": "required"}
+        },
+    }
+    claim = AnalysisRequirementV23.model_validate({
+        "concept": "Ability to build systems and automate tasks",
+        "depth_signal": None,
+        "requirement_type": "required",
+        "concept_type": "skill",
+        "evidence": evidence,
+        "item_excerpt": "ability to build systems and automate tasks",
+        "confidence": "high",
+        "rationale": "Exact source ability wording.",
+    }, context=context)
+    assert claim.concept == "Ability to build systems and automate tasks"
+    assert claim.concept_type == "other"
+
+
 def test_v23_drops_borrowed_list_depth_but_retains_explicit_item_depth() -> None:
     evidence = "Familiarity with API, Webhook, and service connections"
     context = {

@@ -90,6 +90,14 @@ class AnalysisRequirementV23(AnalysisRequirementV22):
             is not None
         ):
             normalized = {**value, "depth_signal": None}
+        if (
+            normalized.get("concept_type")
+            in {"skill", "knowledge", "practice", "domain", "experience", "tool"}
+            and re.match(r"^ability\s+to\b", str(normalized.get("concept") or ""), re.I)
+        ):
+            # A literal source wrapper is valid evidence, but it does not name
+            # a normalized capability. Preserve the claim with an untyped label.
+            normalized = {**normalized, "concept_type": "other"}
         concept = _source_alternative_concept(item)
         if concept is None or concept == normalized.get("concept"):
             return normalized
