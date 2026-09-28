@@ -465,3 +465,15 @@ Across 29 current projections this exact-duplicate reduction affects five
 jobs (`t7Ay`, `t4jp`, `tI1n`, `t4EV`, `tmvA`); accepted artifact identities and
 stored source facts are unchanged. This is a planner and response-size repair,
 not proof that the next model completion or semantic review will pass.
+
+The next bounded `t7Ay` run (attempt 134) exposed another coverage-ownership
+defect. Both retained completions extracted all three preferred facts with
+source-exact sentence excerpts, but the base plan also demanded the two-sentence
+parent paragraph as a separate reference. The model could not satisfy that
+redundant exact-text demand by citing the child sentences. V23 now splits a
+preferred multi-sentence requirement section into exact sentence references
+only when the sentences reconstruct the complete source text without loss and
+no explicit item list is attached. The residual planner then drops its
+duplicate child references. Both attempt-134 completions validate against the
+corrected preferred partition in private offline replay. This repairs a false
+failure; no attempt-134 artifact was persisted or silently accepted.

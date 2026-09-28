@@ -33,7 +33,9 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
     def _requirement_coverage_plan(
         self, model_fields: dict[str, Any]
     ) -> dict[str, dict[str, Any]]:
-        return build_requirement_coverage_plan_v23(model_fields)
+        return _split_exact_preferred_section_sentences(
+            build_requirement_coverage_plan_v23(model_fields)
+        )
 
     def _requirement_partitions(
         self, plan: dict[str, dict[str, Any]]
@@ -100,6 +102,33 @@ _PREFERRED_SENTENCE_END_RE = re.compile(
     re.I,
 )
 _REQUIRED_CUE_RE = re.compile(r"\b(?:essential|required|must|mandatory|necessary)\b", re.I)
+
+
+def _split_exact_preferred_section_sentences(
+    plan: dict[str, dict[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    """Give each sentence of a preferred section one exact coverage owner."""
+
+    result: dict[str, dict[str, Any]] = {}
+    for reference, candidate in plan.items():
+        text = str(candidate.get("text") or "")
+        sentences = _sentences(text)
+        if (
+            candidate.get("source_kind") != "requirement_section"
+            or candidate.get("obligation_hint") != "preferred"
+            or len(sentences) < 2
+            or " ".join(sentences) != text
+            or candidate.get("required_item_excerpts")
+        ):
+            result[reference] = dict(candidate)
+            continue
+        for index, sentence in enumerate(sentences, start=1):
+            result[f"{reference}:sentence:{index}"] = {
+                **candidate,
+                "text": sentence,
+                "obligation_context": text,
+            }
+    return result
 
 
 def _scoped_preferred_qualification_plan(

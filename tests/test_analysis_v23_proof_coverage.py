@@ -14,6 +14,7 @@ from jobhunter.analysis_runtime_v23 import (
     V23CandidateAnalysisProvider,
     _remove_duplicate_residual_ownership,
     _scoped_preferred_qualification_plan,
+    _split_exact_preferred_section_sentences,
 )
 from jobhunter.analysis_service import _analysis_fields_for_english
 from jobhunter.analysis_service_v23 import (
@@ -138,7 +139,9 @@ def test_v23_does_not_repeat_exact_requirement_sentences_as_residual_work() -> N
 
 
 def test_v23_gives_preferred_source_claims_a_separate_small_partition() -> None:
-    plan = build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    plan = _split_exact_preferred_section_sentences(
+        build_requirement_coverage_plan_v23(_fields("t7Ay"))
+    )
     provider = object.__new__(V23CandidateAnalysisProvider)
     parts = provider._requirement_partitions(plan)
     preferred = [
@@ -146,8 +149,32 @@ def test_v23_gives_preferred_source_claims_a_separate_small_partition() -> None:
         if any(item.get("obligation_hint") == "preferred" for item in part.values())
     ]
     assert len(preferred) == 1
-    assert len(preferred[0]) == 2
+    assert len(preferred[0]) == 3
     assert all(item["obligation_hint"] == "preferred" for item in preferred[0].values())
+
+
+def test_v23_preferred_paragraph_uses_exact_sentence_owners() -> None:
+    fields = _fields("t7Ay")
+    base = build_requirement_coverage_plan_v23(fields)
+    plan = _split_exact_preferred_section_sentences(base)
+    parent_ref = "field:description:segment:3"
+    assert parent_ref not in plan
+    children = [
+        plan[f"{parent_ref}:sentence:{index}"]["text"]
+        for index in (1, 2)
+    ]
+    assert " ".join(children) == base[parent_ref]["text"]
+    assert all(
+        plan[f"{parent_ref}:sentence:{index}"]["obligation_hint"] == "preferred"
+        for index in (1, 2)
+    )
+    additional = _v15_candidate_evidence_view(fields)[3]
+    filtered = _remove_duplicate_residual_ownership(additional, plan)
+    assert all(
+        item["text"] not in children
+        for item in filtered.values()
+        if item["source_kind"] == "candidate_residual_sentence"
+    )
 
 
 def test_v23_scopes_preferred_list_strength_to_exact_source_sentence() -> None:
