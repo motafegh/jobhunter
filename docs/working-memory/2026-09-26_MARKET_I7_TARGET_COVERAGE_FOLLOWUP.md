@@ -552,8 +552,22 @@ The planner now assigns each exact sentence as the sole owner only when every
 sentence already exists in the residual ledger and the complete parent text
 reconstructs losslessly. An offline audit across all 29 current English
 projections finds exactly two affected paragraphs: the earlier `t7Ay`
-preferred paragraph and this `tmvA` required note. No further model retry is
-justified without a fresh bounded evaluation decision and source review.
+preferred paragraph and this `tmvA` required note. One new isolated v24
+evaluation of this changed planner is justified; unchanged retries are not.
 V23 persistence also now replays its complete generation ledger from immutable
 source fields, so a future valid `t7Ay` candidate can carry those exact
 sentence owners and residual references through durable coverage validation.
+
+That one new isolated v24 `tmvA` evaluation (attempt 136) did not produce a
+candidate. Both allowed completions put the positive second sentence about
+building systems under the adjacent negative first sentence's reference;
+their `item_excerpt` therefore was not a subspan of the cited evidence. The
+two sentences landed in different bounded partitions. A proposed unique
+reference correction was not applied: the correct owner lay outside the
+current partition, and silently moving or dropping the claim would still
+leave the first sentence unaccounted for. The item/evidence validator is
+correct here. This is model partition adherence, not another source or
+persistence bug. The private copy passed SQLite integrity and foreign-key
+checks; operational Market coverage remains four accepted of six core. Stop
+unchanged `tmvA` model retries. A different general partition/claim design
+needs evidence before another bounded trial.
