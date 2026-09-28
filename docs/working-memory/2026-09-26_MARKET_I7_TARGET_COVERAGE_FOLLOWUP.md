@@ -617,3 +617,30 @@ use the same pruned ledger. The 29-projection offline audit found two
 heading-only residuals (`t7Ay`, `tI1n`) and four exact source quotes across
 `t7Ay` and `taOX`; no coverage reference was lost or duplicated in a v25
 partition. A fresh v25 result still needs complete source review.
+
+The fresh v25 `t7Ay` artifact on a private copy had 30 requirements and no
+duties. Duplicate competency and alternative-proof counts were repaired, but
+whole-source review rejected it because its education claim omitted the
+explicit Master's-or-Ph.D. alternative and the separate preference for
+graduates from reputable universities. The private artifact was rejected;
+operational coverage remains unchanged.
+
+The grouped v25 `tmvA` check produced a pending 24-requirement, seven-duty
+artifact on another private copy. Review found a duplicate positive
+build-systems requirement inferred from the source's negative casual-user
+sentence, plus a candidate requirement fabricated from salary-determination
+context. It was explicitly rejected. The source's actual positive build
+sentence and seven duties were present; these two errors were enough to
+withhold semantic promotion.
+
+An isolated v26 candidate now splits an exact qualification paragraph at an
+explicit `, preferably` transition, retaining the required and preferred
+source clauses separately and preserving degree alternatives without model
+paraphrase. It also carries a standalone negative-suitability sentence and
+compensation-headed residual as contextual coverage exclusions instead of
+asking the model to turn them into positive demand. It never excludes a mixed
+paragraph that also contains positive qualification wording; the `tGc5`
+counterexample is covered by a regression test. Generation and persistence
+share the same versioned ledger. Across 29 current English projections, the
+mixed-clause split affects only `t7Ay`, and the two context exclusions affect
+only `tmvA`. No v26 artifact has been accepted or made public/current yet.

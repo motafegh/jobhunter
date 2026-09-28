@@ -318,6 +318,12 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
         """Optional versioned exact-source carry; older contracts remain unchanged."""
         return [], []
 
+    def _source_context_exclusions(
+        self, plan: dict[str, dict[str, Any]]
+    ) -> tuple[list[str], list[dict[str, str]]]:
+        """Optional versioned source context; older contracts remain unchanged."""
+        return [], []
+
     def _run_once(
         self,
         *,
@@ -365,6 +371,14 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
             del complete_plan[reference]
         deterministic.extend(quoted_requirements)
         deterministic_refs.extend(quoted_refs)
+        context_refs, context_exclusions = self._source_context_exclusions(complete_plan)
+        for reference in context_refs:
+            candidate = complete_plan.get(reference)
+            if candidate is None or not candidate.get("allow_exclusion", False):
+                raise AnalysisValidationError(
+                    f"P1.6 source context cannot exclude coverage: {reference}"
+                )
+            del complete_plan[reference]
         requirement_partitions = self._requirement_partitions(complete_plan)
         responsibility_plan = self._responsibility_coverage_plan(model_fields)
         if not requirement_partitions:
@@ -426,6 +440,7 @@ class V20CandidateAnalysisProvider(V19CandidateAnalysisProvider):
                 finish_reasons.append(result.finish_reason)
 
         structured = _merge_partition_structured(structured_parts)
+        structured["coverage_exclusions"].extend(context_exclusions)
         structured = self._persistable_structured(structured)
         structured = _materialize_v18_deterministic_requirements(structured, deterministic)
         structured, normalized_indexes = _normalize_v15_schedule_concepts(structured)
