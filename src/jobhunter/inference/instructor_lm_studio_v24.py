@@ -26,6 +26,8 @@ def complete_analysis_partition_with_instructor_v24(
     requirement_coverage_plan: dict[str, dict[str, Any]],
     responsibility_coverage_plan: dict[str, str],
     validation_retries: int = 1,
+    contract_version: str = "v24",
+    model_evidence_references: list[str] | None = None,
 ) -> StructuredInferenceResult:
     """Use unchanged v23 claim guards with the v24 model-facing coverage plan."""
 
@@ -58,9 +60,10 @@ def complete_analysis_partition_with_instructor_v24(
         requirement_coverage_plan=requirement_coverage_plan,
         responsibility_coverage_plan=responsibility_coverage_plan,
         response_model=JobAnalysisResponseV23,
-        contract_version="v24",
+        contract_version=contract_version,
         validation_retries=validation_retries,
         additional_evidence_catalog=additional_evidence_catalog,
+        model_evidence_references=model_evidence_references,
     )
     request_body = dict(result.request_body)
     runtime = dict(request_body.get("runtime") or {})

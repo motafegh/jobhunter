@@ -571,3 +571,13 @@ persistence bug. The private copy passed SQLite integrity and foreign-key
 checks; operational Market coverage remains four accepted of six core. Stop
 unchanged `tmvA` model retries. A different general partition/claim design
 needs evidence before another bounded trial.
+
+The next isolated v25 candidate keeps adjacent exact sentences from one
+source paragraph in the same bounded partition when they fit the eight-ref
+limit. A longer group is split at that limit. Each model request now exposes
+only its assigned exact evidence references while validation retains the
+complete source catalog. An offline audit of all 29 current English
+projections found no lost, repeated, or over-limit coverage reference; the
+`tmvA` sentence pair now shares one partition. V25 is not public/current and
+has no accepted artifact yet. The separate `t7Ay` preferred-claim omission
+still needs a general source-fact recovery design and bounded evaluation.

@@ -386,6 +386,7 @@ def _complete_analysis_partition_with_instructor(
     contract_version: str,
     validation_retries: int = 1,
     additional_evidence_catalog: dict[str, str] | None = None,
+    model_evidence_references: list[str] | None = None,
 ) -> StructuredInferenceResult:
     """Run one bounded semantic extraction partition with exact JobHunter coverage context."""
 
@@ -413,6 +414,17 @@ def _complete_analysis_partition_with_instructor(
             )
         evidence_catalog[reference] = text
     model_evidence_catalog = _leaf_evidence_catalog(evidence_catalog)
+    if model_evidence_references is not None:
+        unknown = set(model_evidence_references) - set(evidence_catalog)
+        if unknown:
+            raise InferenceResponseError(
+                f"P1.6 {contract_version} model scope references unknown evidence: "
+                f"{sorted(unknown)}"
+            )
+        model_evidence_catalog = {
+            reference: evidence_catalog[reference]
+            for reference in model_evidence_references
+        }
     requirement_plan = _validated_partition_plan(
         requirement_coverage_plan,
         evidence_catalog,
