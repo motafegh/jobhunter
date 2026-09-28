@@ -587,3 +587,17 @@ source-scoped; it does not assert any history of the JobHunter user. An offline
 audit found two eligible sentences among the 29 current projections, both in
 `t7Ay`. Persistence and whole-source semantic review remain required before
 any artifact can be accepted or used as Market semantic coverage.
+
+The first isolated v25 `t7Ay` live attempt failed in the dense residual
+partition after two completions. The model repeated a shared `familiarity
+with` qualifier in two item excerpts where that full phrase was not a
+contiguous source span, and it called source wording about *applying* new
+technologies prior `experience`. V25 now trims a repeated qualifier only
+when the exact listed child appears uniquely under that source qualifier in
+the same clause. It also replaces an unsupported `Experience in X` label
+with the exact source activity and `other` type only when the phrase `X`
+matches the exact item. The inherited source/evidence/depth/coverage guards
+remain. Both retained completions' three offending claims pass this narrow
+normalization offline; the second full partition response passes offline
+coverage validation. This does not prove a complete artifact, so one changed
+v25 live check is the next bounded step.

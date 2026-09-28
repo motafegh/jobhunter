@@ -17,6 +17,12 @@ P1.6 V25 SOURCE-GROUPED PARTITIONS:
 - Explicit preferred prior-work sentences carried as exact source quotations
   are outside this call's ledger. Do not invent candidate history or re-extract
   them from another reference.
+- For a shared list qualifier such as "familiarity with A, B, and C", quote
+  "B" as the exact item excerpt; the qualifier is contextual and is not a
+  contiguous part of the B excerpt.
+- Do not relabel an activity as prior experience when its exact item states
+  only the activity. A source-exact untyped phrase is valid when the semantic
+  type is uncertain.
 """
 
 

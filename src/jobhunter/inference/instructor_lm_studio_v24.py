@@ -28,6 +28,7 @@ def complete_analysis_partition_with_instructor_v24(
     validation_retries: int = 1,
     contract_version: str = "v24",
     model_evidence_references: list[str] | None = None,
+    response_model: type[JobAnalysisResponseV23] = JobAnalysisResponseV23,
 ) -> StructuredInferenceResult:
     """Use unchanged v23 claim guards with the v24 model-facing coverage plan."""
 
@@ -59,7 +60,7 @@ def complete_analysis_partition_with_instructor_v24(
         seed=seed,
         requirement_coverage_plan=requirement_coverage_plan,
         responsibility_coverage_plan=responsibility_coverage_plan,
-        response_model=JobAnalysisResponseV23,
+        response_model=response_model,
         contract_version=contract_version,
         validation_retries=validation_retries,
         additional_evidence_catalog=additional_evidence_catalog,

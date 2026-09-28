@@ -8,6 +8,10 @@ from jobhunter.analysis_runtime_v14 import _v14_candidate_evidence_view
 from jobhunter.analysis_runtime_v20 import _v20_complete_requirement_plan
 from jobhunter.analysis_runtime_v25 import V25CandidateAnalysisProvider
 from jobhunter.analysis_service_v25 import ENGLISH_PROMPT_VERSION
+from jobhunter.inference.instructor_lm_studio_v25 import (
+    AnalysisRequirementV25,
+    JobAnalysisResponseV25,
+)
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _ROOT = Path(__file__).resolve().parents[1]
@@ -108,5 +112,41 @@ def test_v25_model_sees_only_assigned_evidence(monkeypatch) -> None:
     )
     assert captured["model_evidence_references"] == ["assigned", "work"]
     assert captured["contract_version"] == "v25"
+    assert captured["response_model"] is JobAnalysisResponseV25
     assert CURRENT_PROMPT == "job-analysis-english-v23"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v25"
+
+
+def test_shared_list_qualifier_is_trimmed_only_when_source_proves_it() -> None:
+    evidence = "familiarity with Embedding, Vector Database, and Semantic Search"
+    claim = {
+        "concept": "Working with Vector Database",
+        "depth_signal": None,
+        "requirement_type": "contextual",
+        "concept_type": "skill",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "Source list item.",
+        "item_excerpt": "familiarity with Vector Database",
+    }
+    context = {"analysis_mode": "english", "analysis_fields": {"description": evidence}}
+    normalized = AnalysisRequirementV25.model_validate(claim, context=context)
+    assert normalized.item_excerpt == "Vector Database"
+
+
+def test_unsupported_experience_wording_abstains_to_exact_activity() -> None:
+    evidence = "applying new technologies in the field of AI"
+    claim = {
+        "concept": "Experience in applying new technologies in the field of AI",
+        "depth_signal": None,
+        "requirement_type": "contextual",
+        "concept_type": "experience",
+        "evidence": evidence,
+        "confidence": "high",
+        "rationale": "Source activity.",
+        "item_excerpt": evidence,
+    }
+    context = {"analysis_mode": "english", "analysis_fields": {"description": evidence}}
+    normalized = AnalysisRequirementV25.model_validate(claim, context=context)
+    assert normalized.concept == evidence
+    assert normalized.concept_type == "other"

@@ -12,6 +12,7 @@ from jobhunter.config import Settings
 from jobhunter.inference.instructor_lm_studio_v24 import (
     complete_analysis_partition_with_instructor_v24,
 )
+from jobhunter.inference.instructor_lm_studio_v25 import JobAnalysisResponseV25
 from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _SENTENCE_REF_RE = re.compile(r"^(.*):sentence:\d+$")
@@ -123,6 +124,7 @@ class V25CandidateAnalysisProvider(V24CandidateAnalysisProvider):
             **kwargs,
             contract_version="v25",
             model_evidence_references=scoped_refs,
+            response_model=JobAnalysisResponseV25,
         )
         return _filter_unassigned_partition_claims(
             result,
