@@ -526,6 +526,7 @@ def test_v23_discards_extra_work_claim_outside_partition(monkeypatch) -> None:
     )
     provider = object.__new__(V23CandidateAnalysisProvider)
     filtered = provider._complete_partition(
+        requirement_coverage_plan={},
         responsibility_coverage_plan={"duty": "Build AI agents"}
     )
     assert filtered.structured["role_purpose"] == []
@@ -533,6 +534,37 @@ def test_v23_discards_extra_work_claim_outside_partition(monkeypatch) -> None:
     assert filtered.structured["requirements"] == []
     assert filtered.raw_response == result.raw_response
     assert filtered.request_body["runtime"]["p16_v23_dropped_unassigned_work_claims"] == 2
+
+
+def test_v23_discards_valid_requirements_from_other_partition(monkeypatch) -> None:
+    assigned = {"concept": "Python", "evidence": "Python"}
+    extra = {"concept": "RAG", "evidence": "RAG"}
+    result = StructuredInferenceResult(
+        model="test",
+        structured={
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [assigned, extra],
+            "coverage_exclusions": [],
+        },
+        request_body={"runtime": {"contract": "v23"}},
+        raw_response={"original": "retained"},
+        finish_reason="stop",
+    )
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v23.complete_analysis_partition_with_instructor_v23",
+        lambda **_kwargs: result,
+    )
+    provider = object.__new__(V23CandidateAnalysisProvider)
+    filtered = provider._complete_partition(
+        requirement_coverage_plan={"skill": {"text": "Python"}},
+        responsibility_coverage_plan={},
+    )
+    assert filtered.structured["requirements"] == [assigned]
+    assert filtered.raw_response == result.raw_response
+    assert filtered.request_body["runtime"][
+        "p16_v23_dropped_unassigned_requirement_claims"
+    ] == 1
 
 
 def test_explicit_proof_preferences_are_exact_and_preferred() -> None:

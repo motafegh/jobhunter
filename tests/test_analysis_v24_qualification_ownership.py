@@ -19,6 +19,7 @@ from jobhunter.evidence_refs_v24 import persisted_qualification_plan
 from jobhunter.inference.instructor_lm_studio_v24 import (
     complete_analysis_partition_with_instructor_v24,
 )
+from jobhunter.inference.lm_studio import StructuredInferenceResult
 
 _ROOT = Path(__file__).resolve().parents[1]
 
@@ -76,6 +77,36 @@ def test_v24_is_isolated_from_public_v23_identity() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v24"
     assert JobAnalysisServiceV24.prompt_version == ENGLISH_PROMPT_VERSION
     assert CURRENT_PROMPT == "job-analysis-english-v23"
+
+
+def test_v24_filters_requirement_claims_from_other_partitions(monkeypatch) -> None:
+    result = StructuredInferenceResult(
+        model="offline",
+        structured={
+            "role_purpose": [],
+            "responsibilities": [],
+            "requirements": [
+                {"concept": "Python", "evidence": "Python"},
+                {"concept": "RAG", "evidence": "RAG"},
+            ],
+            "coverage_exclusions": [],
+        },
+        request_body={"runtime": {}},
+        raw_response={},
+        finish_reason="stop",
+    )
+    monkeypatch.setattr(
+        "jobhunter.analysis_runtime_v24.complete_analysis_partition_with_instructor_v24",
+        lambda **_kwargs: result,
+    )
+    provider = object.__new__(V24CandidateAnalysisProvider)
+    filtered = provider._complete_partition(
+        requirement_coverage_plan={"skill": {"text": "Python"}},
+        responsibility_coverage_plan={},
+    )
+    assert filtered.structured["requirements"] == [
+        {"concept": "Python", "evidence": "Python"}
+    ]
 
 
 def test_v24_persistence_uses_the_generation_ownership_plan(

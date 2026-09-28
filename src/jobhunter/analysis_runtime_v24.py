@@ -4,7 +4,10 @@ from __future__ import annotations
 
 from typing import Any
 
-from jobhunter.analysis_runtime_v23 import V23CandidateAnalysisProvider
+from jobhunter.analysis_runtime_v23 import (
+    V23CandidateAnalysisProvider,
+    _filter_unassigned_partition_claims,
+)
 from jobhunter.analysis_service_v24 import JobAnalysisServiceV24
 from jobhunter.config import Settings
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
@@ -28,7 +31,12 @@ class V24CandidateAnalysisProvider(V23CandidateAnalysisProvider):
         )
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
-        return complete_analysis_partition_with_instructor_v24(**kwargs)
+        result = complete_analysis_partition_with_instructor_v24(**kwargs)
+        return _filter_unassigned_partition_claims(
+            result,
+            requirement_plan=kwargs["requirement_coverage_plan"],
+            responsibility_plan=kwargs["responsibility_coverage_plan"],
+        )
 
 
 def build_v24_analysis_service(settings: Settings) -> JobAnalysisServiceV24:

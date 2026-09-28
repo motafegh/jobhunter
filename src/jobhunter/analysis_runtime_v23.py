@@ -64,32 +64,10 @@ class V23CandidateAnalysisProvider(V21CandidateAnalysisProvider):
 
     def _complete_partition(self, **kwargs: Any) -> StructuredInferenceResult:
         result = complete_analysis_partition_with_instructor_v23(**kwargs)
-        allowed = {
-            _normalize(text)
-            for text in kwargs["responsibility_coverage_plan"].values()
-        }
-        structured = dict(result.structured)
-        dropped = 0
-        for field in ("role_purpose", "responsibilities"):
-            claims = list(structured[field])
-            structured[field] = [
-                claim for claim in claims
-                if _normalize(str(claim["evidence"])) in allowed
-            ]
-            dropped += len(claims) - len(structured[field])
-        if not dropped:
-            return result
-
-        request_body = dict(result.request_body)
-        runtime = dict(request_body.get("runtime") or {})
-        runtime["p16_v23_dropped_unassigned_work_claims"] = dropped
-        request_body["runtime"] = runtime
-        return StructuredInferenceResult(
-            model=result.model,
-            structured=structured,
-            request_body=request_body,
-            raw_response=result.raw_response,
-            finish_reason=result.finish_reason,
+        return _filter_unassigned_partition_claims(
+            result,
+            requirement_plan=kwargs["requirement_coverage_plan"],
+            responsibility_plan=kwargs["responsibility_coverage_plan"],
         )
 
     def _persistable_structured(self, structured: dict[str, Any]) -> dict[str, Any]:
@@ -102,6 +80,53 @@ _PREFERRED_SENTENCE_END_RE = re.compile(
     re.I,
 )
 _REQUIRED_CUE_RE = re.compile(r"\b(?:essential|required|must|mandatory|necessary)\b", re.I)
+
+
+def _filter_unassigned_partition_claims(
+    result: StructuredInferenceResult,
+    *,
+    requirement_plan: dict[str, dict[str, Any]],
+    responsibility_plan: dict[str, str],
+) -> StructuredInferenceResult:
+    """Keep each partition's valid source claims inside its assigned ledger."""
+
+    allowed_work = {_normalize(text) for text in responsibility_plan.values()}
+    allowed_requirements = {
+        _normalize(str(candidate.get("text") or ""))
+        for candidate in requirement_plan.values()
+    }
+    structured = dict(result.structured)
+    dropped_work = 0
+    for field in ("role_purpose", "responsibilities"):
+        claims = list(structured[field])
+        structured[field] = [
+            claim for claim in claims
+            if _normalize(str(claim["evidence"])) in allowed_work
+        ]
+        dropped_work += len(claims) - len(structured[field])
+    requirements = list(structured["requirements"])
+    structured["requirements"] = [
+        claim for claim in requirements
+        if _normalize(str(claim["evidence"])) in allowed_requirements
+    ]
+    dropped_requirements = len(requirements) - len(structured["requirements"])
+    if not (dropped_work or dropped_requirements):
+        return result
+
+    request_body = dict(result.request_body)
+    runtime = dict(request_body.get("runtime") or {})
+    if dropped_work:
+        runtime["p16_v23_dropped_unassigned_work_claims"] = dropped_work
+    if dropped_requirements:
+        runtime["p16_v23_dropped_unassigned_requirement_claims"] = dropped_requirements
+    request_body["runtime"] = runtime
+    return StructuredInferenceResult(
+        model=result.model,
+        structured=structured,
+        request_body=request_body,
+        raw_response=result.raw_response,
+        finish_reason=result.finish_reason,
+    )
 
 
 def _split_exact_preferred_section_sentences(

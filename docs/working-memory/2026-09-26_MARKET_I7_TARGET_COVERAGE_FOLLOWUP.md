@@ -509,3 +509,14 @@ grounded literal ability statement while abstaining from an unsupported
 normalized capability type (`other`), analogous to its experience-type
 abstention. The source excerpt, obligation, and evidence still validate. This
 removes a style/type-only blocker without weakening source or partition scope.
+
+The bounded isolated v24 check after type abstention failed on a different
+ownership issue in both completions: the model included valid source-backed
+requirements from other assigned partitions, and the inherited v20 post-step
+rejected the entire candidate for that leakage. The source claims were not
+fabricated; their partition assignment was wrong. V23 already filters stray
+duty claims after each partition. The same post-step now filters stray
+requirement claims for both v23 and isolated v24 while preserving each raw
+completion and recording the drop count. Each partition still must satisfy
+its own coverage ledger, and no cross-partition output is promoted as an
+assigned claim. No operational artifact was created by the isolated trial.
