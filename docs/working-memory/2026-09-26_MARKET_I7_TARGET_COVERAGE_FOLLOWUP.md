@@ -662,3 +662,24 @@ is either context-only or explicitly excludable and actually excluded. Dense
 coverage validation still checks those exclusions, and an offline replay of
 both retained MiMo completions now passes. A changed bounded MiMo evaluation
 is justified; the failed run supplied no model-quality verdict.
+
+The changed MiMo v26 `tmvA` check produced a 21-requirement, seven-duty
+pending artifact. It preserved the explicit `young` trait and kept context
+separate better than the Gemma candidate, but review rejected it because the
+inherited depth normalization stored `relative mastery` as plain `mastery`
+and it typed explicit prior n8n work as a tool. MiMo v26 on `t7Ay` produced
+19 requirements quickly, preserving the education alternative and preference,
+but excluded the long, explicit required span listing MCP, Prompt
+Engineering, Tool Calling, embeddings, Python, and API work. That candidate
+was also rejected. Neither result entered operational Market state.
+
+The isolated v27 candidate fixes these source-boundary defects. A residual
+which is an exact subspan of a removed, explicitly required qualification
+parent inherits required/non-excludable ownership; it cannot be silently
+discarded after exact first items decompose the parent. Exact modifiers such
+as `relative mastery` and `initial familiarity` are retained with the degree,
+and explicit `experience working with` is typed as prior experience even when
+the model labels the named tool. An audit of 29 current projections finds
+required-residual inheritance for `t7Ay` and four `ta9l` references only;
+the closed B1 case is not being regenerated. V27 is still isolated and has
+no accepted artifact.
