@@ -53,5 +53,5 @@ def test_tmvA_trait_statement_is_one_exact_source_fact() -> None:
 
 
 def test_v28_keeps_public_v23_current() -> None:
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v28"

@@ -46,5 +46,5 @@ def test_source_explicit_knowledge_is_not_just_the_named_tool() -> None:
 
 
 def test_v29_does_not_change_public_current_contract() -> None:
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v29"

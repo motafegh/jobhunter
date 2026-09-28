@@ -57,7 +57,7 @@ def test_tmvA_negative_and_salary_context_stay_out_of_positive_demand() -> None:
 
 
 def test_v26_is_isolated_from_public_contract() -> None:
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v26"
 
 

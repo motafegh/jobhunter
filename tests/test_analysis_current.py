@@ -55,7 +55,7 @@ def _service() -> tuple[JobAnalysisService, _FakeEnglishService, _FakeOriginalSe
 
 
 def test_current_contract_is_english_v23_and_original_v9() -> None:
-    assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v23"
+    assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v30"
     assert ENGLISH_ANALYSIS_SCHEMA_VERSION == "job-analysis-v5"
     assert ANALYSIS_SCHEMA_VERSION == ENGLISH_ANALYSIS_SCHEMA_VERSION
     assert ORIGINAL_PROMPT_VERSION == "job-analysis-original-v9"

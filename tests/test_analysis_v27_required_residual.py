@@ -25,7 +25,7 @@ def test_required_decomposed_residual_cannot_be_excluded() -> None:
     assert "Model Context Protocol" in residual["text"]
     assert residual["obligation_hint"] == "required"
     assert residual["allow_exclusion"] is False
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v27"
 
 

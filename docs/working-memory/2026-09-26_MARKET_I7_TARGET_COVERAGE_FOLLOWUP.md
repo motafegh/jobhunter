@@ -734,3 +734,25 @@ were labeled only as `skill`. The isolated v30 response contract now retains
 the explicit prior-experience type only when both the model concept and exact
 source item state prior applied experience. It does not convert an activity
 without prior-experience wording. No v30 artifact has been accepted yet.
+
+MiMo v30 `t7Ay` subsequently produced 26 grounded requirements, all eight
+dense required residual items, both exact education clauses, and no invented
+duties. The full source and artifact were reviewed and accepted in an isolated
+database copy. The previously reviewed MiMo v28 `tmvA` artifact was also
+accepted in its isolated copy with 22 requirements and seven exact duties.
+Both reviewed artifacts were copied into local operational SQLite only after
+checking exact current parsed-source version, semantic hash, current English
+projection ID/content/hash, schema, model and prompt identities, review state,
+and evidence validity. The copied analysis, request, and raw response match
+the reviewed originals. Operational artifacts are `tmvA` 61 and `t7Ay` 62.
+The transfer created no model completion and did not auto-accept a candidate.
+
+English P1.6 now routes new generation through v30/v5. Accepted-only v20,
+v21, v23, and v28 artifacts are compatible with v30 when the exact source and
+translation dependencies still match, including across model IDs; their
+stored model/prompt identities remain visible. Pending and rejected prior
+artifacts are not compatible. The same-target read-only affected-work preview
+reports both formerly missing jobs as accepted-current with reused English
+projections and zero analysis work. This is operational job-level coverage;
+the immutable Market snapshot/profile and shared browser/CLI follow-up remain
+to be checked before claiming full target coverage.

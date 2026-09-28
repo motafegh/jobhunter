@@ -644,7 +644,7 @@ def test_v23_proof_partition_is_separate_and_public_contract_is_v23() -> None:
     assert all(not (set(partition) & proof_refs) or set(partition) == proof_refs
                for partition in partitions)
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v23"
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert "candidate_proof" in _ENGLISH_SYSTEM_PROMPT_V23
 
 

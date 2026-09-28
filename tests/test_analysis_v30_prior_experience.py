@@ -32,5 +32,5 @@ def test_activity_without_prior_experience_stays_untyped() -> None:
 
 
 def test_v30_isolated_from_public_v23() -> None:
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v30"

@@ -266,7 +266,14 @@ class AnalysisStore:
                 JOIN job_detail_versions AS v ON v.id = a.job_detail_version_id
                 JOIN job_postings AS p ON p.id = v.job_posting_id
                 WHERE a.semantic_review_status != 'rejected'
-                  AND a.job_detail_version_id = ? AND a.model = ?
+                  AND a.job_detail_version_id = ?
+                  AND (a.model = ? OR (? = 'job-analysis-english-v30'
+                      AND a.semantic_review_status = 'accepted'
+                      AND a.schema_version = 'job-analysis-v5'
+                      AND a.prompt_version IN (
+                          'job-analysis-english-v20', 'job-analysis-english-v21',
+                          'job-analysis-english-v23', 'job-analysis-english-v28',
+                          'job-analysis-english-v30')))
                   AND (a.prompt_version = ?
                        OR (CASE ?
                            WHEN 'job-analysis-english-v21'
@@ -275,6 +282,10 @@ class AnalysisStore:
                            THEN a.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted')) AND a.schema_version = ?
@@ -285,6 +296,7 @@ class AnalysisStore:
                 (
                     job_detail_version_id,
                     model,
+                    prompt_version,
                     prompt_version,
                     prompt_version,
                     schema_version,
@@ -419,7 +431,14 @@ class AnalysisStore:
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
                   )
-                  AND (? IS NULL OR a.model = ?)
+                  AND (? IS NULL OR a.model = ? OR (
+                    ? = 'job-analysis-english-v30'
+                    AND a.semantic_review_status = 'accepted'
+                    AND a.schema_version = 'job-analysis-v5'
+                    AND a.prompt_version IN (
+                        'job-analysis-english-v20', 'job-analysis-english-v21',
+                        'job-analysis-english-v23', 'job-analysis-english-v28',
+                        'job-analysis-english-v30')))
                   AND (? IS NULL OR a.prompt_version = ?
                        OR (CASE ?
                            WHEN 'job-analysis-english-v21'
@@ -428,6 +447,10 @@ class AnalysisStore:
                            THEN a.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted'))
@@ -441,6 +464,7 @@ class AnalysisStore:
                     source_job_id,
                     model,
                     model,
+                    prompt_version,
                     prompt_version,
                     prompt_version,
                     prompt_version,
@@ -479,7 +503,14 @@ class AnalysisStore:
                       SELECT MAX(v2.id) FROM job_detail_versions AS v2
                       WHERE v2.job_posting_id = p.id
                   )
-                  AND (? IS NULL OR a.model = ?)
+                  AND (? IS NULL OR a.model = ? OR (
+                    ? = 'job-analysis-english-v30'
+                    AND a.semantic_review_status = 'accepted'
+                    AND a.schema_version = 'job-analysis-v5'
+                    AND a.prompt_version IN (
+                        'job-analysis-english-v20', 'job-analysis-english-v21',
+                        'job-analysis-english-v23', 'job-analysis-english-v28',
+                        'job-analysis-english-v30')))
                   AND (? IS NULL OR a.prompt_version = ?
                        OR (CASE ?
                            WHEN 'job-analysis-english-v21'
@@ -488,6 +519,10 @@ class AnalysisStore:
                            THEN a.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                            AND a.schema_version = 'job-analysis-v5'
                            AND a.semantic_review_status = 'accepted'))
@@ -497,7 +532,14 @@ class AnalysisStore:
                       SELECT MAX(a2.id) FROM job_analysis_artifacts AS a2
                       WHERE a2.semantic_review_status != 'rejected'
                         AND a2.job_detail_version_id = v.id
-                        AND (? IS NULL OR a2.model = ?)
+                        AND (? IS NULL OR a2.model = ? OR (
+                    ? = 'job-analysis-english-v30'
+                    AND a2.semantic_review_status = 'accepted'
+                    AND a2.schema_version = 'job-analysis-v5'
+                    AND a2.prompt_version IN (
+                        'job-analysis-english-v20', 'job-analysis-english-v21',
+                        'job-analysis-english-v23', 'job-analysis-english-v28',
+                        'job-analysis-english-v30')))
                         AND (? IS NULL OR a2.prompt_version = ?
                              OR (CASE ?
                            WHEN 'job-analysis-english-v21'
@@ -506,6 +548,10 @@ class AnalysisStore:
                            THEN a2.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN a2.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                                  AND a2.schema_version = 'job-analysis-v5'
                                  AND a2.semantic_review_status = 'accepted'))
@@ -521,11 +567,13 @@ class AnalysisStore:
                     prompt_version,
                     prompt_version,
                     prompt_version,
+                    prompt_version,
                     schema_version,
                     schema_version,
                     int(accepted_only),
                     model,
                     model,
+                    prompt_version,
                     prompt_version,
                     prompt_version,
                     prompt_version,

@@ -88,7 +88,7 @@ def test_v24_does_not_suppress_partial_or_preferred_parent() -> None:
 def test_v24_is_isolated_from_public_v23_identity() -> None:
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v24"
     assert JobAnalysisServiceV24.prompt_version == ENGLISH_PROMPT_VERSION
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
 
 
 def test_v24_filters_requirement_claims_from_other_partitions(monkeypatch) -> None:

@@ -135,7 +135,7 @@ def test_v25_model_sees_only_assigned_evidence(monkeypatch) -> None:
     assert captured["model_evidence_references"] == ["assigned", "work"]
     assert captured["contract_version"] == "v25"
     assert captured["response_model"] is JobAnalysisResponseV25
-    assert CURRENT_PROMPT == "job-analysis-english-v23"
+    assert CURRENT_PROMPT == "job-analysis-english-v30"
     assert ENGLISH_PROMPT_VERSION == "job-analysis-english-v25"
 
 

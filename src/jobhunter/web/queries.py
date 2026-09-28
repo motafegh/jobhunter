@@ -156,11 +156,15 @@ class WebRepository:
                            THEN a.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN a.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                                          AND a.schema_version = 'job-analysis-v5'
                                          AND a.semantic_review_status = 'accepted'))
                                 AND a.schema_version = ?
-                                AND (? IS NULL OR a.model = ?)
+                                AND (? IS NULL OR a.model = ? OR ? = 'job-analysis-english-v30')
                                 AND a.semantic_review_status = 'accepted'
                           )
                     ) AS analyzed_jobs,
@@ -174,6 +178,7 @@ class WebRepository:
                     self._analysis_schema_version,
                     self._analysis_model,
                     self._analysis_model,
+                    self._analysis_prompt_version,
                 ),
             ).fetchone()
         discovered = int(row["discovered_jobs"])
@@ -263,11 +268,15 @@ class WebRepository:
                            THEN aa.prompt_version IN (
                                'job-analysis-english-v20',
                                'job-analysis-english-v21')
+                           WHEN 'job-analysis-english-v30'
+                           THEN aa.prompt_version IN (
+                               'job-analysis-english-v20', 'job-analysis-english-v21',
+                               'job-analysis-english-v23', 'job-analysis-english-v28')
                            ELSE 0 END
                                    AND aa.schema_version = 'job-analysis-v5'
                                    AND aa.semantic_review_status = 'accepted'))
                           AND aa.schema_version = ?
-                          AND (? IS NULL OR aa.model = ?)
+                          AND (? IS NULL OR aa.model = ? OR ? = 'job-analysis-english-v30')
                           AND aa.semantic_review_status = 'accepted'
                     ) AS analyzed
                 FROM job_postings AS p
@@ -286,6 +295,7 @@ class WebRepository:
                     self._analysis_schema_version,
                     self._analysis_model,
                     self._analysis_model,
+                    self._analysis_prompt_version,
                 ),
             ).fetchall()
 

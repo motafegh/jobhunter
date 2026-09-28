@@ -16,7 +16,7 @@ from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
 
 
-def _candidate(tmp_path: Path) -> tuple[Path, int, int]:
+def _candidate(tmp_path: Path, *, prompt_version: str = "job-analysis-english-v23") -> tuple[Path, int, int]:
     database = tmp_path / "jobhunter.sqlite3"
     now = datetime(2026, 9, 24, tzinfo=UTC)
     source = JobHunterStore(database)
@@ -48,7 +48,7 @@ def _candidate(tmp_path: Path) -> tuple[Path, int, int]:
     analysis_id = AnalysisStore(database).record_artifact(
         job_detail_version_id=detail.version_id,
         translation_artifact_id=result.artifact_id, model="model",
-        prompt_version="job-analysis-english-v23", schema_version="job-analysis-v5",
+        prompt_version=prompt_version, schema_version="job-analysis-v5",
         analysis={
             "role_purpose": [], "responsibilities": [],
             "requirements": [{
