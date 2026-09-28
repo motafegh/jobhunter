@@ -7,6 +7,7 @@ from types import SimpleNamespace
 import pytest
 
 from jobhunter.analysis_current import ENGLISH_PROMPT_VERSION as CURRENT_PROMPT
+from jobhunter.analysis_persistence_v23 import persisted_analysis_v23
 from jobhunter.analysis_runtime_v14 import _v14_candidate_evidence_view
 from jobhunter.analysis_runtime_v20 import _v20_complete_requirement_plan
 from jobhunter.analysis_runtime_v24 import (
@@ -112,6 +113,33 @@ def test_v24_filters_requirement_claims_from_other_partitions(monkeypatch) -> No
     assert filtered.structured["requirements"] == [
         {"concept": "Python", "evidence": "Python"}
     ]
+
+
+def test_v24_persistence_retains_deterministic_decomposition(monkeypatch) -> None:
+    monkeypatch.setattr(
+        "jobhunter.analysis_persistence_v23.decomposed_requirement_references",
+        lambda _fields: ["parent"],
+    )
+    monkeypatch.setattr(
+        "jobhunter.analysis_persistence_v23.build_requirement_coverage_plan",
+        lambda _fields: {
+            "parent": {"text": "Exact source paragraph.", "allow_exclusion": True}
+        },
+    )
+    structured = {
+        "role_purpose": [],
+        "responsibilities": [],
+        "requirements": [],
+        "coverage_exclusions": [
+            {"evidence_reference": "parent", "rationale": "Decomposed into exact items."}
+        ],
+    }
+    persisted = persisted_analysis_v23(structured, {}, requirement_plan={})
+    assert persisted["coverage"] == [{
+        "evidence": "Exact source paragraph.",
+        "disposition": "decomposed_requirement",
+        "rationale": "Decomposed into exact items.",
+    }]
 
 
 def test_v24_persistence_uses_the_generation_ownership_plan(

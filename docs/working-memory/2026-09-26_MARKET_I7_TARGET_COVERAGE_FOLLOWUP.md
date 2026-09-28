@@ -531,3 +531,13 @@ source fields, including qualification items, residual sentences, exact-item
 ownership, deterministic field removal, and decomposed references. A focused
 test checks the previously missing location reference. No artifact was
 persisted from the failed isolated run.
+
+The next isolated v24 run advanced through generation again and reached
+persistence. It then rejected the deterministic exclusion for the broad
+`field:description:segment:3` paragraph. Exact qualification items had
+intentionally replaced that parent, and the inherited v13 post-step added the
+parent exclusion for historical provenance. V23 persistence now recognizes
+only source-proven decomposed parent references, requires their deterministic
+exclusion, and records them as `decomposed_requirement` rather than as a
+non-requirement. Unknown model exclusions remain invalid. The isolated run
+created no artifact before this repair.

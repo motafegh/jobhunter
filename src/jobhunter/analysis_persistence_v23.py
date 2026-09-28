@@ -5,6 +5,8 @@ from __future__ import annotations
 from typing import Any
 
 from jobhunter.analysis_service import AnalysisValidationError
+from jobhunter.analysis_service_v13 import decomposed_requirement_references
+from jobhunter.evidence_refs import build_requirement_coverage_plan
 from jobhunter.evidence_refs_v21 import build_responsibility_coverage_plan_v21
 from jobhunter.evidence_refs_v23 import build_requirement_coverage_plan_v23
 
@@ -23,6 +25,12 @@ def persisted_analysis_v23(
 
     if requirement_plan is None:
         requirement_plan = build_requirement_coverage_plan_v23(analysis_fields)
+    original_plan = build_requirement_coverage_plan(analysis_fields)
+    decomposed = {
+        reference: original_plan[reference]
+        for reference in decomposed_requirement_references(analysis_fields)
+        if reference in original_plan
+    }
     responsibility_plan = build_responsibility_coverage_plan_v21(analysis_fields)
     requirements = structured.get("requirements") or []
     responsibilities = structured.get("responsibilities") or []
@@ -36,7 +44,7 @@ def persisted_analysis_v23(
     exclusions: dict[str, dict[str, Any]] = {}
     for item in structured.get("coverage_exclusions") or []:
         reference = str(item.get("evidence_reference") or "")
-        candidate = requirement_plan.get(reference)
+        candidate = requirement_plan.get(reference) or decomposed.get(reference)
         if candidate is None or not candidate.get("allow_exclusion", False):
             raise AnalysisValidationError(
                 f"V23 exclusion is unknown or prohibited: {reference!r}"
@@ -74,6 +82,19 @@ def persisted_analysis_v23(
         coverage.append(
             {"evidence": evidence, "disposition": disposition, "rationale": rationale}
         )
+
+    for reference, candidate in decomposed.items():
+        if reference in requirement_plan:
+            continue
+        if reference not in exclusions:
+            raise AnalysisValidationError(
+                f"Missing deterministic decomposition exclusion: {reference!r}"
+            )
+        coverage.append({
+            "evidence": str(candidate["text"]),
+            "disposition": "decomposed_requirement",
+            "rationale": str(exclusions[reference].get("rationale") or ""),
+        })
 
     seen = {_key(item["evidence"]) for item in coverage}
     for skill in analysis_fields.get("skills") or []:
