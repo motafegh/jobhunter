@@ -725,3 +725,12 @@ now abstains to `other` for a source-exact mixed knowledge/experience or
 education/experience item, and labels an explicit `knowledge of X` item as
 knowledge even when X names a tool. No public routing or Market state has
 changed yet.
+
+MiMo v29 `t7Ay` generated a 26-requirement pending candidate with complete
+source coverage and corrected mixed knowledge/experience and Python-knowledge
+typing. Whole-source review rejected it because two exact source statements
+requesting prior practical experience in designing RAG systems and AI Agents
+were labeled only as `skill`. The isolated v30 response contract now retains
+the explicit prior-experience type only when both the model concept and exact
+source item state prior applied experience. It does not convert an activity
+without prior-experience wording. No v30 artifact has been accepted yet.
