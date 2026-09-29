@@ -27,7 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
-Candidate interpretation v3      Gemma + MiMo + browser + regression hardening complete; owner usefulness review pending
+Candidate interpretation v4      V3.1 integrity repair + regression accepted; fresh snapshot-15 local rerun pending
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -61,13 +61,17 @@ accepted/current Capability:      5
 ```
 
 On 2026-09-29 the owner authorized a separate bounded candidate interpretation
-increment. The ephemeral v3 report has shared browser/CLI entry points over an
-exact Market snapshot, with accepted P1.6 citations and application-derived
-posting counts. Gemma and MiMo returned candidate reports; MiMo exposed a
-single-posting speech/audio specialization but also made unsupported caveat
-claims and took substantially longer. Browser rendering and evidence citations
-were verified. No taxonomy is promoted; owner usefulness review remains pending.
-See
+increment. The captured v3 report proved useful enough to continue but exposed
+concrete evidence/presentation defects, so persistence was not authorized.
+The V3.1 repair now uses
+`market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4`:
+interpretive observations and alternatives are individually evidence-bound,
+internal compact IDs fail closed, source mentions require same-source evidence,
+available-vs-cited evidence is separated, and one-posting role candidates are
+presented as specialty/outlier candidates rather than reusable subfamilies.
+CI `36611296932` passed Ruff, 814 tests, and 814 warnings-as-errors tests.
+The current gate is one fresh snapshot-15 real-model/browser rerun and owner
+review before any persistence decision. No taxonomy is promoted. See
 `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
@@ -414,8 +418,9 @@ B1 CLOSED / DEFER
 → v23/v5 artifact 50 explicitly accepted and frozen in Market snapshots 4-6
 → I7 PASS / bounded first Market vertical slice CLOSED
 → owner-requested same-target coverage follow-up COMPLETE (snapshots 14-15; six of six core P1.6 accepted-current)
-→ ephemeral candidate interpretation v3 EXECUTED (Gemma + MiMo + browser)
-→ current gate: owner usefulness review + explicit report disposition; no taxonomy promotion
+→ ephemeral candidate interpretation v3 EXECUTED + owner usefulness review COMPLETE
+→ V3.1 integrity repair implemented as candidate v4; CI 36611296932 GREEN
+→ current gate: fresh snapshot-15 real-model/browser rerun + explicit report disposition; no taxonomy promotion
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
