@@ -1,14 +1,14 @@
 # Market candidate interpretation v1
 
 **Date:** 2026-09-29  
-**Status:** V3 implementation, bounded two-model run, and rendered browser flow complete; owner usefulness review pending
+**Status:** V3 owner usefulness review complete; V3.1 integrity repair implemented as candidate v4/prompt v4 with green regression gates; fresh snapshot-15 real-model/browser rerun pending
 **Scope:** One ephemeral candidate work/role-subfamily report over an exact immutable Market snapshot
 
 ## Decision and boundaries
 
 The owner authorized the first report-level interpretation increment after bounded I7 closure. V1 is an on-demand analytical candidate. It does not promote responsibility concepts, establish stable archetypes, or make broad-market prevalence claims.
 
-The report reads only core snapshot members whose exact P1.6 artifact is accepted and whose job, source-version, translation, and analysis identities match the frozen snapshot. It provides accepted P1.6 responsibilities and requirements as cited evidence. The model proposes group labels, summaries, and alternatives; application code resolves every citation and computes distinct supporting posting counts.
+The report reads only core snapshot members whose exact P1.6 artifact is accepted and whose job, source-version, translation, and analysis identities match the frozen snapshot. It provides accepted P1.6 responsibilities and requirements as cited evidence. In current v4, the model proposes group labels plus evidence-bound interpretation points and evidence-bound alternatives; application code resolves citations and owns distinct supporting-posting counts, evidence counts, confidence caps, and support-basis classification.
 
 Browser and CLI use the same generator. The browser executes through the existing one-at-a-time `WebOperationManager`. Browser output is held only in the current process, and CLI output is printed as JSON. No report table, candidate report file, raw prompt/response, or Market state is written to the public corpus. Browser output is cleared on process restart.
 
@@ -86,3 +86,41 @@ The regression harness uses real temporary SQLite source/translation/P1.6/Market
 CI run `36597463699` on commit `3d557130` passed Ruff, **812 tests**, and **812 warnings-as-errors tests**.
 
 Engineering hardening is therefore complete for the current bounded v3 increment. The remaining gate is owner usefulness review and the explicit decision to keep the report ephemeral or authorize a separately versioned persisted report contract. This does not promote any role family or taxonomy.
+
+## Owner usefulness review and V3.1 integrity repair — 2026-09-29
+
+The owner reviewed the exact rendered v3 snapshot-15 artifact preserved in commit `c0c8998`. The product conclusion was **useful synthesis, not persistence-ready**. The work-cluster layer reduced manual reading and surfaced a meaningful Speech AI specialty from requirement evidence, but the review exposed concrete defects:
+
+- the top support display repeated the same posting once per cited claim instead of showing distinct supporting postings;
+- `175` available P1.6 claims were labeled as though all 175 were cited by the report;
+- model-facing compact `C*` IDs leaked into user-facing prose;
+- the overall reading could mention a source such as `t7Ay` or `t7ck` without evidence from that same source being attached to the statement;
+- group prose could import a concrete detail from an uncited claim, and free-text alternatives could introduce uncited jobs;
+- one-posting candidates such as Speech AI and Full-Stack AI were presented too much like reusable role subfamilies;
+- the role-subfamily section often repeated work clusters rather than clearly adding a distinct multi-posting role-shape interpretation.
+
+Decision: keep the report **ephemeral**, repair the observed integrity/usability defects once, rerun the same frozen snapshot, and only then decide whether a separately persisted report contract is warranted.
+
+Because the response/evidence semantics changed materially, V3.1 uses new contract identities rather than silently reusing v3:
+
+```text
+report: market-role-family-candidate-v4
+prompt: market-role-family-candidate-prompt-v4
+```
+
+V4 changes:
+
+- replaces one broad overall paragraph with evidence-bound overall observations;
+- replaces free summary/rationale prose with evidence-bound interpretation points;
+- makes every alternative an evidence-bound object;
+- fails closed if an internal compact `C*` ID leaks into user-facing prose;
+- fails closed when an interpretation mentions a source alias without citing evidence from that source;
+- withholds employer names and job titles from the model-facing input so source-specific interpretation must come from accepted claims;
+- computes distinct overall support, available-vs-cited evidence counts, and responsibility/requirement support basis in application code;
+- marks requirement-only groups explicitly as specialty/qualification signals rather than inferred duties;
+- keeps one-posting work patterns low-confidence and routes one-posting role candidates to a specialty/outlier section instead of the multi-posting role-subfamily section;
+- instructs role-subfamily generation to require at least two postings and add a role-shape distinction rather than merely rename a work cluster.
+
+Regression coverage now also proves compact-ID rejection, same-source evidence binding for source mentions, evidence-bound alternatives, available-vs-cited counts, responsibility-vs-requirement support basis, and singleton specialty routing. Final CI run `36611296932` passed Ruff, **814 tests**, and **814 warnings-as-errors tests** on commit `76e8e320`.
+
+The remaining acceptance action is intentionally local and bounded: pull/restart the maintainer app, regenerate snapshot 15 once with the default Gemma analysis model, capture the rendered v4 artifact, and compare it directly against the defects above. No report persistence, role-family promotion, or broader taxonomy work is authorized before that review.
