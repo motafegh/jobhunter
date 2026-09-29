@@ -14,36 +14,62 @@ from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.market_store import MarketStore
 from jobhunter.storage import JobHunterStore
 
-REPORT_CONTRACT = "market-role-family-candidate-v3"
-PROMPT_VERSION = "market-role-family-candidate-prompt-v3"
+REPORT_CONTRACT = "market-role-family-candidate-v4"
+PROMPT_VERSION = "market-role-family-candidate-prompt-v4"
+
+_INTERNAL_CITATION_RE = re.compile(r"\\bC\\d+\\b")
 
 
-def _response_schema(citation_ids: list[str]) -> dict[str, Any]:
-    item = {
+def _evidence_bound_text_schema(
+    citation_ids: list[str],
+    *,
+    text_key: str = "text",
+    max_length: int = 600,
+) -> dict[str, Any]:
+    return {
         "type": "object",
         "additionalProperties": False,
-        "required": [
-            "label",
-            "summary",
-            "why_grouped",
-            "evidence_refs",
-            "confidence",
-            "alternatives",
-        ],
+        "required": [text_key, "evidence_refs"],
         "properties": {
-            "label": {"type": "string", "minLength": 1, "maxLength": 120},
-            "summary": {"type": "string", "minLength": 1, "maxLength": 600},
-            "why_grouped": {"type": "string", "minLength": 1, "maxLength": 600},
+            text_key: {"type": "string", "minLength": 1, "maxLength": max_length},
             "evidence_refs": {
                 "type": "array",
                 "minItems": 1,
                 "uniqueItems": True,
                 "items": {"type": "string", "enum": citation_ids},
             },
+        },
+    }
+
+
+def _response_schema(citation_ids: list[str]) -> dict[str, Any]:
+    interpretation_point = _evidence_bound_text_schema(citation_ids)
+    alternative = _evidence_bound_text_schema(
+        citation_ids,
+        text_key="label",
+        max_length=240,
+    )
+    item = {
+        "type": "object",
+        "additionalProperties": False,
+        "required": [
+            "label",
+            "interpretation_points",
+            "confidence",
+            "alternatives",
+        ],
+        "properties": {
+            "label": {"type": "string", "minLength": 1, "maxLength": 120},
+            "interpretation_points": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 4,
+                "items": interpretation_point,
+            },
             "confidence": {"type": "string", "enum": ["low", "moderate", "high"]},
             "alternatives": {
                 "type": "array",
-                "items": {"type": "string", "maxLength": 240},
+                "items": alternative,
                 "maxItems": 4,
             },
         },
@@ -52,19 +78,17 @@ def _response_schema(citation_ids: list[str]) -> dict[str, Any]:
         "type": "object",
         "additionalProperties": False,
         "required": [
-            "overall_reading",
-            "overall_evidence_refs",
+            "overall_observations",
             "work_clusters",
             "possible_role_subfamilies",
             "limitations",
         ],
         "properties": {
-            "overall_reading": {"type": "string", "minLength": 1, "maxLength": 1000},
-            "overall_evidence_refs": {
+            "overall_observations": {
                 "type": "array",
                 "minItems": 1,
-                "uniqueItems": True,
-                "items": {"type": "string", "enum": citation_ids},
+                "maxItems": 6,
+                "items": interpretation_point,
             },
             "work_clusters": {"type": "array", "items": item, "maxItems": 12},
             "possible_role_subfamilies": {"type": "array", "items": item, "maxItems": 8},
@@ -75,7 +99,6 @@ def _response_schema(citation_ids: list[str]) -> dict[str, Any]:
             },
         },
     }
-
 
 def _resolve_source_aliases(value: Any, aliases: dict[str, str]) -> Any:
     if isinstance(value, str):
@@ -90,6 +113,156 @@ def _resolve_source_aliases(value: Any, aliases: dict[str, str]) -> Any:
             for key, item in value.items()
         }
     return value
+
+
+def _ordered_unique(values: list[str]) -> list[str]:
+    return list(dict.fromkeys(values))
+
+
+def _resolve_evidence_refs(
+    compact_refs: list[str],
+    *,
+    compact_ref_map: dict[str, str],
+    evidence: dict[str, dict[str, Any]],
+) -> tuple[list[str], list[dict[str, Any]]]:
+    full_refs = [compact_ref_map[ref] for ref in compact_refs]
+    return full_refs, [evidence[ref] for ref in full_refs]
+
+
+def _validate_and_resolve_prose(
+    text: str,
+    *,
+    compact_refs: list[str],
+    compact_ref_map: dict[str, str],
+    evidence: dict[str, dict[str, Any]],
+    source_aliases: dict[str, str],
+) -> str:
+    if _INTERNAL_CITATION_RE.search(text):
+        raise ValueError("Candidate report prose leaked an internal compact evidence ID")
+
+    cited_source_job_ids = {
+        evidence[compact_ref_map[ref]]["source_job_id"] for ref in compact_refs
+    }
+    for source_job_id, alias in source_aliases.items():
+        alias_is_mentioned = re.search(rf"\b{re.escape(alias)}\b", text) is not None
+        if alias_is_mentioned and source_job_id not in cited_source_job_ids:
+            raise ValueError(
+                "Candidate report prose mentions a source alias without evidence from that source"
+            )
+    return _resolve_source_aliases(text, source_aliases)
+
+
+def _hydrate_evidence_bound_text(
+    item: dict[str, Any],
+    *,
+    text_key: str,
+    compact_ref_map: dict[str, str],
+    evidence: dict[str, dict[str, Any]],
+    source_aliases: dict[str, str],
+) -> dict[str, Any]:
+    compact_refs = list(item["evidence_refs"])
+    full_refs, used = _resolve_evidence_refs(
+        compact_refs,
+        compact_ref_map=compact_ref_map,
+        evidence=evidence,
+    )
+    resolved_text = _validate_and_resolve_prose(
+        item[text_key],
+        compact_refs=compact_refs,
+        compact_ref_map=compact_ref_map,
+        evidence=evidence,
+        source_aliases=source_aliases,
+    )
+    supporting_source_job_ids = sorted({entry["source_job_id"] for entry in used})
+    return {
+        text_key: resolved_text,
+        "evidence_refs": full_refs,
+        "evidence": used,
+        "evidence_count": len(full_refs),
+        "supporting_posting_count": len(supporting_source_job_ids),
+        "supporting_source_job_ids": supporting_source_job_ids,
+    }
+
+
+def _support_basis(used: list[dict[str, Any]]) -> str:
+    kinds = {item["kind"] for item in used}
+    if kinds == {"responsibility"}:
+        return "responsibility_supported_work"
+    if kinds == {"requirement"}:
+        return "requirement_derived_specialty"
+    return "mixed_responsibility_and_requirement"
+
+
+def _hydrate_group(
+    group: dict[str, Any],
+    *,
+    compact_ref_map: dict[str, str],
+    evidence: dict[str, dict[str, Any]],
+    source_aliases: dict[str, str],
+) -> dict[str, Any]:
+    points = [
+        _hydrate_evidence_bound_text(
+            item,
+            text_key="text",
+            compact_ref_map=compact_ref_map,
+            evidence=evidence,
+            source_aliases=source_aliases,
+        )
+        for item in group["interpretation_points"]
+    ]
+    compact_primary_refs = _ordered_unique(
+        [
+            ref
+            for item in group["interpretation_points"]
+            for ref in item["evidence_refs"]
+        ]
+    )
+    full_refs, used = _resolve_evidence_refs(
+        compact_primary_refs,
+        compact_ref_map=compact_ref_map,
+        evidence=evidence,
+    )
+    resolved_label = _validate_and_resolve_prose(
+        group["label"],
+        compact_refs=compact_primary_refs,
+        compact_ref_map=compact_ref_map,
+        evidence=evidence,
+        source_aliases=source_aliases,
+    )
+    alternatives = [
+        _hydrate_evidence_bound_text(
+            item,
+            text_key="label",
+            compact_ref_map=compact_ref_map,
+            evidence=evidence,
+            source_aliases=source_aliases,
+        )
+        for item in group["alternatives"]
+    ]
+    supporting_source_job_ids = sorted({item["source_job_id"] for item in used})
+    supporting_posting_count = len(supporting_source_job_ids)
+    confidence = group["confidence"]
+    if supporting_posting_count == 1:
+        confidence = "low"
+    elif supporting_posting_count < 4 and confidence == "high":
+        confidence = "moderate"
+    return {
+        "label": resolved_label,
+        "interpretation_points": points,
+        "evidence_refs": full_refs,
+        "evidence": used,
+        "evidence_count": len(full_refs),
+        "supporting_posting_count": supporting_posting_count,
+        "supporting_source_job_ids": supporting_source_job_ids,
+        "confidence": confidence,
+        "alternatives": alternatives,
+        "support_basis": _support_basis(used),
+        "candidate_scope": (
+            "single_posting_specialty_or_outlier"
+            if supporting_posting_count == 1
+            else "multi_posting_pattern"
+        ),
+    }
 
 
 def build_market_candidate_report(
@@ -202,17 +375,25 @@ def build_market_candidate_report(
     result = provider.complete_structured(
         system_prompt=(
             "You are producing a bounded interpretation of one small, frozen job-market sample. "
-            "Group related work and suggest possible role subfamilies only where cited claims "
-            "support it. These are hypotheses, not employer facts or promoted taxonomy. Use "
-            "responsibilities as primary support; requirements may explain differences. Jobs may "
-            "support multiple groups or none. Do not invent counts, prevalence, employers, tools, "
-            "seniority, or source claims. Cite only supplied evidence refs. State ambiguity and "
+            "Group related work and suggest possible role subfamilies only where exact "
+            "cited claims support the interpretation. These are hypotheses, not employer facts "
+            "or promoted taxonomy. Responsibilities are primary evidence for performed work. "
+            "Requirements may identify a specialty or qualification shape, but must never be "
+            "relabeled as duties. Every overall observation, interpretation point, and "
+            "alternative label must cite only the exact supplied evidence refs that support that "
+            "text. If you mention a source alias in text, that text must cite evidence from that "
+            "same source. Do not write compact C-number citation IDs in prose; use them only in "
+            "evidence_refs. Do not import a concrete tool, system, employer, specialization, or "
+            "other source detail from uncited claims. Jobs may support multiple work clusters or "
+            "none. Possible role subfamilies must be supported by at least two distinct postings "
+            "and must add a role-shape distinction rather than merely rename a work cluster; "
+            "otherwise omit them. A one-posting pattern may remain a work cluster/specialty "
+            "hypothesis but is not evidence of a reusable subfamily. Do not invent counts, "
+            "prevalence, employers, tools, seniority, or source claims. State ambiguity and "
             "alternatives plainly. A small sample limits confidence; do not generalize broadly. "
-            "Do not speculate that source wording is copied or erroneous. Requirements are "
-            "available as Q claims; do not claim tools or counts are unavailable. Employer names "
-            "are intentionally omitted from the input. Describe counts as snapshot coverage, not "
-            "market demand. If a title adds a specialization beyond its cited claims, lower "
-            "confidence and state the uncertainty. Empty groups are valid."
+            "Do not speculate that source wording is copied or erroneous. Employer names and job "
+            "titles are intentionally omitted from the model input. Describe counts as snapshot "
+            "coverage, not market demand. Empty groups are valid."
         ),
         user_payload={
             "snapshot": {
@@ -220,10 +401,7 @@ def build_market_candidate_report(
                 "contract": snapshot.snapshot_contract_version,
                 "definition_id": snapshot.target_definition_version_id,
             },
-            "source_aliases": [
-                [source_aliases[source_job_id], value["title"]]
-                for source_job_id, value in sources.items()
-            ],
+            "source_aliases": list(source_aliases.values()),
             "sample_counts": {
                 "accepted_semantic_core_postings": len(sources),
                 "responsibility_claims": sum(
@@ -246,24 +424,67 @@ def build_market_candidate_report(
         max_tokens=min(settings.analysis_max_tokens, 2048),
         seed=0,
     )
-    structured = _resolve_source_aliases(result.structured, source_aliases)
-    overall_evidence = [
-        evidence[compact_ref_map[ref]]
-        for ref in structured.pop("overall_evidence_refs")
+    structured = result.structured
+    overall_observations = [
+        _hydrate_evidence_bound_text(
+            item,
+            text_key="text",
+            compact_ref_map=compact_ref_map,
+            evidence=evidence,
+            source_aliases=source_aliases,
+        )
+        for item in structured["overall_observations"]
     ]
-    for section in ("work_clusters", "possible_role_subfamilies"):
-        for group in structured[section]:
-            refs = [compact_ref_map[ref] for ref in group["evidence_refs"]]
-            used = [evidence[ref] for ref in refs]
-            group["evidence_refs"] = refs
-            group["supporting_posting_count"] = len({item["source_job_id"] for item in used})
-            group["supporting_source_job_ids"] = sorted({item["source_job_id"] for item in used})
-            if group["supporting_posting_count"] == 1:
-                group["confidence"] = "low"
-            elif group["supporting_posting_count"] < 4 and group["confidence"] == "high":
-                group["confidence"] = "moderate"
-            group["evidence"] = used
+    work_clusters = [
+        _hydrate_group(
+            group,
+            compact_ref_map=compact_ref_map,
+            evidence=evidence,
+            source_aliases=source_aliases,
+        )
+        for group in structured["work_clusters"]
+    ]
+    hydrated_roles = [
+        _hydrate_group(
+            group,
+            compact_ref_map=compact_ref_map,
+            evidence=evidence,
+            source_aliases=source_aliases,
+        )
+        for group in structured["possible_role_subfamilies"]
+    ]
+    possible_role_subfamilies = [
+        group for group in hydrated_roles if group["supporting_posting_count"] >= 2
+    ]
+    specialty_candidates = [
+        group for group in hydrated_roles if group["supporting_posting_count"] == 1
+    ]
 
+    cited_refs = _ordered_unique(
+        [
+            ref
+            for item in overall_observations
+            for ref in item["evidence_refs"]
+        ]
+        + [
+            ref
+            for group in work_clusters + hydrated_roles
+            for ref in group["evidence_refs"]
+        ]
+        + [
+            ref
+            for group in work_clusters + hydrated_roles
+            for alternative in group["alternatives"]
+            for ref in alternative["evidence_refs"]
+        ]
+    )
+    overall_source_job_ids = sorted(
+        {
+            source_job_id
+            for item in overall_observations
+            for source_job_id in item["supporting_source_job_ids"]
+        }
+    )
     source_ids_without_responsibilities = sorted(
         source_job_id
         for source_job_id in sources
@@ -273,6 +494,12 @@ def build_market_candidate_report(
             for item in evidence.values()
         )
     )
+    responsibility_claim_count = sum(
+        item["kind"] == "responsibility" for item in evidence.values()
+    )
+    requirement_claim_count = sum(
+        item["kind"] == "requirement" for item in evidence.values()
+    )
     return {
         "contract": REPORT_CONTRACT,
         "prompt_version": PROMPT_VERSION,
@@ -281,7 +508,10 @@ def build_market_candidate_report(
         "target_definition_id": snapshot.target_definition_version_id,
         "model": result.model,
         "source_count": len(sources),
-        "evidence_count": len(evidence),
+        "available_evidence_count": len(evidence),
+        "available_responsibility_claim_count": responsibility_claim_count,
+        "available_requirement_claim_count": requirement_claim_count,
+        "cited_evidence_count": len(cited_refs),
         "source_aliases": {
             source_aliases[source_job_id]: {
                 "source_job_id": source_job_id,
@@ -289,6 +519,8 @@ def build_market_candidate_report(
             }
             for source_job_id, value in sources.items()
         },
+        "overall_observations": overall_observations,
+        "overall_supporting_source_job_ids": overall_source_job_ids,
         "responsibility_coverage": {
             "postings_with_work_claims": sum(
                 any(
@@ -298,22 +530,24 @@ def build_market_candidate_report(
                 )
                 for source_job_id in sources
             ),
-            "postings_without_work_claims": sorted(
-                source_ids_without_responsibilities
-            ),
+            "postings_without_work_claims": source_ids_without_responsibilities,
         },
         "scope_limitations": [
             f"Small snapshot sample: {len(sources)} accepted-semantic core postings.",
             f"{len(source_ids_without_responsibilities)} of {len(sources)} postings have no "
             "extracted responsibilities; their duties are not inferred.",
-            "Employer names are withheld from the interpretation input.",
+            "Requirement-only groups are specialty/qualification hypotheses, not inferred duties.",
+            "Employer names and job titles are withheld from the interpretation input.",
             "This point-in-time snapshot does not establish broad-market prevalence or trends.",
         ],
-        "overall_evidence": overall_evidence,
-        **structured,
+        "work_clusters": work_clusters,
+        "possible_role_subfamilies": possible_role_subfamilies,
+        "specialty_candidates": specialty_candidates,
+        "limitations": _resolve_source_aliases(structured["limitations"], source_aliases),
         "sources": list(sources.values()),
         "authority_note": (
             "Ephemeral analytical candidate based on accepted P1.6 in this frozen snapshot. "
             "Not employer wording, a promoted taxonomy, or broad-market prevalence."
         ),
     }
+

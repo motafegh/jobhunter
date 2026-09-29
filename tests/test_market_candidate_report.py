@@ -160,21 +160,26 @@ class CandidateReportHarness:
         return snapshot.id
 
 
-def _fixture_group(label: str, refs: list[str], *, confidence: str = "high") -> dict:
+def _fixture_point(text: str, refs: list[str]) -> dict:
+    return {"text": text, "evidence_refs": refs}
+
+
+def _fixture_group(
+    label: str,
+    refs: list[str],
+    *,
+    confidence: str = "high",
+    alternatives: list[dict] | None = None,
+) -> dict:
     return {
         "label": label,
-        "summary": f"{label} summary",
-        "why_grouped": f"{label} rationale",
-        "evidence_refs": refs,
+        "interpretation_points": [_fixture_point(f"{label} interpretation", refs)],
         "confidence": confidence,
-        "alternatives": [],
+        "alternatives": alternatives or [],
     }
 
 
-def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
-    tmp_path: Path,
-    monkeypatch,
-) -> None:
+def _seed_two_job_snapshot(tmp_path: Path) -> tuple[CandidateReportHarness, int]:
     harness = CandidateReportHarness(tmp_path)
     first = harness.seed_job(
         "job-a",
@@ -211,7 +216,14 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
             }
         ],
     )
-    snapshot_id = harness.snapshot(first, second)
+    return harness, harness.snapshot(first, second)
+
+
+def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
 
     monkeypatch.setattr(
         "jobhunter.market_candidate_report.ensure_lm_studio_model_context",
@@ -225,23 +237,30 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
             "responsibility_claims": 2,
             "requirement_claims": 2,
         }
+        assert payload["source_aliases"] == ["J1", "J2"]
         assert [row[0] for row in payload["claims"]] == ["C1", "C2", "C3", "C4"]
-        assert kwargs["schema"]["properties"]["overall_evidence_refs"]["items"]["enum"] == [
-            "C1",
-            "C2",
-            "C3",
-            "C4",
-        ]
+        schema = kwargs["schema"]
+        assert schema["properties"]["overall_observations"]["items"]["properties"][
+            "evidence_refs"
+        ]["items"]["enum"] == ["C1", "C2", "C3", "C4"]
         return StructuredInferenceResult(
             model=kwargs["model"],
             structured={
-                "overall_reading": "J1 carries the main work evidence; J2 adds a niche.",
-                "overall_evidence_refs": ["C1"],
+                "overall_observations": [
+                    _fixture_point("J1 carries the main work evidence.", ["C1"]),
+                    _fixture_point("J2 adds a speech specialty signal.", ["C4"]),
+                ],
                 "work_clusters": [
-                    _fixture_group("Agent delivery in J1", ["C1", "C2"]),
+                    _fixture_group(
+                        "Agent delivery",
+                        ["C1", "C2"],
+                        alternatives=[{"label": "Agent operations", "evidence_refs": ["C2"]}],
+                    ),
+                    _fixture_group("Speech specialty", ["C4"]),
                 ],
                 "possible_role_subfamilies": [
-                    _fixture_group("Applied AI with J1 and J2", ["C1", "C4"]),
+                    _fixture_group("Applied AI across J1 and J2", ["C1", "C4"]),
+                    _fixture_group("Speech AI specialist", ["C4"]),
                 ],
                 "limitations": ["J2 has no responsibility claims."],
             },
@@ -267,24 +286,38 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
 
     report = build_market_candidate_report(harness.settings, snapshot_id)
 
-    assert report["contract"] == "market-role-family-candidate-v3"
+    assert report["contract"] == "market-role-family-candidate-v4"
+    assert report["prompt_version"] == "market-role-family-candidate-prompt-v4"
     assert report["source_count"] == 2
-    assert report["evidence_count"] == 4
-    assert "job-a" in report["overall_reading"]
-    assert "job-b" in report["overall_reading"]
-    assert "J1" not in report["overall_reading"]
-    assert "J2" not in report["overall_reading"]
+    assert report["available_evidence_count"] == 4
+    assert report["available_responsibility_claim_count"] == 2
+    assert report["available_requirement_claim_count"] == 2
+    assert report["cited_evidence_count"] == 3
+    assert report["overall_supporting_source_job_ids"] == ["job-a", "job-b"]
+    assert [item["text"] for item in report["overall_observations"]] == [
+        "job-a carries the main work evidence.",
+        "job-b adds a speech specialty signal.",
+    ]
 
-    work = report["work_clusters"][0]
-    assert work["supporting_posting_count"] == 1
-    assert work["supporting_source_job_ids"] == ["job-a"]
-    assert work["confidence"] == "low"
+    agent_work = report["work_clusters"][0]
+    assert agent_work["supporting_posting_count"] == 1
+    assert agent_work["supporting_source_job_ids"] == ["job-a"]
+    assert agent_work["confidence"] == "low"
+    assert agent_work["support_basis"] == "responsibility_supported_work"
+    assert agent_work["candidate_scope"] == "single_posting_specialty_or_outlier"
+    assert agent_work["alternatives"][0]["evidence_refs"] == ["W:job-a:1"]
+
+    speech_work = report["work_clusters"][1]
+    assert speech_work["support_basis"] == "requirement_derived_specialty"
+    assert speech_work["candidate_scope"] == "single_posting_specialty_or_outlier"
 
     role = report["possible_role_subfamilies"][0]
     assert role["supporting_posting_count"] == 2
     assert role["supporting_source_job_ids"] == ["job-a", "job-b"]
     assert role["confidence"] == "moderate"
 
+    assert report["specialty_candidates"][0]["label"] == "Speech AI specialist"
+    assert report["specialty_candidates"][0]["supporting_source_job_ids"] == ["job-b"]
     assert report["responsibility_coverage"] == {
         "postings_with_work_claims": 1,
         "postings_without_work_claims": ["job-b"],
@@ -301,6 +334,49 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
 
     assert after == before
     assert candidate_tables == []
+
+
+@pytest.mark.parametrize(
+    ("text", "refs", "error"),
+    [
+        ("Internal evidence C1 must not leak.", ["C1"], "internal compact evidence ID"),
+        (
+            "J2 is a speech specialist.",
+            ["C1"],
+            "mentions a source alias without evidence from that source",
+        ),
+    ],
+)
+def test_candidate_report_rejects_untraceable_prose(
+    tmp_path: Path,
+    monkeypatch,
+    text: str,
+    refs: list[str],
+    error: str,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.ensure_lm_studio_model_context",
+        lambda **kwargs: None,
+    )
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.LMStudioProvider.complete_structured",
+        lambda _self, **kwargs: StructuredInferenceResult(
+            model=kwargs["model"],
+            structured={
+                "overall_observations": [_fixture_point(text, refs)],
+                "work_clusters": [],
+                "possible_role_subfamilies": [],
+                "limitations": [],
+            },
+            request_body={},
+            raw_response={},
+            finish_reason="stop",
+        ),
+    )
+
+    with pytest.raises(ValueError, match=error):
+        build_market_candidate_report(harness.settings, snapshot_id)
 
 
 def test_candidate_report_rejects_snapshot_analysis_identity_mismatch(
@@ -380,32 +456,46 @@ def test_candidate_report_browser_operation_and_rendering(
         "statement": "Build agent workflows.",
         "source_excerpt": "Build agent workflows.",
     }
+    point = {
+        "text": "Bounded fixture interpretation.",
+        "evidence_refs": ["W:job-a:0"],
+        "evidence": [evidence],
+        "evidence_count": 1,
+        "supporting_posting_count": 1,
+        "supporting_source_job_ids": ["job-a"],
+    }
+    group = {
+        "label": "Agent delivery",
+        "interpretation_points": [{**point, "text": "Build agent workflows."}],
+        "evidence_refs": ["W:job-a:0"],
+        "evidence": [evidence],
+        "evidence_count": 1,
+        "supporting_posting_count": 1,
+        "supporting_source_job_ids": ["job-a"],
+        "confidence": "low",
+        "alternatives": [],
+        "support_basis": "responsibility_supported_work",
+        "candidate_scope": "single_posting_specialty_or_outlier",
+    }
     report = {
-        "contract": "market-role-family-candidate-v3",
+        "contract": "market-role-family-candidate-v4",
         "snapshot_id": 15,
-        "overall_reading": "Bounded fixture interpretation.",
-        "overall_evidence": [evidence],
+        "overall_observations": [point],
+        "overall_supporting_source_job_ids": ["job-a"],
         "model": "fixture-model",
         "source_count": 1,
-        "evidence_count": 1,
+        "available_evidence_count": 1,
+        "available_responsibility_claim_count": 1,
+        "available_requirement_claim_count": 0,
+        "cited_evidence_count": 1,
         "responsibility_coverage": {
             "postings_with_work_claims": 1,
             "postings_without_work_claims": [],
         },
         "authority_note": "Candidate interpretation only.",
-        "work_clusters": [
-            {
-                "label": "Agent delivery",
-                "summary": "Build agent workflows.",
-                "why_grouped": "One exact responsibility supports this candidate group.",
-                "supporting_posting_count": 1,
-                "supporting_source_job_ids": ["job-a"],
-                "confidence": "low",
-                "alternatives": [],
-                "evidence": [evidence],
-            }
-        ],
+        "work_clusters": [group],
         "possible_role_subfamilies": [],
+        "specialty_candidates": [],
         "scope_limitations": ["Small fixture sample."],
         "limitations": ["Interpretive output."],
     }
@@ -445,6 +535,10 @@ def test_candidate_report_browser_operation_and_rendering(
         assert rendered.status_code == 200
         assert "Bounded fixture interpretation." in rendered.text
         assert "Agent delivery" in rendered.text
+        assert "1 available P1.6 claims" in rendered.text
+        assert "1 unique claims cited by this candidate report" in rendered.text
+        assert "Responsibility-supported work." in rendered.text
+        assert "Single-posting specialty/outlier candidate" in rendered.text
         assert "job-a" in rendered.text
         assert "Candidate interpretation only." in rendered.text
     finally:

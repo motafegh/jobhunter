@@ -3,41 +3,93 @@
 {% block heading %}Candidate interpretation{% endblock %}
 {% block eyebrow %}Snapshot {{ report.snapshot_id }} · {{ report.contract }}{% endblock %}
 {% block topbar_actions %}<a class="button secondary" href="/market/snapshots/{{ report.snapshot_id }}">Back to snapshot</a>{% endblock %}
+
+{% macro evidence_summary(item) %}
+<p class="muted"><strong>Evidence:</strong> {{ item.evidence_count }} exact claim{% if item.evidence_count != 1 %}s{% endif %} across {{ item.supporting_posting_count }} snapshot posting{% if item.supporting_posting_count != 1 %}s{% endif %}: {% for job_id in item.supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+{% endmacro %}
+
+{% macro exact_evidence(items) %}
+<details><summary>Exact cited P1.6 claims</summary>
+  {% for item in items %}
+  <p><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · {{ item.kind }} · artifact #{{ item.analysis_artifact_id }} · {{ item.ref }}</p>
+  <blockquote>{{ item.statement }}{% if item.source_excerpt and item.source_excerpt != item.statement %}<br><small>Source excerpt: {{ item.source_excerpt }}</small>{% endif %}</blockquote>
+  {% endfor %}
+</details>
+{% endmacro %}
+
+{% macro group_card(group) %}
+<article class="guide-content">
+  <h3>{{ group.label }} <span class="badge">{{ group.confidence }} confidence</span></h3>
+  {% if group.candidate_scope == 'single_posting_specialty_or_outlier' %}
+  <p class="muted"><strong>Scope:</strong> Single-posting specialty/outlier candidate. This is not evidence of a reusable role subfamily.</p>
+  {% else %}
+  <p class="muted"><strong>Scope:</strong> Multi-posting candidate pattern.</p>
+  {% endif %}
+  {% if group.support_basis == 'responsibility_supported_work' %}
+  <p class="muted"><strong>Evidence basis:</strong> Responsibility-supported work.</p>
+  {% elif group.support_basis == 'requirement_derived_specialty' %}
+  <p class="muted"><strong>Evidence basis:</strong> Requirement-derived specialty/qualification signal; no duties are inferred.</p>
+  {% else %}
+  <p class="muted"><strong>Evidence basis:</strong> Mixed responsibility and requirement evidence.</p>
+  {% endif %}
+  {% for point in group.interpretation_points %}
+  <p>{{ point.text }}</p>
+  {{ evidence_summary(point) }}
+  {% endfor %}
+  <p><strong>Supported by {{ group.supporting_posting_count }} snapshot posting{% if group.supporting_posting_count != 1 %}s{% endif %}:</strong>
+    {% for job_id in group.supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+  </p>
+  {% if group.alternatives %}
+  <div>
+    <strong>Other plausible readings:</strong>
+    {% for alternative in group.alternatives %}
+    <p>{{ alternative.label }}</p>
+    {{ evidence_summary(alternative) }}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {{ exact_evidence(group.evidence) }}
+</article>
+{% endmacro %}
+
 {% block content %}
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Bounded analytical reading</p><h2>What the accepted work suggests</h2></div><span class="badge">Candidate · {{ report.confidence or 'interpretive' }}</span></div>
-  <p>{{ report.overall_reading }}</p>
-  <p><strong>Supported by:</strong>
-    {% for item in report.overall_evidence %}<a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · artifact #{{ item.analysis_artifact_id }}{% if not loop.last %}; {% endif %}{% endfor %}
-  </p>
-  <p class="muted">Model {{ report.model }} · {{ report.source_count }} accepted-semantic core postings · {{ report.evidence_count }} cited P1.6 claims</p>
+  <div class="panel-header"><div><p class="eyebrow">Bounded analytical reading</p><h2>What the accepted work suggests</h2></div><span class="badge">Candidate · interpretive</span></div>
+  {% for observation in report.overall_observations %}
+  <div class="guide-content">
+    <p>{{ observation.text }}</p>
+    {{ evidence_summary(observation) }}
+    {{ exact_evidence(observation.evidence) }}
+  </div>
+  {% endfor %}
+  <p class="muted"><strong>Distinct overall support:</strong> {% for job_id in report.overall_supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+  <p class="muted">Model {{ report.model }} · {{ report.source_count }} accepted-semantic core postings · {{ report.available_evidence_count }} available P1.6 claims ({{ report.available_responsibility_claim_count }} responsibilities + {{ report.available_requirement_claim_count }} requirements) · {{ report.cited_evidence_count }} unique claims cited by this candidate report</p>
   <p class="muted">Work-claim coverage: {{ report.responsibility_coverage.postings_with_work_claims }} of {{ report.source_count }} postings have extracted responsibilities; no work claims for {% for job_id in report.responsibility_coverage.postings_without_work_claims %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% else %}none{% endfor %}.</p>
   <p class="muted">{{ report.authority_note }}</p>
 </section>
 
-{% for section_name, heading in [('work_clusters', 'Candidate work clusters'), ('possible_role_subfamilies', 'Possible role subfamilies')] %}
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Interpretation</p><h2>{{ heading }}</h2></div></div>
-  {% if report[section_name] %}
-    {% for group in report[section_name] %}
-    <article class="guide-content">
-      <h3>{{ group.label }} <span class="badge">{{ group.confidence }} confidence</span></h3>
-      <p>{{ group.summary }}</p><p>{{ group.why_grouped }}</p>
-      <p><strong>Supported by {{ group.supporting_posting_count }} snapshot postings:</strong>
-        {% for job_id in group.supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
-      </p>
-      {% if group.alternatives %}<p><strong>Other plausible readings:</strong> {{ group.alternatives | join('; ') }}</p>{% endif %}
-      <details><summary>Exact cited P1.6 claims</summary>
-        {% for item in group.evidence %}
-        <p><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · {{ item.kind }} · artifact #{{ item.analysis_artifact_id }} · {{ item.ref }}</p>
-        <blockquote>{{ item.statement }}{% if item.source_excerpt and item.source_excerpt != item.statement %}<br><small>Source excerpt: {{ item.source_excerpt }}</small>{% endif %}</blockquote>
-        {% endfor %}
-      </details>
-    </article>
-    {% endfor %}
-  {% else %}<p class="empty-state">The model found no defensible candidate groupings in this sample.</p>{% endif %}
+  <div class="panel-header"><div><p class="eyebrow">Interpretation</p><h2>Candidate work clusters</h2></div></div>
+  {% if report.work_clusters %}
+    {% for group in report.work_clusters %}{{ group_card(group) }}{% endfor %}
+  {% else %}<p class="empty-state">The model found no defensible candidate work groupings in this sample.</p>{% endif %}
 </section>
-{% endfor %}
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Interpretation</p><h2>Possible multi-posting role subfamilies</h2></div></div>
+  <p class="muted">This section excludes one-posting candidates. A role-subfamily hypothesis must be supported by at least two snapshot postings.</p>
+  {% if report.possible_role_subfamilies %}
+    {% for group in report.possible_role_subfamilies %}{{ group_card(group) }}{% endfor %}
+  {% else %}<p class="empty-state">The model found no defensible multi-posting role-subfamily hypothesis in this sample.</p>{% endif %}
+</section>
+
+{% if report.specialty_candidates %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Interpretation</p><h2>Single-posting specialty / outlier candidates</h2></div></div>
+  <p class="muted">These may be useful specialties or outliers, but one posting cannot establish a reusable role subfamily.</p>
+  {% for group in report.specialty_candidates %}{{ group_card(group) }}{% endfor %}
+</section>
+{% endif %}
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Limitations</h2></div></div>
