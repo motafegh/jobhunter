@@ -20,9 +20,9 @@ from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
 from jobhunter.translation_service import TranslationService
 from jobhunter.translation_store import TranslationStore
+from jobhunter.web import market_workspace as market_web
 from jobhunter.web.app import create_app
 from jobhunter.web.operations import WebOperationManager
-from jobhunter.web import market_workspace as market_web
 
 _NOW = datetime(2026, 9, 29, 12, tzinfo=UTC)
 
