@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-09-29
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. The current scoped increment is the owner-authorized ephemeral Market candidate interpretation v3; bounded Gemma/MiMo and browser execution are complete, with owner usefulness review and dedicated regression hardening next. Historical gate sections below remain acceptance evidence, not current routing. I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; active record: `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. The current scoped increment is the owner-authorized ephemeral Market candidate interpretation v3; bounded Gemma/MiMo, browser execution, and dedicated regression hardening are complete, with owner usefulness review and disposition next. Historical gate sections below remain acceptance evidence, not current routing. I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; active record: `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ## 1. Purpose and authority
 

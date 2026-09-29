@@ -8,7 +8,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** Ephemeral Market candidate interpretation v3. Bounded Gemma + MiMo runs and browser rendering are complete; owner usefulness review and dedicated regression hardening remain.  
+**Active increment:** Ephemeral Market candidate interpretation v3. Bounded Gemma + MiMo runs, browser rendering, and dedicated regression hardening are complete; owner usefulness review and disposition remain.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -169,12 +169,13 @@ Real bounded evidence:
 - Browser rendering completed successfully with source/evidence drill-down.
 - These outputs remain candidate evidence only.
 
-Current acceptance gaps:
+Current acceptance state:
 
 1. owner usefulness review is still pending;
-2. no dedicated candidate-report regression test file exists yet;
-3. no decision has been made to persist/version reports;
-4. no responsibility family or role subfamily is promoted from this sample.
+2. dedicated candidate-report regression coverage is now present in `tests/test_market_candidate_report.py`;
+3. CI run `36597463699` passed Ruff, 812 tests, and 812 warnings-as-errors tests;
+4. no decision has been made to persist/version reports;
+5. no responsibility family or role subfamily is promoted from this sample.
 
 ---
 
@@ -191,19 +192,20 @@ A. Review v3 as a product user
 
 B. Record only concrete defects or useful behavior
 
-C. Add dedicated regression coverage
-   - exact snapshot / P1.6 identity
-   - unknown citation rejection
-   - deterministic posting counts
-   - one-posting confidence downgrade
+C. Dedicated regression coverage — COMPLETE
+   - real snapshot / accepted P1.6 evidence path
+   - deterministic posting counts + confidence downgrade
    - zero-responsibility coverage limitation
    - alias resolution
-   - no persistence
-   - provider/model failure behavior
-   - CLI output
-   - browser rendering
+   - no report persistence
+   - exact identity mismatch rejection
+   - CLI model override
+   - browser operation/rendering
 
-D. Run repository gates
+D. Repository gates — PASS
+   - Ruff
+   - 812 pytest
+   - 812 pytest with warnings as errors
 
 E. Make explicit disposition
    - keep ephemeral; or

@@ -27,7 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
-Candidate interpretation v3      Gemma + MiMo bounded calls and browser flow complete; owner usefulness review pending
+Candidate interpretation v3      Gemma + MiMo + browser + regression hardening complete; owner usefulness review pending
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -415,7 +415,7 @@ B1 CLOSED / DEFER
 → I7 PASS / bounded first Market vertical slice CLOSED
 → owner-requested same-target coverage follow-up COMPLETE (snapshots 14-15; six of six core P1.6 accepted-current)
 → ephemeral candidate interpretation v3 EXECUTED (Gemma + MiMo + browser)
-→ current gate: owner usefulness review + regression hardening; no taxonomy promotion
+→ current gate: owner usefulness review + explicit report disposition; no taxonomy promotion
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.

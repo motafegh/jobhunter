@@ -62,3 +62,27 @@ jobhunter market candidate-report 15 --model MiMo-V2.6-Distill-Qwen-9B-Q4_K_L
 ```
 
 Review the complete outputs under `/tmp/jobhunter-market-candidate-gemma-snapshot15-v2.json` and `/tmp/jobhunter-market-candidate-mimo-snapshot15.json` for useful work clusters, justified role hypotheses, citation support, omission/overreach, generation time, and output length. They are private transient machine files and are not repository artifacts. Restart the browser app to load the pushed route before checking the rendered view. Keep results separate from P1.6 review, I7 acceptance, promoted taxonomy, and market-scale claims. Change the implementation only for an observed contract, integrity, or usefulness defect.
+
+
+## Regression hardening — 2026-09-29
+
+Dedicated coverage now exists in `tests/test_market_candidate_report.py`.
+
+The regression harness uses real temporary SQLite source/translation/P1.6/Market state and stubs only the local model response. It verifies:
+
+- exact accepted snapshot/P1.6 evidence is used;
+- model-facing citation enums are bounded to the supplied compact evidence catalog;
+- source aliases are resolved before user presentation;
+- supporting-posting counts are application-derived;
+- one-posting groups are downgraded to low confidence;
+- high confidence over fewer than four supporting postings is capped at moderate;
+- postings without extracted responsibilities remain visible as a coverage limitation;
+- report generation does not persist a report or mutate snapshot/P1.6 counts;
+- a snapshot/P1.6 source-identity mismatch is rejected;
+- CLI `--model` override reaches the shared generator;
+- browser generation uses the operation queue and renders the stored ephemeral report;
+- missing in-process browser reports return 404 rather than implying durable persistence.
+
+CI run `36597463699` on commit `3d557130` passed Ruff, **812 tests**, and **812 warnings-as-errors tests**.
+
+Engineering hardening is therefore complete for the current bounded v3 increment. The remaining gate is owner usefulness review and the explicit decision to keep the report ephemeral or authorize a separately versioned persisted report contract. This does not promote any role family or taxonomy.

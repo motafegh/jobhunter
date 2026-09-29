@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** Ephemeral Market candidate interpretation v3 — bounded real-model/browser execution complete; owner usefulness review and regression hardening pending.
+**Active increment:** Ephemeral Market candidate interpretation v3 — bounded real-model/browser execution and dedicated regression hardening complete; owner usefulness review and disposition pending.
 
 Status vocabulary:
 
@@ -63,7 +63,7 @@ Current implementation:
 - [x] Browser route rendered accepted P1.6 evidence and resolved internal source aliases.
 - [x] Current head CI is green after the v3/context/LM Studio configuration changes.
 - [~] Owner usefulness review: determine whether the report materially reduces manual market reading without overreach.
-- [ ] Add dedicated automated regression coverage for the candidate-report contract and browser/CLI integration.
+- [x] Dedicated candidate-report regression coverage added for real snapshot evidence/counts, exact identity rejection, CLI model override, and browser operation/rendering; CI `36597463699` passed Ruff + 812 tests + 812 warnings-as-errors tests.
 - [ ] Decide the v3 disposition after usefulness + regression review:
   - keep ephemeral and refine only observed defects; or
   - authorize a separate versioned persisted `RoleFamilyIntelligenceReport` contract.
@@ -132,8 +132,6 @@ Portfolio work does not broaden the active semantic authorization.
 ```text
 review the v3 candidate report for real user usefulness
 → record concrete omissions / overreach / presentation defects
-→ add dedicated candidate-report regression coverage
-→ rerun repository gates
 → make an explicit ephemeral-vs-persisted report decision
 → only then proceed to broader Phase-2 responsibility-family / capability-profile work
 ```
