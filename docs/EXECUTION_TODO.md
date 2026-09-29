@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** Ephemeral Market candidate interpretation v3 — bounded real-model/browser execution and dedicated regression hardening complete; owner usefulness review and disposition pending.
+**Active increment:** Market candidate interpretation V3.1 / contract v4 — owner review of v3 found useful synthesis but concrete integrity/presentation defects; v4 engineering + regression gates are complete, fresh snapshot-15 real-model/browser re-evaluation pending.
 
 Status vocabulary:
 
@@ -51,22 +51,25 @@ Current record:
 
 Current implementation:
 
-- [x] `market-role-family-candidate-v3` / prompt v3 implemented.
+- [x] Historical v3 bounded Gemma/MiMo/browser evaluation completed over snapshot 15.
+- [x] Owner usefulness review of the captured v3 report completed: the synthesis is useful enough to continue, but v3 is not persistence-ready.
+- [x] Concrete v3 defects recorded: duplicate overall source display, available-vs-cited evidence mislabeling, internal compact-ID leakage, weak prose/source binding, unbound alternatives, and one-posting role candidates presented too much like reusable subfamilies.
+- [x] V3.1 repair uses new `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` identities because the response/evidence contract changed materially.
 - [x] Reads one immutable Market snapshot and accepted, exact-identity P1.6 only.
-- [x] Model supplies bounded work clusters / possible role-subfamily hypotheses with cited evidence.
-- [x] Application owns source identity, citation resolution, posting counts, snapshot identity and numeric facts.
+- [x] Overall observations, interpretation points, and alternatives are individually evidence-bound.
+- [x] Internal compact `C*` IDs in user-facing prose fail closed.
+- [x] A source alias mentioned by an interpretation must be backed by evidence from that same source.
+- [x] Employer names and job titles are withheld from model input; source details must come from cited claims.
+- [x] Application owns distinct-source support, available-vs-cited evidence counts, posting counts, confidence caps, and responsibility-vs-requirement support basis.
+- [x] One-posting role candidates are separated as specialty/outlier candidates rather than counted as multi-posting role subfamilies.
 - [x] Report remains ephemeral: no Market/report persistence and no corpus publication.
 - [x] CLI and browser share the same generator.
-- [x] Snapshot 15 exercised with six accepted-semantic core postings, 35 responsibility claims and 140 requirement claims.
-- [x] Gemma bounded run completed and rendered.
-- [x] MiMo bounded comparison completed; richer niche coverage was observed together with unsupported caveats and materially higher latency.
-- [x] Browser route rendered accepted P1.6 evidence and resolved internal source aliases.
-- [x] Current head CI is green after the v3/context/LM Studio configuration changes.
-- [~] Owner usefulness review: determine whether the report materially reduces manual market reading without overreach.
-- [x] Dedicated candidate-report regression coverage added for real snapshot evidence/counts, exact identity rejection, CLI model override, and browser operation/rendering; CI `36597463699` passed Ruff + 812 tests + 812 warnings-as-errors tests.
-- [ ] Decide the v3 disposition after usefulness + regression review:
-  - keep ephemeral and refine only observed defects; or
-  - authorize a separate versioned persisted `RoleFamilyIntelligenceReport` contract.
+- [x] Dedicated regression coverage includes evidence binding, compact-ID rejection, source-alias/source-evidence consistency, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
+- [x] CI `36611296932` passed Ruff + 814 tests + 814 warnings-as-errors tests.
+- [~] Fresh real-model/browser re-evaluation of snapshot 15 under v4.
+- [ ] After that rerun, make the explicit report disposition:
+  - keep the interpretation ephemeral; or
+  - separately authorize a persisted/versioned `RoleFamilyIntelligenceReport` contract.
 - [ ] Only after representative evidence supports it, decide whether any responsibility-family / role-archetype interpretation deserves reviewed promotion.
 
 Acceptance boundary:
@@ -130,8 +133,9 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-review the v3 candidate report for real user usefulness
-→ record concrete omissions / overreach / presentation defects
-→ make an explicit ephemeral-vs-persisted report decision
+pull/restart the current app
+→ regenerate snapshot 15 candidate interpretation under v4
+→ capture and review the new report against the recorded v3 defects
+→ make the explicit ephemeral-vs-persisted report decision
 → only then proceed to broader Phase-2 responsibility-family / capability-profile work
 ```
