@@ -8,7 +8,7 @@
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded target-scoped Market I1-I7 first slice are closed/accepted. The owner-authorized ephemeral Market candidate interpretation v3 has completed bounded Gemma/MiMo calls, browser execution, and dedicated regression hardening; owner usefulness review and disposition remain under `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`. The first-slice decision remains `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded target-scoped Market I1-I7 first slice are closed/accepted. Owner review of the ephemeral v3 Market candidate interpretation found useful synthesis but concrete evidence/presentation defects, so persistence was not authorized. The V3.1 integrity repair is implemented as `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` with green regression gates; one fresh snapshot-15 real-model/browser re-evaluation remains before disposition under `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`. The first-slice decision remains `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ## 1. Purpose
 
