@@ -169,8 +169,10 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            I7 target coverage complete; later Market scope not yet authorized
+next exact increment            Candidate interpretation v4 fresh local re-evaluation pending
 ```
+
+A separately owner-authorized ephemeral Market candidate-interpretation increment is active beyond the closed first slice. Its current contract is `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4`. It remains non-promotional and must pass one fresh real-model/browser snapshot-15 re-evaluation before any persistence decision.
 
 B1 final evidence is retained at:
 
