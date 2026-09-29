@@ -40,7 +40,7 @@ class LMStudioProvider:
         base_url: str,
         configured_model: str | None = None,
         api_token: str | None = None,
-        timeout_seconds: float = 30.0,
+        timeout_seconds: float | httpx.Timeout = 30.0,
         max_retries: int = 1,
         transport: httpx.BaseTransport | None = None,
     ) -> None:

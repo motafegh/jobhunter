@@ -1,7 +1,7 @@
 # Market candidate interpretation v1
 
 **Date:** 2026-09-29  
-**Status:** Implementation complete; real-model and usefulness review pending  
+**Status:** V3 implementation, bounded two-model run, and rendered browser flow complete; owner usefulness review pending
 **Scope:** One ephemeral candidate work/role-subfamily report over an exact immutable Market snapshot
 
 ## Decision and boundaries
@@ -42,13 +42,23 @@ The optional CLI `--model` supports a same-snapshot model comparison, including 
 
 Ruff passed for the changed Python modules. Tests were not run in this increment.
 
-The configured model is `gemma-4-e4b-it-ud`, and the configured URL is `http://127.0.0.1:12345/v1`. On this date `/v1/models` returned connection refused at port 12345; port 1234 did not return within the short probe. No LM Studio or llama server process was visible in the Linux process table. Therefore no real report was generated, and schema compatibility, output quality, citation fidelity, rendered report, and model speed remain unverified.
+At the first check, tracked `jobhunter.toml` pointed to stale port 12345. The owner clarified that LM Studio listens on custom port `18080`; the tracked maintainer config and current handoff now record `http://127.0.0.1:18080/v1`. The fresh-clone default in `Settings` remains `1234`. `/v1/models` was reachable and returned both model IDs.
 
-Next run, once the local model server is reachable:
+The first full claim payload contained 21,595 tokens and failed against the loaded 4K context. V2 compacted model-facing claim rows and uses the existing 16K LM Studio context manager. Structured inference then completed successfully. The first Gemma run took 1:14; after contract/presentation refinements, the final recorded Gemma v2 run took 1:28.98.
+
+The same v2 request with `mimo-v2.6-distill-qwen-9b` completed in 8:45.36. MiMo produced seven work clusters and five role candidates, including a distinct speech/audio engineering posting that Gemma did not surface because that posting had no responsibility claims. MiMo also speculated that a PyTorch qualification might be a copied claim and incorrectly said tools/counts were unavailable. Those defects are visible in the model caveats/limitations and prevent treating its output as accepted. Its response is a promising richer candidate but is about six times slower than Gemma on this call.
+
+Gemma produced five work clusters and four possible subfamilies in v2. Its output was more conservative, but its initial wording said "high demand" for a six-posting sample and it did not propose the speech/audio specialty from requirements. V3 keeps counts scoped to snapshot coverage, lowers confidence for one-posting groups, and resolves model source aliases throughout report prose. The final v3 browser generation completed for snapshot 15; the route returned HTTP 200, rendered exact accepted P1.6 evidence citations, and displayed `t7ck` instead of the model's internal `J2` alias. These outputs are candidate evidence only; neither model is promoted, and no broad-market claim is accepted.
+
+The complete CLI outputs are under `/tmp/jobhunter-market-candidate-gemma-snapshot15-v2.json` and `/tmp/jobhunter-market-candidate-mimo-snapshot15.json`; they are private transient machine files and are not repository artifacts. The v3 browser report is available at `/market/snapshots/15/candidate-report` while the local app process remains running.
+
+The next step is owner review of usefulness and limitations. Keep results separate from P1.6 review, I7 acceptance, promoted taxonomy, and market-scale claims. Change the implementation only for an observed contract, integrity, or usefulness defect.
+
+For a repeat run:
 
 ```bash
 jobhunter market candidate-report 15
 jobhunter market candidate-report 15 --model MiMo-V2.6-Distill-Qwen-9B-Q4_K_L
 ```
 
-Review the two complete outputs side by side for useful work clusters, justified role hypotheses, citation support, omission/overreach, generation time, and output length. Keep results separate from P1.6 review, I7 acceptance, promoted taxonomy, and market-scale claims. Change the implementation only for an observed contract, integrity, or usefulness defect.
+Review the complete outputs under `/tmp/jobhunter-market-candidate-gemma-snapshot15-v2.json` and `/tmp/jobhunter-market-candidate-mimo-snapshot15.json` for useful work clusters, justified role hypotheses, citation support, omission/overreach, generation time, and output length. They are private transient machine files and are not repository artifacts. Restart the browser app to load the pushed route before checking the rendered view. Keep results separate from P1.6 review, I7 acceptance, promoted taxonomy, and market-scale claims. Change the implementation only for an observed contract, integrity, or usefulness defect.

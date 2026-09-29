@@ -252,8 +252,8 @@ Portfolio work does not broaden I7 authorization.
 ```text
 I7 remains PASS / bounded first slice CLOSED
 → owner-authorized ephemeral Market candidate interpretation v1 implemented
-→ run against frozen snapshot 15 when local LM Studio is reachable
-→ inspect exact citations and revise prompt/contract only for concrete defects
+→ Gemma + MiMo calls completed against frozen snapshot 15; MiMo adds niche coverage but is ~6x slower and contains unsupported caveats
+→ inspect browser rendering and usefulness; revise prompt/contract only for concrete defects
 → assess usefulness and sample limits; do not promote taxonomy from one small sample
 ```
 

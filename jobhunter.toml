@@ -14,7 +14,8 @@ database_path = "data/jobhunter.sqlite3"
 # LM Studio
 # ============================================================
 
-lm_studio_base_url = "http://127.0.0.1:12345/v1"
+# Maintainer LM Studio server uses its custom loopback port 18080.
+lm_studio_base_url = "http://127.0.0.1:18080/v1"
 
 # Leave this commented for now.
 # We can select models specifically after seeing what LM Studio exposes.

@@ -11,6 +11,7 @@
     {% for item in report.overall_evidence %}<a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · artifact #{{ item.analysis_artifact_id }}{% if not loop.last %}; {% endif %}{% endfor %}
   </p>
   <p class="muted">Model {{ report.model }} · {{ report.source_count }} accepted-semantic core postings · {{ report.evidence_count }} cited P1.6 claims</p>
+  <p class="muted">Work-claim coverage: {{ report.responsibility_coverage.postings_with_work_claims }} of {{ report.source_count }} postings have extracted responsibilities; no work claims for {% for job_id in report.responsibility_coverage.postings_without_work_claims %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% else %}none{% endfor %}.</p>
   <p class="muted">{{ report.authority_note }}</p>
 </section>
 
@@ -40,6 +41,8 @@
 
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Limitations</h2></div></div>
+  {% for limitation in report.scope_limitations %}<p>{{ limitation }}</p>{% endfor %}
+  <h3>Model caveats</h3>
   {% for limitation in report.limitations %}<p>{{ limitation }}</p>{% endfor %}
   <p>{{ report.authority_note }}</p>
 </section>
