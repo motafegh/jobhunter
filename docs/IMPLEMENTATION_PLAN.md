@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-09-29
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. The current scoped increment is the owner-authorized ephemeral Market candidate interpretation v3; bounded Gemma/MiMo, browser execution, and dedicated regression hardening are complete, with owner usefulness review and disposition next. Historical gate sections below remain acceptance evidence, not current routing. I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; active record: `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. Owner review of the ephemeral candidate v3 report found the synthesis useful but not persistence-ready. The authorized V3.1 integrity repair is implemented as `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4`; CI is green, and one fresh snapshot-15 real-model/browser re-evaluation is the current gate before report disposition. Historical gate sections below remain acceptance evidence, not current routing. I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; active record: `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ## 1. Purpose and authority
 
