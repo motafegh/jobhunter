@@ -657,6 +657,13 @@ Candidate subfamilies remain analytical interpretation. Do not force every job i
 
 Do not generate per-job semantic narratives merely to summarize them upward.
 
+The owner authorized the first bounded candidate interpretation increment on
+2026-09-29. V1 operates over one frozen snapshot, uses accepted P1.6 only, cites
+exact claims, and derives support counts in application code. It is ephemeral
+and non-promotional. A real model result and source review are required before
+claiming that this improves the user's market-reading workflow. Current record:
+`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
+
 ## 14.2 Role-Family Intelligence Report
 
 Once semantic synthesis exists and exact nondeterministic output must be recoverable, persist a versioned user-facing `RoleFamilyIntelligenceReport` referencing the exact snapshot/profile and model/prompt/schema contract.

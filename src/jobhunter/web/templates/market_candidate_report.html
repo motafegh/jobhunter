@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Candidate interpretation · Market snapshot {{ report.snapshot_id }}{% endblock %}
+{% block heading %}Candidate interpretation{% endblock %}
+{% block eyebrow %}Snapshot {{ report.snapshot_id }} · {{ report.contract }}{% endblock %}
+{% block topbar_actions %}<a class="button secondary" href="/market/snapshots/{{ report.snapshot_id }}">Back to snapshot</a>{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Bounded analytical reading</p><h2>What the accepted work suggests</h2></div><span class="badge">Candidate · {{ report.confidence or 'interpretive' }}</span></div>
+  <p>{{ report.overall_reading }}</p>
+  <p><strong>Supported by:</strong>
+    {% for item in report.overall_evidence %}<a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · artifact #{{ item.analysis_artifact_id }}{% if not loop.last %}; {% endif %}{% endfor %}
+  </p>
+  <p class="muted">Model {{ report.model }} · {{ report.source_count }} accepted-semantic core postings · {{ report.evidence_count }} cited P1.6 claims</p>
+  <p class="muted">{{ report.authority_note }}</p>
+</section>
+
+{% for section_name, heading in [('work_clusters', 'Candidate work clusters'), ('possible_role_subfamilies', 'Possible role subfamilies')] %}
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Interpretation</p><h2>{{ heading }}</h2></div></div>
+  {% if report[section_name] %}
+    {% for group in report[section_name] %}
+    <article class="guide-content">
+      <h3>{{ group.label }} <span class="badge">{{ group.confidence }} confidence</span></h3>
+      <p>{{ group.summary }}</p><p>{{ group.why_grouped }}</p>
+      <p><strong>Supported by {{ group.supporting_posting_count }} snapshot postings:</strong>
+        {% for job_id in group.supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+      </p>
+      {% if group.alternatives %}<p><strong>Other plausible readings:</strong> {{ group.alternatives | join('; ') }}</p>{% endif %}
+      <details><summary>Exact cited P1.6 claims</summary>
+        {% for item in group.evidence %}
+        <p><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a> · {{ item.kind }} · artifact #{{ item.analysis_artifact_id }} · {{ item.ref }}</p>
+        <blockquote>{{ item.statement }}{% if item.source_excerpt and item.source_excerpt != item.statement %}<br><small>Source excerpt: {{ item.source_excerpt }}</small>{% endif %}</blockquote>
+        {% endfor %}
+      </details>
+    </article>
+    {% endfor %}
+  {% else %}<p class="empty-state">The model found no defensible candidate groupings in this sample.</p>{% endif %}
+</section>
+{% endfor %}
+
+<section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Limitations</h2></div></div>
+  {% for limitation in report.limitations %}<p>{{ limitation }}</p>{% endfor %}
+  <p>{{ report.authority_note }}</p>
+</section>
+{% endblock %}

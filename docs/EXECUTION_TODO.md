@@ -250,13 +250,11 @@ Portfolio work does not broaden I7 authorization.
 ## Exact next action
 
 ```text
-public/current stays v21/v5 with accepted-only v20 compatibility
-→ post-alias v22 evaluation CLOSED / semantically rejected
-→ observed unsafe ontology abstention repaired offline; preferred proof-of-work gap remains
-→ representative offline claim/section evidence and versioned design decision NEXT
-→ no automatic retry, persisted generation, promotion, or vacancy/model switch
-→ accepted-current semantic evidence + immutable snapshot/profile + live drill-down still required
-→ preserve Market I7 HOLD
+I7 remains PASS / bounded first slice CLOSED
+→ owner-authorized ephemeral Market candidate interpretation v1 implemented
+→ run against frozen snapshot 15 when local LM Studio is reachable
+→ inspect exact citations and revise prompt/contract only for concrete defects
+→ assess usefulness and sample limits; do not promote taxonomy from one small sample
 ```
 
 ### Final verification checkpoint — 2026-09-22

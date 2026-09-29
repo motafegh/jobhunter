@@ -1,12 +1,13 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-28
+**Date:** 2026-09-29
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED — V23 ARTIFACT 50 FROZEN IN SNAPSHOT 6
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts are accepted-only compatibility inputs with exact dependencies
 **Owner-requested follow-up:** Same-target coverage completed in snapshots 14-15: ten qualified members, six core, six accepted-semantic core. `tmvA` artifact 61 and `t7Ay` artifact 62 were source-reviewed and accepted. Immutable reuse rerun, CLI/browser, SQLite, and public-corpus verification passed.
+**Active increment:** Owner-authorized ephemeral Market candidate interpretation v1 is implemented for browser and CLI. Real-model response/source review pending because configured LM Studio endpoint `127.0.0.1:12345` refused connection; see `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 **P2.2B-B1:** CLOSED — NO-PROMOTION / DEFER  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending
 
@@ -48,6 +49,10 @@ Final I7 decision (supersedes historical HOLD routing below):
 Active same-target coverage follow-up:
 
 `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`
+
+Current candidate interpretation increment:
+
+`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`
 
 Execution checklist:
 

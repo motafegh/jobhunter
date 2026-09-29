@@ -78,7 +78,7 @@ A bounded per-job semantic slice was intentionally implemented before Phase-1 cl
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
 - heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
 
-This does **not** authorize promoted P2.2C/P2.2D taxonomy growth, personal scoring, semantic role-subfamily/report synthesis beyond the current slice, or authoritative Blueprint use. The bounded target-scoped Market I1-I7 first slice is accepted; the next layer needs its own explicit scope and evidence.
+This does **not** authorize promoted P2.2C/P2.2D taxonomy growth, personal scoring, or authoritative Blueprint use. The bounded target-scoped Market I1-I7 first slice is accepted. On 2026-09-29 the owner separately authorized one bounded ephemeral candidate interpretation over a frozen snapshot; it does not promote reusable taxonomy. Its contract and acceptance boundary are recorded in `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ---
 

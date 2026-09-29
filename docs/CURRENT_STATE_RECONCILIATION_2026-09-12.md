@@ -27,6 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
+Candidate interpretation v1      IMPLEMENTED; real-model review pending
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -58,6 +59,14 @@ current English projections:     29
 accepted/current English P1.6:    11
 accepted/current Capability:      5
 ```
+
+On 2026-09-29 the owner authorized a separate bounded candidate interpretation
+increment. The ephemeral v1 report now has shared browser/CLI entry points over
+an exact Market snapshot, with accepted P1.6 citations and application-derived
+posting counts. This does not promote a taxonomy or close model/product
+acceptance. The configured LM Studio endpoint was unreachable during the first
+runtime check; a real response and source review remain pending. See
+`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
 

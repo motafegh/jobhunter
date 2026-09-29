@@ -6,7 +6,7 @@
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded Market I1-I7 first slice are accepted/closed. Select the next scoped Market product increment under the focused plan. The final I7 decision is `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; older checkpoint sequences remain historical.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and bounded Market I1-I7 are accepted/closed. The owner authorized a bounded ephemeral Market candidate interpretation v1; its real-model review is pending under `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`. The final I7 decision remains `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ---
 

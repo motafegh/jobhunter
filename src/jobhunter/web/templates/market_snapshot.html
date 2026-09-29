@@ -26,6 +26,16 @@
 </section>
 
 <section class="panel">
+  <div class="panel-header"><div><p class="eyebrow">Candidate interpretation</p><h2>Work clusters and possible role subfamilies</h2></div></div>
+  <p class="muted">Generate an on-demand, ephemeral interpretation from this snapshot's accepted P1.6. Posting counts are calculated from cited frozen evidence. The output is a hypothesis, not a promoted taxonomy or broad-market claim.</p>
+  <form method="post" action="/market/actions/snapshots/{{ snapshot.id }}/candidate-report">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <button type="submit" {% if active_operation %}disabled{% endif %}>Build candidate interpretation</button>
+  </form>
+  {% if notice %}<p class="notice">{{ notice }}</p>{% endif %}
+</section>
+
+<section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Authority</p><h2>Snapshot contract and denominators</h2></div><span class="badge">{{ snapshot.snapshot_contract_version }}</span></div>
   <div class="guide-content">
     <p><strong>Created:</strong> {{ snapshot.created_at }} · <strong>Run:</strong> <a href="/market/runs/{{ snapshot.run_id }}">#{{ snapshot.run_id }}</a></p>

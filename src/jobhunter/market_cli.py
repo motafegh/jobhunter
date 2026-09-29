@@ -11,6 +11,7 @@ from pathlib import Path
 from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
+from jobhunter.market_candidate_report import build_market_candidate_report
 from jobhunter.market_workspace import (
     MarketRunControls,
     MarketWorkspaceError,
@@ -108,6 +109,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Inspect an immutable snapshot, members, and deterministic profile",
     )
     snapshot_show.add_argument("snapshot_id", type=int)
+    candidate_report = commands.add_parser(
+        "candidate-report",
+        help="Generate an ephemeral evidence-linked work and role-subfamily interpretation",
+    )
+    candidate_report.add_argument("snapshot_id", type=int)
+    candidate_report.add_argument(
+        "--model",
+        default=None,
+        help="Use a specific locally served model for a side-by-side candidate evaluation",
+    )
     return parser
 
 
@@ -225,6 +236,18 @@ def main(argv: list[str] | None = None) -> int:
                     sort_keys=True,
                 )
             )
+            return 0
+        if parsed.command == "candidate-report":
+            print(json.dumps(
+                build_market_candidate_report(
+                    workspace.settings,
+                    parsed.snapshot_id,
+                    model_override=parsed.model,
+                ),
+                ensure_ascii=False,
+                indent=2,
+                sort_keys=True,
+            ))
             return 0
         raise RuntimeError(f"Unsupported Market command: {parsed.command}")
     except (ConfigLoadError, ValidationError, LookupError, MarketWorkspaceError, ValueError) as exc:

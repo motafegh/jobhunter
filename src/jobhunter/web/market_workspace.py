@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import secrets
+import threading
 from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlencode
@@ -12,6 +13,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from jobhunter.config import Settings
+from jobhunter.market_candidate_report import build_market_candidate_report
 from jobhunter.market_workspace import (
     MarketRunControls,
     MarketWorkspaceService,
@@ -25,6 +27,8 @@ from jobhunter.web.operations import (
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
+_CANDIDATE_REPORTS: dict[int, dict] = {}
+_CANDIDATE_REPORTS_LOCK = threading.Lock()
 
 
 def _csrf(request: Request, submitted: str) -> None:
@@ -174,6 +178,60 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
                 profile=profile,
             ),
         )
+
+    @app.get("/market/snapshots/{snapshot_id}/candidate-report", response_class=HTMLResponse)
+    def market_candidate_report_detail(request: Request, snapshot_id: int):
+        with _CANDIDATE_REPORTS_LOCK:
+            report = _CANDIDATE_REPORTS.get(snapshot_id)
+        if report is None:
+            raise HTTPException(
+                status_code=404,
+                detail="No candidate report is available for this snapshot",
+            )
+        return _TEMPLATES.TemplateResponse(
+            request=request,
+            name="market_candidate_report.html",
+            context=_context(request, page="market", report=report),
+        )
+
+    @app.post("/market/actions/snapshots/{snapshot_id}/candidate-report")
+    def generate_market_candidate_report(
+        request: Request,
+        snapshot_id: int,
+        csrf_token: Annotated[str, Form()],
+    ):
+        _csrf(request, csrf_token)
+
+        def action() -> WebOperationResult:
+            report = build_market_candidate_report(settings, snapshot_id)
+            with _CANDIDATE_REPORTS_LOCK:
+                _CANDIDATE_REPORTS[snapshot_id] = report
+                if len(_CANDIDATE_REPORTS) > 20:
+                    oldest = next(iter(_CANDIDATE_REPORTS))
+                    _CANDIDATE_REPORTS.pop(oldest, None)
+            return WebOperationResult(
+                summary=(
+                    f"Built a candidate interpretation for snapshot {snapshot_id} "
+                    f"from {report['source_count']} accepted-semantic core postings"
+                ),
+                links=(WebOperationLink(
+                    label="Open candidate interpretation",
+                    url=f"/market/snapshots/{snapshot_id}/candidate-report",
+                ),),
+            )
+
+        try:
+            operation = request.app.state.operations.start(
+                "Build Market candidate interpretation",
+                action,
+            )
+        except OperationBusyError as exc:
+            return RedirectResponse(
+                url=f"/market/snapshots/{snapshot_id}?{urlencode({'notice': str(exc)})}",
+                status_code=303,
+            )
+        query = urlencode({"return_to": f"/market/snapshots/{snapshot_id}", "auto_return": "1"})
+        return RedirectResponse(url=f"/operations/{operation.id}?{query}", status_code=303)
 
     @app.post("/market/actions/target")
     def create_market_target(
