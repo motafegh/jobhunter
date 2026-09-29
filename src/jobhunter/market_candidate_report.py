@@ -17,7 +17,7 @@ from jobhunter.storage import JobHunterStore
 REPORT_CONTRACT = "market-role-family-candidate-v4"
 PROMPT_VERSION = "market-role-family-candidate-prompt-v4"
 
-_INTERNAL_CITATION_RE = re.compile(r"\\bC\\d+\\b")
+_INTERNAL_CITATION_RE = re.compile(r"\bC\d+\b")
 
 
 def _evidence_bound_text_schema(
