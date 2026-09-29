@@ -2,13 +2,13 @@
 
 **Status:** Current product definition  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-26
+**Last reconciled:** 2026-09-29
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded target-scoped Market I1-I7 first slice are closed/accepted. The first slice decision is `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`; later Market interpretation needs its own scope and evidence.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, and the bounded target-scoped Market I1-I7 first slice are closed/accepted. The owner-authorized ephemeral Market candidate interpretation v3 has completed bounded Gemma/MiMo calls and browser execution; owner usefulness review and regression hardening remain under `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`. The first-slice decision remains `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
 ## 1. Purpose
 
@@ -526,7 +526,7 @@ Current accepted/current foundations include:
 - `jobinja-detail-v2` and semantic source-version/check separation;
 - browser + CLI shared services;
 - current translation-v2 / English projection architecture;
-- promoted English P1.6 v23/v5 and original P1.6 v9/v4 routing, with accepted-only v20/v5 and v21/v5 compatibility reuse;
+- promoted English P1.6 v30/v5 and original P1.6 v9/v4 routing, with accepted-only v20/v21/v23/v28 v5 compatibility reuse when exact dependencies match;
 - promoted Capability Intelligence v9/v5;
 - Review Snapshot v1 current-chain routing;
 - deterministic repository-safe public corpus v1 and remote publication;
@@ -561,13 +561,14 @@ The accepted heterogeneous reference order is:
 
 ### 10.4 Planned next product layers
 
-From the current Market-I7 frontier:
+From the accepted Market-I7 frontier:
 
-1. complete bounded real local acceptance of the first target-scoped Market slice;
-2. only after separate authorization, add semantic role-subfamily/report synthesis and selective promoted responsibility-family/archetype authority where evidence supports reuse;
-3. consider one carefully selected second source and only then a minimal adapter abstraction;
-4. build the reviewed personal evidence model;
-5. add gap/readiness/learning/action intelligence comparing Market evidence with reviewed personal evidence;
+1. finish usefulness review and regression hardening of the bounded ephemeral Market candidate interpretation;
+2. decide whether a versioned persisted Role-Family Intelligence Report is justified, without promoting taxonomy from one small sample;
+3. build representative reviewed responsibility-family / role-archetype examples and fine-grained JobCapabilityRequirementProfiles before personal comparison;
+4. consider one carefully selected second source and only then a minimal adapter abstraction;
+5. build the reviewed personal evidence model;
+6. add gap/readiness/learning/action intelligence comparing Market evidence with reviewed personal evidence;
 6. add application/interview/outcome workspace and sustained longitudinal operation/trends/backup;
 7. add advanced evaluated retrieval/assistant/model-lab capabilities only where demonstrated useful.
 

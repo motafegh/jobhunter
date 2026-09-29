@@ -2,7 +2,7 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-26
+**Last reconciled:** 2026-09-29
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
@@ -120,12 +120,12 @@ t4jp → P1.6 artifact 37 → Capability artifact 12
 Public corpus publication baseline:
 
 ```text
-Known/discovered jobs:       394
-Fetched/parsed job details:   51
-Current English projections:  27
-English P1.6:                  5
-Original P1.6:                 0
-Capabilities:                  5
+Known/discovered jobs:       420
+Fetched/parsed job details:    51
+Current English projections:   29
+English P1.6:                  11
+Original P1.6:                  0
+Capabilities:                   5
 ```
 
 ### 3.2 Accepted Phase-1 implementation
@@ -144,7 +144,7 @@ Blueprint v6/v5 is implemented for research/inspection but is **deferred and non
 
 ### 3.3 Current semantic-quality position
 
-P1.6 v21/v5 and Capability v9/v5 are promoted/current. The five accepted P1.6 anchor artifacts remain physically v20/v5 and compatibility-current without regeneration. Heterogeneous role-family validation is closed across the accepted Python/software, network/security, and operations/platform anchors; those accepted inputs remain frozen unless a material defect/dependency change reopens them.
+P1.6 v30/v5 and Capability v9/v5 are promoted/current. Accepted v20/v21/v23/v28 P1.6 artifacts may remain compatibility-current without regeneration when exact dependencies and accepted-only compatibility rules match. Heterogeneous role-family validation is closed across the accepted Python/software, network/security, and operations/platform anchors; those accepted inputs remain frozen unless a material defect/dependency change reopens them.
 
 Accepted heterogeneous closure order:
 
