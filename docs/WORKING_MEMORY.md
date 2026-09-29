@@ -8,7 +8,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** Ephemeral Market candidate interpretation v3. Bounded Gemma + MiMo runs, browser rendering, and dedicated regression hardening are complete; owner usefulness review and disposition remain.  
+**Active increment:** Market candidate interpretation V3.1 / contract v4. Owner review of the v3 report found useful synthesis but concrete evidence/presentation defects; v4 engineering and regression gates are complete, with one fresh snapshot-15 real-model/browser rerun pending before disposition.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -61,7 +61,7 @@ Market I5                           ACCEPTED
 Market I6                           ACCEPTED
 Market I7                           PASS / CLOSED FOR BOUNDED SCOPE
 Same-target coverage follow-up      COMPLETE
-Candidate interpretation v3         ACTIVE ACCEPTANCE / NON-PROMOTIONAL
+Candidate interpretation v4         ACTIVE RE-EVALUATION / NON-PROMOTIONAL
 Market → You                        LATER / NOT AUTHORIZED
 ```
 
@@ -80,7 +80,7 @@ Market membership              market-membership-v1 / market-membership-v1.0
 Market snapshot                market-corpus-snapshot-v1
 Market aggregate               market-aggregate-profile-v1
 Public Corpus                  jobhunter-public-corpus-v1
-Candidate report               market-role-family-candidate-v3
+Candidate report               market-role-family-candidate-v4
 ```
 
 Accepted-only historical P1.6 compatibility does not relabel old artifacts. Exact prompt/schema/dependency identity remains visible.
@@ -120,7 +120,7 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. Active increment — Market candidate interpretation v3
+## 4. Active increment — Market candidate interpretation V3.1 / contract v4
 
 Purpose:
 
@@ -151,13 +151,16 @@ responsibility claims:            35
 requirement claims:              140
 ```
 
-The report:
+The v4 report:
 
 - consumes only included core members with accepted exact-identity P1.6;
-- treats responsibilities as primary work evidence and requirements as supporting context;
-- validates every model citation against the supplied catalog;
-- derives support counts in application code;
-- lowers confidence for one-posting groups;
+- treats responsibilities as primary work evidence and requirements as specialty/qualification context rather than inferred duties;
+- requires every overall observation, interpretation point, and alternative to carry exact supplied evidence refs;
+- rejects internal compact `C*` IDs if they leak into user-facing prose;
+- rejects a source-alias mention when that same interpretation does not cite evidence from the source;
+- withholds employer names and job titles from model input;
+- derives distinct support, available-vs-cited evidence counts, confidence caps, and responsibility/requirement evidence basis in application code;
+- separates one-posting role candidates into specialty/outlier candidates instead of presenting them as multi-posting subfamilies;
 - keeps jobs with no extracted responsibilities visible as a coverage limitation;
 - resolves internal source aliases before user presentation;
 - remains ephemeral in CLI/browser memory and does not create Market/report tables or corpus artifacts.
@@ -171,41 +174,37 @@ Real bounded evidence:
 
 Current acceptance state:
 
-1. owner usefulness review is still pending;
-2. dedicated candidate-report regression coverage is now present in `tests/test_market_candidate_report.py`;
-3. CI run `36597463699` passed Ruff, 812 tests, and 812 warnings-as-errors tests;
-4. no decision has been made to persist/version reports;
-5. no responsibility family or role subfamily is promoted from this sample.
+1. owner usefulness review of the captured v3 report is complete: the synthesis was useful, but v3 was not strong enough to persist;
+2. the V3.1 integrity repair is implemented under new v4/prompt-v4 identities;
+3. dedicated regression coverage is present in `tests/test_market_candidate_report.py`;
+4. CI run `36611296932` passed Ruff, 814 tests, and 814 warnings-as-errors tests;
+5. one fresh real-model/browser snapshot-15 rerun under v4 is still required before final report disposition;
+6. no decision has been made to persist/version reports;
+7. no responsibility family or role subfamily is promoted from this sample.
 
 ---
 
 ## 5. Exact continuation sequence
 
 ```text
-A. Review v3 as a product user
-   - useful clusters?
-   - justified role hypotheses?
-   - important omissions?
-   - overreach?
-   - evidence drill-down usable?
-   - latency acceptable?
+A. Pull/restart current main on the maintainer machine
 
-B. Record only concrete defects or useful behavior
+B. Regenerate snapshot 15 under candidate v4
+   - same accepted snapshot input
+   - default Gemma analysis model
+   - browser route must render successfully
 
-C. Dedicated regression coverage — COMPLETE
-   - real snapshot / accepted P1.6 evidence path
-   - deterministic posting counts + confidence downgrade
-   - zero-responsibility coverage limitation
-   - alias resolution
-   - no report persistence
-   - exact identity mismatch rejection
-   - CLI model override
-   - browser operation/rendering
+C. Capture the v4 rendered report as review evidence
 
-D. Repository gates — PASS
-   - Ruff
-   - 812 pytest
-   - 812 pytest with warnings as errors
+D. Compare directly with the recorded v3 defects
+   - no duplicate overall support display
+   - available evidence != cited evidence is labeled correctly
+   - no internal C* IDs in prose
+   - every source-specific observation has source-bound evidence
+   - alternatives are evidence-bound
+   - requirement-only specialty is explicit, not inferred work
+   - one-posting role candidates are not shown as reusable subfamilies
+   - role-subfamily section adds value beyond renamed work clusters
 
 E. Make explicit disposition
    - keep ephemeral; or
