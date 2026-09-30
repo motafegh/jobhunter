@@ -27,7 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
-Candidate interpretation v4      V3.1 integrity repair + regression accepted; fresh snapshot-15 local rerun pending
+Candidate interpretation v5      V3.2 partial-safe integrity filtering + regression accepted; fresh snapshot-15 local rerun pending
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -63,15 +63,17 @@ accepted/current Capability:      5
 On 2026-09-29 the owner authorized a separate bounded candidate interpretation
 increment. The captured v3 report proved useful enough to continue but exposed
 concrete evidence/presentation defects, so persistence was not authorized.
-The V3.1 repair now uses
-`market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4`:
-interpretive observations and alternatives are individually evidence-bound,
-internal compact IDs fail closed, source mentions require same-source evidence,
-available-vs-cited evidence is separated, and one-posting role candidates are
-presented as specialty/outlier candidates rather than reusable subfamilies.
-CI `36611296932` passed Ruff, 814 tests, and 814 warnings-as-errors tests.
-The current gate is one fresh snapshot-15 real-model/browser rerun and owner
-review before any persistence decision. No taxonomy is promoted. See
+V4 added sentence/alternative evidence binding and fail-closed cross-field
+checks. On 2026-09-30 a real snapshot-15 generation hit
+`source_alias_without_matching_evidence`; JobHunter correctly prevented unsafe
+prose from rendering, but the entire report failed. V3.2 therefore advances to
+`market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5`:
+unsafe model-authored elements are omitted and diagnosed while safe elements
+survive; if nothing integrity-safe remains, the report still fails. Model
+limitations with uncited source aliases or internal compact IDs are also
+filtered. CI `36758263560` passed Ruff, 816 tests, and 816 warnings-as-errors
+tests. The current gate is one fresh snapshot-15 real-model/browser rerun and
+owner review before any persistence decision. No taxonomy is promoted. See
 `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
@@ -419,7 +421,8 @@ B1 CLOSED / DEFER
 → I7 PASS / bounded first Market vertical slice CLOSED
 → owner-requested same-target coverage follow-up COMPLETE (snapshots 14-15; six of six core P1.6 accepted-current)
 → ephemeral candidate interpretation v3 EXECUTED + owner usefulness review COMPLETE
-→ V3.1 integrity repair implemented as candidate v4; CI 36611296932 GREEN
+→ V3.1 candidate v4 real rerun FAILED SAFE on source-alias/evidence mismatch
+→ V3.2 candidate v5 partial-safe integrity filtering implemented; CI 36758263560 GREEN
 → current gate: fresh snapshot-15 real-model/browser rerun + explicit report disposition; no taxonomy promotion
 ```
 

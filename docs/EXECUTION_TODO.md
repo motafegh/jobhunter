@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** Market candidate interpretation V3.1 / contract v4 — owner review of v3 found useful synthesis but concrete integrity/presentation defects; v4 engineering + regression gates are complete, fresh snapshot-15 real-model/browser re-evaluation pending.
+**Active increment:** Market candidate interpretation V3.2 / contract v5 — V4 real-model rerun failed safely on a prose/source-evidence mismatch; V5 reduces blast radius by filtering only unsafe generated elements, with green regression gates and a fresh snapshot-15 rerun pending.
 
 Status vocabulary:
 
@@ -54,19 +54,22 @@ Current implementation:
 - [x] Historical v3 bounded Gemma/MiMo/browser evaluation completed over snapshot 15.
 - [x] Owner usefulness review of the captured v3 report completed: the synthesis is useful enough to continue, but v3 is not persistence-ready.
 - [x] Concrete v3 defects recorded: duplicate overall source display, available-vs-cited evidence mislabeling, internal compact-ID leakage, weak prose/source binding, unbound alternatives, and one-posting role candidates presented too much like reusable subfamilies.
-- [x] V3.1 repair uses new `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` identities because the response/evidence contract changed materially.
+- [x] V3.1 used `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` because the response/evidence contract changed materially.
+- [x] Real V4 snapshot-15 run on 2026-09-30 failed safely with `source_alias_without_matching_evidence`; no candidate report entered browser cache.
+- [x] V3.2 advances to `market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5` because post-generation integrity handling changed materially.
 - [x] Reads one immutable Market snapshot and accepted, exact-identity P1.6 only.
 - [x] Overall observations, interpretation points, and alternatives are individually evidence-bound.
-- [x] Internal compact `C*` IDs in user-facing prose fail closed.
-- [x] A source alias mentioned by an interpretation must be backed by evidence from that same source.
+- [x] Internal compact `C*` IDs in user-facing prose are rejected at the generated-element boundary.
+- [x] A source alias mentioned by an interpretation must be backed by evidence from that same source; violating elements are omitted rather than rendering unsupported prose.
 - [x] Employer names and job titles are withheld from model input; source details must come from cited claims.
 - [x] Application owns distinct-source support, available-vs-cited evidence counts, posting counts, confidence caps, and responsibility-vs-requirement support basis.
 - [x] One-posting role candidates are separated as specialty/outlier candidates rather than counted as multi-posting role subfamilies.
 - [x] Report remains ephemeral: no Market/report persistence and no corpus publication.
 - [x] CLI and browser share the same generator.
-- [x] Dedicated regression coverage includes evidence binding, compact-ID rejection, source-alias/source-evidence consistency, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
-- [x] CI `36611296932` passed Ruff + 814 tests + 814 warnings-as-errors tests.
-- [~] Fresh real-model/browser re-evaluation of snapshot 15 under v4.
+- [x] V5 post-validation is partial-safe: invalid observations, alternatives, groups, or model caveats are omitted with path/code diagnostics; the whole report still fails if no integrity-safe interpretation survives.
+- [x] Dedicated regression coverage includes evidence binding, compact-ID rejection, source-alias/source-evidence consistency, partial filtering, invalid-alternative retention of safe groups, all-unsafe failure, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
+- [x] CI `36758263560` passed Ruff + 816 tests + 816 warnings-as-errors tests.
+- [~] Fresh real-model/browser re-evaluation of snapshot 15 under v5.
 - [ ] After that rerun, make the explicit report disposition:
   - keep the interpretation ephemeral; or
   - separately authorize a persisted/versioned `RoleFamilyIntelligenceReport` contract.
@@ -134,7 +137,7 @@ Portfolio work does not broaden the active semantic authorization.
 
 ```text
 pull/restart the current app
-→ regenerate snapshot 15 candidate interpretation under v4
+→ regenerate snapshot 15 candidate interpretation under v5
 → capture and review the new report against the recorded v3 defects
 → make the explicit ephemeral-vs-persisted report decision
 → only then proceed to broader Phase-2 responsibility-family / capability-profile work

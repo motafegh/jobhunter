@@ -1,7 +1,7 @@
 # Market candidate interpretation v1
 
 **Date:** 2026-09-29  
-**Status:** V3 owner usefulness review complete; V3.1 integrity repair implemented as candidate v4/prompt v4 with green regression gates; fresh snapshot-15 real-model/browser rerun pending
+**Status:** V3 owner usefulness review complete; V4 real rerun failed safely on cross-field evidence integrity; V3.2 candidate v5/prompt v5 implemented with partial-safe filtering and green regression gates; fresh snapshot-15 rerun pending
 **Scope:** One ephemeral candidate work/role-subfamily report over an exact immutable Market snapshot
 
 ## Decision and boundaries
@@ -124,3 +124,59 @@ V4 changes:
 Regression coverage now also proves compact-ID rejection, same-source evidence binding for source mentions, evidence-bound alternatives, available-vs-cited counts, responsibility-vs-requirement support basis, and singleton specialty routing. Final CI run `36611296932` passed Ruff, **814 tests**, and **814 warnings-as-errors tests** on commit `76e8e320`.
 
 The remaining acceptance action is intentionally local and bounded: pull/restart the maintainer app, regenerate snapshot 15 once with the default Gemma analysis model, capture the rendered v4 artifact, and compare it directly against the defects above. No report persistence, role-family promotion, or broader taxonomy work is authorized before that review.
+
+## V4 real-run failure and V3.2 / V5 repair — 2026-09-30
+
+The first fresh real-model/browser attempt under V4 ran from
+`2026-09-30T18:12:50Z` to `2026-09-30T18:15:03Z` and failed with:
+
+```text
+ValueError: Candidate report prose mentions a source alias without evidence from that source
+```
+
+This is a useful acceptance result, not evidence that the integrity rule should be weakened.
+The structured model result passed JSON-schema validation, but one model-authored prose item
+violated a cross-field semantic invariant: a source alias appeared without evidence from that
+same source. V4 correctly prevented unsupported prose from rendering. Because browser reports
+are cached only after successful post-validation, no candidate report was available afterward.
+The subsequently captured file named as a V4 report contained only the 404 detail and is not
+review evidence.
+
+The observed design defect was **blast radius**. One unsafe interpretive sentence caused the
+entire otherwise-structured candidate report to fail. That is too brittle for a bounded
+analytical layer while still preserving the permanent rule that unsupported source claims must
+never render.
+
+V3.2 therefore advances the ephemeral contract:
+
+```text
+report: market-role-family-candidate-v5
+prompt: market-role-family-candidate-prompt-v5
+```
+
+V5 keeps the same evidence-integrity checks but applies them at the smallest safe generated
+unit:
+
+- unsafe overall observations are omitted;
+- unsafe interpretation points are omitted;
+- a group is omitted if no integrity-safe interpretation point survives or its label itself
+  violates source/evidence integrity;
+- unsafe alternatives are omitted without discarding an otherwise safe group;
+- model caveats that contain internal compact IDs or uncited source aliases are omitted;
+- every omission is represented by a deterministic `path + code` integrity diagnostic;
+- rejected prose is never rendered or stored in the report;
+- if no integrity-safe interpretation survives anywhere, the whole report still fails.
+
+The prompt also tells the model to avoid source aliases in prose where possible and keeps
+limitations at sample/method level. This reduces avoidable violations without relying on prompt
+obedience for safety.
+
+Regression coverage now includes partial filtering of an unsafe observation, retention of a
+safe group when one alternative is unsafe, filtering of source-specific model caveats, and
+whole-report failure when every interpretation is unsafe. CI run `36758263560` passed Ruff,
+**816 tests**, and **816 warnings-as-errors tests** on commit `f3c9e4cf`.
+
+The next acceptance action remains exactly one fresh snapshot-15 real-model/browser generation
+under V5, followed by capture and review of the actual rendered report. No persistence or
+taxonomy promotion is authorized by this repair.
+
