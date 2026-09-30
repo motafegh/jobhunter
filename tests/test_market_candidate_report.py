@@ -262,7 +262,7 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
                     _fixture_group("Applied AI across J1 and J2", ["C1", "C4"]),
                     _fixture_group("Speech AI specialist", ["C4"]),
                 ],
-                "limitations": ["J2 has no responsibility claims."],
+                "limitations": ["Small sample limits generalization."],
             },
             request_body={},
             raw_response={},
@@ -286,8 +286,8 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
 
     report = build_market_candidate_report(harness.settings, snapshot_id)
 
-    assert report["contract"] == "market-role-family-candidate-v4"
-    assert report["prompt_version"] == "market-role-family-candidate-prompt-v4"
+    assert report["contract"] == "market-role-family-candidate-v5"
+    assert report["prompt_version"] == "market-role-family-candidate-prompt-v5"
     assert report["source_count"] == 2
     assert report["available_evidence_count"] == 4
     assert report["available_responsibility_claim_count"] == 2
@@ -322,6 +322,8 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
         "postings_with_work_claims": 1,
         "postings_without_work_claims": ["job-b"],
     }
+    assert report["integrity_rejection_count"] == 0
+    assert report["integrity_rejections"] == []
 
     with sqlite3.connect(harness.settings.database_path) as connection:
         after = {
@@ -337,22 +339,26 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
 
 
 @pytest.mark.parametrize(
-    ("text", "refs", "error"),
+    ("text", "refs", "expected_code"),
     [
-        ("Internal evidence C1 must not leak.", ["C1"], "internal compact evidence ID"),
+        (
+            "Internal evidence C1 must not leak.",
+            ["C1"],
+            "internal_compact_evidence_id",
+        ),
         (
             "J2 is a speech specialist.",
             ["C1"],
-            "mentions a source alias without evidence from that source",
+            "source_alias_without_matching_evidence",
         ),
     ],
 )
-def test_candidate_report_rejects_untraceable_prose(
+def test_candidate_report_soft_filters_untraceable_prose(
     tmp_path: Path,
     monkeypatch,
     text: str,
     refs: list[str],
-    error: str,
+    expected_code: str,
 ) -> None:
     harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
     monkeypatch.setattr(
@@ -364,7 +370,10 @@ def test_candidate_report_rejects_untraceable_prose(
         lambda _self, **kwargs: StructuredInferenceResult(
             model=kwargs["model"],
             structured={
-                "overall_observations": [_fixture_point(text, refs)],
+                "overall_observations": [
+                    _fixture_point("J1 carries supported work.", ["C1"]),
+                    _fixture_point(text, refs),
+                ],
                 "work_clusters": [],
                 "possible_role_subfamilies": [],
                 "limitations": [],
@@ -375,7 +384,104 @@ def test_candidate_report_rejects_untraceable_prose(
         ),
     )
 
-    with pytest.raises(ValueError, match=error):
+    report = build_market_candidate_report(harness.settings, snapshot_id)
+
+    assert [item["text"] for item in report["overall_observations"]] == [
+        "job-a carries supported work."
+    ]
+    assert report["integrity_rejection_count"] == 1
+    assert report["integrity_rejections"] == [
+        {
+            "path": "overall_observations[1]",
+            "code": expected_code,
+        }
+    ]
+
+
+def test_candidate_report_filters_bad_alternative_without_dropping_group(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.ensure_lm_studio_model_context",
+        lambda **kwargs: None,
+    )
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.LMStudioProvider.complete_structured",
+        lambda _self, **kwargs: StructuredInferenceResult(
+            model=kwargs["model"],
+            structured={
+                "overall_observations": [
+                    _fixture_point("J1 carries supported work.", ["C1"]),
+                ],
+                "work_clusters": [
+                    _fixture_group(
+                        "Agent delivery",
+                        ["C1"],
+                        alternatives=[
+                            {"label": "J2 specialist", "evidence_refs": ["C1"]},
+                            {"label": "Agent workflow delivery", "evidence_refs": ["C1"]},
+                        ],
+                    )
+                ],
+                "possible_role_subfamilies": [],
+                "limitations": ["J2 has no responsibility claims."],
+            },
+            request_body={},
+            raw_response={},
+            finish_reason="stop",
+        ),
+    )
+
+    report = build_market_candidate_report(harness.settings, snapshot_id)
+
+    assert report["work_clusters"][0]["label"] == "Agent delivery"
+    assert [item["label"] for item in report["work_clusters"][0]["alternatives"]] == [
+        "Agent workflow delivery"
+    ]
+    assert report["limitations"] == []
+    assert report["integrity_rejection_count"] == 2
+    assert report["integrity_rejections"] == [
+        {
+            "path": "work_clusters[0].alternatives[0]",
+            "code": "source_alias_without_matching_evidence",
+        },
+        {
+            "path": "limitations[0]",
+            "code": "uncited_source_alias_in_limitation",
+        },
+    ]
+
+
+def test_candidate_report_fails_if_no_integrity_safe_interpretation_survives(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.ensure_lm_studio_model_context",
+        lambda **kwargs: None,
+    )
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.LMStudioProvider.complete_structured",
+        lambda _self, **kwargs: StructuredInferenceResult(
+            model=kwargs["model"],
+            structured={
+                "overall_observations": [
+                    _fixture_point("J2 unsupported here.", ["C1"]),
+                ],
+                "work_clusters": [],
+                "possible_role_subfamilies": [],
+                "limitations": [],
+            },
+            request_body={},
+            raw_response={},
+            finish_reason="stop",
+        ),
+    )
+
+    with pytest.raises(ValueError, match="no integrity-safe interpretation"):
         build_market_candidate_report(harness.settings, snapshot_id)
 
 
@@ -478,7 +584,7 @@ def test_candidate_report_browser_operation_and_rendering(
         "candidate_scope": "single_posting_specialty_or_outlier",
     }
     report = {
-        "contract": "market-role-family-candidate-v4",
+        "contract": "market-role-family-candidate-v5",
         "snapshot_id": 15,
         "overall_observations": [point],
         "overall_supporting_source_job_ids": ["job-a"],
@@ -498,6 +604,13 @@ def test_candidate_report_browser_operation_and_rendering(
         "specialty_candidates": [],
         "scope_limitations": ["Small fixture sample."],
         "limitations": ["Interpretive output."],
+        "integrity_rejection_count": 1,
+        "integrity_rejections": [
+            {
+                "path": "overall_observations[1]",
+                "code": "source_alias_without_matching_evidence",
+            }
+        ],
     }
 
     monkeypatch.setattr(
@@ -541,6 +654,8 @@ def test_candidate_report_browser_operation_and_rendering(
         assert "Single-posting specialty/outlier candidate" in rendered.text
         assert "job-a" in rendered.text
         assert "Candidate interpretation only." in rendered.text
+        assert "Integrity filtering" in rendered.text
+        assert "source_alias_without_matching_evidence" in rendered.text
     finally:
         with market_web._CANDIDATE_REPORTS_LOCK:
             market_web._CANDIDATE_REPORTS.clear()

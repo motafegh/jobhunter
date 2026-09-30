@@ -14,10 +14,18 @@ from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.market_store import MarketStore
 from jobhunter.storage import JobHunterStore
 
-REPORT_CONTRACT = "market-role-family-candidate-v4"
-PROMPT_VERSION = "market-role-family-candidate-prompt-v4"
+REPORT_CONTRACT = "market-role-family-candidate-v5"
+PROMPT_VERSION = "market-role-family-candidate-prompt-v5"
 
 _INTERNAL_CITATION_RE = re.compile(r"\bC\d+\b")
+
+
+class CandidateProseIntegrityError(ValueError):
+    """One model-authored interpretation item failed a user-facing integrity check."""
+
+    def __init__(self, code: str) -> None:
+        super().__init__(code)
+        self.code = code
 
 
 def _evidence_bound_text_schema(
@@ -138,7 +146,7 @@ def _validate_and_resolve_prose(
     source_aliases: dict[str, str],
 ) -> str:
     if _INTERNAL_CITATION_RE.search(text):
-        raise ValueError("Candidate report prose leaked an internal compact evidence ID")
+        raise CandidateProseIntegrityError("internal_compact_evidence_id")
 
     cited_source_job_ids = {
         evidence[compact_ref_map[ref]]["source_job_id"] for ref in compact_refs
@@ -146,9 +154,7 @@ def _validate_and_resolve_prose(
     for source_job_id, alias in source_aliases.items():
         alias_is_mentioned = re.search(rf"\b{re.escape(alias)}\b", text) is not None
         if alias_is_mentioned and source_job_id not in cited_source_job_ids:
-            raise ValueError(
-                "Candidate report prose mentions a source alias without evidence from that source"
-            )
+            raise CandidateProseIntegrityError("source_alias_without_matching_evidence")
     return _resolve_source_aliases(text, source_aliases)
 
 
@@ -193,27 +199,46 @@ def _support_basis(used: list[dict[str, Any]]) -> str:
     return "mixed_responsibility_and_requirement"
 
 
+def _integrity_issue(path: str, code: str) -> dict[str, str]:
+    return {"path": path, "code": code}
+
+
 def _hydrate_group(
     group: dict[str, Any],
     *,
+    path: str,
     compact_ref_map: dict[str, str],
     evidence: dict[str, dict[str, Any]],
     source_aliases: dict[str, str],
-) -> dict[str, Any]:
-    points = [
-        _hydrate_evidence_bound_text(
-            item,
-            text_key="text",
-            compact_ref_map=compact_ref_map,
-            evidence=evidence,
-            source_aliases=source_aliases,
-        )
-        for item in group["interpretation_points"]
-    ]
+) -> tuple[dict[str, Any] | None, list[dict[str, str]]]:
+    issues: list[dict[str, str]] = []
+    points: list[dict[str, Any]] = []
+    accepted_raw_points: list[dict[str, Any]] = []
+    for index, item in enumerate(group["interpretation_points"]):
+        try:
+            point = _hydrate_evidence_bound_text(
+                item,
+                text_key="text",
+                compact_ref_map=compact_ref_map,
+                evidence=evidence,
+                source_aliases=source_aliases,
+            )
+        except CandidateProseIntegrityError as exc:
+            issues.append(
+                _integrity_issue(f"{path}.interpretation_points[{index}]", exc.code)
+            )
+            continue
+        points.append(point)
+        accepted_raw_points.append(item)
+
+    if not points:
+        issues.append(_integrity_issue(path, "no_integrity_safe_interpretation_points"))
+        return None, issues
+
     compact_primary_refs = _ordered_unique(
         [
             ref
-            for item in group["interpretation_points"]
+            for item in accepted_raw_points
             for ref in item["evidence_refs"]
         ]
     )
@@ -222,23 +247,33 @@ def _hydrate_group(
         compact_ref_map=compact_ref_map,
         evidence=evidence,
     )
-    resolved_label = _validate_and_resolve_prose(
-        group["label"],
-        compact_refs=compact_primary_refs,
-        compact_ref_map=compact_ref_map,
-        evidence=evidence,
-        source_aliases=source_aliases,
-    )
-    alternatives = [
-        _hydrate_evidence_bound_text(
-            item,
-            text_key="label",
+    try:
+        resolved_label = _validate_and_resolve_prose(
+            group["label"],
+            compact_refs=compact_primary_refs,
             compact_ref_map=compact_ref_map,
             evidence=evidence,
             source_aliases=source_aliases,
         )
-        for item in group["alternatives"]
-    ]
+    except CandidateProseIntegrityError as exc:
+        issues.append(_integrity_issue(f"{path}.label", exc.code))
+        return None, issues
+
+    alternatives: list[dict[str, Any]] = []
+    for index, item in enumerate(group["alternatives"]):
+        try:
+            alternative = _hydrate_evidence_bound_text(
+                item,
+                text_key="label",
+                compact_ref_map=compact_ref_map,
+                evidence=evidence,
+                source_aliases=source_aliases,
+            )
+        except CandidateProseIntegrityError as exc:
+            issues.append(_integrity_issue(f"{path}.alternatives[{index}]", exc.code))
+            continue
+        alternatives.append(alternative)
+
     supporting_source_job_ids = sorted({item["source_job_id"] for item in used})
     supporting_posting_count = len(supporting_source_job_ids)
     confidence = group["confidence"]
@@ -246,23 +281,55 @@ def _hydrate_group(
         confidence = "low"
     elif supporting_posting_count < 4 and confidence == "high":
         confidence = "moderate"
-    return {
-        "label": resolved_label,
-        "interpretation_points": points,
-        "evidence_refs": full_refs,
-        "evidence": used,
-        "evidence_count": len(full_refs),
-        "supporting_posting_count": supporting_posting_count,
-        "supporting_source_job_ids": supporting_source_job_ids,
-        "confidence": confidence,
-        "alternatives": alternatives,
-        "support_basis": _support_basis(used),
-        "candidate_scope": (
-            "single_posting_specialty_or_outlier"
-            if supporting_posting_count == 1
-            else "multi_posting_pattern"
-        ),
-    }
+    return (
+        {
+            "label": resolved_label,
+            "interpretation_points": points,
+            "evidence_refs": full_refs,
+            "evidence": used,
+            "evidence_count": len(full_refs),
+            "supporting_posting_count": supporting_posting_count,
+            "supporting_source_job_ids": supporting_source_job_ids,
+            "confidence": confidence,
+            "alternatives": alternatives,
+            "support_basis": _support_basis(used),
+            "candidate_scope": (
+                "single_posting_specialty_or_outlier"
+                if supporting_posting_count == 1
+                else "multi_posting_pattern"
+            ),
+        },
+        issues,
+    )
+
+
+def _safe_model_limitations(
+    limitations: list[str],
+    *,
+    source_aliases: dict[str, str],
+) -> tuple[list[str], list[dict[str, str]]]:
+    safe: list[str] = []
+    issues: list[dict[str, str]] = []
+    aliases = tuple(source_aliases.values())
+    for index, text in enumerate(limitations):
+        if _INTERNAL_CITATION_RE.search(text):
+            issues.append(
+                _integrity_issue(
+                    f"limitations[{index}]",
+                    "internal_compact_evidence_id",
+                )
+            )
+            continue
+        if any(re.search(rf"\b{re.escape(alias)}\b", text) for alias in aliases):
+            issues.append(
+                _integrity_issue(
+                    f"limitations[{index}]",
+                    "uncited_source_alias_in_limitation",
+                )
+            )
+            continue
+        safe.append(text)
+    return safe, issues
 
 
 def build_market_candidate_report(
@@ -381,8 +448,9 @@ def build_market_candidate_report(
             "Requirements may identify a specialty or qualification shape, but must never be "
             "relabeled as duties. Every overall observation, interpretation point, and "
             "alternative label must cite only the exact supplied evidence refs that support that "
-            "text. If you mention a source alias in text, that text must cite evidence from that "
-            "same source. Do not write compact C-number citation IDs in prose; use them only in "
+            "text. Prefer not to mention source aliases in prose because JobHunter presents "
+            "supporting postings separately. If you do mention one, that text must cite evidence "
+            "from that same source. Do not write compact C-number citation IDs in prose; use them only in "
             "evidence_refs. Do not import a concrete tool, system, employer, specialization, or "
             "other source detail from uncited claims. Jobs may support multiple work clusters or "
             "none. Possible role subfamilies must be supported by at least two distinct postings "
@@ -392,8 +460,9 @@ def build_market_candidate_report(
             "prevalence, employers, tools, seniority, or source claims. State ambiguity and "
             "alternatives plainly. A small sample limits confidence; do not generalize broadly. "
             "Do not speculate that source wording is copied or erroneous. Employer names and job "
-            "titles are intentionally omitted from the model input. Describe counts as snapshot "
-            "coverage, not market demand. Empty groups are valid."
+            "titles are intentionally omitted from the model input. Limitations must stay at the "
+            "sample/method level and must not mention source aliases or compact evidence IDs. "
+            "Describe counts as snapshot coverage, not market demand. Empty groups are valid."
         ),
         user_payload={
             "snapshot": {
@@ -425,34 +494,62 @@ def build_market_candidate_report(
         seed=0,
     )
     structured = result.structured
-    overall_observations = [
-        _hydrate_evidence_bound_text(
-            item,
-            text_key="text",
-            compact_ref_map=compact_ref_map,
-            evidence=evidence,
-            source_aliases=source_aliases,
-        )
-        for item in structured["overall_observations"]
-    ]
-    work_clusters = [
-        _hydrate_group(
+    integrity_rejections: list[dict[str, str]] = []
+
+    overall_observations: list[dict[str, Any]] = []
+    for index, item in enumerate(structured["overall_observations"]):
+        try:
+            observation = _hydrate_evidence_bound_text(
+                item,
+                text_key="text",
+                compact_ref_map=compact_ref_map,
+                evidence=evidence,
+                source_aliases=source_aliases,
+            )
+        except CandidateProseIntegrityError as exc:
+            integrity_rejections.append(
+                _integrity_issue(f"overall_observations[{index}]", exc.code)
+            )
+            continue
+        overall_observations.append(observation)
+
+    work_clusters: list[dict[str, Any]] = []
+    for index, group in enumerate(structured["work_clusters"]):
+        hydrated, issues = _hydrate_group(
             group,
+            path=f"work_clusters[{index}]",
             compact_ref_map=compact_ref_map,
             evidence=evidence,
             source_aliases=source_aliases,
         )
-        for group in structured["work_clusters"]
-    ]
-    hydrated_roles = [
-        _hydrate_group(
+        integrity_rejections.extend(issues)
+        if hydrated is not None:
+            work_clusters.append(hydrated)
+
+    hydrated_roles: list[dict[str, Any]] = []
+    for index, group in enumerate(structured["possible_role_subfamilies"]):
+        hydrated, issues = _hydrate_group(
             group,
+            path=f"possible_role_subfamilies[{index}]",
             compact_ref_map=compact_ref_map,
             evidence=evidence,
             source_aliases=source_aliases,
         )
-        for group in structured["possible_role_subfamilies"]
-    ]
+        integrity_rejections.extend(issues)
+        if hydrated is not None:
+            hydrated_roles.append(hydrated)
+
+    model_limitations, limitation_issues = _safe_model_limitations(
+        structured["limitations"],
+        source_aliases=source_aliases,
+    )
+    integrity_rejections.extend(limitation_issues)
+
+    if not (overall_observations or work_clusters or hydrated_roles):
+        raise ValueError(
+            "Candidate report contained no integrity-safe interpretation after post-validation"
+        )
+
     possible_role_subfamilies = [
         group for group in hydrated_roles if group["supporting_posting_count"] >= 2
     ]
@@ -539,11 +636,21 @@ def build_market_candidate_report(
             "Requirement-only groups are specialty/qualification hypotheses, not inferred duties.",
             "Employer names and job titles are withheld from the interpretation input.",
             "This point-in-time snapshot does not establish broad-market prevalence or trends.",
+            *(
+                [
+                    f"JobHunter omitted {len(integrity_rejections)} model-authored item(s) "
+                    "that failed post-generation integrity checks."
+                ]
+                if integrity_rejections
+                else []
+            ),
         ],
         "work_clusters": work_clusters,
         "possible_role_subfamilies": possible_role_subfamilies,
         "specialty_candidates": specialty_candidates,
-        "limitations": _resolve_source_aliases(structured["limitations"], source_aliases),
+        "limitations": model_limitations,
+        "integrity_rejection_count": len(integrity_rejections),
+        "integrity_rejections": integrity_rejections,
         "sources": list(sources.values()),
         "authority_note": (
             "Ephemeral analytical candidate based on accepted P1.6 in this frozen snapshot. "

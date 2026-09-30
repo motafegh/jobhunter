@@ -94,6 +94,17 @@
 <section class="panel">
   <div class="panel-header"><div><p class="eyebrow">Evidence quality</p><h2>Limitations</h2></div></div>
   {% for limitation in report.scope_limitations %}<p>{{ limitation }}</p>{% endfor %}
+  {% if report.integrity_rejection_count %}
+  <h3>Integrity filtering</h3>
+  <p>JobHunter omitted {{ report.integrity_rejection_count }} model-authored item{% if report.integrity_rejection_count != 1 %}s{% endif %} that failed post-generation integrity checks. Rejected prose is not rendered.</p>
+  <details><summary>Integrity diagnostics</summary>
+    <ul>
+      {% for issue in report.integrity_rejections %}
+      <li><code>{{ issue.path }}</code> · {{ issue.code }}</li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
   <h3>Model caveats</h3>
   {% for limitation in report.limitations %}<p>{{ limitation }}</p>{% endfor %}
   <p>{{ report.authority_note }}</p>
