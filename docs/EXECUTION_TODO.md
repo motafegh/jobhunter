@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** Market candidate interpretation V3.2 / contract v5 — V4 real-model rerun failed safely on a prose/source-evidence mismatch; V5 reduces blast radius by filtering only unsafe generated elements, with green regression gates and a fresh snapshot-15 rerun pending.
+**Active increment:** Market candidate interpretation V3.3 / contract v6 — V5 real-model rerun completed safely but over-filtered all work/role candidates because declared internal `C*` citation syntax was treated as rejection-worthy; V6 deterministically normalizes declared compact citations while preserving semantic integrity checks. Green regression gates; one final snapshot-15 rerun pending.
 
 Status vocabulary:
 
@@ -56,20 +56,24 @@ Current implementation:
 - [x] Concrete v3 defects recorded: duplicate overall source display, available-vs-cited evidence mislabeling, internal compact-ID leakage, weak prose/source binding, unbound alternatives, and one-posting role candidates presented too much like reusable subfamilies.
 - [x] V3.1 used `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` because the response/evidence contract changed materially.
 - [x] Real V4 snapshot-15 run on 2026-09-30 failed safely with `source_alias_without_matching_evidence`; no candidate report entered browser cache.
-- [x] V3.2 advances to `market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5` because post-generation integrity handling changed materially.
+- [x] V3.2 advanced to `market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5` because post-generation integrity handling changed materially.
+- [x] Real V5 snapshot-15 report captured and reviewed: 175 available claims, 24 unique cited claims, 17 integrity omissions, zero rendered work clusters, and zero rendered role-subfamily candidates.
+- [x] V5 demonstrated that declared compact citation syntax is a normalization concern, not by itself a semantic evidence defect.
+- [x] V3.3/final targeted repair advances to `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`.
 - [x] Reads one immutable Market snapshot and accepted, exact-identity P1.6 only.
 - [x] Overall observations, interpretation points, and alternatives are individually evidence-bound.
-- [x] Internal compact `C*` IDs in user-facing prose are rejected at the generated-element boundary.
+- [x] Internal compact `C*` IDs are never rendered: IDs already declared in the same item's `evidence_refs` are normalized away; undeclared compact IDs reject the element.
 - [x] A source alias mentioned by an interpretation must be backed by evidence from that same source; violating elements are omitted rather than rendering unsupported prose.
 - [x] Employer names and job titles are withheld from model input; source details must come from cited claims.
 - [x] Application owns distinct-source support, available-vs-cited evidence counts, posting counts, confidence caps, and responsibility-vs-requirement support basis.
 - [x] One-posting role candidates are separated as specialty/outlier candidates rather than counted as multi-posting role subfamilies.
 - [x] Report remains ephemeral: no Market/report persistence and no corpus publication.
 - [x] CLI and browser share the same generator.
-- [x] V5 post-validation is partial-safe: invalid observations, alternatives, groups, or model caveats are omitted with path/code diagnostics; the whole report still fails if no integrity-safe interpretation survives.
-- [x] Dedicated regression coverage includes evidence binding, compact-ID rejection, source-alias/source-evidence consistency, partial filtering, invalid-alternative retention of safe groups, all-unsafe failure, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
-- [x] CI `36758263560` passed Ruff + 816 tests + 816 warnings-as-errors tests.
-- [~] Fresh real-model/browser re-evaluation of snapshot 15 under v5.
+- [x] V5 post-validation remains partial-safe for true semantic violations.
+- [x] V6 normalizes declared compact citation groups/tokens before source-alias validation and rejects any compact ID not declared in that item's `evidence_refs`.
+- [x] Dedicated regression coverage now includes declared compact-citation normalization plus undeclared compact-ref rejection, alongside evidence binding, source-alias/source-evidence consistency, partial filtering, all-unsafe failure, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
+- [x] CI `37139118186` passed Ruff + 817 tests + 817 warnings-as-errors tests.
+- [~] Final real-model/browser re-evaluation of snapshot 15 under v6.
 - [ ] After that rerun, make the explicit report disposition:
   - keep the interpretation ephemeral; or
   - separately authorize a persisted/versioned `RoleFamilyIntelligenceReport` contract.
@@ -137,7 +141,7 @@ Portfolio work does not broaden the active semantic authorization.
 
 ```text
 pull/restart the current app
-→ regenerate snapshot 15 candidate interpretation under v5
+→ regenerate snapshot 15 candidate interpretation under v6
 → capture and review the new report against the recorded v3 defects
 → make the explicit ephemeral-vs-persisted report decision
 → only then proceed to broader Phase-2 responsibility-family / capability-profile work

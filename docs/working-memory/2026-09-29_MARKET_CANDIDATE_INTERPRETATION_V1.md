@@ -1,7 +1,7 @@
 # Market candidate interpretation v1
 
 **Date:** 2026-09-29  
-**Status:** V3 owner usefulness review complete; V4 real rerun failed safely on cross-field evidence integrity; V3.2 candidate v5/prompt v5 implemented with partial-safe filtering and green regression gates; fresh snapshot-15 rerun pending
+**Status:** V3 owner usefulness review complete; V4 proved strict cross-field integrity; V5 real rerun completed but over-filtered declared compact citation syntax; V3.3 candidate v6/prompt v6 implemented with green regression gates; final snapshot-15 rerun pending
 **Scope:** One ephemeral candidate work/role-subfamily report over an exact immutable Market snapshot
 
 ## Decision and boundaries
@@ -180,3 +180,38 @@ The next acceptance action remains exactly one fresh snapshot-15 real-model/brow
 under V5, followed by capture and review of the actual rendered report. No persistence or
 taxonomy promotion is authorized by this repair.
 
+## V5 review and V3.3 / V6 final targeted repair — 2026-10-03
+
+The preserved real V5 browser artifact is:
+
+`docs/working-memory/review-artifacts/2026-09-30_snapshot15_candidate_report_v5.html`
+
+V5 completed successfully and demonstrated the intended partial-safe architecture, but its rendered product usefulness regressed too far. The report retained two evidence-bound overall observations, correctly separated 175 available P1.6 claims from 24 unique cited claims, preserved the 4-of-6 responsibility-coverage fact, and rendered no unsafe compact IDs. However, it reported **17 integrity omissions** and rendered **zero work clusters, zero multi-posting role-subfamily candidates, and zero specialty candidates**.
+
+The diagnostics explain why: nearly every rejected interpretation point used `internal_compact_evidence_id`. This is materially different from the V4 `source_alias_without_matching_evidence` failure. A source alias backed by the wrong source evidence is a semantic integrity defect. By contrast, a compact citation such as `(C2, C8)` is an internal representation leak; when `C2` and `C8` are already present in that same item's structured `evidence_refs`, the application already owns the exact evidence relationship.
+
+Decision: do not persist V5 and do not weaken cross-field evidence integrity. Instead perform one **final targeted repair** that moves declared compact citation syntax from the rejection boundary to deterministic normalization.
+
+V3.3 therefore advances the ephemeral contract:
+
+```text
+report: market-role-family-candidate-v6
+prompt: market-role-family-candidate-prompt-v6
+```
+
+V6 behavior:
+
+- collect every `C*` token appearing in model-authored evidence-bound prose;
+- require every mentioned compact ID to already appear in that same item's structured `evidence_refs`;
+- if any mentioned compact ID is undeclared, reject the generated element with `compact_evidence_id_without_matching_ref`;
+- otherwise deterministically remove compact citation-only parenthetical/bracket groups and remaining declared `C*` tokens before user presentation;
+- clean only mechanical whitespace/punctuation artifacts from that removal;
+- continue source-alias/same-source evidence validation on the normalized prose;
+- preserve V5 partial-safe filtering for genuine semantic violations;
+- never render internal compact citation IDs.
+
+This keeps the authority boundary application-owned: the model cannot introduce a new citation through prose, and prompt obedience is not required for safety. The model's inline citation syntax becomes redundant presentation noise only when the structured evidence contract already proves the same citation.
+
+Regression coverage now proves both sides of the boundary: declared compact citations survive through deterministic normalization, while an undeclared compact ID still rejects the element. CI run `37139118186` passed Ruff, **817 tests**, and **817 warnings-as-errors tests** on commit `927cbeeb`.
+
+This is the **final targeted repair cycle** for the candidate-interpretation experiment. The next action is one fresh snapshot-15 real-model/browser run under V6 and capture of the exact rendered artifact. Acceptance requires restoration of useful work/role synthesis without compact-ID leakage or semantic evidence violations. If the V6 real result still needs substantial prompt/validator patching, stop iterating on this report layer, keep it ephemeral, and continue with the deeper Phase-2 semantic model instead of another V7 repair.

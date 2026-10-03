@@ -8,7 +8,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** Market candidate interpretation V3.2 / contract v5. V4 correctly blocked a real source-alias/evidence mismatch but aborted the whole report; V5 now filters unsafe generated elements with explicit diagnostics while preserving safe output, with a fresh snapshot-15 rerun pending before disposition.  
+**Active increment:** Market candidate interpretation V3.3 / contract v6. V5 completed safely but over-filtered all work/role candidates because declared internal `C*` citation syntax was treated as a semantic rejection. V6 deterministically normalizes declared compact citations while keeping undeclared compact refs and source/evidence mismatches as rejection conditions. One final snapshot-15 rerun remains before disposition.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -61,7 +61,7 @@ Market I5                           ACCEPTED
 Market I6                           ACCEPTED
 Market I7                           PASS / CLOSED FOR BOUNDED SCOPE
 Same-target coverage follow-up      COMPLETE
-Candidate interpretation v5         ACTIVE RE-EVALUATION / NON-PROMOTIONAL
+Candidate interpretation v6         ACTIVE FINAL RE-EVALUATION / NON-PROMOTIONAL
 Market → You                        LATER / NOT AUTHORIZED
 ```
 
@@ -80,7 +80,7 @@ Market membership              market-membership-v1 / market-membership-v1.0
 Market snapshot                market-corpus-snapshot-v1
 Market aggregate               market-aggregate-profile-v1
 Public Corpus                  jobhunter-public-corpus-v1
-Candidate report               market-role-family-candidate-v5
+Candidate report               market-role-family-candidate-v6
 ```
 
 Accepted-only historical P1.6 compatibility does not relabel old artifacts. Exact prompt/schema/dependency identity remains visible.
@@ -120,7 +120,7 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. Active increment — Market candidate interpretation V3.2 / contract v5
+## 4. Active increment — Market candidate interpretation V3.3 / contract v6
 
 Purpose:
 
@@ -151,14 +151,15 @@ responsibility claims:            35
 requirement claims:              140
 ```
 
-The v5 report:
+The v6 report:
 
 - consumes only included core members with accepted exact-identity P1.6;
 - treats responsibilities as primary work evidence and requirements as specialty/qualification context rather than inferred duties;
 - requires every overall observation, interpretation point, and alternative to carry exact supplied evidence refs;
-- rejects internal compact `C*` IDs if they leak into user-facing prose;
+- never renders internal compact `C*` IDs: IDs already declared by the same item's `evidence_refs` are normalized away before presentation;
+- rejects an undeclared compact ID as a semantic citation inconsistency;
 - rejects a source-alias mention when that same interpretation does not cite evidence from the source;
-- omits only the unsafe generated element and records a path/code integrity diagnostic; if no safe interpretation survives, the whole report fails;
+- omits only genuinely unsafe generated elements and records a path/code integrity diagnostic; if no safe interpretation survives, the whole report fails;
 - withholds employer names and job titles from model input;
 - derives distinct support, available-vs-cited evidence counts, confidence caps, and responsibility/requirement evidence basis in application code;
 - separates one-posting role candidates into specialty/outlier candidates instead of presenting them as multi-posting subfamilies;
@@ -177,12 +178,13 @@ Current acceptance state:
 
 1. owner usefulness review of the captured v3 report is complete: the synthesis was useful, but v3 was not strong enough to persist;
 2. V4 real-model rerun on 2026-09-30 failed safely on `source_alias_without_matching_evidence`; no report was cached;
-3. V3.2 is implemented under new v5/prompt-v5 identities with partial-safe integrity filtering;
-4. dedicated regression coverage is present in `tests/test_market_candidate_report.py`;
-5. CI run `36758263560` passed Ruff, 816 tests, and 816 warnings-as-errors tests;
-6. one fresh real-model/browser snapshot-15 rerun under v5 is still required before final report disposition;
-7. no decision has been made to persist/version reports;
-8. no responsibility family or role subfamily is promoted from this sample.
+3. V5 real-model rerun completed and was captured, but 17 declared-compact-citation violations removed every work cluster and role-subfamily candidate;
+4. V3.3 is implemented under new v6/prompt-v6 identities with deterministic normalization of declared compact citations and rejection of undeclared ones;
+5. dedicated regression coverage is present in `tests/test_market_candidate_report.py`;
+6. CI run `37139118186` passed Ruff, 817 tests, and 817 warnings-as-errors tests;
+7. one final real-model/browser snapshot-15 rerun under v6 is required before report disposition;
+8. no decision has been made to persist/version reports;
+9. no responsibility family or role subfamily is promoted from this sample.
 
 ---
 
@@ -191,7 +193,7 @@ Current acceptance state:
 ```text
 A. Pull/restart current main on the maintainer machine
 
-B. Regenerate snapshot 15 under candidate v5
+B. Regenerate snapshot 15 under candidate v6
    - same accepted snapshot input
    - default Gemma analysis model
    - browser route must render successfully

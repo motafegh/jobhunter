@@ -169,10 +169,10 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            Candidate interpretation v5 fresh local re-evaluation pending
+next exact increment            Candidate interpretation v6 final local re-evaluation pending
 ```
 
-A separately owner-authorized ephemeral Market candidate-interpretation increment is active beyond the closed first slice. V4 correctly rejected a real model result whose prose/source references violated cross-field evidence integrity, but the whole report failed. The current contract is `market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5`: unsafe model-authored elements are omitted and diagnosed while safe elements survive; the whole report still fails if no integrity-safe interpretation remains. It stays non-promotional and requires one fresh snapshot-15 real-model/browser re-evaluation before any persistence decision.
+A separately owner-authorized ephemeral Market candidate-interpretation increment is active beyond the closed first slice. V4 correctly rejected unsupported source-specific prose but had excessive whole-report blast radius. V5 reduced that blast radius, yet the real snapshot-15 artifact over-filtered the useful synthesis because Gemma placed declared internal `C*` citation markers in prose: 17 model-authored items were omitted and no work clusters or role-subfamily candidates survived. The current/final targeted repair is `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`: compact IDs that are already declared in the same item's `evidence_refs` are deterministically removed before presentation, while undeclared compact IDs and source-alias/evidence mismatches still reject the element. It remains non-promotional and requires one final fresh snapshot-15 real-model/browser re-evaluation before disposition.
 
 B1 final evidence is retained at:
 

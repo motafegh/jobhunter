@@ -27,7 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
-Candidate interpretation v5      V3.2 partial-safe integrity filtering + regression accepted; fresh snapshot-15 local rerun pending
+Candidate interpretation v6      V3.3 declared-citation normalization + regression accepted; final snapshot-15 local rerun pending
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -64,16 +64,19 @@ On 2026-09-29 the owner authorized a separate bounded candidate interpretation
 increment. The captured v3 report proved useful enough to continue but exposed
 concrete evidence/presentation defects, so persistence was not authorized.
 V4 added sentence/alternative evidence binding and fail-closed cross-field
-checks. On 2026-09-30 a real snapshot-15 generation hit
-`source_alias_without_matching_evidence`; JobHunter correctly prevented unsafe
-prose from rendering, but the entire report failed. V3.2 therefore advances to
-`market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5`:
-unsafe model-authored elements are omitted and diagnosed while safe elements
-survive; if nothing integrity-safe remains, the report still fails. Model
-limitations with uncited source aliases or internal compact IDs are also
-filtered. CI `36758263560` passed Ruff, 816 tests, and 816 warnings-as-errors
-tests. The current gate is one fresh snapshot-15 real-model/browser rerun and
-owner review before any persistence decision. No taxonomy is promoted. See
+checks. A real V4 snapshot-15 run correctly blocked a source-alias/evidence
+mismatch but showed excessive whole-report blast radius. V5 made validation
+partial-safe and completed a real snapshot-15 report. That artifact preserved
+24 unique cited claims and safe overall observations, but omitted 17 generated
+items because Gemma included declared internal `C*` markers in prose; no work
+clusters or role-subfamily candidates survived. V3.3 therefore advances to
+`market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`:
+a compact ID already declared in the same item's `evidence_refs` is
+deterministically removed from user-facing prose, while an undeclared compact
+ID or source-alias/evidence mismatch still rejects the generated element.
+CI `37139118186` passed Ruff, 817 tests, and 817 warnings-as-errors tests.
+The current gate is one final snapshot-15 real-model/browser rerun and owner
+review before report disposition. No taxonomy is promoted. See
 `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
@@ -422,8 +425,9 @@ B1 CLOSED / DEFER
 → owner-requested same-target coverage follow-up COMPLETE (snapshots 14-15; six of six core P1.6 accepted-current)
 → ephemeral candidate interpretation v3 EXECUTED + owner usefulness review COMPLETE
 → V3.1 candidate v4 real rerun FAILED SAFE on source-alias/evidence mismatch
-→ V3.2 candidate v5 partial-safe integrity filtering implemented; CI 36758263560 GREEN
-→ current gate: fresh snapshot-15 real-model/browser rerun + explicit report disposition; no taxonomy promotion
+→ V3.2 candidate v5 real rerun COMPLETED but over-filtered all work/role candidates
+→ V3.3 candidate v6 declared-citation normalization implemented; CI 37139118186 GREEN
+→ current gate: final snapshot-15 real-model/browser rerun + explicit report disposition; no taxonomy promotion
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
