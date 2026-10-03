@@ -198,7 +198,7 @@ B. Regenerate snapshot 15 under candidate v6
    - default Gemma analysis model
    - browser route must render successfully
 
-C. Capture the v4 rendered report as review evidence
+C. Capture the v6 rendered report as review evidence
 
 D. Compare directly with the recorded v3 defects
    - no duplicate overall support display
