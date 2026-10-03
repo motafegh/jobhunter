@@ -14,8 +14,8 @@ from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
 from jobhunter.market_store import MarketStore
 from jobhunter.storage import JobHunterStore
 
-REPORT_CONTRACT = "market-role-family-candidate-v5"
-PROMPT_VERSION = "market-role-family-candidate-prompt-v5"
+REPORT_CONTRACT = "market-role-family-candidate-v6"
+PROMPT_VERSION = "market-role-family-candidate-prompt-v6"
 
 _INTERNAL_CITATION_RE = re.compile(r"\bC\d+\b")
 
@@ -137,6 +137,34 @@ def _resolve_evidence_refs(
     return full_refs, [evidence[ref] for ref in full_refs]
 
 
+def _normalize_declared_compact_citations(
+    text: str,
+    *,
+    compact_refs: list[str],
+) -> str:
+    mentioned_refs = _ordered_unique(_INTERNAL_CITATION_RE.findall(text))
+    undeclared_refs = [ref for ref in mentioned_refs if ref not in compact_refs]
+    if undeclared_refs:
+        raise CandidateProseIntegrityError("compact_evidence_id_without_matching_ref")
+    if not mentioned_refs:
+        return text
+
+    normalized = re.sub(
+        r"\s*[\(\[]\s*C\d+(?:\s*[,;/&]\s*C\d+)*\s*[\)\]]",
+        "",
+        text,
+    )
+    normalized = _INTERNAL_CITATION_RE.sub("", normalized)
+    normalized = re.sub(r"\(\s*\)|\[\s*\]", "", normalized)
+    normalized = re.sub(r"\s+([,.;:!?])", r"\1", normalized)
+    normalized = re.sub(r"([,;:])\s*([,;:])+", r"\1", normalized)
+    normalized = re.sub(r"\s{2,}", " ", normalized).strip()
+    normalized = re.sub(r"^[,;:]\s*", "", normalized)
+    if not normalized:
+        raise CandidateProseIntegrityError("empty_after_compact_citation_normalization")
+    return normalized
+
+
 def _validate_and_resolve_prose(
     text: str,
     *,
@@ -145,17 +173,21 @@ def _validate_and_resolve_prose(
     evidence: dict[str, dict[str, Any]],
     source_aliases: dict[str, str],
 ) -> str:
-    if _INTERNAL_CITATION_RE.search(text):
-        raise CandidateProseIntegrityError("internal_compact_evidence_id")
+    normalized_text = _normalize_declared_compact_citations(
+        text,
+        compact_refs=compact_refs,
+    )
 
     cited_source_job_ids = {
         evidence[compact_ref_map[ref]]["source_job_id"] for ref in compact_refs
     }
     for source_job_id, alias in source_aliases.items():
-        alias_is_mentioned = re.search(rf"\b{re.escape(alias)}\b", text) is not None
+        alias_is_mentioned = (
+            re.search(rf"\b{re.escape(alias)}\b", normalized_text) is not None
+        )
         if alias_is_mentioned and source_job_id not in cited_source_job_ids:
             raise CandidateProseIntegrityError("source_alias_without_matching_evidence")
-    return _resolve_source_aliases(text, source_aliases)
+    return _resolve_source_aliases(normalized_text, source_aliases)
 
 
 def _hydrate_evidence_bound_text(
@@ -451,7 +483,9 @@ def build_market_candidate_report(
             "text. Prefer not to mention source aliases in prose because JobHunter presents "
             "supporting postings separately. If you do mention one, that text must cite evidence "
             "from that same source. Do not write compact C-number citation IDs in prose; "
-            "use them only in evidence_refs. Do not import a concrete tool, system, employer, "
+            "use them only in evidence_refs. JobHunter may normalize a declared compact citation "
+            "if one still appears, but an undeclared compact citation invalidates that item. "
+            "Do not import a concrete tool, system, employer, "
             "specialization, or "
             "other source detail from uncited claims. Jobs may support multiple work clusters or "
             "none. Possible role subfamilies must be supported by at least two distinct postings "

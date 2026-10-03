@@ -286,8 +286,8 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
 
     report = build_market_candidate_report(harness.settings, snapshot_id)
 
-    assert report["contract"] == "market-role-family-candidate-v5"
-    assert report["prompt_version"] == "market-role-family-candidate-prompt-v5"
+    assert report["contract"] == "market-role-family-candidate-v6"
+    assert report["prompt_version"] == "market-role-family-candidate-prompt-v6"
     assert report["source_count"] == 2
     assert report["available_evidence_count"] == 4
     assert report["available_responsibility_claim_count"] == 2
@@ -338,13 +338,74 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
     assert candidate_tables == []
 
 
+def test_candidate_report_normalizes_declared_compact_citations(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.ensure_lm_studio_model_context",
+        lambda **kwargs: None,
+    )
+    monkeypatch.setattr(
+        "jobhunter.market_candidate_report.LMStudioProvider.complete_structured",
+        lambda _self, **kwargs: StructuredInferenceResult(
+            model=kwargs["model"],
+            structured={
+                "overall_observations": [
+                    _fixture_point(
+                        "J1 carries supported agent work (C1, C2).",
+                        ["C1", "C2"],
+                    ),
+                ],
+                "work_clusters": [
+                    {
+                        "label": "Agent delivery",
+                        "interpretation_points": [
+                            _fixture_point(
+                                "The work combines workflow construction (C1) "
+                                "and service operation (C2).",
+                                ["C1", "C2"],
+                            ),
+                        ],
+                        "confidence": "high",
+                        "alternatives": [
+                            {
+                                "label": "Agent operations (C2)",
+                                "evidence_refs": ["C2"],
+                            }
+                        ],
+                    }
+                ],
+                "possible_role_subfamilies": [],
+                "limitations": [],
+            },
+            request_body={},
+            raw_response={},
+            finish_reason="stop",
+        ),
+    )
+
+    report = build_market_candidate_report(harness.settings, snapshot_id)
+
+    assert [item["text"] for item in report["overall_observations"]] == [
+        "job-a carries supported agent work."
+    ]
+    assert report["work_clusters"][0]["interpretation_points"][0]["text"] == (
+        "The work combines workflow construction and service operation."
+    )
+    assert report["work_clusters"][0]["alternatives"][0]["label"] == "Agent operations"
+    assert report["integrity_rejection_count"] == 0
+    assert report["integrity_rejections"] == []
+
+
 @pytest.mark.parametrize(
     ("text", "refs", "expected_code"),
     [
         (
-            "Internal evidence C1 must not leak.",
+            "J1 work cites C2 even though only C1 is declared.",
             ["C1"],
-            "internal_compact_evidence_id",
+            "compact_evidence_id_without_matching_ref",
         ),
         (
             "J2 is a speech specialist.",
@@ -353,7 +414,7 @@ def test_candidate_report_uses_exact_snapshot_evidence_and_derives_counts(
         ),
     ],
 )
-def test_candidate_report_soft_filters_untraceable_prose(
+def test_candidate_report_soft_filters_semantically_untraceable_prose(
     tmp_path: Path,
     monkeypatch,
     text: str,
@@ -584,7 +645,7 @@ def test_candidate_report_browser_operation_and_rendering(
         "candidate_scope": "single_posting_specialty_or_outlier",
     }
     report = {
-        "contract": "market-role-family-candidate-v5",
+        "contract": "market-role-family-candidate-v6",
         "snapshot_id": 15,
         "overall_observations": [point],
         "overall_supporting_source_job_ids": ["job-a"],
