@@ -1,12 +1,12 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-09-29  
+**Date:** 2026-10-03  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** Market candidate interpretation V3.3 / contract v6 — V5 real-model rerun completed safely but over-filtered all work/role candidates because declared internal `C*` citation syntax was treated as rejection-worthy; V6 deterministically normalizes declared compact citations while preserving semantic integrity checks. Green regression gates; one final snapshot-15 rerun pending.
+**Active increment:** `RoleFamilyIntelligenceReport` R1 — domain + immutable local persistence. V6 candidate interpretation is accepted/closed for bounded reporting; persistence is authorized, taxonomy promotion is not.
 
 Status vocabulary:
 
@@ -43,52 +43,44 @@ Historical HOLD-era execution remains evidence only and does not control current
 
 ---
 
-## B. Active Market candidate interpretation
+## B. RoleFamilyIntelligenceReport persistence — ACTIVE
 
-Current record:
+Controlling design:
 
-`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`
+`docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
 
-Current implementation:
+Accepted precursor:
 
-- [x] Historical v3 bounded Gemma/MiMo/browser evaluation completed over snapshot 15.
-- [x] Owner usefulness review of the captured v3 report completed: the synthesis is useful enough to continue, but v3 is not persistence-ready.
-- [x] Concrete v3 defects recorded: duplicate overall source display, available-vs-cited evidence mislabeling, internal compact-ID leakage, weak prose/source binding, unbound alternatives, and one-posting role candidates presented too much like reusable subfamilies.
-- [x] V3.1 used `market-role-family-candidate-v4 / market-role-family-candidate-prompt-v4` because the response/evidence contract changed materially.
-- [x] Real V4 snapshot-15 run on 2026-09-30 failed safely with `source_alias_without_matching_evidence`; no candidate report entered browser cache.
-- [x] V3.2 advanced to `market-role-family-candidate-v5 / market-role-family-candidate-prompt-v5` because post-generation integrity handling changed materially.
-- [x] Real V5 snapshot-15 report captured and reviewed: 175 available claims, 24 unique cited claims, 17 integrity omissions, zero rendered work clusters, and zero rendered role-subfamily candidates.
-- [x] V5 demonstrated that declared compact citation syntax is a normalization concern, not by itself a semantic evidence defect.
-- [x] V3.3/final targeted repair advances to `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`.
-- [x] Reads one immutable Market snapshot and accepted, exact-identity P1.6 only.
-- [x] Overall observations, interpretation points, and alternatives are individually evidence-bound.
-- [x] Internal compact `C*` IDs are never rendered: IDs already declared in the same item's `evidence_refs` are normalized away; undeclared compact IDs reject the element.
-- [x] A source alias mentioned by an interpretation must be backed by evidence from that same source; violating elements are omitted rather than rendering unsupported prose.
-- [x] Employer names and job titles are withheld from model input; source details must come from cited claims.
-- [x] Application owns distinct-source support, available-vs-cited evidence counts, posting counts, confidence caps, and responsibility-vs-requirement support basis.
-- [x] One-posting role candidates are separated as specialty/outlier candidates rather than counted as multi-posting role subfamilies.
-- [x] Report remains ephemeral: no Market/report persistence and no corpus publication.
-- [x] CLI and browser share the same generator.
-- [x] V5 post-validation remains partial-safe for true semantic violations.
-- [x] V6 normalizes declared compact citation groups/tokens before source-alias validation and rejects any compact ID not declared in that item's `evidence_refs`.
-- [x] Dedicated regression coverage now includes declared compact-citation normalization plus undeclared compact-ref rejection, alongside evidence binding, source-alias/source-evidence consistency, partial filtering, all-unsafe failure, singleton specialty handling, exact identity rejection, CLI model override, browser rendering, and non-persistence.
-- [x] CI `37139118186` passed Ruff + 817 tests + 817 warnings-as-errors tests.
-- [~] Final real-model/browser re-evaluation of snapshot 15 under v6.
-- [ ] After that rerun, make the explicit report disposition:
-  - keep the interpretation ephemeral; or
-  - separately authorize a persisted/versioned `RoleFamilyIntelligenceReport` contract.
-- [ ] Only after representative evidence supports it, decide whether any responsibility-family / role-archetype interpretation deserves reviewed promotion.
+- [x] Candidate V6 real snapshot-15 report reviewed and accepted for bounded reporting.
+- [x] Review artifact: `docs/working-memory/review-artifacts/2026-10-03_snapshot15_candidate_report_v6.html`.
+- [x] V6 acceptance: 175 available claims, 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero `C*` leakage, zero integrity rejections.
+- [x] Candidate experiment CLOSED; no V7 authorized.
+- [x] Durable report persistence AUTHORIZED.
+- [x] Persistence envelope: `market-role-family-intelligence-report-v1`.
+- [x] Initial generation dependency: `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`.
+- [x] Review contract: `market-role-family-report-review-v1`.
+- [x] Report remains interpretive: reviewed report != employer fact != canonical taxonomy != broad-market prevalence.
+- [x] Market report state remains local/private and is not public-corpus material by default.
+
+R1 — domain + persistence:
+
+- [ ] Add typed report / attempt / review records.
+- [ ] Add dedicated local SQLite report store and initialization.
+- [ ] Persist completed normalized reports immutably.
+- [ ] Add deterministic input/generation/report fingerprints.
+- [ ] Add append-only terminal attempts: `completed | failed | reused`.
+- [ ] Add append-only review events: `accepted_for_bounded_use | rejected`; no event = pending.
+- [ ] Add immutable update/delete triggers for reports and reviews.
+- [ ] Support exact generation-fingerprint lookup/reuse without forbidding explicit regeneration.
+- [ ] Add deterministic Tier-1 tests for immutability, reuse, multiple artifacts, failures, review history/effective state, and no snapshot/P1.6 mutation.
+- [ ] Keep R2 service/model integration, R3 browser/CLI, and R4 real-local acceptance blocked until R1 passes.
 
 Acceptance boundary:
 
 ```text
-useful bounded interpretation
-+ traceable evidence
-+ regression-protected contract
-!= promoted taxonomy
+persisted/reviewed analytical artifact
+!= promoted role-family taxonomy
 ```
-
-Do not promote role families from the current six-posting sample.
 
 ---
 
@@ -140,9 +132,11 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-pull/restart the current app
-→ regenerate snapshot 15 candidate interpretation under v6
-→ capture and review the new report against the recorded v3 defects
-→ make the explicit ephemeral-vs-persisted report decision
-→ only then proceed to broader Phase-2 responsibility-family / capability-profile work
+R1 domain + persistence
+→ typed report / attempt / review models
+→ immutable local SQLite report store
+→ fingerprints + reuse semantics
+→ append-only review history
+→ deterministic Tier-1 tests
+→ only after R1 acceptance authorize R2 service integration
 ```

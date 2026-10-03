@@ -169,10 +169,10 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            Candidate interpretation v6 final local re-evaluation pending
+next exact increment            RoleFamilyIntelligenceReport R1 domain + persistence
 ```
 
-A separately owner-authorized ephemeral Market candidate-interpretation increment is active beyond the closed first slice. V4 correctly rejected unsupported source-specific prose but had excessive whole-report blast radius. V5 reduced that blast radius, yet the real snapshot-15 artifact over-filtered the useful synthesis because Gemma placed declared internal `C*` citation markers in prose: 17 model-authored items were omitted and no work clusters or role-subfamily candidates survived. The current/final targeted repair is `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`: compact IDs that are already declared in the same item's `evidence_refs` are deterministically removed before presentation, while undeclared compact IDs and source-alias/evidence mismatches still reject the element. It remains non-promotional and requires one final fresh snapshot-15 real-model/browser re-evaluation before disposition.
+The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Real snapshot-15 V6 restored useful synthesis with 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` leakage, and zero integrity rejections. `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6` remains the accepted generation contract, but it is not taxonomy authority. The next authorized increment is `RoleFamilyIntelligenceReport` persistence under `market-role-family-intelligence-report-v1`, starting with R1 domain + local SQLite persistence. The design owner is `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`. No responsibility-family or role-archetype promotion is authorized.
 
 B1 final evidence is retained at:
 

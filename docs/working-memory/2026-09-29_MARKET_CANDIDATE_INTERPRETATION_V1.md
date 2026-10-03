@@ -1,14 +1,14 @@
 # Market candidate interpretation v1
 
 **Date:** 2026-09-29  
-**Status:** V3 owner usefulness review complete; V4 proved strict cross-field integrity; V5 real rerun completed but over-filtered declared compact citation syntax; V3.3 candidate v6/prompt v6 implemented with green regression gates; final snapshot-15 rerun pending
+**Status:** CLOSED / ACCEPTED FOR BOUNDED REPORTING — V6 real snapshot-15 acceptance complete; durable RoleFamilyIntelligenceReport persistence authorized separately
 **Scope:** One ephemeral candidate work/role-subfamily report over an exact immutable Market snapshot
 
 ## Decision and boundaries
 
 The owner authorized the first report-level interpretation increment after bounded I7 closure. V1 is an on-demand analytical candidate. It does not promote responsibility concepts, establish stable archetypes, or make broad-market prevalence claims.
 
-The report reads only core snapshot members whose exact P1.6 artifact is accepted and whose job, source-version, translation, and analysis identities match the frozen snapshot. It provides accepted P1.6 responsibilities and requirements as cited evidence. In current v4, the model proposes group labels plus evidence-bound interpretation points and evidence-bound alternatives; application code resolves citations and owns distinct supporting-posting counts, evidence counts, confidence caps, and support-basis classification.
+The report reads only core snapshot members whose exact P1.6 artifact is accepted and whose job, source-version, translation, and analysis identities match the frozen snapshot. It provides accepted P1.6 responsibilities and requirements as cited evidence. In accepted V6, the model proposes evidence-bound observations, work clusters, alternatives and possible role-subfamily hypotheses; application code validates/normalizes citations and owns distinct supporting-posting counts, evidence counts, confidence caps, support-basis classification and integrity filtering.
 
 Browser and CLI use the same generator. The browser executes through the existing one-at-a-time `WebOperationManager`. Browser output is held only in the current process, and CLI output is printed as JSON. No report table, candidate report file, raw prompt/response, or Market state is written to the public corpus. Browser output is cleared on process restart.
 
@@ -215,3 +215,62 @@ This keeps the authority boundary application-owned: the model cannot introduce 
 Regression coverage now proves both sides of the boundary: declared compact citations survive through deterministic normalization, while an undeclared compact ID still rejects the element. CI run `37139118186` passed Ruff, **817 tests**, and **817 warnings-as-errors tests** on commit `927cbeeb`.
 
 This is the **final targeted repair cycle** for the candidate-interpretation experiment. The next action is one fresh snapshot-15 real-model/browser run under V6 and capture of the exact rendered artifact. Acceptance requires restoration of useful work/role synthesis without compact-ID leakage or semantic evidence violations. If the V6 real result still needs substantial prompt/validator patching, stop iterating on this report layer, keep it ephemeral, and continue with the deeper Phase-2 semantic model instead of another V7 repair.
+
+## V6 final real acceptance and disposition — 2026-10-03
+
+The final real browser artifact is:
+
+`docs/working-memory/review-artifacts/2026-10-03_snapshot15_candidate_report_v6.html`
+
+Observed accepted result:
+
+```text
+snapshot:                       15
+accepted-semantic core jobs:     6
+available P1.6 claims:          175
+unique cited claims:             49
+work clusters:                    4
+multi-posting subfamilies:        1
+single-posting specialty:         1
+internal C* leakage:              0
+integrity rejections:             0
+```
+
+The work clusters were:
+
+- Agentic System Architecture and Design;
+- LLM Application Engineering and Orchestration;
+- Productization and Full-Stack AI Implementation;
+- Business Process Automation and Conversational AI.
+
+The report produced one distinct multi-posting role-subfamily hypothesis, `LLM System Hardening Engineer`, grounded in reliability/quality/latency/cost plus approval/logging/tracing responsibilities across two postings. It also retained `Agent Architect (Design Focus)` as a low-confidence singleton specialty/outlier rather than presenting it as an established subfamily.
+
+V6 therefore met the final stop-line:
+
+- useful synthesis was restored;
+- exact evidence remained inspectable;
+- available-vs-cited evidence counts were correct;
+- internal compact citation IDs did not render;
+- no integrity filtering was triggered;
+- single-posting patterns remained explicitly bounded;
+- the role-subfamily layer added at least one distinction beyond merely renaming a work cluster.
+
+Disposition:
+
+```text
+candidate interpretation experiment       CLOSED / ACCEPTED
+market-role-family-candidate-v6           accepted bounded generator
+durable report persistence                AUTHORIZED
+canonical taxonomy promotion              NOT AUTHORIZED
+automatic role-family/subfamily promotion NOT AUTHORIZED
+V7 repair                                 NOT AUTHORIZED
+```
+
+The sample remains too small for promoted taxonomy or broad prevalence claims, and two of six core postings still have no extracted responsibilities. Model-run variability across V3/V5/V6 is acceptable for a reviewed interpretive artifact but is further reason not to treat generated group labels as canonical truth.
+
+The next controlling record is:
+
+`docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
+
+No further candidate-generator repair is authorized unless a future persisted-report implementation exposes a new repeatable correctness/integrity defect.
+

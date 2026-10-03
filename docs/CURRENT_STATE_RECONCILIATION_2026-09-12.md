@@ -27,7 +27,7 @@ Market I6 browser + CLI workflow    ACCEPTED / CLOSED
 Market I7 real local acceptance     PASS / CLOSED FOR BOUNDED SCOPE
 First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
-Candidate interpretation v6      V3.3 declared-citation normalization + regression accepted; final snapshot-15 local rerun pending
+Candidate interpretation v6      ACCEPTED / CLOSED FOR BOUNDED REPORTING
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -60,24 +60,18 @@ accepted/current English P1.6:    11
 accepted/current Capability:      5
 ```
 
-On 2026-09-29 the owner authorized a separate bounded candidate interpretation
-increment. The captured v3 report proved useful enough to continue but exposed
-concrete evidence/presentation defects, so persistence was not authorized.
-V4 added sentence/alternative evidence binding and fail-closed cross-field
-checks. A real V4 snapshot-15 run correctly blocked a source-alias/evidence
-mismatch but showed excessive whole-report blast radius. V5 made validation
-partial-safe and completed a real snapshot-15 report. That artifact preserved
-24 unique cited claims and safe overall observations, but omitted 17 generated
-items because Gemma included declared internal `C*` markers in prose; no work
-clusters or role-subfamily candidates survived. V3.3 therefore advances to
-`market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`:
-a compact ID already declared in the same item's `evidence_refs` is
-deterministically removed from user-facing prose, while an undeclared compact
-ID or source-alias/evidence mismatch still rejects the generated element.
-CI `37139118186` passed Ruff, 817 tests, and 817 warnings-as-errors tests.
-The current gate is one final snapshot-15 real-model/browser rerun and owner
-review before report disposition. No taxonomy is promoted. See
-`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
+On 2026-09-29 the owner authorized a separate bounded candidate interpretation increment.
+V3 established usefulness but exposed evidence/presentation defects; V4 proved strict cross-field
+integrity but had excessive blast radius; V5 made validation partial-safe but over-filtered
+declared compact citation syntax. The final V6 real snapshot-15 artifact, preserved at
+`docs/working-memory/review-artifacts/2026-10-03_snapshot15_candidate_report_v6.html`,
+restored useful synthesis with 49 unique cited claims, four work clusters, one multi-posting
+role-subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` leakage, and
+zero integrity rejections. The candidate experiment is therefore accepted/closed for bounded
+reporting. No taxonomy is promoted. The next authorized increment is durable local
+`RoleFamilyIntelligenceReport` persistence under `market-role-family-intelligence-report-v1`,
+starting with R1 domain + persistence. See
+`docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
 
@@ -426,8 +420,9 @@ B1 CLOSED / DEFER
 → ephemeral candidate interpretation v3 EXECUTED + owner usefulness review COMPLETE
 → V3.1 candidate v4 real rerun FAILED SAFE on source-alias/evidence mismatch
 → V3.2 candidate v5 real rerun COMPLETED but over-filtered all work/role candidates
-→ V3.3 candidate v6 declared-citation normalization implemented; CI 37139118186 GREEN
-→ current gate: final snapshot-15 real-model/browser rerun + explicit report disposition; no taxonomy promotion
+→ V3.3 candidate v6 real rerun ACCEPTED / candidate experiment CLOSED
+→ RoleFamilyIntelligenceReport persistence AUTHORIZED
+→ current gate: R1 domain + immutable local persistence; no taxonomy promotion
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.

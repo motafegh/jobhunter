@@ -1,14 +1,14 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-09-29  
+**Date:** 2026-10-03  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** Market candidate interpretation V3.3 / contract v6. V5 completed safely but over-filtered all work/role candidates because declared internal `C*` citation syntax was treated as a semantic rejection. V6 deterministically normalizes declared compact citations while keeping undeclared compact refs and source/evidence mismatches as rejection conditions. One final snapshot-15 rerun remains before disposition.  
+**Active increment:** `RoleFamilyIntelligenceReport` R1 domain + persistence. Candidate V6 is accepted/closed for bounded reporting; the next work is immutable local report/attempt/review persistence under `market-role-family-intelligence-report-v1`. Taxonomy promotion remains unauthorized.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -61,7 +61,7 @@ Market I5                           ACCEPTED
 Market I6                           ACCEPTED
 Market I7                           PASS / CLOSED FOR BOUNDED SCOPE
 Same-target coverage follow-up      COMPLETE
-Candidate interpretation v6         ACTIVE FINAL RE-EVALUATION / NON-PROMOTIONAL
+Candidate interpretation v6         ACCEPTED / CLOSED FOR BOUNDED REPORTING
 Market → You                        LATER / NOT AUTHORIZED
 ```
 
@@ -80,7 +80,9 @@ Market membership              market-membership-v1 / market-membership-v1.0
 Market snapshot                market-corpus-snapshot-v1
 Market aggregate               market-aggregate-profile-v1
 Public Corpus                  jobhunter-public-corpus-v1
-Candidate report               market-role-family-candidate-v6
+Candidate generator            market-role-family-candidate-v6
+Role-family report              market-role-family-intelligence-report-v1
+Role-family report review       market-role-family-report-review-v1
 ```
 
 Accepted-only historical P1.6 compatibility does not relabel old artifacts. Exact prompt/schema/dependency identity remains visible.
@@ -120,156 +122,101 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. Active increment — Market candidate interpretation V3.3 / contract v6
+## 4. Active increment — RoleFamilyIntelligenceReport R1
 
-Purpose:
+Candidate interpretation V6 is accepted/closed for bounded reporting.
 
-Turn one frozen Market snapshot into a bounded, evidence-linked interpretation of recurring work and possible role subfamilies without converting model prose into employer fact or promoted taxonomy.
-
-Implementation:
-
-- `src/jobhunter/market_candidate_report.py`
-- `src/jobhunter/market_cli.py`
-- `src/jobhunter/web/market_workspace.py`
-- `src/jobhunter/web/templates/market_candidate_report.html`
-
-Authority boundary:
+Final real acceptance evidence:
 
 ```text
-accepted exact P1.6 evidence
-→ model proposes bounded interpretation
-→ application validates citations and computes counts
-→ user reviews usefulness
-→ no taxonomy promotion from generation alone
+snapshot:                    15
+accepted-semantic core:       6
+available P1.6 claims:      175
+unique cited claims:         49
+work clusters:                4
+multi-posting subfamilies:    1
+singleton specialty:          1
+C* leakage:                   0
+integrity rejections:         0
 ```
 
-Snapshot 15 input:
+Exact artifact:
+
+`docs/working-memory/review-artifacts/2026-10-03_snapshot15_candidate_report_v6.html`
+
+Disposition:
 
 ```text
-accepted-semantic core postings: 6
-responsibility claims:            35
-requirement claims:              140
+candidate generator v6        ACCEPT for bounded reporting
+durable report persistence    AUTHORIZED
+taxonomy promotion            NOT AUTHORIZED
+V7 repair                     NOT AUTHORIZED
 ```
 
-The v6 report:
+Controlling persistence design:
 
-- consumes only included core members with accepted exact-identity P1.6;
-- treats responsibilities as primary work evidence and requirements as specialty/qualification context rather than inferred duties;
-- requires every overall observation, interpretation point, and alternative to carry exact supplied evidence refs;
-- never renders internal compact `C*` IDs: IDs already declared by the same item's `evidence_refs` are normalized away before presentation;
-- rejects an undeclared compact ID as a semantic citation inconsistency;
-- rejects a source-alias mention when that same interpretation does not cite evidence from the source;
-- omits only genuinely unsafe generated elements and records a path/code integrity diagnostic; if no safe interpretation survives, the whole report fails;
-- withholds employer names and job titles from model input;
-- derives distinct support, available-vs-cited evidence counts, confidence caps, and responsibility/requirement evidence basis in application code;
-- separates one-posting role candidates into specialty/outlier candidates instead of presenting them as multi-posting subfamilies;
-- keeps jobs with no extracted responsibilities visible as a coverage limitation;
-- resolves internal source aliases before user presentation;
-- remains ephemeral in CLI/browser memory and does not create Market/report tables or corpus artifacts.
+`docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
 
-Real bounded evidence:
+R1 scope only:
 
-- Gemma completed in about 1m29s and produced a conservative report.
-- MiMo completed in about 8m45s, surfaced additional niche/speech-audio interpretation, but also emitted unsupported caveats.
-- Browser rendering completed successfully with source/evidence drill-down.
-- These outputs remain candidate evidence only.
+- typed `MarketRoleFamilyIntelligenceReport`, attempt and review records;
+- immutable local SQLite report persistence;
+- deterministic input/generation/report fingerprints;
+- append-only terminal attempts;
+- append-only review history;
+- effective review state from latest event;
+- exact generation reuse plus explicit regeneration support;
+- deterministic Tier-1 tests;
+- no LM Studio requirement in normal CI;
+- no browser/CLI implementation yet;
+- no public-corpus publication;
+- no taxonomy promotion.
 
-Current acceptance state:
+Authority remains:
 
-1. owner usefulness review of the captured v3 report is complete: the synthesis was useful, but v3 was not strong enough to persist;
-2. V4 real-model rerun on 2026-09-30 failed safely on `source_alias_without_matching_evidence`; no report was cached;
-3. V5 real-model rerun completed and was captured, but 17 declared-compact-citation violations removed every work cluster and role-subfamily candidate;
-4. V3.3 is implemented under new v6/prompt-v6 identities with deterministic normalization of declared compact citations and rejection of undeclared ones;
-5. dedicated regression coverage is present in `tests/test_market_candidate_report.py`;
-6. CI run `37139118186` passed Ruff, 817 tests, and 817 warnings-as-errors tests;
-7. one final real-model/browser snapshot-15 rerun under v6 is required before report disposition;
-8. no decision has been made to persist/version reports;
-9. no responsibility family or role subfamily is promoted from this sample.
+```text
+exact immutable snapshot
+→ V6 bounded generator
+→ application validation/normalization
+→ immutable persisted analytical report
+→ append-only human review
+!= canonical taxonomy
+```
 
 ---
 
 ## 5. Exact continuation sequence
 
 ```text
-A. Pull/restart current main on the maintainer machine
+A. R1 domain model
+   - report artifact
+   - generation attempt
+   - append-only review event
 
-B. Regenerate snapshot 15 under candidate v6
-   - same accepted snapshot input
-   - default Gemma analysis model
-   - browser route must render successfully
+B. R1 local persistence
+   - tables + FKs + indexes
+   - immutable report/review triggers
+   - canonical JSON hashes/fingerprints
 
-C. Capture the v6 rendered report as review evidence
+C. R1 store semantics
+   - record/get/list reports
+   - exact generation lookup/reuse
+   - explicit regeneration allowed
+   - record terminal attempts
+   - append review / derive effective state
 
-D. Compare directly with the recorded v3 defects
-   - no duplicate overall support display
-   - available evidence != cited evidence is labeled correctly
-   - no internal C* IDs in prose
-   - every source-specific observation has source-bound evidence
-   - alternatives are evidence-bound
-   - requirement-only specialty is explicit, not inferred work
-   - one-posting role candidates are not shown as reusable subfamilies
-   - role-subfamily section adds value beyond renamed work clusters
+D. R1 deterministic tests
+   - no model/network dependency
+   - immutability
+   - multiple artifacts per snapshot
+   - failed attempt creates no report
+   - review history/effective state
+   - no upstream Market/P1.6 mutation
 
-E. Make explicit disposition
-   - keep ephemeral; or
-   - authorize a separately versioned persisted RoleFamilyIntelligenceReport
-
-F. Then continue broader Phase-2 semantics
-   - representative responsibility families / role archetypes
-   - JobCapabilityRequirementProfile
+E. R1 closure
+   - CI green
+   - docs reconciled
+   - then authorize R2 service + V6 integration
 ```
 
-Do not skip directly from one six-posting candidate report to promoted taxonomy.
-
----
-
-## 6. Current stop lines
-
-Do not currently:
-
-- reopen B1 or accepted Market I1-I7 without a repeatable contradiction;
-- regenerate accepted anchors merely because v30 is current;
-- auto-accept P1.6;
-- make Capability or Work mandatory Market gates;
-- claim broad-market prevalence or trends from snapshot 15;
-- promote responsibility families / stable role archetypes from the current candidate report;
-- implement automatic repost/new-ID collapse without evidence;
-- begin Market → You / readiness scoring before reviewed personal evidence exists;
-- publish private Market state into `corpus/`;
-- add graph/vector/RAG/agent infrastructure without demonstrated need.
-
-Interpretive uncertainty should fail soft; integrity/provenance violations should fail hard.
-
----
-
-## 7. Historical records
-
-Historical detail remains available in dated working-memory and experiment records rather than this rolling handoff.
-
-Important historical pointers:
-
-- B1 closure: `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
-- Market foundation: `docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`
-- I6 implementation: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`
-- I7 protocol: `docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`
-- historical I7 HOLD: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`
-- final I7 PASS: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`
-- coverage follow-up: `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`
-- candidate interpretation: `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`
-
-Historical HOLD-era wording is evidence, not current routing.
-
----
-
-## 8. Parallel portfolio/release
-
-Still pending:
-
-```text
-GitHub description/topics
-real browser screenshots + privacy review
-intentional v0.1.0 tag/release
-owner mastery verification
-```
-
-These do not alter the active Market interpretation acceptance boundary.
+Do not start R2 browser/model integration before R1 closure.

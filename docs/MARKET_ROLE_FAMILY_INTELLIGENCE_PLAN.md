@@ -300,7 +300,37 @@ Old snapshots remain immutable after source/target/contract changes.
 
 Deterministic immutable derivative of one exact snapshot + aggregate contract.
 
-It is the first-slice user intelligence artifact. A separate model-generated report artifact is not required yet.
+It remains the factual first-slice numeric/aggregate authority.
+
+## 5.7 `RoleFamilyIntelligenceReport` — authorized post-I7 analytical layer
+
+The bounded V6 candidate-interpretation experiment established enough product value and evidence integrity to authorize a separate durable model-generated report artifact.
+
+Controlling focused design:
+
+`docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
+
+Initial contract:
+
+```text
+persistence envelope: market-role-family-intelligence-report-v1
+generation dependency: market-role-family-candidate-v6
+review contract: market-role-family-report-review-v1
+```
+
+The report is an immutable derivative of one exact Market snapshot plus one exact generation identity. It persists the normalized evidence-linked interpretation, exact evidence references, application-derived counts, integrity diagnostics and generation provenance.
+
+Human review is separate, append-only history. A reviewed report may be accepted for bounded use or rejected.
+
+Permanent boundary:
+
+```text
+MarketAggregateProfile = deterministic factual aggregate
+RoleFamilyIntelligenceReport = reviewed bounded interpretation
+RoleFamilyIntelligenceReport != promoted taxonomy
+```
+
+The report remains local/private by default and is not automatically exported to the public corpus.
 
 ---
 
