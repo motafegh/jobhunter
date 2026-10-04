@@ -8,7 +8,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** `RoleFamilyIntelligenceReport` R3 shared browser + CLI workflow. R1 persistence and R2 service/V6 integration are accepted/closed with green CI; R3 now moves browser and CLI onto durable report history/review state through the same service. R4 real-local acceptance remains blocked.  
+**Active increment:** `RoleFamilyIntelligenceReport` R4 bounded real-local acceptance. R1-R3 are accepted/closed; current work is real snapshot-15 durability/review/browser-CLI/SQLite/public-corpus verification using the maintainer LM Studio setup.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -122,7 +122,7 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. RoleFamilyIntelligenceReport R1-R2 closure / R3 active
+## 4. RoleFamilyIntelligenceReport R1-R3 closure / R4 active
 
 Candidate interpretation V6 is accepted/closed for bounded reporting.
 
@@ -194,41 +194,58 @@ R2 accepted implementation:
 - deterministic service tests stub only the generation boundary;
 - CI `37220490754`: Ruff + 830 tests + 830 warnings-as-errors tests all green.
 
+R3 accepted implementation:
+
+- browser no longer owns reports in process memory; durable report IDs/history/reviews come from the R2 service + R1 store;
+- snapshot page exposes durable history, exact reuse and explicit regeneration;
+- report detail is restart-safe and supports append-only accept/reject review;
+- CLI `role-report list|generate|show|review` shares the same service/state and hides private raw inference payloads;
+- deterministic test proves browser/CLI same report ID/state and fresh-app restart durability;
+- Market workspace now guides target → scope → refresh → intelligence and hides advanced mechanics behind progressive disclosure;
+- snapshot/report presentation prioritizes decision-relevant findings while retaining exact evidence/provenance drill-down;
+- closure record: `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`;
+- CI `37223301900`: Ruff + 830 tests + 830 warnings-as-errors tests all green.
+
 ---
 
 ## 5. Exact continuation sequence
 
 ```text
-A. R3 browser durable workflow
-   - report history per snapshot
-   - report detail by durable artifact id
-   - ordinary generate/reuse
-   - explicit regenerate
-   - append accept/reject review
+A. R4 local safety baseline
+   - git pull / clean status
+   - backup current SQLite
+   - PRAGMA integrity + foreign-key baseline
+   - verify public-corpus baseline
 
-B. R3 CLI durable workflow
-   - list reports
-   - generate/reuse
-   - show report
-   - review report
-   - same service/state as browser
+B. Real local runtime
+   - LM Studio endpoint 127.0.0.1:18080/v1
+   - configured accepted analysis model available
+   - start current JobHunter app
 
-C. Presentation boundaries
-   - show contracts/model/prompt/time/review state
-   - show available vs cited evidence and exact evidence
-   - show integrity diagnostics/review history
-   - keep request/raw response out of ordinary UI
+C. Snapshot-15 durable report
+   - open redesigned snapshot 15
+   - generate/reuse exact V6 durable report
+   - inspect report ID, counts, evidence, integrity, limitations
+   - preserve exact artifact identity
 
-D. Deterministic shared-workflow tests
-   - one temp SQLite DB
-   - no LM Studio/network
-   - browser/CLI IDs and review state agree
-   - app restart preserves report history
+D. Restart / cross-surface proof
+   - stop and restart app
+   - browser durable report still resolves
+   - CLI role-report list/show matches same ID/payload
 
-E. R3 closure
-   - CI green
-   - docs reconciled
-   - then authorize R4 bounded real-local acceptance
+E. Owner review
+   - accept_for_bounded_use or reject exact artifact
+   - browser and CLI show same append-only effective state/history
+
+F. Final invariants
+   - SQLite integrity + foreign keys
+   - snapshot/P1.6 identities unchanged
+   - repository-safe public corpus unchanged
+
+G. R4 disposition
+   - record evidence
+   - close persistence increment if PASS
+   - then return to broader Phase-2 semantic plan
 ```
 
-Do not start R4 real-local acceptance before R3 closure.
+Do not start taxonomy promotion or broader Phase-2 implementation until R4 disposition is recorded.
