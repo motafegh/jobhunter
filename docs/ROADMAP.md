@@ -6,7 +6,7 @@
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1 persistence are accepted/closed. R1 established immutable local report/attempt/review history with deterministic fingerprints and no taxonomy authority. The current authorized increment is R2: one shared application service that composes exact snapshot/evidence validation, accepted V6 generation, exact reuse, persistence, attempt recording, and review-state resolution. R3 browser/CLI and R4 real-local acceptance remain blocked until R2 closes. Broader responsibility-family/capability semantics remain after this persistence increment.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1-R2 are accepted/closed. R2 established the single shared generation/persistence/review service and exact reuse behavior with no second semantic path. The current authorized increment is R3: persisted report history/detail/review in the browser and equivalent CLI list/generate/show/review access over the same service. R4 bounded real-local acceptance remains blocked until R3 closes. Broader responsibility-family/capability semantics remain after this persistence increment.
 
 ---
 
