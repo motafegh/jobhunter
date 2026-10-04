@@ -9,7 +9,7 @@
   <summary>Inspect frozen evidence</summary>
   {% for support in row.evidence %}
     <div class="evidence-entry">
-      <p><a href="/jobs/{{ support.source_job_id }}">{{ support.source_job_id }}</a> · P1.6 #{{ support.analysis_artifact_id }} · claim indexes {{ support.claim_indexes | join(', ') }}</p>
+      <p><a href="/jobs/{{ support.source_job_id }}">{{ support.source_job_id }}</a> · Frozen P1.6 artifact #{{ support.analysis_artifact_id }} · Claim indexes (zero-based): {{ support.claim_indexes | join(', ') }}</p>
       {% if support.strengths %}<p class="muted">Strengths: {{ support.strengths | join(', ') }}</p>{% endif %}
       {% for statement in support.statements or [] %}<p>{{ statement }}</p>{% endfor %}
       {% for quote in support.evidence %}<blockquote>{{ quote }}</blockquote>{% endfor %}
