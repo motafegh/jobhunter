@@ -1,14 +1,14 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-10-03  
+**Date:** 2026-10-04  
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** `RoleFamilyIntelligenceReport` R1 domain + persistence. Candidate V6 is accepted/closed for bounded reporting; the next work is immutable local report/attempt/review persistence under `market-role-family-intelligence-report-v1`. Taxonomy promotion remains unauthorized.  
+**Active increment:** `RoleFamilyIntelligenceReport` R2 shared service + V6 integration. R1 persistence is accepted/closed with green CI; R2 now composes exact reuse/generation/attempt/review-state behavior over the accepted V6 generator and immutable store. R3 browser/CLI remains blocked.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -122,7 +122,7 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. Active increment — RoleFamilyIntelligenceReport R1
+## 4. RoleFamilyIntelligenceReport R1 closure / R2 active
 
 Candidate interpretation V6 is accepted/closed for bounded reporting.
 
@@ -157,17 +157,16 @@ Controlling persistence design:
 
 `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
 
-R1 scope only:
+R1 accepted implementation:
 
 - typed `MarketRoleFamilyIntelligenceReport`, attempt and review records;
-- immutable local SQLite report persistence;
-- deterministic input/generation/report fingerprints;
-- append-only terminal attempts;
-- append-only review history;
-- effective review state from latest event;
-- exact generation reuse plus explicit regeneration support;
-- deterministic Tier-1 tests;
-- no LM Studio requirement in normal CI;
+- dedicated `market_role_family_report_store.py` local SQLite owner;
+- immutable reports and append-only terminal attempts/reviews;
+- canonical input/generation/report SHA-256 fingerprints and read-time corruption checks;
+- exact generation reuse lookup plus explicit multiple immutable regenerations;
+- effective review state and newest accepted-report selection;
+- deterministic Tier-1 coverage with no LM Studio dependency;
+- CI `37217405526`: Ruff + 825 tests + 825 warnings-as-errors tests all green;
 - no browser/CLI implementation yet;
 - no public-corpus publication;
 - no taxonomy promotion.
@@ -188,35 +187,36 @@ exact immutable snapshot
 ## 5. Exact continuation sequence
 
 ```text
-A. R1 domain model
-   - report artifact
-   - generation attempt
-   - append-only review event
+A. R2 shared service
+   - single owner over accepted V6 generator + R1 store
+   - no duplicate semantic generation logic
 
-B. R1 local persistence
-   - tables + FKs + indexes
-   - immutable report/review triggers
-   - canonical JSON hashes/fingerprints
+B. Exact identity / reuse
+   - derive exact normalized candidate input
+   - derive generation identity/fingerprint
+   - ordinary call reuses newest exact artifact
+   - record reused attempt
 
-C. R1 store semantics
-   - record/get/list reports
-   - exact generation lookup/reuse
-   - explicit regeneration allowed
-   - record terminal attempts
-   - append review / derive effective state
+C. New generation
+   - explicit regeneration bypasses reuse
+   - call accepted V6 generator
+   - persist normalized report + audit request/raw response
+   - record completed attempt
+   - generation failure records failed attempt only
 
-D. R1 deterministic tests
-   - no model/network dependency
-   - immutability
-   - multiple artifacts per snapshot
-   - failed attempt creates no report
-   - review history/effective state
-   - no upstream Market/P1.6 mutation
+D. Review facade
+   - append accept/reject review
+   - expose effective state / accepted report selection
 
-E. R1 closure
+E. Deterministic service tests
+   - stub generator only
+   - no LM Studio/network
+   - verify reuse, regeneration, failure and review paths
+
+F. R2 closure
    - CI green
    - docs reconciled
-   - then authorize R2 service + V6 integration
+   - then authorize R3 shared browser/CLI workflow
 ```
 
-Do not start R2 browser/model integration before R1 closure.
+Do not start R3 browser/CLI or R4 local acceptance before R2 closure.

@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-29
+**Last reconciled:** 2026-10-04
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, and the candidate-interpretation experiment are accepted/closed for their stated scopes. Real snapshot-15 V6 is the accepted bounded generator baseline (`market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`). The next authorized implementation is durable local `RoleFamilyIntelligenceReport` persistence, explicitly separate from taxonomy promotion. R1 implements typed domain objects, immutable SQLite report persistence, append-only attempt/review history, fingerprints, and deterministic tests only. R2-R4 remain blocked until R1 is accepted. Controlling design: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the candidate-interpretation experiment, and `RoleFamilyIntelligenceReport` R1 domain + persistence are accepted/closed. R1 added typed report/attempt/review records, immutable local SQLite persistence, canonical fingerprints, exact reuse lookup, explicit regeneration support, append-only review history, corruption checks, and deterministic Tier-1 tests; CI `37217405526` passed Ruff + 825 tests + 825 warnings-as-errors tests. R2 is now authorized: add one shared report service that wraps the accepted V6 generator with persistence/reuse/attempt/review-state behavior. R3 browser/CLI and R4 real-local acceptance remain blocked until R2 closure. Controlling design: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
 
 ## 1. Purpose and authority
 

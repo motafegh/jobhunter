@@ -1,7 +1,7 @@
 # RoleFamilyIntelligenceReport persistence contract
 
 **Date:** 2026-10-03  
-**Status:** AUTHORIZED DESIGN / IMPLEMENTATION NOT STARTED  
+**Status:** R1 ACCEPTED / CLOSED; R2 SERVICE + V6 INTEGRATION ACTIVE / AUTHORIZED  
 **Owner scope:** Persist the accepted bounded Market candidate interpretation as a local, immutable, reviewable analytical artifact.  
 **Predecessor:** `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`  
 **Accepted generator:** `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`
@@ -463,3 +463,91 @@ Do not combine this increment with:
 - vector/RAG/graph/agent infrastructure.
 
 After R4 acceptance, return to the broader Phase-2 semantic plan. The persisted report becomes a durable evidence-linked analytical input, not a shortcut around the remaining semantic work.
+
+## 16. R1 implementation closure — 2026-10-04
+
+R1 is implemented and accepted on commit `bb6ef4af`.
+
+Implementation:
+
+- `src/jobhunter/market_models.py`
+  - `MarketRoleFamilyIntelligenceReport`
+  - `MarketRoleFamilyReportAttempt`
+  - `MarketRoleFamilyReportReview`
+  - attempt/review enums and v1 contract constants.
+- `src/jobhunter/market_role_family_report_store.py`
+  - dedicated local SQLite persistence owner;
+  - canonical JSON hashing;
+  - input, generation and normalized-report fingerprints;
+  - immutable report storage;
+  - exact generation-fingerprint reuse lookup;
+  - explicit multiple immutable artifacts for regeneration;
+  - append-only terminal attempt records;
+  - append-only review events;
+  - effective review-state resolution;
+  - newest effectively accepted report selection;
+  - read-time generation/report fingerprint corruption checks.
+- `tests/test_market_role_family_report_store.py`
+  - deterministic Tier-1 coverage only; no LM Studio/network dependency.
+
+Persistence tables:
+
+```text
+market_role_family_reports
+market_role_family_report_attempts
+market_role_family_report_reviews
+```
+
+All three histories reject UPDATE/DELETE through SQLite triggers. Failed attempts cannot reference an artifact. Completed/reused attempts must reference an artifact from the exact same snapshot/generation fingerprint. Explicit regeneration is intentionally permitted under the same generation fingerprint because local model inference is not assumed bit-deterministic.
+
+Generation identity V1 requires:
+
+```text
+provider
+model
+context_length
+max_tokens
+seed
+structured_schema
+```
+
+The local endpoint URL remains operational configuration and is excluded from semantic generation identity.
+
+CI run `37217405526` passed:
+
+```text
+Ruff                     PASS
+pytest                   825 passed
+pytest -W error          825 passed
+```
+
+R1 acceptance boundary is satisfied. It did not add model calls, browser/CLI routes, public-corpus export or taxonomy promotion.
+
+## 17. R2 authorization
+
+R2 is now authorized.
+
+R2 must add one shared application service over the existing accepted V6 generator and the R1 store. It must not create a second prompt/schema/generation path.
+
+Required R2 behavior:
+
+1. derive/reuse the exact normalized V6 candidate input used by the generator;
+2. derive the semantic generation identity and exact generation fingerprint;
+3. ordinary generation:
+   - if an exact artifact exists, return the newest artifact;
+   - append a `reused` attempt;
+   - do not call LM Studio;
+4. explicit regeneration:
+   - bypass reuse;
+   - call the accepted V6 generator;
+   - persist a new immutable report even when the generation fingerprint matches an older artifact;
+   - append a `completed` attempt;
+5. generation failure:
+   - append a `failed` attempt with error diagnostics;
+   - create no report artifact;
+   - re-raise/preserve the failure for the caller;
+6. expose review append, effective review state and accepted-report selection through the same service;
+7. deterministic tests stub only the candidate generator / inference boundary and require no live LM Studio.
+
+R3 browser/CLI and R4 bounded real-local acceptance remain blocked until R2 is accepted.
+

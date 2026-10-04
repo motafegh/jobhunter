@@ -1,12 +1,12 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-10-03  
+**Date:** 2026-10-04  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** `RoleFamilyIntelligenceReport` R1 — domain + immutable local persistence. V6 candidate interpretation is accepted/closed for bounded reporting; persistence is authorized, taxonomy promotion is not.
+**Active increment:** `RoleFamilyIntelligenceReport` R2 — shared service + accepted V6 generator integration. R1 domain/persistence is accepted/closed; browser/CLI remain blocked until R2 passes.
 
 Status vocabulary:
 
@@ -62,18 +62,20 @@ Accepted precursor:
 - [x] Report remains interpretive: reviewed report != employer fact != canonical taxonomy != broad-market prevalence.
 - [x] Market report state remains local/private and is not public-corpus material by default.
 
-R1 — domain + persistence:
+R1 — domain + persistence: ACCEPTED / CLOSED
 
-- [ ] Add typed report / attempt / review records.
-- [ ] Add dedicated local SQLite report store and initialization.
-- [ ] Persist completed normalized reports immutably.
-- [ ] Add deterministic input/generation/report fingerprints.
-- [ ] Add append-only terminal attempts: `completed | failed | reused`.
-- [ ] Add append-only review events: `accepted_for_bounded_use | rejected`; no event = pending.
-- [ ] Add immutable update/delete triggers for reports and reviews.
-- [ ] Support exact generation-fingerprint lookup/reuse without forbidding explicit regeneration.
-- [ ] Add deterministic Tier-1 tests for immutability, reuse, multiple artifacts, failures, review history/effective state, and no snapshot/P1.6 mutation.
-- [ ] Keep R2 service/model integration, R3 browser/CLI, and R4 real-local acceptance blocked until R1 passes.
+- [x] Typed report / attempt / review records added in `market_models.py`.
+- [x] Dedicated local SQLite owner: `market_role_family_report_store.py`.
+- [x] Completed normalized reports persist immutably.
+- [x] Canonical input/generation/report SHA-256 fingerprints are application-owned.
+- [x] Terminal attempts are append-only: `completed | failed | reused`.
+- [x] Reviews are append-only: `accepted_for_bounded_use | rejected`; no event = pending.
+- [x] Report, attempt, and review update/delete triggers enforce history immutability.
+- [x] Exact generation-fingerprint lookup returns newest reusable artifact; explicit regeneration may persist another immutable artifact under the same generation fingerprint.
+- [x] Persisted generation/report fingerprints are verified on read and corruption fails closed.
+- [x] Effective review state and newest effectively accepted report selection are implemented.
+- [x] Tier-1 tests cover canonical hashing, identity validation, immutability, explicit regeneration, exact reuse, terminal attempts, failed-attempt no-report behavior, append-only review reversal/history, accepted selection, generation mismatch, corruption detection, and no upstream Market/P1.6 mutation.
+- [x] CI `37217405526`: Ruff PASS; 825 tests PASS; 825 warnings-as-errors tests PASS.
 
 Acceptance boundary:
 
@@ -81,6 +83,19 @@ Acceptance boundary:
 persisted/reviewed analytical artifact
 != promoted role-family taxonomy
 ```
+
+R2 — shared service + V6 integration:
+
+- [ ] Add one shared `market_role_family_report_service.py` owner.
+- [ ] Derive the exact normalized candidate input used for the V6 generation fingerprint.
+- [ ] On ordinary generation, reuse an exact existing report and record a `reused` attempt.
+- [ ] On explicit regeneration, call the accepted V6 generator and persist a new immutable report even for the same generation fingerprint.
+- [ ] On successful new generation, record report then `completed` attempt.
+- [ ] On generation failure, record `failed` attempt and create no report artifact.
+- [ ] Persist exact normalized report plus request/raw-response audit data without introducing a second semantic path.
+- [ ] Expose review append/effective-state operations through the same service.
+- [ ] Add deterministic service tests with the candidate generator stubbed; normal CI must not require LM Studio.
+- [ ] Keep R3 browser/CLI and R4 real-local acceptance blocked until R2 passes.
 
 ---
 
@@ -132,11 +147,12 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-R1 domain + persistence
-→ typed report / attempt / review models
-→ immutable local SQLite report store
-→ fingerprints + reuse semantics
-→ append-only review history
-→ deterministic Tier-1 tests
-→ only after R1 acceptance authorize R2 service integration
+R2 shared service + V6 integration
+→ exact candidate-input/generation identity derivation
+→ ordinary exact reuse + reused attempt
+→ explicit regeneration + persisted report + completed attempt
+→ failure attempt without report
+→ review/effective-state facade
+→ deterministic service tests
+→ only after R2 acceptance authorize R3 browser/CLI
 ```

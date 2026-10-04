@@ -169,10 +169,10 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            RoleFamilyIntelligenceReport R1 domain + persistence
+next exact increment            RoleFamilyIntelligenceReport R2 service + V6 integration
 ```
 
-The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Real snapshot-15 V6 restored useful synthesis with 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` leakage, and zero integrity rejections. `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6` remains the accepted generation contract, but it is not taxonomy authority. The next authorized increment is `RoleFamilyIntelligenceReport` persistence under `market-role-family-intelligence-report-v1`, starting with R1 domain + local SQLite persistence. The design owner is `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`. No responsibility-family or role-archetype promotion is authorized.
+The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Real snapshot-15 V6 restored useful synthesis with 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` leakage, and zero integrity rejections. `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6` remains the accepted generation contract, but it is not taxonomy authority. `RoleFamilyIntelligenceReport` R1 domain + persistence is now ACCEPTED / CLOSED: typed report/attempt/review records, immutable local SQLite history, deterministic fingerprints, exact reuse lookup, explicit regeneration support, append-only review history, and Tier-1 tests are complete; CI `37217405526` passed Ruff plus 825 tests and 825 warnings-as-errors tests. The next authorized increment is R2 shared service + V6 integration under `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`. No browser/CLI work or taxonomy promotion is authorized until R2 is accepted.
 
 B1 final evidence is retained at:
 
