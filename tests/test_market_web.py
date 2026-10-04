@@ -26,6 +26,9 @@ def test_runtime_app_registers_target_scoped_market_routes(tmp_path: Path) -> No
     assert ("/market/targets", "GET") in route_methods
     assert ("/market/runs/{run_id}", "GET") in route_methods
     assert ("/market/snapshots/{snapshot_id}", "GET") in route_methods
+    assert ("/market/reports/{report_id}", "GET") in route_methods
+    assert ("/market/actions/snapshots/{snapshot_id}/candidate-report", "POST") in route_methods
+    assert ("/market/actions/reports/{report_id}/review", "POST") in route_methods
     assert ("/market/actions/target", "POST") in route_methods
     assert ("/market/actions/definition", "POST") in route_methods
     assert ("/market/actions/run", "POST") in route_methods
@@ -50,11 +53,14 @@ def test_market_workspace_renders_same_persisted_target_definition(tmp_path: Pat
     )
 
     assert response.status_code == 200
-    assert "Market targets" in response.text
+    assert "Market workspace" in response.text
+    assert "From a target to usable market intelligence" in response.text
     assert "Applied AI" in response.text
     assert "Applied AI engineering work" in response.text
-    assert "Run bounded Market update" in response.text
-    assert "Search vocabulary is candidate acquisition only" in response.text
+    assert "Run Market update with defaults" in response.text
+    assert "Customize run budgets" in response.text
+    assert "Recent intelligence" in response.text
+    assert "Acquisition scope and search plan" in response.text
 
 
 def test_market_browser_unknown_history_is_not_fabricated(tmp_path: Path) -> None:
