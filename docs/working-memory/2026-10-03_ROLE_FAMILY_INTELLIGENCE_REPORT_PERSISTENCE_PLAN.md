@@ -1,7 +1,7 @@
 # RoleFamilyIntelligenceReport persistence contract
 
 **Date:** 2026-10-03  
-**Status:** R1 ACCEPTED / CLOSED; R2 SERVICE + V6 INTEGRATION ACTIVE / AUTHORIZED  
+**Status:** R1-R2 ACCEPTED / CLOSED; R3 SHARED BROWSER + CLI WORKFLOW ACTIVE / AUTHORIZED  
 **Owner scope:** Persist the accepted bounded Market candidate interpretation as a local, immutable, reviewable analytical artifact.  
 **Predecessor:** `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`  
 **Accepted generator:** `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`
@@ -551,3 +551,89 @@ Required R2 behavior:
 
 R3 browser/CLI and R4 bounded real-local acceptance remain blocked until R2 is accepted.
 
+## 18. R2 implementation closure — 2026-10-04
+
+R2 is implemented and accepted across commits `3423e84e`, `37a98903`, and `0c50bc87`.
+
+Generator integration:
+
+- `PreparedMarketCandidateReport` derives the exact snapshot/P1.6-backed V6 model input before inference;
+- semantic generation identity is explicit: provider, model, 16K context, bounded max tokens, seed and structured-schema identity;
+- `GeneratedMarketCandidateReport` returns the validated normalized report plus private request/raw-response audit payloads;
+- `build_market_candidate_report(...)` remains the compatibility wrapper used by existing callers;
+- the accepted V6 prompt/schema/post-validation logic remains one path only.
+
+Shared service:
+
+`src/jobhunter/market_role_family_report_service.py`
+
+Behavior:
+
+```text
+ordinary request
+→ prepare exact input
+→ exact persisted lookup
+→ reuse newest match
+→ append reused attempt
+→ no LM call
+
+explicit regenerate / no reusable artifact
+→ accepted V6 generation
+→ validate contract + prompt + snapshot + model identity
+→ persist immutable normalized report + audit payload
+→ append completed attempt
+
+generation/identity failure
+→ append failed attempt
+→ create no report artifact
+→ preserve exception to caller
+```
+
+The service also exposes append-only review, effective review state, latest accepted report, report/attempt/review listing, and exact report retrieval over the R1 store.
+
+Deterministic service tests prove:
+
+- one generation followed by ordinary exact reuse calls the generator only once;
+- input fingerprint matches the exact prepared candidate payload;
+- explicit regeneration creates a second immutable artifact under the same generation fingerprint;
+- failed generation records one failed attempt and no report;
+- generated snapshot/contract identity mismatch fails before persistence;
+- review acceptance/rejection history controls effective state and accepted selection.
+
+CI run `37220490754` passed:
+
+```text
+Ruff                     PASS
+pytest                   830 passed
+pytest -W error          830 passed
+```
+
+R2 did not add browser/CLI routes, public-corpus export, live-model CI requirements, or taxonomy promotion.
+
+## 19. R3 authorization
+
+R3 is now authorized.
+
+R3 must replace the current ephemeral browser/CLI candidate-report ownership with the durable report service/state without creating UI-specific semantics.
+
+Required browser behavior:
+
+1. snapshot page exposes persisted role-family report history and effective accepted report where available;
+2. ordinary generate uses exact reuse semantics by default;
+3. explicit regenerate is visibly separate from ordinary generate/reuse;
+4. report detail is addressed by durable report artifact ID and survives app restart;
+5. detail shows persistence/candidate contract identities, model/prompt, generated time, review state/history, available-vs-cited evidence, work clusters/subfamilies/specialties, limitations, exact evidence and integrity diagnostics;
+6. append-only Accept for bounded use / Reject review actions use the service;
+7. request body/raw model response stay private audit data and are not ordinary report UI.
+
+Required CLI behavior:
+
+1. list persisted reports for one snapshot;
+2. generate/reuse by default, with an explicit regeneration option;
+3. show one persisted report;
+4. append accept/reject review;
+5. use the same service and report IDs as the browser.
+
+R3 deterministic acceptance must use one temporary SQLite database and no live LM Studio/network, proving browser/CLI report IDs, persisted payload and effective review state agree, and a fresh app/service instance can still read the same report history.
+
+R4 bounded real-local acceptance remains blocked until R3 is accepted.
