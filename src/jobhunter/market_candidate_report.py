@@ -477,7 +477,6 @@ def prepare_market_candidate_report(
         for compact_ref, full_ref in compact_ref_map.items()
     ]
 
-
     candidate_input = {
         "snapshot": {
             "id": snapshot.id,
@@ -702,9 +701,9 @@ def generate_market_candidate_report(
     report = {
         "contract": REPORT_CONTRACT,
         "prompt_version": PROMPT_VERSION,
-        "snapshot_id": snapshot.id,
-        "snapshot_contract": snapshot.snapshot_contract_version,
-        "target_definition_id": snapshot.target_definition_version_id,
+        "snapshot_id": prepared.snapshot_id,
+        "snapshot_contract": prepared.snapshot_contract,
+        "target_definition_id": prepared.target_definition_id,
         "model": result.model,
         "source_count": len(sources),
         "available_evidence_count": len(evidence),
@@ -764,7 +763,6 @@ def generate_market_candidate_report(
         request_body=result.request_body,
         raw_response=result.raw_response,
     )
-
 
 
 def build_market_candidate_report(
