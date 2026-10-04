@@ -29,7 +29,8 @@ First Market vertical slice         ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Candidate interpretation v6      ACCEPTED / CLOSED FOR BOUNDED REPORTING
 RoleFamily report R1            ACCEPTED / CLOSED
-RoleFamily report R2            ACTIVE / AUTHORIZED
+RoleFamily report R2            ACCEPTED / CLOSED
+RoleFamily report R3            ACTIVE / AUTHORIZED
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -72,7 +73,7 @@ role-subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` l
 zero integrity rejections. The candidate experiment is therefore accepted/closed for bounded
 reporting. No taxonomy is promoted. The next authorized increment is durable local
 `RoleFamilyIntelligenceReport` persistence under `market-role-family-intelligence-report-v1`,
-R1 domain + persistence is now accepted/closed. The implementation adds `src/jobhunter/market_role_family_report_store.py` plus typed Market report/attempt/review records. Reports, attempts, and reviews are immutable/append-only local SQLite history; canonical input/generation/report fingerprints, exact reuse lookup, explicit regeneration, effective review state, accepted-report selection, and corruption checks are regression-protected. CI `37217405526` passed Ruff plus 825 tests and 825 warnings-as-errors tests. R2 shared service + V6 integration is now authorized. See
+R1 domain + persistence and R2 shared service + V6 integration are now accepted/closed. R2 adds `src/jobhunter/market_role_family_report_service.py` and splits the accepted V6 generator into exact preparation + generation seams without changing the existing direct-build API. Ordinary service calls reuse the newest exact persisted generation and record `reused` without invoking LM Studio; explicit regeneration persists another immutable artifact and records `completed`; generation/identity failure records `failed` and creates no report. Review append/effective-state selection is exposed through the same service. CI `37220490754` passed Ruff plus 830 tests and 830 warnings-as-errors tests. R3 shared browser/CLI workflow is now authorized. See
 `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
@@ -424,8 +425,9 @@ B1 CLOSED / DEFER
 → V3.2 candidate v5 real rerun COMPLETED but over-filtered all work/role candidates
 → V3.3 candidate v6 real rerun ACCEPTED / candidate experiment CLOSED
 → RoleFamilyIntelligenceReport R1 persistence ACCEPTED / CLOSED
-→ R2 shared service + V6 integration AUTHORIZED
-→ current gate: service/reuse/attempt/review-state integration only; no browser/CLI or taxonomy promotion
+→ R2 shared service + V6 integration ACCEPTED / CLOSED
+→ R3 shared browser + CLI workflow AUTHORIZED
+→ current gate: durable report history/detail/generate/review surfaces over the same service; no R4 acceptance or taxonomy promotion yet
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
