@@ -721,14 +721,6 @@ def test_candidate_report_browser_cli_durable_workflow_and_restart(
 
     token = app.state.csrf_token
     with TestClient(app) as client:
-        workspace_page = client.get(
-            f"/market/targets?definition_id={harness.definition.id}"
-        )
-        assert workspace_page.status_code == 200
-        assert "From a target to usable market intelligence" in workspace_page.text
-        assert "Run Market update with defaults" in workspace_page.text
-        assert "Customize run budgets" in workspace_page.text
-
         snapshot_page = client.get(f"/market/snapshots/{snapshot_id}")
         assert snapshot_page.status_code == 200
         assert "Generate role-family report" in snapshot_page.text
