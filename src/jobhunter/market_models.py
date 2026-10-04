@@ -146,3 +146,64 @@ class MarketAggregateProfile:
     profile_sha256: str
     profile: dict[str, Any]
     created_at: str
+
+ROLE_FAMILY_REPORT_CONTRACT_VERSION = "market-role-family-intelligence-report-v1"
+ROLE_FAMILY_REPORT_REVIEW_CONTRACT_VERSION = "market-role-family-report-review-v1"
+
+
+class MarketRoleFamilyReportAttemptOutcome(StrEnum):
+    COMPLETED = "completed"
+    FAILED = "failed"
+    REUSED = "reused"
+
+
+class MarketRoleFamilyReportReviewDisposition(StrEnum):
+    ACCEPTED_FOR_BOUNDED_USE = "accepted_for_bounded_use"
+    REJECTED = "rejected"
+
+
+@dataclass(frozen=True, slots=True)
+class MarketRoleFamilyIntelligenceReport:
+    id: int
+    snapshot_id: int
+    report_contract_version: str
+    candidate_contract_version: str
+    prompt_version: str
+    model: str
+    generation_identity: dict[str, Any]
+    input_fingerprint: str
+    generation_fingerprint: str
+    report_sha256: str
+    report: dict[str, Any]
+    request_body: dict[str, Any]
+    raw_response: dict[str, Any]
+    created_at: str
+
+
+@dataclass(frozen=True, slots=True)
+class MarketRoleFamilyReportAttempt:
+    id: int
+    snapshot_id: int
+    attempted_at: str
+    report_contract_version: str
+    candidate_contract_version: str
+    prompt_version: str
+    model: str
+    generation_identity: dict[str, Any]
+    input_fingerprint: str
+    generation_fingerprint: str
+    outcome: str
+    artifact_id: int | None
+    error_type: str | None
+    error_message: str | None
+
+
+@dataclass(frozen=True, slots=True)
+class MarketRoleFamilyReportReview:
+    id: int
+    report_artifact_id: int
+    review_contract_version: str
+    disposition: str
+    note: str | None
+    reviewed_at: str
+
