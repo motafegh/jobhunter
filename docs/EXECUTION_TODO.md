@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** `RoleFamilyIntelligenceReport` R3 — shared browser + CLI workflow over the accepted R2 service and durable report state. R1-R2 are accepted/closed; R4 real-local acceptance remains blocked until R3 passes.
+**Active increment:** `RoleFamilyIntelligenceReport` R4 — bounded real-local acceptance on snapshot 15 using the durable R1-R3 workflow. R1-R3 are accepted/closed; no taxonomy promotion is authorized.
 
 Status vocabulary:
 
@@ -98,18 +98,36 @@ R2 — shared service + V6 integration: ACCEPTED / CLOSED
 - [x] Deterministic service tests stub the generation boundary only; normal CI requires no LM Studio/network.
 - [x] CI `37220490754`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors tests PASS.
 
-R3 — shared browser + CLI workflow:
+R3 — shared browser + CLI workflow + bounded Market UX redesign: ACCEPTED / CLOSED
 
-- [ ] Replace browser ephemeral/in-process candidate-report ownership with persisted report history/detail through `MarketRoleFamilyReportService`.
-- [ ] Browser generate action must call ordinary exact reuse by default; explicit regeneration must be a distinct user action.
-- [ ] Browser report detail must show persistence/candidate contracts, model/prompt, generated time, effective review state, available-vs-cited counts, groups/specialties, limitations, exact evidence, integrity diagnostics, and review history.
-- [ ] Browser must allow append-only `Accept for bounded use` / `Reject` review actions.
-- [ ] Raw request/raw model response must remain private audit data and not ordinary report UI.
-- [ ] CLI must expose the same persisted state/service for list, generate/reuse, show, and review.
-- [ ] Browser and CLI must agree on report IDs, review state, and exact persisted payload.
-- [ ] App restart must not lose report history.
-- [ ] Add deterministic browser/CLI tests over one temp SQLite DB; no live LM Studio required.
-- [ ] Keep R4 bounded real-local acceptance blocked until R3 passes.
+- [x] Browser in-process candidate-report ownership removed; persisted report history/detail uses `MarketRoleFamilyReportService`.
+- [x] Ordinary browser generation uses exact reuse by default; explicit fresh immutable regeneration is a separate action.
+- [x] Durable report detail is addressed by report artifact ID and survives app restart.
+- [x] Report detail shows contracts, model/prompt, generated time, effective review state/history, available-vs-cited counts, clusters/subfamilies/specialties, limitations, exact evidence, integrity status and provenance.
+- [x] Browser append-only `Accept for bounded use` / `Reject` review actions use the shared service.
+- [x] Private request/raw model response remain local audit data and are excluded from ordinary browser/CLI presentation.
+- [x] CLI durable `role-report list|generate|show|review` uses the same service/report IDs; historical `candidate-report` now generates/reuses durable state.
+- [x] Browser and CLI agree on report ID/payload/effective review state.
+- [x] Fresh app instance reads the same report and review state after restart.
+- [x] Market workspace redesigned as a guided target → scope → refresh → intelligence journey with progressive disclosure for advanced controls/history.
+- [x] Snapshot redesigned as the intelligence decision hub; report redesigned around findings/review/evidence before provenance.
+- [x] Existing frozen-evidence wording/integrity contracts preserved.
+- [x] Closure record: `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`.
+- [x] CI `37223301900`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors tests PASS.
+
+R4 — bounded real-local acceptance:
+
+- [ ] Pull current main on the maintainer machine and verify clean local state/SQLite backup.
+- [ ] Verify LM Studio endpoint/model availability with the configured 18080 endpoint.
+- [ ] Start the current app and open snapshot 15 through the redesigned Market flow.
+- [ ] Generate/persist one real V6 durable report for snapshot 15 (or intentionally verify exact persisted reuse if the same generation already exists).
+- [ ] Verify report history/detail survives a full app restart.
+- [ ] Verify browser and CLI show the same durable report ID, normalized payload and effective review state.
+- [ ] Inspect exact evidence, available-vs-cited counts, integrity diagnostics and limitations in the rendered report.
+- [ ] Append the owner bounded-use review and verify review history/effective state through browser and CLI.
+- [ ] Verify SQLite `PRAGMA integrity_check` and `foreign_key_check`.
+- [ ] Verify upstream Market snapshot/P1.6 state and repository-safe public corpus remain unchanged.
+- [ ] Record the exact R4 acceptance evidence/disposition; only then close the persistence increment.
 
 ---
 
@@ -161,11 +179,13 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-R3 shared browser + CLI workflow
-→ persisted report history/detail routes
-→ generate/reuse + explicit regenerate via shared service
-→ append-only review actions/history
-→ CLI list/generate/show/review over same service
-→ restart/durability + browser/CLI agreement tests
-→ only after R3 acceptance authorize R4 real-local acceptance
+R4 bounded real-local acceptance on snapshot 15
+→ local sync + DB backup/integrity baseline
+→ LM Studio 18080/model verification
+→ generate or exact-reuse durable V6 report
+→ restart app and prove report durability
+→ browser/CLI report ID + payload + review-state agreement
+→ owner bounded-use review
+→ SQLite integrity/foreign keys + public-corpus/upstream invariants
+→ record final R4 disposition
 ```
