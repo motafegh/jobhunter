@@ -523,9 +523,9 @@ pytest -W error          825 passed
 
 R1 acceptance boundary is satisfied. It did not add model calls, browser/CLI routes, public-corpus export or taxonomy promotion.
 
-## 17. R2 authorization
+## 17. Historical R2 authorization gate
 
-R2 is now authorized.
+At the R1 closure checkpoint, R2 was authorized under the requirements below. Section 18 records its completed acceptance.
 
 R2 must add one shared application service over the existing accepted V6 generator and the R1 store. It must not create a second prompt/schema/generation path.
 
@@ -549,7 +549,7 @@ Required R2 behavior:
 6. expose review append, effective review state and accepted-report selection through the same service;
 7. deterministic tests stub only the candidate generator / inference boundary and require no live LM Studio.
 
-R3 browser/CLI and R4 bounded real-local acceptance remain blocked until R2 is accepted.
+At that checkpoint, R3 browser/CLI and R4 bounded real-local acceptance remained blocked until R2 acceptance.
 
 ## 18. R2 implementation closure — 2026-10-04
 
