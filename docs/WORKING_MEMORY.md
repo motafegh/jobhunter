@@ -8,7 +8,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** `RoleFamilyIntelligenceReport` R2 shared service + V6 integration. R1 persistence is accepted/closed with green CI; R2 now composes exact reuse/generation/attempt/review-state behavior over the accepted V6 generator and immutable store. R3 browser/CLI remains blocked.  
+**Active increment:** `RoleFamilyIntelligenceReport` R3 shared browser + CLI workflow. R1 persistence and R2 service/V6 integration are accepted/closed with green CI; R3 now moves browser and CLI onto durable report history/review state through the same service. R4 real-local acceptance remains blocked.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is intentionally current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -122,7 +122,7 @@ Snapshots 14-15 contain ten qualified members, six core postings and six accepte
 
 ---
 
-## 4. RoleFamilyIntelligenceReport R1 closure / R2 active
+## 4. RoleFamilyIntelligenceReport R1-R2 closure / R3 active
 
 Candidate interpretation V6 is accepted/closed for bounded reporting.
 
@@ -182,41 +182,53 @@ exact immutable snapshot
 != canonical taxonomy
 ```
 
+R2 accepted implementation:
+
+- `market_candidate_report.py` exposes exact preparation before inference and a separate accepted V6 generation step while preserving the direct-build wrapper;
+- `market_role_family_report_service.py` is the single orchestration owner;
+- ordinary exact match → persisted reuse + `reused` attempt + no LM call;
+- explicit regenerate → accepted V6 call + new immutable artifact + `completed` attempt;
+- generation or generated-identity failure → `failed` attempt + no report artifact;
+- report contract/prompt/snapshot/model identity is checked before persistence;
+- review append/effective-state/latest-accepted selection is exposed through the service;
+- deterministic service tests stub only the generation boundary;
+- CI `37220490754`: Ruff + 830 tests + 830 warnings-as-errors tests all green.
+
 ---
 
 ## 5. Exact continuation sequence
 
 ```text
-A. R2 shared service
-   - single owner over accepted V6 generator + R1 store
-   - no duplicate semantic generation logic
-
-B. Exact identity / reuse
-   - derive exact normalized candidate input
-   - derive generation identity/fingerprint
-   - ordinary call reuses newest exact artifact
-   - record reused attempt
-
-C. New generation
-   - explicit regeneration bypasses reuse
-   - call accepted V6 generator
-   - persist normalized report + audit request/raw response
-   - record completed attempt
-   - generation failure records failed attempt only
-
-D. Review facade
+A. R3 browser durable workflow
+   - report history per snapshot
+   - report detail by durable artifact id
+   - ordinary generate/reuse
+   - explicit regenerate
    - append accept/reject review
-   - expose effective state / accepted report selection
 
-E. Deterministic service tests
-   - stub generator only
+B. R3 CLI durable workflow
+   - list reports
+   - generate/reuse
+   - show report
+   - review report
+   - same service/state as browser
+
+C. Presentation boundaries
+   - show contracts/model/prompt/time/review state
+   - show available vs cited evidence and exact evidence
+   - show integrity diagnostics/review history
+   - keep request/raw response out of ordinary UI
+
+D. Deterministic shared-workflow tests
+   - one temp SQLite DB
    - no LM Studio/network
-   - verify reuse, regeneration, failure and review paths
+   - browser/CLI IDs and review state agree
+   - app restart preserves report history
 
-F. R2 closure
+E. R3 closure
    - CI green
    - docs reconciled
-   - then authorize R3 shared browser/CLI workflow
+   - then authorize R4 bounded real-local acceptance
 ```
 
-Do not start R3 browser/CLI or R4 local acceptance before R2 closure.
+Do not start R4 real-local acceptance before R3 closure.
