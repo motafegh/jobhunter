@@ -13,8 +13,12 @@ from jobhunter import market_cli
 from jobhunter.analysis_store import AnalysisStore
 from jobhunter.config import Settings
 from jobhunter.inference.lm_studio import StructuredInferenceResult
-from jobhunter.market_candidate_report import build_market_candidate_report
+from jobhunter.market_candidate_report import (
+    GeneratedMarketCandidateReport,
+    build_market_candidate_report,
+)
 from jobhunter.market_models import MarketDefinitionSpec, MarketSnapshotMemberInput
+from jobhunter.market_role_family_report_service import MarketRoleFamilyReportService
 from jobhunter.market_store import MarketStore
 from jobhunter.sources import DiscoveredJobLink
 from jobhunter.storage import JobHunterStore
@@ -577,9 +581,42 @@ def test_candidate_report_rejects_snapshot_analysis_identity_mismatch(
         build_market_candidate_report(harness.settings, snapshot_id)
 
 
-def test_candidate_report_cli_passes_model_override(monkeypatch, capsys) -> None:
+def test_candidate_report_cli_uses_durable_service(monkeypatch, capsys) -> None:
     settings = object()
     calls = []
+    artifact = SimpleNamespace(
+        id=9,
+        snapshot_id=15,
+        report_contract_version="market-role-family-intelligence-report-v1",
+        candidate_contract_version="market-role-family-candidate-v6",
+        prompt_version="market-role-family-candidate-prompt-v6",
+        model="MiMo",
+        generation_identity={"provider": "lm-studio", "model": "MiMo"},
+        input_fingerprint="input-hash",
+        generation_fingerprint="generation-hash",
+        report_sha256="report-hash",
+        created_at="2026-10-04T12:00:00+00:00",
+        report={"snapshot_id": 15, "model": "MiMo"},
+    )
+
+    class FakeReportService:
+        def __init__(self, received_settings):
+            assert received_settings is settings
+
+        def generate_report(
+            self,
+            snapshot_id,
+            *,
+            model_override=None,
+            regenerate=False,
+        ):
+            calls.append((snapshot_id, model_override, regenerate))
+            return artifact
+
+        def effective_review_state(self, report_id):
+            assert report_id == artifact.id
+            return "pending"
+
     monkeypatch.setattr(
         market_cli,
         "_load_workspace",
@@ -587,136 +624,225 @@ def test_candidate_report_cli_passes_model_override(monkeypatch, capsys) -> None
     )
     monkeypatch.setattr(
         market_cli,
-        "build_market_candidate_report",
-        lambda received_settings, snapshot_id, model_override=None: calls.append(
-            (received_settings, snapshot_id, model_override)
-        )
-        or {"snapshot_id": snapshot_id, "model": model_override},
+        "MarketRoleFamilyReportService",
+        FakeReportService,
     )
 
-    assert market_cli.main(["candidate-report", "15", "--model", "MiMo"]) == 0
+    assert (
+        market_cli.main(
+            ["candidate-report", "15", "--model", "MiMo", "--regenerate"]
+        )
+        == 0
+    )
 
     output = json.loads(capsys.readouterr().out)
-    assert calls == [(settings, 15, "MiMo")]
-    assert output == {"snapshot_id": 15, "model": "MiMo"}
+    assert calls == [(15, "MiMo", True)]
+    assert output["id"] == 9
+    assert output["snapshot_id"] == 15
+    assert output["review_state"] == "pending"
+    assert output["report"] == {"snapshot_id": 15, "model": "MiMo"}
+    assert "request_body" not in output
+    assert "raw_response" not in output
 
 
-def test_candidate_report_browser_operation_and_rendering(
+def test_candidate_report_browser_cli_durable_workflow_and_restart(
     tmp_path: Path,
     monkeypatch,
+    capsys,
 ) -> None:
-    settings = Settings(
-        data_dir=tmp_path / "data",
-        evidence_dir=tmp_path / "data/evidence",
-        database_path=tmp_path / "data/jobhunter.sqlite3",
-        translation_enabled=False,
-    )
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
     operations = WebOperationManager()
-    app = create_app(settings, operations=operations)
-    market_web.register_market_workspace_routes(app, settings)
+    app = create_app(harness.settings, operations=operations)
+    market_web.register_market_workspace_routes(app, harness.settings)
 
-    evidence = {
-        "source_job_id": "job-a",
-        "analysis_artifact_id": 7,
-        "kind": "responsibility",
-        "ref": "W:job-a:0",
-        "statement": "Build agent workflows.",
-        "source_excerpt": "Build agent workflows.",
-    }
-    point = {
-        "text": "Bounded fixture interpretation.",
-        "evidence_refs": ["W:job-a:0"],
-        "evidence": [evidence],
-        "evidence_count": 1,
-        "supporting_posting_count": 1,
-        "supporting_source_job_ids": ["job-a"],
-    }
-    group = {
-        "label": "Agent delivery",
-        "interpretation_points": [{**point, "text": "Build agent workflows."}],
-        "evidence_refs": ["W:job-a:0"],
-        "evidence": [evidence],
-        "evidence_count": 1,
-        "supporting_posting_count": 1,
-        "supporting_source_job_ids": ["job-a"],
-        "confidence": "low",
-        "alternatives": [],
-        "support_basis": "responsibility_supported_work",
-        "candidate_scope": "single_posting_specialty_or_outlier",
-    }
-    report = {
-        "contract": "market-role-family-candidate-v6",
-        "snapshot_id": 15,
-        "overall_observations": [point],
-        "overall_supporting_source_job_ids": ["job-a"],
-        "model": "fixture-model",
-        "source_count": 1,
-        "available_evidence_count": 1,
-        "available_responsibility_claim_count": 1,
-        "available_requirement_claim_count": 0,
-        "cited_evidence_count": 1,
-        "responsibility_coverage": {
-            "postings_with_work_claims": 1,
-            "postings_without_work_claims": [],
-        },
-        "authority_note": "Candidate interpretation only.",
-        "work_clusters": [group],
-        "possible_role_subfamilies": [],
-        "specialty_candidates": [],
-        "scope_limitations": ["Small fixture sample."],
-        "limitations": ["Interpretive output."],
-        "integrity_rejection_count": 1,
-        "integrity_rejections": [
-            {
-                "path": "overall_observations[1]",
-                "code": "source_alias_without_matching_evidence",
-            }
-        ],
-    }
+    generation_calls = []
+
+    def generate(_settings, prepared):
+        generation_calls.append(prepared)
+        evidence = prepared.evidence["W:job-a:0"]
+        point = {
+            "text": "Bounded fixture interpretation.",
+            "evidence_refs": ["W:job-a:0"],
+            "evidence": [evidence],
+            "evidence_count": 1,
+            "supporting_posting_count": 1,
+            "supporting_source_job_ids": ["job-a"],
+        }
+        group = {
+            "label": "Agent delivery",
+            "interpretation_points": [{**point, "text": "Build agent workflows."}],
+            "evidence_refs": ["W:job-a:0"],
+            "evidence": [evidence],
+            "evidence_count": 1,
+            "supporting_posting_count": 1,
+            "supporting_source_job_ids": ["job-a"],
+            "confidence": "low",
+            "alternatives": [],
+            "support_basis": "responsibility_supported_work",
+            "candidate_scope": "single_posting_specialty_or_outlier",
+        }
+        return GeneratedMarketCandidateReport(
+            report={
+                "contract": "market-role-family-candidate-v6",
+                "prompt_version": "market-role-family-candidate-prompt-v6",
+                "snapshot_id": prepared.snapshot_id,
+                "snapshot_contract": prepared.snapshot_contract,
+                "target_definition_id": prepared.target_definition_id,
+                "model": prepared.model,
+                "overall_observations": [point],
+                "overall_supporting_source_job_ids": ["job-a"],
+                "source_count": 2,
+                "available_evidence_count": 4,
+                "available_responsibility_claim_count": 2,
+                "available_requirement_claim_count": 2,
+                "cited_evidence_count": 1,
+                "responsibility_coverage": {
+                    "postings_with_work_claims": 1,
+                    "postings_without_work_claims": ["job-b"],
+                },
+                "authority_note": "Candidate interpretation only.",
+                "work_clusters": [group],
+                "possible_role_subfamilies": [],
+                "specialty_candidates": [],
+                "scope_limitations": ["Small fixture sample."],
+                "limitations": ["Interpretive output."],
+                "integrity_rejection_count": 0,
+                "integrity_rejections": [],
+                "sources": list(prepared.sources.values()),
+            },
+            request_body={"private_request_marker": True},
+            raw_response={"private_raw_marker": True},
+        )
 
     monkeypatch.setattr(
-        market_web,
-        "build_market_candidate_report",
-        lambda _settings, snapshot_id: {**report, "snapshot_id": snapshot_id},
+        "jobhunter.market_role_family_report_service.generate_market_candidate_report",
+        generate,
     )
-    with market_web._CANDIDATE_REPORTS_LOCK:
-        market_web._CANDIDATE_REPORTS.clear()
 
-    try:
-        token = app.state.csrf_token
-        with TestClient(app) as client:
-            missing = client.get("/market/snapshots/15/candidate-report")
-            assert missing.status_code == 404
+    token = app.state.csrf_token
+    with TestClient(app) as client:
+        workspace_page = client.get(
+            f"/market/targets?definition_id={harness.definition.id}"
+        )
+        assert workspace_page.status_code == 200
+        assert "From a target to usable market intelligence" in workspace_page.text
+        assert "Run Market update with defaults" in workspace_page.text
+        assert "Customize run budgets" in workspace_page.text
 
-            response = client.post(
-                "/market/actions/snapshots/15/candidate-report",
-                data={"csrf_token": token},
-                follow_redirects=False,
-            )
-            assert response.status_code == 303
-            operation_id = response.headers["location"].split("?", 1)[0].rsplit("/", 1)[-1]
+        snapshot_page = client.get(f"/market/snapshots/{snapshot_id}")
+        assert snapshot_page.status_code == 200
+        assert "Generate role-family report" in snapshot_page.text
+        assert "No durable interpretation" in snapshot_page.text
 
-            for _ in range(100):
-                operation = operations.get(operation_id)
-                assert operation is not None
-                if operation.status in {"completed", "failed"}:
-                    break
-                time.sleep(0.01)
+        response = client.post(
+            f"/market/actions/snapshots/{snapshot_id}/candidate-report",
+            data={"csrf_token": token, "regenerate": "false"},
+            follow_redirects=False,
+        )
+        assert response.status_code == 303
+        operation_id = response.headers["location"].split("?", 1)[0].rsplit("/", 1)[-1]
 
-            assert operation.status == "completed"
-            rendered = client.get("/market/snapshots/15/candidate-report")
+        for _ in range(100):
+            operation = operations.get(operation_id)
+            assert operation is not None
+            if operation.status in {"completed", "failed"}:
+                break
+            time.sleep(0.01)
 
+        assert operation.status == "completed"
+
+        service = MarketRoleFamilyReportService(harness.settings)
+        artifacts = service.list_reports(snapshot_id)
+        assert len(artifacts) == 1
+        artifact = artifacts[0]
+        assert len(generation_calls) == 1
+
+        rendered = client.get(f"/market/reports/{artifact.id}")
         assert rendered.status_code == 200
         assert "Bounded fixture interpretation." in rendered.text
         assert "Agent delivery" in rendered.text
-        assert "1 available P1.6 claims" in rendered.text
-        assert "1 unique claims cited by this candidate report" in rendered.text
-        assert "Responsibility-supported work." in rendered.text
-        assert "Single-posting specialty/outlier candidate" in rendered.text
-        assert "job-a" in rendered.text
-        assert "Candidate interpretation only." in rendered.text
-        assert "Integrity filtering" in rendered.text
-        assert "source_alias_without_matching_evidence" in rendered.text
-    finally:
-        with market_web._CANDIDATE_REPORTS_LOCK:
-            market_web._CANDIDATE_REPORTS.clear()
+        assert "Ready for your review" in rendered.text
+        assert "Evidence used" in rendered.text
+        assert "private_request_marker" not in rendered.text
+        assert "private_raw_marker" not in rendered.text
+
+        compatibility = client.get(
+            f"/market/snapshots/{snapshot_id}/candidate-report",
+            follow_redirects=False,
+        )
+        assert compatibility.status_code == 303
+        assert compatibility.headers["location"] == f"/market/reports/{artifact.id}"
+
+        reuse_response = client.post(
+            f"/market/actions/snapshots/{snapshot_id}/candidate-report",
+            data={"csrf_token": token, "regenerate": "false"},
+            follow_redirects=False,
+        )
+        reuse_operation_id = (
+            reuse_response.headers["location"].split("?", 1)[0].rsplit("/", 1)[-1]
+        )
+        for _ in range(100):
+            reuse_operation = operations.get(reuse_operation_id)
+            assert reuse_operation is not None
+            if reuse_operation.status in {"completed", "failed"}:
+                break
+            time.sleep(0.01)
+
+        assert reuse_operation.status == "completed"
+        assert len(generation_calls) == 1
+        assert len(service.list_reports(snapshot_id)) == 1
+        assert [attempt.outcome for attempt in service.list_attempts(snapshot_id)] == [
+            "completed",
+            "reused",
+        ]
+
+    monkeypatch.setattr(
+        market_cli,
+        "_load_workspace",
+        lambda _config: SimpleNamespace(settings=harness.settings),
+    )
+    assert market_cli.main(["role-report", "list", str(snapshot_id)]) == 0
+    listed = json.loads(capsys.readouterr().out)
+    assert listed[0]["id"] == artifact.id
+    assert listed[0]["review_state"] == "pending"
+
+    assert market_cli.main(["role-report", "show", str(artifact.id)]) == 0
+    shown = json.loads(capsys.readouterr().out)
+    assert shown["id"] == artifact.id
+    assert shown["report"]["work_clusters"][0]["label"] == "Agent delivery"
+    assert "request_body" not in shown
+    assert "raw_response" not in shown
+
+    assert (
+        market_cli.main(
+            [
+                "role-report",
+                "review",
+                str(artifact.id),
+                "--disposition",
+                "accepted_for_bounded_use",
+                "--note",
+                "Useful bounded interpretation.",
+            ]
+        )
+        == 0
+    )
+    reviewed = json.loads(capsys.readouterr().out)
+    assert reviewed["effective_review_state"] == "accepted_for_bounded_use"
+
+    fresh_operations = WebOperationManager()
+    fresh_app = create_app(harness.settings, operations=fresh_operations)
+    market_web.register_market_workspace_routes(fresh_app, harness.settings)
+    with TestClient(fresh_app) as fresh_client:
+        after_restart = fresh_client.get(f"/market/reports/{artifact.id}")
+        assert after_restart.status_code == 200
+        assert "Accepted for bounded use" in after_restart.text
+        assert "Useful bounded interpretation." in after_restart.text
+
+        snapshot_after_restart = fresh_client.get(
+            f"/market/snapshots/{snapshot_id}"
+        )
+        assert snapshot_after_restart.status_code == 200
+        assert f"Report #{artifact.id}" in snapshot_after_restart.text
+        assert "accepted for bounded use" in snapshot_after_restart.text.lower()
+

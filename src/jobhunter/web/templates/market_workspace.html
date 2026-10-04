@@ -1,98 +1,273 @@
 {% extends "base.html" %}
-{% block title %}Market targets · JobHunter{% endblock %}
-{% block heading %}Market targets{% endblock %}
-{% block eyebrow %}Target-scoped, versioned market intelligence{% endblock %}
-{% block topbar_actions %}<a class="button secondary" href="/market">Legacy aggregate view</a>{% endblock %}
+{% block title %}Market workspace · JobHunter{% endblock %}
+{% block heading %}Market workspace{% endblock %}
+{% block eyebrow %}Guided target → snapshot → intelligence workflow{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/market">Legacy aggregate view</a>{% endblock %}
 
 {% block content %}
-{% if notice %}<section class="panel"><p><strong>{{ notice }}</strong></p></section>{% endif %}
+{% if notice %}<div class="notice">{{ notice }}</div>{% endif %}
+
+<section class="panel workflow-journey-panel">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Your path</p>
+      <h2>From a target to usable market intelligence</h2>
+    </div>
+    <span class="badge good">Local / private</span>
+  </div>
+  <div class="journey-grid">
+    <article class="journey-step {% if state.selected_target %}done{% else %}active{% endif %}">
+      <span class="journey-number">1</span>
+      <div><strong>Choose target</strong><small>What market do you want to understand?</small></div>
+    </article>
+    <article class="journey-step {% if state.selected_definition %}done{% elif state.selected_target %}active{% endif %}">
+      <span class="journey-number">2</span>
+      <div><strong>Define scope</strong><small>Freeze what belongs inside this target.</small></div>
+    </article>
+    <article class="journey-step {% if state.snapshots %}done{% elif state.selected_definition %}active{% endif %}">
+      <span class="journey-number">3</span>
+      <div><strong>Refresh evidence</strong><small>Run the bounded target-scoped workflow.</small></div>
+    </article>
+    <article class="journey-step {% if state.snapshots %}active{% endif %}">
+      <span class="journey-number">4</span>
+      <div><strong>Read intelligence</strong><small>Open a snapshot and its durable interpretation.</small></div>
+    </article>
+  </div>
+</section>
 
 <section class="metric-grid three">
-  <article class="metric-card accent"><span class="metric-label">Targets</span><strong class="metric-value">{{ state.targets|length }}</strong><span class="metric-help">Stable local identities</span></article>
-  <article class="metric-card"><span class="metric-label">Definition</span><strong class="metric-value">{% if state.selected_definition %}v{{ state.selected_definition.version_number }}{% else %}—{% endif %}</strong><span class="metric-help">Meaning changes create immutable versions</span></article>
-  <article class="metric-card"><span class="metric-label">Snapshots</span><strong class="metric-value">{{ state.snapshots|length }}</strong><span class="metric-help">Immutable point-in-time authority</span></article>
+  <article class="metric-card accent">
+    <span class="metric-label">Target</span>
+    <strong class="metric-value small-value">{{ state.selected_target.name if state.selected_target else "Not selected" }}</strong>
+    <span class="metric-help">{{ state.targets|length }} local target{% if state.targets|length != 1 %}s{% endif %}</span>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Definition</span>
+    <strong class="metric-value">{% if state.selected_definition %}v{{ state.selected_definition.version_number }}{% else %}—{% endif %}</strong>
+    <span class="metric-help">Immutable scope version</span>
+  </article>
+  <article class="metric-card">
+    <span class="metric-label">Snapshots</span>
+    <strong class="metric-value">{{ state.snapshots|length }}</strong>
+    <span class="metric-help">Frozen point-in-time evidence</span>
+  </article>
 </section>
 
-<section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Target identity</p><h2>Select or create a market target</h2></div><span class="badge">Local/private</span></div>
-  <div class="search-plan-list">
-    {% for target in state.targets %}
-      <div class="search-plan-row"><span class="search-index">{{ target.id }}</span><div><strong><a href="/market/targets?target_id={{ target.id }}">{{ target.name }}</a></strong><small>{{ target.slug }}{% if target.description %} · {{ target.description }}{% endif %}</small></div>{% if state.selected_target and target.id == state.selected_target.id %}<span class="badge">Selected</span>{% endif %}</div>
-    {% else %}<div class="empty-state">No Market target exists yet.</div>{% endfor %}
-  </div>
-  <form method="post" action="/market/actions/target" class="market-form">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    <p><label>Slug<br><input name="slug" required placeholder="applied-ai"></label></p>
-    <p><label>Name<br><input name="name" required placeholder="Applied AI / ML Engineering"></label></p>
-    <p><label>Description<br><input name="description" placeholder="Optional display description"></label></p>
-    <button class="button primary" type="submit">Create target</button>
-  </form>
+<section class="panel action-hero">
+  {% if not state.selected_target %}
+    <div class="action-hero-copy">
+      <p class="eyebrow">Next best action</p>
+      <h2>Create your first market target</h2>
+      <p>Start with the career market you actually want to study. You can create additional targets later without changing this history.</p>
+    </div>
+    <form method="post" action="/market/actions/target" class="market-form compact-market-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <p><label>Short ID<input name="slug" required placeholder="applied-ai"></label></p>
+      <p><label>Display name<input name="name" required placeholder="Applied AI / ML Engineering"></label></p>
+      <p><label>Description<input name="description" placeholder="Optional"></label></p>
+      <button class="button primary" type="submit">Create target</button>
+    </form>
+  {% elif not state.selected_definition %}
+    <div class="action-hero-copy">
+      <p class="eyebrow">Next best action</p>
+      <h2>Define what “{{ state.selected_target.name }}” means</h2>
+      <p>This freezes the membership intent and acquisition scope for future runs. Historical definitions remain untouched.</p>
+    </div>
+    <form method="post" action="/market/actions/definition" class="market-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <input type="hidden" name="target_id" value="{{ state.selected_target.id }}">
+      <p class="field-wide"><label>Membership intent<textarea name="membership_intent" required rows="4" placeholder="Describe what is core, adjacent, and outside this target."></textarea></label></p>
+      <details class="task-disclosure field-wide">
+        <summary>Advanced scope and search inputs</summary>
+        <div class="market-form advanced-form-grid">
+          <p><label>Search profiles<input name="profiles" placeholder="ai-focused"></label></p>
+          <p><label>Search packs<input name="packs" placeholder="ai-ml, llm-applications"></label></p>
+          <p><label>Extra search terms<input name="terms" placeholder="AI Engineer, RAG"></label></p>
+          <p><label>Include hints<input name="include_hints"></label></p>
+          <p><label>Exclude hints<input name="exclude_hints"></label></p>
+          <p><label>Geography<input name="geography_scope"></label></p>
+          <p><label>Work arrangement<input name="work_arrangement_scope"></label></p>
+          <p><label>Seniority<input name="seniority_scope"></label></p>
+          <p><label>Employment type<input name="employment_type_scope"></label></p>
+        </div>
+      </details>
+      <button class="button primary" type="submit">Create immutable definition</button>
+    </form>
+  {% else %}
+    <div class="action-hero-copy">
+      <p class="eyebrow">Current workspace</p>
+      <h2>{{ state.selected_target.name }} · definition v{{ state.selected_definition.version_number }}</h2>
+      <p>{{ state.selected_definition.spec.membership_intent }}</p>
+      <div class="context-chips">
+        <span class="badge">Definition #{{ state.selected_definition.id }}</span>
+        <span class="badge">{{ preview.searches|length if preview else 0 }} acquisition searches</span>
+        {% if state.snapshots %}<span class="badge good">Latest snapshot #{{ state.snapshots[0].id }}</span>{% endif %}
+      </div>
+    </div>
+    <div class="primary-action-stack">
+      {% if state.snapshots %}
+        <a class="button primary" href="/market/snapshots/{{ state.snapshots[0].id }}">Open latest snapshot</a>
+        <span class="field-help">Best place to read current evidence and role-family intelligence.</span>
+      {% else %}
+        <span class="badge warn">No snapshot yet</span>
+        <span class="field-help">Run the target once to create frozen evidence.</span>
+      {% endif %}
+    </div>
+  {% endif %}
 </section>
-
-{% if state.selected_target %}
-<section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Immutable meaning</p><h2>{{ state.selected_target.name }} definitions</h2></div><span class="badge">Catalog {{ catalog.version }}</span></div>
-  <p class="muted">Changing target meaning creates a new definition version. It never rewrites historical runs, memberships, snapshots, or upstream source/P1.6 artifacts.</p>
-  <div class="search-plan-list">
-    {% for definition in state.definitions %}
-      <div class="search-plan-row"><span class="search-index">v{{ definition.version_number }}</span><div><strong><a href="/market/targets?definition_id={{ definition.id }}">Definition {{ definition.id }}</a></strong><small>{{ definition.spec.membership_intent }}</small></div>{% if state.selected_definition and definition.id == state.selected_definition.id %}<span class="badge">Selected</span>{% endif %}</div>
-    {% else %}<div class="empty-state">Create the first immutable definition for this target.</div>{% endfor %}
-  </div>
-
-  <form method="post" action="/market/actions/definition" class="market-form">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-    <input type="hidden" name="target_id" value="{{ state.selected_target.id }}">
-    <p><label>Membership intent<br><textarea name="membership_intent" required rows="4" placeholder="Describe what is core, adjacent, and outside this target."></textarea></label></p>
-    <p><label>Search profiles (comma/newline separated)<br><input name="profiles" placeholder="ai-focused"></label></p>
-    <p><label>Search packs<br><input name="packs" placeholder="ai-ml, llm-applications"></label></p>
-    <p><label>Extra search terms<br><input name="terms" placeholder="AI Engineer, RAG"></label></p>
-    <p><label>Include hints<br><input name="include_hints"></label></p>
-    <p><label>Exclude hints<br><input name="exclude_hints"></label></p>
-    <p><label>Geography scope<br><input name="geography_scope"></label></p>
-    <p><label>Work arrangement scope<br><input name="work_arrangement_scope"></label></p>
-    <p><label>Seniority scope<br><input name="seniority_scope"></label></p>
-    <p><label>Employment type scope<br><input name="employment_type_scope"></label></p>
-    <button class="button primary" type="submit">Create immutable definition</button>
-  </form>
-</section>
-{% endif %}
 
 {% if state.selected_definition %}
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Acquisition envelope</p><h2>Definition {{ state.selected_definition.id }} · v{{ state.selected_definition.version_number }}</h2></div><span class="badge">{{ preview.searches|length if preview else 0 }} searches</span></div>
-  <p><strong>Membership intent:</strong> {{ state.selected_definition.spec.membership_intent }}</p>
-  <p class="muted">Search vocabulary is candidate acquisition only; I3 membership decides core/adjacent/uncertain/excluded from actual job evidence.</p>
-  {% if preview %}<div class="search-plan-list">{% for search in preview.searches %}<div class="search-plan-row"><span class="search-index">{{ loop.index }}</span><div><strong>{{ search.name }}</strong><small>{{ search.url }}</small></div><span class="badge">{{ search.max_pages }} page{% if search.max_pages != 1 %}s{% endif %}</span></div>{% endfor %}</div>{% endif %}
-</section>
-
-<section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Bounded refresh</p><h2>Run this target</h2></div><span class="badge">Single mutable operation</span></div>
-  <p class="muted">Budgets are explicit. Remaining target work stays visible instead of spilling into unrelated global backlog. Market state remains local/private.</p>
-  <form method="post" action="/market/actions/run" class="market-form">
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Refresh evidence</p>
+      <h2>Update this target</h2>
+    </div>
+    <span class="badge">Bounded operation</span>
+  </div>
+  <p class="muted">The defaults are the normal path. Open advanced controls only when you intentionally want to change run budgets.</p>
+  <form method="post" action="/market/actions/run" class="market-run-form">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <input type="hidden" name="definition_id" value="{{ state.selected_definition.id }}">
-    <p><label>Search request budget <input type="number" name="request_budget" min="1" max="500" value="{{ settings.jobinja_search_request_budget }}" required></label></p>
-    <p><label>Search limit <input type="number" name="search_limit" min="1" max="500" value="{{ settings.jobinja_max_expanded_searches }}" required></label></p>
-    <p><label>Max pages/search <input type="number" name="default_max_pages" min="1" max="50" value="{{ settings.jobinja_default_keyword_max_pages }}" required></label></p>
-    <p><label>Missing detail limit <input type="number" name="missing_limit" min="0" max="50" value="{{ settings.jobinja_sync_missing_limit }}" required></label></p>
-    <p><label>Refresh limit <input type="number" name="refresh_limit" min="0" max="50" value="{{ settings.jobinja_sync_refresh_limit }}" required></label></p>
-    <p><label>Refresh after hours <input type="number" step="0.1" name="refresh_after_hours" min="0.1" max="8760" value="{{ settings.jobinja_refresh_after_hours }}" required></label></p>
-    <p><label>Translation limit <input type="number" name="translation_limit" min="0" max="50" value="{{ settings.translation_batch_limit }}" required></label></p>
-    <p><label>P1.6 generation limit <input type="number" name="analysis_limit" min="0" max="20" value="{{ settings.analysis_batch_limit }}" required></label></p>
-    <p><label>Membership limit <input type="number" name="membership_limit" min="0" max="50" value="20" required></label></p>
-    <button class="button primary" type="submit">Run bounded Market update</button>
+
+    <div class="run-action-row">
+      <button class="button primary" type="submit" {% if active_operation %}disabled{% endif %}>Run Market update with defaults</button>
+      <span class="field-help">Target-scoped acquisition → source sync → translation/P1.6 → membership → immutable snapshot.</span>
+    </div>
+
+    <details class="task-disclosure">
+      <summary>Customize run budgets</summary>
+      <div class="market-form advanced-form-grid">
+        <p><label>Search request budget<input type="number" name="request_budget" min="1" max="500" value="{{ settings.jobinja_search_request_budget }}" required></label></p>
+        <p><label>Search limit<input type="number" name="search_limit" min="1" max="500" value="{{ settings.jobinja_max_expanded_searches }}" required></label></p>
+        <p><label>Max pages/search<input type="number" name="default_max_pages" min="1" max="50" value="{{ settings.jobinja_default_keyword_max_pages }}" required></label></p>
+        <p><label>Missing detail limit<input type="number" name="missing_limit" min="0" max="50" value="{{ settings.jobinja_sync_missing_limit }}" required></label></p>
+        <p><label>Refresh limit<input type="number" name="refresh_limit" min="0" max="50" value="{{ settings.jobinja_sync_refresh_limit }}" required></label></p>
+        <p><label>Refresh after hours<input type="number" step="0.1" name="refresh_after_hours" min="0.1" max="8760" value="{{ settings.jobinja_refresh_after_hours }}" required></label></p>
+        <p><label>Translation limit<input type="number" name="translation_limit" min="0" max="50" value="{{ settings.translation_batch_limit }}" required></label></p>
+        <p><label>P1.6 generation limit<input type="number" name="analysis_limit" min="0" max="20" value="{{ settings.analysis_batch_limit }}" required></label></p>
+        <p><label>Membership limit<input type="number" name="membership_limit" min="0" max="50" value="20" required></label></p>
+      </div>
+      <p class="muted">These values are submitted even while the section is collapsed; change them only when you intentionally want a different bounded run.</p>
+    </details>
   </form>
 </section>
 
 <section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">History</p><h2>Runs and immutable snapshots</h2></div></div>
-  {% if state.runs %}<div class="table-wrap"><table><thead><tr><th>Run</th><th>Status</th><th>Started</th><th>Completed</th></tr></thead><tbody>{% for run in state.runs %}<tr><td><a href="/market/runs/{{ run.id }}">#{{ run.id }}</a></td><td>{{ run.status }}</td><td>{{ run.started_at }}</td><td>{{ run.completed_at or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No target-scoped run exists for this definition yet.</div>{% endif %}
-  {% if state.snapshots %}<div class="table-wrap"><table><thead><tr><th>Snapshot</th><th>Run</th><th>Created</th><th>Core postings</th></tr></thead><tbody>{% for snapshot in state.snapshots %}<tr><td><a href="/market/snapshots/{{ snapshot.id }}">#{{ snapshot.id }}</a></td><td>#{{ snapshot.run_id }}</td><td>{{ snapshot.created_at }}</td><td>{{ snapshot.metadata.primary_core_postings or 0 }}</td></tr>{% endfor %}</tbody></table></div>{% endif %}
+  <div class="panel-header">
+    <div>
+      <p class="eyebrow">Recent intelligence</p>
+      <h2>Snapshots</h2>
+    </div>
+    <span class="badge">{{ state.snapshots|length }} total</span>
+  </div>
+  {% if state.snapshots %}
+    <div class="snapshot-card-grid">
+      {% for snapshot in state.snapshots[:6] %}
+      <a class="snapshot-card" href="/market/snapshots/{{ snapshot.id }}">
+        <div><span class="eyebrow">Snapshot #{{ snapshot.id }}</span><strong>{{ snapshot.metadata.primary_core_postings or 0 }} core postings</strong></div>
+        <small>{{ snapshot.created_at }} · run #{{ snapshot.run_id }}</small>
+        <span class="text-link">Open intelligence →</span>
+      </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">No snapshot yet. Run this target to create the first frozen evidence set.</div>
+  {% endif %}
 </section>
 
-<section class="panel">
-  <div class="panel-header"><div><p class="eyebrow">Membership history</p><h2>Qualified evidence decisions</h2></div><span class="badge">{{ state.memberships|length }} records</span></div>
-  {% if state.memberships %}<div class="table-wrap"><table><thead><tr><th>Job</th><th>Disposition</th><th>Confidence</th><th>Source</th><th>P1.6</th></tr></thead><tbody>{% for item in state.memberships %}<tr><td><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a></td><td>{{ item.disposition }}<details><summary>Reason and evidence · #{{ item.id }}</summary><p>{{ item.reason }}</p><p>Evidence references: {{ item.evidence_refs | join(", ") }}</p><p>English artifact: {{ item.translation_artifact_id or "—" }} · Classifier: {{ item.classifier_contract_version }}</p>{% if item.supersedes_membership_id %}<p>Supersedes membership #{{ item.supersedes_membership_id }}</p>{% endif %}</details></td><td>{{ item.confidence or '—' }}</td><td>v{{ item.job_detail_version_id }}</td><td>{{ item.analysis_artifact_id or '—' }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state">No membership decisions exist for this definition yet.</div>{% endif %}
-</section>
+<details class="panel disclosure-panel">
+  <summary class="panel-summary">
+    <span><span class="eyebrow">History</span><strong>Runs and qualified membership decisions</strong></span>
+    <span class="badge">{{ state.runs|length }} runs · {{ state.memberships|length }} membership records</span>
+  </summary>
+  <div class="disclosure-body">
+    {% if state.runs %}
+      <h3>Runs</h3>
+      <div class="table-wrap"><table><thead><tr><th>Run</th><th>Status</th><th>Started</th><th>Completed</th></tr></thead><tbody>{% for run in state.runs %}<tr><td><a href="/market/runs/{{ run.id }}">#{{ run.id }}</a></td><td>{{ run.status }}</td><td>{{ run.started_at }}</td><td>{{ run.completed_at or '—' }}</td></tr>{% endfor %}</tbody></table></div>
+    {% endif %}
+    <h3>Membership history</h3>
+    {% if state.memberships %}
+      <div class="table-wrap"><table><thead><tr><th>Job</th><th>Disposition</th><th>Confidence</th><th>P1.6</th></tr></thead><tbody>{% for item in state.memberships %}<tr><td><a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a></td><td>{{ item.disposition }}<details><summary>Why?</summary><p>{{ item.reason }}</p><p>Evidence: {{ item.evidence_refs | join(", ") }}</p></details></td><td>{{ item.confidence or '—' }}</td><td>{{ item.analysis_artifact_id or '—' }}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}
+      <div class="empty-state">No membership decisions exist for this definition yet.</div>
+    {% endif %}
+  </div>
+</details>
+
+<details class="panel disclosure-panel">
+  <summary class="panel-summary">
+    <span><span class="eyebrow">Definition details</span><strong>Acquisition scope and search plan</strong></span>
+    <span class="badge">{{ preview.searches|length if preview else 0 }} searches</span>
+  </summary>
+  <div class="disclosure-body">
+    <p><strong>Membership intent:</strong> {{ state.selected_definition.spec.membership_intent }}</p>
+    <p class="muted">Search vocabulary finds candidates; membership classification decides what actually belongs in the target.</p>
+    {% if preview %}
+      <div class="search-plan-list">
+        {% for search in preview.searches %}
+          <div class="search-plan-row"><span class="search-index">{{ loop.index }}</span><div><strong>{{ search.name }}</strong><small>{{ search.url }}</small></div><span class="badge">{{ search.max_pages }} page{% if search.max_pages != 1 %}s{% endif %}</span></div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</details>
 {% endif %}
+
+<details class="panel disclosure-panel">
+  <summary class="panel-summary">
+    <span><span class="eyebrow">Workspace setup</span><strong>Targets and immutable definitions</strong></span>
+    <span class="badge">{{ state.targets|length }} targets</span>
+  </summary>
+  <div class="disclosure-body management-grid">
+    <div>
+      <h3>Targets</h3>
+      <div class="search-plan-list">
+        {% for target in state.targets %}
+          <div class="search-plan-row"><span class="search-index">{{ target.id }}</span><div><strong><a href="/market/targets?target_id={{ target.id }}">{{ target.name }}</a></strong><small>{{ target.slug }}{% if target.description %} · {{ target.description }}{% endif %}</small></div>{% if state.selected_target and target.id == state.selected_target.id %}<span class="badge good">Current</span>{% endif %}</div>
+        {% else %}<div class="empty-state">No targets yet.</div>{% endfor %}
+      </div>
+      {% if state.selected_target %}
+      <form method="post" action="/market/actions/target" class="market-form compact-market-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <p><label>Short ID<input name="slug" required></label></p>
+        <p><label>Name<input name="name" required></label></p>
+        <p><label>Description<input name="description"></label></p>
+        <button class="button ghost" type="submit">Add another target</button>
+      </form>
+      {% endif %}
+    </div>
+    {% if state.selected_target %}
+    <div>
+      <h3>{{ state.selected_target.name }} definitions</h3>
+      <div class="search-plan-list">
+        {% for definition in state.definitions %}
+          <div class="search-plan-row"><span class="search-index">v{{ definition.version_number }}</span><div><strong><a href="/market/targets?definition_id={{ definition.id }}">Definition #{{ definition.id }}</a></strong><small>{{ definition.spec.membership_intent }}</small></div>{% if state.selected_definition and definition.id == state.selected_definition.id %}<span class="badge good">Current</span>{% endif %}</div>
+        {% else %}<div class="empty-state">No definition yet.</div>{% endfor %}
+      </div>
+      {% if state.selected_definition %}
+      <p class="muted">To change target meaning, create another immutable definition rather than editing history.</p>
+      <details class="task-disclosure">
+        <summary>Create a new immutable definition version</summary>
+        <form method="post" action="/market/actions/definition" class="market-form advanced-form-grid">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+          <input type="hidden" name="target_id" value="{{ state.selected_target.id }}">
+          <p class="field-wide"><label>Membership intent<textarea name="membership_intent" required rows="3">{{ state.selected_definition.spec.membership_intent }}</textarea></label></p>
+          <p><label>Search profiles<input name="profiles" value="{{ state.selected_definition.spec.search_profiles | join(', ') }}"></label></p>
+          <p><label>Search packs<input name="packs" value="{{ state.selected_definition.spec.search_packs | join(', ') }}"></label></p>
+          <p><label>Extra search terms<input name="terms" value="{{ state.selected_definition.spec.extra_search_terms | join(', ') }}"></label></p>
+          <p><label>Include hints<input name="include_hints" value="{{ state.selected_definition.spec.include_hints | join(', ') }}"></label></p>
+          <p><label>Exclude hints<input name="exclude_hints" value="{{ state.selected_definition.spec.exclude_hints | join(', ') }}"></label></p>
+          <p><label>Geography<input name="geography_scope" value="{{ state.selected_definition.spec.geography_scope or '' }}"></label></p>
+          <p><label>Work arrangement<input name="work_arrangement_scope" value="{{ state.selected_definition.spec.work_arrangement_scope or '' }}"></label></p>
+          <p><label>Seniority<input name="seniority_scope" value="{{ state.selected_definition.spec.seniority_scope or '' }}"></label></p>
+          <p><label>Employment type<input name="employment_type_scope" value="{{ state.selected_definition.spec.employment_type_scope or '' }}"></label></p>
+          <button class="button ghost" type="submit">Save as new definition version</button>
+        </form>
+      </details>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</details>
 {% endblock %}

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import secrets
-import threading
 from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlencode
@@ -13,7 +12,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from jobhunter.config import Settings
-from jobhunter.market_candidate_report import build_market_candidate_report
+from jobhunter.market_role_family_report_service import MarketRoleFamilyReportService
 from jobhunter.market_workspace import (
     MarketRunControls,
     MarketWorkspaceService,
@@ -27,8 +26,6 @@ from jobhunter.web.operations import (
 
 _WEB_DIR = Path(__file__).resolve().parent
 _TEMPLATES = Jinja2Templates(directory=str(_WEB_DIR / "templates"))
-_CANDIDATE_REPORTS: dict[int, dict] = {}
-_CANDIDATE_REPORTS_LOCK = threading.Lock()
 
 
 def _csrf(request: Request, submitted: str) -> None:
@@ -161,10 +158,24 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
         )
 
     @app.get("/market/snapshots/{snapshot_id}", response_class=HTMLResponse)
-    def market_snapshot_detail(request: Request, snapshot_id: int):
+    def market_snapshot_detail(
+        request: Request,
+        snapshot_id: int,
+        notice: str = "",
+    ):
         workspace = MarketWorkspaceService(settings)
+        reports = MarketRoleFamilyReportService(settings)
         try:
             snapshot, members, profile = workspace.snapshot_by_id(snapshot_id)
+            artifacts = reports.list_reports(snapshot_id)
+            report_items = [
+                {
+                    "artifact": artifact,
+                    "review_state": reports.effective_review_state(artifact.id),
+                }
+                for artifact in artifacts
+            ]
+            accepted_report = reports.latest_accepted_report(snapshot_id)
         except LookupError as exc:
             raise HTTPException(status_code=404, detail=str(exc)) from exc
         return _TEMPLATES.TemplateResponse(
@@ -176,22 +187,53 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
                 snapshot=snapshot,
                 members=members,
                 profile=profile,
+                report_items=report_items,
+                accepted_report=accepted_report,
+                notice=notice,
             ),
         )
 
-    @app.get("/market/snapshots/{snapshot_id}/candidate-report", response_class=HTMLResponse)
-    def market_candidate_report_detail(request: Request, snapshot_id: int):
-        with _CANDIDATE_REPORTS_LOCK:
-            report = _CANDIDATE_REPORTS.get(snapshot_id)
-        if report is None:
+    @app.get("/market/reports/{report_id}", response_class=HTMLResponse)
+    def market_role_family_report_detail(
+        request: Request,
+        report_id: int,
+        notice: str = "",
+    ):
+        reports = MarketRoleFamilyReportService(settings)
+        artifact = reports.get_report(report_id)
+        if artifact is None:
             raise HTTPException(
                 status_code=404,
-                detail="No candidate report is available for this snapshot",
+                detail=f"Unknown Market role-family report {report_id}",
             )
+        reviews = reports.list_reviews(report_id)
         return _TEMPLATES.TemplateResponse(
             request=request,
             name="market_candidate_report.html",
-            context=_context(request, page="market", report=report),
+            context=_context(
+                request,
+                page="market",
+                artifact=artifact,
+                report=artifact.report,
+                review_state=reports.effective_review_state(report_id),
+                reviews=reviews,
+                notice=notice,
+            ),
+        )
+
+    @app.get("/market/snapshots/{snapshot_id}/candidate-report")
+    def market_candidate_report_compatibility(
+        snapshot_id: int,
+    ):
+        reports = MarketRoleFamilyReportService(settings).list_reports(snapshot_id)
+        if not reports:
+            raise HTTPException(
+                status_code=404,
+                detail="No durable role-family report is available for this snapshot",
+            )
+        return RedirectResponse(
+            url=f"/market/reports/{reports[0].id}",
+            status_code=303,
         )
 
     @app.post("/market/actions/snapshots/{snapshot_id}/candidate-report")
@@ -199,30 +241,40 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
         request: Request,
         snapshot_id: int,
         csrf_token: Annotated[str, Form()],
+        regenerate: Annotated[bool, Form()] = False,
     ):
         _csrf(request, csrf_token)
 
         def action() -> WebOperationResult:
-            report = build_market_candidate_report(settings, snapshot_id)
-            with _CANDIDATE_REPORTS_LOCK:
-                _CANDIDATE_REPORTS[snapshot_id] = report
-                if len(_CANDIDATE_REPORTS) > 20:
-                    oldest = next(iter(_CANDIDATE_REPORTS))
-                    _CANDIDATE_REPORTS.pop(oldest, None)
+            service = MarketRoleFamilyReportService(settings)
+            artifact = service.generate_report(
+                snapshot_id,
+                regenerate=regenerate,
+            )
+            attempts = service.list_attempts(snapshot_id)
+            outcome = attempts[-1].outcome if attempts else "completed"
+            verb = "Reused" if outcome == "reused" else "Generated"
             return WebOperationResult(
                 summary=(
-                    f"Built a candidate interpretation for snapshot {snapshot_id} "
-                    f"from {report['source_count']} accepted-semantic core postings"
+                    f"{verb} durable role-family report #{artifact.id} for "
+                    f"snapshot {snapshot_id} from "
+                    f"{artifact.report['source_count']} accepted-semantic core postings"
                 ),
-                links=(WebOperationLink(
-                    label="Open candidate interpretation",
-                    url=f"/market/snapshots/{snapshot_id}/candidate-report",
-                ),),
+                links=(
+                    WebOperationLink(
+                        label="Open role-family report",
+                        url=f"/market/reports/{artifact.id}",
+                    ),
+                ),
             )
 
         try:
             operation = request.app.state.operations.start(
-                "Build Market candidate interpretation",
+                (
+                    "Regenerate Market role-family report"
+                    if regenerate
+                    else "Generate or reuse Market role-family report"
+                ),
                 action,
             )
         except OperationBusyError as exc:
@@ -230,8 +282,48 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
                 url=f"/market/snapshots/{snapshot_id}?{urlencode({'notice': str(exc)})}",
                 status_code=303,
             )
-        query = urlencode({"return_to": f"/market/snapshots/{snapshot_id}", "auto_return": "1"})
+        query = urlencode(
+            {
+                "return_to": f"/market/snapshots/{snapshot_id}",
+                "auto_return": "1",
+            }
+        )
         return RedirectResponse(url=f"/operations/{operation.id}?{query}", status_code=303)
+
+    @app.post("/market/actions/reports/{report_id}/review")
+    def review_market_role_family_report(
+        request: Request,
+        report_id: int,
+        csrf_token: Annotated[str, Form()],
+        disposition: Annotated[str, Form()],
+        note: Annotated[str, Form()] = "",
+    ):
+        _csrf(request, csrf_token)
+        service = MarketRoleFamilyReportService(settings)
+        artifact = service.get_report(report_id)
+        if artifact is None:
+            raise HTTPException(
+                status_code=404,
+                detail=f"Unknown Market role-family report {report_id}",
+            )
+        try:
+            service.review_report(
+                report_id,
+                disposition=disposition,
+                note=note or None,
+            )
+        except ValueError as exc:
+            raise HTTPException(status_code=400, detail=str(exc)) from exc
+        label = (
+            "Accepted for bounded use"
+            if disposition == "accepted_for_bounded_use"
+            else "Rejected"
+        )
+        query = urlencode({"notice": f"{label} report #{report_id}."})
+        return RedirectResponse(
+            url=f"/market/reports/{report_id}?{query}",
+            status_code=303,
+        )
 
     @app.post("/market/actions/target")
     def create_market_target(
