@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-10-04
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the candidate-interpretation experiment, and `RoleFamilyIntelligenceReport` R1-R2 are accepted/closed. R2 refactored the accepted V6 generator into an exact pre-inference preparation seam plus generation step while preserving `build_market_candidate_report(...)`; `MarketRoleFamilyReportService` now owns exact reuse, explicit regeneration, immutable persistence, terminal attempt recording, generated-identity checks, and review/effective-state access. CI `37220490754` passed Ruff + 830 tests + 830 warnings-as-errors tests. R3 is now authorized: move browser/CLI report workflow onto this shared service and persisted state. R4 real-local acceptance remains blocked until R3 closure. Controlling design: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the candidate-interpretation experiment, and `RoleFamilyIntelligenceReport` R1-R3 are accepted/closed. R3 replaced ephemeral browser state with durable report IDs/history/reviews through `MarketRoleFamilyReportService`, added matching CLI list/generate/show/review operations, proved restart/browser/CLI agreement, and completed a bounded guided-UX redesign for Market workspace, snapshot and report presentation. CI `37223301900` passed Ruff + 830 tests + 830 warnings-as-errors tests. R4 is now authorized: bounded real-local acceptance only. No new semantic model, taxonomy promotion, or broader Phase-2 work enters R4. Controlling design: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
 
 ## 1. Purpose and authority
 
