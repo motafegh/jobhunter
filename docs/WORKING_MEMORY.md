@@ -30,9 +30,12 @@ Authority and stable context:
 11. `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`
 12. `docs/EXECUTION_TODO.md`
 
-Current focused record:
+Current focused records:
 
-`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`
+- `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
+- `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`
+
+The candidate-interpretation record remains predecessor/history after V6 acceptance.
 
 Accepted Market closure records:
 
