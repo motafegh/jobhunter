@@ -6,7 +6,7 @@
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** `RoleFamilyIntelligenceReport` R2 — shared service + accepted V6 generator integration. R1 domain/persistence is accepted/closed; browser/CLI remain blocked until R2 passes.
+**Active increment:** `RoleFamilyIntelligenceReport` R3 — shared browser + CLI workflow over the accepted R2 service and durable report state. R1-R2 are accepted/closed; R4 real-local acceptance remains blocked until R3 passes.
 
 Status vocabulary:
 
@@ -84,18 +84,32 @@ persisted/reviewed analytical artifact
 != promoted role-family taxonomy
 ```
 
-R2 — shared service + V6 integration:
+R2 — shared service + V6 integration: ACCEPTED / CLOSED
 
-- [ ] Add one shared `market_role_family_report_service.py` owner.
-- [ ] Derive the exact normalized candidate input used for the V6 generation fingerprint.
-- [ ] On ordinary generation, reuse an exact existing report and record a `reused` attempt.
-- [ ] On explicit regeneration, call the accepted V6 generator and persist a new immutable report even for the same generation fingerprint.
-- [ ] On successful new generation, record report then `completed` attempt.
-- [ ] On generation failure, record `failed` attempt and create no report artifact.
-- [ ] Persist exact normalized report plus request/raw-response audit data without introducing a second semantic path.
-- [ ] Expose review append/effective-state operations through the same service.
-- [ ] Add deterministic service tests with the candidate generator stubbed; normal CI must not require LM Studio.
-- [ ] Keep R3 browser/CLI and R4 real-local acceptance blocked until R2 passes.
+- [x] Added one shared `market_role_family_report_service.py` owner.
+- [x] Accepted V6 generator now exposes exact pre-inference `PreparedMarketCandidateReport` plus `GeneratedMarketCandidateReport`; existing `build_market_candidate_report(...)` remains compatible.
+- [x] Exact normalized candidate input and semantic generation identity are derived before any LM Studio call.
+- [x] Ordinary generation reuses the newest exact persisted report, records `reused`, and does not call the generator.
+- [x] Explicit regeneration bypasses reuse, calls accepted V6, persists a new immutable report even under the same generation fingerprint, and records `completed`.
+- [x] Generation failure records `failed` and creates no report artifact.
+- [x] Generated contract/prompt/snapshot/model identity mismatch fails closed before persistence and is recorded as a failed attempt.
+- [x] Exact normalized report plus request/raw-response audit payloads are persisted without a second semantic generation path.
+- [x] Review append/effective-state/latest-accepted operations are exposed through the same service.
+- [x] Deterministic service tests stub the generation boundary only; normal CI requires no LM Studio/network.
+- [x] CI `37220490754`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors tests PASS.
+
+R3 — shared browser + CLI workflow:
+
+- [ ] Replace browser ephemeral/in-process candidate-report ownership with persisted report history/detail through `MarketRoleFamilyReportService`.
+- [ ] Browser generate action must call ordinary exact reuse by default; explicit regeneration must be a distinct user action.
+- [ ] Browser report detail must show persistence/candidate contracts, model/prompt, generated time, effective review state, available-vs-cited counts, groups/specialties, limitations, exact evidence, integrity diagnostics, and review history.
+- [ ] Browser must allow append-only `Accept for bounded use` / `Reject` review actions.
+- [ ] Raw request/raw model response must remain private audit data and not ordinary report UI.
+- [ ] CLI must expose the same persisted state/service for list, generate/reuse, show, and review.
+- [ ] Browser and CLI must agree on report IDs, review state, and exact persisted payload.
+- [ ] App restart must not lose report history.
+- [ ] Add deterministic browser/CLI tests over one temp SQLite DB; no live LM Studio required.
+- [ ] Keep R4 bounded real-local acceptance blocked until R3 passes.
 
 ---
 
@@ -147,12 +161,11 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-R2 shared service + V6 integration
-→ exact candidate-input/generation identity derivation
-→ ordinary exact reuse + reused attempt
-→ explicit regeneration + persisted report + completed attempt
-→ failure attempt without report
-→ review/effective-state facade
-→ deterministic service tests
-→ only after R2 acceptance authorize R3 browser/CLI
+R3 shared browser + CLI workflow
+→ persisted report history/detail routes
+→ generate/reuse + explicit regenerate via shared service
+→ append-only review actions/history
+→ CLI list/generate/show/review over same service
+→ restart/durability + browser/CLI agreement tests
+→ only after R3 acceptance authorize R4 real-local acceptance
 ```
