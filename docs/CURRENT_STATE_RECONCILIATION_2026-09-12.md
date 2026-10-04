@@ -30,7 +30,8 @@ Semantic subfamily/report synthesis DEFERRED FROM FIRST SLICE
 Candidate interpretation v6      ACCEPTED / CLOSED FOR BOUNDED REPORTING
 RoleFamily report R1            ACCEPTED / CLOSED
 RoleFamily report R2            ACCEPTED / CLOSED
-RoleFamily report R3            ACTIVE / AUTHORIZED
+RoleFamily report R3            ACCEPTED / CLOSED
+RoleFamily report R4            ACTIVE / AUTHORIZED
 Market → You                        LATER / NOT AUTHORIZED
 
 Portfolio / release                 PARALLEL
@@ -73,7 +74,7 @@ role-subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` l
 zero integrity rejections. The candidate experiment is therefore accepted/closed for bounded
 reporting. No taxonomy is promoted. The next authorized increment is durable local
 `RoleFamilyIntelligenceReport` persistence under `market-role-family-intelligence-report-v1`,
-R1 domain + persistence and R2 shared service + V6 integration are now accepted/closed. R2 adds `src/jobhunter/market_role_family_report_service.py` and splits the accepted V6 generator into exact preparation + generation seams without changing the existing direct-build API. Ordinary service calls reuse the newest exact persisted generation and record `reused` without invoking LM Studio; explicit regeneration persists another immutable artifact and records `completed`; generation/identity failure records `failed` and creates no report. Review append/effective-state selection is exposed through the same service. CI `37220490754` passed Ruff plus 830 tests and 830 warnings-as-errors tests. R3 shared browser/CLI workflow is now authorized. See
+R1 persistence, R2 shared service + V6 integration, and R3 durable browser/CLI workflow are now accepted/closed. R3 removes in-process candidate-report ownership, addresses reports by durable artifact ID, exposes generate/reuse versus explicit regeneration, append-only review, and matching CLI list/generate/show/review operations over one service/state. A bounded usability redesign makes the Market workspace a guided target→scope→refresh→intelligence flow, moves advanced controls/history behind progressive disclosure, makes snapshot the intelligence hub, and reorganizes report presentation around review/findings/evidence before provenance. Deterministic tests prove browser/CLI agreement and fresh-app restart persistence; private request/raw response remain hidden from ordinary UI/CLI. CI `37223301900` passed Ruff plus 830 tests and 830 warnings-as-errors tests. R4 bounded real-local acceptance is now authorized. See
 `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
 
 ### P1.6 v21 promotion reconciliation — 2026-09-22 (historical)
@@ -426,8 +427,9 @@ B1 CLOSED / DEFER
 → V3.3 candidate v6 real rerun ACCEPTED / candidate experiment CLOSED
 → RoleFamilyIntelligenceReport R1 persistence ACCEPTED / CLOSED
 → R2 shared service + V6 integration ACCEPTED / CLOSED
-→ R3 shared browser + CLI workflow AUTHORIZED
-→ current gate: durable report history/detail/generate/review surfaces over the same service; no R4 acceptance or taxonomy promotion yet
+→ R3 durable browser + CLI workflow / guided Market UX ACCEPTED / CLOSED
+→ R4 bounded real-local acceptance AUTHORIZED
+→ current gate: real snapshot-15 persistence/restart/review/browser-CLI/SQLite/public-corpus verification; no taxonomy promotion
 ```
 
 For present-tense status use this file together with `docs/EXECUTION_TODO.md` and `docs/WORKING_MEMORY.md`. Older dated `NEXT` wording is historical when it conflicts with this overlay.
