@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import dataclass
 from typing import Any
 
 import httpx
@@ -26,6 +27,32 @@ class CandidateProseIntegrityError(ValueError):
     def __init__(self, code: str) -> None:
         super().__init__(code)
         self.code = code
+
+
+@dataclass(frozen=True, slots=True)
+class PreparedMarketCandidateReport:
+    """Exact accepted V6 input and semantic generation identity before inference."""
+
+    snapshot_id: int
+    snapshot_contract: str
+    target_definition_id: int
+    model: str
+    generation_identity: dict[str, Any]
+    candidate_input: dict[str, Any]
+    response_schema: dict[str, Any]
+    evidence: dict[str, dict[str, Any]]
+    sources: dict[str, dict[str, Any]]
+    source_aliases: dict[str, str]
+    compact_ref_map: dict[str, str]
+
+
+@dataclass(frozen=True, slots=True)
+class GeneratedMarketCandidateReport:
+    """Validated V6 report plus private inference audit payloads."""
+
+    report: dict[str, Any]
+    request_body: dict[str, Any]
+    raw_response: dict[str, Any]
 
 
 def _evidence_bound_text_schema(
@@ -364,13 +391,13 @@ def _safe_model_limitations(
     return safe, issues
 
 
-def build_market_candidate_report(
+def prepare_market_candidate_report(
     settings: Settings,
     snapshot_id: int,
     *,
     model_override: str | None = None,
-) -> dict[str, Any]:
-    """Interpret accepted exact P1.6 from one immutable snapshot without persisting it."""
+) -> PreparedMarketCandidateReport:
+    """Derive the exact accepted V6 model input without calling LM Studio."""
     market = MarketStore(settings.database_path)
     snapshot = market.get_snapshot(snapshot_id)
     if snapshot is None:
@@ -450,10 +477,69 @@ def build_market_candidate_report(
         for compact_ref, full_ref in compact_ref_map.items()
     ]
 
+
+    candidate_input = {
+        "snapshot": {
+            "id": snapshot.id,
+            "contract": snapshot.snapshot_contract_version,
+            "definition_id": snapshot.target_definition_version_id,
+        },
+        "source_aliases": list(source_aliases.values()),
+        "sample_counts": {
+            "accepted_semantic_core_postings": len(sources),
+            "responsibility_claims": sum(
+                item["kind"] == "responsibility" for item in evidence.values()
+            ),
+            "requirement_claims": sum(
+                item["kind"] == "requirement" for item in evidence.values()
+            ),
+        },
+        "claims": compact_claims,
+        "work_claim_refs": [
+            compact_ref
+            for compact_ref, full_ref in compact_ref_map.items()
+            if evidence[full_ref]["kind"] == "responsibility"
+        ],
+    }
+    max_tokens = min(settings.analysis_max_tokens, 2048)
+    return PreparedMarketCandidateReport(
+        snapshot_id=snapshot.id,
+        snapshot_contract=snapshot.snapshot_contract_version,
+        target_definition_id=snapshot.target_definition_version_id,
+        model=model,
+        generation_identity={
+            "provider": "lm-studio",
+            "model": model,
+            "context_length": 16_384,
+            "max_tokens": max_tokens,
+            "seed": 0,
+            "structured_schema": "jobhunter_market_candidate_report",
+        },
+        candidate_input=candidate_input,
+        response_schema=_response_schema(list(compact_ref_map)),
+        evidence=evidence,
+        sources=sources,
+        source_aliases=source_aliases,
+        compact_ref_map=compact_ref_map,
+    )
+
+
+def generate_market_candidate_report(
+    settings: Settings,
+    prepared: PreparedMarketCandidateReport,
+) -> GeneratedMarketCandidateReport:
+    """Run accepted V6 inference over an already-derived exact candidate input."""
+
+    model = prepared.model
+    evidence = prepared.evidence
+    sources = prepared.sources
+    source_aliases = prepared.source_aliases
+    compact_ref_map = prepared.compact_ref_map
+
     ensure_lm_studio_model_context(
         openai_base_url=settings.lm_studio_base_url,
         model=model,
-        context_length=16_384,
+        context_length=prepared.generation_identity["context_length"],
         api_token=settings.lm_studio_api_token,
         connect_timeout_seconds=min(settings.inference_timeout_seconds, 10.0),
         exclusive_llm=True,
@@ -485,8 +571,7 @@ def build_market_candidate_report(
             "from that same source. Do not write compact C-number citation IDs in prose; "
             "use them only in evidence_refs. JobHunter may normalize a declared compact citation "
             "if one still appears, but an undeclared compact citation invalidates that item. "
-            "Do not import a concrete tool, system, employer, "
-            "specialization, or "
+            "Do not import a concrete tool, system, employer, specialization, or "
             "other source detail from uncited claims. Jobs may support multiple work clusters or "
             "none. Possible role subfamilies must be supported by at least two distinct postings "
             "and must add a role-shape distinction rather than merely rename a work cluster; "
@@ -499,35 +584,17 @@ def build_market_candidate_report(
             "sample/method level and must not mention source aliases or compact evidence IDs. "
             "Describe counts as snapshot coverage, not market demand. Empty groups are valid."
         ),
-        user_payload={
-            "snapshot": {
-                "id": snapshot.id,
-                "contract": snapshot.snapshot_contract_version,
-                "definition_id": snapshot.target_definition_version_id,
-            },
-            "source_aliases": list(source_aliases.values()),
-            "sample_counts": {
-                "accepted_semantic_core_postings": len(sources),
-                "responsibility_claims": sum(
-                    item["kind"] == "responsibility" for item in evidence.values()
-                ),
-                "requirement_claims": sum(
-                    item["kind"] == "requirement" for item in evidence.values()
-                ),
-            },
-            "claims": compact_claims,
-            "work_claim_refs": [
-                compact_ref
-                for compact_ref, full_ref in compact_ref_map.items()
-                if evidence[full_ref]["kind"] == "responsibility"
-            ],
-        },
-        schema_name="jobhunter_market_candidate_report",
-        schema=_response_schema(list(compact_ref_map)),
+        user_payload=prepared.candidate_input,
+        schema_name=prepared.generation_identity["structured_schema"],
+        schema=prepared.response_schema,
         model=model,
-        max_tokens=min(settings.analysis_max_tokens, 2048),
-        seed=0,
+        max_tokens=prepared.generation_identity["max_tokens"],
+        seed=prepared.generation_identity["seed"],
     )
+    if result.model != model:
+        raise ValueError(
+            "Candidate report provider returned a different model identity than requested"
+        )
     structured = result.structured
     integrity_rejections: list[dict[str, str]] = []
 
@@ -632,7 +699,7 @@ def build_market_candidate_report(
     requirement_claim_count = sum(
         item["kind"] == "requirement" for item in evidence.values()
     )
-    return {
+    report = {
         "contract": REPORT_CONTRACT,
         "prompt_version": PROMPT_VERSION,
         "snapshot_id": snapshot.id,
@@ -692,4 +759,26 @@ def build_market_candidate_report(
             "Not employer wording, a promoted taxonomy, or broad-market prevalence."
         ),
     }
+    return GeneratedMarketCandidateReport(
+        report=report,
+        request_body=result.request_body,
+        raw_response=result.raw_response,
+    )
+
+
+
+def build_market_candidate_report(
+    settings: Settings,
+    snapshot_id: int,
+    *,
+    model_override: str | None = None,
+) -> dict[str, Any]:
+    """Interpret accepted exact P1.6 from one immutable snapshot without persisting it."""
+
+    prepared = prepare_market_candidate_report(
+        settings,
+        snapshot_id,
+        model_override=model_override,
+    )
+    return generate_market_candidate_report(settings, prepared).report
 
