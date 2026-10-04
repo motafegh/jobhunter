@@ -1,7 +1,7 @@
 # RoleFamilyIntelligenceReport persistence contract
 
 **Date:** 2026-10-03  
-**Status:** R1-R2 ACCEPTED / CLOSED; R3 SHARED BROWSER + CLI WORKFLOW ACTIVE / AUTHORIZED  
+**Status:** R1-R3 ACCEPTED / CLOSED; R4 BOUNDED REAL-LOCAL ACCEPTANCE ACTIVE / AUTHORIZED  
 **Owner scope:** Persist the accepted bounded Market candidate interpretation as a local, immutable, reviewable analytical artifact.  
 **Predecessor:** `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`  
 **Accepted generator:** `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`
@@ -610,9 +610,9 @@ pytest -W error          830 passed
 
 R2 did not add browser/CLI routes, public-corpus export, live-model CI requirements, or taxonomy promotion.
 
-## 19. R3 authorization
+## 19. Historical R3 authorization gate
 
-R3 is now authorized.
+At the R2 closure checkpoint, R3 was authorized under the requirements below. Section 20 records its completed acceptance.
 
 R3 must replace the current ephemeral browser/CLI candidate-report ownership with the durable report service/state without creating UI-specific semantics.
 
@@ -636,4 +636,113 @@ Required CLI behavior:
 
 R3 deterministic acceptance must use one temporary SQLite database and no live LM Studio/network, proving browser/CLI report IDs, persisted payload and effective review state agree, and a fresh app/service instance can still read the same report history.
 
-R4 bounded real-local acceptance remains blocked until R3 is accepted.
+At that checkpoint, R4 bounded real-local acceptance remained blocked until R3 acceptance.
+
+## 20. R3 implementation closure — 2026-10-04
+
+R3 is accepted/closed.
+
+Primary implementation commit:
+
+`107b0eedf88860b13f29cb06bd3cf14e508392ad`
+
+Compatibility/test follow-ups:
+
+```text
+8930032d  preserve frozen snapshot evidence wording
+d7f517c0  correct durable browser fixture scope
+f3e5b8f1  update Market web tests for guided R3 workflow
+```
+
+Dedicated closure record:
+
+`docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`
+
+Accepted durable workflow:
+
+```text
+snapshot
+→ persisted report history
+→ exact reuse OR explicit regenerate
+→ durable report ID/detail
+→ append-only owner review
+```
+
+Browser and CLI consume the same `MarketRoleFamilyReportService` state. The historical snapshot candidate-report URL is compatibility-only and redirects to the newest durable artifact.
+
+Normal CLI workflow:
+
+```text
+jobhunter market role-report list <snapshot_id>
+jobhunter market role-report generate <snapshot_id> [--regenerate]
+jobhunter market role-report show <report_id>
+jobhunter market role-report review <report_id> --disposition ...
+```
+
+Private request/raw-response audit payloads remain persisted locally but are absent from ordinary browser/CLI presentation.
+
+R3 also accepts the bounded Market UX direction requested by the owner:
+
+- guide the normal workflow instead of exposing every control equally;
+- make the next useful action explicit;
+- use progressive disclosure for advanced budgets/history/provenance;
+- make snapshot the intelligence hub;
+- present the role-family report around review status, findings, evidence and limitations before lower-level identity metadata.
+
+This remains server-rendered FastAPI/Jinja. No SPA/framework expansion was needed.
+
+Final CI run `37223301900`:
+
+```text
+Ruff                     PASS
+pytest                   830 passed
+pytest -W error          830 passed
+```
+
+Deterministic R3 acceptance proves persisted report/review durability across a fresh app instance and browser/CLI agreement over the same report ID/state.
+
+## 21. R4 authorization and real-local protocol
+
+R4 is now authorized and is the only active increment in this persistence program.
+
+Use the real maintainer environment and snapshot 15.
+
+Acceptance sequence:
+
+1. sync current `main` and establish a clean working-tree baseline;
+2. create a SQLite backup before any R4 generation/review action;
+3. record baseline:
+   - `PRAGMA integrity_check`;
+   - `PRAGMA foreign_key_check`;
+   - current snapshot-15 member/analysis identities;
+   - current repository-safe public-corpus counts/state;
+4. verify the configured LM Studio endpoint `http://127.0.0.1:18080/v1` and accepted analysis model are reachable;
+5. start the current app and open snapshot 15 through the redesigned Market workflow;
+6. generate/reuse the durable V6 role-family report:
+   - ordinary action must reuse an exact persisted generation when available;
+   - if no exact artifact exists, it may generate/persist once;
+   - explicit regeneration is used only intentionally;
+7. inspect the durable report:
+   - exact report ID;
+   - snapshot/model/contracts;
+   - available vs cited evidence;
+   - work clusters/subfamilies/specialties;
+   - exact cited P1.6 evidence;
+   - integrity diagnostics;
+   - limitations;
+8. stop and restart the app, then prove the same report ID/detail still resolves;
+9. prove CLI `role-report list/show` sees the same artifact/payload;
+10. append the owner bounded-use review through one surface and prove the same effective review state/history through the other;
+11. verify post-run SQLite integrity/foreign keys;
+12. verify snapshot/P1.6 upstream identities and repository-safe public corpus are unchanged;
+13. record exact evidence and PASS/HOLD/FAIL disposition.
+
+R4 must not:
+
+- introduce another candidate/prompt contract merely to improve output;
+- regenerate repeatedly to obtain preferred prose;
+- promote generated role labels into canonical taxonomy;
+- broaden into responsibility-family/capability-profile implementation;
+- publish Market report state into `corpus/`.
+
+A PASS closes the `RoleFamilyIntelligenceReport` persistence increment and returns planning to the broader Phase-2 semantic roadmap.
