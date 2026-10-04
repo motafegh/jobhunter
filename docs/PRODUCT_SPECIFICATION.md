@@ -8,7 +8,7 @@
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1-R2 are accepted/closed. R2 added one shared service over the accepted V6 generator and immutable report store: exact pre-inference candidate identity, ordinary persisted reuse without LM calls, explicit regeneration, completed/reused/failed attempt history, generated-identity fail-closed checks, and append-only review/effective-state access. CI `37220490754` passed Ruff plus 830 tests and 830 warnings-as-errors tests. The next authorized increment is R3 shared browser/CLI workflow over that same service/state; R4 real-local acceptance and taxonomy promotion remain blocked. Controlling plan: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1-R3 are accepted/closed. R3 moved browser and CLI onto the durable R2 service/state, proved cross-surface report/review agreement and restart persistence, and improved the Market product journey with clear next actions, progressive disclosure of advanced controls, snapshot-centered intelligence, and evidence-first readable report presentation. CI `37223301900` passed Ruff plus 830 tests and 830 warnings-as-errors tests. The next authorized increment is R4 bounded real-local acceptance on snapshot 15; taxonomy promotion remains unauthorized. R3 closure: `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`.
 
 ## 1. Purpose
 
