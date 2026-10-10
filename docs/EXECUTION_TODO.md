@@ -1,12 +1,12 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-10-04  
+**Date:** 2026-10-10  
 **Active branch:** `main`  
-**Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`  
+**Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md` plus the newer dated closure/status records under `docs/working-memory/`  
 **Market plan:** `docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`  
-**Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED  
-**Active increment:** `RoleFamilyIntelligenceReport` R4 — bounded real-local acceptance on snapshot 15 using the durable R1-R3 workflow. R1-R3 are accepted/closed; no taxonomy promotion is authorized.
+**Current product gate:** MARKET I1-I7 ACCEPTED / BOUNDED FIRST SLICE CLOSED; ROLE-FAMILY REPORT R1-R4 ACCEPTED / CLOSED  
+**Active increment:** Phase-2 semantic direction reconciliation. No P2.2C responsibility-family promotion, P2.2D stable role-archetype promotion, P2.3 capability-profile implementation, or Market v2 expansion is authorized until the next bounded semantic increment is explicitly selected and planned.
 
 Status vocabulary:
 
@@ -31,6 +31,8 @@ Status vocabulary:
 - [x] Same-target coverage follow-up complete in snapshots 14-15: ten qualified members, six core, six accepted-current P1.6.
 - [x] Current English P1.6 generation contract: `job-analysis-english-v30 / job-analysis-v5`.
 - [x] Public corpus current baseline: 420 jobs, 51 parsed details, 29 English projections, 11 accepted English P1.6, 5 Capability artifacts.
+- [x] Candidate interpretation V6 CLOSED / accepted for bounded reporting.
+- [x] Durable `RoleFamilyIntelligenceReport` R1-R4 ACCEPTED / CLOSED.
 
 Do not reopen accepted historical work without a repeatable current contradiction.
 
@@ -38,24 +40,27 @@ Key closure records:
 
 - `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`
 - `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`
+- `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
 Historical HOLD-era execution remains evidence only and does not control current routing.
 
 ---
 
-## B. RoleFamilyIntelligenceReport persistence — ACTIVE
+## B. RoleFamilyIntelligenceReport persistence — ACCEPTED / CLOSED
 
-Controlling design:
+Controlling design/history:
 
 `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`
+
+Final acceptance:
+
+`docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
 Accepted precursor:
 
 - [x] Candidate V6 real snapshot-15 report reviewed and accepted for bounded reporting.
 - [x] Review artifact: `docs/working-memory/review-artifacts/2026-10-03_snapshot15_candidate_report_v6.html`.
-- [x] V6 acceptance: 175 available claims, 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero `C*` leakage, zero integrity rejections.
 - [x] Candidate experiment CLOSED; no V7 authorized.
-- [x] Durable report persistence AUTHORIZED.
 - [x] Persistence envelope: `market-role-family-intelligence-report-v1`.
 - [x] Initial generation dependency: `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`.
 - [x] Review contract: `market-role-family-report-review-v1`.
@@ -74,7 +79,7 @@ R1 — domain + persistence: ACCEPTED / CLOSED
 - [x] Exact generation-fingerprint lookup returns newest reusable artifact; explicit regeneration may persist another immutable artifact under the same generation fingerprint.
 - [x] Persisted generation/report fingerprints are verified on read and corruption fails closed.
 - [x] Effective review state and newest effectively accepted report selection are implemented.
-- [x] Tier-1 tests cover canonical hashing, identity validation, immutability, explicit regeneration, exact reuse, terminal attempts, failed-attempt no-report behavior, append-only review reversal/history, accepted selection, generation mismatch, corruption detection, and no upstream Market/P1.6 mutation.
+- [x] Tier-1 deterministic tests accepted.
 - [x] CI `37217405526`: Ruff PASS; 825 tests PASS; 825 warnings-as-errors tests PASS.
 
 Acceptance boundary:
@@ -86,52 +91,86 @@ persisted/reviewed analytical artifact
 
 R2 — shared service + V6 integration: ACCEPTED / CLOSED
 
-- [x] Added one shared `market_role_family_report_service.py` owner.
-- [x] Accepted V6 generator now exposes exact pre-inference `PreparedMarketCandidateReport` plus `GeneratedMarketCandidateReport`; existing `build_market_candidate_report(...)` remains compatible.
-- [x] Exact normalized candidate input and semantic generation identity are derived before any LM Studio call.
-- [x] Ordinary generation reuses the newest exact persisted report, records `reused`, and does not call the generator.
-- [x] Explicit regeneration bypasses reuse, calls accepted V6, persists a new immutable report even under the same generation fingerprint, and records `completed`.
+- [x] One shared `market_role_family_report_service.py` owner.
+- [x] Exact normalized candidate input and semantic generation identity derived before LM Studio call.
+- [x] Ordinary exact reuse records `reused` and skips generation.
+- [x] Explicit regeneration may persist another immutable artifact.
 - [x] Generation failure records `failed` and creates no report artifact.
-- [x] Generated contract/prompt/snapshot/model identity mismatch fails closed before persistence and is recorded as a failed attempt.
-- [x] Exact normalized report plus request/raw-response audit payloads are persisted without a second semantic generation path.
-- [x] Review append/effective-state/latest-accepted operations are exposed through the same service.
-- [x] Deterministic service tests stub the generation boundary only; normal CI requires no LM Studio/network.
+- [x] Generated identity mismatch fails closed before persistence.
+- [x] Request/raw-response audit payloads are persisted privately without a second semantic path.
+- [x] Review/effective-state/latest-accepted operations use the same service.
 - [x] CI `37220490754`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors tests PASS.
 
 R3 — shared browser + CLI workflow + bounded Market UX redesign: ACCEPTED / CLOSED
 
-- [x] Browser in-process candidate-report ownership removed; persisted report history/detail uses `MarketRoleFamilyReportService`.
-- [x] Ordinary browser generation uses exact reuse by default; explicit fresh immutable regeneration is a separate action.
-- [x] Durable report detail is addressed by report artifact ID and survives app restart.
-- [x] Report detail shows contracts, model/prompt, generated time, effective review state/history, available-vs-cited counts, clusters/subfamilies/specialties, limitations, exact evidence, integrity status and provenance.
-- [x] Browser append-only `Accept for bounded use` / `Reject` review actions use the shared service.
-- [x] Private request/raw model response remain local audit data and are excluded from ordinary browser/CLI presentation.
-- [x] CLI durable `role-report list|generate|show|review` uses the same service/report IDs; historical `candidate-report` now generates/reuses durable state.
-- [x] Browser and CLI agree on report ID/payload/effective review state.
-- [x] Fresh app instance reads the same report and review state after restart.
-- [x] Market workspace redesigned as a guided target → scope → refresh → intelligence journey with progressive disclosure for advanced controls/history.
-- [x] Snapshot redesigned as the intelligence decision hub; report redesigned around findings/review/evidence before provenance.
-- [x] Existing frozen-evidence wording/integrity contracts preserved.
+- [x] Browser in-process candidate-report ownership removed.
+- [x] Browser uses durable report IDs/history/review state via the shared service.
+- [x] Ordinary generate/reuse and explicit fresh regeneration are visibly distinct.
+- [x] Durable report survives fresh app instance/restart.
+- [x] Browser review actions append `accepted_for_bounded_use | rejected` events.
+- [x] CLI `role-report list|generate|show|review` uses the same service/report IDs.
+- [x] Browser and CLI agree on persisted report ID/payload/effective review state.
+- [x] Private request/raw model response remain outside ordinary browser/CLI presentation.
+- [x] Market workspace uses guided target → scope → refresh → intelligence flow and progressive disclosure.
+- [x] Snapshot/report presentation prioritizes decision-relevant findings while preserving exact evidence/provenance drill-down.
 - [x] Closure record: `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`.
 - [x] CI `37223301900`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors tests PASS.
 
-R4 — bounded real-local acceptance:
+R4 — bounded real-local acceptance: PASS / CLOSED
 
-- [ ] Pull current main on the maintainer machine and verify clean local state/SQLite backup.
-- [ ] Verify LM Studio endpoint/model availability with the configured 18080 endpoint.
-- [ ] Start the current app and open snapshot 15 through the redesigned Market flow.
-- [ ] Generate/persist one real V6 durable report for snapshot 15 (or intentionally verify exact persisted reuse if the same generation already exists).
-- [ ] Verify report history/detail survives a full app restart.
-- [ ] Verify browser and CLI show the same durable report ID, normalized payload and effective review state.
-- [ ] Inspect exact evidence, available-vs-cited counts, integrity diagnostics and limitations in the rendered report.
-- [ ] Append the owner bounded-use review and verify review history/effective state through browser and CLI.
-- [ ] Verify SQLite `PRAGMA integrity_check` and `foreign_key_check`.
-- [ ] Verify upstream Market snapshot/P1.6 state and repository-safe public corpus remain unchanged.
-- [ ] Record the exact R4 acceptance evidence/disposition; only then close the persistence increment.
+- [x] Maintainer SQLite backed up before R4; pre-existing local corpus modifications were fingerprinted rather than reset.
+- [x] LM Studio endpoint `http://127.0.0.1:18080/v1` and `gemma-4-e4b-it-ud` verified.
+- [x] Snapshot 15 remained ten members / six accepted-semantic core postings with expected P1.6 identities.
+- [x] First real artifact #1 exposed incomplete recovery-policy generation identity and remained immutable/pending.
+- [x] Recovery-policy identity defect repaired and regression-tested; CI `38068073900`: Ruff PASS; 830 tests PASS; 830 warnings-as-errors PASS.
+- [x] Repaired ordinary generation persisted artifact #2 with recovery identity: initial 2048, multiplier 4, ceiling 32768; successful request 8192.
+- [x] Artifact #2 result: six source postings, 175 available claims, 27 cited claims, four work clusters, one multi-posting subfamily hypothesis, two singleton specialty/outlier candidates, zero integrity rejections.
+- [x] Full app restart preserved report #2 and browser/CLI agreed on the durable artifact.
+- [x] Owner accepted report #2 for bounded analytical use; artifact #1 remains pending historical evidence.
+- [x] Exact ordinary reuse produced attempt `(3, reused, artifact 2)` and report count remained two; no artifact #3 was generated.
+- [x] Final SQLite `integrity_check = ok` and `foreign_key_check = []`.
+- [x] Snapshot 15 remained ten members / six accepted-semantic members after R4.
+- [x] Pre-existing corpus files remained byte-identical to their pre-R4 SHA-256 baseline.
+- [x] Final acceptance/disposition recorded in `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`.
+
+Final boundary:
+
+```text
+RoleFamilyIntelligenceReport persistence program = ACCEPTED / CLOSED
+reviewed report = useful bounded analytical artifact
+reviewed report != canonical taxonomy
+```
 
 ---
 
-## C. Permanent Market / authority invariants
+## C. Active Phase-2 semantic direction reconciliation
+
+The report-infrastructure program is closed. Do not create R5 or continue report/prompt polishing merely because model wording can vary.
+
+Current strategic candidates from the controlling implementation plan:
+
+```text
+P2.2  source responsibility → canonical responsibility → responsibility family → evidence-derived role archetype
+P2.3  corpus-scale capability requirement profiles
+P2.4  Market v2 over reviewed/current canonical mappings/profiles
+```
+
+Before implementation, reconcile:
+
+- [ ] what accepted P2.1 Canonical Registry and P2.2A Job Work Intelligence already provide;
+- [ ] why P2.2B-B1 ended NO-PROMOTION / DEFER and which prerequisite was missing;
+- [ ] what the accepted Market snapshot/report evidence now changes, if anything, for that promotion boundary;
+- [ ] whether the next useful bounded increment should target responsibilities/deliverables, capability profiles, or another prerequisite;
+- [ ] exact authority boundary: candidate analytical interpretation vs reviewed canonical correspondence vs promoted reusable taxonomy;
+- [ ] representative evidence/sample required before any P2.2C/P2.2D promotion;
+- [ ] how the accepted durable Market report may inform investigation without becoming taxonomy authority;
+- [ ] one explicit next plan/acceptance gate before code implementation.
+
+No semantic implementation is authorized until this reconciliation selects it.
+
+---
+
+## D. Permanent Market / authority invariants
 
 - [x] target identity is separate from immutable target-definition meaning.
 - [x] search/acquisition envelope != target membership truth.
@@ -147,13 +186,14 @@ R4 — bounded real-local acceptance:
 - [x] numeric counts are deterministic application responsibilities.
 - [x] browser and CLI share state/service owners.
 - [x] Market state remains local/private by default.
+- [x] reviewed durable Market interpretation remains separate from canonical taxonomy authority.
 
 ---
 
-## D. Explicitly deferred / not authorized
+## E. Explicitly deferred / not authorized
 
-- [-] P2.2C promoted responsibility families without representative reviewed evidence.
-- [-] P2.2D stable promoted role archetypes without representative reviewed evidence.
+- [-] P2.2C promoted responsibility families without representative reviewed evidence and explicit reauthorization.
+- [-] P2.2D stable promoted role archetypes without representative reviewed evidence and explicit reauthorization.
 - [-] P1.6 auto-acceptance.
 - [-] Capability/Work as mandatory Market gates.
 - [-] automatic repost/new-ID collapse without real evidence.
@@ -164,7 +204,7 @@ R4 — bounded real-local acceptance:
 
 ---
 
-## E. Parallel portfolio/release
+## F. Parallel portfolio/release
 
 - [x] MIT license complete.
 - [ ] GitHub description/topics.
@@ -179,13 +219,11 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-R4 bounded real-local acceptance on snapshot 15
-→ local sync + DB backup/integrity baseline
-→ LM Studio 18080/model verification
-→ generate or exact-reuse durable V6 report
-→ restart app and prove report durability
-→ browser/CLI report ID + payload + review-state agreement
-→ owner bounded-use review
-→ SQLite integrity/foreign keys + public-corpus/upstream invariants
-→ record final R4 disposition
+Phase-2 semantic direction reconciliation
+→ re-read P2.1 / P2.2A accepted boundaries and P2.2B-B1 no-promotion evidence
+→ compare those prerequisites with the newly accepted Market I1-I7 + durable reviewed report evidence
+→ choose the next bounded semantic responsibility
+→ define promotion/acceptance gate and representative evidence
+→ write/update the focused plan
+→ only then authorize implementation
 ```
