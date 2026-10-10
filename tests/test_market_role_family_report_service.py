@@ -178,6 +178,7 @@ def _generation(
             "specialty_candidates": [],
             "integrity_rejection_count": 0,
             "integrity_rejections": [],
+            "authority_note": "Ephemeral analytical candidate.",
         },
         request_body={"request": label},
         raw_response={"response": label},
@@ -214,7 +215,15 @@ def test_service_generates_once_then_reuses_exact_artifact(
     assert first.input_fingerprint == role_family_input_fingerprint(
         prepared.candidate_input
     )
-    assert first.generation_identity == prepared.generation_identity
+    assert first.generation_identity == {
+        **prepared.generation_identity,
+        "truncation_recovery_multiplier": 4,
+        "max_recovery_tokens": 32768,
+    }
+    assert first.report["authority_note"] == (
+        "Bounded analytical candidate based on accepted P1.6 in this frozen snapshot. "
+        "Not employer wording, a promoted taxonomy, or broad-market prevalence."
+    )
     assert first.request_body == {"request": "Agent delivery"}
     assert first.raw_response == {"response": "Agent delivery"}
     assert [attempt.outcome for attempt in service.list_attempts(snapshot_id)] == [
