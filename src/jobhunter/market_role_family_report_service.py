@@ -21,6 +21,13 @@ from jobhunter.market_models import (
 )
 from jobhunter.market_role_family_report_store import MarketRoleFamilyReportStore
 
+_ROLE_FAMILY_TRUNCATION_RECOVERY_MULTIPLIER = 4
+_ROLE_FAMILY_MAX_RECOVERY_TOKENS = 32_768
+_DURABLE_AUTHORITY_NOTE = (
+    "Bounded analytical candidate based on accepted P1.6 in this frozen snapshot. "
+    "Not employer wording, a promoted taxonomy, or broad-market prevalence."
+)
+
 
 def _utc_now() -> datetime:
     return datetime.now(UTC)
@@ -54,11 +61,16 @@ class MarketRoleFamilyReportService:
             snapshot_id,
             model_override=model_override,
         )
+        generation_identity = self._durable_generation_identity(prepared)
         if not regenerate:
-            reusable = self._find_reusable(prepared)
+            reusable = self._find_reusable(
+                prepared,
+                generation_identity=generation_identity,
+            )
             if reusable is not None:
                 self._record_attempt(
                     prepared,
+                    generation_identity=generation_identity,
                     outcome="reused",
                     artifact_id=reusable.id,
                 )
@@ -70,10 +82,12 @@ class MarketRoleFamilyReportService:
                 self._settings,
                 prepared,
             )
-            self._validate_generated_report(prepared, generated.report)
+            durable_report = self._durable_report(generated.report)
+            self._validate_generated_report(prepared, durable_report)
         except Exception as exc:
             self._record_attempt(
                 prepared,
+                generation_identity=generation_identity,
                 outcome="failed",
                 attempted_at=attempted_at,
                 error=exc,
@@ -85,15 +99,16 @@ class MarketRoleFamilyReportService:
             candidate_contract_version=REPORT_CONTRACT,
             prompt_version=PROMPT_VERSION,
             model=prepared.model,
-            generation_identity=prepared.generation_identity,
+            generation_identity=generation_identity,
             candidate_input=prepared.candidate_input,
-            report=generated.report,
+            report=durable_report,
             request_body=generated.request_body,
             raw_response=generated.raw_response,
             created_at=self._clock(),
         )
         self._record_attempt(
             prepared,
+            generation_identity=generation_identity,
             outcome="completed",
             attempted_at=attempted_at,
             artifact_id=artifact.id,
@@ -149,6 +164,27 @@ class MarketRoleFamilyReportService:
         return self._store.list_reviews(report_artifact_id)
 
     @staticmethod
+    def _durable_generation_identity(
+        prepared: PreparedMarketCandidateReport,
+    ) -> dict:
+        """Describe the accepted provider recovery policy used by durable V6 generation."""
+
+        return {
+            **prepared.generation_identity,
+            "truncation_recovery_multiplier": _ROLE_FAMILY_TRUNCATION_RECOVERY_MULTIPLIER,
+            "max_recovery_tokens": _ROLE_FAMILY_MAX_RECOVERY_TOKENS,
+        }
+
+    @staticmethod
+    def _durable_report(report: dict) -> dict:
+        """Apply durable-envelope wording without changing model-authored interpretation."""
+
+        return {
+            **report,
+            "authority_note": _DURABLE_AUTHORITY_NOTE,
+        }
+
+    @staticmethod
     def _validate_generated_report(
         prepared: PreparedMarketCandidateReport,
         report: dict,
@@ -168,13 +204,15 @@ class MarketRoleFamilyReportService:
     def _find_reusable(
         self,
         prepared: PreparedMarketCandidateReport,
+        *,
+        generation_identity: dict,
     ) -> MarketRoleFamilyIntelligenceReport | None:
         return self._store.find_reusable_report(
             snapshot_id=prepared.snapshot_id,
             candidate_contract_version=REPORT_CONTRACT,
             prompt_version=PROMPT_VERSION,
             model=prepared.model,
-            generation_identity=prepared.generation_identity,
+            generation_identity=generation_identity,
             candidate_input=prepared.candidate_input,
         )
 
@@ -182,6 +220,7 @@ class MarketRoleFamilyReportService:
         self,
         prepared: PreparedMarketCandidateReport,
         *,
+        generation_identity: dict,
         outcome: str,
         attempted_at: datetime | None = None,
         artifact_id: int | None = None,
@@ -193,7 +232,7 @@ class MarketRoleFamilyReportService:
             candidate_contract_version=REPORT_CONTRACT,
             prompt_version=PROMPT_VERSION,
             model=prepared.model,
-            generation_identity=prepared.generation_identity,
+            generation_identity=generation_identity,
             candidate_input=prepared.candidate_input,
             outcome=outcome,
             artifact_id=artifact_id,
