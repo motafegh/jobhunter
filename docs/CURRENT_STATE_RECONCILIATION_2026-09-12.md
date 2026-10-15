@@ -1,6 +1,9 @@
 # JobHunter Current-State Reconciliation — 2026-09-12
 
-**Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
+**Status:** SUPERSEDED / HISTORICAL STATUS CHECKPOINT
+**Superseded by:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
+
+Retained checkpoint and acceptance history follows. Its former current/next instructions do not control execution.
 **Last reconciled:** 2026-09-29
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  

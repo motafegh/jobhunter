@@ -1,13 +1,13 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-10-10  
+**Date:** 2026-10-15
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / ROLE-FAMILY REPORT R1-R4 ACCEPTED / P2.2B-B2 ACTIVE  
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
-**Current public corpus:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
+**Committed public-corpus baseline:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
 **Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
@@ -241,15 +241,15 @@ Promotion rule:
 ## 6. Exact continuation sequence
 
 ```text
-B2.1 read-only local baseline
-   - git pull / preserve unrelated local changes
+B2.1 read-only local baseline COMPLETE (2026-10-15)
+   - main aligned at bf016c7 / pre-existing tNpG corpus changes preserved
    - SQLite backup
    - PRAGMA integrity + foreign keys
    - inspect exact current responsibility claims for tvMm/tNVe/tjgi/tmvA
    - verify artifacts 50/56/60/61
    - inspect current Registry concepts/mapping states
 
-B2.2 owner semantic review
+B2.2 owner semantic review NEXT
    - R1-R6 one at a time
    - ACCEPT | HOLD | REJECT
    - no mutation first
@@ -272,3 +272,15 @@ B2.5 disposition
 ```
 
 Do not start P2.2C, P2.2D, P2.3, P2.4, Blueprint authority, personal scoring, bulk mapping or a new model-review loop during B2.
+
+## 7. Alignment and housekeeping checkpoint — 2026-10-15
+
+The current entrypoints, product/architecture/plans, semantic/runtime guides, and corpus/snapshot guides now route to the October 10 overlay and B2 decision. Superseded September status and the executed R4 protocol are explicitly historical; accepted contracts and artifacts are unchanged.
+
+B2.1 confirmed exact artifacts 50/56/60/61 and all 35 responsibilities as accepted/current and unmapped. Registry remains four concepts / six claim decisions. SQLite integrity is `ok`, foreign keys empty. Backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`.
+
+The existing unpublished `tNpG` source/projection/manifest changes remain separate: local corpus 420 jobs / 52 parsed / 30 English / 11 P1.6 / 5 Capability; committed baseline 420 / 51 / 29 / 11 / 5. Their hashes match the R4 pre-existing baseline. Do not silently publish or reset them during housekeeping.
+
+Verified alignment baseline: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changes documentation/docstrings only; it does not repeat model generation or semantic acceptance.
+
+Next: owner B2.2 semantic review of R1-R6, before canonical mutation. No feature implementation or later Phase-2 authorization was added.

@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-10-10  
+**Date:** 2026-10-15
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
 **P2.2 plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`  
@@ -80,13 +80,15 @@ P2.4 Market v2                       DOWNSTREAM / NOT AUTHORIZED
 
 ### B2.1 Read-only maintainer baseline
 
-- [ ] Pull current `main`; do not reset unrelated pre-existing local changes.
-- [ ] Back up the configured SQLite database before Registry mutation.
-- [ ] Record pre-run `PRAGMA integrity_check` and `PRAGMA foreign_key_check`.
-- [ ] List exact accepted/current `responsibility` claims for `tvMm`, `tNVe`, `tjgi`, `tmvA`.
-- [ ] Confirm expected P1.6 artifacts: `tvMm=50`, `tNVe=56`, `tjgi=60`, `tmvA=61`.
-- [ ] Record existing Registry `responsibility` concepts and mapping states for the selected claims.
-- [ ] Stop/re-evaluate any candidate whose exact claim is no longer accepted/current; do not silently substitute a different claim.
+- [x] Pull current `main`; do not reset unrelated pre-existing local changes.
+- [x] Back up the configured SQLite database before Registry mutation.
+- [x] Record pre-run `PRAGMA integrity_check` and `PRAGMA foreign_key_check`.
+- [x] List exact accepted/current `responsibility` claims for `tvMm`, `tNVe`, `tjgi`, `tmvA`.
+- [x] Confirm expected P1.6 artifacts: `tvMm=50`, `tNVe=56`, `tjgi=60`, `tmvA=61`.
+- [x] Record existing Registry `responsibility` concepts and mapping states for the selected claims.
+- [x] Stop/re-evaluate any candidate whose exact claim is no longer accepted/current; do not silently substitute a different claim.
+
+Verified on 2026-10-15 at `bf016c7`: SQLite integrity `ok`, foreign keys empty; exact artifacts 50/56/60/61 remain accepted/current; all 35 selected responsibility claims are pending Registry review. Baseline backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`. Repeat the baseline only if dependencies/state change before mutation.
 
 ### B2.2 Owner semantic review — no mutation first
 
@@ -194,10 +196,8 @@ Portfolio work does not broaden the active semantic authorization.
 ## Exact next action
 
 ```text
-P2.2B-B2.1 read-only baseline
-→ local sync + SQLite backup/integrity
-→ inspect exact current responsibility claims for tvMm/tNVe/tjgi/tmvA
-→ inspect current Registry concepts/mapping states
-→ bring the exact evidence into B2.2
-→ review R1-R6 with the owner before any canonical mutation
+P2.2B-B2.1 read-only baseline COMPLETE (2026-10-15)
+→ B2.2 review R1-R6 with the owner
+→ no canonical mutation before explicit semantic approval
+→ apply only accepted correspondences, then verify and close B2
 ```

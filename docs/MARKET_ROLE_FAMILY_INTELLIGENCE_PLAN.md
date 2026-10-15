@@ -2,13 +2,13 @@
 
 **Status:** CURRENT / CONTROLLING PRODUCT PLAN — FOUNDATION PASS / I1-I7 BOUNDED FIRST SLICE ACCEPTED
 **Original date:** 2026-09-06  
-**Last reconciled:** 2026-09-19
+**Last reconciled:** 2026-10-15
 **Branch:** `main`  
 **Scope:** Target-scoped market refresh → qualified evidence corpus → deterministic aggregate intelligence → later bounded semantic role-family synthesis/history → later reviewed personal comparison
 
 ## 1. Current execution decision
 
-The former P2.2B-B1 gate is closed as **NO-PROMOTION / DEFER**. The formal Market foundation investigation has been executed and passed.
+The former P2.2B-B1 gate is closed as **NO-PROMOTION / DEFER**. Market I1-I7, same-target coverage, candidate interpretation V6, and report R1-R4 are accepted/closed for bounded scope. The active project increment is B2 selective responsibility normalization under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`; it does not promote Market report labels. The formal Market foundation investigation has been executed and passed.
 
 Final foundation decision:
 
@@ -95,7 +95,7 @@ docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md
 docs/ROADMAP.md
 docs/IMPLEMENTATION_PLAN.md
         ↓
-docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md
+docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md
         ↓
 this plan + current foundation decision
 ```
@@ -687,16 +687,13 @@ Candidate subfamilies remain analytical interpretation. Do not force every job i
 
 Do not generate per-job semantic narratives merely to summarize them upward.
 
-The owner authorized the first bounded candidate interpretation increment on
-2026-09-29. V1 operates over one frozen snapshot, uses accepted P1.6 only, cites
-exact claims, and derives support counts in application code. It is ephemeral
-and non-promotional. A real model result and source review are required before
-claiming that this improves the user's market-reading workflow. Current record:
-`docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`.
+The owner authorized the bounded candidate experiment on 2026-09-29. V6 closed it successfully for bounded reporting; earlier V1-V5 results remain history. Its exact frozen input is accepted P1.6 in snapshot 15, with application-derived counts and validated claim citations. Durable report R1-R4 is now separately accepted under `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`; final real-local closure is `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`. No report label becomes reusable taxonomy through this acceptance.
 
 ## 14.2 Role-Family Intelligence Report
 
-Once semantic synthesis exists and exact nondeterministic output must be recoverable, persist a versioned user-facing `RoleFamilyIntelligenceReport` referencing the exact snapshot/profile and model/prompt/schema contract.
+The accepted R1-R4 implementation persists immutable `RoleFamilyIntelligenceReport` artifacts linked to the exact snapshot/profile and model/prompt/schema/generation policy. Exact reuse, explicit regeneration, append-only review, and browser/CLI history share one service/store. Private inference audit payloads remain outside ordinary presentation.
+
+The reading order below remains mature product direction; later comparison/trend sections require their own evidence and authorization.
 
 Numeric values must be injected from deterministic profile data rather than authored by the model.
 
@@ -855,6 +852,8 @@ I1-I6 repository acceptance complete
 → bounded real CLI/browser and reuse checks PASS
 → I7 PASS / first vertical slice CLOSED
 → owner-requested same-target coverage follow-up COMPLETE in snapshots 14-15, without enlarging the bounded I7 acceptance claim
+→ candidate V6 + durable report R1-R4 ACCEPTED / CLOSED
+→ B2 selective responsibility correspondence review ACTIVE; no family/archetype promotion
 ```
 
 I6 implementation baseline: `docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`.
@@ -865,4 +864,4 @@ Historical I7 HOLD record: `docs/working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_
 
 Final I7 decision: `docs/working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`.
 
-Future Market interpretation/report and personal scope require their own contracts and evidence; I7 acceptance does not pre-accept them.
+V6/report acceptance has its own contract and closure evidence above. Further Market semantics, trends, and personal scope require separate contracts and decisions; neither I7 nor R4 pre-accepts them.

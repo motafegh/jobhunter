@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-10-04
+**Last reconciled:** 2026-10-15
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the candidate-interpretation experiment, and `RoleFamilyIntelligenceReport` R1-R3 are accepted/closed. R3 replaced ephemeral browser state with durable report IDs/history/reviews through `MarketRoleFamilyReportService`, added matching CLI list/generate/show/review operations, proved restart/browser/CLI agreement, and completed a bounded guided-UX redesign for Market workspace, snapshot and report presentation. CI `37223301900` passed Ruff + 830 tests + 830 warnings-as-errors tests. R4 is now authorized: bounded real-local acceptance only. No new semantic model, taxonomy promotion, or broader Phase-2 work enters R4. Controlling design: `docs/working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, candidate interpretation V6, and `RoleFamilyIntelligenceReport` R1-R4 are accepted/closed. The active increment is P2.2B-B2 selective responsibility normalization: verify exact accepted/current snapshot-15 claims, review proposed correspondences with the owner, then apply only approved mappings through the existing Canonical Registry. P2.2C families, P2.2D stable archetypes, P2.3 capability profiles, and P2.4 Market v2 remain unauthorized. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`. Focused decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
 
 ## 1. Purpose and authority
 
@@ -24,7 +24,7 @@ strategic sequencing
 IMPLEMENTATION_PLAN.md
 this file: controlling delivery order / gates
         ↓
-CURRENT_STATE_RECONCILIATION_2026-09-12.md
+CURRENT_STATE_RECONCILIATION_2026-10-10.md
 current focused plan / decision
         ↓
 EXECUTION_TODO.md
@@ -73,7 +73,7 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 
 A bounded per-job semantic slice was intentionally implemented before Phase-1 closure to prove safe authority boundaries above P1.6. Its current dispositions are:
 
-- English P1.6 v23/v5: promoted/current for new generation; accepted v20/v5 and v21/v5 artifacts remain accepted-only compatibility inputs;
+- English P1.6 v30/v5: promoted/current for new generation; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs;
 - Capability Intelligence v9/v5: promoted/current and operationally closed on the same accepted anchors;
 - Role Capability Blueprint v6/v5: implemented but Phase-1 deferred/non-authoritative after repeated semantic-boundary failures;
 - heterogeneous role-family validation: closed across Python/software, network/security, and operations/platform anchors.
@@ -97,7 +97,7 @@ Current strong foundations include:
 - user triage separate from source truth;
 - hardened `english-projection-v2` architecture using `lm-studio-translation-v2`;
 - local LM Studio structured inference boundary;
-- promoted P1.6 v23/v5 factual extraction infrastructure with accepted-only v20/v5 and v21/v5 compatibility reuse;
+- promoted P1.6 v30/v5 factual extraction infrastructure with accepted-only v20/v21/v23/v28 v5 compatibility reuse;
 - promoted Capability Intelligence v9/v5 with deterministic source truth and bounded model reasoning;
 - deferred/non-authoritative Blueprint v6/v5 experimental evidence;
 - first Market aggregation over accepted/current English P1.6;
@@ -347,7 +347,7 @@ P1.6 artifact contract:      v20/v5 (accepted historical anchor)
 
 The first persisted `tmBK` P1.6 artifact 38 is **semantically rejected** and must not feed Capability. It was not published as an accepted corpus artifact and no Capability downstream was created.
 
-At P1-A closure, fresh English v20 artifacts persisted as `pending`; explicit review acceptance recorded time/note, and rejection released the contract identity for rebuild. The same promotion boundary remains current for v21: fresh v21 artifacts are pending until explicit review, while accepted v20 artifacts are compatibility-readable without rewriting their identity. Capability, Market, browser accepted counts, and public-corpus export select accepted artifacts only. Historical v20 validator behavior remains version-isolated.
+At P1-A closure, fresh English v20 artifacts persisted as `pending`; explicit review acceptance recorded time/note, and rejection released the contract identity for rebuild. The same promotion boundary remains current for v30: fresh v30 artifacts are pending until explicit review, while accepted v20/v21/v23/v28 v5 artifacts retain exact identities under accepted-only compatibility rules. Capability, Market, browser accepted counts, and public-corpus export select accepted artifacts only. Historical v20 validator behavior remains version-isolated.
 
 Current live result:
 
@@ -651,14 +651,17 @@ ROADMAP.md
 → strategic direction
 
 PHASE_1_JOBINJA_AUTOMATION_PLAN.md
-→ active Phase-1 detail
+→ accepted Phase-1 implementation history
 
 SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md
-→ active heterogeneous semantic-quality sub-gate
+→ accepted heterogeneous semantic-quality history
 
 EXECUTION_TODO.md
 → exact current operational checklist
 
 WORKING_MEMORY.md
 → rolling handoff/current state, non-authoritative
+
+docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md
+→ active B2 scope, exact claim pairs, review and acceptance sequence
 ```

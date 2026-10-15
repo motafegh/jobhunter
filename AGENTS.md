@@ -26,8 +26,8 @@ Before material changes, read:
 6. `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`
 7. `docs/ROADMAP.md`
 8. `docs/IMPLEMENTATION_PLAN.md`
-9. `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
-10. the current active focused/implementation plan or decision
+9. `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
+10. the current active focused/implementation plan or decision (`docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md` for P2.2B-B2)
 11. `docs/EXECUTION_TODO.md`
 12. `docs/WORKING_MEMORY.md`
 13. task-specific decision/experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
@@ -40,6 +40,8 @@ docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECIS
 docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md
 docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md
 ```
+
+The current P2.2B-B2 stream also requires `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`, `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`, and `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`. The earlier I6/I7 records above are acceptance history, not the current execution route.
 
 The former Market foundation entry protocol and broad research consolidation are executed/history.
 Load them only when a specific accepted design decision needs its earlier evidence.
@@ -145,7 +147,7 @@ tmyX English P1.6 artifact 46 → Capability v9 artifact 15
 
 Those five accepted anchor artifacts remain physically v20/v5 and are accepted-only compatibility inputs under the v30 current boundary. New English P1.6 generation uses v30/v5. Accepted v21/v5, v23/v5, and v28/v5 artifacts are also compatibility inputs across model identities when exact source/translation dependencies match; pending/rejected prior candidates never satisfy v30 currentness. Exact artifact prompt/schema identity must remain visible when compatibility reuse occurs.
 
-Current repository-safe public corpus:
+Committed repository-safe public corpus baseline (local unpublished projections may differ):
 
 ```text
 known/discovered Jobinja jobs: 420
@@ -169,10 +171,16 @@ Blueprint                      EXPERIMENTAL / NON-AUTHORITATIVE
 Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
-next exact increment            RoleFamilyIntelligenceReport R4 bounded real-local acceptance
+RoleFamily report R1-R4         ACCEPTED / CLOSED
+P2.2B-B2                       ACTIVE / AUTHORIZED
+P2.3 capability profiles        DEFERRED / NOT AUTHORIZED
+P2.4 Market v2                  DOWNSTREAM / NOT AUTHORIZED
+next exact increment            B2 owner review of selective responsibility correspondences
 ```
 
-The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Real snapshot-15 V6 restored useful synthesis with 49 unique cited claims, four work clusters, one multi-posting subfamily hypothesis, one singleton specialty/outlier, zero internal `C*` leakage, and zero integrity rejections. `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6` remains the accepted generation contract, but it is not taxonomy authority. `RoleFamilyIntelligenceReport` R1 persistence, R2 shared service integration, and R3 durable browser/CLI workflow are ACCEPTED / CLOSED. R3 removed in-process report ownership, moved browser/CLI to durable report IDs and append-only review state, and applied a bounded Market UX redesign: guided target→scope→refresh→intelligence flow, progressive disclosure for advanced controls/history, snapshot as the decision hub, and report presentation led by findings/review rather than raw mechanics. CI `37223301900` passed Ruff plus 830 tests and 830 warnings-as-errors tests. The next authorized increment is R4 bounded real-local acceptance using snapshot 15 and the real local LM setup. Taxonomy promotion remains unauthorized.
+The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Its earlier V6 review run cited 49 unique claims. The durable `RoleFamilyIntelligenceReport` R1-R4 program is also ACCEPTED / CLOSED: real-local report #2 cites 27 of 175 available snapshot-15 claims, has four work clusters, one multi-posting subfamily hypothesis, two singleton specialties/outliers, and zero integrity rejections. Report #2 is `accepted_for_bounded_use`; pre-repair report #1 remains immutable/pending. These are distinct reviewed analytical results, not taxonomy authority. R4 closure: `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`.
+
+The active B2 tranche uses the existing P2.1 Registry to review six proposed responsibility correspondences across exact accepted/current P1.6 claims. Owner semantic review precedes canonical mutation. No new model or subsystem is needed unless execution exposes a concrete tooling defect. Controlling decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. B1 remains closed; B2 does not authorize P2.2C/P2.2D/P2.3/P2.4.
 
 B1 final evidence is retained at:
 
@@ -206,7 +214,9 @@ This does **not** prohibit new bounded analytical interpretation under a new exp
 
 ---
 
-## 5. Current exact next-work rule — Market first vertical slice
+## 5. Accepted Market first-slice boundary and history
+
+Current execution is P2.2B-B2 under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. This section preserves the accepted I1-I7 scope and its historical stop lines. The separately authorized V6/report R1-R4 work is closed; the first-slice exclusions below do not reverse that later acceptance.
 
 Formal foundation decision:
 
@@ -366,7 +376,7 @@ search/acquisition envelope
 - exact counts/shares/employer concentration/denominators are deterministic application responsibilities;
 - Market state remains local/private by default.
 
-### 5.3 First-slice stop lines
+### 5.3 Historical first-slice stop lines
 
 Do not during this slice:
 

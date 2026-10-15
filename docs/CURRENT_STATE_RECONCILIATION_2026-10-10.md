@@ -1,7 +1,8 @@
 # JobHunter Current-State Reconciliation — 2026-10-10
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
-**Date:** 2026-10-10  
+**Date:** 2026-10-10
+**Last reconciled:** 2026-10-15
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
@@ -110,7 +111,7 @@ Work Intelligence / RoleFamilyIntelligenceReport may identify candidate patterns
 ## 6. B2 exact execution sequence
 
 ```text
-B2.1 read-only local baseline
+B2.1 read-only local baseline COMPLETE (2026-10-15)
   → pull current main
   → back up SQLite
   → integrity / foreign keys
@@ -157,7 +158,7 @@ Do not during B2:
 ## 8. Current exact next action
 
 ```text
-P2.2B-B2.1
-→ establish the maintainer-machine read-only exact-claim + Registry baseline
-→ then review R1-R6 with the owner before any canonical mutation
+P2.2B-B2.1 COMPLETE on 2026-10-15: exact artifacts 50/56/60/61 remain accepted/current,
+all 35 responsibilities are pending Registry review; integrity ok / no FK violations.
+→ B2.2 review R1-R6 with the owner before any canonical mutation
 ```

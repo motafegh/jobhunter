@@ -1,11 +1,12 @@
 # P2.2 Responsibility, Work, and Role Intelligence Plan
 
-**Status:** CONTROLLING DURABLE P2.2 PLAN — P2.2A ACCEPTED / B1 CLOSED NO-PROMOTION-DEFER / P2.2C-D NOT AUTHORIZED
+**Status:** CONTROLLING DURABLE P2.2 PLAN — P2.2A ACCEPTED / B1 CLOSED / B2 ACTIVE / P2.2C-D NOT AUTHORIZED
 **Date:** 2026-09-01
+**Last reconciled:** 2026-10-15
 **Scope:** P2.2 responsibility/work interpretation, selective responsibility/deliverable promotion, responsibility families, and role-archetype intelligence  
 **Authority:** Subordinate to `docs/PRODUCT_SPECIFICATION.md`, `docs/DOMAIN_AND_ANALYSIS_MODEL.md`, `docs/SOURCE_POLICY.md`, `docs/ARCHITECTURE.md`, `docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`, `docs/ROADMAP.md` plus its 2026-08-26 amendment, and `docs/IMPLEMENTATION_PLAN.md` plus its 2026-08-26 amendment  
 **Previous gate:** P2.1 Canonical Concept Registry — CLOSED / ACCEPTED  
-**Current lifecycle:** P2.2A Job Work Intelligence v2 — ACCEPTED / CLOSED; P2.2B-B1 — CLOSED / NO-PROMOTION / DEFER; P2.2C/P2.2D — NOT AUTHORIZED. Present-tense project execution is Market I7 bounded real local acceptance.
+**Current lifecycle:** P2.2A Job Work Intelligence v2 — ACCEPTED / CLOSED; P2.2B-B1 — CLOSED / NO-PROMOTION / DEFER; P2.2C/P2.2D — NOT AUTHORIZED. P2.2B-B2 is active under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. Market I1-I7 and report R1-R4 are closed.
 
 ---
 
@@ -879,9 +880,9 @@ Stop line:
 - do not publish P2.2 state;
 - do not start P2.3/Market v2/personal intelligence.
 
-### P2.2B — Selective responsibility/deliverable promotion — LATER
+### P2.2B — Selective responsibility/deliverable promotion — B2 ACTIVE
 
-Start only after P2.2A shows concrete reusable correspondences worth promoting.
+P2.2A is closed. B1 closed without promotion; B2 now reviews six candidate responsibility correspondences from snapshot 15 through the existing Registry under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. Deliverable promotion is outside this bounded tranche.
 
 ### P2.2C — Responsibility families — LATER
 
@@ -950,4 +951,4 @@ P2.2A accepted
 → no P2.2C/P2.2D authorization created
 ```
 
-The current project route is Market I7 bounded real local acceptance. Do not infer authorization for P2.2C/P2.2D, publication, or taxonomy expansion from P2.2A/B1 history.
+The current project route is P2.2B-B2 selective responsibility normalization under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. Market I1-I7, V6 analytical synthesis, and report R1-R4 are accepted/closed. Do not infer authorization for P2.2C/P2.2D, publication, or taxonomy expansion from P2.2A/B1 history.

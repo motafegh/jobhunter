@@ -24,7 +24,7 @@ JobHunter currently supports an end-to-end Jobinja-centered workflow:
 - build Capability Intelligence above accepted factual claims while preserving complete source coverage;
 - organize accepted work through Job Work Intelligence v2 without letting model prose replace source truth;
 - maintain reviewed canonical concepts and exact claim mappings in the Canonical Registry;
-- expose bounded Market/report read models from accepted evidence;
+- define target markets, retain immutable snapshots, and inspect deterministic profiles plus durable evidence-linked analytical reports;
 - inspect the same durable state through a local browser UI and CLI;
 - export a deterministic repository-safe public corpus for remote inspection and reproducibility;
 - preserve selected semantic-review evidence as curated review snapshots.
@@ -111,7 +111,7 @@ Role Capability Blueprint v6 remains implemented as **experimental/historical re
 
 The operational database remains local at runtime, but the repository includes a deterministic public projection under [`corpus/`](corpus/README.md).
 
-Current committed baseline:
+Committed public-corpus baseline (local unpublished projections may differ):
 
 | Public corpus state | Count |
 | --- | ---: |
@@ -246,7 +246,8 @@ P2.2A Job Work Intelligence             ACCEPTED / CLOSED
 P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
 Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
-Current exact increment                 Same-target I7 coverage COMPLETE; next Market increment needs separate scope
+RoleFamilyIntelligenceReport R1-R4       ACCEPTED / CLOSED
+Current exact increment                 P2.2B-B2 selective responsibility correspondence review
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -288,7 +289,7 @@ Useful entry points:
 - [`docs/DOMAIN_AND_ANALYSIS_MODEL.md`](docs/DOMAIN_AND_ANALYSIS_MODEL.md) — domain/analysis semantics;
 - [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
-- [`docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`](docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay;
+- [`docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`](docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md) — current status/routing overlay;
 - [`docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — controlling Market plan and authorized first slice;
 - [`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal foundation PASS/authorization;
 - [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md) — fresh-clone development setup and optional local services;
@@ -332,7 +333,7 @@ MARKET
 ↺
 ```
 
-Current development is now implementing the first target-scoped Market substrate while keeping semantic role-subfamily synthesis, longitudinal trend claims, and personal scoring separately gated.
+The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is selective reviewed responsibility normalization through the existing Registry, under the [B2 decision](docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md). Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
 
 ## License
 

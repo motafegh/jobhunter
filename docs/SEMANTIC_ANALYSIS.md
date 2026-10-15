@@ -1,11 +1,12 @@
 # Evidence-Backed Semantic Analysis
 
-**Status:** English P1.6 v21/v5 promoted/current; accepted v20/v5 anchors compatibility-current
+**Status:** English P1.6 v30/v5 promoted/current; accepted-only v20/v21/v23/v28 v5 compatibility
+**Last reconciled:** 2026-10-15
 **Date:** 2026-08-21
 
 P1.6 is JobHunter's strict factual semantic layer. It extracts job-level facts from one selected language representation while keeping evidence/provenance mechanically enforceable.
 
-The Phase-1 quality sequence is closed and preserved in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`. Present-tense execution routing comes from the current-state reconciliation/TODO; the current project frontier is Market I7 bounded real local acceptance.
+The Phase-1 quality sequence is closed and preserved in `docs/SEMANTIC_QUALITY_ACCEPTANCE_PLAN.md`. Present-tense execution routing comes from the current-state reconciliation/TODO; Market I1-I7 and durable report R1-R4 are accepted/closed, and the active tranche is B2 responsibility correspondence review under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
 
 ---
 
@@ -29,7 +30,7 @@ They are independent artifacts. Neither analysis uses the other language represe
 ```text
 current parsed source
 → english-projection-v2
-→ job-analysis-english-v21
+→ job-analysis-english-v30
 → job-analysis-v5 persisted schema
 ```
 
@@ -43,13 +44,13 @@ original source fields
 
 Current public routing is defined through `src/jobhunter/analysis_current.py`. Historical implementations remain versioned for reproducibility.
 
-Prompt/runtime or schema changes intentionally create distinct current/historical artifacts. V21 is a deliberate prompt/runtime identity change because it adds exact item-scoped candidate evidence while preserving the v5 persisted schema. Accepted v20/v5 artifacts remain exact historical artifacts and are reusable under the current boundary only when already accepted.
+Prompt/runtime or schema changes intentionally create distinct current/historical artifacts. V30 is the public-current generation path. It retains exact item evidence and parent coverage from the v21/v23 lineage, incorporates later dense-item and mixed-ontology guards, and preserves explicit prior applied experience. Accepted v20/v21/v23/v28 v5 artifacts retain their exact identities and are compatibility-current only when accepted and exact source/translation dependencies match. Pending/rejected historical candidates never satisfy currentness.
 
 ---
 
-## 3. Current English v21 / schema-v5 behavior
+## 3. Current English v30 / schema-v5 behavior
 
-V21 is the current source-led, partition-scoped factual extraction path. It retains the accepted v20/v5 factual substrate and v5 persistence shape, while adding exact item-level candidate evidence beneath durable parent coverage so depth, obligation, experience type, and compound facts can be validated without borrowing meaning from neighboring text.
+V30 is the current source-led, partition-scoped factual extraction path. It retains schema v5 and exact item-level candidate evidence beneath parent coverage so depth, obligation, experience type, and compound facts can be validated without borrowing meaning from neighboring text. Explicit applied experience stays distinct from knowledge; mixed knowledge/experience source items may abstain from a narrower ontology while preserving the complete grounded claim.
 
 Current behavior includes:
 
@@ -72,11 +73,11 @@ Current behavior includes:
 - long local Instructor reads use no arbitrary read deadline after successful connection;
 - transport replay remains disabled and validation retry remains bounded.
 
-The accepted v20 predecessor was additionally hardened around several real software-posting shapes, and v21 retains those protections:
+The accepted lineage was hardened around real software-posting shapes. Current handling preserves these distinctions:
 
 - `Sufficient knowledge` is accepted as explicit employer depth while plain `knowledge` remains non-depth;
 - one dense evidence segment may contain several different depth levels, and each requirement preserves its own exact level rather than inheriting the first marker;
-- if multi-level evidence lacks item-specific depth, validation fails closed rather than guessing;
+- if item-specific depth cannot be supported, retain the grounded claim with unknown depth; an unsupported asserted degree cannot borrow a neighboring marker;
 - `Ability to effectively use AI ...` is treated as application/manner rather than technical depth when the evidence contains no genuine depth marker;
 - a coverage reference positively represented by an extracted requirement cannot simultaneously remain as a redundant exclusion for that same reference.
 
@@ -141,7 +142,7 @@ A mechanically completed artifact remains a semantic-review candidate wherever t
 
 ## 6. Persisted English schema v5
 
-English v21 persists `job-analysis-v5`. Candidate-only `item_excerpt` scope is removed before persistence; durable parent evidence remains exact. Accepted v20/v5 artifacts preserve their original prompt identity and are compatibility-current only when already accepted.
+English v30 persists `job-analysis-v5`. Candidate-only `item_excerpt` scope is removed before persistence; durable parent evidence remains exact. Accepted v20/v21/v23/v28 v5 artifacts preserve their original prompt identity and are compatibility-current only under accepted/current dependency rules.
 
 ### Role purpose
 
@@ -326,7 +327,7 @@ Mixed-strength source clauses must not become one monolithic required claim.
 
 Preferred claims require explicit source preference semantics.
 
-Depth rules remain concept-specific. The validator may perform deterministic normalization only when scope and meaning are mechanically provable. If a dense evidence segment contains several distinct depth levels and no item-specific signal is available, fail closed instead of borrowing another subject's depth.
+Depth rules remain concept-specific. Unsupported degree metadata cannot borrow another subject's marker. If a grounded exact item has no independently supported degree, normalize optional depth metadata to unknown while preserving the source wording, obligation, and evidence. This does not erase a source-explicit degree or weaken prior-experience requirements.
 
 Similarly, non-depth wording such as a deployment scope, vague preference extent, schedule wording, or effective-application phrase must not become technical depth merely because a model places it in `depth_signal`.
 
@@ -345,7 +346,7 @@ LM Studio OpenAI-compatible API
         ↓
 Instructor JSON_SCHEMA mode
         ↓
-Pydantic v21 response models
+Pydantic v30 response models
         ├─ shape/type validation
         ├─ evidence-reference resolution context
         ├─ optionality/depth/concept rules
@@ -440,14 +441,14 @@ Capability v9 requires the accepted/current English P1.6 dependency selected by 
 
 ## 17. Current live acceptance state
 
-Public English P1.6 v21/v5 is promoted/current for new generation. The accepted dense+sparse and heterogeneous anchors listed below remain their exact v20/v5 artifacts and are accepted-only compatibility-current:
+Public English P1.6 v30/v5 is promoted/current for new generation. The accepted dense+sparse and heterogeneous anchors listed below remain their exact v20/v5 artifacts and are accepted-only compatibility-current:
 
 ```text
 tG9K → artifact 36 → accepted/current
 t4jp → artifact 37 → accepted/current
 ```
 
-Current heterogeneous non-regression order:
+Accepted heterogeneous non-regression anchors:
 
 ```text
 1. Python/software          ← tmBK accepted: P1.6 39 → Capability 13
@@ -465,7 +466,7 @@ English projection:   38
 P1.6 contract:        v20/v5
 ```
 
-The first persisted candidate P1.6 artifact 38 was rejected because deterministic depth canonicalization propagated `Mastery` to unrelated concepts. The accepted v20 predecessor fixed that defect and the adjacent `Sufficient knowledge`, effective-AI-application and redundant-coverage-exclusion cases with regressions; v21 retains those guards while adding item-scoped evidence.
+The first persisted candidate P1.6 artifact 38 was rejected because deterministic depth canonicalization propagated `Mastery` to unrelated concepts. The accepted v20 predecessor fixed that defect and the adjacent `Sufficient knowledge`, effective-AI-application and redundant-coverage-exclusion cases with regressions. Later contracts retain the source-scope protections; current optional-depth handling preserves grounded claims with unknown degree as described above.
 
 The rejected artifact did not feed Capability. Rebuilt P1.6 artifact 39 was explicitly accepted after complete manual review; Capability artifact 13 then passed 16/16 requirement coverage and 7/7 explicit-depth review. Python/software is closed.
 
@@ -524,4 +525,4 @@ P1.6 still does not provide:
 - mature repost/duplicate normalization before later market intelligence;
 - proof of semantic stability across every target role family.
 
-Those are later layers or remaining acceptance work. Current Phase-1 work is to prove the promoted factual contract generalizes across a bounded heterogeneous sample without unresolved repeatable material defects.
+These are separate downstream capabilities or evidence limits. Phase 1 and its bounded heterogeneous acceptance are closed; the current B2 tranche reviews responsibility correspondences without changing accepted P1.6 facts.

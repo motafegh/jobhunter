@@ -1,7 +1,9 @@
 # RoleFamilyIntelligenceReport persistence contract
 
 **Date:** 2026-10-03  
-**Status:** R1-R3 ACCEPTED / CLOSED; R4 BOUNDED REAL-LOCAL ACCEPTANCE ACTIVE / AUTHORIZED  
+**Status:** R1-R4 ACCEPTED / CLOSED
+**Final acceptance:** `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
+**Current continuation:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
 **Owner scope:** Persist the accepted bounded Market candidate interpretation as a local, immutable, reviewable analytical artifact.  
 **Predecessor:** `docs/working-memory/2026-09-29_MARKET_CANDIDATE_INTERPRETATION_V1.md`  
 **Accepted generator:** `market-role-family-candidate-v6 / market-role-family-candidate-prompt-v6`
@@ -30,7 +32,7 @@ The exact review artifact is:
 
 V6 restored useful synthesis without reopening the integrity defects found in V3-V5. The candidate-interpretation experiment is therefore closed successfully. There is no V7 repair cycle.
 
-The next authorized increment is persistence and review of the report as a durable **analytical artifact**.
+This plan authorized persistence and review of the report as a durable **analytical artifact**. R1-R4 have now passed; the contract and executed protocol below are retained as acceptance history.
 
 This authorization does **not** authorize:
 
@@ -198,9 +200,13 @@ provider = lm-studio
 model
 context_length
 max_tokens
+truncation_recovery_multiplier = 4
+max_recovery_tokens = 32768
 seed
 structured-schema identity
 ```
+
+`max_tokens` is the initial request budget. R4 acceptance added the provider recovery policy to the durable identity so a successful larger recovery request is auditable and cannot silently reuse a pre-repair artifact. The successful request itself remains in private audit evidence. The durable wrapper also uses an application-authored bounded analytical authority note rather than describing a persisted report as ephemeral. These repairs preserve the model-authored interpretation and V6 generation contract.
 
 The local endpoint URL is operational configuration and does not define report semantics.
 
@@ -500,7 +506,7 @@ market_role_family_report_reviews
 
 All three histories reject UPDATE/DELETE through SQLite triggers. Failed attempts cannot reference an artifact. Completed/reused attempts must reference an artifact from the exact same snapshot/generation fingerprint. Explicit regeneration is intentionally permitted under the same generation fingerprint because local model inference is not assumed bit-deterministic.
 
-Generation identity V1 requires:
+At the R1 checkpoint, generation identity V1 required the fields below. R4 later extended the durable identity with the recovery policy defined in Section 5; this block preserves the original checkpoint evidence.
 
 ```text
 provider
@@ -701,9 +707,9 @@ pytest -W error          830 passed
 
 Deterministic R3 acceptance proves persisted report/review durability across a fresh app instance and browser/CLI agreement over the same report ID/state.
 
-## 21. R4 authorization and real-local protocol
+## 21. Executed R4 authorization and real-local protocol
 
-R4 is now authorized and is the only active increment in this persistence program.
+R4 passed and closed on 2026-10-10. The protocol below is retained history, not authorization for another generation. Final report #2 is accepted for bounded use; pre-repair report #1 remains immutable/pending. Exact reuse, restart, review, integrity, and non-mutation evidence are in the final acceptance record linked above.
 
 Use the real maintainer environment and snapshot 15.
 

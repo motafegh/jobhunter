@@ -168,8 +168,9 @@ class CanonicalRegistryReviewReader:
         """List accepted/current English P1.6 claims and their mapping state.
 
         Currentness is checked twice: the analysis must belong to the current source
-        detail and frozen v20/v5 contract, and its translation dependency must equal
-        the translation service's configured current English projection.
+        detail and public-current contract (including accepted-only compatibility),
+        and its translation dependency must equal the translation service's
+        configured current English projection.
         """
 
         if not 1 <= limit <= 5000:

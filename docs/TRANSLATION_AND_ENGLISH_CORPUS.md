@@ -2,6 +2,7 @@
 
 **Status:** Current translation/English-projection architecture guide  
 **Date:** 2026-08-21
+**Last reconciled:** 2026-10-15
 
 ## 1. Purpose
 
@@ -255,7 +256,7 @@ Current English P1.6:
 current source version
 → current English projection v2
 → English analysis fields/evidence only
-→ job-analysis-english-v20 / job-analysis-v5
+→ job-analysis-english-v30 / job-analysis-v5
 ```
 
 Current Original P1.6:

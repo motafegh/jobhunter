@@ -1,7 +1,8 @@
 # Current Runtime and Versioned Semantic Code
 
 **Status:** Current / supporting engineering reference  
-**Date:** 2026-09-02  
+**Date:** 2026-09-02
+**Last reconciled:** 2026-10-15
 **Scope:** Runtime/versioned semantic-source orientation and PR4 disposition  
 **Authority:** Subordinate to `AGENTS.md`, product/domain/source/architecture documents, and current accepted contracts.
 
@@ -28,7 +29,7 @@ Do not route new product code directly to an older versioned semantic module unl
 Accepted contracts:
 
 ```text
-English P1.6:          job-analysis-english-v20 / job-analysis-v5
+English P1.6:          job-analysis-english-v30 / job-analysis-v5
 Original-language:    job-analysis-original-v9 / job-analysis-v4
 ```
 
@@ -36,11 +37,13 @@ Original-language:    job-analysis-original-v9 / job-analysis-v4
 
 ```text
 analysis_current.py
-├── English  → analysis_runtime_v20 / analysis_service_v20
+├── English  → analysis_runtime_v30 / analysis_service_v30
 └── Original → analysis_runtime / analysis_service (accepted v9/v4 path)
 ```
 
-The accepted English v20 path is layered. The PR4 dependency audit confirmed that v20 directly or transitively reuses earlier implementation pieces, including:
+The public English v30 path reuses the v29→v24 service/provider lineage, the v23 partition/persistence helpers, and earlier transitive components. Accepted v20/v21/v23/v28 v5 artifacts are compatibility-current only when accepted and exact source/translation dependencies match; their historical identity remains visible.
+
+The retained PR4 audit below describes the earlier v20 checkpoint. It is historical dependency evidence, not a complete current import inventory or removal proof:
 
 ```text
 analysis_runtime_v20
@@ -50,7 +53,7 @@ analysis_runtime_v20
 → shared evidence, translation, LM Studio runtime and persistence services
 ```
 
-Examples of current reuse include:
+Examples of reuse recorded at that checkpoint include:
 
 - v20 imports the v19 provider, v18 deterministic structured-fact logic, v15 concept normalization, and v14 context configuration;
 - v19 reuses the v18 provider and v13 Instructor helper;
@@ -161,7 +164,7 @@ Use these categories when reading `src/jobhunter/`:
 Includes:
 
 - current neutral/public facades;
-- accepted P1.6 v20 and original v9 routing;
+- public-current P1.6 v30 and original v9 routing, with accepted-only historical compatibility;
 - earlier P1.6 runtime/service/inference components imported by the accepted path;
 - Capability v9 and its v8/v6 implementation substrate;
 - Work Intelligence and Canonical Registry current modules.

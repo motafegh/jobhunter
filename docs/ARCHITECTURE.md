@@ -2,6 +2,7 @@
 
 **Status:** Current architecture  
 **Date:** 2026-09-02
+**Last reconciled:** 2026-10-15
 
 JobHunter is a **local-first Python modular monolith** for turning public job-market evidence into traceable career intelligence.
 
@@ -141,6 +142,9 @@ Capability artifact          bounded capability-level organization/reasoning
 Work Intelligence artifact   bounded work organization/interpretation
 Canonical concept            reviewed reusable correspondence identity
 Canonical claim mapping      reviewed exact P1.6 claim → concept decision
+Market target/definition     stable target + immutable target meaning
+Market snapshot/profile      frozen membership/evidence + deterministic aggregate
+Role-family report/review    immutable analytical report + append-only review
 Market/report aggregate      bounded read model over accepted evidence
 Blueprint artifact           experimental historical interpretation
 User workflow state          local human triage, not employer truth
@@ -197,7 +201,7 @@ ACCEPTED/CURRENT P1.6 FACTUAL SUBSTRATE
 
 This fan-out is important. Capability, Work Intelligence, Canonical Registry, and Market are different consumers of accepted P1.6. None is allowed to rewrite P1.6 source truth.
 
-The current P2.2B pilot is testing selective reviewed responsibility correspondence through the existing Canonical Registry. Responsibility families/archetypes and broader Market v2 remain later work.
+The current P2.2B-B2 tranche reviews selective responsibility correspondences through the existing Canonical Registry. Responsibility families/archetypes and broader Market v2 remain later work.
 
 ---
 
@@ -239,6 +243,14 @@ Review Snapshot
 
 Public Corpus
   jobhunter-public-corpus-v1
+
+Market
+  membership:       market-membership-v1 / market-membership-v1.0
+  snapshot:         market-corpus-snapshot-v1
+  aggregate:        market-aggregate-profile-v1
+  candidate:        market-role-family-candidate-v6
+  durable report:   market-role-family-intelligence-report-v1
+  report review:    market-role-family-report-review-v1
 ```
 
 Prompt/runtime changes intentionally create distinct current/historical artifacts even when a persisted schema remains compatible.
@@ -376,11 +388,11 @@ Important invariants:
   satisfies a vacancy's prior-experience request;
 - unsupported role purpose is omitted;
 - evidence must validate against authoritative employer fields;
-- fresh English v23 artifacts remain `pending` until explicit semantic review;
+- fresh English v30 artifacts remain `pending` until explicit semantic review;
 - pending candidates are inspectable but excluded from accepted downstream layers;
 - rejection archives local candidate evidence and removes it from current/reuse selection so the same contract can be rebuilt; when a historical pending Market snapshot references the candidate, its payload and ID remain retained with rejected review status, while the snapshot keeps its original point-in-time pending state.
 
-`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v23/v5 while original-language P1.6 remains on independently validated v9/v4. Explicitly accepted v20/v5 and v21/v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected older candidates do not cross the v23 current boundary.
+`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v30/v5 while original-language P1.6 remains on independently validated v9/v4. Explicitly accepted v20/v21/v23/v28 v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected older candidates do not cross the v30 current boundary.
 
 ---
 
@@ -482,7 +494,7 @@ A `deliverable` concept category exists, but candidate Work Intelligence deliver
 
 The Registry is deliberately human-reviewed. Similar words, shared domains, or partial semantic overlap do not prove canonical equivalence. No model is allowed to silently create or accept canonical concepts/aliases/mappings.
 
-The current P2.2B-B1 pilot is a selective responsibility-promotion proof, not a completeness-driven taxonomy build.
+P2.2B-B1 is closed without promotion. The active B2 tranche reviews selected cross-job responsibility correspondences using this existing Registry; it does not bulk-build taxonomy.
 
 ---
 
@@ -499,7 +511,9 @@ They may expose:
 - current pipeline/artifact counts and queues;
 - lineage/currentness information.
 
-Current Market is not yet a reviewed corpus-wide canonical role taxonomy or Market v2.
+Target-scoped Market retains immutable membership snapshots and deterministic aggregate profiles. `MarketRoleFamilyReportService` and its SQLite store add immutable snapshot-linked V6 analytical reports, exact generation identity/reuse, attempts, and append-only bounded-use review. Browser and CLI address the same durable report IDs; raw request/response audit payloads remain local and hidden from ordinary presentation. R1-R4 acceptance is recorded in `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`.
+
+These accepted bounded reports are not reviewed corpus-wide canonical taxonomy or P2.4 Market v2.
 
 Capability, Work Intelligence themes, Blueprint interpretations, and speculative canonical relationships are not silently mixed into Market truth.
 
@@ -733,19 +747,17 @@ Accepted semantic layers are not reopened for harmless non-authoritative wording
 ## 26. Current architectural state
 
 ```text
-Phase 1                         CLOSED
-P2.1 Canonical Registry        CLOSED
-P2.2A Job Work Intelligence    ACCEPTED / CLOSED
-P2.2B selective responsibility promotion pilot    IN PROGRESS
+Phase 1 / P2.1 / P2.2A              ACCEPTED / CLOSED
+P2.2B-B1                            CLOSED / NO-PROMOTION / DEFER
+Market I1-I7 + coverage follow-up    ACCEPTED / CLOSED FOR BOUNDED SCOPE
+Candidate V6 + report R1-R4          ACCEPTED / CLOSED FOR BOUNDED REPORTING
+P2.2B-B2                            ACTIVE / AUTHORIZED
+P2.2C / P2.2D / P2.3 / P2.4         NOT AUTHORIZED
 ```
 
-Current P2.2B-B1 is deliberately narrow: prove or reject one reviewed reusable responsibility correspondence using exact accepted/current P1.6 evidence. It does not authorize responsibility families, broad ontology construction, deliverable promotion, Market v2, or personal scoring.
+B2 reuses exact accepted/current P1.6 responsibility claims, the existing Registry reader/service/store, and explicit owner semantic review. It needs no new subsystem unless execution reveals a concrete tooling defect. B1's former `ta9l` generation path remains closed history.
 
-The machine-local next gate for that product work remains `ta9l` English projection → P1.6 v20/v5 generation → semantic review → final correspondence evaluation.
-
-Portfolio/documentation work may proceed independently but must not bypass that product gate or change accepted semantics.
-
----
+Present-tense status comes from `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; exact B2 scope comes from `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. Portfolio work remains parallel.
 
 ## 27. Planned architectural evolution
 

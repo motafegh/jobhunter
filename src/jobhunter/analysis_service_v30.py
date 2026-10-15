@@ -1,4 +1,4 @@
-"""Isolated v30 candidate preserving exact prior applied exposure."""
+"""Public-current English P1.6 v30 service preserving exact prior applied exposure."""
 
 from jobhunter.analysis_service_v29 import JobAnalysisServiceV29
 

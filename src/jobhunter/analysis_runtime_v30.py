@@ -1,4 +1,4 @@
-"""Isolated v30 provider for source-explicit experience ontology."""
+"""Public-current English P1.6 v30 provider for source-explicit experience ontology."""
 
 from __future__ import annotations
 
@@ -33,7 +33,7 @@ class V30CandidateAnalysisProvider(V29CandidateAnalysisProvider):
 
 
 def build_v30_analysis_service(settings: Settings) -> JobAnalysisServiceV30:
-    """Build isolated candidate service over a private SQLite copy."""
+    """Build the public-current English v30 service for the configured database."""
     from jobhunter.analysis_failure_diagnostics import AnalysisFailureDiagnosticStore
     from jobhunter.analysis_runtime import _translation_service
     from jobhunter.analysis_store import AnalysisStore

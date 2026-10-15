@@ -2,6 +2,7 @@
 
 **Status:** Current browser architecture/surface guide  
 **Date:** 2026-08-23
+**Last reconciled:** 2026-10-15
 
 ## 1. Purpose
 
@@ -169,7 +170,7 @@ Role Capability Blueprint   # experimental only
 Current contracts:
 
 ```text
-English P1.6:   job-analysis-english-v20 / job-analysis-v5
+English P1.6:   job-analysis-english-v30 / job-analysis-v5
 Original P1.6:  job-analysis-original-v9 / job-analysis-v4
 Capability:     job-capability-intelligence-v9 / job-capability-intelligence-v5
 Blueprint:      role-capability-blueprint-v6 / role-capability-blueprint-v5
@@ -241,9 +242,11 @@ Do not auto-prune vocabulary solely because two searches overlap.
 
 ## 11. Market
 
-Current Market aggregates accepted/current **English P1.6** only.
+The primary target-scoped workflow starts at `/market/targets`: select or define a target, inspect its immutable definition, run a bounded refresh, then open the resulting immutable snapshot and deterministic profile. Source-level membership does not require accepted P1.6; strong requirement/responsibility statistics use the separate accepted-semantic core denominator. Missing, pending, failed, and rejected analysis coverage remains visible.
 
-It does not yet aggregate Capability or Blueprint.
+Snapshot pages link to durable role-family analytical reports. Generate/reuse uses exact persisted generation identity; explicit regeneration creates another immutable artifact. Report detail and append-only bounded-use reviews share the same service/state as CLI `market role-report list/generate/show/review`. Private request/raw-response payloads remain outside ordinary presentation. Market I1-I7 and report R1-R4 are accepted/closed for bounded scope.
+
+The legacy `/market` page remains a current-corpus aggregate over accepted/current **English P1.6**. It is separate from target-scoped immutable history. Neither path makes Capability or Blueprint mandatory Market inputs or promotes analytical report labels into taxonomy.
 
 Market must retain/expose enough context to understand:
 
@@ -253,7 +256,7 @@ Market must retain/expose enough context to understand:
 - requirement-strength semantics;
 - concentration/small-sample warning state.
 
-Coverage is not semantic-quality certification. Market truthfulness is accepted; current P1.7 work preserves that scope and warning contract.
+Coverage is not semantic-quality certification. Phase-1/P1.7 acceptance is closed; bounded Market/report acceptance preserves the source, denominator, uncertainty, and privacy boundaries.
 
 ---
 

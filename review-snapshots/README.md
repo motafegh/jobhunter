@@ -82,7 +82,7 @@ A current-chain artifact can still fail semantic review. A historical artifact c
 Current public contracts:
 
 ```text
-English P1.6 current generation: job-analysis-english-v21 / job-analysis-v5
+English P1.6 current generation: job-analysis-english-v30 / job-analysis-v5
 Accepted snapshot anchors below: exact v20/v5 artifacts retained through accepted-only compatibility
 Capability:   job-capability-intelligence-v9 / job-capability-intelligence-v5
 ```
@@ -105,18 +105,18 @@ Blueprint v6 remains deferred/non-authoritative and pinned to historical Capabil
 
 The public corpus gate is closed: the local database was projected, deterministically verified, intentionally published, and remotely inspected.
 
-Current published/verified baseline:
+Committed public-corpus baseline (local unpublished projections may differ):
 
 ```text
-Known/discovered jobs:       353
-Fetched/parsed job details:   43
-Current English projections:  20
-English P1.6:                  5
+Known/discovered jobs:       420
+Fetched/parsed job details:   51
+Current English projections:  29
+English P1.6:                 11
 Original P1.6:                 0
 Capabilities:                  5
 ```
 
-`353` means known/discovered job identities, **not** 353 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection.
+`420` means known/discovered job identities, **not** 420 complete advertisements. Only jobs with a current fetched/parsed detail are eligible for downstream semantic-review selection.
 
 The authoritative current corpus structure and commands are documented in [`../corpus/README.md`](../corpus/README.md).
 

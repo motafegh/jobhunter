@@ -2,13 +2,13 @@
 
 **Status:** Current product definition  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-29
+**Last reconciled:** 2026-10-15
 **Product type:** Local-first personal career-intelligence application  
 **Primary user:** Repository owner  
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, the V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1-R3 are accepted/closed. R3 moved browser and CLI onto the durable R2 service/state, proved cross-surface report/review agreement and restart persistence, and improved the Market product journey with clear next actions, progressive disclosure of advanced controls, snapshot-centered intelligence, and evidence-first readable report presentation. CI `37223301900` passed Ruff plus 830 tests and 830 warnings-as-errors tests. The next authorized increment is R4 bounded real-local acceptance on snapshot 15; taxonomy promotion remains unauthorized. R3 closure: `docs/working-memory/2026-10-04_MARKET_R3_DURABLE_WORKFLOW_AND_UX_CLOSURE.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, candidate interpretation V6, and `RoleFamilyIntelligenceReport` R1-R4 are accepted/closed. The active increment is P2.2B-B2 selective responsibility normalization: verify exact accepted/current snapshot-15 claims, review proposed correspondences with the owner, then apply only approved mappings through the existing Canonical Registry. P2.2C families, P2.2D stable archetypes, P2.3 capability profiles, and P2.4 Market v2 remain unauthorized. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`. Focused decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
 
 ## 1. Purpose
 
@@ -76,7 +76,7 @@ The browser application and CLI currently support a substantial Jobinja-centered
 8. refresh/fetch missing or due job details;
 9. translate/repair one job or a bounded eligible queue using current translation-v2 rules;
 10. run the deterministic parser audit;
-11. run/reuse promoted evidence-backed English P1.6 v23 analysis for eligible jobs, while preserving accepted-only v20/v21 compatibility reuse;
+11. run/reuse promoted evidence-backed English P1.6 v30 analysis for eligible jobs, while preserving accepted-only v20/v21/v23/v28 compatibility reuse;
 12. inspect per-job responsibilities/requirements, exact evidence, requirement strength and explicit depth;
 13. run/reuse promoted bounded Capability Intelligence v9 above accepted/current English P1.6;
 14. inspect Capability source truth, grouping, source coverage/provenance and bounded reasoning;
@@ -87,16 +87,18 @@ The browser application and CLI currently support a substantial Jobinja-centered
 19. export/verify/status the complete repository-safe public corpus;
 20. use the repository public corpus for remote inspection and heterogeneous role selection without direct local SQLite access;
 21. create/version target markets and preview/run bounded target-scoped Market workflows;
-22. inspect target-specific memberships, immutable snapshots, deterministic aggregate profiles, run ledgers, and evidence through the shared browser/CLI state.
+22. inspect target-specific memberships, immutable snapshots, deterministic aggregate profiles, run ledgers, and evidence through the shared browser/CLI state;
+23. generate/reuse durable role-family analytical reports, inspect their evidence/history, and append bounded-use reviews through browser or CLI.
 
 Current semantic layers are not all at the same acceptance level:
 
-- English P1.6 v23/v5 is promoted/current for new generation; accepted v20/v5 and v21/v5 artifacts remain accepted-only compatibility-current and are not mass-regenerated;
+- English P1.6 v30/v5 is promoted/current for new generation; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility-current and are not mass-regenerated;
 - Capability v9/v5 is promoted/current and operationally closed on those anchors;
 - heterogeneous role-family validation is closed across Python/software, network/security, and operations/platform anchors;
 - Blueprint v6/v5 remains experimental/deferred and non-authoritative;
 - Market truthfulness/source/lifecycle/partial-success/P1.7 Phase-1 gates are closed; Phase 1, P2.1, and P2.2A are accepted;
-- the target-scoped Market first slice is repository-accepted through I6; I7 real local acceptance remains the end-to-end closure gate.
+- the target-scoped Market I1-I7 first slice, same-target coverage follow-up, V6 candidate interpretation, and durable report R1-R4 are accepted/closed for their bounded scopes;
+- P2.2B-B2 selective responsibility normalization is active, with owner review required before canonical mutation.
 
 One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
@@ -236,7 +238,7 @@ The current Market surface now supports stable target identity, immutable target
 
 The first slice keeps source/core and accepted-semantic denominators separate, preserves incomplete P1.6 coverage explicitly, and does not claim repost-adjusted unique demand. I7 passed bounded real-local repeated-use acceptance with one genuinely reviewed and accepted P1.6 core member frozen into snapshots 4-6; CLI/rendered-browser semantic drill-down, snapshot immutability, SQLite integrity and privacy checks passed. Its one-posting semantic denominator does not establish broad-market prevalence.
 
-This layer is **not yet** a reviewed canonical role taxonomy, duplicate-adjusted mature market model, semantic role-subfamily report layer, or complete-labor-market claim.
+Snapshot 15 subsequently established six accepted-semantic core postings with 35 responsibilities and 140 requirements. V6 synthesis and durable report R1-R4 are separately accepted for bounded analytical use. They do not establish canonical role taxonomy, duplicate-adjusted demand, or broad-market prevalence.
 
 ### 6.6 Repository-safe public corpus and selected review exports
 
@@ -248,13 +250,13 @@ The complete current repository-safe public projection is:
 corpus/  → jobhunter-public-corpus-v1
 ```
 
-Accepted publication baseline:
+Committed public-corpus baseline (local unpublished projections may differ):
 
 ```text
-Known/discovered jobs:       394
+Known/discovered jobs:       420
 Fetched/parsed job details:   51
-Current English projections:  27
-English P1.6:                  5
+Current English projections:  29
+English P1.6:                 11
 Original P1.6:                 0
 Capabilities:                  5
 ```
@@ -557,20 +559,19 @@ The accepted heterogeneous reference order is:
 
 `tmBK` produced regression-driven hardening around `Sufficient knowledge`, multi-signal depth scope, non-depth `effectively use AI` wording, contradictory coverage exclusions, and deterministic structured-skill ownership. Its first persisted candidate artifact was rejected and never fed Capability; rebuilt P1.6 artifact 39 and Capability artifact 13 were explicitly accepted after complete review.
 
-`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, P2.2A Job Work Intelligence, and the bounded Market I1-I7 first slice are accepted/closed. The next product increment needs a scoped decision under the Market plan.
+`t4qV` is accepted after the general certification/credential ontology rule correctly kept five preferred certifications role-level. `tmyX` is accepted after general evidence-heading, candidate-duty, and non-depth ability/skill fixes. Heterogeneous semantic validation, Market truthfulness/sampling, source/lifecycle acceptance, partial-success semantics, and P1.7 report/run/browser acceptance are closed. Phase 1, P2.1, P2.2A Job Work Intelligence, and the bounded Market I1-I7 first slice are accepted/closed. The active B2 tranche is governed by the October 10 semantic direction decision; report R1-R4 is also accepted/closed.
 
 ### 10.4 Planned next product layers
 
-From the accepted Market-I7 frontier:
+From the accepted Market/report frontier:
 
-1. finish usefulness review and regression hardening of the bounded ephemeral Market candidate interpretation;
-2. decide whether a versioned persisted Role-Family Intelligence Report is justified, without promoting taxonomy from one small sample;
-3. build representative reviewed responsibility-family / role-archetype examples and fine-grained JobCapabilityRequirementProfiles before personal comparison;
+1. review and apply only approved B2 responsibility correspondences through the existing Registry;
+2. make a separate P2.2C-family versus P2.3-capability-profile readiness decision after B2 closes;
+3. build representative reviewed family/archetype and capability-profile evidence before personal comparison;
 4. consider one carefully selected second source and only then a minimal adapter abstraction;
-5. build the reviewed personal evidence model;
-6. add gap/readiness/learning/action intelligence comparing Market evidence with reviewed personal evidence;
-6. add application/interview/outcome workspace and sustained longitudinal operation/trends/backup;
-7. add advanced evaluated retrieval/assistant/model-lab capabilities only where demonstrated useful.
+5. build the reviewed personal evidence model with privacy and recovery boundaries;
+6. add explainable gap/readiness/actions, followed by application/interview/outcome workflows;
+7. add sustained longitudinal intelligence and advanced retrieval/assistant capabilities only under their own evidence and acceptance gates.
 
 See `docs/ROADMAP.md`.
 

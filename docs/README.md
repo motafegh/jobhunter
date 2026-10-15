@@ -15,46 +15,45 @@ For the current product and engineering model, use this sequence:
 5. [`UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — source fact, correspondence, interpretation, recommendation, and promotion boundaries.
 6. [`ROADMAP.md`](ROADMAP.md) — strategic sequencing.
 7. [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) — delivery order and implementation gates.
-8. [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status-only overlay for present-tense routing.
+8. [`CURRENT_STATE_RECONCILIATION_2026-10-10.md`](CURRENT_STATE_RECONCILIATION_2026-10-10.md) — current status-only overlay for present-tense routing.
 
 These are stable controlling or routing documents. Their root paths are kept intentionally stable because `AGENTS.md`, active plans, source comments, tests, and historical records reference them extensively.
 
 Some large master documents intentionally retain historical present-tense wording from earlier checkpoints. The current reconciliation supersedes those **status-only** passages without rewriting durable product/roadmap/implementation semantics or historical chronology.
 
-The older [`CURRENT_STATE_RECONCILIATION_2026-09-05.md`](CURRENT_STATE_RECONCILIATION_2026-09-05.md) is the previous status checkpoint and is no longer current.
+The September [5](CURRENT_STATE_RECONCILIATION_2026-09-05.md) and [12](CURRENT_STATE_RECONCILIATION_2026-09-12.md) reconciliations are superseded status checkpoints retained as history.
 
 ## 2. Current execution state
 
 ```text
-Phase 1                              CLOSED / ACCEPTED
-P2.1 Canonical Registry             CLOSED / ACCEPTED
-P2.2A Work Intelligence             CLOSED / ACCEPTED
+Phase 1 / P2.1 / P2.2A              ACCEPTED / CLOSED
 P2.2B-B1                            CLOSED / NO-PROMOTION / DEFER
-P2.2C promoted responsibility       NOT ACTIVE / NOT AUTHORIZED
-P2.2D stable role archetypes        LATER
-
-Market research                     COMPLETE ENOUGH
-Market foundation investigation     PASS / COMPLETE
-Market first vertical slice         I1-I6 ACCEPTED / I7 EXECUTED / HOLD
-Current exact increment             I7 HOLD closure follow-up
-Semantic report/subfamily synthesis DEFERRED FROM FIRST SLICE
+Market I1-I7 + coverage follow-up    ACCEPTED / CLOSED FOR BOUNDED SCOPE
+Candidate interpretation V6         ACCEPTED FOR BOUNDED REPORTING
+RoleFamilyIntelligenceReport R1-R4   ACCEPTED / CLOSED
+P2.2B-B2                            ACTIVE / OWNER SEMANTIC REVIEW NEXT
+P2.2C / P2.2D / P2.3 / P2.4         NOT AUTHORIZED
 ```
 
 Use these files for current execution:
 
-- [`CURRENT_STATE_RECONCILIATION_2026-09-12.md`](CURRENT_STATE_RECONCILIATION_2026-09-12.md) — current status/routing overlay.
-- [`MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — current controlling Market product/implementation plan.
-- [`working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal `PASS / FIRST VERTICAL SLICE AUTHORIZED` decision and first-slice contract.
-- [`working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md`](working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md) — accepted I6 implementation baseline.
-- [`working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md`](working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md) — executed real-local acceptance protocol.
-- [`working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md`](working-memory/2026-09-18_MARKET_I7_REAL_LOCAL_ACCEPTANCE_HOLD.md) — sanitized I7 execution evidence and HOLD decision.
-- [`working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md`](working-memory/2026-09-12_MARKET_RESEARCH_CONSOLIDATION_AND_DECISION_LEDGER.md) — prior research/history; load only when a specific decision needs its evidence.
-- [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — current implementation checklist.
-- [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — rolling handoff/current-state memory.
+- [`CURRENT_STATE_RECONCILIATION_2026-10-10.md`](CURRENT_STATE_RECONCILIATION_2026-10-10.md) — current status-only overlay.
+- [`P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`](P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md) — durable P2.2 semantics.
+- [`working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`](working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md) — exact B2 candidates, review sequence, and stop lines.
+- [`EXECUTION_TODO.md`](EXECUTION_TODO.md) — operational checklist.
+- [`WORKING_MEMORY.md`](WORKING_MEMORY.md) — compact continuation state.
 
-The exact next product action is the **bounded I7 HOLD semantic-evidence closure step**. The rerun snapshot/profile identities, historical immutability, definition fingerprint, SQLite integrity, privacy boundary, and artifact-48 rejection are now closed. The remaining gate is one genuinely valid accepted-current P1.6 core artifact, followed by a new snapshot/profile and real CLI/browser requirement/responsibility evidence drill-down. Do not restart B1/foundation work or broaden into later Market scope.
+Accepted Market/report evidence:
 
-## 3. Closed P2.2B and executed Market-foundation records
+- [`MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — durable Market direction and first-slice contract.
+- [`working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — foundation decision.
+- [`working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md`](working-memory/2026-09-26_MARKET_I7_FINAL_LOCAL_ACCEPTANCE.md) — final bounded I7 PASS; earlier HOLD records are history.
+- [`working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md`](working-memory/2026-10-03_ROLE_FAMILY_INTELLIGENCE_REPORT_PERSISTENCE_PLAN.md) — accepted report contract.
+- [`working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`](working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md) — R1-R4 closure and real-local report/reuse/review evidence.
+
+The exact next semantic action is owner review of R1-R6 before any canonical mutation. B2 uses existing Registry tooling; it does not authorize family/archetype promotion or a new implementation subsystem.
+
+## 3. Closed B1 and executed Market-foundation records
 
 These remain important immediate history but are no longer the live route:
 
@@ -92,8 +91,9 @@ I1 domain + SQLite persistence                         ACCEPTED
 → I4 immutable snapshot                                 ACCEPTED
 → I5 deterministic aggregate profile                    ACCEPTED
 → I6 browser + CLI                                      ACCEPTED
-→ I7 bounded local real acceptance                      EXECUTED / HOLD
-→ bounded I7 closure follow-up                           NEXT
+→ I7 bounded local real acceptance                      ACCEPTED / CLOSED
+→ same-target coverage follow-up                        COMPLETE
+→ V6 candidate interpretation + report R1-R4             ACCEPTED / CLOSED
 ```
 
 Important current constraints:
@@ -104,7 +104,7 @@ Important current constraints:
 - pending/missing/failed P1.6 remains visible and never means zero demand;
 - Capability/Work are not mandatory first-slice gates;
 - automatic repost/new-ID collapse is deferred; denominator wording is `qualified source postings`, not `unique demand units`;
-- semantic role-subfamily synthesis and persisted model-generated Role-Family Intelligence Report are later layers;
+- bounded V6 synthesis and durable report R1-R4 are separately accepted analytical layers; their labels do not become canonical taxonomy;
 - Market runtime state remains local/private by default.
 
 ## 5. Current technical and operational references

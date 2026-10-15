@@ -2,11 +2,11 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-09-29
+**Last reconciled:** 2026-10-15
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, V6 bounded candidate interpretation, and `RoleFamilyIntelligenceReport` R1-R3 are accepted/closed. The durable report is now persisted, service-owned, browser/CLI-accessible, reviewable, restart-safe, and presented through the guided Market UX. The current authorized increment is R4 bounded real-local acceptance: run/persist the real snapshot-15 V6 report, verify restart durability, review it, confirm browser/CLI agreement, SQLite integrity/foreign keys, and unchanged public-corpus state. Broader responsibility-family/capability semantics remain after R4 closure.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, candidate interpretation V6, and `RoleFamilyIntelligenceReport` R1-R4 are accepted/closed. The active increment is P2.2B-B2 selective responsibility normalization: verify exact accepted/current snapshot-15 claims, review proposed correspondences with the owner, then apply only approved mappings through the existing Canonical Registry. P2.2C families, P2.2D stable archetypes, P2.3 capability profiles, and P2.4 Market v2 remain unauthorized. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`. Focused decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
 
 ---
 
@@ -117,7 +117,7 @@ tG9K → P1.6 artifact 36 → Capability artifact 11
 t4jp → P1.6 artifact 37 → Capability artifact 12
 ```
 
-Public corpus publication baseline:
+Committed public-corpus baseline (local unpublished projections may differ):
 
 ```text
 Known/discovered jobs:       420
@@ -130,7 +130,7 @@ Capabilities:                   5
 
 ### 3.2 Accepted Phase-1 implementation
 
-The repository already contains, but must not over-claim before the remaining gates pass:
+The repository contains the following accepted Phase-1 capabilities:
 
 - classified source response/failure states;
 - cautious lifecycle transitions;
@@ -243,7 +243,7 @@ Phase 1:                    CLOSED / ACCEPTED
 P2.1:                       CLOSED / ACCEPTED
 P2.2A:                      CLOSED / ACCEPTED
 Market I1-I7:               ACCEPTED / BOUNDED FIRST SLICE CLOSED
-Current frontier:           Select next scoped Market product increment
+Current frontier:           P2.2B-B2 selective responsibility normalization
 ```
 
 Historical experiment/incident files remain historical and must not be rewritten as though they were current contracts.
