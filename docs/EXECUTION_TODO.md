@@ -147,7 +147,18 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 
 ---
 
-## D. Permanent authority invariants
+## D. Product usability alongside semantic work
+
+- [x] Owner priority confirmed: improve whole-product usability, productivity, and usefulness; prioritize understanding/comparing jobs and Market findings.
+- [x] Source-level journey review identified broad-processing-first Overview, document-first job detail, opaque evidence link labels, and loss of explicit finding context when returning from a job.
+- [ ] Prepare the first bounded screen/interaction design: Overview → existing Market snapshot/report → human-readable supporting jobs → context-preserving return.
+- [ ] Use existing accepted artifacts and R3 presentation; retain exact historical/current distinction, source evidence, uncertainty, and review boundaries.
+- [ ] Evaluate comprehension and navigation on real retained examples; record observed benefit and remaining friction without claiming measured savings before use.
+- [ ] Scope any subsequent small-set job comparison separately; use accepted facts, approved B2 correspondences where available, and clearly labeled interpretation. No personal scoring or automatic taxonomy promotion.
+
+The owning UX direction and source findings are in `docs/ROADMAP.md` §13. This is a parallel product priority and bounded design proposal; B2.2 semantic review remains next, and no UI implementation or new semantic layer is claimed complete.
+
+## E. Permanent authority invariants
 
 - [x] source fact != normalized correspondence != analytical interpretation != recommendation/decision synthesis.
 - [x] generated/candidate != reviewed/promoted.
@@ -163,7 +174,7 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 
 ---
 
-## E. Explicitly deferred / not authorized
+## F. Explicitly deferred / not authorized
 
 - [-] P2.2C promoted responsibility families during B2.
 - [-] P2.2D stable promoted role archetypes during B2.
@@ -181,7 +192,7 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 
 ---
 
-## F. Parallel portfolio/release
+## G. Parallel portfolio/release
 
 - [x] MIT license complete.
 - [ ] GitHub description/topics.

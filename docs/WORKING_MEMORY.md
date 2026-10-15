@@ -10,6 +10,7 @@
 **Committed public-corpus baseline:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
 **Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
+**Parallel product priority:** Whole-product usability/productivity, prioritizing understanding and comparing jobs or Market findings. UX source findings and the proposed first bounded journey are owned by `docs/ROADMAP.md` §13 and the execution TODO; no redesign is implemented yet.
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
 This file is current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
@@ -284,3 +285,9 @@ The existing unpublished `tNpG` source/projection/manifest changes remain separa
 Verified alignment baseline: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changes documentation/docstrings only; it does not repeat model generation or semantic acceptance.
 
 Next: owner B2.2 semantic review of R1-R6, before canonical mutation. No feature implementation or later Phase-2 authorization was added.
+
+## 8. Usability direction — 2026-10-15
+
+Owner-selected first friction: understanding/comparing jobs or Market findings. Source review found that Overview still promotes the broad processing workflow, job detail leads with complete source/translation documents, and Market evidence links often use job IDs while job detail returns to the general catalog. These are observed code/presentation structures; no visual usability test or time-savings measurement has been performed.
+
+Proposed first journey: easy entry to the existing Market intelligence → readable job context on evidence links → inspect a supporting job → return to the originating finding, preserving frozen/current evidence boundaries. Build on accepted R3; keep B2 review and its promotion rules intact. Small-set job comparison follows its own bounded design. See the existing roadmap/TODO owners rather than creating another plan.
