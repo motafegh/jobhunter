@@ -2,6 +2,7 @@
 
 **Date:** 2026-10-10  
 **Status:** DECISION COMPLETE / P2.2B-B2 AUTHORIZED / IMPLEMENTATION-SUBSYSTEM EXPANSION NOT REQUIRED  
+**Execution update — 2026-10-15:** B2.1 read-only baseline is complete; exact artifacts 50/56/60/61 remain accepted/current, all 35 responsibility claims are pending Registry review, and SQLite integrity/foreign keys pass. The backup and evidence boundary are recorded in `docs/EXECUTION_TODO.md`. B2.2 owner review is next; no canonical mutation has occurred.
 **Entry gate:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_ENTRY.md`  
 **Predecessor closure:** `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
@@ -421,4 +422,4 @@ P2.2C responsibility families — NOT AUTHORIZED
 P2.2D stable role archetypes — NOT AUTHORIZED
 ```
 
-The next execution is B2.1 read-only local evidence confirmation followed by owner semantic review of R1-R6. No repository feature implementation should begin before that review exposes a concrete tooling gap.
+The next execution is B2.2 owner semantic review of R1-R6, using the completed B2.1 baseline recorded above. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
