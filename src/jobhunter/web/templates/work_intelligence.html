@@ -2,9 +2,10 @@
 {% block title %}Work Intelligence · {{ detail.fields.title if detail else (posting.title_observed or source_job_id) }} · JobHunter{% endblock %}
 {% block heading %}Job Work Intelligence{% endblock %}
 {% block eyebrow %}{{ detail.fields.title if detail else (posting.title_observed or source_job_id) }} · candidate interpretation{% endblock %}
-{% block topbar_actions %}<a class="button ghost" href="/jobs/{{ source_job_id }}">Back to job</a>{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="{{ origin.job_url if origin else "/jobs/" ~ source_job_id }}">Back to job</a>{% endblock %}
 
 {% block content %}
+{% include "research_origin.html" %}
 {% if notice %}<div class="notice">{{ notice }}</div>{% endif %}
 {% if readiness_error %}<div class="notice warn-notice"><strong>Work Intelligence is not ready.</strong> {{ readiness_error }}</div>{% endif %}
 

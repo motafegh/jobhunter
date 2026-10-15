@@ -55,6 +55,7 @@ from jobhunter.translation_service import (
     format_translation_batch_summary,
 )
 from jobhunter.translation_store import TranslationStore
+from jobhunter.web.intelligence_navigation import job_origin, overview_intelligence
 from jobhunter.web.operations import (
     OperationBusyError,
     WebOperationLink,
@@ -430,6 +431,7 @@ def create_app(
                 page="dashboard",
                 notice=notice,
                 stats=repository.dashboard_stats(),
+                intelligence=overview_intelligence(settings),
                 priority_preview=priority_preview,
                 recent_runs=repository.recent_runs(limit=6),
                 recent_operations=request.app.state.operations.recent()[:6],
@@ -487,7 +489,13 @@ def create_app(
         )
 
     @app.get("/jobs/{source_job_id}", response_class=HTMLResponse)
-    def job_detail(request: Request, source_job_id: str):
+    def job_detail(
+        request: Request,
+        source_job_id: str,
+        from_snapshot: int | None = None,
+        from_report: int | None = None,
+        from_finding: str = "",
+    ):
         store = JobHunterStore(settings.database_path)
         store.initialize()
         posting = store.get_job(source_job_id)
@@ -530,6 +538,13 @@ def create_app(
                 request,
                 page="jobs",
                 source_job_id=source_job_id,
+                origin=job_origin(
+                    settings,
+                    source_job_id,
+                    snapshot_id=from_snapshot,
+                    report_id=from_report,
+                    finding=from_finding,
+                ),
                 posting=posting,
                 detail=detail,
                 translation=translation,

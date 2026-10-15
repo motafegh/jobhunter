@@ -2,9 +2,10 @@
 {% block title %}Capability Intelligence · {{ detail.fields.title if detail else source_job_id }} · JobHunter{% endblock %}
 {% block heading %}Capability Intelligence{% endblock %}
 {% block eyebrow %}{{ detail.fields.title if detail else source_job_id }} · job-local reasoning{% endblock %}
-{% block topbar_actions %}<a class="button ghost" href="/jobs/{{ source_job_id }}">Back to job</a>{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="{{ origin.job_url if origin else "/jobs/" ~ source_job_id }}">Back to job</a>{% endblock %}
 
 {% block content %}
+{% include "research_origin.html" %}
 <section class="panel">
   <div class="panel-header">
     <div><p class="eyebrow">Reasoning layer above strict extraction</p><h2>What this role likely requires in practice</h2></div>

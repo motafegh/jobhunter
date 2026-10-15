@@ -10,18 +10,18 @@
   <span class="badge {% if state == 'accepted_for_bounded_use' %}good{% elif state == 'rejected' %}bad{% else %}warn{% endif %}">{{ state | replace('_', ' ') }}</span>
 {% endmacro %}
 
-{% macro evidence_summary(item) %}
-<p class="evidence-summary"><strong>{{ item.evidence_count }}</strong> exact claim{% if item.evidence_count != 1 %}s{% endif %} · <strong>{{ item.supporting_posting_count }}</strong> posting{% if item.supporting_posting_count != 1 %}s{% endif %} · {% for job_id in item.supporting_source_job_ids %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
+{% macro evidence_summary(item, anchor="findings") %}
+<p class="evidence-summary"><strong>{{ item.evidence_count }}</strong> exact claim{% if item.evidence_count != 1 %}s{% endif %} · <strong>{{ item.supporting_posting_count }}</strong> posting{% if item.supporting_posting_count != 1 %}s{% endif %} · {% for job_id in item.supporting_source_job_ids %}<a href="{{ job_url(job_id, anchor) }}" title="Job reference: {{ job_id }}">{{ source_labels.get(job_id, {}).get("label", job_id) }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>
 {% endmacro %}
 
-{% macro exact_evidence(items) %}
+{% macro exact_evidence(items, anchor="findings") %}
 <details class="evidence-disclosure">
   <summary>Inspect exact cited P1.6 claims</summary>
   <div class="evidence-list">
   {% for item in items %}
     <article class="evidence-entry">
       <div class="evidence-entry-head">
-        <a href="/jobs/{{ item.source_job_id }}">{{ item.source_job_id }}</a>
+        <a href="{{ job_url(item.source_job_id, anchor) }}" title="Job reference: {{ item.source_job_id }}">{{ source_labels.get(item.source_job_id, {}).get("label", item.source_job_id) }}</a>
         <span class="badge">{{ item.kind }}</span>
         <span class="mono-small">{{ item.ref }}</span>
       </div>
@@ -34,8 +34,8 @@
 </details>
 {% endmacro %}
 
-{% macro group_card(group, kind_label) %}
-<article class="interpretation-card">
+{% macro group_card(group, kind_label, anchor) %}
+<article class="interpretation-card" id="{{ anchor }}">
   <div class="interpretation-card-head">
     <div>
       <span class="eyebrow">{{ kind_label }}</span>
@@ -61,7 +61,7 @@
     {% for point in group.interpretation_points %}
       <div class="interpretation-point">
         <p>{{ point.text }}</p>
-        {{ evidence_summary(point) }}
+        {{ evidence_summary(point, anchor) }}
       </div>
     {% endfor %}
   </div>
@@ -69,11 +69,11 @@
   <details class="task-disclosure compact-disclosure">
     <summary>Other plausible readings</summary>
     {% for alternative in group.alternatives %}
-      <div class="alternative-reading"><strong>{{ alternative.label }}</strong>{{ evidence_summary(alternative) }}</div>
+      <div class="alternative-reading"><strong>{{ alternative.label }}</strong>{{ evidence_summary(alternative, anchor) }}</div>
     {% endfor %}
   </details>
   {% endif %}
-  {{ exact_evidence(group.evidence) }}
+  {{ exact_evidence(group.evidence, anchor) }}
 </article>
 {% endmacro %}
 
@@ -97,6 +97,7 @@
     </div>
   </div>
 
+  <details class="task-disclosure" {% if review_state == "pending" %}open{% endif %}><summary>{{ "Review this interpretation" if review_state == "pending" else "Update your review" }}</summary>
   <form method="post" action="/market/actions/reports/{{ artifact.id }}/review" class="review-form">
     <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
     <label>Review note <span class="muted">(optional)</span>
@@ -108,6 +109,7 @@
     </div>
     <span class="field-help">A new review event is appended. Previous decisions remain in history.</span>
   </form>
+  </details>
 </section>
 
 <section class="metric-grid four report-metrics">
@@ -117,17 +119,17 @@
   <article class="metric-card"><span class="metric-label">Role subfamilies</span><strong class="metric-value">{{ report.possible_role_subfamilies|length }}</strong><span class="metric-help">{{ report.specialty_candidates|length }} singleton specialty/outlier candidate{% if report.specialty_candidates|length != 1 %}s{% endif %}</span></article>
 </section>
 
-<section class="panel intelligence-lead">
+<section class="panel intelligence-lead" id="findings">
   <div class="panel-header">
     <div><p class="eyebrow">Executive reading</p><h2>What this snapshot suggests</h2></div>
     <span class="badge">Interpretive · evidence-linked</span>
   </div>
   <div class="observation-grid">
     {% for observation in report.overall_observations %}
-      <article class="observation-card">
+      <article class="observation-card" id="observation-{{ loop.index }}">
         <p>{{ observation.text }}</p>
-        {{ evidence_summary(observation) }}
-        {{ exact_evidence(observation.evidence) }}
+        {{ evidence_summary(observation, "observation-" ~ loop.index) }}
+        {{ exact_evidence(observation.evidence, "observation-" ~ loop.index) }}
       </article>
     {% endfor %}
   </div>
@@ -135,7 +137,7 @@
     <strong>Responsibility coverage</strong>
     <span>{{ report.responsibility_coverage.postings_with_work_claims }} of {{ report.source_count }} postings have extracted responsibilities.</span>
     {% if report.responsibility_coverage.postings_without_work_claims %}
-      <span>No responsibility claims for {% for job_id in report.responsibility_coverage.postings_without_work_claims %}<a href="/jobs/{{ job_id }}">{{ job_id }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</span>
+      <span>No responsibility claims for {% for job_id in report.responsibility_coverage.postings_without_work_claims %}<a href="{{ job_url(job_id) }}">{{ source_labels.get(job_id, {}).get("label", job_id) }}</a>{% if not loop.last %}, {% endif %}{% endfor %}.</span>
     {% endif %}
   </div>
 </section>
@@ -147,7 +149,7 @@
   </div>
   {% if report.work_clusters %}
     <div class="interpretation-grid">
-      {% for group in report.work_clusters %}{{ group_card(group, "Work cluster") }}{% endfor %}
+      {% for group in report.work_clusters %}{{ group_card(group, "Work cluster", "work-" ~ loop.index) }}{% endfor %}
     </div>
   {% else %}<div class="empty-state">No defensible work-cluster grouping survived evidence validation.</div>{% endif %}
 </section>
@@ -160,7 +162,7 @@
   <p class="muted">A subfamily hypothesis must be supported by at least two postings and add a role-shape distinction beyond merely renaming a work cluster.</p>
   {% if report.possible_role_subfamilies %}
     <div class="interpretation-grid">
-      {% for group in report.possible_role_subfamilies %}{{ group_card(group, "Role-subfamily hypothesis") }}{% endfor %}
+      {% for group in report.possible_role_subfamilies %}{{ group_card(group, "Role-subfamily hypothesis", "subfamily-" ~ loop.index) }}{% endfor %}
     </div>
   {% else %}<div class="empty-state">No defensible multi-posting role-subfamily hypothesis in this run.</div>{% endif %}
 </section>
@@ -172,7 +174,7 @@
     <span class="badge warn">Not reusable subfamilies</span>
   </div>
   <div class="interpretation-grid">
-    {% for group in report.specialty_candidates %}{{ group_card(group, "Specialty / outlier") }}{% endfor %}
+    {% for group in report.specialty_candidates %}{{ group_card(group, "Specialty / outlier", "specialty-" ~ loop.index) }}{% endfor %}
   </div>
 </section>
 {% endif %}

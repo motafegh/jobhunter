@@ -18,6 +18,7 @@ from jobhunter.market_workspace import (
     MarketWorkspaceService,
     market_run_summary,
 )
+from jobhunter.web.intelligence_navigation import market_job_url, snapshot_jobs
 from jobhunter.web.operations import (
     OperationBusyError,
     WebOperationLink,
@@ -186,6 +187,10 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
                 page="market",
                 snapshot=snapshot,
                 members=members,
+                source_labels=snapshot_jobs(settings.database_path, snapshot_id),
+                job_url=lambda job_id, finding="": market_job_url(
+                    job_id, snapshot_id=snapshot_id, finding=finding
+                ),
                 profile=profile,
                 report_items=report_items,
                 accepted_report=accepted_report,
@@ -215,6 +220,13 @@ def register_market_workspace_routes(app: FastAPI, settings: Settings) -> None:
                 page="market",
                 artifact=artifact,
                 report=artifact.report,
+                source_labels=snapshot_jobs(settings.database_path, artifact.snapshot_id),
+                job_url=lambda job_id, finding="findings": market_job_url(
+                    job_id,
+                    snapshot_id=artifact.snapshot_id,
+                    report_id=artifact.id,
+                    finding=finding,
+                ),
                 review_state=reports.effective_review_state(report_id),
                 reviews=reviews,
                 notice=notice,

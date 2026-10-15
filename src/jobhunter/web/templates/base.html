@@ -12,6 +12,7 @@
   <script defer src="{{ url_for('static', path='/app.js') }}"></script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div class="app-shell">
     <aside class="sidebar">
       <a class="brand" href="/">
@@ -19,14 +20,18 @@
         <span><strong>JobHunter</strong><small>Career intelligence</small></span>
       </a>
       <nav class="nav-list" aria-label="Primary">
-        <a class="nav-item {% if page == 'dashboard' %}active{% endif %}" href="/">Overview</a>
-        <a class="nav-item {% if page == 'jobs' %}active{% endif %}" href="/jobs">Jobs</a>
-        <a class="nav-item {% if page == 'report' %}active{% endif %}" href="/report">Report</a>
-        <a class="nav-item {% if page == 'market' %}active{% endif %}" href="/market/targets">Market</a>
-        <a class="nav-item {% if page == 'registry' %}active{% endif %}" href="/registry">Registry</a>
-        <a class="nav-item {% if page == 'searches' %}active{% endif %}" href="/searches">Search plan</a>
-        <a class="nav-item {% if page == 'operations' %}active{% endif %}" href="/operations">Operations</a>
-        <a class="nav-item {% if page == 'system' %}active{% endif %}" href="/system">System</a>
+        <div class="nav-group">
+          <span class="nav-label">Your research</span>
+          {% for key, href, label in [('dashboard', '/', 'Overview'), ('market', '/market/targets', 'Market intelligence'), ('jobs', '/jobs', 'Jobs')] %}
+          <a class="nav-item {% if page == key %}active{% endif %}" href="{{ href }}" {% if page == key %}aria-current="page"{% endif %}>{{ label }}</a>
+          {% endfor %}
+        </div>
+        <div class="nav-group secondary-navigation">
+          <span class="nav-label">Manage &amp; inspect</span>
+          {% for key, href, label in [('report', '/report', 'Corpus health'), ('operations', '/operations', 'Activity'), ('registry', '/registry', 'Reviewed concepts'), ('searches', '/searches', 'Search plan'), ('system', '/system', 'System')] %}
+          <a class="nav-item {% if page == key %}active{% endif %}" href="{{ href }}" {% if page == key %}aria-current="page"{% endif %}>{{ label }}</a>
+          {% endfor %}
+        </div>
       </nav>
       <div class="sidebar-footer">
         {% if active_operation %}
@@ -39,7 +44,7 @@
         <small>Local application</small>
       </div>
     </aside>
-    <main class="main-content">
+    <main class="main-content" id="main-content" tabindex="-1">
       <header class="topbar">
         <div>
           <p class="eyebrow">{% block eyebrow %}Local-first career intelligence{% endblock %}</p>

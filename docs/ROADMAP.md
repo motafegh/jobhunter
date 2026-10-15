@@ -1130,13 +1130,13 @@ The browser remains the normal user interface. Add product domains only when und
 
 On 2026-10-15 the owner confirmed whole-product usability, productivity, and usefulness as a parallel priority, with **understanding and comparing jobs or Market findings** as the highest-friction task. Apply this across increments rather than treating visual polish as a separate end-stage project. B2 semantic review remains the active semantic tranche; this priority does not pre-approve candidate correspondences or later semantic authority.
 
-Source inspection identifies three concrete improvement opportunities:
+The pre-implementation source inspection identified three concrete improvement opportunities:
 
-- `src/jobhunter/web/templates/dashboard.html` still labels the broad `/actions/full-workflow` processing form as the primary workflow; the accepted target-scoped Market journey is reached separately.
-- `src/jobhunter/web/templates/job_detail.html` places complete source/English documents before structured analysis; Work and Capability understanding are separate linked pages. The default reading journey can require repeated navigation and document scanning.
-- `src/jobhunter/web/templates/market_candidate_report.html` and `market_snapshot.html` commonly identify supporting postings by opaque job IDs. Job detail returns to the general catalog, without an explicit route back to the originating finding. These are source-level observations, not measured usability results.
+- Overview promoted broad processing ahead of the accepted target-scoped Market journey.
+- Job detail placed complete source/English documents before structured analysis; Work and Capability understanding required separate navigation.
+- Market evidence links commonly identified postings by opaque IDs, and job detail offered only a general catalog return. These baseline observations are not measured usability results.
 
-The proposed first bounded usability slice is **Market finding → supporting jobs → back to the finding**:
+The owner authorized the first bounded usability slice on 2026-10-15: **Market finding → supporting jobs → back to the finding**. It is implemented and locally verified, with owner repeated-use feedback still pending:
 
 1. make the existing target/snapshot/accepted-report journey easy to reach from Overview;
 2. show human-readable role/company context on evidence links when the exact frozen evidence supports it, retaining stable IDs and dependency identity in inspectable detail;
@@ -1145,7 +1145,7 @@ The proposed first bounded usability slice is **Market finding → supporting jo
 
 Build on the accepted R3 Market presentation and shared services. Start with existing facts and reports; opening or navigating a view must not generate models or mutate review state. A subsequent bounded comparison view can place a small selected set of jobs side by side using existing accepted facts and explicitly labeled interpretation. Shared reviewed responsibilities may use approved B2 mappings; unmapped facts remain valid and distinct. Missing wording means not stated, not proof of absence. Personal fit/readiness scoring remains outside this scope.
 
-Before implementation, turn the selected slice into a concrete screen/interaction design in the existing execution owner. Evaluate it through normal product use: can the owner identify the main work, an important difference between postings, a material unknown, and the supporting evidence with less repeated reading/navigation than the current path? Record the actual observation; do not invent time savings or require a new evaluation framework. Whole-product review should also cover empty/pending/stale/failed states, keyboard use, narrow screens, and clear next actions as the touched workflow requires.
+For each subsequent increment, capture its concrete screen/interaction design in the existing execution owner. Evaluate it through normal product use: can the owner identify the main work, an important difference between postings, a material unknown, and the supporting evidence with less repeated reading/navigation than the prior path? Record the actual observation; do not invent time savings or require a new evaluation framework. Whole-product review should also cover empty/pending/stale/failed states, keyboard use, narrow screens, and clear next actions as the touched workflow requires.
 
 Likely mature information architecture:
 

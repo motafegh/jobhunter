@@ -27,6 +27,7 @@ from jobhunter.web.common import (
     require_csrf,
     template_context,
 )
+from jobhunter.web.intelligence_navigation import request_origin
 from jobhunter.web.operations import OperationBusyError, WebOperationLink, WebOperationResult
 
 
@@ -86,6 +87,7 @@ def register_capability_routes(app: FastAPI, settings: Settings) -> None:
                 request,
                 page="jobs",
                 source_job_id=source_job_id,
+                origin=request_origin(settings, source_job_id, request),
                 posting=posting,
                 detail=detail,
                 english_analysis=english_analysis,

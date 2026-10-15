@@ -151,12 +151,14 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 
 - [x] Owner priority confirmed: improve whole-product usability, productivity, and usefulness; prioritize understanding/comparing jobs and Market findings.
 - [x] Source-level journey review identified broad-processing-first Overview, document-first job detail, opaque evidence link labels, and loss of explicit finding context when returning from a job.
-- [ ] Prepare the first bounded screen/interaction design: Overview → existing Market snapshot/report → human-readable supporting jobs → context-preserving return.
-- [ ] Use existing accepted artifacts and R3 presentation; retain exact historical/current distinction, source evidence, uncertainty, and review boundaries.
-- [ ] Evaluate comprehension and navigation on real retained examples; record observed benefit and remaining friction without claiming measured savings before use.
+- [x] Prepare the first bounded screen/interaction design: Overview leads with read-only Market and interested-job entry points; daily navigation separates from maintenance; job detail leads with accepted work/requirements and keeps full documents/processing inspectable; pinned source-version labels identify supporting jobs; validated snapshot/report parameters provide a return path and explicit current-versus-historical context.
+- [x] Implement the owner-authorized navigation/UI slice (2026-10-15). Overview now leads with existing intelligence; navigation groups daily research and management; job detail leads with an accepted-fact preview; exact-version role/company labels and validated return context connect findings to jobs and Work/Capability views. Processing/full source remain available through disclosures.
+- [x] Use existing accepted artifacts and R3 presentation; retain exact historical/current distinction, source evidence, uncertainty, and review boundaries. Viewing pages does not generate artifacts or append review state.
+- [x] Verify the retained snapshot-15/report-2 journey in a real browser on a SQLite copy, desktop and 390px viewport: return to the same finding, human-readable source labels, visible mobile back action, keyboard skip, no horizontal overflow or page errors. 834 warnings-as-errors tests pass, including changed-source historical-label and invalid-origin regressions.
+- [ ] Owner repeated-use assessment of comprehension and remaining friction; no subjective acceptance or measured time savings is claimed by the browser checks.
 - [ ] Scope any subsequent small-set job comparison separately; use accepted facts, approved B2 correspondences where available, and clearly labeled interpretation. No personal scoring or automatic taxonomy promotion.
 
-The owning UX direction and source findings are in `docs/ROADMAP.md` §13. This is a parallel product priority and bounded design proposal; B2.2 semantic review remains next, and no UI implementation or new semantic layer is claimed complete.
+The owning UX direction is in `docs/ROADMAP.md` §13. The first navigation/UI slice is implemented and locally verified; owner usefulness review remains distinct. B2.2 semantic review is still next for the semantic stream. No job-comparison feature or new semantic layer was added.
 
 ## E. Permanent authority invariants
 

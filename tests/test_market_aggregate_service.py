@@ -606,7 +606,10 @@ def test_browser_snapshot_exposes_frozen_claim_evidence(h: Harness) -> None:
     assert response.status_code == 200
     assert f"Frozen P1.6 artifact #{analysis_id}" in response.text
     assert "Claim indexes (zero-based): 0" in response.text
-    assert 'href="/jobs/web-evidence"' in response.text
+    assert (
+        f'href="/jobs/web-evidence?from_snapshot={snapshot.id}'
+        '&amp;from_finding=requirements"'
+    ) in response.text
     assert "Use Python &lt;safely&gt;." in response.text
     assert "Evaluate retrieval quality." in response.text
     assert "Alpha" in response.text

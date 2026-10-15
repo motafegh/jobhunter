@@ -1,0 +1,4 @@
+{% if origin %}
+<nav class="journey-breadcrumb" aria-label="Research context"><a href="/market/targets">Market</a><span aria-hidden="true">/</span><a href="{{ origin.return_url }}">{{ origin.label }}</a><span aria-hidden="true">/</span><span>Job</span></nav>
+<div class="notice research-context"><strong>Viewing the latest local job state.</strong> You arrived from snapshot #{{ origin.snapshot_id }}, where this role was <span dir="auto">{{ origin.job.label }}</span> (source version {{ origin.job.detail_id }}{% if origin.job.analysis_id %}, analysis #{{ origin.job.analysis_id }}{% endif %}). {% if origin.job.source_changed %}<strong>The source has changed since that snapshot.</strong> {% endif %}The original frozen claims remain in the <a href="{{ origin.return_url }}">Market finding</a>.</div>
+{% endif %}

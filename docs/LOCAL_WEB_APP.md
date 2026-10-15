@@ -8,6 +8,10 @@
 
 The local web application is the normal human-facing interface for repeated JobHunter use.
 
+Overview leads with existing Market intelligence, analyzed jobs, and Interested/Review later entry points. Daily research navigation is grouped separately from corpus health, activity, reviewed concepts, search setup, and system controls. Broad processing is retained behind an explicit maintenance disclosure.
+
+Job detail leads with a preview of exact accepted work/requirements, without ranking the first entries as most important. Full analysis/evidence, original/English documents, and processing controls remain accessible. Market evidence links use role/company labels from the pinned source/translation versions. Validated snapshot/report/finding IDs provide a return path through job and Work/Capability reading; job views explicitly distinguish current local state from the frozen originating evidence. Arbitrary return URLs are not accepted. These navigation changes do not run generation or append reviews.
+
 CLI remains available for automation, debugging, tests, acceptance work, and advanced operation.
 
 The browser is a **second interface over the same application services and SQLite/evidence state**. It does not maintain separate parsers, translations, analyses, Capability/Blueprint truth, public-corpus truth, or user data.

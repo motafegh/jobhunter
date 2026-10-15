@@ -15,6 +15,7 @@ from fastapi.responses import HTMLResponse
 from jobhunter.config import Settings
 from jobhunter.storage import JobHunterStore
 from jobhunter.web.common import TEMPLATES, redirect_with_notice, require_csrf, template_context
+from jobhunter.web.intelligence_navigation import request_origin
 from jobhunter.work_intelligence_models import JobWorkIntelligence
 from jobhunter.work_intelligence_service import (
     WorkIntelligenceError,
@@ -60,6 +61,7 @@ def register_work_intelligence_routes(app: FastAPI, settings: Settings) -> None:
                 request,
                 page="jobs",
                 source_job_id=source_job_id,
+                origin=request_origin(settings, source_job_id, request),
                 posting=posting,
                 detail=detail,
                 artifact=artifact,

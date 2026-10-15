@@ -1,12 +1,14 @@
 {% extends "base.html" %}
 {% block title %}{{ detail.fields.title if detail else (posting.title_observed or 'Job') }} · JobHunter{% endblock %}
 {% block heading %}{{ detail.fields.title if detail else (posting.title_observed or 'Discovered Jobinja opportunity') }}{% endblock %}
-{% block eyebrow %}Jobinja reference {{ source_job_id }}{% endblock %}
-{% block topbar_actions %}<a class="button ghost" href="/jobs">Back to jobs</a>{% endblock %}
+{% block eyebrow %}Understand the role · latest local evidence{% endblock %}
+{% block topbar_actions %}{% if origin %}<a class="button ghost" href="{{ origin.return_url }}">{{ origin.label }}</a>{% else %}<a class="button ghost" href="/jobs">Back to jobs</a>{% endif %}{% endblock %}
 
 {% block content %}
+{% include "research_origin.html" %}
 <section class="job-hero panel">
   <div>
+    <p class="technical-ref">Jobinja reference {{ source_job_id }}</p>
     {% if detail %}
       <div class="job-hero-meta"><span>{{ detail.fields.company or 'Company unavailable' }}</span><span>{{ detail.fields.location or 'Location unavailable' }}</span><span>{{ detail.fields.employment_type or 'Employment type unavailable' }}</span></div>
       <div class="badge-row">
@@ -25,45 +27,33 @@
   </div>
   <div class="job-actions">
     <form method="post" action="/jobs/{{ source_job_id }}/triage"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><select name="triage_state" aria-label="Triage state"><option value="unreviewed" {% if workflow.triage_state == 'unreviewed' %}selected{% endif %}>Unreviewed</option><option value="interested" {% if workflow.triage_state == 'interested' %}selected{% endif %}>Interested</option><option value="review_later" {% if workflow.triage_state == 'review_later' %}selected{% endif %}>Review later</option><option value="reviewed" {% if workflow.triage_state == 'reviewed' %}selected{% endif %}>Reviewed</option><option value="not_relevant" {% if workflow.triage_state == 'not_relevant' %}selected{% endif %}>Not relevant</option></select><button class="button ghost" type="submit">Save triage</button></form>
-    <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source' if detail else 'Fetch details' }}</button></form>
-    {% if translation_enabled and detail %}<form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Repair English' if legacy_translation and not translation else ('Recheck English' if translation else 'Translate to English') }}</button></form>{% endif %}
-    {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-english" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck English analysis' if english_analysis_artifact else 'Analyze English' }}</button></form>{% endif %}
-    {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'accepted' %}<a class="button primary" href="/jobs/{{ source_job_id }}/work-intelligence">Work Intelligence</a><a class="button ghost" href="/jobs/{{ source_job_id }}/capability-intelligence">Capability Intelligence</a>{% endif %}
-    {% if detail %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-original" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button ghost" type="submit">{{ 'Recheck original analysis' if original_analysis_artifact else 'Analyze Original' }}</button></form>{% endif %}
+    {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'accepted' %}<a class="button primary" href="/jobs/{{ source_job_id }}/work-intelligence{% if origin %}?{{ origin.query }}{% endif %}">Explore work interpretation</a><a class="button ghost" href="/jobs/{{ source_job_id }}/capability-intelligence{% if origin %}?{{ origin.query }}{% endif %}">Explore capabilities</a>{% elif english_analysis_artifact %}<a class="button primary" href="#english-analysis">Review the analysis</a>{% else %}<a class="button primary" href="#job-tools">Prepare this job</a>{% endif %}
   </div>
 </section>
 
 {% if legacy_translation and not translation %}<div class="notice warn-notice"><strong>English repair required.</strong> A historical {{ legacy_translation.translation_schema_version }} artifact exists, but JobHunter now requires the hardened current schema before English analysis or export. Original-language analysis remains independent and can use the current source directly.</div>{% endif %}
 {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'pending' %}
-<div class="notice warn-notice"><strong>Human semantic review required.</strong> This candidate is visible for complete inspection, but it is excluded from Capability, Market, and the public corpus until accepted.</div>
+<div class="notice warn-notice"><strong>Human semantic review required.</strong> This candidate is visible for complete inspection, but it is excluded from Capability, accepted-semantic Market statistics, and the public corpus until accepted.</div>
 {% endif %}
 
 {% if detail %}
-<div class="language-grid">
-  <section class="panel document-panel">
-    <div class="panel-header"><div><p class="eyebrow">Authoritative source</p><h2>Original job data</h2></div><span class="badge">{{ detail.fields.language or 'unknown' }}</span></div>
-    <dl class="fact-grid">
-      <div><dt>Company</dt><dd>{{ detail.fields.company or '—' }}</dd></div><div><dt>Category</dt><dd>{{ detail.fields.job_category or '—' }}</dd></div><div><dt>Location</dt><dd>{{ detail.fields.location or '—' }}</dd></div><div><dt>Employment</dt><dd>{{ detail.fields.employment_type or '—' }}</dd></div><div><dt>Experience</dt><dd>{{ detail.fields.minimum_experience or '—' }}</dd></div><div><dt>Education</dt><dd>{{ detail.fields.education or '—' }}</dd></div><div><dt>Salary</dt><dd>{{ detail.fields.salary or '—' }}</dd></div><div><dt>Gender</dt><dd>{{ detail.fields.gender or '—' }}</dd></div><div><dt>Military service</dt><dd>{{ detail.fields.military_service or '—' }}</dd></div><div><dt>Date posted</dt><dd>{{ detail.fields.date_posted or '—' }}</dd></div>
-    </dl>
-    <div class="document-section"><h3>Source skill tags</h3><div class="tag-list">{% for skill in detail.fields.skills or [] %}<span class="tag">{{ skill }}</span>{% else %}<span class="muted">No source tags</span>{% endfor %}</div></div>
-    <div class="document-section"><h3>Job description</h3><p class="long-copy" dir="auto">{{ detail.fields.description or '—' }}</p></div>
-    {% if detail.fields.company_description %}<div class="document-section"><h3>Company description</h3><p class="long-copy" dir="auto">{{ detail.fields.company_description }}</p></div>{% endif %}
-  </section>
 
-  <section class="panel document-panel english-panel">
-    <div class="panel-header"><div><p class="eyebrow">Derived representation</p><h2>English projection</h2></div>{% if translation %}<span class="badge good">{{ translation.provider_model }}</span>{% endif %}</div>
-    {% if translation %}{% set e = translation.fields %}
-      <dl class="fact-grid"><div><dt>Company</dt><dd>{{ e.company or '—' }}</dd></div><div><dt>Category</dt><dd>{{ e.job_category or '—' }}</dd></div><div><dt>Location</dt><dd>{{ e.location or '—' }}</dd></div><div><dt>Employment</dt><dd>{{ e.employment_type or '—' }}</dd></div><div><dt>Experience</dt><dd>{{ e.minimum_experience or '—' }}</dd></div><div><dt>Education</dt><dd>{{ e.education or '—' }}</dd></div><div><dt>Salary</dt><dd>{{ e.salary or '—' }}</dd></div><div><dt>Gender</dt><dd>{{ e.gender or '—' }}</dd></div><div><dt>Military service</dt><dd>{{ e.military_service or '—' }}</dd></div><div><dt>Date posted</dt><dd>{{ e.date_posted or '—' }}</dd></div></dl>
-      <div class="document-section"><h3>Source skill tags</h3><div class="tag-list">{% for skill in e.skills or [] %}<span class="tag">{{ skill }}</span>{% else %}<span class="muted">No source tags</span>{% endfor %}</div></div>
-      <div class="document-section"><h3>Job description</h3><p class="long-copy">{{ e.description or '—' }}</p></div>
-      {% if e.company_description %}<div class="document-section"><h3>Company description</h3><p class="long-copy">{{ e.company_description }}</p></div>{% endif %}
-      <div class="artifact-meta"><span>{{ translation.provider_name }}</span><span>{{ translation.translation_schema_version }}</span><span>{{ translation.translated_segment_count }} translated / {{ translation.native_segment_count }} native</span></div>
-    {% else %}<div class="empty-state tall">No current hardened English projection exists. Translate/repair this job before running English analysis.</div>{% endif %}
-  </section>
-</div>
-
+<nav class="section-nav" aria-label="On this job page"><a href="#job-understanding">At a glance</a><a href="#english-analysis">Full analysis</a><a href="#job-documents">Source documents</a><a href="#job-tools">Processing &amp; checks</a></nav>
+<section class="panel job-understanding" id="job-understanding">
+  <div class="panel-header"><div><p class="eyebrow">At a glance</p><h2>The work and requirements</h2></div><span class="badge">Source-backed preview</span></div>
+  {% if english_analysis_artifact and english_analysis_artifact.semantic_review_status == 'accepted' %}
+    {% set a = english_analysis_artifact.analysis %}
+    {% for item in a.role_purpose or [] %}<p class="lead-copy">{{ item.statement }}</p>{% endfor %}
+    <div class="understanding-grid">
+      <div><h3>Work described · {{ a.responsibilities|length }}</h3><ul class="reading-list">{% for item in a.responsibilities[:4] %}<li>{{ item.statement }}</li>{% else %}<li>No direct responsibilities stated in the accepted analysis. Requirements do not establish duties.</li>{% endfor %}</ul></div>
+      <div><h3>Requirements · {{ a.requirements|length }}</h3><ul class="reading-list">{% for item in a.requirements[:5] %}<li><strong>{{ item.concept }}</strong> <span class="badge">{{ item.requirement_type }}</span>{% if item.depth_signal %}<span class="muted"> · {{ item.depth_signal }}</span>{% endif %}</li>{% else %}<li>No supported requirements extracted.</li>{% endfor %}</ul></div>
+    </div>
+    <p class="muted">First entries in the accepted analysis, not an importance ranking. <a class="text-link" href="#english-analysis">Read all claims and exact evidence →</a></p>
+  {% elif english_analysis_artifact %}<p class="muted">An analysis is waiting for semantic review. Inspect its claims and evidence below before using it as accepted intelligence.</p>
+  {% else %}<p class="muted">Accepted analysis is not available yet. The source documents remain readable; use processing controls to prepare this job.</p>{% endif %}
+</section>
 <div class="language-grid">
-  <section class="panel analysis-panel">
+  <section class="panel analysis-panel" id="english-analysis">
     <div class="panel-header"><div><p class="eyebrow">English projection · independent artifact</p><h2>English semantic analysis</h2></div>{% if english_analysis_artifact %}<span class="badge {{ 'good' if english_analysis_artifact.semantic_review_status == 'accepted' else 'warn' }}">{{ english_analysis_artifact.semantic_review_status }} · {{ english_analysis_artifact.model }}</span>{% else %}<span class="badge">Not analyzed</span>{% endif %}</div>
     {% if english_analysis_artifact %}{% set a = english_analysis_artifact.analysis %}
       {% if a.role_purpose %}<div class="analysis-section"><h3>Role purpose</h3>{% for item in a.role_purpose %}<div class="claim-card"><strong>{{ item.statement }}</strong><blockquote>{{ item.evidence }}</blockquote><span class="badge">{{ item.confidence }}</span></div>{% endfor %}</div>{% endif %}
@@ -87,6 +77,31 @@
   </section>
 </div>
 
+<details class="panel disclosure-panel" id="job-documents"><summary class="panel-summary"><span><span class="eyebrow">Read the full posting</span><strong>Original source &amp; English representation</strong></span></summary><div class="disclosure-body">
+<div class="language-grid">
+  <section class="panel document-panel">
+    <div class="panel-header"><div><p class="eyebrow">Authoritative source</p><h2>Original job data</h2></div><span class="badge">{{ detail.fields.language or 'unknown' }}</span></div>
+    <dl class="fact-grid">
+      <div><dt>Company</dt><dd>{{ detail.fields.company or '—' }}</dd></div><div><dt>Category</dt><dd>{{ detail.fields.job_category or '—' }}</dd></div><div><dt>Location</dt><dd>{{ detail.fields.location or '—' }}</dd></div><div><dt>Employment</dt><dd>{{ detail.fields.employment_type or '—' }}</dd></div><div><dt>Experience</dt><dd>{{ detail.fields.minimum_experience or '—' }}</dd></div><div><dt>Education</dt><dd>{{ detail.fields.education or '—' }}</dd></div><div><dt>Salary</dt><dd>{{ detail.fields.salary or '—' }}</dd></div><div><dt>Gender</dt><dd>{{ detail.fields.gender or '—' }}</dd></div><div><dt>Military service</dt><dd>{{ detail.fields.military_service or '—' }}</dd></div><div><dt>Date posted</dt><dd>{{ detail.fields.date_posted or '—' }}</dd></div>
+    </dl>
+    <div class="document-section"><h3>Source skill tags</h3><div class="tag-list">{% for skill in detail.fields.skills or [] %}<span class="tag">{{ skill }}</span>{% else %}<span class="muted">No source tags</span>{% endfor %}</div></div>
+    <div class="document-section"><h3>Job description</h3><p class="long-copy" dir="auto">{{ detail.fields.description or '—' }}</p></div>
+    {% if detail.fields.company_description %}<div class="document-section"><h3>Company description</h3><p class="long-copy" dir="auto">{{ detail.fields.company_description }}</p></div>{% endif %}
+  </section>
+
+  <section class="panel document-panel english-panel">
+    <div class="panel-header"><div><p class="eyebrow">Derived representation</p><h2>English projection</h2></div>{% if translation %}<span class="badge good">{{ translation.provider_model }}</span>{% endif %}</div>
+    {% if translation %}{% set e = translation.fields %}
+      <dl class="fact-grid"><div><dt>Company</dt><dd>{{ e.company or '—' }}</dd></div><div><dt>Category</dt><dd>{{ e.job_category or '—' }}</dd></div><div><dt>Location</dt><dd>{{ e.location or '—' }}</dd></div><div><dt>Employment</dt><dd>{{ e.employment_type or '—' }}</dd></div><div><dt>Experience</dt><dd>{{ e.minimum_experience or '—' }}</dd></div><div><dt>Education</dt><dd>{{ e.education or '—' }}</dd></div><div><dt>Salary</dt><dd>{{ e.salary or '—' }}</dd></div><div><dt>Gender</dt><dd>{{ e.gender or '—' }}</dd></div><div><dt>Military service</dt><dd>{{ e.military_service or '—' }}</dd></div><div><dt>Date posted</dt><dd>{{ e.date_posted or '—' }}</dd></div></dl>
+      <div class="document-section"><h3>Source skill tags</h3><div class="tag-list">{% for skill in e.skills or [] %}<span class="tag">{{ skill }}</span>{% else %}<span class="muted">No source tags</span>{% endfor %}</div></div>
+      <div class="document-section"><h3>Job description</h3><p class="long-copy">{{ e.description or '—' }}</p></div>
+      {% if e.company_description %}<div class="document-section"><h3>Company description</h3><p class="long-copy">{{ e.company_description }}</p></div>{% endif %}
+      <div class="artifact-meta"><span>{{ translation.provider_name }}</span><span>{{ translation.translation_schema_version }}</span><span>{{ translation.translated_segment_count }} translated / {{ translation.native_segment_count }} native</span></div>
+    {% else %}<div class="empty-state tall">No current hardened English projection exists. Translate/repair this job before running English analysis.</div>{% endif %}
+  </section>
+</div>
+
+</div></details>
 <div class="dashboard-grid lower-grid">
   <section class="panel"><div class="panel-header"><div><p class="eyebrow">Discovery provenance</p><h2>Why this posting entered JobHunter</h2></div><span class="badge">{{ search_provenance|length }} search matches</span></div>{% if search_provenance %}<div class="tag-list dense">{% for name in search_provenance %}<span class="tag">{{ name }}</span>{% endfor %}</div>{% else %}<div class="empty-state">No stored search provenance; this may have been directly added.</div>{% endif %}</section>
   <section class="panel"><div class="panel-header"><div><p class="eyebrow">Lifecycle evidence</p><h2>Source availability</h2></div><span class="badge">{{ posting.lifecycle_state }}</span></div>{% if lifecycle_events %}<div class="timeline">{% for event in lifecycle_events %}<div class="timeline-row"><span class="timeline-dot {{ 'good' if event.classification == 'active' else ('bad' if event.classification in ['expired_explicit','not_found','gone'] else '') }}"></span><div><strong>{{ event.classification.replace('_',' ') }}</strong><div class="job-meta">{{ event.checked_at }}{% if event.status_code %} · HTTP {{ event.status_code }}{% endif %}</div>{% if event.detail %}<p class="error-copy">{{ event.detail }}</p>{% endif %}</div><span class="badge">{{ 'retryable' if event.retryable else 'final signal' }}</span></div>{% endfor %}</div>{% else %}<div class="empty-state">No lifecycle-classified checks yet.</div>{% endif %}</section>
@@ -97,4 +112,9 @@
   <section class="panel"><div class="panel-header"><div><p class="eyebrow">Provenance</p><h2>Evidence identity</h2></div></div><dl class="metadata-list"><div><dt>Jobinja reference</dt><dd>{{ source_job_id }}</dd></div><div><dt>Semantic SHA-256</dt><dd class="mono-small">{{ detail.semantic_sha256 }}</dd></div><div><dt>Raw HTML SHA-256</dt><dd class="mono-small">{{ detail.content_sha256 }}</dd></div><div><dt>First recorded</dt><dd>{{ detail.fetched_at }}</dd></div><div><dt>Source URL</dt><dd><a class="text-link" href="{{ detail.final_url }}" rel="noreferrer">Open Jobinja</a></dd></div><div><dt>Evidence file</dt><dd class="mono-small">{{ detail.evidence_path }}</dd></div></dl></section>
 </div>
 {% endif %}
+<details class="panel disclosure-panel" id="job-tools" {% if not english_analysis_artifact %}open{% endif %}><summary class="panel-summary"><span><span class="eyebrow">Manage this posting</span><strong>Processing &amp; source checks</strong></span></summary><div class="disclosure-body"><p class="muted">These actions may fetch source data or run local models. Existing bounds, reuse, and review rules apply.</p><div class="journey-actions">
+    <form method="post" action="/jobs/{{ source_job_id }}/fetch" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button {{ 'ghost' if detail else 'primary' }}" type="submit">{{ 'Check source' if detail else 'Fetch details' }}</button></form>
+    {% if translation_enabled and detail %}<form method="post" action="/jobs/{{ source_job_id }}/translate" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Repair English' if legacy_translation and not translation else ('Recheck English' if translation else 'Translate to English') }}</button></form>{% endif %}
+    {% if detail and translation %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-english" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button primary" type="submit">{{ 'Recheck English analysis' if english_analysis_artifact else 'Analyze English' }}</button></form>{% endif %}
+    {% if detail %}<form method="post" action="/jobs/{{ source_job_id }}/analyze-original" data-operation-form><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button ghost" type="submit">{{ 'Recheck original analysis' if original_analysis_artifact else 'Analyze Original' }}</button></form>{% endif %}</div></div></details>
 {% endblock %}
