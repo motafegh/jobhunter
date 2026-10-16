@@ -95,7 +95,7 @@ Verified on 2026-10-15 at `bf016c7`: SQLite integrity `ok`, foreign keys empty; 
 Review these six candidates one at a time as `ACCEPT | HOLD | REJECT`:
 
 - [x] R1 — ACCEPTED / APPLIED 2026-10-16: `responsibility:design-implement-ai-agents`, exact mappings #7 (50[0]) and #8 (56[0]); broader cases pending. Idempotency, rendered browser/CLI agreement, integrity, and non-mutation checks passed; see focused decision §14.
-- [ ] R2 — integrate AI systems with APIs / databases / services.
+- [x] R2 — ACCEPTED / APPLIED 2026-10-16: `responsibility:integrate-ai-systems-with-services`, mappings #9 (50[2]) and #10 (56[2]); broader cases pending. Idempotency, rendered browser/CLI agreement, integrity, and preservation checks passed; focused decision §15.
 - [ ] R3 — implement LLM Tool / Function Calling.
 - [ ] R4 — develop RAG / knowledge-retrieval systems.
 - [ ] R5 — design / develop multi-step AI workflows.
@@ -158,7 +158,7 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 - [ ] Owner repeated-use assessment of comprehension and remaining friction; no subjective acceptance or measured time savings is claimed by the browser checks.
 - [ ] Scope any subsequent small-set job comparison separately; use accepted facts, approved B2 correspondences where available, and clearly labeled interpretation. No personal scoring or automatic taxonomy promotion.
 
-The owning UX direction is in `docs/ROADMAP.md` §13. The first navigation/UI slice is implemented and locally verified; owner usefulness review remains distinct. B2.2 review of R2-R6 remains next for the semantic stream. No job-comparison feature or new semantic layer was added.
+The owning UX direction is in `docs/ROADMAP.md` §13. The first navigation/UI slice is implemented and locally verified; owner usefulness review remains distinct. B2.2 review of R3-R6 remains next for the semantic stream. No job-comparison feature or new semantic layer was added.
 
 ## E. Permanent authority invariants
 
@@ -210,8 +210,8 @@ Portfolio work does not broaden the active semantic authorization.
 
 ```text
 P2.2B-B2.1 read-only baseline COMPLETE (2026-10-15)
-→ R1 approved/applied/verified (2026-10-16)
-→ B2.2 review R2-R6 with the owner
+→ R1/R2 approved/applied/verified (2026-10-16)
+→ B2.2 review R3-R6 with the owner
 → no canonical mutation before explicit semantic approval
 → apply only accepted correspondences, then verify and close B2
 ```

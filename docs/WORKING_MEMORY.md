@@ -250,8 +250,8 @@ B2.1 read-only local baseline COMPLETE (2026-10-15)
    - verify artifacts 50/56/60/61
    - inspect current Registry concepts/mapping states
 
-B2.2 R1 APPROVED / APPLIED / VERIFIED (2026-10-16)
-   - R2-R6 owner review next, one at a time
+B2.2 R1/R2 APPROVED / APPLIED / VERIFIED (2026-10-16)
+   - R3-R6 owner review next, one at a time
    - ACCEPT | HOLD | REJECT
    - no mutation first
 
@@ -284,7 +284,7 @@ The existing unpublished `tNpG` source/projection/manifest changes remain separa
 
 Verified alignment baseline: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changes documentation/docstrings only; it does not repeat model generation or semantic acceptance.
 
-Next after this historical baseline: owner B2.2 semantic review; R1 has since been applied as recorded below, and R2-R6 remain pending. No feature implementation or later Phase-2 authorization was added.
+Next after this historical baseline: owner B2.2 semantic review; R1/R2 have since been applied as recorded below, and R3-R6 remain pending. No feature implementation or later Phase-2 authorization was added.
 
 ## 8. Usability direction — 2026-10-15
 
@@ -313,7 +313,28 @@ provenance, rendered browser/CLI agreement, SQLite integrity/foreign keys, and
 all other table/corpus preservation checks passed. Backups/results remain local
 under `data/local-acceptance/b2-review-2026-10-16/`.
 
-Next: R2 owner semantic review of only artifact 50 responsibility[2] and artifact
-56 responsibility[2], with API/database/service integration definition and
-boundary exclusions in focused decision §14. No R2 mutation yet. B2 remains
+R2 was subsequently approved and applied as recorded below; its definition and
+boundary exclusions remain in focused decision §14. B2 remains
 active; no family, archetype, personal-readiness, or downstream authorization.
+
+
+## 10. B2 R2 execution — 2026-10-16
+
+Owner approved the exact R2 definition and pair. Applied
+`responsibility:integrate-ai-systems-with-services` through the existing CLI,
+with mapping #9 to `tvMm` artifact 50 responsibility[2] and #10 to `tNVe`
+artifact 56 responsibility[2]. Broader R2 cases remain pending. Registry totals:
+six concepts / ten mappings; four of the selected 35 responsibilities mapped,
+31 pending. R1 rows and all other previous Registry rows are preserved.
+
+Fresh backup and results remain local in
+`data/local-acceptance/b2-review-2026-10-16/`. Exact current dependencies,
+idempotency including review metadata, rendered browser/CLI agreement, SQLite
+integrity/foreign keys, other-table preservation, and corpus hash preservation
+passed. This was data-only: no code/model/source changes or full-suite rerun.
+
+Next: owner review of R3, `responsibility:implement-llm-tool-calling`, exact
+artifact 50/56 responsibility[3] pair. Proposed definition: implementing tool
+calling or function calling for language-model-based systems. Structured Output
+is additional scope only in the second posting. Exact wording, rationale, and
+limits are in focused decision §15. No R3 mutation; B2 remains active.

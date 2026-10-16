@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-10  
 **Status:** DECISION COMPLETE / P2.2B-B2 AUTHORIZED / IMPLEMENTATION-SUBSYSTEM EXPANSION NOT REQUIRED  
-**Execution update — 2026-10-16:** R1 owner approval applied: concept `responsibility:design-implement-ai-agents`, mappings #7 (`tvMm` artifact 50 responsibility[0]) and #8 (`tNVe` artifact 56 responsibility[0]). The other 33 selected responsibilities remain pending. Exact dependencies, idempotency, rendered browser/CLI agreement, integrity, and non-Registry/non-corpus mutation checks pass. R2 owner review is next; B2 remains active.
+**Execution update — 2026-10-16:** R1 and R2 owner approvals are applied: mappings #7/#8 for `responsibility:design-implement-ai-agents` and #9/#10 for `responsibility:integrate-ai-systems-with-services`, each over the exact approved artifact 50/56 claims. Four of the 35 selected responsibilities are mapped; 31 remain pending. Exact dependencies, idempotency, rendered browser/CLI agreement, integrity, and preservation checks pass. R3 owner review is next; B2 remains active.
 **Entry gate:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_ENTRY.md`  
 **Predecessor closure:** `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
@@ -422,7 +422,7 @@ P2.2C responsibility families — NOT AUTHORIZED
 P2.2D stable role archetypes — NOT AUTHORIZED
 ```
 
-The next execution is B2.2 owner semantic review of R2-R6, following the approved and applied R1 disposition below. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
+The next execution is B2.2 owner semantic review of R3-R6, following the approved and applied R1/R2 dispositions below. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
 
 
 ## 14. R1 owner decision and execution repair — 2026-10-16
@@ -470,7 +470,7 @@ acquisition or model generation occurred. Local backups/results remain ignored.
 R1 boundary claims `tjgi` artifact 60 responsibility[2] and `tmvA` artifact 61
 responsibility[3] remain pending. This is not whole-B2 closure or family authority.
 
-**R2 proposal, pending owner semantic review:**
+**R2 proposal reviewed and approved by the owner on 2026-10-16; application evidence in §15:**
 
 - ID: `responsibility:integrate-ai-systems-with-services`.
 - Label: **Integrate AI systems with APIs, data stores, and services**.
@@ -481,5 +481,48 @@ responsibility[3] remain pending. This is not whole-B2 closure or family authori
 - Boundary claims artifact 60 responsibility[3] (“Connecting AI models and services via API”) and artifact 61 responsibility[2] (“Connect AI tools to CRM, email, and internal systems.”) remain pending: neither asserts the complete shared interface scope of the proposed pair.
 
 All four R2 claims were reconfirmed accepted/current and pending on 2026-10-16.
-No R2 concept or mappings have been created. Owner review is required under the
-existing promotion boundary; R1 approval does not approve R2.
+The owner subsequently approved this exact R2 proposal; §15 records its application.
+R1 approval was not used as authorization for R2.
+
+
+## 15. R2 approved application and R3 review — 2026-10-16
+
+The owner approved the R2 proposal above. Applied through the existing Registry
+CLI after rechecking exact current source/translation/artifact identities and
+source wording. Fresh backup:
+`data/local-acceptance/b2-review-2026-10-16/pre-r2-live.sqlite3`.
+
+- Concept: `responsibility:integrate-ai-systems-with-services`.
+- Label: **Integrate AI systems with APIs, data stores, and services**.
+- Definition: **Connecting AI agents or language models to APIs, databases, and internal services.**
+- Mapping #9: `tvMm` artifact 50 / source version 47 / translation 41 / responsibility[2].
+- Mapping #10: `tNVe` artifact 56 / source version 56 / translation 48 / responsibility[2].
+
+Registry totals are six concepts and ten mappings. Reapplying the concept and
+both mappings preserved all rows and review metadata exactly. Only
+`canonical_concepts`, `job_claim_canonical_mappings`, and their SQLite sequence
+counters changed; all pre-existing Registry rows, every other table, and every
+corpus file hash were preserved. No aliases were added. Integrity is `ok` and
+foreign-key violations are empty. Rendered browser Registry concept/claim pages
+on a post-update database copy agree with the CLI and original source wording.
+Local result: `data/local-acceptance/b2-review-2026-10-16/r2-live-result.json`.
+
+R2 boundary claims `tjgi` artifact 60 responsibility[3] and `tmvA` artifact 61
+responsibility[2] remain pending. Four of the 35 snapshot-selected responsibility
+claims are now mapped, and 31 remain pending. No source fetch, model generation,
+code change, or full-suite rerun was needed for this data-only application.
+Historical engineering evidence remains the 843 passing tests and successful CI
+recorded in §14; these are not represented as newly executed R2 tests.
+
+**R3 proposal, pending owner semantic review:**
+
+- ID: `responsibility:implement-llm-tool-calling`.
+- Label: **Implement LLM tool/function calling**.
+- Definition: **Implementing tool calling or function calling for language-model-based systems.**
+- Proposed pair: `tvMm` artifact 50 responsibility[3], “Implementing Tool Calling / Function Calling with LLMs”; `tNVe` artifact 56 responsibility[3], “implementing Tool / Function Calling and Structured Output”.
+- Both assert implementation of tool/function calling. The second posting's title and description establish its LLM application context; the original claim remains exact. Structured Output is additional scope only in `tNVe` and is not part of the shared definition.
+- This correspondence does not assert a shared framework, autonomous execution, permission model, or deployment responsibility. R2's general service integration remains a separate correspondence.
+
+Both R3 claims were reconfirmed accepted/current and pending, with exact source
+versions 47/56 and translations 41/48. No R3 concept or mappings have been
+created. Owner review of this exact proposal is the next promotion gate.
