@@ -649,10 +649,21 @@ def build_canonical_registry_service(settings: Settings) -> CanonicalRegistrySer
 
 
 def _validate_mapping_artifact(artifact: AnalysisArtifact) -> None:
-    if artifact.prompt_version != ENGLISH_PROMPT_VERSION or (
+    # Match the accepted-only v30 compatibility boundary in AnalysisStore. Keep
+    # the original artifact identity; generation currentness does not invalidate
+    # reviewed historical source facts. The service still checks exact current
+    # source/translation dependencies before requesting a mapping.
+    compatible_prompts = {ENGLISH_PROMPT_VERSION}
+    if ENGLISH_PROMPT_VERSION == "job-analysis-english-v30":
+        compatible_prompts.update(
+            f"job-analysis-english-v{version}" for version in (20, 21, 23, 28)
+        )
+    if artifact.prompt_version not in compatible_prompts or (
         artifact.schema_version != ENGLISH_ANALYSIS_SCHEMA_VERSION
     ):
-        raise CanonicalRegistryError("mapping input must use the frozen English P1.6 contract")
+        raise CanonicalRegistryError(
+            "mapping input must use an accepted-compatible English P1.6 contract"
+        )
     if artifact.translation_artifact_id is None:
         raise CanonicalRegistryError("mapping input must reference an English projection")
     if artifact.semantic_review_status != "accepted":

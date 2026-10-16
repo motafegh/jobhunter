@@ -33,6 +33,8 @@ def _seed_analysis(
     *,
     job_id: str = "registry1",
     review_status: str = "accepted",
+    prompt_version: str = ENGLISH_PROMPT_VERSION,
+    schema_version: str = ENGLISH_ANALYSIS_SCHEMA_VERSION,
 ) -> tuple[TranslationService, int]:
     source_store = JobHunterStore(database_path)
     source_store.initialize()
@@ -73,8 +75,8 @@ def _seed_analysis(
         job_detail_version_id=detail.version_id,
         translation_artifact_id=translation.artifact_id,
         model="analysis-model",
-        prompt_version=ENGLISH_PROMPT_VERSION,
-        schema_version=ENGLISH_ANALYSIS_SCHEMA_VERSION,
+        prompt_version=prompt_version,
+        schema_version=schema_version,
         analysis={
             "requirements": [
                 {
@@ -422,4 +424,63 @@ def test_pending_or_stale_p16_cannot_receive_current_mapping(tmp_path: Path) -> 
             canonical_concept_id=concept.concept_id,
             reviewed_at=_NOW,
             review_note="Reviewed stale translation boundary",
+        )
+
+
+@pytest.mark.parametrize("version", [20, 21, 23, 28, 30])
+def test_registry_maps_accepted_compatible_artifact_across_model_identity(
+    tmp_path: Path, version: int,
+) -> None:
+    database_path = tmp_path / "registry.sqlite3"
+    translation, artifact_id = _seed_analysis(
+        database_path, prompt_version=f"job-analysis-english-v{version}",
+    )
+    store = CanonicalRegistryStore(database_path)
+    concept = _create_concept(
+        store, "responsibility:build-services", ConceptCategory.RESPONSIBILITY,
+        "Build services",
+    )
+    service = CanonicalRegistryService(
+        registry_store=store, analysis_store=AnalysisStore(database_path),
+        translation_service=translation, analysis_model="different-current-model",
+    )
+    kwargs = dict(
+        claim_kind=ClaimKind.RESPONSIBILITY, claim_index=0,
+        disposition=MappingDisposition.MAPPED,
+        canonical_concept_id=concept.concept_id, reviewed_at=_NOW,
+        review_note="Owner approved exact responsibility correspondence",
+    )
+    mapping = service.record_current_claim_mapping("registry1", **kwargs)
+    assert mapping.analysis_artifact_id == artifact_id
+    assert mapping.source_text == "Build Python services"
+    assert service.record_current_claim_mapping("registry1", **kwargs) == mapping
+    artifact = AnalysisStore(database_path).artifact_by_id(artifact_id)
+    assert artifact.prompt_version == f"job-analysis-english-v{version}"
+    assert artifact.model == "analysis-model"
+
+
+@pytest.mark.parametrize(
+    ("prompt", "schema", "status"),
+    [
+        ("job-analysis-english-v22", "job-analysis-v5", "accepted"),
+        ("job-analysis-english-v23", "job-analysis-v4", "accepted"),
+        ("job-analysis-original-v9", "job-analysis-v4", "accepted"),
+        ("job-analysis-english-v23", "job-analysis-v5", "pending"),
+    ],
+)
+def test_registry_rejects_incompatible_or_unaccepted_artifact(
+    tmp_path: Path, prompt: str, schema: str, status: str,
+) -> None:
+    database_path = tmp_path / "registry.sqlite3"
+    _, artifact_id = _seed_analysis(
+        database_path, prompt_version=prompt, schema_version=schema,
+        review_status=status,
+    )
+    store = CanonicalRegistryStore(database_path)
+    with pytest.raises(CanonicalRegistryError, match="contract|semantically accepted"):
+        store.record_claim_mapping(
+            analysis_artifact_id=artifact_id, claim_kind=ClaimKind.RESPONSIBILITY,
+            claim_index=0, disposition=MappingDisposition.UNMAPPED,
+            canonical_concept_id=None, reviewed_at=_NOW,
+            review_note="Unsupported input must remain unreviewed",
         )

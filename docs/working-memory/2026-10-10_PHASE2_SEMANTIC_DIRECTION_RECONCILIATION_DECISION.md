@@ -423,3 +423,23 @@ P2.2D stable role archetypes — NOT AUTHORIZED
 ```
 
 The next execution is B2.2 owner semantic review of R1-R6, using the completed B2.1 baseline recorded above. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
+
+
+## 14. R1 owner decision and execution repair — 2026-10-16
+
+The owner approved `responsibility:design-implement-ai-agents`, label **Design and
+implement AI agents**, definition **Designing AI agents and implementing their
+behavior for use in an application or system.** Only `tvMm` artifact 50
+responsibility[0] and `tNVe` artifact 56 responsibility[0] are approved mappings.
+The broader `tjgi`/`tmvA` cases remain pending, with their original claims intact.
+
+Before mutation, a SQLite-copy reproduction exposed a concrete Registry defect:
+the current-artifact service selects accepted v23/v5 correctly, but the store's
+write validator rejects it as not v30. The narrow repair admits the same accepted
+v20/v21/v23/v28 compatibility contracts as the current P1.6 boundary, preserves
+original artifact identity, and retains acceptance, schema, translation, exact
+current dependency, category, and immutable review checks. No artifacts are
+regenerated or automatically accepted. Regression coverage exercises every
+compatible version across model identity, exact identity/idempotency, and
+unsupported version/schema/pending rejection. Normal CI must pass before live R1
+application. This is the tooling-gap exception authorized by B2, not a new layer.
