@@ -2,7 +2,7 @@
 
 **Date:** 2026-10-10  
 **Status:** DECISION COMPLETE / P2.2B-B2 AUTHORIZED / IMPLEMENTATION-SUBSYSTEM EXPANSION NOT REQUIRED  
-**Execution update — 2026-10-15:** B2.1 read-only baseline is complete; exact artifacts 50/56/60/61 remain accepted/current, all 35 responsibility claims are pending Registry review, and SQLite integrity/foreign keys pass. The backup and evidence boundary are recorded in `docs/EXECUTION_TODO.md`. B2.2 owner review is next; no canonical mutation has occurred.
+**Execution update — 2026-10-16:** R1 owner approval applied: concept `responsibility:design-implement-ai-agents`, mappings #7 (`tvMm` artifact 50 responsibility[0]) and #8 (`tNVe` artifact 56 responsibility[0]). The other 33 selected responsibilities remain pending. Exact dependencies, idempotency, rendered browser/CLI agreement, integrity, and non-Registry/non-corpus mutation checks pass. R2 owner review is next; B2 remains active.
 **Entry gate:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_ENTRY.md`  
 **Predecessor closure:** `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
@@ -422,7 +422,7 @@ P2.2C responsibility families — NOT AUTHORIZED
 P2.2D stable role archetypes — NOT AUTHORIZED
 ```
 
-The next execution is B2.2 owner semantic review of R1-R6, using the completed B2.1 baseline recorded above. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
+The next execution is B2.2 owner semantic review of R2-R6, following the approved and applied R1 disposition below. Reconfirm the baseline if dependencies/state change before mutation. No repository feature implementation should begin before that review exposes a concrete tooling gap.
 
 
 ## 14. R1 owner decision and execution repair — 2026-10-16
@@ -443,3 +443,43 @@ regenerated or automatically accepted. Regression coverage exercises every
 compatible version across model identity, exact identity/idempotency, and
 unsupported version/schema/pending rejection. Normal CI must pass before live R1
 application. This is the tooling-gap exception authorized by B2, not a new layer.
+
+
+### R1 application evidence and next review
+
+The repair is committed at `dafdb05`; Ruff and **843 warnings-as-errors tests**
+passed locally. Normal CI [38893557722](https://github.com/motafegh/jobhunter/actions/runs/38893557722)
+passed before live mutation. A copy-only full rehearsal also passed.
+
+Live R1 application used the existing `jobhunter-registry` CLI after a fresh
+backup at `data/local-acceptance/b2-review-2026-10-16/pre-r1-live.sqlite3`.
+Mapping #7 preserves artifact 50 / source version 47 / translation 41 / claim 0;
+mapping #8 preserves artifact 56 / source version 56 / translation 48 / claim 0.
+The Registry now contains five concepts and eight mappings; no alias was added.
+Reapplying all three commands returned the identical concept/mapping rows,
+including review metadata. Every table except `canonical_concepts`,
+`job_claim_canonical_mappings`, and `sqlite_sequence` matched the pre-run rows.
+Existing Registry rows were preserved. SQLite integrity is `ok`, foreign-key
+violations are empty, and all corpus file hashes are unchanged.
+
+The normal rendered concept and claim pages were checked through the browser
+application on a post-update database copy and agreed with CLI/source identities.
+This is rendered-route acceptance, not a new visual usability study. No network
+acquisition or model generation occurred. Local backups/results remain ignored.
+
+R1 boundary claims `tjgi` artifact 60 responsibility[2] and `tmvA` artifact 61
+responsibility[3] remain pending. This is not whole-B2 closure or family authority.
+
+**R2 proposal, pending owner semantic review:**
+
+- ID: `responsibility:integrate-ai-systems-with-services`.
+- Label: **Integrate AI systems with APIs, data stores, and services**.
+- Definition: **Connecting AI agents or language models to APIs, databases, and internal services.**
+- Exact proposed mappings: artifact 50 responsibility[2], “Connecting Agents to tools, APIs, databases, and internal services”; artifact 56 responsibility[2], “connecting LLMs to APIs, databases, and internal services”.
+- Rationale: both explicitly connect an AI component to the same API/database/internal-service interfaces. Agent versus LLM subject remains visible in the original claim; tools are additional scope in the first claim.
+- No authentication, deployment, architecture, ownership, or production guarantees are inferred.
+- Boundary claims artifact 60 responsibility[3] (“Connecting AI models and services via API”) and artifact 61 responsibility[2] (“Connect AI tools to CRM, email, and internal systems.”) remain pending: neither asserts the complete shared interface scope of the proposed pair.
+
+All four R2 claims were reconfirmed accepted/current and pending on 2026-10-16.
+No R2 concept or mappings have been created. Owner review is required under the
+existing promotion boundary; R1 approval does not approve R2.

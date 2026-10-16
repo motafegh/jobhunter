@@ -1,7 +1,7 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-10-15
+**Date:** 2026-10-16
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
@@ -250,8 +250,8 @@ B2.1 read-only local baseline COMPLETE (2026-10-15)
    - verify artifacts 50/56/60/61
    - inspect current Registry concepts/mapping states
 
-B2.2 owner semantic review NEXT
-   - R1-R6 one at a time
+B2.2 R1 APPROVED / APPLIED / VERIFIED (2026-10-16)
+   - R2-R6 owner review next, one at a time
    - ACCEPT | HOLD | REJECT
    - no mutation first
 
@@ -284,7 +284,7 @@ The existing unpublished `tNpG` source/projection/manifest changes remain separa
 
 Verified alignment baseline: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changes documentation/docstrings only; it does not repeat model generation or semantic acceptance.
 
-Next: owner B2.2 semantic review of R1-R6, before canonical mutation. No feature implementation or later Phase-2 authorization was added.
+Next after this historical baseline: owner B2.2 semantic review; R1 has since been applied as recorded below, and R2-R6 remain pending. No feature implementation or later Phase-2 authorization was added.
 
 ## 8. Usability direction — 2026-10-15
 
@@ -295,3 +295,25 @@ Proposed first journey: easy entry to the existing Market intelligence → reada
 The owner subsequently authorized implementation on 2026-10-15. Delivered: research-first Overview; grouped navigation with active-page/keyboard support; accepted-fact job preview before full documents; processing disclosures; frozen role/company evidence labels; and validated snapshot/report/finding return context retained through job/Work/Capability reading. Job pages explicitly show current local state and flag source changes relative to the originating snapshot. No generation, review, semantic contract, or comparison feature changed.
 
 Verification: Ruff and 834 warnings-as-errors tests passed. A real Edge/Playwright run against a SQLite copy proved Overview → report #2 → job → Work → job → original finding, desktop/mobile layout, visible narrow-screen return action, keyboard skip, no horizontal overflow, and no page errors. Historical-label and invalid-origin regressions preserve source boundaries; UI subjective usefulness/time savings remain for owner use. Screenshots are local and untracked, not public-corpus exports.
+
+
+## 9. B2 R1 execution — 2026-10-16
+
+Owner approved the exact R1 definition and two mappings. Applied through existing
+Registry CLI: `responsibility:design-implement-ai-agents`, mapping #7 to `tvMm`
+artifact 50 responsibility[0] and #8 to `tNVe` artifact 56 responsibility[0].
+Broader R1 cases remain pending. Registry totals: five concepts / eight mappings;
+33 of the snapshot-selected 35 responsibilities remain pending.
+
+Execution exposed a narrow write-validator defect: accepted-compatible v23/v5
+was selected by currentness but rejected by Registry persistence. Fixed in
+`dafdb05`, with 843 warnings-as-errors tests, Ruff, and successful normal CI
+38893557722 before live application. Rehearsal and live idempotency, exact
+provenance, rendered browser/CLI agreement, SQLite integrity/foreign keys, and
+all other table/corpus preservation checks passed. Backups/results remain local
+under `data/local-acceptance/b2-review-2026-10-16/`.
+
+Next: R2 owner semantic review of only artifact 50 responsibility[2] and artifact
+56 responsibility[2], with API/database/service integration definition and
+boundary exclusions in focused decision §14. No R2 mutation yet. B2 remains
+active; no family, archetype, personal-readiness, or downstream authorization.
