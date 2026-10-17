@@ -15,7 +15,7 @@
   },
   "counts": {
     "capabilities": 5,
-    "english_projections": 29,
+    "english_projections": 30,
     "jobs": 420,
     "p16_english": 11,
     "p16_original": 0,
@@ -3913,21 +3913,21 @@
     {
       "artifact_ids": {
         "capability": null,
-        "english_projection": null,
+        "english_projection": 49,
         "p16_english": null,
         "p16_original": null
       },
       "canonical_url": "https://jobinja.ir/companies/ptnmed-1/jobs/tNpG/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%DB%8C-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-llm-rag-%D8%AD%D9%88%D8%B2%D9%87-%DB%8C-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1-%D8%B3%D9%84%D8%A7%D9%85%D8%AA-%D8%AF%D8%B1-%D9%BE%DB%8C%D9%88%D9%86%D8%AF-%D8%B7%D8%A8-%D9%88-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1",
       "company_slug": "ptnmed-1",
-      "job_detail_version_id": null,
-      "language": "unknown",
+      "job_detail_version_id": 57,
+      "language": "mixed",
       "lifecycle_state": "active",
-      "parse_status": null,
-      "semantic_sha256": null,
+      "parse_status": "parsed",
+      "semantic_sha256": "50046e933344bca246d4c0b65ce3afb84a9d66937311b52c274e86b02d32293c",
       "source_job_id": "tNpG",
       "stages": {
         "capability": false,
-        "english_projection": false,
+        "english_projection": true,
         "p16_english": false,
         "p16_original": false,
         "source": true
