@@ -1,7 +1,7 @@
 # JobHunter Execution TODO
 
 **Status:** Active working checklist  
-**Date:** 2026-10-16
+**Date:** 2026-10-17
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
 **P2.2 plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`  
@@ -36,7 +36,8 @@ Status vocabulary:
 - [x] R4 exact reuse proven: attempts `(1, completed, 1)`, `(2, completed, 2)`, `(3, reused, 2)` with two total report artifacts.
 - [x] Current English P1.6 generation contract: `job-analysis-english-v30 / job-analysis-v5` with accepted-only compatibility inputs under exact dependency rules.
 - [x] Capability current contract: `job-capability-intelligence-v9 / job-capability-intelligence-v5`.
-- [x] Public corpus baseline: 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
+- [x] Public corpus baseline: 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
+- [x] Previously local `tNpG` source/detail + English projection intentionally published 2026-10-17; no P1.6, Capability, Registry, or Market authority was added by that publication.
 
 Key closure/current records:
 
@@ -132,7 +133,7 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 - [ ] Post-run `PRAGMA integrity_check = ok`.
 - [ ] Post-run `PRAGMA foreign_key_check = []`.
 - [ ] Accepted P1.6 artifacts and Market snapshot identities remain unchanged.
-- [ ] Repository-safe `corpus/` remains unchanged; Registry publication is still unauthorized.
+- [ ] Repository-safe `corpus/` remains unchanged by Registry review/application; Registry publication is still unauthorized.
 - [ ] If no product/code defect appears, do not create code/test changes merely to accompany semantic local-state review.
 - [ ] If execution exposes a real product/contract defect, fix only that defect, add focused regression evidence, and run normal CI before continuing.
 
@@ -212,6 +213,7 @@ Portfolio work does not broaden the active semantic authorization.
 P2.2B-B2.1 read-only baseline COMPLETE (2026-10-15)
 → R1/R2 approved/applied/verified (2026-10-16)
 → B2.2 review R3-R6 with the owner
+→ R3 exact pair is artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
 → no canonical mutation before explicit semantic approval
 → apply only accepted correspondences, then verify and close B2
 ```
