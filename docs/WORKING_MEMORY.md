@@ -10,6 +10,7 @@
 **Committed public-corpus baseline:** 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
 **Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. Semantic review of R1-R6 is complete. R1/R2 are applied/verified; R3-R6 are accepted semantically and await local Registry application/verification. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
+**Contingent post-B2 analysis:** a non-authorizing readiness pre-decision recommends P2.3A before promoted P2.2C if B2 closes cleanly; it does not change the current B2 gate.  
 **Parallel product priority:** Whole-product usability/productivity, prioritizing understanding and comparing jobs or Market findings. The first navigation/UI slice is implemented and locally verified; owner repeated-use feedback remains pending.  
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
@@ -37,6 +38,7 @@ Current focused records:
 - `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
 - `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 - `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`
+- `docs/working-memory/2026-10-17_POST_B2_P2_2C_VS_P2_3_READINESS_PREDECISION.md` — contingent analysis only; no authorization while B2 remains open.
 - `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 
 Historical entry/evidence records remain available but do not override the current-state overlay.
@@ -147,7 +149,7 @@ B  P2.3 corpus-scale capability requirement profiles
 C  P2.4 Market v2
 ```
 
-Decision:
+Current controlling decision:
 
 ```text
 A selected at P2.2B level
@@ -156,6 +158,16 @@ C downstream
 ```
 
 Reasoning remains in `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
+
+A separate contingent readiness analysis now exists for the mandatory **post-B2** decision. It recommends, if B2 closes cleanly:
+
+```text
+P2.3A bounded Job Capability Requirement Profile foundation  SELECT NEXT
+P2.2C promoted ResponsibilityFamily implementation           DEFER, NOT REJECT
+P2.4 Market v2                                                REMAINS DOWNSTREAM
+```
+
+This is **not current authorization**. B2 local application/verification and closure must happen first. See `docs/working-memory/2026-10-17_POST_B2_P2_2C_VS_P2_3_READINESS_PREDECISION.md`.
 
 ---
 
@@ -330,7 +342,9 @@ R3-R6 semantic review complete / accepted
 → update current state to proven post-application counts
 → record B2 closure
 → STOP
-→ make a separate P2.2C-vs-P2.3 readiness decision
+→ formal post-B2 direction decision
+   - re-read the contingent pre-decision against proven local state
+   - if no material contradiction: select P2.3A and defer promoted P2.2C
 ```
 
 GitHub cannot claim the R3-R6 SQLite rows exist because the maintainer runtime database is intentionally local and excluded from the repository.
