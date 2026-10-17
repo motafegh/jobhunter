@@ -2,7 +2,7 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-10-15
+**Last reconciled:** 2026-10-17
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
@@ -35,6 +35,18 @@ MIT license                         COMPLETE
 metadata/screenshots/release/mastery PENDING
 ```
 
+Current committed public-corpus baseline after the 2026-10-17 `tNpG` publication:
+
+```text
+known/discovered Jobinja jobs       420
+fetched/parsed detail jobs           52
+current English projections          30
+accepted/current English P1.6        11
+accepted/current Capability            5
+```
+
+The `tNpG` publication adds current source/detail and English-projection material only. It does not add accepted P1.6, Capability, Registry mappings, or Market authority.
+
 ## 2. Current exact semantic decision
 
 Controlling decision:
@@ -49,7 +61,7 @@ Direction B — capability profiles                 DEFERRED, NOT REJECTED
 Direction C — Market v2                           DOWNSTREAM
 ```
 
-The next bounded tranche is **P2.2B-B2 snapshot-15 selective responsibility normalization**.
+The current bounded tranche is **P2.2B-B2 snapshot-15 selective responsibility normalization**.
 
 B2 is not P2.2C. It creates only reviewed normalized responsibility correspondences through the existing P2.1 Canonical Registry when exact accepted/current P1.6 claims survive human semantic review.
 
@@ -57,7 +69,7 @@ B2 is not P2.2C. It creates only reviewed normalized responsibility corresponden
 
 B1 did not prove the proposed responsibility correspondence invalid. It stopped because the selected second job lacked an acceptable/current P1.6 artifact.
 
-Snapshot 15 now supplies:
+Snapshot 15 supplies:
 
 ```text
 accepted-semantic core postings       6
@@ -77,20 +89,37 @@ tNVe  artifact 56   8 responsibilities
 
 `t7ck` and `t7Ay` remain valid accepted-semantic Market evidence but have no direct responsibilities and cannot create responsibility facts from requirement-only evidence.
 
-## 4. B2 initial candidate review set
+## 4. B2 candidate review state
 
-Review, do not pre-promote:
+Review and promotion are explicit; no candidate is pre-promoted.
 
 ```text
 R1  AI-agent design / implementation
+    ACCEPTED / APPLIED / VERIFIED 2026-10-16
+    concept: responsibility:design-implement-ai-agents
+    mappings: artifact 50 responsibility[0], artifact 56 responsibility[0]
+
 R2  AI-system integration with APIs / databases / services
+    ACCEPTED / APPLIED / VERIFIED 2026-10-16
+    concept: responsibility:integrate-ai-systems-with-services
+    mappings: artifact 50 responsibility[2], artifact 56 responsibility[2]
+
 R3  LLM Tool / Function Calling implementation
+    NEXT OWNER REVIEW
+
 R4  RAG / knowledge-retrieval development
+    PENDING
+
 R5  multi-step AI workflow design/development
+    PENDING
+
 R6  AI-system performance evaluation/improvement
+    PENDING
 ```
 
-Exact claim pairs, tentative concept IDs, broader boundary cases, and stop lines are defined in the controlling decision record.
+Four of the 35 selected responsibilities are mapped; 31 remain pending. The broader R1/R2 boundary claims remain pending rather than being pulled into the accepted correspondences.
+
+Exact claim pairs, tentative concept IDs, broader boundary cases, application evidence, and stop lines are defined in the controlling decision record.
 
 ## 5. Current architecture rule
 
@@ -108,33 +137,37 @@ Do not create another canonical concept system or model-driven promotion path.
 
 Work Intelligence / RoleFamilyIntelligenceReport may identify candidate patterns but remain analytical interpretation; they do not authorize canonical mappings.
 
+The R1 execution exposed one narrow Registry write-validator defect: accepted-compatible historical English P1.6 artifacts selected by the currentness policy could be rejected by persistence. Commit `dafdb05` aligned Registry persistence with the accepted v20/v21/v23/v28/v30 v5 compatibility boundary while preserving exact artifact identity, semantic acceptance, source/translation dependencies, schema checks, and immutable review behavior. This repair is complete; it did not create a new semantic layer.
+
 ## 6. B2 exact execution sequence
 
 ```text
 B2.1 read-only local baseline COMPLETE (2026-10-15)
-  → pull current main
-  → back up SQLite
-  → integrity / foreign keys
-  → inspect exact current tvMm/tNVe/tjgi/tmvA responsibility claims
-  → inspect current Registry concepts/mapping states
+  → backup / integrity / foreign keys
+  → exact current tvMm/tNVe/tjgi/tmvA responsibility claims confirmed
+  → Registry baseline confirmed
 
-B2.2 semantic review
-  → review R1-R6 one at a time
-  → ACCEPT | HOLD | REJECT correspondence
-  → no mutation before review
+B2.2 semantic review ACTIVE
+  → R1 ACCEPTED / APPLIED / VERIFIED
+  → R2 ACCEPTED / APPLIED / VERIFIED
+  → R3 NEXT
+  → then R4-R6 one at a time
+  → ACCEPT | HOLD | REJECT before mutation
 
 B2.3 local application
-  → create/reuse only accepted responsibility concepts
+  → create/reuse only explicitly accepted responsibility concepts
   → map only explicitly approved exact claims
 
 B2.4 proof
   → rerun/idempotency
   → CLI/browser same reviewed state
   → SQLite integrity / foreign keys
-  → P1.6/Market/public-corpus unchanged
+  → accepted P1.6 and Market identities unchanged
+  → Registry remains local/private; public-corpus publication remains separate
 
 B2.5 disposition
   → record accepted mappings + held/rejected boundaries
+  → close B2 as accepted or no-promotion/defer for its bounded tranche
   → STOP
   → separate P2.2C vs P2.3 readiness decision
 ```
@@ -158,7 +191,12 @@ Do not during B2:
 ## 8. Current exact next action
 
 ```text
-P2.2B-B2.1 COMPLETE on 2026-10-15: exact artifacts 50/56/60/61 remain accepted/current,
-all 35 responsibilities are pending Registry review; integrity ok / no FK violations.
-→ B2.2 review R1-R6 with the owner before any canonical mutation
+R1/R2 approved, applied and verified on 2026-10-16
+→ 4/35 selected responsibilities mapped; 31 pending
+→ B2.2 owner semantic review of R3 next
+→ proposed identity: responsibility:implement-llm-tool-calling
+→ exact pair: artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
+→ no R3 canonical mutation before explicit semantic approval
 ```
+
+The latest repository head before this reconciliation also intentionally publishes the previously local `tNpG` source/detail + English projection. That corpus publication is independent of B2 and does not change the R3 review gate.
