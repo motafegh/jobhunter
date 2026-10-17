@@ -49,9 +49,13 @@ The `tNpG` publication adds current source/detail and English-projection materia
 
 ## 2. Current exact semantic decision
 
-Controlling decision:
+Controlling direction decision:
 
 `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
+
+Latest bounded R3 decision:
+
+`docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 
 Direction result:
 
@@ -63,7 +67,7 @@ Direction C — Market v2                           DOWNSTREAM
 
 The current bounded tranche is **P2.2B-B2 snapshot-15 selective responsibility normalization**.
 
-B2 is not P2.2C. It creates only reviewed normalized responsibility correspondences through the existing P2.1 Canonical Registry when exact accepted/current P1.6 claims survive human semantic review.
+B2 is not P2.2C. It creates only reviewed normalized responsibility correspondences through the existing P2.1 Canonical Registry when exact accepted/current P1.6 claims survive semantic review.
 
 ## 3. Evidence change since B1
 
@@ -105,7 +109,9 @@ R2  AI-system integration with APIs / databases / services
     mappings: artifact 50 responsibility[2], artifact 56 responsibility[2]
 
 R3  LLM Tool / Function Calling implementation
-    NEXT OWNER REVIEW
+    ACCEPTED 2026-10-17 / LOCAL APPLICATION + VERIFICATION PENDING
+    concept: responsibility:implement-llm-tool-calling
+    approved mappings: artifact 50 responsibility[3], artifact 56 responsibility[3]
 
 R4  RAG / knowledge-retrieval development
     PENDING
@@ -117,9 +123,9 @@ R6  AI-system performance evaluation/improvement
     PENDING
 ```
 
-Four of the 35 selected responsibilities are mapped; 31 remain pending. The broader R1/R2 boundary claims remain pending rather than being pulled into the accepted correspondences.
+R3 is semantically accepted because both exact accepted/current claims assert implementation of Tool/Function Calling for LLM-based systems. `Structured Output` is additional scope in `tNVe` and remains source-specific rather than entering the normalized definition. No shared framework, autonomy, permission, deployment, orchestration, production, or Structured Output responsibility is inferred.
 
-Exact claim pairs, tentative concept IDs, broader boundary cases, application evidence, and stop lines are defined in the controlling decision record.
+Four of the 35 selected responsibilities are currently proven mapped in the local Registry from R1/R2; 31 remain pending until R3 is actually applied to the maintainer SQLite database. The R1/R2 broader boundary claims remain pending.
 
 ## 5. Current architecture rule
 
@@ -127,7 +133,7 @@ Reuse existing accepted owners:
 
 ```text
 accepted/current P1.6 factual responsibility
-→ human semantic correspondence review
+→ explicit semantic correspondence review
 → jobhunter-canonical-concept-registry-v1
 → reviewed responsibility concept
 → immutable exact claim mapping
@@ -150,11 +156,12 @@ B2.1 read-only local baseline COMPLETE (2026-10-15)
 B2.2 semantic review ACTIVE
   → R1 ACCEPTED / APPLIED / VERIFIED
   → R2 ACCEPTED / APPLIED / VERIFIED
-  → R3 NEXT
-  → then R4-R6 one at a time
-  → ACCEPT | HOLD | REJECT before mutation
+  → R3 ACCEPTED; local application/verification pending
+  → R4-R6 remain pending
+  → ACCEPT | HOLD | REJECT before each mutation
 
 B2.3 local application
+  → apply R3 exactly as recorded in the 2026-10-17 R3 decision
   → create/reuse only explicitly accepted responsibility concepts
   → map only explicitly approved exact claims
 
@@ -167,6 +174,7 @@ B2.4 proof
 
 B2.5 disposition
   → record accepted mappings + held/rejected boundaries
+  → continue R4-R6 one at a time after each accepted application is verified
   → close B2 as accepted or no-promotion/defer for its bounded tranche
   → STOP
   → separate P2.2C vs P2.3 readiness decision
@@ -192,11 +200,14 @@ Do not during B2:
 
 ```text
 R1/R2 approved, applied and verified on 2026-10-16
-→ 4/35 selected responsibilities mapped; 31 pending
-→ B2.2 owner semantic review of R3 next
-→ proposed identity: responsibility:implement-llm-tool-calling
-→ exact pair: artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
-→ no R3 canonical mutation before explicit semantic approval
+R3 semantic correspondence ACCEPTED on 2026-10-17
+→ canonical concept: responsibility:implement-llm-tool-calling
+→ exact approved pair: artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
+→ apply R3 to the maintainer local SQLite database through existing jobhunter-registry CLI
+→ prove idempotency, CLI/browser agreement, integrity/FK and preservation boundaries
+→ only after R3 is applied/verified, advance to R4 semantic review
 ```
 
-The latest repository head before this reconciliation also intentionally publishes the previously local `tNpG` source/detail + English projection. That corpus publication is independent of B2 and does not change the R3 review gate.
+The exact R3 application commands and verification boundary are fixed in `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`. This repository session cannot claim the local Registry rows exist because the runtime SQLite database is intentionally local and excluded from GitHub.
+
+The latest repository also intentionally publishes the previously local `tNpG` source/detail + English projection. That corpus publication is independent of B2 and does not change the R3 application boundary.
