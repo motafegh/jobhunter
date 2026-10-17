@@ -151,11 +151,13 @@ Committed repository-safe public corpus baseline (local unpublished projections 
 
 ```text
 known/discovered Jobinja jobs: 420
-fetched/parsed detail jobs:      51
-current English projections:     29
+fetched/parsed detail jobs:      52
+current English projections:     30
 accepted/current English P1.6:    11
 accepted/current Capability:      5
 ```
+
+The 2026-10-17 corpus publication adds the previously local `tNpG` source/detail and English projection. It adds no accepted P1.6, Capability, Registry mapping, or Market authority.
 
 Current phase/product state:
 
@@ -175,12 +177,12 @@ RoleFamily report R1-R4         ACCEPTED / CLOSED
 P2.2B-B2                       ACTIVE / AUTHORIZED
 P2.3 capability profiles        DEFERRED / NOT AUTHORIZED
 P2.4 Market v2                  DOWNSTREAM / NOT AUTHORIZED
-next exact increment            B2 owner review of selective responsibility correspondences
+next exact increment            B2 R3 owner semantic review; R1/R2 already applied/verified
 ```
 
 The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Its earlier V6 review run cited 49 unique claims. The durable `RoleFamilyIntelligenceReport` R1-R4 program is also ACCEPTED / CLOSED: real-local report #2 cites 27 of 175 available snapshot-15 claims, has four work clusters, one multi-posting subfamily hypothesis, two singleton specialties/outliers, and zero integrity rejections. Report #2 is `accepted_for_bounded_use`; pre-repair report #1 remains immutable/pending. These are distinct reviewed analytical results, not taxonomy authority. R4 closure: `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`.
 
-The active B2 tranche uses the existing P2.1 Registry to review six proposed responsibility correspondences across exact accepted/current P1.6 claims. Owner semantic review precedes canonical mutation. No new model or subsystem is needed unless execution exposes a concrete tooling defect. Controlling decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. B1 remains closed; B2 does not authorize P2.2C/P2.2D/P2.3/P2.4.
+The active B2 tranche uses the existing P2.1 Registry to review six proposed responsibility correspondences across exact accepted/current P1.6 claims. Owner semantic review precedes canonical mutation. R1 (`responsibility:design-implement-ai-agents`) and R2 (`responsibility:integrate-ai-systems-with-services`) are approved/applied/verified over four exact artifact-50/56 responsibility claims; 31 of the selected 35 responsibility claims remain pending and R3 is next. No new model or subsystem is needed unless execution exposes a concrete tooling defect. Controlling decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. B1 remains closed; B2 does not authorize P2.2C/P2.2D/P2.3/P2.4.
 
 B1 final evidence is retained at:
 
