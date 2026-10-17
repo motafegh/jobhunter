@@ -1,15 +1,15 @@
 # JobHunter Working Memory / Handoff
 
 **Status:** Rolling non-authoritative handoff  
-**Date:** 2026-10-16
+**Date:** 2026-10-17
 **Repository:** `https://github.com/motafegh/jobhunter`  
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / ROLE-FAMILY REPORT R1-R4 ACCEPTED / P2.2B-B2 ACTIVE  
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
-**Committed public-corpus baseline:** 420 jobs / 51 parsed details / 29 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
+**Committed public-corpus baseline:** 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
+**Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. R1/R2 are approved/applied/verified; R3 is the next owner semantic review. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
 **Parallel product priority:** Whole-product usability/productivity, prioritizing understanding and comparing jobs or Market findings. The first navigation/UI slice is implemented and locally verified under `docs/ROADMAP.md` §13 and the execution TODO; owner repeated-use feedback remains pending.
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
@@ -207,13 +207,16 @@ Initial candidate review set:
 R1  design / implement AI agents
     strict pair: tvMm[0] ↔ tNVe[0]
     boundary: tjgi[2], tmvA[3]
+    ACCEPTED / APPLIED / VERIFIED
 
 R2  integrate AI systems with APIs / databases / services
     strict pair: tvMm[2] ↔ tNVe[2]
     boundary: tjgi[3], tmvA[2]
+    ACCEPTED / APPLIED / VERIFIED
 
 R3  implement LLM Tool / Function Calling
     pair: tvMm[3] ↔ tNVe[3]
+    NEXT OWNER REVIEW
 
 R4  develop RAG / knowledge retrieval
     pair: tvMm[6] ↔ tNVe[4]
@@ -226,7 +229,7 @@ R6  evaluate / improve AI-system performance
     boundary: tvMm[9]
 ```
 
-Tentative concept IDs and exact boundary notes are in the controlling decision file. They are not pre-approved concepts.
+Tentative concept IDs and exact boundary notes are in the controlling decision file. R1/R2 are the only approved/applied concepts so far; R3-R6 remain unapproved until owner semantic review.
 
 Promotion rule:
 
@@ -263,7 +266,8 @@ B2.4 verify
    - idempotency
    - browser/CLI same reviewed state
    - SQLite integrity/foreign keys
-   - P1.6/Market/public-corpus unchanged
+   - P1.6/Market unchanged
+   - Registry publication remains unauthorized
 
 B2.5 disposition
    - record accepted mappings + held/rejected boundaries
@@ -276,19 +280,19 @@ Do not start P2.2C, P2.2D, P2.3, P2.4, Blueprint authority, personal scoring, bu
 
 ## 7. Alignment and housekeeping checkpoint — 2026-10-15
 
-The current entrypoints, product/architecture/plans, semantic/runtime guides, and corpus/snapshot guides now route to the October 10 overlay and B2 decision. Superseded September status and the executed R4 protocol are explicitly historical; accepted contracts and artifacts are unchanged.
+The current entrypoints, product/architecture/plans, semantic/runtime guides, and corpus/snapshot guides were aligned to the October 10 overlay and B2 decision. Superseded September status and the executed R4 protocol are explicitly historical; accepted contracts and artifacts are unchanged.
 
-B2.1 confirmed exact artifacts 50/56/60/61 and all 35 responsibilities as accepted/current and unmapped. Registry remains four concepts / six claim decisions. SQLite integrity is `ok`, foreign keys empty. Backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`.
+B2.1 confirmed exact artifacts 50/56/60/61 and all 35 responsibilities as accepted/current and unmapped at that checkpoint. Registry was four concepts / six claim decisions. SQLite integrity was `ok`, foreign keys empty. Backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`.
 
-The existing unpublished `tNpG` source/projection/manifest changes remain separate: local corpus 420 jobs / 52 parsed / 30 English / 11 P1.6 / 5 Capability; committed baseline 420 / 51 / 29 / 11 / 5. Their hashes match the R4 pre-existing baseline. Do not silently publish or reset them during housekeeping.
+At that checkpoint the `tNpG` source/projection/manifest changes were still local: local corpus 420 jobs / 52 parsed / 30 English / 11 P1.6 / 5 Capability while the committed baseline remained 420 / 51 / 29 / 11 / 5. That statement is historical. On 2026-10-17 the owner intentionally published those `tNpG` source/detail + English-projection changes, so the committed repository-safe baseline is now 420 / 52 / 30 / 11 / 5. The publication did not add P1.6, Capability, Registry mappings, or Market authority.
 
-Verified alignment baseline: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changes documentation/docstrings only; it does not repeat model generation or semantic acceptance.
+Verified alignment baseline on 2026-10-15: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changed documentation/docstrings only; it did not repeat model generation or semantic acceptance.
 
-Next after this historical baseline: owner B2.2 semantic review; R1/R2 have since been applied as recorded below, and R3-R6 remain pending. No feature implementation or later Phase-2 authorization was added.
+Next after this historical baseline: owner B2.2 semantic review; R1/R2 have since been applied as recorded below, and R3-R6 remain pending. No later Phase-2 authorization was added.
 
 ## 8. Usability direction — 2026-10-15
 
-Owner-selected first friction: understanding/comparing jobs or Market findings. Source review found that Overview still promotes the broad processing workflow, job detail leads with complete source/translation documents, and Market evidence links often use job IDs while job detail returns to the general catalog. These are observed code/presentation structures; no visual usability test or time-savings measurement has been performed.
+Owner-selected first friction: understanding/comparing jobs or Market findings. Source review found that Overview still promoted the broad processing workflow, job detail led with complete source/translation documents, and Market evidence links often used job IDs while job detail returned to the general catalog. These are baseline source observations, not measured usability results.
 
 Proposed first journey: easy entry to the existing Market intelligence → readable job context on evidence links → inspect a supporting job → return to the originating finding, preserving frozen/current evidence boundaries. Build on accepted R3; keep B2 review and its promotion rules intact. Small-set job comparison follows its own bounded design. See the existing roadmap/TODO owners rather than creating another plan.
 
@@ -338,3 +342,9 @@ artifact 50/56 responsibility[3] pair. Proposed definition: implementing tool
 calling or function calling for language-model-based systems. Structured Output
 is additional scope only in the second posting. Exact wording, rationale, and
 limits are in focused decision §15. No R3 mutation; B2 remains active.
+
+## 11. State reconciliation — 2026-10-17
+
+The owner published the previously local `tNpG` source/detail and English projection to `main`. Repository-safe corpus counts are now 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts. GitHub CI for the publication head passed.
+
+The controlling current-state overlay, execution TODO, working memory, and top-level current-facing documentation are reconciled to the same present-tense state: R1/R2 are applied and verified; four of 35 selected responsibilities are mapped; R3 is the next semantic review. The October 15 statements describing all 35 responsibilities as pending or `tNpG` as unpublished remain historical evidence only.
