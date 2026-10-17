@@ -116,10 +116,12 @@ Committed public-corpus baseline (local unpublished projections may differ):
 | Public corpus state | Count |
 | --- | ---: |
 | Known/discovered jobs | 420 |
-| Fetched/parsed job details | 51 |
-| Current English projections | 29 |
+| Fetched/parsed job details | 52 |
+| Current English projections | 30 |
 | Accepted English P1.6 artifacts | 11 |
 | Accepted Capability artifacts | 5 |
+
+The October 17 publication adds the current `tNpG` source/detail and English projection. It does not add accepted P1.6 or Capability for that job.
 
 `420` means known/discovered job identities, not 420 complete advertisements.
 
@@ -247,7 +249,8 @@ P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
 Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 RoleFamilyIntelligenceReport R1-R4       ACCEPTED / CLOSED
-Current exact increment                 P2.2B-B2 selective responsibility correspondence review
+P2.2B-B2 R1/R2                          ACCEPTED / APPLIED / VERIFIED
+Current exact increment                 P2.2B-B2 R3 semantic correspondence review
 ```
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
@@ -333,7 +336,7 @@ MARKET
 ↺
 ```
 
-The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is selective reviewed responsibility normalization through the existing Registry, under the [B2 decision](docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md). Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
+The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is selective reviewed responsibility normalization through the existing Registry, under the [B2 decision](docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md). R1 and R2 are applied and verified; R3 is the next owner semantic review. Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
 
 ## License
 
