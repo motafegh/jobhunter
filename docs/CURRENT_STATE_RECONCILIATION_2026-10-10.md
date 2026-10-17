@@ -53,9 +53,10 @@ Controlling direction decision:
 
 `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
 
-Latest bounded R3 decision:
+Bounded semantic-decision records:
 
-`docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
+- `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
+- `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`
 
 Direction result:
 
@@ -95,7 +96,7 @@ tNVe  artifact 56   8 responsibilities
 
 ## 4. B2 candidate review state
 
-Review and promotion are explicit; no candidate is pre-promoted.
+The bounded R1-R6 semantic review is now complete. Review does not itself prove local Registry application.
 
 ```text
 R1  AI-agent design / implementation
@@ -113,19 +114,31 @@ R3  LLM Tool / Function Calling implementation
     concept: responsibility:implement-llm-tool-calling
     approved mappings: artifact 50 responsibility[3], artifact 56 responsibility[3]
 
-R4  RAG / knowledge-retrieval development
-    PENDING
+R4  RAG development
+    ACCEPTED 2026-10-17 / LOCAL APPLICATION + VERIFICATION PENDING
+    concept: responsibility:develop-rag-systems
+    approved mappings: artifact 50 responsibility[6], artifact 56 responsibility[4]
 
 R5  multi-step AI workflow design/development
-    PENDING
+    ACCEPTED 2026-10-17 / LOCAL APPLICATION + VERIFICATION PENDING
+    concept: responsibility:design-develop-multi-step-ai-workflows
+    approved mappings: artifact 50 responsibility[7], artifact 56 responsibility[5]
 
 R6  AI-system performance evaluation/improvement
-    PENDING
+    ACCEPTED 2026-10-17 / LOCAL APPLICATION + VERIFICATION PENDING
+    concept: responsibility:evaluate-improve-ai-system-performance
+    approved mappings: artifact 50 responsibility[8], artifact 56 responsibility[7]
 ```
 
-R3 is semantically accepted because both exact accepted/current claims assert implementation of Tool/Function Calling for LLM-based systems. `Structured Output` is additional scope in `tNVe` and remains source-specific rather than entering the normalized definition. No shared framework, autonomy, permission, deployment, orchestration, production, or Structured Output responsibility is inferred.
+R3 preserves `Structured Output` as source-specific extra scope rather than part of the normalized definition.
 
-Four of the 35 selected responsibilities are currently proven mapped in the local Registry from R1/R2; 31 remain pending until R3 is actually applied to the maintainer SQLite database. The R1/R2 broader boundary claims remain pending.
+R4 deliberately narrows the original tentative identity: both claims explicitly share **RAG development**, while `Knowledge-based systems` and `Knowledge Retrieval` are not equivalent. The accepted concept is therefore `responsibility:develop-rag-systems`; each source-specific knowledge phrase remains exact in its original claim.
+
+R5 normalizes only multi-step AI/agent workflow design/development. `reliable` remains specific to `tvMm`; Multi-Agent, Email, Ticketing, and module-integration scope remains specific to `tNVe`.
+
+R6 normalizes explicit evaluation/improvement of AI/agent-system performance. `debugging` remains specific to `tvMm`; quality/reliability/latency/cost remain explicit `tNVe` dimensions. `tvMm` artifact 50 responsibility[9] remains pending because “paying attention to” those qualities is not the same evaluate/improve action.
+
+Four of the 35 selected responsibilities are currently proven mapped in the local Registry from R1/R2; 31 remain pending until R3-R6 are actually applied to the maintainer SQLite database. If all eight approved R3-R6 claims remain accepted/current and pending, successful application would be expected to produce 12/35 mapped and 23 pending. That expected state is not current authority until local verification proves it.
 
 ## 5. Current architecture rule
 
@@ -153,29 +166,30 @@ B2.1 read-only local baseline COMPLETE (2026-10-15)
   → exact current tvMm/tNVe/tjgi/tmvA responsibility claims confirmed
   → Registry baseline confirmed
 
-B2.2 semantic review ACTIVE
-  → R1 ACCEPTED / APPLIED / VERIFIED
-  → R2 ACCEPTED / APPLIED / VERIFIED
-  → R3 ACCEPTED; local application/verification pending
-  → R4-R6 remain pending
-  → ACCEPT | HOLD | REJECT before each mutation
+B2.2 semantic review COMPLETE
+  → R1-R6 reviewed individually
+  → R1/R2 accepted/applied/verified
+  → R3-R6 accepted semantically; local application/verification pending
 
-B2.3 local application
-  → apply R3 exactly as recorded in the 2026-10-17 R3 decision
-  → create/reuse only explicitly accepted responsibility concepts
-  → map only explicitly approved exact claims
+B2.3 local application ACTIVE
+  → pull current main and back up SQLite
+  → reconfirm all eight R3-R6 claims are still accepted/current and pending
+  → create/reuse only the four accepted R3-R6 responsibility concepts
+  → map only the eight explicitly approved exact claims
+  → add no aliases
+  → leave tvMm 50[9] and broader R1/R2 boundaries pending
 
 B2.4 proof
   → rerun/idempotency
   → CLI/browser same reviewed state
   → SQLite integrity / foreign keys
+  → R1/R2 and unrelated Registry rows unchanged
   → accepted P1.6 and Market identities unchanged
   → Registry remains local/private; public-corpus publication remains separate
 
 B2.5 disposition
-  → record accepted mappings + held/rejected boundaries
-  → continue R4-R6 one at a time after each accepted application is verified
-  → close B2 as accepted or no-promotion/defer for its bounded tranche
+  → record exact applied row identities + held/pending boundaries
+  → close B2 for the bounded six-candidate tranche
   → STOP
   → separate P2.2C vs P2.3 readiness decision
 ```
@@ -199,15 +213,16 @@ Do not during B2:
 ## 8. Current exact next action
 
 ```text
-R1/R2 approved, applied and verified on 2026-10-16
-R3 semantic correspondence ACCEPTED on 2026-10-17
-→ canonical concept: responsibility:implement-llm-tool-calling
-→ exact approved pair: artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
-→ apply R3 to the maintainer local SQLite database through existing jobhunter-registry CLI
+R1/R2 applied and verified
+R3-R6 semantic correspondences accepted
+→ semantic review stage COMPLETE
+→ apply the accepted R3-R6 batch to the maintainer local SQLite database
+→ exact concepts/mappings/commands are fixed in the 2026-10-17 R4-R6 decision record
 → prove idempotency, CLI/browser agreement, integrity/FK and preservation boundaries
-→ only after R3 is applied/verified, advance to R4 semantic review
+→ record final B2 disposition
+→ STOP and make a separate P2.2C-vs-P2.3 readiness decision
 ```
 
-The exact R3 application commands and verification boundary are fixed in `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`. This repository session cannot claim the local Registry rows exist because the runtime SQLite database is intentionally local and excluded from GitHub.
+The exact combined application commands and verification boundary are fixed in `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`. This repository session cannot claim the local Registry rows exist because the runtime SQLite database is intentionally local and excluded from GitHub.
 
-The latest repository also intentionally publishes the previously local `tNpG` source/detail + English projection. That corpus publication is independent of B2 and does not change the R3 application boundary.
+The latest repository also intentionally publishes the previously local `tNpG` source/detail + English projection. That corpus publication is independent of B2 and does not change the local Registry application boundary.
