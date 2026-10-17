@@ -5,7 +5,8 @@
 **Active branch:** `main`  
 **Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
 **P2.2 plan:** `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`  
-**Current decision:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`  
+**Current direction decision:** `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`  
+**Latest R3 decision:** `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`  
 **Current product gate:** MARKET I1-I7 ACCEPTED / ROLE-FAMILY REPORT R1-R4 ACCEPTED / P2.2B-B2 ACTIVE  
 **Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization using existing P2.1 Canonical Registry review machinery. P2.2C/P2.2D/P2.3/P2.4 remain unauthorized.
 
@@ -45,6 +46,7 @@ Key closure/current records:
 - `docs/working-memory/2026-09-26_MARKET_I7_TARGET_COVERAGE_FOLLOWUP.md`
 - `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 - `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
+- `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 
 Do not reopen accepted historical work without a repeatable material contradiction.
 
@@ -89,22 +91,26 @@ P2.4 Market v2                       DOWNSTREAM / NOT AUTHORIZED
 - [x] Record existing Registry `responsibility` concepts and mapping states for the selected claims.
 - [x] Stop/re-evaluate any candidate whose exact claim is no longer accepted/current; do not silently substitute a different claim.
 
-Verified on 2026-10-15 at `bf016c7`: SQLite integrity `ok`, foreign keys empty; exact artifacts 50/56/60/61 remain accepted/current; all 35 selected responsibility claims are pending Registry review. Baseline backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`. Repeat the baseline only if dependencies/state change before mutation.
+Verified on 2026-10-15 at `bf016c7`: SQLite integrity `ok`, foreign keys empty; exact artifacts 50/56/60/61 remain accepted/current; all 35 selected responsibility claims were pending Registry review at that historical baseline. Baseline backup: `data/local-acceptance/project-alignment-2026-10-15/baseline-181157.sqlite3`. Repeat the baseline only if dependencies/state change before mutation.
 
-### B2.2 Owner semantic review — no mutation first
+### B2.2 Semantic review — no mutation first
 
 Review these six candidates one at a time as `ACCEPT | HOLD | REJECT`:
 
 - [x] R1 — ACCEPTED / APPLIED 2026-10-16: `responsibility:design-implement-ai-agents`, exact mappings #7 (50[0]) and #8 (56[0]); broader cases pending. Idempotency, rendered browser/CLI agreement, integrity, and non-mutation checks passed; see focused decision §14.
 - [x] R2 — ACCEPTED / APPLIED 2026-10-16: `responsibility:integrate-ai-systems-with-services`, mappings #9 (50[2]) and #10 (56[2]); broader cases pending. Idempotency, rendered browser/CLI agreement, integrity, and preservation checks passed; focused decision §15.
-- [ ] R3 — implement LLM Tool / Function Calling.
+- [x] R3 — ACCEPTED SEMANTICALLY 2026-10-17 / APPLICATION PENDING: `responsibility:implement-llm-tool-calling`, exact approved pair 50[3] + 56[3]. Shared core is implementation of Tool/Function Calling for LLM-based systems; `Structured Output` remains source-specific extra scope. See the 2026-10-17 R3 decision.
 - [ ] R4 — develop RAG / knowledge-retrieval systems.
 - [ ] R5 — design / develop multi-step AI workflows.
 - [ ] R6 — evaluate / improve AI-system performance.
 
-Exact pairs, tentative IDs and boundary members are controlled by:
+Exact R1-R2 history and candidate boundaries are controlled by:
 
 `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
+
+R3 decision and exact application protocol are controlled by:
+
+`docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 
 Rules:
 
@@ -116,7 +122,15 @@ Rules:
 
 ### B2.3 Apply accepted correspondences only
 
-For each accepted candidate only:
+R3 exact local application is now the next operation:
+
+- [~] Reconfirm `tvMm` artifact 50 responsibility[3] and `tNVe` artifact 56 responsibility[3] are accepted/current and still pending in the configured local database.
+- [~] Back up the configured SQLite database before R3 mutation.
+- [~] Create/reuse `responsibility:implement-llm-tool-calling` with label **Implement LLM tool/function calling** and definition **Implementing tool calling or function calling for language-model-based systems.**
+- [~] Map only exact claims 50[3] and 56[3] to that concept.
+- [x] No alias is authorized for R3.
+
+For each later accepted candidate only:
 
 - [ ] create/reuse the reviewed `responsibility:*` canonical concept through existing Registry tooling;
 - [ ] map only the explicitly approved exact claims;
@@ -127,13 +141,16 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 
 ### B2.4 Verification
 
-- [ ] Reapply the same reviewed concept/mapping commands and prove idempotent reuse/no duplicate state.
-- [ ] CLI Registry views show the exact approved concepts/mappings/source wording.
-- [ ] Browser Registry views show the same reviewed state.
-- [ ] Post-run `PRAGMA integrity_check = ok`.
-- [ ] Post-run `PRAGMA foreign_key_check = []`.
-- [ ] Accepted P1.6 artifacts and Market snapshot identities remain unchanged.
-- [ ] Repository-safe `corpus/` remains unchanged by Registry review/application; Registry publication is still unauthorized.
+For R3 after local application:
+
+- [~] Reapply the exact R3 concept/mapping commands and prove idempotent reuse/no duplicate state.
+- [~] CLI Registry views show the exact approved R3 concept/mappings/source wording.
+- [~] Browser Registry views show the same reviewed R3 state.
+- [~] Post-run `PRAGMA integrity_check = ok`.
+- [~] Post-run `PRAGMA foreign_key_check = []`.
+- [~] R1/R2 and other pre-existing Registry rows remain unchanged.
+- [~] Accepted P1.6 artifacts and Market snapshot identities remain unchanged.
+- [~] Repository-safe `corpus/` remains unchanged by Registry review/application; Registry publication is still unauthorized.
 - [ ] If no product/code defect appears, do not create code/test changes merely to accompany semantic local-state review.
 - [ ] If execution exposes a real product/contract defect, fix only that defect, add focused regression evidence, and run normal CI before continuing.
 
@@ -159,7 +176,7 @@ Claims not reviewed into an accepted correspondence remain pending unless a spec
 - [ ] Owner repeated-use assessment of comprehension and remaining friction; no subjective acceptance or measured time savings is claimed by the browser checks.
 - [ ] Scope any subsequent small-set job comparison separately; use accepted facts, approved B2 correspondences where available, and clearly labeled interpretation. No personal scoring or automatic taxonomy promotion.
 
-The owning UX direction is in `docs/ROADMAP.md` §13. The first navigation/UI slice is implemented and locally verified; owner usefulness review remains distinct. B2.2 review of R3-R6 remains next for the semantic stream. No job-comparison feature or new semantic layer was added.
+The owning UX direction is in `docs/ROADMAP.md` §13. The first navigation/UI slice is implemented and locally verified; owner usefulness review remains distinct. R3 local Registry application/verification is next in the semantic stream; R4-R6 remain pending. No job-comparison feature or new semantic layer was added.
 
 ## E. Permanent authority invariants
 
@@ -212,8 +229,8 @@ Portfolio work does not broaden the active semantic authorization.
 ```text
 P2.2B-B2.1 read-only baseline COMPLETE (2026-10-15)
 → R1/R2 approved/applied/verified (2026-10-16)
-→ B2.2 review R3-R6 with the owner
-→ R3 exact pair is artifact 50 responsibility[3] ↔ artifact 56 responsibility[3]
-→ no canonical mutation before explicit semantic approval
-→ apply only accepted correspondences, then verify and close B2
+→ R3 semantic correspondence ACCEPTED (2026-10-17)
+→ apply responsibility:implement-llm-tool-calling to exact 50[3] + 56[3] in local SQLite
+→ verify idempotency, rendered CLI/browser agreement, integrity/FK and preservation
+→ only then advance to R4 semantic review
 ```
