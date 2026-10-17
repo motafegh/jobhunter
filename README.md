@@ -249,9 +249,13 @@ P2.2B first responsibility pilot        CLOSED / NO-PROMOTION / DEFER
 Market foundation investigation         PASS / COMPLETE
 Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 RoleFamilyIntelligenceReport R1-R4       ACCEPTED / CLOSED
+P2.2B-B2 semantic review R1-R6          COMPLETE
 P2.2B-B2 R1/R2                          ACCEPTED / APPLIED / VERIFIED
-Current exact increment                 P2.2B-B2 R3 semantic correspondence review
+P2.2B-B2 R3-R6                          ACCEPTED SEMANTICALLY / LOCAL APPLICATION PENDING
+Current exact increment                 apply + verify exact R3-R6 Registry batch on maintainer SQLite
 ```
+
+The repository also contains a **non-authorizing post-B2 pre-decision** and technical reuse audit. If B2 closes cleanly, they currently favor a bounded P2.3A capability-requirement-profile direction before promoted P2.2C, beginning with a composition/reuse experiment rather than another inference stack. P2.3 remains not authorized while B2 is open.
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
 
@@ -336,7 +340,9 @@ MARKET
 ↺
 ```
 
-The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is selective reviewed responsibility normalization through the existing Registry, under the [B2 decision](docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md). R1 and R2 are applied and verified; R3 is the next owner semantic review. Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
+The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is the final local persistence/proof step of selective reviewed responsibility normalization through the existing Registry: R1/R2 are applied and verified; R3-R6 are semantically accepted and await exact local application plus idempotency/browser/CLI/integrity/preservation proof. Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
+
+A contingent post-B2 analysis favors P2.3A before promoted P2.2C if B2 closes cleanly. The accompanying technical audit recommends first comparing deterministic P1.6+Registry projection, optional reuse of accepted Capability-v9 organization, and only-if-needed bounded reuse of Capability-v9 grouping machinery before defining new persistent profile state. This is future decision evidence, not current authorization.
 
 ## License
 
