@@ -9,7 +9,7 @@
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
 **Committed public-corpus baseline:** 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts.
 **LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. R1/R2 are approved/applied/verified; R3 is the next owner semantic review. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
+**Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. R1/R2 are approved/applied/verified; R3 semantic correspondence is accepted and its local Registry application/verification is next. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
 **Parallel product priority:** Whole-product usability/productivity, prioritizing understanding and comparing jobs or Market findings. The first navigation/UI slice is implemented and locally verified under `docs/ROADMAP.md` §13 and the execution TODO; owner repeated-use feedback remains pending.
 **Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
 
@@ -35,6 +35,7 @@ Stable authority:
 Current focused records:
 
 - `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
+- `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 - `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_ENTRY.md` — closed entry/history.
 - `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`
 - `docs/working-memory/2026-10-10_MARKET_R4_RECOVERY_IDENTITY_REPAIR.md`
@@ -44,7 +45,7 @@ Historical B1 evidence:
 - `docs/working-memory/2026-09-14_P2_2B_B1_EXTRACTION_RECOVERY.md`
 - `docs/working-memory/2026-09-01_P2_2B_B1_REPO_EVIDENCE_SELECTION.md`
 
-Do not follow older I7 HOLD, open-B1, R4-active, or Phase-2-reconciliation-active instructions when they conflict with the current decision/state overlay.
+Do not follow older I7 HOLD, open-B1, R4-active, pre-R3-review, or Phase-2-reconciliation-active instructions when they conflict with the current decision/state overlay.
 
 ---
 
@@ -182,9 +183,13 @@ Why:
 - P2.3 has strong per-job Capability v9 architecture but lacks reviewed cross-job canonical relationship coverage over the current Market set;
 - P2.4 is defined to aggregate reviewed canonical mappings/profiles and is therefore downstream.
 
-Controlling decision:
+Controlling direction decision:
 
 `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`
+
+Latest bounded semantic decision:
+
+`docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`
 
 ---
 
@@ -195,13 +200,13 @@ Objective:
 ```text
 accepted/current P1.6 responsibility claims
 → bounded candidate cross-job correspondence
-→ owner semantic review
+→ explicit semantic review
 → existing P2.1 Registry reviewed responsibility concept + exact immutable claim mappings
 ```
 
 No new software subsystem is required unless execution proves a concrete gap in existing Registry tooling.
 
-Initial candidate review set:
+Candidate review state:
 
 ```text
 R1  design / implement AI agents
@@ -216,20 +221,26 @@ R2  integrate AI systems with APIs / databases / services
 
 R3  implement LLM Tool / Function Calling
     pair: tvMm[3] ↔ tNVe[3]
-    NEXT OWNER REVIEW
+    ACCEPTED SEMANTICALLY / LOCAL APPLICATION + VERIFICATION PENDING
+    concept: responsibility:implement-llm-tool-calling
 
 R4  develop RAG / knowledge retrieval
     pair: tvMm[6] ↔ tNVe[4]
+    PENDING
 
 R5  design / develop multi-step AI workflows
     pair: tvMm[7] ↔ tNVe[5]
+    PENDING
 
 R6  evaluate / improve AI-system performance
     strict pair: tvMm[8] ↔ tNVe[7]
     boundary: tvMm[9]
+    PENDING
 ```
 
-Tentative concept IDs and exact boundary notes are in the controlling decision file. R1/R2 are the only approved/applied concepts so far; R3-R6 remain unapproved until owner semantic review.
+R3 accepted definition: **Implementing tool calling or function calling for language-model-based systems.** `Structured Output` in `tNVe` is additional source-specific scope and is not generalized. No shared framework, autonomy, permission, deployment, orchestration, production, or Structured Output responsibility is inferred.
+
+R1/R2 are the only mappings currently proven applied in the maintainer local SQLite database. Do not claim R3 applied until its local commands and verification pass.
 
 Promotion rule:
 
@@ -246,28 +257,36 @@ Promotion rule:
 
 ```text
 B2.1 read-only local baseline COMPLETE (2026-10-15)
-   - main aligned at bf016c7 / pre-existing tNpG corpus changes preserved
    - SQLite backup
    - PRAGMA integrity + foreign keys
-   - inspect exact current responsibility claims for tvMm/tNVe/tjgi/tmvA
-   - verify artifacts 50/56/60/61
-   - inspect current Registry concepts/mapping states
+   - exact current responsibility claims and artifacts 50/56/60/61 confirmed
+   - Registry baseline confirmed
 
-B2.2 R1/R2 APPROVED / APPLIED / VERIFIED (2026-10-16)
-   - R3-R6 owner review next, one at a time
-   - ACCEPT | HOLD | REJECT
-   - no mutation first
+B2.2 semantic review ACTIVE
+   - R1 ACCEPTED / APPLIED / VERIFIED
+   - R2 ACCEPTED / APPLIED / VERIFIED
+   - R3 ACCEPTED 2026-10-17
+   - R4-R6 pending
 
-B2.3 apply only accepted correspondences
-   - existing jobhunter-registry concept/mapping commands
-   - no unrelated mappings/aliases
+B2.3 R3 local application NEXT
+   - pull current main
+   - fresh SQLite backup
+   - reconfirm exact 50[3] / 56[3] current pending claims
+   - create/reuse responsibility:implement-llm-tool-calling
+   - map only those two claims
+   - no alias
 
-B2.4 verify
-   - idempotency
+B2.4 R3 verify
+   - exact-command idempotency
    - browser/CLI same reviewed state
    - SQLite integrity/foreign keys
+   - R1/R2 + all other Registry rows preserved
    - P1.6/Market unchanged
-   - Registry publication remains unauthorized
+   - public corpus unchanged by Registry mutation
+
+then
+   - R4 semantic review
+   - continue R5/R6 one at a time
 
 B2.5 disposition
    - record accepted mappings + held/rejected boundaries
@@ -288,18 +307,17 @@ At that checkpoint the `tNpG` source/projection/manifest changes were still loca
 
 Verified alignment baseline on 2026-10-15: dependency consistency, Ruff, 830 warnings-as-errors tests, corpus verification, and read-only browser routes on a SQLite copy passed. CI `38078527873` passed on `bf016c7`. This housekeeping changed documentation/docstrings only; it did not repeat model generation or semantic acceptance.
 
-Next after this historical baseline: owner B2.2 semantic review; R1/R2 have since been applied as recorded below, and R3-R6 remain pending. No later Phase-2 authorization was added.
+The later R1/R2 applications and R3 semantic decision supersede that checkpoint's next-action wording; no later Phase-2 authorization was added.
 
 ## 8. Usability direction — 2026-10-15
 
 Owner-selected first friction: understanding/comparing jobs or Market findings. Source review found that Overview still promoted the broad processing workflow, job detail led with complete source/translation documents, and Market evidence links often used job IDs while job detail returned to the general catalog. These are baseline source observations, not measured usability results.
 
-Proposed first journey: easy entry to the existing Market intelligence → readable job context on evidence links → inspect a supporting job → return to the originating finding, preserving frozen/current evidence boundaries. Build on accepted R3; keep B2 review and its promotion rules intact. Small-set job comparison follows its own bounded design. See the existing roadmap/TODO owners rather than creating another plan.
+Proposed first journey: easy entry to the existing Market intelligence → readable job context on evidence links → inspect a supporting job → return to the originating finding, preserving frozen/current evidence boundaries. Build on accepted R3 presentation; keep B2 review and its promotion rules intact. Small-set job comparison follows its own bounded design. See the existing roadmap/TODO owners rather than creating another plan.
 
 The owner subsequently authorized implementation on 2026-10-15. Delivered: research-first Overview; grouped navigation with active-page/keyboard support; accepted-fact job preview before full documents; processing disclosures; frozen role/company evidence labels; and validated snapshot/report/finding return context retained through job/Work/Capability reading. Job pages explicitly show current local state and flag source changes relative to the originating snapshot. No generation, review, semantic contract, or comparison feature changed.
 
 Verification: Ruff and 834 warnings-as-errors tests passed. A real Edge/Playwright run against a SQLite copy proved Overview → report #2 → job → Work → job → original finding, desktop/mobile layout, visible narrow-screen return action, keyboard skip, no horizontal overflow, and no page errors. Historical-label and invalid-origin regressions preserve source boundaries; UI subjective usefulness/time savings remain for owner use. Screenshots are local and untracked, not public-corpus exports.
-
 
 ## 9. B2 R1 execution — 2026-10-16
 
@@ -321,7 +339,6 @@ R2 was subsequently approved and applied as recorded below; its definition and
 boundary exclusions remain in focused decision §14. B2 remains
 active; no family, archetype, personal-readiness, or downstream authorization.
 
-
 ## 10. B2 R2 execution — 2026-10-16
 
 Owner approved the exact R2 definition and pair. Applied
@@ -337,14 +354,30 @@ idempotency including review metadata, rendered browser/CLI agreement, SQLite
 integrity/foreign keys, other-table preservation, and corpus hash preservation
 passed. This was data-only: no code/model/source changes or full-suite rerun.
 
-Next: owner review of R3, `responsibility:implement-llm-tool-calling`, exact
-artifact 50/56 responsibility[3] pair. Proposed definition: implementing tool
-calling or function calling for language-model-based systems. Structured Output
-is additional scope only in the second posting. Exact wording, rationale, and
-limits are in focused decision §15. No R3 mutation; B2 remains active.
+The former next action was R3 review. That semantic gate is now closed by the 2026-10-17 R3 decision; R3 local application/verification is next.
 
 ## 11. State reconciliation — 2026-10-17
 
 The owner published the previously local `tNpG` source/detail and English projection to `main`. Repository-safe corpus counts are now 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts. GitHub CI for the publication head passed.
 
-The controlling current-state overlay, execution TODO, working memory, and top-level current-facing documentation are reconciled to the same present-tense state: R1/R2 are applied and verified; four of 35 selected responsibilities are mapped; R3 is the next semantic review. The October 15 statements describing all 35 responsibilities as pending or `tNpG` as unpublished remain historical evidence only.
+The controlling current-state overlay, execution TODO, working memory, and top-level current-facing documentation were reconciled to the same present-tense state: R1/R2 applied and verified; four of 35 selected responsibilities mapped; R3 was then the next semantic review. The October 15 statements describing all 35 responsibilities as pending or `tNpG` as unpublished remain historical evidence only.
+
+## 12. R3 semantic decision — 2026-10-17
+
+The owner delegated the remaining R3 semantic gate to the assistant. Independent review of the exact accepted/current P1.6 claims confirmed the correspondence:
+
+```text
+tvMm artifact 50 responsibility[3]
+Implementing Tool Calling / Function Calling with LLMs
+
+↕ reviewed normalized correspondence
+
+tNVe artifact 56 responsibility[3]
+implementing Tool / Function Calling and Structured Output
+```
+
+Decision: **ACCEPT** `responsibility:implement-llm-tool-calling` with label **Implement LLM tool/function calling** and definition **Implementing tool calling or function calling for language-model-based systems.** `Structured Output` remains additional source-specific scope in `tNVe`; no alias or broader technical responsibility is inferred.
+
+Repository CI at `e1b21e29` was fully green, including warnings-as-errors, before the decision was recorded. The exact local application commands and verification boundary are in `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`.
+
+Important: GitHub does not contain the maintainer runtime SQLite database. Therefore R3 is **semantically accepted but not yet claimed applied/verified**. Next is exact local Registry application + idempotency/browser/CLI/integrity/preservation proof. Only then advance to R4.
