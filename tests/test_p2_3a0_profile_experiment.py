@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+from pathlib import Path
 from typing import Any
 
 import pytest
@@ -394,3 +396,57 @@ def test_strategy_b_requirement_only_job_rejects_fabricated_responsibility_link(
 
     with pytest.raises(ValueError, match="unavailable .*responsibility.*0"):
         compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+
+def test_strategy_b_accepts_real_committed_tg9k_capability_fixture() -> None:
+    job_dir = Path("corpus/jobs/tG9K")
+    p16 = json.loads((job_dir / "p16-english.json").read_text(encoding="utf-8"))
+    capability = json.loads((job_dir / "capability.json").read_text(encoding="utf-8"))
+    assert p16["semantic_review_status"] == "accepted"
+
+    claims: list[CanonicalClaimReviewItem] = []
+    dependency = {
+        "analysis_artifact_id": p16["artifact_id"],
+        "source_job_id": p16["source_job_id"],
+        "job_detail_version_id": p16["job_detail_version_id"],
+        "translation_artifact_id": p16["translation_artifact_id"],
+    }
+    for index, requirement in enumerate(p16["analysis"]["requirements"]):
+        claims.append(
+            CanonicalClaimReviewItem(
+                **dependency,
+                claim_kind="requirement",
+                claim_index=index,
+                source_text=requirement["concept"],
+                evidence=requirement.get("evidence"),
+                concept_type=requirement.get("concept_type"),
+                strength=requirement.get("requirement_type"),
+                depth_signal=requirement.get("depth_signal"),
+                mapping=None,
+            )
+        )
+    for index, responsibility in enumerate(p16["analysis"]["responsibilities"]):
+        claims.append(
+            CanonicalClaimReviewItem(
+                **dependency,
+                claim_kind="responsibility",
+                claim_index=index,
+                source_text=responsibility["statement"],
+                evidence=responsibility.get("evidence"),
+                concept_type=None,
+                strength=None,
+                depth_signal=None,
+                mapping=None,
+            )
+        )
+
+    base = compose_p23a0_strategy_a("tG9K", tuple(claims))
+    result = compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+    assert result.capability_artifact_id == 11
+    assert len(result.groups) == 4
+    assert result.grouped_claim_count == 39
+    assert len(result.ungrouped_claims) == 1
+    assert result.ungrouped_claims[0].claim_kind == "requirement"
+    assert result.ungrouped_claims[0].claim_index == 31
+    assert result.canonical_concept_ids == ()
