@@ -446,7 +446,7 @@ def test_strategy_b_accepts_real_committed_tg9k_capability_fixture() -> None:
     assert result.capability_artifact_id == 11
     assert len(result.groups) == 4
     assert result.grouped_claim_count == 39
-    assert len(result.ungrouped_claims) == 1
-    assert result.ungrouped_claims[0].claim_kind == "requirement"
-    assert result.ungrouped_claims[0].claim_index == 31
+    assert len(result.ungrouped_claims) == 2
+    assert all(claim.claim_kind == "requirement" for claim in result.ungrouped_claims)
+    assert {claim.claim_index for claim in result.ungrouped_claims} == {31, 32}
     assert result.canonical_concept_ids == ()
