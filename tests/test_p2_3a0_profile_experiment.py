@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import pytest
 
 from jobhunter.canonical_registry import JobClaimMapping, MappingDisposition
@@ -7,6 +9,7 @@ from jobhunter.canonical_registry_review import CanonicalClaimReviewItem
 from jobhunter.p2_3a0_profile_experiment import (
     compose_p23a0_strategy_a,
     compose_p23a0_strategy_a_for_job,
+    compose_p23a0_strategy_b_from_public_capability,
 )
 
 
@@ -58,6 +61,52 @@ def _claim(
         depth_signal=None,
         mapping=mapping,
     )
+
+
+def _public_capability(
+    *,
+    profiles: list[dict[str, Any]],
+    analysis_artifact_id: int = 101,
+    job_detail_version_id: int = 201,
+    translation_artifact_id: int = 301,
+) -> dict[str, Any]:
+    return {
+        "analysis_artifact_id": analysis_artifact_id,
+        "artifact_id": 401,
+        "capability_schema_version": "job-capability-intelligence-v5",
+        "intelligence": {"capabilities": profiles},
+        "job_detail_version_id": job_detail_version_id,
+        "model": "accepted-local-model",
+        "prompt_version": "job-capability-intelligence-v9",
+        "schema_version": "jobhunter-public-corpus-v1",
+        "source_job_id": "job-1",
+        "stage": "capability",
+        "translation_artifact_id": translation_artifact_id,
+    }
+
+
+def _profile(
+    *,
+    label: str,
+    requirements: list[int] | None = None,
+    responsibilities: list[int] | None = None,
+) -> dict[str, Any]:
+    return {
+        "capability_label": label,
+        "summary": f"Accepted job-local summary for {label}.",
+        "requirement_strength": "required",
+        "source_requirement_indices": requirements or [],
+        "source_responsibility_indices": responsibilities or [],
+        "depth_signals": [],
+        "work_activities": [],
+        "sub_capabilities": [],
+        "underlying_knowledge": [],
+        "operational_practices": [],
+        "operational_context": [],
+        "unknown_scope": [],
+        "independence_expectation": None,
+        "overall_confidence": "high",
+    }
 
 
 def test_strategy_a_groups_only_reviewed_shared_canonical_identity() -> None:
@@ -205,3 +254,143 @@ def test_for_job_reads_only_current_claims_for_requested_job() -> None:
 
     assert result.source_job_id == "job-1"
     assert result.claim_count == 1
+
+
+def test_strategy_b_uses_capability_group_only_as_job_local_organization() -> None:
+    python_text = "Python proficiency"
+    work_text = "Build backend services"
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (
+            _claim(
+                claim_index=0,
+                source_text=python_text,
+                mapping=_mapping(
+                    mapping_id=1,
+                    claim_index=0,
+                    source_text=python_text,
+                    concept_id="skill:python",
+                ),
+            ),
+            _claim(
+                claim_index=0,
+                claim_kind="responsibility",
+                source_text=work_text,
+                mapping=_mapping(
+                    mapping_id=2,
+                    claim_index=0,
+                    claim_kind="responsibility",
+                    source_text=work_text,
+                    concept_id="responsibility:build-backend-services",
+                ),
+            ),
+            _claim(claim_index=1, source_text="FastAPI familiarity"),
+        ),
+    )
+    capability = _public_capability(
+        profiles=[
+            _profile(
+                label="Python backend engineering",
+                requirements=[0, 1],
+                responsibilities=[0],
+            )
+        ]
+    )
+
+    result = compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+    assert result.capability_artifact_id == 401
+    assert result.capability_model == "accepted-local-model"
+    assert len(result.groups) == 1
+    group = result.groups[0]
+    assert group.job_local_label == "Python backend engineering"
+    assert group.requirement_claim_count == 2
+    assert group.responsibility_claim_count == 1
+    assert group.canonical_concept_ids == (
+        "responsibility:build-backend-services",
+        "skill:python",
+    )
+    assert result.canonical_concept_ids == group.canonical_concept_ids
+    assert result.ungrouped_claims == ()
+
+
+def test_strategy_b_does_not_turn_job_local_label_into_canonical_identity() -> None:
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (_claim(claim_index=0, source_text="RAG familiarity"),),
+    )
+    capability = _public_capability(
+        profiles=[_profile(label="RAG", requirements=[0])]
+    )
+
+    result = compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+    assert result.groups[0].job_local_label == "RAG"
+    assert result.groups[0].canonical_concept_ids == ()
+    assert result.canonical_concept_ids == ()
+
+
+def test_strategy_b_preserves_claims_not_grouped_by_capability_v9() -> None:
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (
+            _claim(claim_index=0, source_text="Python"),
+            _claim(claim_index=1, source_text="Three years experience"),
+        ),
+    )
+    capability = _public_capability(
+        profiles=[_profile(label="Programming", requirements=[0])]
+    )
+
+    result = compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+    assert result.grouped_claim_count == 1
+    assert len(result.ungrouped_claims) == 1
+    assert result.ungrouped_claims[0].claim_index == 1
+
+
+def test_strategy_b_rejects_dependency_mismatch() -> None:
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (_claim(claim_index=0, source_text="Python"),),
+    )
+    capability = _public_capability(
+        profiles=[_profile(label="Programming", requirements=[0])],
+        analysis_artifact_id=999,
+    )
+
+    with pytest.raises(ValueError, match="dependencies do not match"):
+        compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+
+def test_strategy_b_rejects_non_public_or_non_v9_input() -> None:
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (_claim(claim_index=0, source_text="Python"),),
+    )
+    capability = _public_capability(
+        profiles=[_profile(label="Programming", requirements=[0])]
+    )
+    capability["schema_version"] = "local-private-artifact"
+
+    with pytest.raises(ValueError, match="public-corpus"):
+        compose_p23a0_strategy_b_from_public_capability(base, capability)
+
+
+def test_strategy_b_requirement_only_job_rejects_fabricated_responsibility_link() -> None:
+    base = compose_p23a0_strategy_a(
+        "job-1",
+        (_claim(claim_index=0, source_text="Python"),),
+    )
+    capability = _public_capability(
+        profiles=[
+            _profile(
+                label="Programming",
+                requirements=[0],
+                responsibilities=[0],
+            )
+        ]
+    )
+
+    with pytest.raises(ValueError, match="unavailable .*responsibility.*0"):
+        compose_p23a0_strategy_b_from_public_capability(base, capability)
