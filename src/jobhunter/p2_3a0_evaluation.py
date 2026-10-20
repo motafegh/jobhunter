@@ -216,6 +216,8 @@ def summarize_p23a0_evaluations(
     total_b_grouped_claims = sum(
         evaluation.grouped_distinct_claim_count for evaluation in strategy_b_evaluations
     )
+    has_strategy_a_evidence = bool(evaluations)
+    has_strategy_b_evidence = bool(strategy_b_evaluations)
 
     return {
         "job_count": len(evaluations),
@@ -226,9 +228,13 @@ def summarize_p23a0_evaluations(
             "total_bucket_count": total_a_buckets,
             "canonical_mapping_coverage_ratio": _ratio(total_a_mapped, total_a_claims),
             "bucket_per_claim_ratio": _ratio(total_a_buckets, total_a_claims),
-            "all_exact_claims_recoverable": all(
-                evaluation.strategy_a.exact_claim_recoverability
-                for evaluation in evaluations
+            "all_exact_claims_recoverable": (
+                all(
+                    evaluation.strategy_a.exact_claim_recoverability
+                    for evaluation in evaluations
+                )
+                if has_strategy_a_evidence
+                else None
             ),
         },
         "strategy_b": {
@@ -246,13 +252,21 @@ def summarize_p23a0_evaluations(
                 evaluation.duplicate_group_membership_count
                 for evaluation in strategy_b_evaluations
             ),
-            "all_exact_partitions_ok": all(
-                evaluation.exact_partition_ok
-                for evaluation in strategy_b_evaluations
+            "all_exact_partitions_ok": (
+                all(
+                    evaluation.exact_partition_ok
+                    for evaluation in strategy_b_evaluations
+                )
+                if has_strategy_b_evidence
+                else None
             ),
-            "all_work_activity_boundaries_ok": all(
-                evaluation.work_activity_boundary_ok
-                for evaluation in strategy_b_evaluations
+            "all_work_activity_boundaries_ok": (
+                all(
+                    evaluation.work_activity_boundary_ok
+                    for evaluation in strategy_b_evaluations
+                )
+                if has_strategy_b_evidence
+                else None
             ),
         },
         "decision_authority": "none_mechanical_measurements_only",
