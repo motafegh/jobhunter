@@ -76,6 +76,7 @@ def _strategy_b_payload(composition: P23A0StrategyBComposition) -> dict[str, Any
             "grouped_distinct_claim_count": composition.grouped_claim_count,
             "ungrouped_claim_count": len(composition.ungrouped_claims),
             "reviewed_canonical_concept_count": len(composition.canonical_concept_ids),
+            "suppressed_work_activity_count": composition.suppressed_work_activity_count,
         },
         "reviewed_canonical_concept_ids": list(composition.canonical_concept_ids),
         "groups": [
@@ -91,6 +92,7 @@ def _strategy_b_payload(composition: P23A0StrategyBComposition) -> dict[str, Any
                 "claims": [_claim_payload(claim) for claim in group.claims],
                 "depth_signals": list(group.depth_signals),
                 "work_activities": list(group.work_activities),
+                "suppressed_work_activity_count": group.suppressed_work_activity_count,
                 "sub_capabilities": list(group.sub_capabilities),
                 "underlying_knowledge": list(group.underlying_knowledge),
                 "operational_practices": list(group.operational_practices),
