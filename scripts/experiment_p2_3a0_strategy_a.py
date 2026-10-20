@@ -12,6 +12,11 @@ from jobhunter.canonical_registry_review import (
     build_canonical_registry_review_reader,
 )
 from jobhunter.config import ConfigLoadError, Settings
+from jobhunter.p2_3a0_evaluation import (
+    P23A0JobEvaluation,
+    evaluate_p23a0_job,
+    summarize_p23a0_evaluations,
+)
 from jobhunter.p2_3a0_profile_experiment import (
     P23A0StrategyAComposition,
     P23A0StrategyBComposition,
@@ -119,9 +124,11 @@ def run(
     settings = Settings.load(config_path)
     reader = build_canonical_registry_review_reader(settings)
     jobs: list[dict[str, Any]] = []
+    evaluations: list[P23A0JobEvaluation] = []
 
     for job_id in job_ids:
         composition = compose_p23a0_strategy_a_for_job(reader, job_id)
+        strategy_b: P23A0StrategyBComposition | None = None
         job_payload: dict[str, Any] = {
             "source_job_id": composition.source_job_id,
             "strategy_a": _strategy_a_payload(composition),
@@ -139,6 +146,10 @@ def run(
                 job_payload["strategy_b"] = {
                     "status": "unavailable_no_accepted_public_capability_v9",
                 }
+
+        evaluation = evaluate_p23a0_job(composition, strategy_b)
+        evaluations.append(evaluation)
+        job_payload["evaluation"] = evaluation.to_payload()
         jobs.append(job_payload)
 
     return {
@@ -153,6 +164,7 @@ def run(
         "authority": "experimental_non_authoritative",
         "persistence": "none",
         "model_calls": 0,
+        "evaluation_summary": summarize_p23a0_evaluations(tuple(evaluations)),
         "jobs": jobs,
     }
 
@@ -161,8 +173,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description=(
             "Export read-only P2.3A-0 Strategy A and optional accepted-public "
-            "Capability-v9 Strategy B composition. This does not mutate Registry or "
-            "authorize P2.3."
+            "Capability-v9 Strategy B composition plus deterministic evaluation "
+            "metrics. This does not mutate Registry or authorize P2.3."
         )
     )
     parser.add_argument(
