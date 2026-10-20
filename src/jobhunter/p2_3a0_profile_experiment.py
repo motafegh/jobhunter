@@ -123,6 +123,7 @@ class P23A0StrategyBGroup:
     requirement_strength: str | None
     depth_signals: tuple[dict[str, Any], ...]
     work_activities: tuple[dict[str, Any], ...]
+    suppressed_work_activity_count: int
     sub_capabilities: tuple[dict[str, Any], ...]
     underlying_knowledge: tuple[dict[str, Any], ...]
     operational_practices: tuple[dict[str, Any], ...]
@@ -170,6 +171,10 @@ class P23A0StrategyBComposition:
                 }
             )
         )
+
+    @property
+    def suppressed_work_activity_count(self) -> int:
+        return sum(group.suppressed_work_activity_count for group in self.groups)
 
 
 def compose_p23a0_strategy_a(
@@ -269,6 +274,11 @@ def compose_p23a0_strategy_b_from_public_capability(
     caller must supply the committed ``capability.json`` payload, not an arbitrary
     latest database artifact. Exact dependency identities are revalidated against
     Strategy A before any job-local grouping is used.
+
+    Capability-v9 work activities are only exposed when the same group links at
+    least one exact accepted/current P1.6 responsibility. Requirement-only evidence
+    may still contribute qualification/depth interpretation, but it cannot manufacture
+    work that P1.6 never established. Suppression is counted explicitly for audit.
     """
 
     _validate_public_capability_identity(base, public_capability)
@@ -311,6 +321,17 @@ def compose_p23a0_strategy_b_from_public_capability(
                 }
             )
         )
+        raw_work_activities = _dict_sequence(profile, "work_activities", position)
+        has_linked_responsibility = any(
+            claim.claim_kind == "responsibility" for claim in linked_claims
+        )
+        if has_linked_responsibility:
+            work_activities = raw_work_activities
+            suppressed_work_activity_count = 0
+        else:
+            work_activities = ()
+            suppressed_work_activity_count = len(raw_work_activities)
+
         groups.append(
             P23A0StrategyBGroup(
                 job_local_label=label,
@@ -319,7 +340,8 @@ def compose_p23a0_strategy_b_from_public_capability(
                 canonical_concept_ids=canonical_ids,
                 requirement_strength=_optional_string(profile.get("requirement_strength")),
                 depth_signals=_dict_sequence(profile, "depth_signals", position),
-                work_activities=_dict_sequence(profile, "work_activities", position),
+                work_activities=work_activities,
+                suppressed_work_activity_count=suppressed_work_activity_count,
                 sub_capabilities=_dict_sequence(profile, "sub_capabilities", position),
                 underlying_knowledge=_dict_sequence(profile, "underlying_knowledge", position),
                 operational_practices=_dict_sequence(profile, "operational_practices", position),
