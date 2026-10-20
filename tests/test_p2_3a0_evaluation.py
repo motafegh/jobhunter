@@ -112,8 +112,18 @@ def test_strategy_a_evaluation_quantifies_mapping_and_fragmentation() -> None:
     strategy_a = compose_p23a0_strategy_a(
         "job-1",
         (
-            _claim(kind="requirement", index=0, text=first, mapping=_mapping(claim_index=0, source_text=first)),
-            _claim(kind="requirement", index=1, text=second, mapping=_mapping(claim_index=1, source_text=second)),
+            _claim(
+                kind="requirement",
+                index=0,
+                text=first,
+                mapping=_mapping(claim_index=0, source_text=first),
+            ),
+            _claim(
+                kind="requirement",
+                index=1,
+                text=second,
+                mapping=_mapping(claim_index=1, source_text=second),
+            ),
             _claim(kind="requirement", index=2, text=third),
         ),
     )
@@ -179,7 +189,7 @@ def test_strategy_b_evaluation_detects_duplicate_cross_group_membership() -> Non
     assert evaluation.exact_partition_ok is False
 
 
-def test_job_and_cross_job_summary_remain_measurement_only() -> None:
+def test_job_and_cross_job_summary_preserve_unevaluated_strategy_b() -> None:
     strategy_a = compose_p23a0_strategy_a(
         "job-1",
         (_claim(kind="requirement", index=0, text="Python proficiency"),),
@@ -192,6 +202,15 @@ def test_job_and_cross_job_summary_remain_measurement_only() -> None:
     assert summary["job_count"] == 1
     assert summary["strategy_b_available_job_count"] == 0
     assert summary["strategy_a"]["all_exact_claims_recoverable"] is True
-    assert summary["strategy_b"]["all_exact_partitions_ok"] is True
-    assert summary["strategy_b"]["all_work_activity_boundaries_ok"] is True
+    assert summary["strategy_b"]["all_exact_partitions_ok"] is None
+    assert summary["strategy_b"]["all_work_activity_boundaries_ok"] is None
     assert summary["decision_authority"] == "none_mechanical_measurements_only"
+
+
+def test_empty_summary_preserves_unevaluated_state() -> None:
+    summary = summarize_p23a0_evaluations(())
+
+    assert summary["job_count"] == 0
+    assert summary["strategy_a"]["all_exact_claims_recoverable"] is None
+    assert summary["strategy_b"]["all_exact_partitions_ok"] is None
+    assert summary["strategy_b"]["all_work_activity_boundaries_ok"] is None
