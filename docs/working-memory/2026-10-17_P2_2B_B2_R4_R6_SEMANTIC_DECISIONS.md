@@ -1,5 +1,8 @@
 # P2.2B-B2 R4-R6 Semantic Decisions — 2026-10-17
 
+**Current-status update — 2026-10-26:** B2 application/proof is complete and the six-candidate tranche is closed. The original decision below remains historical semantic authority; pending-application/next-gate wording is superseded by `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Do not repeat the live batch.
+
+
 **Status:** SEMANTIC REVIEW COMPLETE / R4-R6 ACCEPTED / LOCAL APPLICATION PENDING  
 **Scope:** Remaining B2 candidates R4-R6, plus the combined local application boundary for accepted-but-unapplied R3-R6.  
 **Authority:** The owner delegated continuation of the remaining semantic gates to the assistant on 2026-10-17. This record closes semantic review only; it does not claim local SQLite rows that have not been executed and verified.

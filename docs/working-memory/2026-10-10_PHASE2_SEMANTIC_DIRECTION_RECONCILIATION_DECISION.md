@@ -1,5 +1,8 @@
 # Phase-2 semantic direction reconciliation decision
 
+**Current-status update — 2026-10-26:** B2 application/proof is complete and the six-candidate tranche is closed. The original decision below remains historical semantic authority; pending-application/next-gate wording is superseded by `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Do not repeat the live batch.
+
+
 **Date:** 2026-10-10  
 **Status:** DECISION COMPLETE / P2.2B-B2 AUTHORIZED / IMPLEMENTATION-SUBSYSTEM EXPANSION NOT REQUIRED  
 **Execution update — 2026-10-16:** R1 and R2 owner approvals are applied: mappings #7/#8 for `responsibility:design-implement-ai-agents` and #9/#10 for `responsibility:integrate-ai-systems-with-services`, each over the exact approved artifact 50/56 claims. Four of the 35 selected responsibilities are mapped; 31 remain pending. Exact dependencies, idempotency, rendered browser/CLI agreement, integrity, and preservation checks pass. R3 owner review is next; B2 remains active.

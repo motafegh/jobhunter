@@ -2,11 +2,11 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-10-15
+**Last reconciled:** 2026-10-26
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, candidate interpretation V6, and `RoleFamilyIntelligenceReport` R1-R4 are accepted/closed. The active increment is P2.2B-B2 selective responsibility normalization: verify exact accepted/current snapshot-15 claims, review proposed correspondences with the owner, then apply only approved mappings through the existing Canonical Registry. P2.2C families, P2.2D stable archetypes, P2.3 capability profiles, and P2.4 Market v2 remain unauthorized. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`. Focused decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and the six-candidate B2 normalization tranche are accepted/closed. The owner-authorized zero-model P2.3A-0 evaluation and bounded read-only comparison are implemented and locally verified under `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Owner repeated-use assessment remains pending. Persistent profiles, promoted families/archetypes, new inference and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`.
 
 ---
 
@@ -243,7 +243,7 @@ Phase 1:                    CLOSED / ACCEPTED
 P2.1:                       CLOSED / ACCEPTED
 P2.2A:                      CLOSED / ACCEPTED
 Market I1-I7:               ACCEPTED / BOUNDED FIRST SLICE CLOSED
-Current frontier:           P2.2B-B2 selective responsibility normalization
+Current frontier:           bounded P2.3A read-only comparison; B2 closed
 ```
 
 Historical experiment/incident files remain historical and must not be rewritten as though they were current contracts.
@@ -1128,7 +1128,7 @@ The browser remains the normal user interface. Add product domains only when und
 
 ### Current owner priority — understanding and comparison
 
-On 2026-10-15 the owner confirmed whole-product usability, productivity, and usefulness as a parallel priority, with **understanding and comparing jobs or Market findings** as the highest-friction task. Apply this across increments rather than treating visual polish as a separate end-stage project. B2 semantic review remains the active semantic tranche; this priority does not pre-approve candidate correspondences or later semantic authority.
+On 2026-10-15 the owner confirmed whole-product usability, productivity, and usefulness as a parallel priority, with **understanding and comparing jobs or Market findings** as the highest-friction task. Apply this across increments rather than treating visual polish as a separate end-stage project. That historical priority did not pre-approve semantic correspondence or later authority. B2 is now closed; the October 26 bounded comparison follows this usability priority.
 
 The pre-implementation source inspection identified three concrete improvement opportunities:
 

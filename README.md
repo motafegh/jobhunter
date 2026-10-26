@@ -251,11 +251,12 @@ Market first vertical slice             I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOP
 RoleFamilyIntelligenceReport R1-R4       ACCEPTED / CLOSED
 P2.2B-B2 semantic review R1-R6          COMPLETE
 P2.2B-B2 R1/R2                          ACCEPTED / APPLIED / VERIFIED
-P2.2B-B2 R3-R6                          ACCEPTED SEMANTICALLY / LOCAL APPLICATION PENDING
-Current exact increment                 apply + verify exact R3-R6 Registry batch on maintainer SQLite
+P2.2B-B2 R3-R6                          ACCEPTED / APPLIED / VERIFIED
+P2.2B-B2                               CLOSED / ACCEPTED, SIX-CANDIDATE SCOPE
+Current exact increment                 bounded read-only job capability comparison
 ```
 
-The repository also contains a **non-authorizing post-B2 pre-decision** and technical reuse audit. If B2 closes cleanly, they currently favor a bounded P2.3A capability-requirement-profile direction before promoted P2.2C, beginning with a composition/reuse experiment rather than another inference stack. P2.3 remains not authorized while B2 is open.
+B2 is now closed and the October 26 owner-authorized bounded P2.3A slice is implemented. **Compare jobs** (`/compare`) places up to three jobs' accepted qualifications, explicit depth, and direct responsibilities together, with literal wording search and evidence drill-down. Existing current Capability-v9 grouping is optional job-local interpretation; each factual claim is counted once. Viewing the page does not call models or persist a profile. Owner repeated-use assessment remains pending; persistent P2.3 profiles are not authorized.
 
 Five heterogeneous accepted P1.6 → Capability chains currently serve as semantic anchors across AI/ML, sparse listings, Python/software, network/security, and operations/platform role shapes.
 
@@ -340,9 +341,9 @@ MARKET
 ↺
 ```
 
-The target-scoped Market substrate and durable bounded analytical reports are accepted. Current work is the final local persistence/proof step of selective reviewed responsibility normalization through the existing Registry: R1/R2 are applied and verified; R3-R6 are semantically accepted and await exact local application plus idempotency/browser/CLI/integrity/preservation proof. Promoted families/archetypes, capability profiles, Market v2, trends, and personal comparison retain their separate gates.
+The target-scoped Market substrate, durable bounded analytical reports, and six-candidate B2 normalization tranche are accepted. Current work is the bounded read-only comparison described in the October 26 decision. Promoted families/archetypes, persistent capability profiles, Market v2, trends, and personal comparison retain their separate gates.
 
-A contingent post-B2 analysis favors P2.3A before promoted P2.2C if B2 closes cleanly. The accompanying technical audit recommends first comparing deterministic P1.6+Registry projection, optional reuse of accepted Capability-v9 organization, and only-if-needed bounded reuse of Capability-v9 grouping machinery before defining new persistent profile state. This is future decision evidence, not current authorization.
+The October 26 evaluation and bounded browser slice follow the post-B2 capability-profile direction before promoted P2.2C. Strategy A preserves all 175 target claims without compaction. Optional Capability grouping is available only on the five older anchors and has overlapping claim support. The implemented browser retains factual fallback and distinct counts; no new inference or persistent profile state was introduced. See `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md` for evidence and limits.
 
 ## License
 

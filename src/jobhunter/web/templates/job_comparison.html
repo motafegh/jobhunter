@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Compare jobs · JobHunter{% endblock %}
+{% block heading %}What do these jobs ask for?{% endblock %}
+{% block eyebrow %}Compare current, accepted evidence{% endblock %}
+{% block topbar_actions %}<a class="button ghost" href="/jobs">Job catalog</a>{% if origin %}<a class="button ghost" href="{{ origin.return_url }}">{{ origin.label }}</a>{% endif %}{% endblock %}
+
+{% macro fact(claim, job) %}
+<li class="comparison-fact" id="{{ claim_anchor(claim) }}">
+  <p class="comparison-statement" dir="auto">{{ claim.source_text }}</p>
+  {% if claim.claim_kind == 'requirement' %}
+  <div class="badge-row"><span class="badge">{{ (claim.strength or 'strength unknown').replace('_', ' ') }}</span><span class="badge">{% if claim.depth_signal %}Explicit depth: {{ claim.depth_signal }}{% else %}Depth not established{% endif %}</span></div>
+  {% endif %}
+  {% if claim.mapping and claim.mapping.canonical_concept_id %}
+  <p class="field-help">Reviewed correspondence: <a class="text-link" href="/registry/concepts/{{ claim.mapping.canonical_concept_id|urlencode }}">{{ comparison.canonical_labels.get(claim.mapping.canonical_concept_id, claim.mapping.canonical_concept_id) }}</a></p>
+  {% else %}<p class="field-help">{{ 'Not mapped to a reviewed concept' if claim.mapping_state == 'pending' else 'Registry decision: ' ~ claim.mapping_state }}</p>{% endif %}
+  <details class="comparison-evidence"><summary>Evidence &amp; source</summary>
+    {% if claim.evidence %}<blockquote dir="auto">{{ claim.evidence }}</blockquote>{% else %}<p class="muted">No separate excerpt; inspect the accepted analysis and original document.</p>{% endif %}
+    <p class="technical-ref">Analysis #{{ claim.analysis_artifact_id }} · {{ claim.claim_kind }}[{{ claim.claim_index }}] · source version {{ claim.job_detail_version_id }} · English #{{ claim.translation_artifact_id }}</p>
+    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id == origin_job %}?{{ origin.query }}{% endif %}#english-analysis">Open accepted analysis and source</a>
+  </details>
+</li>
+{% endmacro %}
+
+{% block content %}
+{% if origin %}
+<div class="notice research-context"><strong>Comparing the latest local evidence.</strong> Your originating <a href="{{ origin.return_url }}">Market finding</a> remains frozen in snapshot #{{ origin.snapshot_id }}.{% if origin.job.source_changed %} <strong>The originating job's source has changed since that snapshot.</strong>{% endif %}</div>
+{% endif %}
+<section class="panel comparison-controls">
+  <p class="lead-copy">Choose up to three jobs, then find a capability phrase such as Python, RAG or MCP. Read the qualification, explicit depth and actual work together.</p>
+  <form method="get" action="/compare">
+    {% if origin %}
+    <input type="hidden" name="origin_job" value="{{ origin_job }}">
+    {% for key in ['from_snapshot', 'from_report', 'from_finding'] %}{% if key in request.query_params %}<input type="hidden" name="{{ key }}" value="{{ request.query_params[key] }}">{% endif %}{% endfor %}
+    {% endif %}
+    <div class="comparison-selectors">
+      {% for slot in range(3) %}
+      <label><span>Job {{ slot + 1 }}{% if slot %} · optional{% endif %}</span><select name="job" aria-label="Job {{ slot + 1 }}">
+        <option value="">Choose a job…</option>
+        {% for option in comparison.options %}<option value="{{ option.source_job_id }}" {% if slot < selected_ids|length and option.source_job_id == selected_ids[slot] %}selected{% endif %}>{{ option.title }} · {{ option.company }} · {{ option.source_job_id }}</option>{% endfor %}
+      </select></label>
+      {% endfor %}
+    </div>
+    <div class="comparison-filter"><label><span>Find wording in accepted claims</span><input type="search" name="q" maxlength="120" value="{{ comparison.query }}" placeholder="e.g. Python, RAG, MCP"></label><button class="button primary" type="submit">Compare</button><a class="button ghost" href="/compare">Clear</a></div>
+  </form>
+  <p class="field-help">Search matches claim wording, not neighboring claims in a shared evidence passage. Different wording may describe related skills; no match means not found in this view, not that the capability is unnecessary. English wording is derived from the original source.</p>
+</section>
+
+{% if not comparison.options %}<section class="panel empty-state">No accepted/current English analysis is available yet. Pending, rejected or stale analyses do not supply comparison facts. <a class="text-link" href="/jobs">Inspect the job catalog</a>.</section>
+{% elif not comparison.jobs %}<section class="panel empty-state">Select jobs above to compare their requirements and work without opening separate documents. Only jobs with accepted/current claim evidence are offered.</section>{% endif %}
+
+<div class="comparison-grid comparison-count-{{ comparison.jobs|length }}">
+{% for job in comparison.jobs %}
+<article class="panel comparison-job" aria-labelledby="comparison-title-{{ loop.index }}">
+  <header class="comparison-job-header"><p class="eyebrow" dir="auto">{{ job.option.company }}</p><h2 id="comparison-title-{{ loop.index }}" dir="auto">{{ job.option.title }}</h2><p class="technical-ref">{{ job.option.source_job_id }}</p>
+    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id == origin_job %}?{{ origin.query }}{% endif %}">Full job evidence</a>
+  </header>
+  {% if not job.claims %}
+  <div class="notice warn-notice">No accepted/current claim evidence is available for this job. Missing, pending, rejected or stale analysis is not evidence of no demand.</div>
+  {% else %}
+  <p class="comparison-coverage"><strong>{{ job.matching_claims|length }}</strong> distinct matching claims out of {{ job.claims|length }} accepted claims.</p>
+  {% if not job.matching_claims %}<div class="notice">No matching wording found. Try another phrase or clear the filter; this is not proof of absence.</div>{% endif %}
+
+  {% if job.groups %}
+  <details class="comparison-grouping"><summary>Related capability areas · {{ job.groups|length }}</summary>
+    <p class="field-help">{{ job.grouping_notice }} Groups may share claims; each fact is counted once below. Summaries describe the complete group; links below show matching facts. A group label does not establish cross-job equivalence.</p>
+    {% for group in job.groups %}
+    <div class="comparison-group"><h3>{{ group.interpretation.job_local_label }}</h3>
+      <p class="muted">{{ group.interpretation.summary }}</p>
+      {% if group.shared_claim_count %}<p class="field-help">{{ group.shared_claim_count }} supporting claims also appear in other groups.</p>{% endif %}
+      <div class="comparison-references">{% for claim in group.matching_claims %}<a class="text-link" href="#{{ claim_anchor(claim) }}">{{ claim.claim_kind }} {{ claim.claim_index + 1 }}</a>{% endfor %}</div>
+      {% if group.interpretation.unknown_scope %}<p class="field-help">Scope left unknown in this interpretation:</p><ul class="reading-list">{% for item in group.interpretation.unknown_scope %}<li>{{ item.statement }} <span class="badge">{{ (item.evidence_status or 'unknown_or_unsupported').replace('_', ' ') }}</span></li>{% endfor %}</ul>{% endif %}
+    </div>
+    {% endfor %}
+    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}/capability-intelligence">Inspect complete capability interpretation #{{ job.capability_artifact_id }}</a>
+  </details>
+  {% else %}<p class="field-help">{{ job.grouping_notice }}</p>{% endif %}
+
+  <section class="comparison-section"><h3>Qualifications and depth <span class="badge">{{ job.requirements|length }}</span></h3>
+    <ul class="comparison-facts">{% for claim in job.requirements %}{{ fact(claim, job) }}{% else %}<li class="muted">No matching requirement wording. Clear the filter to inspect all accepted claims.</li>{% endfor %}</ul>
+  </section>
+  <section class="comparison-section"><h3>Work explicitly described <span class="badge">{{ job.responsibilities|length }}</span></h3>
+    {% if not job.total_responsibilities %}<p class="notice">No direct responsibilities in the accepted analysis. Qualification evidence does not establish duties.</p>
+    {% elif not job.responsibilities %}<p class="muted">No matching responsibility wording. Other duties exist; whether they require this capability remains unestablished by this filter.</p>{% endif %}
+    <ul class="comparison-facts">{% for claim in job.responsibilities %}{{ fact(claim, job) }}{% endfor %}</ul>
+  </section>
+  <p class="field-help">No additional technical scope, independence or production context is inferred here. Follow the evidence for the employer's full wording.</p>
+  {% endif %}
+</article>
+{% endfor %}
+</div>
+{% endblock %}

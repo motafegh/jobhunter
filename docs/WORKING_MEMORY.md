@@ -1,20 +1,29 @@
 # JobHunter Working Memory / Handoff
 
-**Status:** Rolling non-authoritative handoff  
-**Date:** 2026-10-17  
-**Repository:** `https://github.com/motafegh/jobhunter`  
-**Active branch:** `main`  
-**Current state:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`  
-**Current product gate:** MARKET I1-I7 ACCEPTED / ROLE-FAMILY REPORT R1-R4 ACCEPTED / P2.2B-B2 ACTIVE  
-**Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`; accepted v20/v21/v23/v28 v5 artifacts remain accepted-only compatibility inputs when exact dependencies match.  
-**Committed public-corpus baseline:** 420 jobs / 52 parsed details / 30 English projections / 11 accepted English P1.6 / 5 Capability artifacts.  
-**LM Studio maintainer endpoint:** `http://127.0.0.1:18080/v1`; fresh-clone `Settings` default remains port 1234.  
-**Active increment:** P2.2B-B2 snapshot-15 selective responsibility normalization through the existing P2.1 Canonical Registry. Semantic review of R1-R6 is complete. R1/R2 are applied/verified; R3-R6 are accepted semantically and await local Registry application/verification. No P2.2C family, P2.2D archetype, P2.3 profile or P2.4 Market-v2 implementation is authorized.  
-**Contingent post-B2 analysis:** a non-authorizing readiness pre-decision recommends P2.3A before promoted P2.2C if B2 closes cleanly. A technical reuse audit further recommends beginning any later P2.3A with a composition/reuse experiment rather than another inference stack. Neither changes the current B2 gate.  
-**Parallel product priority:** Whole-product usability/productivity, prioritizing understanding and comparing jobs or Market findings. The first navigation/UI slice is implemented and locally verified; owner repeated-use feedback remains pending.  
-**Parallel portfolio:** MIT complete; GitHub metadata + screenshots + release + owner mastery pending.
+**Last reconciled:** 2026-10-26
+**Current gate:** B2 CLOSED / ACCEPTED FOR SIX-CANDIDATE SCOPE. P2.3A-0 evaluation executed; bounded read-only browser comparison authorized.
+**Current focused owner:** `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`
+**Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
-This file is current-frontier oriented. Detailed historical execution belongs in dated records under `docs/working-memory/`.
+The October 26 owner approval covers all three reviewed steps. R3–R6 already exist as mapping rows 11–18; do not repeat the live application. Current selected responsibilities: 12 mapped / 23 pending. Current Registry totals: ten concepts, eighteen decisions, one existing alias. All unrelated source/analysis/Market rows match the pre-R3–R6 backup.
+
+## Current execution
+
+- [x] Pull/reconcile current source, retained evidence, and local SQLite.
+- [x] Verify exact R1–R6 state, idempotency on a copy, rendered browser/CLI agreement, integrity/FKs, corpus and unrelated-state preservation.
+- [x] Close B2 for the six reviewed correspondences; preserve pending boundaries.
+- [x] Evaluate the six target jobs and five existing Capability anchors separately with zero model/source calls.
+- [x] Retain failed exact-partition checks on overlapping anchor groups; unavailable target B evidence remains null.
+- [x] Build a bounded browser view for up to three jobs with exact wording, requirement/depth/work separation, optional current Capability organization, and evidence drill-down.
+- [x] Verify read-only/currentness/privacy boundaries, 878 strict-warning tests, and real-data desktop/390px interaction.
+- [x] Record final delivery and proof limits in the October 26 focused record.
+- [ ] Owner repeated-use usefulness assessment.
+
+Persistent P2.3 profiles, Strategy-C inference, P2.2C/P2.2D, P2.4, personal scoring, and bulk canonicalization remain unauthorized. Existing experimental metrics are not a semantic or product acceptance result.
+
+## Historical October 17 handoff/checklist
+
+The remaining sections retain the former checklist as history. Their present-tense B2-active/application-pending and P2.3-not-authorized wording is superseded by the October 26 focused decision above. They do not instruct a new live application or reverse the bounded browser authorization.
 
 ## 1. Read this first
 

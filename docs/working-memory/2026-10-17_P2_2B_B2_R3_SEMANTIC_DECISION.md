@@ -1,5 +1,8 @@
 # P2.2B-B2 R3 Semantic Decision — 2026-10-17
 
+**Current-status update — 2026-10-26:** B2 application/proof is complete and the six-candidate tranche is closed. The original decision below remains historical semantic authority; pending-application/next-gate wording is superseded by `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Do not repeat the live batch.
+
+
 **Status:** ACCEPTED SEMANTIC CORRESPONDENCE / LOCAL APPLICATION PENDING  
 **Scope:** R3 only — implement LLM Tool / Function Calling.  
 **Authority:** owner delegated the remaining R3 semantic gate to the assistant on 2026-10-17. This record closes that semantic gate but does not claim a local SQLite mutation that has not been executed.

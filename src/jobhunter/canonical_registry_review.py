@@ -312,7 +312,9 @@ class CanonicalRegistryReviewReader:
                     evidence=_optional_claim_text(claim.get("evidence")),
                     concept_type=_optional_claim_text(claim.get("concept_type")),
                     strength=_optional_claim_text(
-                        claim.get("strength") or claim.get("requirement_strength")
+                        claim.get("requirement_type")
+                        or claim.get("strength")
+                        or claim.get("requirement_strength")
                     ),
                     depth_signal=_optional_claim_text(claim.get("depth_signal")),
                     mapping=mapping,

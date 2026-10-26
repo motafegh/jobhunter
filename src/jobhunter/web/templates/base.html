@@ -22,7 +22,7 @@
       <nav class="nav-list" aria-label="Primary">
         <div class="nav-group">
           <span class="nav-label">Your research</span>
-          {% for key, href, label in [('dashboard', '/', 'Overview'), ('market', '/market/targets', 'Market intelligence'), ('jobs', '/jobs', 'Jobs')] %}
+          {% for key, href, label in [('dashboard', '/', 'Overview'), ('market', '/market/targets', 'Market intelligence'), ('jobs', '/jobs', 'Jobs'), ('compare', '/compare', 'Compare jobs')] %}
           <a class="nav-item {% if page == key %}active{% endif %}" href="{{ href }}" {% if page == key %}aria-current="page"{% endif %}>{{ label }}</a>
           {% endfor %}
         </div>

@@ -2,7 +2,7 @@
 
 **Status:** Current architecture  
 **Date:** 2026-09-02
-**Last reconciled:** 2026-10-15
+**Last reconciled:** 2026-10-26
 
 JobHunter is a **local-first Python modular monolith** for turning public job-market evidence into traceable career intelligence.
 
@@ -201,7 +201,7 @@ ACCEPTED/CURRENT P1.6 FACTUAL SUBSTRATE
 
 This fan-out is important. Capability, Work Intelligence, Canonical Registry, and Market are different consumers of accepted P1.6. None is allowed to rewrite P1.6 source truth.
 
-The current P2.2B-B2 tranche reviews selective responsibility correspondences through the existing Canonical Registry. Responsibility families/archetypes and broader Market v2 remain later work.
+The closed P2.2B-B2 tranche reviewed six responsibility correspondences through the existing Canonical Registry. The bounded current browser comparison reuses exact accepted facts and optional current Capability grouping; responsibility families/archetypes, persistent profiles and Market v2 remain later work.
 
 ---
 
@@ -494,7 +494,7 @@ A `deliverable` concept category exists, but candidate Work Intelligence deliver
 
 The Registry is deliberately human-reviewed. Similar words, shared domains, or partial semantic overlap do not prove canonical equivalence. No model is allowed to silently create or accept canonical concepts/aliases/mappings.
 
-P2.2B-B1 is closed without promotion. The active B2 tranche reviews selected cross-job responsibility correspondences using this existing Registry; it does not bulk-build taxonomy.
+P2.2B-B1 is closed without promotion. The closed B2 tranche applied six selected cross-job correspondences using this existing Registry; it did not bulk-build taxonomy.
 
 ---
 
@@ -751,13 +751,14 @@ Phase 1 / P2.1 / P2.2A              ACCEPTED / CLOSED
 P2.2B-B1                            CLOSED / NO-PROMOTION / DEFER
 Market I1-I7 + coverage follow-up    ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Candidate V6 + report R1-R4          ACCEPTED / CLOSED FOR BOUNDED REPORTING
-P2.2B-B2                            ACTIVE / AUTHORIZED
-P2.2C / P2.2D / P2.3 / P2.4         NOT AUTHORIZED
+P2.2B-B2                            CLOSED / ACCEPTED, SIX-CANDIDATE SCOPE
+P2.3A bounded browser slice          IMPLEMENTED / LOCALLY VERIFIED
+Persistent P2.3 / P2.2C-D / P2.4     NOT AUTHORIZED
 ```
 
-B2 reuses exact accepted/current P1.6 responsibility claims, the existing Registry reader/service/store, and explicit owner semantic review. It needs no new subsystem unless execution reveals a concrete tooling defect. B1's former `ta9l` generation path remains closed history.
+B2 reused exact accepted/current P1.6 responsibility claims, the existing Registry reader/service/store, and explicit semantic review. Its local application and preservation proof are complete. B1's former `ta9l` generation path remains closed history.
 
-Present-tense status comes from `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; exact B2 scope comes from `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. Portfolio work remains parallel.
+Present-tense status comes from `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; current bounded delivery and proof limits come from `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. The October 10 B2 decision remains semantic-definition history. Portfolio work remains parallel.
 
 ## 27. Planned architectural evolution
 
@@ -784,3 +785,7 @@ Future additions should preserve the same architecture discipline:
 - bounded model reasoning;
 - local-first privacy;
 - no generic retrieval/agent/vector/distributed infrastructure until a measured need proves its value.
+
+## Bounded job comparison
+
+`/compare` reads current accepted English P1.6 through `CanonicalRegistryReviewReader`, with exact reviewed mappings and optional current SQLite Capability-v9 organization. It compares at most three jobs, searches accepted claim wording, and renders distinct qualifications/depth and direct responsibilities. Repeated Capability group references do not duplicate factual counts. Missing or invalid grouping retains the factual fallback. No model call, durable profile, canonical promotion or public-corpus runtime dependency is introduced.

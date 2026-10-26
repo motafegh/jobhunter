@@ -27,12 +27,12 @@ Before material changes, read:
 7. `docs/ROADMAP.md`
 8. `docs/IMPLEMENTATION_PLAN.md`
 9. `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
-10. the current active focused/implementation plan or decision (`docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md` for P2.2B-B2)
+10. the current active focused/implementation plan or decision (`docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md` for the bounded comparison slice)
 11. `docs/EXECUTION_TODO.md`
 12. `docs/WORKING_MEMORY.md`
 13. task-specific decision/experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
 
-For the current Market implementation stream, load at minimum after the stable documents:
+For changes to the accepted Market implementation, load at minimum after the stable documents:
 
 ```text
 docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md
@@ -41,7 +41,7 @@ docs/working-memory/2026-09-17_MARKET_I6_BROWSER_CLI_WORKFLOW_IMPLEMENTATION.md
 docs/working-memory/2026-09-18_MARKET_I7_LOCAL_ACCEPTANCE_PROTOCOL.md
 ```
 
-The current P2.2B-B2 stream also requires `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`, `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`, `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`, and `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`. The earlier I6/I7 records above are acceptance history, not the current execution route.
+The closed P2.2B-B2 semantic definitions remain controlled by `docs/P2_2_RESPONSIBILITY_WORK_ROLE_INTELLIGENCE_PLAN.md`, `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`, `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`, and `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`. The earlier I6/I7 records above are acceptance history, not the current execution route.
 
 The former Market foundation entry protocol and broad research consolidation are executed/history.
 Load them only when a specific accepted design decision needs its earlier evidence.
@@ -174,17 +174,17 @@ Market foundation investigation PASS / COMPLETE
 Market first vertical slice     I1-I7 ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Market I1-I6                    REPOSITORY ACCEPTED / CLOSED
 RoleFamily report R1-R4         ACCEPTED / CLOSED
-P2.2B-B2                       ACTIVE / AUTHORIZED
-P2.3 capability profiles        DEFERRED / NOT AUTHORIZED
+P2.2B-B2                       CLOSED / ACCEPTED, SIX-CANDIDATE SCOPE
+P2.3 bounded browser slice      AUTHORIZED; PERSISTENT PROFILES NOT AUTHORIZED
 P2.4 Market v2                  DOWNSTREAM / NOT AUTHORIZED
-next exact increment            B2 R3-R6 local Registry application + verification; semantic review complete
+next exact increment            owner repeated-use assessment of implemented comparison; October 26 decision controls
 ```
 
 The bounded Market candidate-interpretation experiment is CLOSED / ACCEPTED FOR BOUNDED REPORTING. Its earlier V6 review run cited 49 unique claims. The durable `RoleFamilyIntelligenceReport` R1-R4 program is also ACCEPTED / CLOSED: real-local report #2 cites 27 of 175 available snapshot-15 claims, has four work clusters, one multi-posting subfamily hypothesis, two singleton specialties/outliers, and zero integrity rejections. Report #2 is `accepted_for_bounded_use`; pre-repair report #1 remains immutable/pending. These are distinct reviewed analytical results, not taxonomy authority. R4 closure: `docs/working-memory/2026-10-10_MARKET_R4_FINAL_LOCAL_ACCEPTANCE.md`.
 
-The active B2 tranche uses the existing P2.1 Registry to normalize six reviewed responsibility correspondences across exact accepted/current P1.6 claims. Semantic review of R1-R6 is complete. R1 (`responsibility:design-implement-ai-agents`) and R2 (`responsibility:integrate-ai-systems-with-services`) are approved/applied/verified over four exact artifact-50/56 responsibility claims. R3-R6 are semantically accepted but still require machine-local Registry application and verification. The current proven state is therefore 4/35 mapped and 31 pending; the expected 12/35 mapped post-state is not authority until local proof exists. No new model or subsystem is needed for this remaining B2 persistence/proof step. Controlling decision and application records: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`, `docs/working-memory/2026-10-17_P2_2B_B2_R3_SEMANTIC_DECISION.md`, and `docs/working-memory/2026-10-17_P2_2B_B2_R4_R6_SEMANTIC_DECISIONS.md`. B1 remains closed; B2 does not authorize P2.2C/P2.2D/P2.3/P2.4.
+The B2 tranche used the existing P2.1 Registry to normalize six reviewed responsibility correspondences. All R1–R6 are applied and verified over twelve exact artifact-50/56 claims; 12/35 selected responsibilities are mapped and 23 remain pending. R3–R6 mapping rows 11–18 were applied October 20 and reverified October 26 against the retained pre-application backup. No live reapplication is needed. Closure, proof limits, and the separately owner-authorized bounded P2.3A evaluation/browser scope are controlled by `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Historical October 10/17 records retain the exact semantic definitions. B1 stays closed; no promoted families/archetypes or Market v2 are authorized.
 
-A contingent post-B2 analysis recommends P2.3A before promoted P2.2C **only if B2 closes cleanly**. Its technical supplement recommends a P2.3A-0 composition/reuse experiment before any new persistent profile subsystem, because Capability v9 already owns much of the multidimensional/evidence-status machinery while P2.1 canonical coverage remains deliberately sparse. These records are non-authorizing while B2 is open: `docs/working-memory/2026-10-17_POST_B2_P2_2C_VS_P2_3_READINESS_PREDECISION.md` and `docs/working-memory/2026-10-17_P2_3A_TECHNICAL_FEASIBILITY_AND_REUSE_AUDIT.md`.
+A contingent post-B2 analysis recommends P2.3A before promoted P2.2C **only if B2 closes cleanly**. Its technical supplement recommends a P2.3A-0 composition/reuse experiment before any new persistent profile subsystem, because Capability v9 already owns much of the multidimensional/evidence-status machinery while P2.1 canonical coverage remains deliberately sparse. Their original contingent analysis is now followed by the bounded October 26 decision; it does not authorize the whole P2.3 program: `docs/working-memory/2026-10-17_POST_B2_P2_2C_VS_P2_3_READINESS_PREDECISION.md` and `docs/working-memory/2026-10-17_P2_3A_TECHNICAL_FEASIBILITY_AND_REUSE_AUDIT.md`.
 
 B1 final evidence is retained at:
 
@@ -220,7 +220,7 @@ This does **not** prohibit new bounded analytical interpretation under a new exp
 
 ## 5. Accepted Market first-slice boundary and history
 
-Current execution is P2.2B-B2 under `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`. This section preserves the accepted I1-I7 scope and its historical stop lines. The separately authorized V6/report R1-R4 work is closed; the first-slice exclusions below do not reverse that later acceptance.
+Current execution is the bounded comparison slice under `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`; B2 is closed. This section preserves the accepted I1-I7 scope and its historical stop lines. The separately authorized V6/report R1-R4 work is closed; the first-slice exclusions below do not reverse that later acceptance.
 
 Formal foundation decision:
 

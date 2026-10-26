@@ -20,6 +20,7 @@ from jobhunter.public_corpus import DEFAULT_PUBLIC_CORPUS_DIR, export_public_cor
 from jobhunter.web.app import create_app
 from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
+from jobhunter.web.comparison import register_comparison_routes
 from jobhunter.web.item_review import register_item_review_routes
 from jobhunter.web.market_workspace import register_market_workspace_routes
 from jobhunter.web.operations import WebOperationManager
@@ -191,6 +192,7 @@ def build_runtime_app(settings: Settings):
     operations = WebOperationManager(after_success=lambda: _synchronize_public_corpus(settings))
     app = create_app(settings, operations=operations)
     register_capability_routes(app, settings)
+    register_comparison_routes(app, settings)
     register_blueprint_routes(app, settings)
     register_registry_routes(app, settings)
     register_work_intelligence_routes(app, settings)

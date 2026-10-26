@@ -29,6 +29,7 @@ from jobhunter.canonical_registry_review import (
     CanonicalClaimReviewItem,
     CanonicalRegistryReviewReader,
 )
+from jobhunter.capability_store import CapabilityIntelligenceArtifact
 
 P23A0CompositionBasis = Literal["reviewed_canonical_identity", "exact_source_claim"]
 PUBLIC_CORPUS_SCHEMA_VERSION = "jobhunter-public-corpus-v1"
@@ -282,12 +283,52 @@ def compose_p23a0_strategy_b_from_public_capability(
     """
 
     _validate_public_capability_identity(base, public_capability)
+    return _compose_strategy_b(
+        base,
+        capability_artifact_id=_required_int(public_capability, "artifact_id"),
+        capability_model=_required_string(public_capability, "model"),
+        intelligence=public_capability.get("intelligence"),
+    )
+
+
+def compose_p23a0_strategy_b_from_current_capability(
+    base: P23A0StrategyAComposition,
+    artifact: CapabilityIntelligenceArtifact,
+) -> P23A0StrategyBComposition:
+    """Reuse a current SQLite Capability without making corpus a runtime input.
+
+    The caller selects the configured current v9 artifact. This boundary still
+    validates its exact accepted/current P1.6 dependency chain and contract.
+    """
+
+    if (artifact.prompt_version, artifact.schema_version) != (
+        CAPABILITY_V9_PROMPT_VERSION, CAPABILITY_V9_SCHEMA_VERSION,
+    ):
+        raise ValueError("Comparison requires the current Capability-v9 contract")
+    _validate_capability_dependencies(
+        base,
+        source_job_id=artifact.source_job_id,
+        identity=(artifact.analysis_artifact_id, artifact.job_detail_version_id,
+                  artifact.translation_artifact_id),
+    )
+    return _compose_strategy_b(
+        base, capability_artifact_id=artifact.id,
+        capability_model=artifact.model, intelligence=artifact.intelligence,
+    )
+
+
+def _compose_strategy_b(
+    base: P23A0StrategyAComposition,
+    *,
+    capability_artifact_id: int,
+    capability_model: str,
+    intelligence: Any,
+) -> P23A0StrategyBComposition:
     claim_by_kind_index = {
         (claim.claim_kind, claim.claim_index): claim for claim in base.claims
     }
-    intelligence = public_capability.get("intelligence")
     if not isinstance(intelligence, dict):
-        raise ValueError("Public Capability-v9 projection is missing intelligence")
+        raise ValueError("Capability-v9 intelligence must be an object")
     profiles = intelligence.get("capabilities")
     if not isinstance(profiles, list):
         raise ValueError("Public Capability-v9 intelligence.capabilities must be a list")
@@ -357,8 +398,8 @@ def compose_p23a0_strategy_b_from_public_capability(
     )
     return P23A0StrategyBComposition(
         base=base,
-        capability_artifact_id=_required_int(public_capability, "artifact_id"),
-        capability_model=_required_string(public_capability, "model"),
+        capability_artifact_id=capability_artifact_id,
+        capability_model=capability_model,
         groups=tuple(groups),
         ungrouped_claims=ungrouped,
     )
@@ -376,29 +417,34 @@ def _validate_public_capability_identity(
         raise ValueError("Strategy B requires Capability-v9 prompt identity")
     if payload.get("capability_schema_version") != CAPABILITY_V9_SCHEMA_VERSION:
         raise ValueError("Strategy B requires Capability-v9 schema identity")
-    if payload.get("source_job_id") != base.source_job_id:
-        raise ValueError("Capability projection source job does not match Strategy A")
-
-    claims = base.claims
-    if not claims:
-        raise ValueError("Strategy B requires at least one accepted/current P1.6 claim")
-    dependency_identities = {
-        (
-            claim.analysis_artifact_id,
-            claim.job_detail_version_id,
-            claim.translation_artifact_id,
-        )
-        for claim in claims
-    }
-    if len(dependency_identities) != 1:
-        raise ValueError("Strategy A claims do not share one exact P1.6 dependency chain")
-    analysis_id, detail_id, translation_id = next(iter(dependency_identities))
-    actual = (
-        _required_int(payload, "analysis_artifact_id"),
-        _required_int(payload, "job_detail_version_id"),
-        _required_int(payload, "translation_artifact_id"),
+    _validate_capability_dependencies(
+        base,
+        source_job_id=payload.get("source_job_id"),
+        identity=(
+            _required_int(payload, "analysis_artifact_id"),
+            _required_int(payload, "job_detail_version_id"),
+            _required_int(payload, "translation_artifact_id"),
+        ),
     )
-    if actual != (analysis_id, detail_id, translation_id):
+
+
+def _validate_capability_dependencies(
+    base: P23A0StrategyAComposition,
+    *,
+    source_job_id: object,
+    identity: tuple[int, int, int],
+) -> None:
+    if source_job_id != base.source_job_id:
+        raise ValueError("Capability projection source job does not match Strategy A")
+    if not base.claims:
+        raise ValueError("Strategy B requires at least one accepted/current P1.6 claim")
+    dependencies = {
+        (claim.analysis_artifact_id, claim.job_detail_version_id, claim.translation_artifact_id)
+        for claim in base.claims
+    }
+    if len(dependencies) != 1:
+        raise ValueError("Strategy A claims do not share one exact P1.6 dependency chain")
+    if identity != next(iter(dependencies)):
         raise ValueError("Capability projection dependencies do not match Strategy A")
 
 

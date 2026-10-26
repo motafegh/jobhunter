@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-10-15
+**Last reconciled:** 2026-10-26
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, bounded Market I1-I7, candidate interpretation V6, and `RoleFamilyIntelligenceReport` R1-R4 are accepted/closed. The active increment is P2.2B-B2 selective responsibility normalization: verify exact accepted/current snapshot-15 claims, review proposed correspondences with the owner, then apply only approved mappings through the existing Canonical Registry. P2.2C families, P2.2D stable archetypes, P2.3 capability profiles, and P2.4 Market v2 remain unauthorized. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`. Focused decision: `docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and the six-candidate B2 normalization tranche are accepted/closed. The owner-authorized zero-model P2.3A-0 evaluation and bounded read-only comparison are implemented and locally verified under `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Owner repeated-use assessment remains pending. Persistent profiles, promoted families/archetypes, new inference and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`.
 
 ## 1. Purpose and authority
 
@@ -663,5 +663,8 @@ WORKING_MEMORY.md
 → rolling handoff/current state, non-authoritative
 
 docs/working-memory/2026-10-10_PHASE2_SEMANTIC_DIRECTION_RECONCILIATION_DECISION.md
-→ active B2 scope, exact claim pairs, review and acceptance sequence
+→ closed B2 semantic definitions and exact claim pairs
+
+docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md
+→ B2 closure, bounded comparison delivery and proof limits
 ```
