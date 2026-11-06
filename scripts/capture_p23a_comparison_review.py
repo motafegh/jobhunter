@@ -12,7 +12,7 @@ import json
 import sqlite3
 import subprocess
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from urllib.parse import quote, urlencode
 
@@ -169,7 +169,7 @@ def main() -> int:
     LOCAL_TMP_DIR.mkdir(parents=True, exist_ok=True)
     payload: dict[str, object] = {
         "contract": "p23a-owner-usefulness-aggregate-evidence-v1",
-        "captured_utc": datetime.now(timezone.utc).isoformat(),
+        "captured_utc": datetime.now(UTC).isoformat(),
         "git_head": _head_sha(),
         "evidence_type": "automated_mechanical_counts_only_not_owner_acceptance",
         "database_published": False,
