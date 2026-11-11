@@ -248,3 +248,33 @@ def test_source_wording_is_escaped_and_no_match_is_not_absence(settings: Setting
         no_match = client.get("/compare?job=escaped&q=NumPy")
         assert "not proof of absence" in no_match.text
         assert "not that the capability is unnecessary" in no_match.text
+
+
+def test_compact_overview_uses_exact_distinct_facts_and_preserves_unknowns(
+    settings: Settings,
+) -> None:
+    _seed(settings, "direct", grouping=True)
+    _seed(settings, "qualified", responsibilities=False)
+    with TestClient(build_runtime_app(settings)) as client:
+        response = client.get("/compare?job=direct&job=qualified&q=Python")
+        # The first Registry reader initializes its empty tables; compare subsequent GETs.
+        before = _rows(settings)
+        assert response.status_code == 200
+        html = response.text
+        assert html.count('class="text-link comparison-overview-job"') == 2
+        assert "2 of 3 distinct accepted claims match this wording." in html
+        assert "1 of 2 distinct accepted claims match this wording." in html
+        assert "1</strong> matching direct duties" in html
+        assert "0</strong> matching direct duties" in html
+        assert "No direct duties stated in the accepted analysis." in html
+        assert "1 matching qualifications state explicit depth." in html
+        assert "they are not similarity, readiness, or demand scores." in html
+        assert 'href="#comparison-job-1"' in html
+        assert 'id="comparison-job-1"' in html
+        assert 'href="#comparison-job-2"' in html
+        assert 'id="comparison-job-2"' in html
+        no_match = client.get("/compare?job=direct&q=java")
+        assert "No wording match does not establish no demand." in no_match.text
+        assert "Other duties exist; none matches this wording." in no_match.text
+        assert 'id="comparison-overview"' not in client.get("/compare").text
+        assert _rows(settings) == before

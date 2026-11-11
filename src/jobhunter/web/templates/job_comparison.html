@@ -25,6 +25,37 @@
 {% if origin %}
 <div class="notice research-context"><strong>Comparing the latest local evidence.</strong> Your originating <a href="{{ origin.return_url }}">Market finding</a> remains frozen in snapshot #{{ origin.snapshot_id }}.{% if origin.job.source_changed %} <strong>The originating job's source has changed since that snapshot.</strong>{% endif %}</div>
 {% endif %}
+{% if comparison.jobs %}
+<section class="panel comparison-overview" id="comparison-overview" aria-labelledby="comparison-overview-title">
+  <div class="comparison-overview-header">
+    <div>
+      <h2 id="comparison-overview-title">Comparison at a glance</h2>
+      <p class="field-help">Counts describe distinct accepted claims{% if comparison.query %} containing the literal wording “{{ comparison.query }}”{% endif %}; they are not similarity, readiness, or demand scores.</p>
+    </div>
+    <a class="text-link" href="#comparison-results">Detailed evidence</a>
+  </div>
+  <ol class="comparison-overview-list">
+    {% for job in comparison.jobs %}
+    <li>
+      <a class="text-link comparison-overview-job" href="#comparison-job-{{ loop.index }}">Job {{ loop.index }} · {{ job.option.title }}</a>
+      {% if not job.claims %}
+      <p class="field-help">Accepted/current facts unavailable; this does not establish absent demand.</p>
+      {% else %}
+      <p class="field-help">{{ job.matching_claims|length }} of {{ job.claims|length }} distinct accepted claims match{% if comparison.query %} this wording{% else %} the full view{% endif %}.</p>
+      <div class="comparison-overview-stats">
+        <span><strong>{{ job.requirements|length }}</strong> matching qualifications</span>
+        <span><strong>{{ job.responsibilities|length }}</strong> matching direct duties</span>
+      </div>
+      <p class="field-help">{{ job.requirements|selectattr('depth_signal')|list|length }} matching qualifications state explicit depth.</p>
+      {% if not job.total_responsibilities %}<p class="field-help">No direct duties stated in the accepted analysis.</p>
+      {% elif not job.responsibilities %}<p class="field-help">Other duties exist; none matches this wording.</p>{% endif %}
+      {% if not job.matching_claims %}<p class="field-help">No wording match does not establish no demand.</p>{% endif %}
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ol>
+</section>
+{% endif %}
 <section class="panel comparison-controls">
   <p class="lead-copy">Choose up to three jobs, then find a capability phrase such as Python, RAG or MCP. Read the qualification, explicit depth and actual work together.</p>
   <form method="get" action="/compare">
@@ -48,9 +79,9 @@
 {% if not comparison.options %}<section class="panel empty-state">No accepted/current English analysis is available yet. Pending, rejected or stale analyses do not supply comparison facts. <a class="text-link" href="/jobs">Inspect the job catalog</a>.</section>
 {% elif not comparison.jobs %}<section class="panel empty-state">Select jobs above to compare their requirements and work without opening separate documents. Only jobs with accepted/current claim evidence are offered.</section>{% endif %}
 
-<div class="comparison-grid comparison-count-{{ comparison.jobs|length }}">
+<div id="comparison-results" class="comparison-grid comparison-count-{{ comparison.jobs|length }}">
 {% for job in comparison.jobs %}
-<article class="panel comparison-job" aria-labelledby="comparison-title-{{ loop.index }}">
+<article id="comparison-job-{{ loop.index }}" class="panel comparison-job" aria-labelledby="comparison-title-{{ loop.index }}">
   <header class="comparison-job-header"><p class="eyebrow" dir="auto">{{ job.option.company }}</p><h2 id="comparison-title-{{ loop.index }}" dir="auto">{{ job.option.title }}</h2><p class="technical-ref">{{ job.option.source_job_id }}</p>
     <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id == origin_job %}?{{ origin.query }}{% endif %}">Full job evidence</a>
   </header>

@@ -126,6 +126,22 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
+/* Bounded read-only summary surfaces exact facts without claiming semantic alignment. */
+.comparison-overview { margin-bottom: 18px; }
+.comparison-overview-header { display: flex; justify-content: space-between; gap: 14px; align-items: start; }
+.comparison-overview-header h2 { margin: 0 0 5px; }
+.comparison-overview-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 16px 0 0; list-style: none; }
+.comparison-overview-list > li { min-width: 0; padding: 14px; border: 1px solid var(--border-soft); border-radius: var(--radius-sm); background: var(--surface-2); overflow-wrap: anywhere; }
+.comparison-overview-job { font-weight: 600; }
+.comparison-overview-stats { display: flex; gap: 12px; flex-wrap: wrap; margin: 12px 0 8px; }
+.comparison-overview-stats span { flex: 1 1 120px; font-size: 13px; color: var(--muted); }
+.comparison-overview-stats strong { font-size: 19px; color: var(--text); }
+#comparison-overview, #comparison-results, .comparison-job { scroll-margin-top: 16px; }
+@media (max-width: 760px) {
+  .comparison-overview-header { flex-wrap: wrap; }
+  .comparison-overview-list { grid-template-columns: 1fr; gap: 8px; }
+  .comparison-overview-list > li { padding: 12px; }
+}
 /* Small-set comparison keeps exact facts distinct from optional interpretation. */
 .comparison-controls form { display: grid; gap: 16px; }
 .comparison-selectors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
