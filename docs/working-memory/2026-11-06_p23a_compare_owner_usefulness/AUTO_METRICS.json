@@ -1,0 +1,182 @@
+{
+  "captured_utc": "2026-11-11T16:17:00.489005+00:00",
+  "cases": [
+    {
+      "jobs": [
+        {
+          "accepted_distinct_claims": 36,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 1,
+          "matching_direct_responsibilities": 1,
+          "matching_distinct_claims": 3,
+          "matching_requirements": 2,
+          "matching_requirements_with_explicit_depth": 1,
+          "matching_requirements_with_obligation": 2,
+          "public_job_id": "tvMm",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 11,
+          "visible_job_local_groups": 0
+        },
+        {
+          "accepted_distinct_claims": 32,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 1,
+          "matching_direct_responsibilities": 1,
+          "matching_distinct_claims": 4,
+          "matching_requirements": 3,
+          "matching_requirements_with_explicit_depth": 0,
+          "matching_requirements_with_obligation": 3,
+          "public_job_id": "tNVe",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 8,
+          "visible_job_local_groups": 0
+        },
+        {
+          "accepted_distinct_claims": 26,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 3,
+          "matching_requirements": 3,
+          "matching_requirements_with_explicit_depth": 0,
+          "matching_requirements_with_obligation": 3,
+          "public_job_id": "t7Ay",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 0,
+          "visible_job_local_groups": 0
+        }
+      ],
+      "literal_filter": "RAG",
+      "public_job_ids": [
+        "tvMm",
+        "tNVe",
+        "t7Ay"
+      ],
+      "scenario": "rag_three_jobs",
+      "state": "evaluated"
+    },
+    {
+      "jobs": [
+        {
+          "accepted_distinct_claims": 41,
+          "current_capability_overlay_available": true,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 2,
+          "matching_requirements": 2,
+          "matching_requirements_with_explicit_depth": 1,
+          "matching_requirements_with_obligation": 2,
+          "public_job_id": "tG9K",
+          "repeated_support_slots_in_visible_groups": 18,
+          "total_direct_responsibilities": 8,
+          "visible_job_local_groups": 2
+        },
+        {
+          "accepted_distinct_claims": 16,
+          "current_capability_overlay_available": true,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 2,
+          "matching_requirements": 2,
+          "matching_requirements_with_explicit_depth": 1,
+          "matching_requirements_with_obligation": 2,
+          "public_job_id": "tmBK",
+          "repeated_support_slots_in_visible_groups": 8,
+          "total_direct_responsibilities": 0,
+          "visible_job_local_groups": 2
+        }
+      ],
+      "literal_filter": "Python",
+      "public_job_ids": [
+        "tG9K",
+        "tmBK"
+      ],
+      "scenario": "python_two_anchors",
+      "state": "evaluated"
+    },
+    {
+      "jobs": [
+        {
+          "accepted_distinct_claims": 18,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 18,
+          "matching_requirements": 18,
+          "matching_requirements_with_explicit_depth": 3,
+          "matching_requirements_with_obligation": 18,
+          "public_job_id": "t7ck",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 0,
+          "visible_job_local_groups": 0
+        },
+        {
+          "accepted_distinct_claims": 26,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 26,
+          "matching_requirements": 26,
+          "matching_requirements_with_explicit_depth": 6,
+          "matching_requirements_with_obligation": 26,
+          "public_job_id": "t7Ay",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 0,
+          "visible_job_local_groups": 0
+        }
+      ],
+      "literal_filter": "",
+      "public_job_ids": [
+        "t7ck",
+        "t7Ay"
+      ],
+      "scenario": "requirement_only",
+      "state": "evaluated"
+    },
+    {
+      "jobs": [
+        {
+          "accepted_distinct_claims": 36,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 0,
+          "matching_requirements": 0,
+          "matching_requirements_with_explicit_depth": 0,
+          "matching_requirements_with_obligation": 0,
+          "public_job_id": "tvMm",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 11,
+          "visible_job_local_groups": 0
+        },
+        {
+          "accepted_distinct_claims": 32,
+          "current_capability_overlay_available": false,
+          "matching_claims_with_reviewed_concept": 0,
+          "matching_direct_responsibilities": 0,
+          "matching_distinct_claims": 0,
+          "matching_requirements": 0,
+          "matching_requirements_with_explicit_depth": 0,
+          "matching_requirements_with_obligation": 0,
+          "public_job_id": "tNVe",
+          "repeated_support_slots_in_visible_groups": 0,
+          "total_direct_responsibilities": 8,
+          "visible_job_local_groups": 0
+        }
+      ],
+      "literal_filter": "zzzz-jh-no-match-2026",
+      "public_job_ids": [
+        "tvMm",
+        "tNVe"
+      ],
+      "scenario": "no_match",
+      "state": "evaluated"
+    }
+  ],
+  "contract": "p23a-owner-usefulness-aggregate-evidence-v1",
+  "database_published": false,
+  "evidence_type": "automated_mechanical_counts_only_not_owner_acceptance",
+  "git_head": "88ad5bfd62fd730b508dcc75ecb12fd73ecb9a7a",
+  "snapshot_foreign_key_violations": 0,
+  "snapshot_integrity_ok": true
+}
