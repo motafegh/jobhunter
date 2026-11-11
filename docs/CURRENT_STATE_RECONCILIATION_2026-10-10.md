@@ -2,7 +2,7 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-10-26
+**Last reconciled:** 2026-11-11
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
@@ -18,8 +18,11 @@ P2.2B-B2                            CLOSED / ACCEPTED, SIX-CANDIDATE SCOPE
 Market I1-I7 + coverage follow-up    ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Candidate V6 / report R1-R4          ACCEPTED / CLOSED FOR BOUNDED REPORTING
 P2.3A-0 evaluation                  EXECUTED / BOUNDED FINDINGS RECORDED
-P2.3A bounded browser comparison     IMPLEMENTED / LOCALLY VERIFIED
-Owner repeated-use assessment       PENDING
+P2.3A bounded factual comparison     DELIVERED / ENGINEERING CLOSED
+Market-context navigation repair    ACCEPTED / PROMOTED TO MAIN
+At-a-glance UI experiment           CLOSED / NO-PROMOTION
+Owner efficiency measurement        NOT ESTABLISHED / NOT CLAIMED
+Next capability expectation slice   PROPOSED / BOUNDED DECISION PENDING
 Persistent P2.3 profiles             NOT AUTHORIZED
 P2.2C / P2.2D / P2.4                 NOT AUTHORIZED
 Blueprint                           EXPERIMENTAL / NON-AUTHORITATIVE
@@ -28,7 +31,9 @@ Personal readiness / scoring        NOT AUTHORIZED
 
 Current focused decision and closure proof:
 
-`docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`
+`docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`
+
+The October 26 historical authorization remains `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`.
 
 The owner approved B2 closure reconciliation, existing composition evaluation, and a bounded browser understanding/comparison slice on October 26. This supersedes the old instruction to apply R3–R6: those exact mappings already exist and were reverified without production mutation. It does not authorize the whole P2.3 program.
 
@@ -70,3 +75,12 @@ The implemented bounded view compares up to three jobs, finds exact capability w
 Do not reopen B1, accepted anchors, Capability v9, or Blueprint merely to fill this view. Do not bulk-map the pending claims, promote families/archetypes, start Market v2/personal scoring, add Strategy-C inference, or publish private state. Any additional inference or durable profile architecture requires a separate bounded decision.
 
 Portfolio/release work remains parallel: MIT complete; metadata, screenshots/release, and owner mastery retain their own scope.
+
+
+## 6. November 11 completion and next product routing
+
+The factual `/compare` implementation is retained. A reproducible frozen-Market-context bug was repaired so every compared job that actually belongs to the originating frozen snapshot preserves validated report/finding navigation; nonmembers cannot impersonate snapshot evidence. The repaired code and regression tests were validated against real snapshot #15/report #2.
+
+The optional `at a glance` prototype was **not promoted**: its raw-count summary was not shown to improve owner comprehension or time-to-decision, and introduced reading/editing tradeoffs. No measured owner benefit or time savings are asserted. That experimental UI work is closed rather than a standing condition for the next feature stage.
+
+The next product **candidate** is `docs/working-memory/2026-11-11_NEXT_SUBSTANTIVE_CAPABILITY_EXPECTATION_SLICE.md`: job-specific, evidence-grounded technical work and capability expectations with explicit/implied/inferred/unknown distinctions. Its design and real-case gate precede persistent profiles or corpus-scale promotion. No new inference, Market v2, personal scoring or taxonomy authority is granted by this record.

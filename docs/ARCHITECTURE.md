@@ -752,7 +752,7 @@ P2.2B-B1                            CLOSED / NO-PROMOTION / DEFER
 Market I1-I7 + coverage follow-up    ACCEPTED / CLOSED FOR BOUNDED SCOPE
 Candidate V6 + report R1-R4          ACCEPTED / CLOSED FOR BOUNDED REPORTING
 P2.2B-B2                            CLOSED / ACCEPTED, SIX-CANDIDATE SCOPE
-P2.3A bounded browser slice          IMPLEMENTED / LOCALLY VERIFIED
+P2.3A bounded factual comparison     DELIVERED / ENGINEERING CLOSED
 Persistent P2.3 / P2.2C-D / P2.4     NOT AUTHORIZED
 ```
 

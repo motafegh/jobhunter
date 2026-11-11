@@ -1,25 +1,24 @@
 # JobHunter Working Memory / Handoff
 
-**Last reconciled:** 2026-10-26
-**Current gate:** B2 CLOSED / ACCEPTED FOR SIX-CANDIDATE SCOPE. P2.3A-0 evaluation executed; bounded read-only browser comparison authorized.
-**Current focused owner:** `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`
+**Last reconciled:** 2026-11-11
+**Current gate:** B2 CLOSED; bounded P2.3A factual comparison ENGINEERING-CLOSED, with a verified frozen-Market navigation repair. Optional overview NO-PROMOTION; owner time savings NOT ESTABLISHED.
+**Current focused owner:** `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`
+**Next substantive candidate:** `docs/working-memory/2026-11-11_NEXT_SUBSTANTIVE_CAPABILITY_EXPECTATION_SLICE.md`
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
-The October 26 owner approval covers all three reviewed steps. R3–R6 already exist as mapping rows 11–18; do not repeat the live application. Current selected responsibilities: 12 mapped / 23 pending. Current Registry totals: ten concepts, eighteen decisions, one existing alias. All unrelated source/analysis/Market rows match the pre-R3–R6 backup.
+The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
 ## Current execution
 
-- [x] Pull/reconcile current source, retained evidence, and local SQLite.
-- [x] Verify exact R1–R6 state, idempotency on a copy, rendered browser/CLI agreement, integrity/FKs, corpus and unrelated-state preservation.
-- [x] Close B2 for the six reviewed correspondences; preserve pending boundaries.
-- [x] Evaluate the six target jobs and five existing Capability anchors separately with zero model/source calls.
-- [x] Retain failed exact-partition checks on overlapping anchor groups; unavailable target B evidence remains null.
-- [x] Build a bounded browser view for up to three jobs with exact wording, requirement/depth/work separation, optional current Capability organization, and evidence drill-down.
-- [x] Verify read-only/currentness/privacy boundaries, 878 strict-warning tests, and real-data desktop/390px interaction.
-- [x] Record final delivery and proof limits in the October 26 focused record.
-- [ ] Owner repeated-use usefulness assessment.
+- [x] B2 reviewed normalization and bounded Market/report acceptance remain closed.
+- [x] Deliver/verify `/compare` factual accepted evidence, depth/obligation versus duties, and source links.
+- [x] Repair loss of frozen-Market context for a second compared snapshot member, without assigning provenance to unrelated jobs.
+- [x] Independently check live snapshot-15/report-2 navigation with structural probes and desktop/mobile Chromium.
+- [x] Archive the optional summary prototype as **NO PROMOTION** with owner time savings explicitly unmeasured.
+- [x] Close the bounded comparison engineering/optional-UX investigation; no repeated cosmetic test backlog.
+- [ ] Next candidate: capability-expectation reuse/gap audit for `tvMm`, `tNVe`, `t7Ay` and a bounded product contract before new model work/persistence.
 
-Persistent P2.3 profiles, Strategy-C inference, P2.2C/P2.2D, P2.4, personal scoring, and bulk canonicalization remain unauthorized. Existing experimental metrics are not a semantic or product acceptance result.
+No Strategy-C inference, P2.3 persistent profiles, P2.2C/D, P2.4, personal scoring, bulk mappings, or historical accepted-artifact regeneration is authorized by this closure.
 
 ## Historical October 17 handoff/checklist
 

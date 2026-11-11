@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-10-26
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and the six-candidate B2 normalization tranche are accepted/closed. The owner-authorized zero-model P2.3A-0 evaluation and bounded read-only comparison are implemented and locally verified under `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Owner repeated-use assessment remains pending. Persistent profiles, promoted families/archetypes, new inference and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The next proposed feature gate is source-backed job-specific capability expectations, not another comparison UI iteration. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
 
 ## 1. Purpose and authority
 

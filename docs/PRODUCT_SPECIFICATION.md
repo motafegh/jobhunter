@@ -8,7 +8,7 @@
 **Strategic roadmap:** `docs/ROADMAP.md`  
 **Controlling delivery plan:** `docs/IMPLEMENTATION_PLAN.md`
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and the six-candidate B2 normalization tranche are accepted/closed. The owner-authorized zero-model P2.3A-0 evaluation and bounded read-only comparison are implemented and locally verified under `docs/working-memory/2026-10-26_B2_CLOSURE_AND_P2_3A_BOUNDED_BROWSER_DECISION.md`. Owner repeated-use assessment remains pending. Persistent profiles, promoted families/archetypes, new inference and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The next proposed feature gate is source-backed job-specific capability expectations, not another comparison UI iteration. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
 
 ## 1. Purpose
 
@@ -100,7 +100,7 @@ Current semantic layers are not all at the same acceptance level:
 - Market truthfulness/source/lifecycle/partial-success/P1.7 Phase-1 gates are closed; Phase 1, P2.1, and P2.2A are accepted;
 - the target-scoped Market I1-I7 first slice, same-target coverage follow-up, V6 candidate interpretation, and durable report R1-R4 are accepted/closed for their bounded scopes;
 - P2.2B-B2 is closed for six reviewed correspondences: 12/35 selected responsibility claims mapped, 23 pending;
-- the bounded read-only comparison is implemented and locally verified; owner repeated-use assessment and any broader P2.3 profile program retain separate gates.
+- the bounded read-only comparison is implemented and engineering-closed, with a validated Market-context navigation repair; the optional summary experiment was not promoted, user time savings remain unmeasured, and broader P2.3 profile work retains a separate gate.
 
 One failed search, posting, parser, translation, semantic-analysis, Capability, corpus-projection or UI operation must not invalidate earlier successful durable work from the rest of a bounded run.
 
@@ -567,7 +567,7 @@ The accepted heterogeneous reference order is:
 
 From the accepted Market/report frontier:
 
-1. assess repeated-use value of the implemented bounded comparison over current accepted evidence;
+1. audit reuse and missing semantic work for a bounded job-specific capability-expectation candidate, without pretending the earlier comparison has measured time-savings acceptance;
 2. decide whether additional capability grouping or profile persistence is justified by a concrete limitation;
 3. build representative reviewed family/archetype and capability-profile evidence before personal comparison;
 4. consider one carefully selected second source and only then a minimal adapter abstraction;

@@ -126,3 +126,78 @@ def test_overview_uses_existing_intelligence_without_generation(tmp_path: Path, 
         assert "Skip to content" in response.text
         assert 'aria-current="page"' in response.text
     assert before == _dump(harness.settings.database_path)
+
+
+def test_comparison_keeps_report_context_only_for_frozen_snapshot_members(
+    tmp_path: Path,
+) -> None:
+    harness, snapshot_id = _seed_two_job_snapshot(tmp_path)
+    report = _record_report(
+        MarketRoleFamilyReportStore(harness.settings.database_path), snapshot_id
+    )
+    # This accepted outside job may be compared but was never a frozen snapshot member.
+    harness.seed_job(
+        "job-c",
+        title="Unrelated comparison role",
+        responsibilities=[],
+        requirements=[
+            {"concept": "SQL", "requirement_type": "required", "evidence": "SQL required"}
+        ],
+    )
+    posting = harness.source.get_job("job-b")
+    harness.source.record_job_detail(
+        job_posting_id=posting.id,
+        fetched_at=datetime(2026, 10, 15, tzinfo=UTC),
+        requested_url=posting.canonical_url,
+        final_url=posting.canonical_url,
+        status_code=200,
+        content_sha256="changed-job-b",
+        semantic_sha256="changed-job-b",
+        evidence_path=Path("new-job-b.html"),
+        metadata_path=Path("new-job-b.json"),
+        parser_version="jobinja-detail-v2",
+        parse_status="parsed",
+        fields={"title": "Job B, updated", "company": "New employer"},
+    )
+    origin = job_origin(
+        harness.settings,
+        "job-a",
+        snapshot_id=snapshot_id,
+        report_id=report.id,
+        finding="work-1",
+    )
+    assert origin.snapshot_member_ids == frozenset({"job-a", "job-b"})
+    assert origin.changed_source_member_ids == frozenset({"job-b"})
+
+    app = build_runtime_app(harness.settings)
+    with TestClient(app) as client:
+        response = client.get(
+            "/compare",
+            params=[
+                ("job", "job-a"), ("job", "job-b"), ("job", "job-c"),
+                ("origin_job", "job-a"), ("from_snapshot", str(snapshot_id)),
+                ("from_report", str(report.id)), ("from_finding", "work-1"),
+            ],
+        )
+        assert response.status_code == 200
+        text = response.text
+        frozen_query = (
+            f"from_snapshot={snapshot_id}&amp;from_report={report.id}"
+            "&amp;from_finding=work-1"
+        )
+        assert f'href="/jobs/job-a?{frozen_query}"' in text
+        assert f'href="/jobs/job-b?{frozen_query}"' in text
+        assert 'href="/jobs/job-c"' in text
+        assert f'href="/jobs/job-c?{frozen_query}"' not in text
+        assert "This posting was not a member of the originating frozen Market snapshot." in text
+        assert "The source changed since that snapshot;" in text
+        assert f"/market/reports/{report.id}#work-1" in text
+        detail = client.get(
+            f"/jobs/job-b?from_snapshot={snapshot_id}"
+            f"&from_report={report.id}&from_finding=work-1"
+        )
+        assert detail.status_code == 200
+        assert f"/market/reports/{report.id}#work-1" in detail.text
+        assert client.get(
+            f"/jobs/job-c?from_snapshot={snapshot_id}&from_report={report.id}"
+        ).status_code == 404

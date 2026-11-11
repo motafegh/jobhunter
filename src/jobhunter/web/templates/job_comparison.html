@@ -16,7 +16,7 @@
   <details class="comparison-evidence"><summary>Evidence &amp; source</summary>
     {% if claim.evidence %}<blockquote dir="auto">{{ claim.evidence }}</blockquote>{% else %}<p class="muted">No separate excerpt; inspect the accepted analysis and original document.</p>{% endif %}
     <p class="technical-ref">Analysis #{{ claim.analysis_artifact_id }} · {{ claim.claim_kind }}[{{ claim.claim_index }}] · source version {{ claim.job_detail_version_id }} · English #{{ claim.translation_artifact_id }}</p>
-    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id == origin_job %}?{{ origin.query }}{% endif %}#english-analysis">Open accepted analysis and source</a>
+    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id in origin.snapshot_member_ids %}?{{ origin.query }}{% endif %}#english-analysis">Open accepted analysis and source</a>
   </details>
 </li>
 {% endmacro %}
@@ -52,7 +52,8 @@
 {% for job in comparison.jobs %}
 <article class="panel comparison-job" aria-labelledby="comparison-title-{{ loop.index }}">
   <header class="comparison-job-header"><p class="eyebrow" dir="auto">{{ job.option.company }}</p><h2 id="comparison-title-{{ loop.index }}" dir="auto">{{ job.option.title }}</h2><p class="technical-ref">{{ job.option.source_job_id }}</p>
-    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id == origin_job %}?{{ origin.query }}{% endif %}">Full job evidence</a>
+    <a class="text-link" href="/jobs/{{ job.option.source_job_id|urlencode }}{% if origin and job.option.source_job_id in origin.snapshot_member_ids %}?{{ origin.query }}{% endif %}">Full job evidence</a>
+    {% if origin and job.option.source_job_id not in origin.snapshot_member_ids %}<p class="field-help">This posting was not a member of the originating frozen Market snapshot.</p>{% elif origin and job.option.source_job_id in origin.changed_source_member_ids %}<p class="field-help">The source changed since that snapshot; this view shows current accepted evidence.</p>{% endif %}
   </header>
   {% if not job.claims %}
   <div class="notice warn-notice">No accepted/current claim evidence is available for this job. Missing, pending, rejected or stale analysis is not evidence of no demand.</div>

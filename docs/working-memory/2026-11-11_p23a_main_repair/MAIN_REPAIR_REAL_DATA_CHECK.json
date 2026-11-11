@@ -1,0 +1,33 @@
+{
+  "baseline_head": "21f9d03398ad22e7cafaaa187a4d0381a4db3c75",
+  "checks": {
+    "both_member_job_links_preserve_context": true,
+    "outside_member_claim_uncontextualized": true,
+    "outside_member_detail_uncontextualized": true,
+    "outside_snapshot_context_rejected": true,
+    "outside_snapshot_warning": true,
+    "report_return_context": true,
+    "second_member_claim_links_preserve_context": true,
+    "second_member_detail_returns_to_finding": true
+  },
+  "contract": "p23a-main-context-repair-acceptance-v1",
+  "isolated_sqlite_foreign_key_violations": 0,
+  "isolated_sqlite_integrity_ok": true,
+  "live_database_modified": false,
+  "report_id": 2,
+  "scope": "main candidate read-only HTTP and provenance; no owner time-savings",
+  "selected_public_job_ids": [
+    "tNVe",
+    "tvMm",
+    "tG9K"
+  ],
+  "snapshot_id": 15,
+  "snapshot_member_count": 10,
+  "status": {
+    "comparison": 200,
+    "origin": 200,
+    "outside_context": 404,
+    "report": 200,
+    "second_member": 200
+  }
+}
