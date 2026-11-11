@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "member_a_full_link_preserved": true,
+    "member_b_exact_claim_drilldown_preserved": true,
+    "member_b_full_link_preserved": true,
+    "member_b_returns_to_frozen_report": true,
+    "outside_exact_claim_drilldown_uncontextualized": true,
+    "outside_full_link_not_contextualized": true,
+    "outside_member_context_rejected": true,
+    "outside_snapshot_warning": true,
+    "report_context_return": true
+  },
+  "contract": "p23a-real-snapshot-market-navigation-v1",
+  "frozen_member_count": 10,
+  "http_status": {
+    "comparison": 200,
+    "origin_detail": 200,
+    "other_snapshot_detail": 200,
+    "outside_context_request": 404,
+    "report": 200
+  },
+  "report_id": 2,
+  "scope": "technical-only-not-owner-usefulness",
+  "selected_public_job_ids": [
+    "tNVe",
+    "tvMm",
+    "tG9K"
+  ],
+  "snapshot_id": 15
+}

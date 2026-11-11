@@ -1,0 +1,35 @@
+{
+  "contract": "p23a-market-real-browser-probe-v1",
+  "results": [
+    {
+      "entered_contextual_compare": true,
+      "member_claim_link_keeps_context": true,
+      "off_origin_hosts": [],
+      "originating_detail_context": true,
+      "other_member_link_keeps_context": true,
+      "outside_claim_link_uncontextualized": true,
+      "outside_job_link_has_no_frozen_context": true,
+      "outside_job_warning": true,
+      "page_errors": [],
+      "report_http": 200,
+      "returned_to_report": true,
+      "second_member_detail_returns_report": true,
+      "viewport": "desktop"
+    },
+    {
+      "entered_contextual_compare": true,
+      "member_claim_link_keeps_context": true,
+      "off_origin_hosts": [],
+      "originating_detail_context": true,
+      "other_member_link_keeps_context": true,
+      "outside_claim_link_uncontextualized": true,
+      "outside_job_link_has_no_frozen_context": true,
+      "outside_job_warning": true,
+      "page_errors": [],
+      "report_http": 200,
+      "returned_to_report": true,
+      "second_member_detail_returns_report": true,
+      "viewport": "mobile"
+    }
+  ]
+}

@@ -74,6 +74,8 @@ class MarketJobOrigin:
     label: str
     job: dict
     job_url: str
+    snapshot_member_ids: frozenset[str]
+    changed_source_member_ids: frozenset[str]
 
     @property
     def query(self) -> str:
@@ -130,6 +132,10 @@ def job_origin(
         job=jobs[job_id],
         job_url=market_job_url(
             job_id, snapshot_id=snapshot_id, report_id=report_id, finding=finding
+        ),
+        snapshot_member_ids=frozenset(jobs),
+        changed_source_member_ids=frozenset(
+            member_id for member_id, member in jobs.items() if member["source_changed"]
         ),
     )
 
