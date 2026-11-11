@@ -1,0 +1,58 @@
+{
+  "acquisition_calls": 0,
+  "cases": [
+    {
+      "accepted_claims": 36,
+      "capability_phrase": "RAG",
+      "current_capability_v9_available": false,
+      "direct_duties": 1,
+      "exact_phrase_matches": 3,
+      "explicit_depth_qualifications": 1,
+      "qualification_alternative_flags": 0,
+      "qualifications": 2,
+      "source_job_id": "tvMm",
+      "verification_questions": 4
+    },
+    {
+      "accepted_claims": 32,
+      "capability_phrase": "RAG",
+      "current_capability_v9_available": false,
+      "direct_duties": 1,
+      "exact_phrase_matches": 4,
+      "explicit_depth_qualifications": 0,
+      "qualification_alternative_flags": 1,
+      "qualifications": 3,
+      "source_job_id": "tNVe",
+      "verification_questions": 6
+    },
+    {
+      "accepted_claims": 26,
+      "capability_phrase": "RAG",
+      "current_capability_v9_available": false,
+      "direct_duties": 0,
+      "exact_phrase_matches": 3,
+      "explicit_depth_qualifications": 0,
+      "qualification_alternative_flags": 0,
+      "qualifications": 3,
+      "source_job_id": "t7Ay",
+      "verification_questions": 5
+    },
+    {
+      "accepted_claims": 41,
+      "capability_phrase": "Python",
+      "current_capability_v9_available": true,
+      "direct_duties": 0,
+      "exact_phrase_matches": 2,
+      "explicit_depth_qualifications": 1,
+      "qualification_alternative_flags": 0,
+      "qualifications": 2,
+      "source_job_id": "tG9K",
+      "verification_questions": 4
+    }
+  ],
+  "contract": "p23b-capability-expectation-mechanical-audit-v0",
+  "live_database_mutated": false,
+  "model_calls": 0,
+  "source_baseline_commit": "2de22a877772cf4a40154d8118a35ad19d1af8b7",
+  "state": "candidate-only; not a semantic or owner acceptance"
+}

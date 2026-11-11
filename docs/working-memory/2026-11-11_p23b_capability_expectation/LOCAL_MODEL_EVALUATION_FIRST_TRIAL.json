@@ -1,0 +1,19 @@
+{
+  "accepted_as_employer_truth": false,
+  "capability_phrase": "RAG",
+  "configured_local_endpoint": "127.0.0.1:18080/v1",
+  "contract": "p23b-local-model-eval-v0",
+  "database_mutated": false,
+  "finish_reason": "stop",
+  "max_tokens": 1400,
+  "mechanical_error_class": "JSONDecodeError",
+  "mechanical_outcome": "validation_rejected",
+  "model": "gemma-4-e2b-it",
+  "output_nonempty": true,
+  "owner_semantic_acceptance": false,
+  "raw_response_public": false,
+  "source_job_id": "tNVe",
+  "source_text_public": false,
+  "time_utc": "2026-11-11T18:31:02.678224+00:00",
+  "valid_unreviewed_candidate_count": 0
+}
