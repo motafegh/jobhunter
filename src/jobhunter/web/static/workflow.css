@@ -140,9 +140,15 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 @media (max-width: 760px) {
   .comparison-overview-header { flex-wrap: wrap; }
   .comparison-overview-list { grid-template-columns: 1fr; gap: 8px; }
-  .comparison-overview-list > li { padding: 12px; }
+  .comparison-overview-list > li { padding: 10px 12px; }
+  .comparison-overview-list .field-help { margin: 4px 0; line-height: 1.4; }
+  .comparison-overview-stats { margin: 6px 0 4px; }
+  .comparison-overview-list { margin-top: 10px; }
+
 }
 /* Small-set comparison keeps exact facts distinct from optional interpretation. */
+.comparison-editor > summary { cursor: pointer; min-height: 44px; color: var(--accent); font-weight: 600; overflow-wrap: anywhere; }
+.comparison-editor[open] > summary { margin-bottom: 12px; }
 .comparison-controls form { display: grid; gap: 16px; }
 .comparison-selectors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
 .comparison-selectors label, .comparison-filter label { display: grid; gap: 7px; min-width: 0; }

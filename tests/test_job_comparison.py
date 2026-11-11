@@ -248,6 +248,10 @@ def test_source_wording_is_escaped_and_no_match_is_not_absence(settings: Setting
         no_match = client.get("/compare?job=escaped&q=NumPy")
         assert "not proof of absence" in no_match.text
         assert "not that the capability is unnecessary" in no_match.text
+        injected_query = client.get("/compare", params={"job": "escaped", "q": "<script>"})
+        assert injected_query.status_code == 200
+        assert "&lt;script&gt;" in injected_query.text
+        assert "<script>" not in injected_query.text
 
 
 def test_compact_overview_uses_exact_distinct_facts_and_preserves_unknowns(
@@ -262,6 +266,8 @@ def test_compact_overview_uses_exact_distinct_facts_and_preserves_unknowns(
         assert response.status_code == 200
         html = response.text
         assert html.count('class="text-link comparison-overview-job"') == 2
+        assert '<details class="panel comparison-controls comparison-editor">' in html
+        assert 'Change selected jobs or wording · Python' in html
         assert "2 of 3 distinct accepted claims match this wording." in html
         assert "1 of 2 distinct accepted claims match this wording." in html
         assert "1</strong> matching direct duties" in html
@@ -276,5 +282,8 @@ def test_compact_overview_uses_exact_distinct_facts_and_preserves_unknowns(
         no_match = client.get("/compare?job=direct&q=java")
         assert "No wording match does not establish no demand." in no_match.text
         assert "Other duties exist; none matches this wording." in no_match.text
-        assert 'id="comparison-overview"' not in client.get("/compare").text
+        empty = client.get("/compare")
+        assert 'id="comparison-overview"' not in empty.text
+        assert '<details class="panel comparison-controls comparison-editor" open>' in empty.text
+        assert 'Choose jobs and wording' in empty.text
         assert _rows(settings) == before
