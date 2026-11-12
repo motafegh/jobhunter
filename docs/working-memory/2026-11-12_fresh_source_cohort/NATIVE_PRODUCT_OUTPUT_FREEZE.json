@@ -1,0 +1,158 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "analysis_elapsed_seconds": 74.13,
+      "analysis_exit_code": 1,
+      "analysis_log_sha256": "7bd1986b4e0b17e090010fa277b89904fc0ef43f8cfb0f17aa526ab13276d17e",
+      "analysis_timeout": false,
+      "job_id": "tNhZ",
+      "p16_attempts": [
+        {
+          "artifact_id": null,
+          "attempt_id": 1,
+          "error_type": "SafeFailure",
+          "model": "gemma-4-e4b-it-ud",
+          "outcome": "failed",
+          "prompt_version": "job-analysis-english-v30",
+          "schema_version": "job-analysis-v5"
+        }
+      ],
+      "p16_candidate_generated": false,
+      "source_fetched_at_utc": "2026-11-12T18:53:25.165898+00:00",
+      "source_html_sha256": "2a8827dc5463d6abfd976f5d89bb51f2854fdc1e3396057a8ef1766d0d72af13",
+      "translation_id": 1,
+      "translation_model": "gemma-4-e2b-it",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_schema_version": "english-projection-v2",
+      "translation_segments": 13,
+      "translation_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060"
+    },
+    {
+      "analysis_elapsed_seconds": 167.51,
+      "analysis_exit_code": 1,
+      "analysis_log_sha256": "b440bae929e1cb14e7ca21bdbaf55f453c1b140831cdf7178f2b82e693640e7e",
+      "analysis_timeout": false,
+      "job_id": "tMps",
+      "p16_attempts": [
+        {
+          "artifact_id": null,
+          "attempt_id": 2,
+          "error_type": "SafeFailure",
+          "model": "gemma-4-e4b-it-ud",
+          "outcome": "failed",
+          "prompt_version": "job-analysis-english-v30",
+          "schema_version": "job-analysis-v5"
+        }
+      ],
+      "p16_candidate_generated": false,
+      "source_fetched_at_utc": "2026-11-12T18:53:26.666644+00:00",
+      "source_html_sha256": "62902c40c2a9e2ca3479e407189ef7241167433cf6971f12257735a8940706cd",
+      "translation_id": 2,
+      "translation_model": "gemma-4-e2b-it",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_schema_version": "english-projection-v2",
+      "translation_segments": 22,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "analysis_elapsed_seconds": 179.41,
+      "analysis_exit_code": 1,
+      "analysis_log_sha256": "ec6cedaef854a8e61c6122247095ead721670f4ee4c0db3cd13b6bd1d4c4f6bc",
+      "analysis_timeout": false,
+      "job_id": "tMqd",
+      "p16_attempts": [
+        {
+          "artifact_id": null,
+          "attempt_id": 3,
+          "error_type": "SafeFailure",
+          "model": "gemma-4-e4b-it-ud",
+          "outcome": "failed",
+          "prompt_version": "job-analysis-english-v30",
+          "schema_version": "job-analysis-v5"
+        }
+      ],
+      "p16_candidate_generated": false,
+      "source_fetched_at_utc": "2026-11-12T18:53:28.127017+00:00",
+      "source_html_sha256": "c47148e26ebedcafa0a6acd1172c6038142a99470a5f19b8fc6500d5b37711dd",
+      "translation_id": 3,
+      "translation_model": "gemma-4-e2b-it",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_schema_version": "english-projection-v2",
+      "translation_segments": 21,
+      "translation_sha256": "2791b8e0f97a6592ec76e5ed59effed2d96ec21a24afbfa71c5abd8a1d96e944"
+    },
+    {
+      "analysis_elapsed_seconds": 16.15,
+      "analysis_exit_code": 1,
+      "analysis_log_sha256": "ee62e4c2d30d91946c1d2cfcb10c94366e45849003680eb7f8a086d87a94d2eb",
+      "analysis_timeout": false,
+      "job_id": "tNDx",
+      "p16_attempts": [
+        {
+          "artifact_id": null,
+          "attempt_id": 4,
+          "error_type": "SafeFailure",
+          "model": "gemma-4-e4b-it-ud",
+          "outcome": "failed",
+          "prompt_version": "job-analysis-english-v30",
+          "schema_version": "job-analysis-v5"
+        }
+      ],
+      "p16_candidate_generated": false,
+      "source_fetched_at_utc": "2026-11-12T18:53:29.657499+00:00",
+      "source_html_sha256": "722f0b147f1c4f9413324d4505ab233ecc336525c1784c7aa0594dd5d51bbb71",
+      "translation_id": 4,
+      "translation_model": "gemma-4-e2b-it",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_schema_version": "english-projection-v2",
+      "translation_segments": 12,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "analysis_elapsed_seconds": 78.02,
+      "analysis_exit_code": 0,
+      "analysis_log_sha256": "9fe369ab8708879602494d0ae6b977c9e5dd30e02ae5c97b005e3a45eccbb4da",
+      "analysis_timeout": false,
+      "job_id": "tMjm",
+      "p16_analysis_sha256": "5282058fdbfc9fd0fc0e33fb0c6858c29552d8b6850f7a7e95a886224143424b",
+      "p16_artifact_id": 1,
+      "p16_attempts": [
+        {
+          "artifact_id": 1,
+          "attempt_id": 5,
+          "error_type": null,
+          "model": "gemma-4-e4b-it-ud",
+          "outcome": "completed",
+          "prompt_version": "job-analysis-english-v30",
+          "schema_version": "job-analysis-v5"
+        }
+      ],
+      "p16_candidate_generated": true,
+      "p16_direct_duties_count": 0,
+      "p16_model": "gemma-4-e4b-it-ud",
+      "p16_prompt_version": "job-analysis-english-v30",
+      "p16_raw_response_sha256": "29c5d60d36e2c27d4fb481adcf6b3e3a3ed7d5a347977e6ef7de4cb710b65af4",
+      "p16_requirements_count": 20,
+      "p16_review_status": "pending",
+      "p16_role_purpose_count": 0,
+      "p16_schema_version": "job-analysis-v5",
+      "source_fetched_at_utc": "2026-11-12T18:53:34.045291+00:00",
+      "source_html_sha256": "b6f5d90ad7571b7a62e8855ba6edec4e0ade8c97b9cee657ea16ae115a7e4337",
+      "translation_id": 5,
+      "translation_model": "gemma-4-e2b-it",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_schema_version": "english-projection-v2",
+      "translation_segments": 13,
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b"
+    }
+  ],
+  "contract": "fresh-current-cohort-native-product-frozen-v1",
+  "model_output_viewed_by_independent_evaluator_before_freeze": false,
+  "p16_candidates_generated": 1,
+  "p16_failures_or_timeouts": 4,
+  "product_code_unmodified_from_main": true,
+  "raw_output_public": false,
+  "semantics_independently_reviewed": false,
+  "translations_available": 5
+}

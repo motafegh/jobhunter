@@ -1,0 +1,68 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "captured_source_html_sha256_verified": true,
+      "date_posted": "2026-10-01",
+      "independent_live_http": 200,
+      "job_id": "tNhZ",
+      "live_html_bytewise_identical": false,
+      "live_jsonld_date_posted_matches": true,
+      "live_jsonld_description_matches": true,
+      "live_jsonld_title_matches": true,
+      "product_case_freeze_sha256": "e607ec292e0ce446c00c01d76b469a5178cc78c5ccef7792bbfa0f46581ba711",
+      "source_review_notes_sha256": "bc90b840c68a7f20b63ef397954e5d27412d67f311e0cc6c90562d9ba2422c3e"
+    },
+    {
+      "captured_source_html_sha256_verified": true,
+      "date_posted": "2026-10-24",
+      "independent_live_http": 200,
+      "job_id": "tMps",
+      "live_html_bytewise_identical": false,
+      "live_jsonld_date_posted_matches": true,
+      "live_jsonld_description_matches": true,
+      "live_jsonld_title_matches": true,
+      "product_case_freeze_sha256": "57e25bb86bb8291945c41ad805fbdb71eccfce49b02d1e1a999b112f2bc37854",
+      "source_review_notes_sha256": "6427c3139de890e49c9338e313caf6a5a1aa8016cfe10d89fdb415ad478970da"
+    },
+    {
+      "captured_source_html_sha256_verified": true,
+      "date_posted": "2026-10-18",
+      "independent_live_http": 200,
+      "job_id": "tMqd",
+      "live_html_bytewise_identical": false,
+      "live_jsonld_date_posted_matches": true,
+      "live_jsonld_description_matches": true,
+      "live_jsonld_title_matches": true,
+      "product_case_freeze_sha256": "c5b7cbb44dd2fa3e6c3e1fdf3ae408701acc6437b76f3929e792b8788eddae0d",
+      "source_review_notes_sha256": "d38f24eac601d8e165f7b3f1a1f484dd150a21bd488364d90f128ccfad2a62a1"
+    },
+    {
+      "captured_source_html_sha256_verified": true,
+      "date_posted": "2026-09-30",
+      "independent_live_http": 200,
+      "job_id": "tNDx",
+      "live_html_bytewise_identical": false,
+      "live_jsonld_date_posted_matches": true,
+      "live_jsonld_description_matches": true,
+      "live_jsonld_title_matches": true,
+      "product_case_freeze_sha256": "f5e24597969586f796f5f955dc7028141c08a76163aa7fe1f7a436bb3ab86bf3",
+      "source_review_notes_sha256": "eceb34c2415c738405878319b75508e62d492755719ec2207859592ec47f8c38"
+    },
+    {
+      "captured_source_html_sha256_verified": true,
+      "date_posted": "2026-10-25",
+      "independent_live_http": 200,
+      "job_id": "tMjm",
+      "live_html_bytewise_identical": false,
+      "live_jsonld_date_posted_matches": true,
+      "live_jsonld_description_matches": true,
+      "live_jsonld_title_matches": true,
+      "product_case_freeze_sha256": "17293303f3fdb9e2eaa298fc3533ee87ecc8d13a377b6e57d6f3d97a975e20ba",
+      "source_review_notes_sha256": "7dd8a3a5d40daf37a91e648bce377e53bd47c9385aa843fe1d692c12dd23f7ea"
+    }
+  ],
+  "contract": "jobhunter-fresh-source-independent-live-check-v1",
+  "original_html_bytewise_identical_across_accesses": false,
+  "source_page_content_changed_at_jsonld_level": false
+}

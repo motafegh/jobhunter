@@ -1,0 +1,102 @@
+{
+  "classification": "freshly acquired on 2026-11-12, NOT proven newly posted",
+  "contract": "jobhunter-fresh-current-cohort-source-freeze-v1",
+  "discovery_failures": 0,
+  "environment_proxy_inherited": false,
+  "isolated_database_foreign_key_violations": 0,
+  "isolated_database_integrity": "ok",
+  "jobs": [
+    {
+      "fetched_at_utc": "2026-11-12T18:53:25.165898+00:00",
+      "http_status": 200,
+      "job_id": "tNhZ",
+      "original_content_sha256": "2a8827dc5463d6abfd976f5d89bb51f2854fdc1e3396057a8ef1766d0d72af13",
+      "parse_status": "parsed",
+      "prior_analysis_count": 0,
+      "source_detail_id": 1,
+      "url": "https://jobinja.ir/companies/setuptrack/jobs/tNhZ/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D9%87%D9%86%D8%AF%D8%B3-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-ai-engineer-llm-%D8%AF%D9%88%D8%B1%DA%A9%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B3%D8%AA%D8%A7%D9%BE-%D8%AA%D8%B1%DA%A9"
+    },
+    {
+      "fetched_at_utc": "2026-11-12T18:53:26.666644+00:00",
+      "http_status": 200,
+      "job_id": "tMps",
+      "original_content_sha256": "62902c40c2a9e2ca3479e407189ef7241167433cf6971f12257735a8940706cd",
+      "parse_status": "parsed",
+      "prior_analysis_count": 0,
+      "source_detail_id": 2,
+      "url": "https://jobinja.ir/companies/fanavaran-5/jobs/tMps/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-applied-ai-engineer-%D8%AF%D8%B1-%D9%81%D9%86%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D8%A7%D8%B7%D9%84%D8%A7%D8%B9%D8%A7%D8%AA-%D8%AE%D8%A8%D8%B1%D9%87"
+    },
+    {
+      "fetched_at_utc": "2026-11-12T18:53:28.127017+00:00",
+      "http_status": 200,
+      "job_id": "tMqd",
+      "original_content_sha256": "c47148e26ebedcafa0a6acd1172c6038142a99470a5f19b8fc6500d5b37711dd",
+      "parse_status": "parsed",
+      "prior_analysis_count": 0,
+      "source_detail_id": 3,
+      "url": "https://jobinja.ir/companies/yektaz-cyclet-kavir/jobs/tMqd/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-ai-backend-python-developer-%D8%AF%D8%B1-%DB%8C%DA%A9%D8%AA%D8%A7%D8%B2-%D8%B3%DB%8C%DA%A9%D9%84%D8%AA-%DA%A9%D9%88%DB%8C%D8%B1"
+    },
+    {
+      "fetched_at_utc": "2026-11-12T18:53:29.657499+00:00",
+      "http_status": 200,
+      "job_id": "tNDx",
+      "original_content_sha256": "722f0b147f1c4f9413324d4505ab233ecc336525c1784c7aa0594dd5d51bbb71",
+      "parse_status": "parsed",
+      "prior_analysis_count": 0,
+      "source_detail_id": 4,
+      "url": "https://jobinja.ir/companies/fadak-rayan/jobs/tNDx/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D9%81%D9%86%DB%8C-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%B3%D8%A7%DB%8C%D8%A8%D8%B1%DB%8C-edr-%D8%AF%D8%B1-%D9%81%D8%AF%DA%A9-%D8%B1%D8%A7%DB%8C%D8%A7%D9%86"
+    },
+    {
+      "fetched_at_utc": "2026-11-12T18:53:34.045291+00:00",
+      "http_status": 200,
+      "job_id": "tMjm",
+      "original_content_sha256": "b6f5d90ad7571b7a62e8855ba6edec4e0ade8c97b9cee657ea16ae115a7e4337",
+      "parse_status": "parsed",
+      "prior_analysis_count": 0,
+      "source_detail_id": 5,
+      "url": "https://jobinja.ir/companies/abshar-data-processing-co/jobs/tMjm/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%DA%A9%D8%A7%D8%B1%D8%B4%D9%86%D8%A7%D8%B3-%D8%AA%D8%B3%D8%AA-%D9%86%D9%81%D9%88%D8%B0-%D9%88-%D8%A7%D9%85%D9%86%DB%8C%D8%AA-%D8%AF%D8%B1-%D8%AF%D8%A7%D8%AF%D9%87-%D9%BE%D8%B1%D8%AF%D8%A7%D8%B2%D8%A7%D9%86-%D8%A2%D8%A8%D8%B4%D8%A7%D8%B1"
+    }
+  ],
+  "live_database_mutated": false,
+  "newly_discovered_in_isolated_database": 71,
+  "original_html_sha256_verified": true,
+  "raw_html_public": false,
+  "search_page_count": 4,
+  "searches": [
+    {
+      "content_sha256": "a02fb1c1b3dc75e38bb9e9a98a6bd0e1251ef86433d9b3b00a2747fa34e44f2b",
+      "discovered_count": 20,
+      "fetched_at_utc": "2026-11-12T18:52:34.166061+00:00",
+      "page_number": 1,
+      "search_name": "term:adhoc :: هوش مصنوعی [3a4d6cc6ea]",
+      "status_code": 200
+    },
+    {
+      "content_sha256": "7965e6b1b636fae2269e22759ae8f97574cec7842fd81023cfbf7f16a8c40975",
+      "discovered_count": 13,
+      "fetched_at_utc": "2026-11-12T18:52:35.727343+00:00",
+      "page_number": 1,
+      "search_name": "term:adhoc :: RAG [9410114c7e]",
+      "status_code": 200
+    },
+    {
+      "content_sha256": "924e6ef1fa30746a17ae969281f1f1c94c054e329ea075441eda95da0578442f",
+      "discovered_count": 20,
+      "fetched_at_utc": "2026-11-12T18:52:37.190900+00:00",
+      "page_number": 1,
+      "search_name": "term:adhoc :: امنیت سایبری [413ed7e6d2]",
+      "status_code": 200
+    },
+    {
+      "content_sha256": "16b19ef060ec6a9e6c53739cb9c071784bcbf59505bc6e0e36c772ad9e8bc1fb",
+      "discovered_count": 20,
+      "fetched_at_utc": "2026-11-12T18:52:38.715244+00:00",
+      "page_number": 1,
+      "search_name": "term:adhoc :: Python [e2f288f2ac]",
+      "status_code": 200
+    }
+  ],
+  "selection_rule": "preselected five varied roles across AI, LLM, backend, EDR and pentest",
+  "source": "Jobinja",
+  "unique_discovered_job_ids": 71
+}

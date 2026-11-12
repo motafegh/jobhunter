@@ -1,0 +1,131 @@
+{
+  "cases": [
+    {
+      "english_p16_exit_code": 1,
+      "english_p16_review": {
+        "correct_source_boundary": "Python/backend is central; LLM familiarity and portfolio invitation do not independently establish mandatory technical capabilities",
+        "decision": "failed_safe_no_english_candidate",
+        "downstream_allowed": false,
+        "error_class": "unsupported_preferred_candidate_from_conditional_portfolio",
+        "severity": "high_coverage"
+      },
+      "english_p16_structural_candidate_generated": false,
+      "frozen_independent_notes_sha256": "bc90b840c68a7f20b63ef397954e5d27412d67f311e0cc6c90562d9ba2422c3e",
+      "job_id": "tNhZ",
+      "live_description_matches_captured_source": true,
+      "live_original_url_http": 200,
+      "original_date_posted": "2026-10-01",
+      "original_snapshot_sha256": "2a8827dc5463d6abfd976f5d89bb51f2854fdc1e3396057a8ef1766d0d72af13",
+      "pre_review_product_result_sha256": "e607ec292e0ce446c00c01d76b469a5178cc78c5ccef7792bbfa0f46581ba711"
+    },
+    {
+      "english_p16_exit_code": 1,
+      "english_p16_review": {
+        "correct_source_boundary": "Middle 2–4 and Senior 4–7 years are distinct eligibility paths; tool examples and many security controls are only advantageous",
+        "decision": "failed_safe_no_english_candidate",
+        "downstream_allowed": false,
+        "error_class": "tiered_middle_senior_requirements_mislabelled_preferred",
+        "severity": "high_coverage"
+      },
+      "english_p16_structural_candidate_generated": false,
+      "frozen_independent_notes_sha256": "6427c3139de890e49c9338e313caf6a5a1aa8016cfe10d89fdb415ad478970da",
+      "job_id": "tMps",
+      "live_description_matches_captured_source": true,
+      "live_original_url_http": 200,
+      "original_date_posted": "2026-10-24",
+      "original_snapshot_sha256": "62902c40c2a9e2ca3479e407189ef7241167433cf6971f12257735a8940706cd",
+      "pre_review_product_result_sha256": "57e25bb86bb8291945c41ad805fbdb71eccfce49b02d1e1a999b112f2bc37854"
+    },
+    {
+      "english_p16_exit_code": 1,
+      "english_p16_review": {
+        "correct_source_boundary": "Required Python/backend and AI integration differ from explicitly advantageous LLM/vector/agent and high-traffic experience",
+        "decision": "failed_safe_no_english_candidate",
+        "downstream_allowed": false,
+        "error_class": "source_exact_coverage_collision_between_soft_requirements_and_preferred_LLM",
+        "severity": "high_coverage"
+      },
+      "english_p16_structural_candidate_generated": false,
+      "frozen_independent_notes_sha256": "d38f24eac601d8e165f7b3f1a1f484dd150a21bd488364d90f128ccfad2a62a1",
+      "job_id": "tMqd",
+      "live_description_matches_captured_source": true,
+      "live_original_url_http": 200,
+      "original_date_posted": "2026-10-18",
+      "original_snapshot_sha256": "c47148e26ebedcafa0a6acd1172c6038142a99470a5f19b8fc6500d5b37711dd",
+      "pre_review_product_result_sha256": "c5b7cbb44dd2fa3e6c3e1fdf3ae408701acc6437b76f3929e792b8788eddae0d"
+    },
+    {
+      "english_p16_exit_code": 1,
+      "english_p16_review": {
+        "correct_source_boundary": "Five explicit EDR deployment/support/troubleshooting/client/report duties and separate required versus preferred technical credentials",
+        "decision": "failed_safe_no_english_candidate",
+        "downstream_allowed": false,
+        "error_class": "empty_english_p16_from_information_rich_EDR_source",
+        "severity": "high_coverage"
+      },
+      "english_p16_structural_candidate_generated": false,
+      "frozen_independent_notes_sha256": "eceb34c2415c738405878319b75508e62d492755719ec2207859592ec47f8c38",
+      "job_id": "tNDx",
+      "live_description_matches_captured_source": true,
+      "live_original_url_http": 200,
+      "original_date_posted": "2026-09-30",
+      "original_snapshot_sha256": "722f0b147f1c4f9413324d4505ab233ecc336525c1784c7aa0594dd5d51bbb71",
+      "pre_review_product_result_sha256": "f5e24597969586f796f5f955dc7028141c08a76163aa7fe1f7a436bb3ab86bf3"
+    },
+    {
+      "english_p16_exit_code": 0,
+      "english_p16_review": {
+        "correct_source_boundary": "Technical ability conditions and optional remote arrangement are distinct; zero direct duty bullets is defensible; source skill tags overlap narrative requirements",
+        "decision": "english_candidate_generated_but_human_review_rejected",
+        "downstream_allowed": false,
+        "error_class": "remote_work_option_promoted_to_required_qualification",
+        "severity": "high_misclassification"
+      },
+      "english_p16_structural_candidate_generated": true,
+      "frozen_independent_notes_sha256": "7dd8a3a5d40daf37a91e648bce377e53bd47c9385aa843fe1d692c12dd23f7ea",
+      "job_id": "tMjm",
+      "live_description_matches_captured_source": true,
+      "live_original_url_http": 200,
+      "original_date_posted": "2026-10-25",
+      "original_snapshot_sha256": "b6f5d90ad7571b7a62e8855ba6edec4e0ade8c97b9cee657ea16ae115a7e4337",
+      "pre_review_product_result_sha256": "17293303f3fdb9e2eaa298fc3533ee87ecc8d13a377b6e57d6f3d97a975e20ba"
+    }
+  ],
+  "contract": "jobhunter-current-real-ad-independent-review-v1",
+  "downstream_work_capability_not_run_due_to_gate": true,
+  "english_p16_approved_for_downstream": 0,
+  "english_p16_attempted": 5,
+  "english_p16_human_review_rejections": 1,
+  "english_p16_structural_candidates": 1,
+  "english_p16_validation_failures": 4,
+  "english_translations_successful": 5,
+  "evaluated_cases_are_not_representative_market_sample": true,
+  "five_live_original_pages_still_http_200": true,
+  "five_original_details_captured_http_200": true,
+  "live_jsonld_descriptions_unchanged": true,
+  "method": "Same assistant, source-only independent review locked case-by-case after product output seal and before opening derived P1.6; not a protected blind holdout",
+  "original_mode_EDR_diagnostic": {
+    "artifact_id": 2,
+    "independently_accepted_as_truth": false,
+    "model": "gemma-4-e4b-it-ud",
+    "not_a_substitute_for_failed_english_P16": true,
+    "prompt_version": "job-analysis-original-v9",
+    "requirements": 8,
+    "responsibilities": 4,
+    "review_status_stored_by_native_service": "accepted",
+    "role_purpose_count": 1,
+    "schema_version": "job-analysis-v4",
+    "sha256": "fbed7199b3bfaae6b2463e920eedd5698e463de6b4ad066d6ae593070490237f",
+    "source_faithfulness_defects": [
+      "Main EDR deployment/configuration/support duty was filed as role purpose instead of direct responsibility",
+      "Required teamwork/management-structure trait was labeled preferred by merging adjacent preference heading",
+      "Preferred Kaspersky-specific certifications were omitted",
+      "Experience >=3 years and structured 3–6 years category were duplicated without non-independence warning",
+      "Native accepted status is not an independent reviewer verdict"
+    ]
+  },
+  "original_publication_dates_are_not_nov12": true,
+  "raw_source_or_model_text_committed": false,
+  "source_searches": 4,
+  "unique_source_jobs_discovered": 71
+}

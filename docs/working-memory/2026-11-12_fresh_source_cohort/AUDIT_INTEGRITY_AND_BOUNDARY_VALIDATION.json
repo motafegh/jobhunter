@@ -1,0 +1,34 @@
+{
+  "checks": {
+    "all_checks_passed": true,
+    "all_five_original_source_snapshots_sha256_verified": true,
+    "all_independent_verdicts_no_english_downstream": true,
+    "all_live_original_jsonld_semantically_same": true,
+    "all_native_data_in_isolated_db": true,
+    "all_source_pages_live_status_200": true,
+    "five_independent_note_sha256_locks_verified": true,
+    "five_product_case_seals_exist": true,
+    "isolated_sqlite_foreign_key_integrity": true,
+    "isolated_sqlite_integrity": true,
+    "live_sqlite_mtime_precedes_current_audit": true,
+    "live_sqlite_no_new_p16_for_cohort": true,
+    "native_five_english_translations": true,
+    "native_p16_count_four_fail_one_candidate": true,
+    "no_work_or_capability_artifact_generated": true,
+    "original_language_diagnostic_not_accepted_as_truth": true,
+    "previously_seen_public_id_tNhZ_not_new_to_live_DB": true,
+    "product_freeze_artifact_original_sha256_verified": true,
+    "rejected_original_candidate_archived_without_raw_public_text": true,
+    "source_files_not_in_git": true,
+    "tracked_repository_corpus_unchanged": true,
+    "untracked_repository_corpus_unchanged": true
+  },
+  "contract": "current-source-audit-boundary-validation-v1",
+  "failed_checks": 0,
+  "live_sqlite_modified_utc": "2026-10-20T16:31:17.135617+00:00",
+  "newly_acquired_selected_ids_not_preexisting_in_live_DB": 4,
+  "raw_private_source_committed": false,
+  "selected_ids_preexisting_in_live_database": [
+    "tNhZ"
+  ]
+}
