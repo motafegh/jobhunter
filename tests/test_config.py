@@ -276,3 +276,19 @@ jobinja_search_profiles = ["does-not-exist"]
 
     with pytest.raises(ValidationError, match="Unknown Jobinja search profile"):
         Settings.load(config_path)
+
+
+def test_jobinja_environment_proxy_opt_in(tmp_path: Path, monkeypatch) -> None:
+    config_path = tmp_path / "jobhunter.toml"
+    config_path.write_text("[jobhunter]\n", encoding="utf-8")
+    monkeypatch.delenv("JOBHUNTER_JOBINJA_USE_ENV_PROXY", raising=False)
+    assert Settings.load(config_path).jobinja_use_env_proxy is False
+
+    config_path.write_text(
+        "[jobhunter]\njobinja_use_env_proxy = true\n", encoding="utf-8"
+    )
+    assert Settings.load(config_path).jobinja_use_env_proxy is True
+    monkeypatch.setenv("JOBHUNTER_JOBINJA_USE_ENV_PROXY", "false")
+    assert Settings.load(config_path).jobinja_use_env_proxy is False
+    monkeypatch.setenv("JOBHUNTER_JOBINJA_USE_ENV_PROXY", "true")
+    assert Settings.load(config_path).jobinja_use_env_proxy is True

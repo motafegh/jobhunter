@@ -68,6 +68,7 @@ inference_max_retries = 1
 
 # Public Jobinja acquisition settings.
 jobinja_user_agent = "JobHunter/0.1 (local personal career research)"
+jobinja_use_env_proxy = false
 jobinja_request_timeout_seconds = 30.0
 jobinja_request_delay_seconds = 1.0
 jobinja_search_request_budget = 40
@@ -655,6 +656,7 @@ def _jobinja_client(settings: Settings) -> JobinjaClient:
     return JobinjaClient(
         user_agent=settings.jobinja_user_agent,
         timeout_seconds=settings.jobinja_request_timeout_seconds,
+        use_env_proxy=settings.jobinja_use_env_proxy,
     )
 
 

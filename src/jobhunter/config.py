@@ -101,6 +101,7 @@ class Settings(BaseModel):
     analysis_batch_limit: int = Field(default=5, ge=1, le=20)
 
     jobinja_user_agent: str = "JobHunter/0.1 (local personal career research)"
+    jobinja_use_env_proxy: bool = False
     jobinja_request_timeout_seconds: float = Field(default=30.0, gt=0, le=120)
     jobinja_request_delay_seconds: float = Field(default=1.0, ge=0, le=60)
     jobinja_max_retries: int = Field(default=1, ge=0, le=3)
@@ -308,6 +309,7 @@ class Settings(BaseModel):
             "JOBHUNTER_ANALYSIS_MAX_TOKENS": "analysis_max_tokens",
             "JOBHUNTER_ANALYSIS_BATCH_LIMIT": "analysis_batch_limit",
             "JOBHUNTER_JOBINJA_USER_AGENT": "jobinja_user_agent",
+            "JOBHUNTER_JOBINJA_USE_ENV_PROXY": "jobinja_use_env_proxy",
             "JOBHUNTER_JOBINJA_REQUEST_TIMEOUT_SECONDS": "jobinja_request_timeout_seconds",
             "JOBHUNTER_JOBINJA_REQUEST_DELAY_SECONDS": "jobinja_request_delay_seconds",
             "JOBHUNTER_JOBINJA_MAX_RETRIES": "jobinja_max_retries",

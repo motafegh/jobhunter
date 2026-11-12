@@ -268,6 +268,7 @@ class JobinjaClient:
         user_agent: str,
         timeout_seconds: float,
         max_retries: int = 1,
+        use_env_proxy: bool = False,
         transport: httpx.BaseTransport | None = None,
         sleep=time.sleep,
     ) -> None:
@@ -276,6 +277,7 @@ class JobinjaClient:
         self._user_agent = user_agent
         self._timeout_seconds = timeout_seconds
         self._max_retries = max_retries
+        self._use_env_proxy = use_env_proxy
         self._transport = transport
         self._sleep = sleep
 
@@ -286,6 +288,7 @@ class JobinjaClient:
                 with httpx.Client(
                     timeout=self._timeout_seconds,
                     follow_redirects=True,
+                    trust_env=self._use_env_proxy,
                     transport=self._transport,
                     headers={
                         "Accept": "text/html,application/xhtml+xml",

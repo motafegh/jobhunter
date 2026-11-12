@@ -344,3 +344,107 @@ def test_login_redirect_is_auth_required_not_missing_job() -> None:
     assert caught.value.classification == "auth_required"
     assert caught.value.status_code == 200
     assert caught.value.retryable is False
+
+
+@pytest.mark.parametrize("use_env_proxy", [False, True])
+def test_source_http_client_uses_environment_proxy_only_when_configured(
+    monkeypatch, use_env_proxy: bool
+) -> None:
+    original_client = httpx.Client
+    observed: list[bool] = []
+
+    def recording_client(**kwargs):
+        observed.append(kwargs.get("trust_env"))
+        return original_client(**kwargs)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=request,
+            headers={"content-type": "text/html"},
+            text="<html><body>Jobinja result page</body></html>",
+        )
+
+    monkeypatch.setattr(httpx, "Client", recording_client)
+    client = JobinjaClient(
+        user_agent="JobHunter-Test/1",
+        timeout_seconds=5,
+        use_env_proxy=use_env_proxy,
+        transport=httpx.MockTransport(handler),
+    )
+    result = client.fetch_search_page("https://jobinja.ir/jobs?q=Python", 1)
+    assert result.status_code == 200
+    assert observed == [use_env_proxy]
+
+
+def test_jobinja_cli_client_respects_proxy_setting() -> None:
+    from jobhunter.cli import _jobinja_client
+    from jobhunter.config import Settings
+
+    default_client = _jobinja_client(Settings())
+    assert default_client._use_env_proxy is False
+    env_client = _jobinja_client(Settings(jobinja_use_env_proxy=True))
+    assert env_client._use_env_proxy is True
+
+
+def test_jobinja_proxy_routing_with_loopback_origin(monkeypatch) -> None:
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+    from threading import Thread
+
+    class Origin(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(b"<html><body>original source</body></html>")
+
+        def log_message(self, *_args) -> None:
+            pass
+
+    class Proxy(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(403)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.end_headers()
+            self.wfile.write(b"<html><body>proxy route denied</body></html>")
+
+        def log_message(self, *_args) -> None:
+            pass
+
+    servers = []
+    threads = []
+    try:
+        for handler in (Origin, Proxy):
+            server = ThreadingHTTPServer(("127.0.0.1", 0), handler)
+            thread = Thread(target=server.serve_forever, daemon=True)
+            thread.start()
+            servers.append(server)
+            threads.append(thread)
+
+        origin, proxy = servers
+        url = f"http://127.0.0.1:{origin.server_port}/jobs"
+        monkeypatch.setenv("HTTP_PROXY", f"http://127.0.0.1:{proxy.server_port}")
+        monkeypatch.setenv("http_proxy", f"http://127.0.0.1:{proxy.server_port}")
+        monkeypatch.setenv("NO_PROXY", "")
+        monkeypatch.setenv("no_proxy", "")
+
+        direct_client = JobinjaClient(
+            user_agent="JobHunter-Test/1", timeout_seconds=3,
+            max_retries=0, use_env_proxy=False,
+        )
+        assert direct_client._get(url).status_code == 200
+
+        opted_in_client = JobinjaClient(
+            user_agent="JobHunter-Test/1", timeout_seconds=3,
+            max_retries=0, use_env_proxy=True,
+        )
+        with pytest.raises(JobinjaAcquisitionError) as caught:
+            opted_in_client._get(url)
+        assert caught.value.status_code == 403
+        assert caught.value.classification == "access_denied"
+    finally:
+        for server in servers:
+            server.shutdown()
+            server.server_close()
+        for thread in threads:
+            thread.join(timeout=3)

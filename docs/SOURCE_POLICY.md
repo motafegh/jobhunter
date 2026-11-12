@@ -64,6 +64,11 @@ The active Jobinja adapter uses:
 - approved-host/path validation and redirect revalidation;
 - sequential requests;
 - descriptive user agent;
+- direct HTTPS by default for Jobinja, independently of inherited shell/Windows
+  HTTP_PROXY / HTTPS_PROXY values; opt in explicitly with
+  jobinja_use_env_proxy = true only when that proxy route is authorized and
+  required. Disabling an accidentally inherited local proxy is not a source
+  bypass or permission to evade source-side protections;
 - configured delay;
 - per-search page limits;
 - global run-level request budget;

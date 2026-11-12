@@ -1,0 +1,61 @@
+{
+  "contract": "jobinja-proxy-routing-acceptance-v1",
+  "controlled_path_comparison": {
+    "python_search_body_classification": "active",
+    "python_search_extracted_links": 20,
+    "python_search_html_validation": "passed",
+    "python_search_without_environment_proxy_http": 200,
+    "robots_through_environment_proxy_http": 403,
+    "robots_without_environment_proxy_http": 200,
+    "same_declared_user_agent": true
+  },
+  "first_attempt_proxy_routed": {
+    "discovered_jobs": 0,
+    "keyword_searches": 3,
+    "status_403": 3
+  },
+  "fix": {
+    "explicit_opt_in_available": true,
+    "jobinja_use_env_proxy_default": false,
+    "no_identity_or_cookie_bypass": true,
+    "other_JobHunter_HTTP_clients_changed": false,
+    "system_wide_proxy_changed": false
+  },
+  "inherited_proxy_listener": "127.0.0.1:8080",
+  "jobinja_in_no_proxy_bypass": false,
+  "post_fix_native_cli": {
+    "accepted_analysis_promoted": false,
+    "all_snapshot_hashes_verified": true,
+    "detail_failures": 0,
+    "detail_records": [
+      {
+        "content_sha256": "80fe9eae9d9f8c21f5bbcf8e37b2a2d01890e0a6b6071d9299dee13853cc31c2",
+        "job_id": "tMqd",
+        "parse_status": "parsed",
+        "status_code": 200
+      },
+      {
+        "content_sha256": "bf89cc7a799dc3da3487214e0a9530b0b208090e6aba81cf31309f88365aca9c",
+        "job_id": "tu3p",
+        "parse_status": "parsed",
+        "status_code": 200
+      }
+    ],
+    "discovery_failure_count": 0,
+    "http_status_search": 200,
+    "individual_details_fetched": 2,
+    "isolated_db_foreign_key_errors": 0,
+    "isolated_db_integrity": "ok",
+    "jobs_discovered": 20,
+    "new_job_count": 20,
+    "search_page_sha256": "293ec28ab74b5fa6cc2188180132eeb892aac93f1600547daea9f260e6780797",
+    "search_pages_fetched": 1,
+    "source_evidence_committed": false,
+    "tracked_corpus_untouched": true
+  },
+  "recorded_at_utc": "2026-11-12T18:45:21.485550+00:00",
+  "root_cause": "Jobinja HTTPX client unintentionally inherited WSL HTTPS_PROXY via default trust_env; proxied route received HTTP 403 while direct routing succeeded",
+  "scope": "controlled source diagnosis and real CLI acquisition, isolated data only",
+  "source": "jobinja",
+  "windows_proxy_process": "VeePNService"
+}

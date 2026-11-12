@@ -404,7 +404,25 @@ jobhunter --config config/local.toml doctor
 
 ### Jobinja failure
 
-First confirm that offline planning works, then use the bounded acquisition runbook. Keep access/challenge/network failures distinct from legitimate vacancy state.
+First confirm that offline planning works, then use the bounded acquisition
+runbook. Keep access/challenge/network failures distinct from legitimate
+vacancy state.
+
+**Proxy-routing diagnostic (November 2026):** JobHunter's Jobinja client
+previously inherited HTTP_PROXY / HTTPS_PROXY from WSL, which silently routed
+the source through the Windows-side VeePN listener at 127.0.0.1:8080. That
+proxy route returned ArvanCloud HTTP 403, while a standard direct request with
+the same JobHunter user agent returned HTTP 200 and valid search HTML.
+
+Current source configuration defaults to **direct HTTPS**:
+jobinja_use_env_proxy = false. Explicitly set it to true only when you
+intentionally need and are authorized to use the environment proxy. You can
+also set JOBHUNTER_JOBINJA_USE_ENV_PROXY=true (or false) to override local
+configuration for a specific session. This applies only to the Jobinja source
+client; do not disable the machine's VPN or change proxy routing for other
+apps to troubleshoot this integration. Continue respecting source denials and
+stop on CAPTCHA/challenge pages. The diagnosis and real acquisition test are
+recorded in the dated Jobinja proxy-routing repair record.
 
 ---
 
