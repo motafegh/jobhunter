@@ -1,5 +1,17 @@
 # JobHunter Working Memory / Handoff
 
+**Current branch-stage reconciliation:** 2026-11-12 — isolated experimental source-fidelity evaluation; NOT promoted.
+**Accepted product baseline:** `main` at `74ffec25533c5cd4b1afa90b0c3bc76ee023e7aa`.
+**Current factual audit:** `evaluation/current-real-ads-2026-11-12` at `0a4287676795742f933dbb8142a8f9ae9c55f9a9`: five real public jobs, 5/5 translations, 4/5 current English P1.6 validation failures, one generated candidate rejected on independent source review; zero approved for downstream.
+**Current experimental code:** `experiment/p16-source-fidelity-2026-11-12`: v31 remains unpromoted; one of four re-trialed failed jobs generated pending source-grounded duties, but was NOT advice-ready; two failed and one timed out. The post-trial ledger repair/conflict warning was tested deterministically, not in new model calls.
+**Current focused decision:** `docs/working-memory/2026-11-12_P16_SOURCE_FIDELITY_V31_EXPERIMENT_CLOSURE_AND_NEXT_GATE.md`
+**Next engineering gate:** original-source section identity + bilingual translation alignment + structured-skill/narrative obligation reconciliation; preserve v30 currentness and historical accepted artifacts.
+**Explicit stop:** Do not merge v31, mark trial candidates accepted, treat original-language auto-accepted as semantically reviewed, or resume P2.3B prose/persistent profiles before source-fidelity recovery.
+
+## November 12 authoritative branch-stage overlay
+
+The preceding observations are an experimental no-promotion disposition and **do not change accepted current functionality on main**. Source acquisition's unintended environment proxy was repaired and validated on main, so this is not a new-source acquisition blocker. The exact negative and positive P1.6 evidence is retained via independent source hashes and bounded case runs. This overlay supersedes the historical November 11 next-task recommendation below *on this experiment branch only*.
+
 **Last reconciled:** 2026-11-11
 **Current gate:** B2 CLOSED; bounded P2.3A factual comparison ENGINEERING-CLOSED, with a verified frozen-Market navigation repair. Optional overview NO-PROMOTION; owner time savings NOT ESTABLISHED.
 **Current focused owner:** `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`
@@ -8,7 +20,7 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
-## Current execution
+## Historical November 11 current execution (superseded by November 12 overlay)
 
 - [x] B2 reviewed normalization and bounded Market/report acceptance remain closed.
 - [x] Deliver/verify `/compare` factual accepted evidence, depth/obligation versus duties, and source links.
