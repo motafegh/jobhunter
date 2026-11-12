@@ -1,0 +1,37 @@
+{
+  "capture_type": "previously_acquired_jobinja_original_html",
+  "contract": "jobhunter-independent-real-ad-audit-source-v1",
+  "live_url_status": "not independently accessible via search/browsing at audit time; cannot confirm currently open",
+  "not_fresh_live_postings": true,
+  "source_count": 4,
+  "sources": [
+    {
+      "canonical_url": "https://jobinja.ir/companies/ptnmed-1/jobs/tNpG/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D8%AA%D9%88%D8%B3%D8%B9%D9%87-%D8%AF%D9%87%D9%86%D8%AF%D9%87-%DB%8C-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-llm-rag-%D8%AD%D9%88%D8%B2%D9%87-%DB%8C-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1-%D8%B3%D9%84%D8%A7%D9%85%D8%AA-%D8%AF%D8%B1-%D9%BE%DB%8C%D9%88%D9%86%D8%AF-%D8%B7%D8%A8-%D9%88-%D9%86%D8%B1%D9%85-%D8%A7%D9%81%D8%B2%D8%A7%D8%B1",
+      "content_sha256": "8b5224231f83c3b3135cde371c23c3f4c115e15a5d38b808c0c4ac3cdeb55ece",
+      "job_id": "tNpG",
+      "original_capture_date_utc": "2026-09-29T18:09:30.760599+00:00",
+      "prior_p16_analysis_artifacts": 0
+    },
+    {
+      "canonical_url": "https://jobinja.ir/companies/sadra-kala/jobs/t4Ay/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-%D9%85%D8%AA%D8%AE%D8%B5%D8%B5-%D9%87%D9%88%D8%B4-%D9%85%D8%B5%D9%86%D9%88%D8%B9%DB%8C-senior-ai-engineer-llm-rag-ai-agents-%D9%85%D8%B4%D9%87%D8%AF-%D8%AF%D8%B1-%D8%B5%D8%AF%D8%B1%D8%A7-%DA%A9%D8%A7%D9%84%D8%A7%DB%8C-%D8%B4%D8%B1%D9%82",
+      "content_sha256": "fa52fba1301f2d4c5719c29bc765a58d9eb9dae3ec49bf15f2a35fa522634e22",
+      "job_id": "t4Ay",
+      "original_capture_date_utc": "2026-08-01T19:35:59.915059+00:00",
+      "prior_p16_analysis_artifacts": 0
+    },
+    {
+      "canonical_url": "https://jobinja.ir/companies/mofid-securities/jobs/ta9l/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-senior-applied-ai-engineer-%D8%AF%D8%B1-%DA%A9%D8%A7%D8%B1%DA%AF%D8%B2%D8%A7%D8%B1%DB%8C-%D9%85%D9%81%DB%8C%D8%AF",
+      "content_sha256": "7ee854192557482a911477248c2b17a3d6a82d5ad58f8164529d083cdb936530",
+      "job_id": "ta9l",
+      "original_capture_date_utc": "2026-08-01T19:36:02.250116+00:00",
+      "prior_p16_analysis_artifacts": 0
+    },
+    {
+      "canonical_url": "https://jobinja.ir/companies/digikala/jobs/t4wP/%D8%A7%D8%B3%D8%AA%D8%AE%D8%AF%D8%A7%D9%85-security-engineer-%D8%AF%D8%B1-%D8%AF%DB%8C%D8%AC%DB%8C-%DA%A9%D8%A7%D9%84%D8%A7",
+      "content_sha256": "bfb00a115cd076ba6715b9ba75029f9aa5f5787f2bda90487564834689b47cad",
+      "job_id": "t4wP",
+      "original_capture_date_utc": "2026-08-01T19:50:14.214251+00:00",
+      "prior_p16_analysis_artifacts": 0
+    }
+  ]
+}

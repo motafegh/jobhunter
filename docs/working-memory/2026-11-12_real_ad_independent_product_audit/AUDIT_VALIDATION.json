@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "accepted_diagnostic_record_in_eval_only": true,
+    "all_safety_checks_passed": true,
+    "cohort_four_unique": true,
+    "independent_checklists_sha_frozen": true,
+    "isolated_db_fks": true,
+    "isolated_db_integrity": true,
+    "no_new_live_analysis_for_cases": true,
+    "original_archive_sha_verified": true,
+    "product_p16_frozen_hashes": true,
+    "rejected_analysis_in_archive": true,
+    "repo_branch_is_evaluation": true,
+    "tracked_corpus_restored": true,
+    "untracked_corpus_restored": true
+  },
+  "contract": "jobhunter-independent-audit-verification-v1",
+  "failed_count": 0,
+  "live_job_analysis_records_for_cases": 0
+}
