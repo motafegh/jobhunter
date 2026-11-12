@@ -71,50 +71,118 @@ def exact_scoped_sections(description: str) -> tuple[SourceSection, ...]:
     return tuple(output)
 
 
+def _section_requirement(
+    description: str, section: SourceSection, start: int, end: int
+) -> dict[str, Any]:
+    """Source-owned exact span with no inferred additional obligation."""
+    kind = section.kind
+    return {
+        "text": description[start:end],
+        "source_kind": "requirement_section",
+        "obligation_hint": "preferred" if kind == "preferred" else "required",
+        "allow_exclusion": kind not in {"eligibility_middle", "eligibility_senior"},
+        "obligation_context": description[section.heading_start:section.end],
+        "v31_source_section_kind": kind,
+        "v31_source_offset": start,
+        "v31_source_end": end,
+        "v31_boundary_inferred": section.inferred_boundary,
+    }
+
+
+def _uncovered_source_spans(
+    description: str, section: SourceSection, owned: list[tuple[int, int]]
+) -> list[tuple[int, int]]:
+    """Keep only missing text; never re-introduce a huge duplicate parent."""
+    if not owned:
+        return [(section.start, section.end)]
+    spans: list[tuple[int, int]] = []
+    current = section.start
+    for begin, end in sorted(owned):
+        if begin > current:
+            spans.append((current, begin))
+        current = max(current, end)
+    if current < section.end:
+        spans.append((current, section.end))
+    remaining = []
+    for begin, end in spans:
+        while begin < end and (
+            description[begin].isspace() or description[begin] in ",;:•"
+        ):
+            begin += 1
+        while begin < end and (
+            description[end - 1].isspace() or description[end - 1] in ",;:•"
+        ):
+            end -= 1
+        if begin < end and any(c.isalnum() for c in description[begin:end]):
+            remaining.append((begin, end))
+    return remaining
+
+
 def v31_requirement_plan(
     fields: dict[str, Any],
     inherited_plan: dict[str, dict[str, Any]],
 ) -> dict[str, dict[str, Any]]:
+    """Retain narrower v30 claims when a single explicit source section owns them.
+
+    Replace only ambiguous heading-crossing references. Fill uncovered source
+    spans individually instead of replacing a dense exact-evidence ledger with
+    one unreviewable broad parent. Never delete unrelated structured fields.
+    """
     description = fields.get("description")
     if not isinstance(description, str):
         return {ref: dict(item) for ref, item in inherited_plan.items()}
     sections = exact_scoped_sections(description)
-    explicit = [s for s in sections if s.kind in {
-        "requirements", "preferred", "eligibility_middle", "eligibility_senior",
-    }]
+    allowed = {"requirements", "preferred", "eligibility_middle", "eligibility_senior"}
+    explicit = [(i, s) for i, s in enumerate(sections) if s.kind in allowed]
     if not explicit:
         return {ref: dict(item) for ref, item in inherited_plan.items()}
-    # Remove only model-owned description references whose source spans overlap
-    # an explicitly scoped section, replacing them with more precise exact refs.
-    # Structured education/experience/skills are separate source fields.
+
     result: dict[str, dict[str, Any]] = {}
+    owned: dict[int, list[tuple[int, int]]] = {i: [] for i, _ in explicit}
     for reference, candidate in inherited_plan.items():
         text = str(candidate.get("text") or "")
-        if not reference.startswith("field:description:") or not any(
-            text and (
-                text in description[s.heading_start:s.end]
-                or s.text in text
-            ) for s in explicit
-        ):
+        if not reference.startswith("field:description:") or not text:
             result[reference] = dict(candidate)
-    for index, section in enumerate(sections):
-        if section.kind not in {
-            "requirements", "preferred", "eligibility_middle", "eligibility_senior",
-        }:
             continue
-        ref = f"field:description:v31:section:{index}"
-        hint = "preferred" if section.kind == "preferred" else "required"
-        result[ref] = {
-            "text": section.text,
-            "source_kind": "requirement_section",
-            "obligation_hint": hint,
-            "allow_exclusion": section.kind not in {"eligibility_middle","eligibility_senior"},
-            "obligation_context": description[section.heading_start:section.end],
-            "v31_source_section_kind": section.kind,
-            "v31_source_offset": section.start,
-            "v31_source_end": section.end,
-            "v31_boundary_inferred": section.inferred_boundary,
-        }
+        # Only preserve a source-specific claim with one unique exact owner.
+        exact = [(i, s) for i, s in explicit if s.text.count(text) == 1]
+        if len(exact) == 1:
+            index, section = exact[0]
+            begin = section.start + section.text.index(text)
+            end = begin + len(text)
+            updated = dict(candidate)
+            updated.update({
+                "obligation_hint": (
+                    "preferred" if section.kind == "preferred" else "required"
+                ),
+                "obligation_context": description[section.heading_start:section.end],
+                "v31_source_section_kind": section.kind,
+                "v31_source_offset": begin,
+                "v31_source_end": end,
+                "v31_boundary_inferred": section.inferred_boundary,
+            })
+            result[reference] = updated
+            owned[index].append((begin, end))
+            continue
+        if any(
+            s.text in text or text in description[s.heading_start:s.end]
+            for _, s in explicit
+        ):
+            # Span crosses separate authority sections; a replacement must
+            # stay inside one exact section, or its meaning is undecidable.
+            continue
+        result[reference] = dict(candidate)
+
+    for index, section in explicit:
+        for part, (begin, end) in enumerate(
+            _uncovered_source_spans(description, section, owned[index])
+        ):
+            ref = f"field:description:v31:section:{index}:part:{part}"
+            result[ref] = _section_requirement(description, section, begin, end)
+    assert all(
+        description[c["v31_source_offset"]:c["v31_source_end"]] == c["text"]
+        for c in result.values() if "v31_source_offset" in c
+    )
     return result
 
 

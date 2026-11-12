@@ -165,3 +165,130 @@ def test_structured_fields_are_not_removed_by_overlays() -> None:
 def test_existing_public_v30_contract_not_modified() -> None:
     assert JobAnalysisServiceV31.prompt_version == "job-analysis-english-v31"
     assert V30CandidateAnalysisProvider is not V31CandidateAnalysisProvider
+
+
+def test_retains_existing_granular_qualification_references() -> None:
+    """The new heading reader cannot replace a dense accepted ledger wholesale."""
+    description = (
+        "Requirements: Strong Python; Practical backend experience; "
+        "Knowledge of SQL"
+    )
+    exact = [
+        "Strong Python", "Practical backend experience", "Knowledge of SQL"
+    ]
+    inherited = {
+        f"field:description:segment:0:clause:{i}": {
+            "text": text,
+            "source_kind": "requirement_section",
+            "obligation_hint": "required",
+            "allow_exclusion": False,
+        } for i, text in enumerate(exact)
+    }
+    result = v31_requirement_plan({"description": description}, inherited)
+    assert set(result) == set(inherited)
+    assert all(result[k]["text"] == v["text"] for k, v in inherited.items())
+    assert all(v["v31_source_section_kind"] == "requirements" for v in result.values())
+
+
+def test_replaces_only_cross_heading_reference_and_preserves_adjacent_clauses() -> None:
+    description = (
+        "Requirements: Strong Python; Practical API experience; "
+        "Teamwork. General Conditions: Ability to collaborate and learn"
+    )
+    inherited = {
+        "first": {"text": "Strong Python", "source_kind": "requirement_section",
+                  "obligation_hint": "required", "allow_exclusion": False},
+        "second": {"text": "Practical API experience",
+                   "source_kind": "requirement_section",
+                   "obligation_hint": "required", "allow_exclusion": False},
+        "field:description:cross": {
+            "text": "Teamwork. General Conditions: Ability to collaborate and learn",
+            "source_kind": "requirement_section",
+            "obligation_hint": "required", "allow_exclusion": True,
+        },
+    }
+    # The synthetic pre-existing labels use conventional description refs,
+    # not fabricated structured field keys.
+    inherited["field:description:0"] = inherited.pop("first")
+    inherited["field:description:1"] = inherited.pop("second")
+    result = v31_requirement_plan({"description": description}, inherited)
+    assert "field:description:0" in result
+    assert "field:description:1" in result
+    assert "field:description:cross" not in result
+    assert any("Teamwork." in c["text"] for c in result.values())
+    assert any("Ability to collaborate" in c["text"] for c in result.values())
+    for c in result.values():
+        if "v31_source_offset" in c:
+            assert description[c["v31_source_offset"]:c["v31_source_end"]] == c["text"]
+
+
+def test_section_scope_does_not_override_unrelated_structured_requirement() -> None:
+    text = (
+        "Requirements: Practical Linux experience. "
+        "Preferred qualifications: Experience with Linux containers."
+    )
+    inherited = {
+        "field:education": {
+            "text": "Bachelor's degree", "source_kind": "structured_field",
+            "obligation_hint": "required", "allow_exclusion": False,
+        },
+    }
+    result = v31_requirement_plan({"description": text}, inherited)
+    assert result["field:education"] == inherited["field:education"]
+    assert sum(v["obligation_hint"] == "preferred" for k, v in result.items()
+               if k.startswith("field:description:")) == 1
+
+
+def test_structured_tag_source_explicit_nonrequired_conflict_is_reported() -> None:
+    from jobhunter.source_obligation_conflicts import (
+        structured_skill_preference_conflicts,
+    )
+
+    description = (
+        "What is important to us? Strong Python proficiency. "
+        "Familiarity with trading systems or LLMs is an advantage, "
+        "but not a requirement."
+    )
+    fields = {"description": description, "skills": ["LLM", "Python"]}
+    conflicts = structured_skill_preference_conflicts(fields)
+    assert [item.skill for item in conflicts] == ["LLM"]
+    assert "not a requirement" in conflicts[0].source_text
+    assert (
+        description[
+            conflicts[0].source_section_start:conflicts[0].source_section_end
+        ]
+        == conflicts[0].source_text
+    )
+    assert conflicts[0].reason.endswith("source_nonrequired")
+
+
+def test_structured_skill_flags_are_advisory_not_automatic_demotions() -> None:
+    from jobhunter.source_obligation_conflicts import (
+        structured_skill_preference_conflicts,
+    )
+
+    fields = {
+        "description": (
+            "Required Skills: Deep experience with Python and SQL. "
+            "Advantages: Familiarity with RAG."
+        ),
+        "skills": ["Python", "SQL", "RAG"],
+    }
+    assert structured_skill_preference_conflicts(fields) == ()
+    assert structured_skill_preference_conflicts({
+        "description": "General work on LLMAgents is optional.",
+        "skills": ["LLM"],
+    }) == ()
+
+
+def test_conflict_detection_never_invents_unknown_metadata() -> None:
+    from jobhunter.source_obligation_conflicts import (
+        structured_skill_preference_conflicts,
+    )
+
+    assert structured_skill_preference_conflicts({
+        "description": "Optional LLM awareness.",
+    }) == ()
+    assert structured_skill_preference_conflicts({
+        "skills": ["LLM"],
+    }) == ()

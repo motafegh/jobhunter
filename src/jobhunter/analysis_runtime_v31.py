@@ -17,6 +17,7 @@ from jobhunter.inference.instructor_lm_studio_v24 import (
 )
 from jobhunter.inference.instructor_lm_studio_v31 import JobAnalysisResponseV31
 from jobhunter.inference.lm_studio import StructuredInferenceResult
+from jobhunter.source_obligation_conflicts import structured_skill_preference_conflicts
 
 
 class V31CandidateAnalysisProvider(V30CandidateAnalysisProvider):
@@ -37,7 +38,31 @@ class V31CandidateAnalysisProvider(V30CandidateAnalysisProvider):
         updated["additional_plan"] = v31_scoped_additional_plan(
             kwargs["original_fields"], kwargs["additional_plan"]
         )
-        return super()._run_once(**updated)
+        result = super()._run_once(**updated)
+        conflicts = structured_skill_preference_conflicts(kwargs["original_fields"])
+        if not conflicts:
+            return result
+        # Runtime metadata is review-only. It neither rewrites structured
+        # requirements nor silently declares either source authoritative.
+        request_body = dict(result.request_body)
+        runtime = dict(request_body.get("runtime") or {})
+        runtime["p16_v31_structured_skill_obligation_conflicts"] = [
+            {
+                "skill": conflict.skill,
+                "source_section_start": conflict.source_section_start,
+                "source_section_end": conflict.source_section_end,
+                "reason": conflict.reason,
+            }
+            for conflict in conflicts
+        ]
+        request_body["runtime"] = runtime
+        return StructuredInferenceResult(
+            model=result.model,
+            structured=result.structured,
+            request_body=request_body,
+            raw_response=result.raw_response,
+            finish_reason=result.finish_reason,
+        )
 
     def _source_context_exclusions(
         self, plan: dict[str, dict[str, Any]]
