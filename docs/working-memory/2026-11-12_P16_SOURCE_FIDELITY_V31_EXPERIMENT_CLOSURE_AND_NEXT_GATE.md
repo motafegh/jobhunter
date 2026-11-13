@@ -7,6 +7,8 @@
 **Evidence:** `docs/working-memory/2026-11-12_p16_source_fidelity_v31/CANDIDATE_MECHANICAL_AND_SEMANTIC_RESULTS.json`
 **Prior independent source review:** `evaluation/current-real-ads-2026-11-12` at `0a4287676795742f933dbb8142a8f9ae9c55f9a9`
 
+> **Corrective erratum — November 13, 2026:** Reinspection of the original Persian source found the prior `tNDx` translation-error diagnosis was wrong. The source says teamwork is an advantage and the English rendering preserves it. The actual defect was the v31 ledger’s inferred required obligation. Run outcomes and no-promotion remain unchanged.
+
 ## 1. Product question and conclusion
 
 Can JobHunter produce useful source-backed technical-job understanding for the five real Jobinja ads that exposed failures in English P1.6, without loosening source-truth validation or fabricating requirements?
@@ -42,7 +44,7 @@ The controlled live trials used **commit `37e13830ece5d4ef587ddb08ecf88d29f3b5fd
 | `tNhZ` Python-fintech backend / optional LLM | Failed | Generated pending in 119 s, six explicit duties | Partial recovery, **not approved**: `LLM` site tag materialized as required while employer text says familiarity is not mandatory. Also one residual label remains overly literal. |
 | `tMps` applied AI with Middle/Senior tracks | Failed | Failed in 105 s | Source sections separated alternatives, but model omitted required duty coverage refs; no artifact. |
 | `tMqd` Python/AI backend, optional LLM frameworks | Failed | **Timed out** (bounded command exited 124 after 306 s) | Runtime/model completion unresolved; no candidate. Timeout does not establish semantic failure or success. |
-| `tNDx` EDR technical support | Failed | Failed in 56 s | Original Persian requires teamwork; English translation adds “considered an advantage.” Model obligation and source-plan constraint conflict; fail-closed is appropriate. |
+| `tNDx` EDR technical support | Failed | Failed in 56 s | The Persian item says “مزیت محسوب می‌شود” (“considered an advantage”); the English translation preserves this. The v31 planner incorrectly labeled this item required; strict validation rejected the mismatch. |
 | `tMjm` pentesting qualifications | Generated but human-rejected on v30 | **Not run on v31** | Do not infer a repair from static ledger checks. |
 
 The isolated `tNhZ` v31 candidate is **pending** (artifact ID 3, exact analysis SHA-256 in the machine-readable report). Neither this candidate nor the separate native original-language EDR `accepted` artifact from the prior audit establishes independent semantic correctness. There is no new approved Work/Capability result.
@@ -58,7 +60,7 @@ No evidence authorizes promoting either revision. All accepted v30 historical be
 
 **A. Lost source-section ownership.** A flattened translated description obscures the difference between employer duties, qualifications, preference headings, application requests and work arrangements. Source-exact section reading helps, but only if it retains fine-grained provenance and does not manufacture missing facts.
 
-**B. Original-versus-English semantic conflicts.** For `tNDx`, the Persian `نیازمندی‌ها` section lists teamwork among requirements; the English translation wrongly treats the same sentence as an advantage. A partition-level parser operating only on English cannot safely fix this by changing an obligation hint. Original-source authority must accompany the translation at item/section granularity.
+**B. Original item-level preference misclassified by v31.** In `tNDx`, the original Persian marks teamwork as an **advantage** (`مزیت محسوب می‌شود`), and the English translation agrees. The prior mistranslation diagnosis was incorrect. The v31 planner overrode item-level wording with a required section hint. Heading guesses must never supersede source-explicit modality.
 
 **C. Structured metadata conflicts with narrative authority.** In `tNhZ`, the site's required-like structured `LLM` skill tag conflicts with an explicitly non-required prose familiarity statement. Blindly treating every structured skill tag as mandatory yields contradictory outputs even when duties are correct. Keep both evidence sources distinguishable and show **requires human/source reconciliation** before promotion.
 
