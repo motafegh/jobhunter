@@ -2,7 +2,7 @@
 
 **Last research-status reconciliation:** 2026-11-13 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
-**Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are now included on main. All model-driven source classification and original-item LM translation code remain unmerged. No new English P1.6 authority is approved. Owner review packet `JH-OWNER-A1-20261113` is ready in local Windows Downloads; Pass A and fresh holdout judgments remain pending. Stage A record: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`.
+**Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
 **Last reconciled:** 2026-11-11

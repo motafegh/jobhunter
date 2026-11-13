@@ -9,6 +9,16 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
+## November 13 Owner Audit A1 completion overlay (supersedes Stage A review-pending wording)
+
+The owner submitted a partial, independent Pass A review covering two of the four A1 cases. That original submission was preserved verbatim and hashed. Under explicit owner delegation the assistant reviewed all four original Persian postings, froze 59 source-anchored assessment items, then compared the saved model outputs. The assistant identified 18 diagnostic model/pipeline flags and 11 original-versus-English translation observations. The remaining two cases were NOT human-owner reviewed. The assistant had prior context about earlier model failures, so this is not an independent blind human validation.
+
+**Current owner-approved workflow:** routine source/model assessment delegated to the assistant; ask the owner only when their own judgment is necessary. Source ambiguities requiring employer clarification stay unresolved, not guessed. Assistant evaluation is not automatic semantic promotion.
+
+Production English P1.6 stays v30/v5; original v9/v4, translation v2, Capability, Work and Market remain unchanged. No P1.6 candidates were accepted as a result of this evaluation; the next build gate is a source-owned bilingual alignment/review contract and separate unseen verification cohort.
+
+Complete record: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
+
 ## November 13 source-first Stage A status overlay
 
 Stage A delivered an **inactive, versioned source identity foundation** and a

@@ -72,3 +72,13 @@ and `docs/review-packets/2026-11-13_JH_OWNER_A1_SOURCE_ONLY.md`.
 **Current decision:** Product English P1.6 remains v30. Merge no experimental
 parser, source-bound translation model, or v31 candidate results until Stage B
 semantic review and compatibility gates are satisfied.
+
+## Owner Audit A1 assistant completion — 2026-11-13
+
+The owner subsequently uploaded the initial Pass A answers for only two cases and delegated the remaining review to the assistant. The user-provided original was preserved unchanged and source-only. The assistant documented four original-language case assessments (59 source-anchored assertions), froze them, and then inspected the retained model/translation evidence (18 diagnostic flags and 11 translation comparisons). The assistant had historical contextual knowledge of previous model failures; this cannot be represented as a truly independent human/blind reviewer.
+
+Full review: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`. Safe machine report: `docs/working-memory/2026-11-13_owner_a1_assistant_review/SAFE_RECONCILIATION_METRICS.json`.
+
+**Updated user review preference:** Routine manual checklists are no longer required from the owner. The assistant should inspect sources, verify original-language claims and model outputs and record unresolved source ambiguities. Request owner input only when a decision genuinely requires their judgment; do not ask the owner to guess employer intent. Any assistant-only assessment remains distinct from independent human certification.
+
+**No promotion:** Original v9 mechanical acceptance and experimental v31 pending outputs are not independently source-validated. English v30 remains production. The next work is source/translation item alignment, metadata-versus-prose authority, bounded fact-only fallback and fresh holdout validation after fixes, rather than another round of owner form entry.

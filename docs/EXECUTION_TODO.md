@@ -2,7 +2,7 @@
 
 **Last research-status reconciliation:** 2026-11-13 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
-**Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are now included on main. All model-driven source classification and original-item LM translation code remain unmerged. No new English P1.6 authority is approved. Owner review packet `JH-OWNER-A1-20261113` is ready in local Windows Downloads; Pass A and fresh holdout judgments remain pending. Stage A record: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`.
+**Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
 **Last reconciled:** 2026-11-11
@@ -18,9 +18,11 @@ The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pend
 - [x] Extract and verify passive source-identity/legacy-alignment core without promoting experimental section heuristics.
 - [x] Verify 53 preserved original-source offsets and no new translated item alignment.
 - [x] Prepare source-only owner audit A1 for four real exposed jobs, with source hashes, offline form and private raw-source retention.
-- [ ] Receive and seal the owner's independent Pass A response.
-- [ ] Reveal Pass B model/translation comparison and reconcile owner verdicts without automatic promotion.
-- [ ] Build the reviewed bilingual item and original-obligation contract; validate on an unseen cohort before any public P1.6 routing change.
+- [x] Receive, verify, and seal the owner’s **partial** independent Pass A responses (2/4 cases; original SHA-256 preserved).
+- [x] Complete assistant source-grounded assessment for all four frozen ads, then seal before comparing saved model results.
+- [x] Perform assistant-only Pass B comparison and reconcile source facts, model failures, metadata conflicts and translation risks; preserve unsupported employer strength as unknown. No human verdict manufactured.
+- [ ] Build source-owned bilingual item and original-obligation candidate with explicit review state and automatic confidence/unknown boundaries.
+- [ ] Re-evaluate a separate unseen fresh cohort before approving a public P1.6 route change; preserve accepted v30/v9 state and downstream compatibility.
 
 ## Current execution
 

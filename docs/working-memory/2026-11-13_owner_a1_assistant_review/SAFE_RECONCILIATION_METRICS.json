@@ -1,0 +1,241 @@
+{
+  "all_cases_exposed_not_holdouts": true,
+  "assistant_model_comparison_sha256": "065e038272fb46cc8373bf370f451957010e685bfc8b6a122e7e52cfd16f4aec",
+  "assistant_original_source_anchored_claim_count": 59,
+  "assistant_original_source_review_sha256": "2d57a8a96483e7ef32307bddb4edd5ff9978d1da9a85aceb2dfb254ad7e58ccd",
+  "assistant_review_cannot_claim_blind_independent_human_verdict": true,
+  "assistant_reviewer_prior_context_exposure": true,
+  "assistant_source_case_count": 4,
+  "candidate_or_pipeline_flags": 18,
+  "cases": [
+    {
+      "assistant_original_source_reviewed": true,
+      "diagnostic_issues": [
+        {
+          "code": "contradictory_required_LLM_structured_tag",
+          "severity": "critical"
+        },
+        {
+          "code": "structured_AI_and_API_tags_auto_required",
+          "severity": "high"
+        },
+        {
+          "code": "malformed_residual_LLM_concept",
+          "severity": "medium"
+        },
+        {
+          "code": "duplicate_qualification_sources",
+          "severity": "medium"
+        }
+      ],
+      "job_id": "tNhZ",
+      "model_baseline_status": "no_persisted_english_candidate",
+      "model_v31_status": "pending_not_advice_ready",
+      "other_model_status": null,
+      "owner_original_source_reviewed": true,
+      "source_english_projection_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060",
+      "source_qualified_claims_not_promoted": true,
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "translation_observations": [
+        {
+          "code": "preserved_source_optional_LLM",
+          "source_anchor_id": "d27692cabd61dd8d4c4f43647594476e8d8868f4693eca9ee1d71aaa5a29c45d",
+          "status": "preserved"
+        },
+        {
+          "code": "minor_agreement_qualifier_loss",
+          "source_anchor_id": "953883bd0a05598939f465c5b828d81aa8c8852dfdec2c22dcdb1a9c3df7dcef",
+          "status": "minor_omission"
+        }
+      ],
+      "unresolved_employer_qualification_modality": []
+    },
+    {
+      "assistant_original_source_reviewed": true,
+      "diagnostic_issues": [
+        {
+          "code": "P16_extraction_no_usable_candidate",
+          "severity": "high"
+        },
+        {
+          "code": "v31_required_direct_work_coverage_missing",
+          "severity": "high"
+        },
+        {
+          "code": "board_skill_list_contains_page_section_headers",
+          "severity": "medium"
+        },
+        {
+          "code": "board_numeric_experience_conflicts_with_text_paths",
+          "severity": "medium"
+        }
+      ],
+      "job_id": "tMps",
+      "model_baseline_status": "no_persisted_english_candidate",
+      "model_v31_status": "validation_failure_no_persisted_candidate",
+      "other_model_status": null,
+      "owner_original_source_reviewed": true,
+      "source_english_projection_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609",
+      "source_qualified_claims_not_promoted": true,
+      "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "translation_observations": [
+        {
+          "code": "middle_or_senior_tracks_preserved",
+          "source_anchor_id": "161df71a850c3e1e13824effbdf72ffb80dfe13e1a6462970b5bfce2e323a639",
+          "status": "preserved"
+        },
+        {
+          "code": "one_domain_middle_alternative_preserved",
+          "source_anchor_id": "15cf8bf1afcb5c3f8f9e936450a495fea62395cdcef3e1d6cc06f0ca6d1e0309",
+          "status": "preserved"
+        },
+        {
+          "code": "preferred_heading_preserved",
+          "source_anchor_id": "53c59a821a3ca82dc14c3c14e6f6bb0389f8dd6c1aa90a40382a3477317f7317",
+          "status": "preserved"
+        }
+      ],
+      "unresolved_employer_qualification_modality": []
+    },
+    {
+      "assistant_original_source_reviewed": true,
+      "diagnostic_issues": [
+        {
+          "code": "missing_EDR_implementation_responsibility",
+          "severity": "high"
+        },
+        {
+          "code": "work_duty_contains_next_requirements_header",
+          "severity": "high"
+        },
+        {
+          "code": "Kaspersky_certification_source_omission",
+          "severity": "high"
+        },
+        {
+          "code": "unsupported_certification_government_experience_preference_heading",
+          "severity": "high"
+        },
+        {
+          "code": "v31_false_required_hint_on_explicit_preference",
+          "severity": "high"
+        },
+        {
+          "code": "dual_experience_ranges_without_reconciliation",
+          "severity": "medium"
+        }
+      ],
+      "job_id": "tNDx",
+      "model_baseline_status": "no_persisted_english_candidate",
+      "model_v31_status": "validation_failure_no_persisted_english_candidate",
+      "other_model_status": "mechanically_accepted_but_unreviewed_semantically",
+      "owner_original_source_reviewed": false,
+      "source_english_projection_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039",
+      "source_qualified_claims_not_promoted": true,
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "translation_observations": [
+        {
+          "code": "teamwork_optional_preserved",
+          "source_anchor_id": "1c2d341438db101875c5dd6548ed330f89065d032477b1f6997d4954ffc82b65",
+          "status": "preserved"
+        },
+        {
+          "code": "requirements_heading_absorbed_in_report_duty",
+          "source_anchor_id": "ce9923f0f30125d578869b38cbf91309a8cf1e870e4cf1bdde1dd093c41a7953",
+          "status": "boundary_error"
+        },
+        {
+          "code": "invented_advantages_heading_before_certifications",
+          "source_anchor_id": "f2ff8992434b069018e120b5f119dfc9fe7f7884754cd04316e8bc7a6bf21b13",
+          "status": "unsupported_added_heading"
+        }
+      ],
+      "unresolved_employer_qualification_modality": [
+        "kaspersky_certification",
+        "government_large_customer_experience"
+      ]
+    },
+    {
+      "assistant_original_source_reviewed": true,
+      "diagnostic_issues": [
+        {
+          "code": "remote_work_arrangement_misclassified_required",
+          "severity": "critical"
+        },
+        {
+          "code": "context_heading_and_trait_merged",
+          "severity": "high"
+        },
+        {
+          "code": "conscientiousness_translated_as_task_identification",
+          "severity": "medium"
+        },
+        {
+          "code": "board_education_automatically_required",
+          "severity": "medium"
+        }
+      ],
+      "job_id": "tMjm",
+      "model_baseline_status": "generated_then_source_review_rejected_and_archived",
+      "model_v31_status": "not_trialed",
+      "other_model_status": null,
+      "owner_original_source_reviewed": false,
+      "source_english_projection_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b",
+      "source_qualified_claims_not_promoted": true,
+      "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "translation_observations": [
+        {
+          "code": "remote_work_arrangement_mixed_into_requirements",
+          "source_anchor_id": "3a33ae657f5b15c2ac3b8117652ad3b851f42c56c27220c4f5e58b173248be0b",
+          "status": "boundary_risk"
+        },
+        {
+          "code": "conscientiousness_translation_shift",
+          "source_anchor_id": "ae80554669b0748e3ffa0ff773a74e0d2f58db0b743ebe7fe77a5400eeb61b21",
+          "status": "translation_error"
+        },
+        {
+          "code": "salary_range_preserved",
+          "source_anchor_id": "62c97419a3f56324fa8af3ba97173e27a88926a5f41ab642d6b4f477fd28b0fb",
+          "status": "preserved"
+        }
+      ],
+      "unresolved_employer_qualification_modality": []
+    }
+  ],
+  "contract": "jobhunter-owner-a1-source-assistant-and-model-audit-safe-metrics-v1",
+  "created_at_utc": "2026-11-13T16:08:51.614092+00:00",
+  "diagnostic_flag_severity_counts": {
+    "critical": 2,
+    "high": 9,
+    "medium": 7
+  },
+  "employer_dependent_unknowns_preserved_unresolved": true,
+  "model_evidence_seal_sha256": "112f7f10912a22560ef1073a13d0983d00d62bd7abc5db43f64fb8df26900c07",
+  "original_owner_pass_a_sha256": "55ae967a2d3015ac077822cb9667690b0178dc585ad5f502c58385f6aeb584c6",
+  "original_owner_reviewed_case_count": 2,
+  "original_owner_reviewed_cases": [
+    "tNhZ",
+    "tMps"
+  ],
+  "original_owner_submitted_result_modified": false,
+  "owner_did_not_review_cases": [
+    "tNDx",
+    "tMjm"
+  ],
+  "packet_id": "JH-OWNER-A1-20261113",
+  "previous_model_candidates_promoted": false,
+  "public_english_p16_contract_unchanged": "job-analysis-english-v30",
+  "raw_source_or_owner_responses_in_git": false,
+  "source_snapshot_count": 4,
+  "translation_observation_count": 11,
+  "translation_observation_type_counts": {
+    "boundary_error": 1,
+    "boundary_risk": 1,
+    "minor_omission": 1,
+    "preserved": 6,
+    "translation_error": 1,
+    "unsupported_added_heading": 1
+  },
+  "user_new_manual_clarification_required": false
+}
