@@ -58,4 +58,17 @@ Start with a small risk-stratified packet (e.g. optional vs required LLM, EDR pr
 8. Older main governance and current-state reconciliation files predate this research. This index is the current status-only research handoff; future accepted architectural changes must be reflected in controlling documents, not only working-memory records.
 9. Retained original source evidence includes real public job text; preserve source-usage, retention and privacy constraints. Do not commit local raw captures or personal review annotations without explicit screening.
 
-**Current decision:** Product remains on v30. Begin manual review packet design and a passive foundation code-review gate; do not promote the experimental model outputs or bulk-merge unqualified candidate semantics.
+## Stage A completion overlay — 2026-11-13
+
+The narrowly scoped passive source identity and legacy English field-provenance
+module has been accepted for main. Its new identity contract does NOT reuse the
+research heuristic parser's source span IDs or adopt its classifications. The
+offline source-only owner packet A1 is ready; raw original descriptions remain
+local-only. Pass A owner verdict and Pass B comparison are still pending.
+
+See `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`
+and `docs/review-packets/2026-11-13_JH_OWNER_A1_SOURCE_ONLY.md`.
+
+**Current decision:** Product English P1.6 remains v30. Merge no experimental
+parser, source-bound translation model, or v31 candidate results until Stage B
+semantic review and compatibility gates are satisfied.

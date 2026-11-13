@@ -2,7 +2,7 @@
 
 **Last research-status reconciliation:** 2026-11-13 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
-**Research state:** Jobinja repair on main; independent five-job audit, v31 no-promotion, and original-language source-lineage v1 are preserved in separate branches. Source-first code has NOT been merged; no new English P1.6 authority is approved. Owner has volunteered as manual reviewer; review packets and fresh holdout still pending.
+**Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are now included on main. All model-driven source classification and original-item LM translation code remain unmerged. No new English P1.6 authority is approved. Owner review packet `JH-OWNER-A1-20261113` is ready in local Windows Downloads; Pass A and fresh holdout judgments remain pending. Stage A record: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`.
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
 **Last reconciled:** 2026-11-11

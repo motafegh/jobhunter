@@ -2,12 +2,31 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-11
+**Last reconciled:** 2026-11-13
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 13 source-first Stage A status overlay
+
+Stage A delivered an **inactive, versioned source identity foundation** and a
+local-only owner source-first review packet (JH-OWNER-A1-20261113). The
+foundation verifies exact original description spans and makes the existing
+field-level English translation's lack of item alignment explicit. It introduces
+no new accepted source classifications or English P1.6 artifacts. P1.6 v30/v5
+remains the current production English analyzer; original v9/v4, Capability,
+Work, Registry and Market current behavior are unchanged.
+
+The owner has a source-only offline review package for four exposed jobs; Pass A
+verdicts are pending and model-comparison Pass B is withheld. The research-only
+heuristic parser, source-bound LM Studio trial and v31 candidates remain outside
+main. The next gate is reviewed bilingual item alignment and a separate unseen
+cohort, NOT a direct source-semantic promotion.
+
+Record: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`.
+Public Pass A: `docs/review-packets/2026-11-13_JH_OWNER_A1_SOURCE_ONLY.md`.
 
 ## 1. Current operating state
 

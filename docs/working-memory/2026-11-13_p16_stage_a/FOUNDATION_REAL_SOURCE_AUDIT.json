@@ -1,0 +1,68 @@
+{
+  "cases": [
+    {
+      "job_id": "tNhZ",
+      "legacy_translated_field_item_alignment": "not_established",
+      "original_detail_version_id": 1,
+      "original_spans_matched": 17,
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "unique_passive_anchors": 17
+    },
+    {
+      "job_id": "tMps",
+      "legacy_translated_field_item_alignment": "not_established",
+      "original_detail_version_id": 2,
+      "original_spans_matched": 10,
+      "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "unique_passive_anchors": 10
+    },
+    {
+      "job_id": "tMqd",
+      "legacy_translated_field_item_alignment": "not_established",
+      "original_detail_version_id": 3,
+      "original_spans_matched": 3,
+      "source_semantic_sha256": "b315fbbf853c0bc2b30bbd99c5b9a82fe6e482ef6186d501c10733071a765248",
+      "unique_passive_anchors": 3
+    },
+    {
+      "job_id": "tNDx",
+      "legacy_translated_field_item_alignment": "not_established",
+      "original_detail_version_id": 4,
+      "original_spans_matched": 19,
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "unique_passive_anchors": 19
+    },
+    {
+      "job_id": "tMjm",
+      "legacy_translated_field_item_alignment": "not_established",
+      "original_detail_version_id": 5,
+      "original_spans_matched": 4,
+      "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "unique_passive_anchors": 4
+    }
+  ],
+  "contract": "jobhunter-p16-passive-stage-a-audit-v1",
+  "existing_corpus_mutated": false,
+  "legacy_field_alignment_contract": "jobhunter-legacy-field-alignment-v1",
+  "legacy_field_translation_item_alignment": "not_established_for_all_53",
+  "old_research_span_ids_reused": false,
+  "original_research_case_count": 5,
+  "original_spans_verified": 53,
+  "owner_review": {
+    "case_count": 4,
+    "local_zip_sha256": "43934dd556a8ca8e3f025764270b32c36adb98be61d8dd1cf3b2da868af5aac6",
+    "model_answers_published": false,
+    "original_source_snapshots_frozen": true,
+    "packet_id": "JH-OWNER-A1-20261113",
+    "packet_manifest_sha256": "82611bf831f22d6744435ab664f4b4d81ebba6c28664a78296a4286c074ecc83",
+    "pass_a_completed": false,
+    "pass_b_released": false,
+    "public_source_only_guide": "docs/review-packets/2026-11-13_JH_OWNER_A1_SOURCE_ONLY.md",
+    "source_only_html_sha256": "3113ddf437346f203d5085203d4bcade1c54db4fcb78ef5e67fc4afb120d9599"
+  },
+  "production_db_mutated": false,
+  "public_analysis_routing_changed": false,
+  "source_content_copied_into_git": false,
+  "source_span_contract": "jobhunter-source-span-identity-v1",
+  "unique_new_versioned_anchors": 53
+}

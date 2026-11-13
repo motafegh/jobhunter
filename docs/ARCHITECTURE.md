@@ -358,6 +358,19 @@ current parsed source version
 
 The original employer source remains authoritative. English projection is derived convenience data with segment provenance and exact source dependency.
 
+
+**Passive source identity foundation (2026-11-13 Stage A):** The isolated
+`src/jobhunter/source_span_identity.py` contract provides exact original parsed
+description span identifiers, source-version checks, Unicode/UTF-8 offsets and
+content hashes. For legacy `english-projection-v2`, it explicitly distinguishes
+native-English exact identity from **translated field only, item unaligned**.
+The module has no inference, source-section classification, database writes,
+migration, or public P1.6 route integration; it is evidence tooling only.
+The previous source-section heuristic parser and per-item LM Studio translation
+remain separate research until item-level semantic review. Stage A's gate and
+owner audit package are recorded in
+`docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`.
+
 LM Studio is the normal local translation provider. Optional external translation is deliberate and policy-controlled rather than an implicit fallback.
 
 ---
