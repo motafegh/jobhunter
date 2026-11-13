@@ -1,0 +1,52 @@
+{
+  "case_count": 2,
+  "contract": "p16-sourcebound-translation-trial-v1",
+  "current_english_p16_modified": false,
+  "current_translation_modified": false,
+  "generated_at_utc": "2026-11-13T12:13:53.570443+00:00",
+  "private_text_exported": false,
+  "results": [
+    {
+      "candidate_semantic_review_state": "unreviewed",
+      "elapsed_seconds": 26,
+      "job_id": "tNDx",
+      "model": "gemma-4-e4b-it-ud",
+      "original_kind": "preferred",
+      "original_obligation": "preferred",
+      "original_span_id": "d6b09e236c88e964dc5c886608e54c5f",
+      "original_span_sha256": "5ee80862073de9130f078a85469214b78147178f2f475f6b2b880413e0f3e8d3",
+      "private_record_sha256": "d871167ad02e24e25704cefa61fdae023d20d101ecf570d23da462706460cc0d",
+      "promoted": false,
+      "raw_trial_log_sha256": "bd9839886e92489d241c32e7960ca741a4e2ab25e419cc8e518a14a498e395b8",
+      "review_flag_count": 0,
+      "source_detail_version_id": 4,
+      "source_field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_sha256": "9249d0fb4c46a4acad44f2c56ed2e97486b5bf72894f97f475736bd34b8fe024",
+      "translation_status": "source_bound_unreviewed"
+    },
+    {
+      "candidate_semantic_review_state": "unreviewed",
+      "elapsed_seconds": 10,
+      "job_id": "tNhZ",
+      "model": "gemma-4-e4b-it-ud",
+      "original_kind": "preferred",
+      "original_obligation": "preferred",
+      "original_span_id": "9324c3cb16fd7ed6120b3a2fce42beba",
+      "original_span_sha256": "d9bc2eeb5b647c70270f9fd15a376d6501ad5b3026ed8935b86011b231af467d",
+      "private_record_sha256": "e887a6b3c5924b66b3f9e6dd1d11692199170798a1074efc1904b87de2bf0348",
+      "promoted": false,
+      "raw_trial_log_sha256": "9d514b35ddf3b6aead2bc2e09f6a8342f1e9a4d2d69c2e538f3b2b705f8244cb",
+      "review_flag_count": 0,
+      "source_detail_version_id": 1,
+      "source_field_sha256": "bc2499fff5cf4f40de21287aa3b2f060c4875faed2e22ac04261de0d0a27c2ca",
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "translation_provider": "lm-studio-translation-v2",
+      "translation_sha256": "2b3d26ef2251901ca54c3b1205df1448c0bd9ab864123b760ce034acda14942f",
+      "translation_status": "source_bound_unreviewed"
+    }
+  ],
+  "semantically_accepted": 0,
+  "source_bound_completed": 2
+}

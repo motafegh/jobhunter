@@ -8,6 +8,18 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
+## 2026-11-13 source-first branch gate (research only)
+
+**Status:** Source-first bilingual evidence lineage v1 is implemented and mechanically evaluated on five retained real Jobinja ads. The original-source spine produced 53 exact source spans, and existing whole-description English v2 artifacts remain item-unaligned. Two exact preferred clauses were translated individually with local LM Studio and showed preserved preference cues under bounded inspection. All source-bound translation candidates remain semantically unreviewed and unpromoted.
+
+**Current focused record:** docs/working-memory/2026-11-13_P16_ORIGINAL_SOURCE_LINEAGE_V1_RESULTS_AND_NEXT_GATE.md
+
+**Privacy-safe evidence:** docs/working-memory/2026-11-13_p16_source_lineage/COHORT_AUDIT.json and BOUND_TRANSLATION_TRIAL.json. Private text and translation logs remain ignored under data/local-acceptance.
+
+**Next gate:** Independently review source-bound Persian/English items, modality/alternatives and metadata conflicts on a separate unseen cohort; then design a bounded source-owned P1.6 candidate. Do not change current English v30, original v9, translation v2, Registry, Capability, Market or persistent P2.3 profile authority on evidence from these exposed diagnostics alone.
+
+The November 11 execution overlay below describes the accepted main baseline, not completed source-first promotion.
+
 ## Current execution
 
 - [x] B2 reviewed normalization and bounded Market/report acceptance remain closed.

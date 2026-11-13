@@ -1,0 +1,238 @@
+{
+  "candidate_generated": 0,
+  "cases": [
+    {
+      "alignment_counts": {
+        "legacy_translated_field_unaligned": 17
+      },
+      "description_field_sha256": "bc2499fff5cf4f40de21287aa3b2f060c4875faed2e22ac04261de0d0a27c2ca",
+      "job_id": "tNhZ",
+      "nonpromotable": true,
+      "source_detail_version_id": 1,
+      "source_exact_utf8_offsets_checked": true,
+      "source_language": "mixed",
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "source_span_ids": [
+        "2f69870665c1f6d28d4366866c3d182d",
+        "dff1002dc6cac654cf725172e30e4725",
+        "c0498340692a4f983c70780397489779",
+        "f78d861227bb7a97ede91fe21a228434",
+        "32514654a613039c5470eab1bb8ee0d6",
+        "be392d60feea6d7810842c11c630b948",
+        "9e6b16ddc22db9dc3751ffea6a9ef804",
+        "11fb04064eaaff7c376621645052a180",
+        "d6262d9aed972e474c414a244d8d0baa",
+        "9324c3cb16fd7ed6120b3a2fce42beba",
+        "d2430b9fb69ed18e354e2d7226456347",
+        "39a389bec32d35293b5b98c3ef10e731",
+        "bef2c7323ce118930a14a07a871bb3fd",
+        "4a0be09f9090fe80b801cfc74560918c",
+        "bbb36776f4ee29026af3099b6f5bb0e6",
+        "c85416ae3a33c36eab73f6bc15ec900b",
+        "d581024cfa5a1680f7f2c60678b829b1"
+      ],
+      "span_kind_counts": {
+        "application": 2,
+        "arrangement": 3,
+        "context": 2,
+        "duty_candidate": 1,
+        "preferred": 1,
+        "qualification_candidate": 2,
+        "unresolved": 6
+      },
+      "span_obligation_counts": {
+        "not_applicable": 8,
+        "preferred": 1,
+        "unresolved": 8
+      },
+      "spans": 17,
+      "status": "inspected_not_semantically_approved",
+      "structured_tag_preference_warnings": 1,
+      "translation_artifact_id": 1,
+      "translation_schema_version": "english-projection-v2",
+      "translation_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060",
+      "warning_span_ids": [
+        "9324c3cb16fd7ed6120b3a2fce42beba"
+      ]
+    },
+    {
+      "alignment_counts": {
+        "legacy_translated_field_unaligned": 10
+      },
+      "description_field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+      "job_id": "tMps",
+      "nonpromotable": true,
+      "source_detail_version_id": 2,
+      "source_exact_utf8_offsets_checked": true,
+      "source_language": "mixed",
+      "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "source_span_ids": [
+        "d331bbb1500574754e3bc9149db90f39",
+        "53fd6bf10bd01b39c9ae193f31028c37",
+        "8d88406ef8d34a46e6cadbfe3414c4f1",
+        "79cad85bc704cc848387c9d144d7ce10",
+        "21a30b068b06b4a9fa9426045d2a5e4c",
+        "c96d979a8dc61169afd421ffd7d27257",
+        "45fb1fb9c652a853287a860172c00386",
+        "31104b7de6a29964d64d5a9ec2004a7d",
+        "cc5d4b28ae67c3167e52e4c3c089aaa1",
+        "1671c095c47e25e9e1954f7908d71c68"
+      ],
+      "span_kind_counts": {
+        "arrangement": 2,
+        "duty_candidate": 3,
+        "eligibility_middle_candidate": 1,
+        "eligibility_senior_candidate": 1,
+        "preferred": 1,
+        "qualification_candidate": 1,
+        "unresolved": 1
+      },
+      "span_obligation_counts": {
+        "not_applicable": 5,
+        "preferred": 1,
+        "unresolved": 4
+      },
+      "spans": 10,
+      "status": "inspected_not_semantically_approved",
+      "structured_tag_preference_warnings": 0,
+      "translation_artifact_id": 2,
+      "translation_schema_version": "english-projection-v2",
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609",
+      "warning_span_ids": []
+    },
+    {
+      "alignment_counts": {
+        "legacy_translated_field_unaligned": 3
+      },
+      "description_field_sha256": "91506ff9b04c1c04bad60e5b6f90815dd818d8bf2931c36976d4c6434d2ffb36",
+      "job_id": "tMqd",
+      "nonpromotable": true,
+      "source_detail_version_id": 3,
+      "source_exact_utf8_offsets_checked": true,
+      "source_language": "mixed",
+      "source_semantic_sha256": "b315fbbf853c0bc2b30bbd99c5b9a82fe6e482ef6186d501c10733071a765248",
+      "source_span_ids": [
+        "5059141b992f7452e291b49d3b1c3507",
+        "f4c1abf8645bd363b015c090e3e6dfdc",
+        "f0b3a0d831f0229f67c52390dd1dd308"
+      ],
+      "span_kind_counts": {
+        "duty_candidate": 1,
+        "preferred": 1,
+        "qualification_candidate": 1
+      },
+      "span_obligation_counts": {
+        "not_applicable": 1,
+        "preferred": 1,
+        "unresolved": 1
+      },
+      "spans": 3,
+      "status": "inspected_not_semantically_approved",
+      "structured_tag_preference_warnings": 0,
+      "translation_artifact_id": 3,
+      "translation_schema_version": "english-projection-v2",
+      "translation_sha256": "2791b8e0f97a6592ec76e5ed59effed2d96ec21a24afbfa71c5abd8a1d96e944",
+      "warning_span_ids": []
+    },
+    {
+      "alignment_counts": {
+        "legacy_translated_field_unaligned": 19
+      },
+      "description_field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+      "job_id": "tNDx",
+      "nonpromotable": true,
+      "source_detail_version_id": 4,
+      "source_exact_utf8_offsets_checked": true,
+      "source_language": "mixed",
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "source_span_ids": [
+        "dcb91fa4733f18308e612261598669bb",
+        "558ec4e564aec1c841cf3848f91d6508",
+        "9754e92efaa432dc2f6af00573ef1dd3",
+        "eff45072332999b8bd2e975fd90d0e70",
+        "f5b3716a1c5b1d8bbf1d6cfc2617ae29",
+        "871d31dfc9ea94db34dd51899006d3e9",
+        "fa5ec69de232f07e58f4622d9200ec7a",
+        "e8f8f11b0af1f4303326bb4fd8723102",
+        "f696d989b6b3d48918e3bff17f62fe5b",
+        "afbd0590f36bf16ea22d25f69a5f8cfe",
+        "19f6b149db48db49e1501a938fa94134",
+        "d6b09e236c88e964dc5c886608e54c5f",
+        "6b4a13df62169e4aaf703eebe4318493",
+        "dddc2e291ef88b91fe8cf159e2784f42",
+        "318c0f40071e3551e2bdcef277c7038c",
+        "28f8e12670218135ea7fbddcd87d2603",
+        "aeef5bc2e9cb0f36216539d9d602da04",
+        "02b5aa16d78f4e3d02de1ce93582c05f",
+        "47653178eed428a6bf4fbf9712f494ba"
+      ],
+      "span_kind_counts": {
+        "arrangement": 2,
+        "benefits": 3,
+        "duty_candidate": 5,
+        "preferred": 1,
+        "qualification_candidate": 6,
+        "unresolved": 2
+      },
+      "span_obligation_counts": {
+        "not_applicable": 10,
+        "preferred": 1,
+        "unresolved": 8
+      },
+      "spans": 19,
+      "status": "inspected_not_semantically_approved",
+      "structured_tag_preference_warnings": 0,
+      "translation_artifact_id": 4,
+      "translation_schema_version": "english-projection-v2",
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039",
+      "warning_span_ids": []
+    },
+    {
+      "alignment_counts": {
+        "legacy_translated_field_unaligned": 4
+      },
+      "description_field_sha256": "bfa0710f72614b1592593fb140f35bbfbcbb1c01850a8c45a2ab0621357195ef",
+      "job_id": "tMjm",
+      "nonpromotable": true,
+      "source_detail_version_id": 5,
+      "source_exact_utf8_offsets_checked": true,
+      "source_language": "mixed",
+      "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "source_span_ids": [
+        "c2830de082b5ec344a853bb3688899d8",
+        "3bd218605f9acff944aa2a5c234b1e94",
+        "32203091838bd8bc97a5b9953ed57b88",
+        "d6b558811a20dc112220460c9dbc4c00"
+      ],
+      "span_kind_counts": {
+        "arrangement": 1,
+        "qualification_candidate": 2,
+        "unresolved": 1
+      },
+      "span_obligation_counts": {
+        "not_applicable": 1,
+        "unresolved": 3
+      },
+      "spans": 4,
+      "status": "inspected_not_semantically_approved",
+      "structured_tag_preference_warnings": 0,
+      "translation_artifact_id": 5,
+      "translation_schema_version": "english-projection-v2",
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b",
+      "warning_span_ids": []
+    }
+  ],
+  "contract": "p16-source-lineage-audit-v1",
+  "current_english_p16_changed": false,
+  "generated_at_utc": "2026-11-13T12:10:10.510571+00:00",
+  "jobs_inspected": 5,
+  "jobs_requested": 5,
+  "original_analysis_p16_changed": false,
+  "privacy": "public_counts_hashes_only",
+  "semantic_reviewed_or_promoted": 0,
+  "source_db_changed": false,
+  "source_lineage_contract": "p16-original-source-spine-v1",
+  "source_snapshot_foreign_keys": "ok",
+  "source_snapshot_integrity": "ok",
+  "whole_field_v2_provenance_cannot_prove_item_alignment": true
+}
