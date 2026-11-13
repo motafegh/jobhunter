@@ -1,0 +1,61 @@
+# JobHunter research, manual-review and promotion index
+
+**Recorded:** 2026-11-13
+**Authority:** Status/handoff only. Does not modify controlling product/domain/source/architecture semantics.
+**Accepted product code on main before this documentation update:** 74ffec25533c5cd4b1afa90b0c3bc76ee023e7aa.
+**Current production English analyzer:** P1.6 v30/v5. Source-first prototypes are NOT in the production analysis route.
+
+## Evidence and branch disposition
+
+| Scope | Branch / commit | What it establishes | Disposition |
+| --- | --- | --- | --- |
+| Jobinja proxy diagnosis and repair | main / 74ffec2 | Direct-source route restored, 20 discoveries + 2 detail pages verified, CI passed | Accepted production fix |
+| Fresh original-ad independent audit | evaluation/current-real-ads-2026-11-12 / 72ca882 | Five source captures, translations, P1.6 failures, independent comparisons; dated EDR semantic erratum | Evidence, not model validation approval |
+| English-only v31 P1.6 trial | experiment/p16-source-fidelity-2026-11-12 / 03d6071 | Source-scoped parser candidate, real trial, corrected EDR preference diagnosis | No promotion |
+| Original-language item spine and bounded translation | research/p16-original-source-evidence-spine-2026-11-13 / 4035d7b | 53 exact original spans from five jobs; two successful source-bound translations; 903 tests | Unmerged, unapproved research infrastructure |
+
+Read in this order for source-first work:
+1. `docs/working-memory/2026-11-12_FRESH_SOURCE_INDEPENDENT_PRODUCT_EVALUATION_RESULT.md` from the evaluation branch, AND `docs/working-memory/2026-11-13_EDR_TEAMWORK_SOURCE_INTERPRETATION_ERRATUM.md` from the same branch.
+2. `docs/working-memory/2026-11-12_P16_SOURCE_FIDELITY_V31_EXPERIMENT_CLOSURE_AND_NEXT_GATE.md` from the v31 experiment branch, including corrective erratum at its top.
+3. `docs/working-memory/2026-11-13_P16_ORIGINAL_SOURCE_LINEAGE_V1_RESULTS_AND_NEXT_GATE.md` from the source-first research branch.
+4. The versioned JSON audit/verification reports linked from those records. Treat frozen hashes as evidence identity, not proof of semantic accuracy.
+
+DO NOT replay the superseded assertion that EDR teamwork is mandatory: the source says `مزیت محسوب می‌شود` (an advantage), span ID `d6b09e236c88e964dc5c886608e54c5f`. The source-first experiment correctly labels that item preferred.
+
+## User's explicit manual reviewer role
+
+The owner has agreed to manually audit original-source meanings and selected English/P1.6 claims when review material is ready. The assistant is responsible for PREPARING complete, readable packages; the owner does not need to fetch SQLite data or write bespoke scripts.
+
+**Required review-package structure (future gate; NOT yet produced):**
+- `PACKET_MANIFEST`: frozen job ID, original URL, captured-at time, original detail version/hash, analyzer/model/prompt version, scope, exposure/holdout label, expected reviewer effort, privacy.
+- `PASS_A_SOURCE_ONLY`: original Persian source excerpt or source page, exact span ID, source-heading context, and independent questions WITHOUT showing JobHunter's interpretation first. For each item request duty/qualification/preference/arrangement/application/unknown, required-vs-optional strength, tier alternatives, whether information is missing and a short source-grounded explanation.
+- `PASS_B_MODEL_COMPARISON`: English translation, JobHunter candidate interpretation, classification/evidence references and explicit uncertainty; reveal AFTER Pass A is saved. Ask correctness, omissions, invented items, wrong strength/obligation, and reviewer correction/evidence.
+- `REVIEW_FORM`: clear correct/incorrect/partial/uncertain/needs-source-check choices, free-text notes, optional evidence quote, and explicit cannot-determine. Support partial completion. Record human reviewer verdict distinctly from mechanical validation and model confidence.
+- `RECONCILIATION`: frozen Pass A and B judgments, case-level discrepancy types, conflicts needing follow-up, decision on claim-level qualification and any unresolved objections. Sign off/review is evidence, not automatic production promotion.
+- `PROVENANCE`: source and packet SHA-256, code commit, predeclared sampling rule, review timestamps, blinded/unblinded ordering and per-case acceptance status. Never include private personal data or model secrets.
+
+Start with a small risk-stratified packet (e.g. optional vs required LLM, EDR preferred teamwork, Middle/Senior alternatives, qualification vs duty, work arrangement) rather than making the owner review all 53 unqualified spans. Reserve at least one subsequent independent unseen cohort for candidate verification after design fixes.
+
+## Recommended staged code integration
+
+**A. Foundation on main, initially inactive.** Review the source spine and bounded translation primitives for API correctness, performance, exact source identity, privacy, deterministic test coverage, compatibility and maintainability. Cleanly separate importable utilities from evaluation-only scripts. Merge only that accepted passive subset with tests and documentation. This is NOT approval of source item semantics or new analyzer behavior.
+
+**B. Reviewable bilingual contracts.** Create durable item-alignment and review-state contracts with explicit unknown/unsupported meaning, versioned source ownership and reviewer packet artifacts. Verify user adjudication and fresh cases before changing the accepted translation/claim authority.
+
+**C. Public analyzer routing.** Switch English P1.6 from v30 only after source-faithful new candidates pass independent user review, real source fidelity and regression gates, existing historical artifact/currentness invariants and downstream Work/Capability compatibility. Do not count structurally valid but wrong claims as a success.
+
+**D. Downstream intelligence.** Resume persistent career capability expectations, Registry mapping and personalized recommendations only after upstream source facts are qualified and useful.
+
+## Gaps and stop lines (as of November 13)
+
+1. The human review packets/forms and independent reviewed verdicts DO NOT YET EXIST. They must be prepared before a semantic promotion gate.
+2. The source-first research code has not been merged to main, and no P1.6 integration/migration has been verified.
+3. Only two source-bound local translation examples exist, both exposed developer cases; there is no separate unseen external/generalization validation.
+4. The current English-projection-v2 has field-level provenance but not per-item aligned evidence; the new research code documents that lack rather than inventing links.
+5. A durable qualified, source-linked English projection, explicit candidate-to-reviewed state machine and compatible acceptance migration are not yet implemented.
+6. The original-language v9 path can persist a mechanically `accepted` artifact without independent source review; that must be treated as a review-authority concern.
+7. Full model-provider wire request/response retention and lossless reproducibility of ignored local raw trial data have NOT been established for the new source-bound prototype. Private local evidence must be preserved before cleanup; GitHub contains only safe hashes and counts.
+8. Older main governance and current-state reconciliation files predate this research. This index is the current status-only research handoff; future accepted architectural changes must be reflected in controlling documents, not only working-memory records.
+9. Retained original source evidence includes real public job text; preserve source-usage, retention and privacy constraints. Do not commit local raw captures or personal review annotations without explicit screening.
+
+**Current decision:** Product remains on v30. Begin manual review packet design and a passive foundation code-review gate; do not promote the experimental model outputs or bulk-merge unqualified candidate semantics.

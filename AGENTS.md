@@ -32,6 +32,8 @@ Before material changes, read:
 12. `docs/WORKING_MEMORY.md`
 13. task-specific decision/experiment/working-memory records, `corpus/README.md`, and selected review snapshots as needed.
 
+For source-first P1.6 research or integration after November 13, 2026, also read `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`. It is a **status-only** handoff, not authorization to activate research candidates or override current product/domain/source/architecture contracts.
+
 For changes to the accepted Market implementation, load at minimum after the stable documents:
 
 ```text
