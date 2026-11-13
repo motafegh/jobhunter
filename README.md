@@ -298,6 +298,7 @@ Useful entry points:
 - [`docs/SOURCE_POLICY.md`](docs/SOURCE_POLICY.md) — acquisition and source-authority rules;
 - [`docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md`](docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md) — epistemic/decision authority;
 - [`docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`](docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md) — current status/routing overlay;
+- [`docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`](docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md) — current focused **planning-only** Stage B original-source/bilingual quality gates (B0 next; no new public analysis route yet);
 - [`docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md`](docs/MARKET_ROLE_FAMILY_INTELLIGENCE_PLAN.md) — controlling Market plan and authorized first slice;
 - [`docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md`](docs/working-memory/2026-09-14_MARKET_ROLE_FAMILY_FOUNDATION_INVESTIGATION_DECISION.md) — formal foundation PASS/authorization;
 - [`docs/DEVELOPMENT_AND_LOCAL_SETUP.md`](docs/DEVELOPMENT_AND_LOCAL_SETUP.md) — fresh-clone development setup and optional local services;

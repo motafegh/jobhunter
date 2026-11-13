@@ -2,7 +2,7 @@
 
 **Status:** Current translation/English-projection architecture guide  
 **Date:** 2026-08-21
-**Last reconciled:** 2026-10-15
+**Last reconciled:** 2026-11-13
 
 ## 1. Purpose
 
@@ -41,7 +41,7 @@ immutable Jobinja evidence
                       ↓
              english-projection-v2
                       ↓
-              English P1.6 v20/v5
+              English P1.6 v30/v5 (accepted older v5 compatibility preserved)
 ```
 
 A translation/model failure never modifies source evidence or source semantic history.
@@ -274,6 +274,26 @@ This architecture is intentional. Earlier bilingual mixed-evidence designs cause
 The source remains ultimate authority through human/review comparison. If an English projection materially changes source meaning, the English downstream chain is blocked/rejected rather than silently repaired inside P1.6.
 
 A current heterogeneous example is `tI1n`, whose English projection materially mistranslated a portfolio/work-sample application condition. It was correctly withheld from P1.6 and remains translation-quality evidence.
+
+## Stage B future boundary — plan adopted November 13, 2026, NOT implemented
+
+The passive Stage A original-source anchor and legacy English field-alignment
+status are now accepted on main. The four-case A1 source/model audit detected
+material item-level qualification/obligation and translation-boundary errors.
+The next focused plan is `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+
+Stage B research should build **versioned source-owned item/translation
+candidates outside English P1.6 v30**. Existing `english-projection-v2` still
+establishes source-field association only: it must not acquire invented English
+item offsets or semantic equivalence by schema renaming. If a new bilingual
+contract becomes accepted, it will be explicitly versioned, separately
+validated and routed through a later authorization; no Persian source text
+may silently appear as hidden English-v30 analysis evidence.
+
+**Status:** Plan adopted, B0 baseline next, no new translation provider,
+projection schema, P1.6 route or accepted translation record promoted.
+
+---
 
 ## 20. Quality work that remains
 

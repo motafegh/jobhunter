@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-10-26
+**Last reconciled:** 2026-11-13
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The next proposed feature gate is source-backed job-specific capability expectations, not another comparison UI iteration. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The formerly next candidate (November 11) was source-backed job-specific capability expectations; the November 13 source-fidelity findings now make Stage B the active next prerequisite. Capability-expectation work is retained but sequenced afterward. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
 
 ## 1. Purpose and authority
 
@@ -57,6 +57,48 @@ If a subordinate plan becomes stale, reconcile it. Do not silently bypass this p
 - Do not infer personal capability/readiness before reviewed personal evidence exists.
 - Do not keep shrinking or prompt-patching a model-derived layer indefinitely when repeated bounded evidence shows it is not reliable enough for the current phase; preserve the evidence, defer the layer, and continue with accepted upstream contracts.
 - Once a public semantic layer has passed bounded acceptance and promotion, reopen it only for a repeatable material correctness/provenance/contract defect or a changed accepted dependency, not cosmetic model wording variation.
+
+---
+
+## 2.1 Active next prerequisite — P1.6 Stage B source fidelity (2026-11-13)
+
+**Authoritative current focused plan:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+This explicitly supersedes the November 11 *next execution candidate* ordering,
+not its completed comparison/capability-evaluation history. The previously
+proposed job-specific capability-expectation slice is retained but **sequenced
+after Stage B's qualified source-fidelity gate**.
+
+Stage A passive source anchor and owner-review packager were accepted to main.
+Four exposed A1 cases were subsequently assessed; 59 assistant source-anchored
+assertions, 18 observed diagnostic flags and 11 translated phrase observations
+were recorded without human/assistant review authority conflation. English
+v30/v5 and original v9/v4 did not change. These exposed cases do not prove
+generalized reliability and cannot serve as unseen promotion evidence.
+
+**B0–B6 controlling delivery gates:**
+
+| Gate | Deliverable / acceptance owner | State |
+| --- | --- | --- |
+| B0 | Frozen baseline/source versions, predeclared diagnostic and unseen cohort, resource bounds | NEXT / NOT STARTED |
+| B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | PLANNED |
+| B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | PLANNED |
+| B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PLANNED |
+| B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | PLANNED |
+| B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
+| B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
+
+No B1–B6 implementation is authorized merely by adding this plan to the
+repository; execute each bounded gate from a separate branch with its specified
+acceptance record, not a wholesale research-branch merge. A candidate brief
+may be useful **without** becoming durable P1.6, Registry, Capability, Work or
+Market authority. A new public route requires a separately evidenced B6
+decision. The source-first work never adds hidden original Persian evidence to
+an unchanged English v30 artifact; `english-projection-v2` item alignment
+remains unestablished.
+
+See the November 13 original-source A1 audit and Stage A closure for evidence
+identity and user review delegation. Ask the owner only when their decision is
+material; unresolved employer wording must stay unknown.
 
 ---
 
@@ -645,6 +687,10 @@ Require explicit promotion/evidence before implementation:
 ---
 
 ## 21. Current plan links
+
+Current focused P1.6 source-fidelity execution owner:
+`docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`
+(B0 next; B6 conditional).
 
 ```text
 ROADMAP.md

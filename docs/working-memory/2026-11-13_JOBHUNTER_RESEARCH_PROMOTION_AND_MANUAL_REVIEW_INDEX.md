@@ -1,5 +1,30 @@
 # JobHunter research, manual-review and promotion index
 
+## Stage B authoritative focused plan adoption — 2026-11-13
+
+**Current next engineering gate:** B0 of `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+The formerly planned P2.3 capability-expectation feature is sequenced *after*
+source-fidelity quality work, not cancelled. This index keeps the historical
+research paths and four-job owner-delegated audit evidence; the focused plan,
+roadmap, implementation plan and current-state overlay now control execution.
+
+**Plan created, not code implemented.** Stage A passive source anchors are on
+main; v31 prompt-only candidates, research semantic heading heuristics and
+source-bound model calls remain unmerged. No unchanged v30 artifact may silently
+consume original Persian source as extra evidence.
+
+**Review preference:** The owner delegates routine source/model review; the
+assistant records its own judgments and uncertainty, and may not represent
+them as independent human source certification. Unanswered employer-intent
+questions stay unresolved. A fresh genuinely unseen verification cohort is
+required before any claim of generalized improvement or a B6 public switch.
+
+**Source fidelity sequence:** B0 baseline -> B1 contract -> B2 original facts
+-> B3 bilingual alignment -> B4 useful candidate brief -> B5 fresh evaluation
+-> B6 explicit accept/no-promote integration. Every gate retains auditable
+evidence, test counts and source version/model identity.
+
+
 **Recorded:** 2026-11-13
 **Authority:** Status/handoff only. Does not modify controlling product/domain/source/architecture semantics.
 **Accepted product code on main before this documentation update:** 74ffec25533c5cd4b1afa90b0c3bc76ee023e7aa.

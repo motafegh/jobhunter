@@ -1,0 +1,110 @@
+{
+  "accepted_anchor_job_ids": [
+    "tG9K",
+    "t4jp",
+    "tmBK",
+    "t4qV",
+    "tmyX"
+  ],
+  "accepted_english_contract": "job-analysis-english-v30/job-analysis-v5",
+  "accepted_legacy_translation": "english-projection-v2",
+  "accepted_original_contract": "job-analysis-original-v9/job-analysis-v4",
+  "accepted_source_anchor": "jobhunter-source-span-identity-v1",
+  "baseline_main_commit": "8eded9e15949fc34a041984a90e40d930f91f6fd",
+  "contract": "jobhunter-p16-stage-b-plan-gate-register-v1",
+  "created_date": "2026-11-13",
+  "existing_accepted_artifacts_mutated": false,
+  "exposed_case_ids": [
+    "tNhZ",
+    "tMps",
+    "tNDx",
+    "tMjm"
+  ],
+  "exposed_diagnostic_flag_count": 18,
+  "exposed_original_source_assertion_count": 59,
+  "exposed_translation_observation_count": 11,
+  "gates": [
+    {
+      "code_commit": null,
+      "exit_evidence": "read_only_source_and_artifact_snapshots; frozen exposed cases; unseen selection protocol; resource budget",
+      "gate": "B0",
+      "name": "baseline_and_predeclared_evaluation",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "item/alignment/obligation/review definitions; traceable alternatives; explicit persistence and rollout owners",
+      "gate": "B1",
+      "name": "versioned_contract_and_compatibility_ADR",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "source-anchored duties/qualifications/alternatives/arrangements and conflict guard tests",
+      "gate": "B2",
+      "name": "original_item_and_board_metadata_semantics",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "exact item association and checked modality; legacy field alignment explicitly unknown",
+      "gate": "B3",
+      "name": "source_bound_translation_and_semantic_guard",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "useful bounded original-source claims, failures/partial outcomes, no durable authority",
+      "gate": "B4",
+      "name": "candidate_job_understanding_brief",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "predeclared original-source references and paired v30/candidate scorecard with honest denominator",
+      "gate": "B5",
+      "name": "fresh_unseen_independent_evaluation",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "not_started"
+    },
+    {
+      "code_commit": null,
+      "exit_evidence": "explicit decision, new route or sidecar-only, rollback, CI, stable old chain invariants",
+      "gate": "B6",
+      "name": "conditional_integrate_or_no_promote",
+      "report_path": null,
+      "source_version_sha256": null,
+      "status": "conditional_not_authorized"
+    }
+  ],
+  "human_review_claimed_for_assistant_only_findings": false,
+  "independently_evaluated_unseen_cases": 0,
+  "manual_owner_review_all_jobs_required": false,
+  "model_outcomes_exposed_not_general_reliability": true,
+  "next_gate": "B0",
+  "owner_a1_status": "assistant_review_completed_owner_partial_original_preserved",
+  "plan_path": "docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+  "post_b_priority": "separately_gated_job_specific_capability_expectation_candidate",
+  "production_route_changed": false,
+  "qualified_for_public_promotion": false,
+  "reconciliation_path": "docs/working-memory/2026-11-13_STAGE_B_SOURCE_FIDELITY_PLAN_RECONCILIATION.md",
+  "stage_a_status": "passive_source_identity_accepted_main",
+  "stage_b_new_candidate_generated": false,
+  "status": "plan_only_no_stage_b_implementation",
+  "unseen_cohort_target_size": [
+    6,
+    8
+  ],
+  "unseen_source_access_verified": false
+}

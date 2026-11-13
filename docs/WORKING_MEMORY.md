@@ -3,6 +3,8 @@
 **Last research-status reconciliation:** 2026-11-13 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
+**Current selected next stage:** P1.6 source-grounded bilingual Stage B, plan created 2026-11-13; **B0 is next / NOT STARTED**. Read `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`. B1–B6 remain gated; no new model/semantic/currentness/schema changes authorized. The November 11 capability-expectation next-feature proposal is preserved as a **subsequent** experiment, not an active parallel build. Stage A passive source identity accepted; four-job A1 assistant source/model review complete (59 source assertions, 18 diagnostic flags, 11 translation checks), not independent blind human verification. The user delegated routine review to the assistant; ambiguous employer intent must stay unresolved.
+
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
 **Last reconciled:** 2026-11-11
@@ -13,6 +15,28 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
+## 2026-11-13 current Stage B handoff (supersedes earlier current-execution wording below)
+
+**Plan-authority decision:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+B0 baseline/snapshot/evaluation protocol is the next action. B1 contract/ADR,
+B2 original-source classification, B3 bilingual meaning, B4 candidate
+job-understanding, B5 independent fresh case verification and B6 controlled
+production integration follow only after their respective acceptance gates.
+The previous November 11 next capability-expectation proposal remains valid
+but is downstream in sequence. Existing B2/Market and P2.3A /compare remain
+closed/accepted as documented.
+
+Current production English P1.6 remains v30/v5, original v9/v4 and translation
+v2. The accepted Stage A source anchor is passive; experimental v31 and the
+heuristic original-language source-section and item-model translation code
+remain unmerged. No new Stage B artifact or source fact has been accepted.
+
+**Immediate operator instruction:** create a dedicated B0 branch; inspect
+source and existing accepted data; freeze a read-only online backup; predeclare
+model/holdout review boundaries. Do not start prompt/DB/schema/user-route
+implementation from the plan without an accepted B0 result. User involvement
+only for consequential owner decisions; employer ambiguity stays unknown.
+
 ## Current execution
 
 - [x] B2 reviewed normalization and bounded Market/report acceptance remain closed.
@@ -21,7 +45,7 @@ The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pend
 - [x] Independently check live snapshot-15/report-2 navigation with structural probes and desktop/mobile Chromium.
 - [x] Archive the optional summary prototype as **NO PROMOTION** with owner time savings explicitly unmeasured.
 - [x] Close the bounded comparison engineering/optional-UX investigation; no repeated cosmetic test backlog.
-- [ ] Next candidate: capability-expectation reuse/gap audit for `tvMm`, `tNVe`, `t7Ay` and a bounded product contract before new model work/persistence.
+- [ ] Historical next candidate DEFERRED IN SEQUENCE until Stage B qualifies: capability-expectation reuse/gap audit for `tvMm`, `tNVe`, `t7Ay`.
 
 No Strategy-C inference, P2.3 persistent profiles, P2.2C/D, P2.4, personal scoring, bulk mappings, or historical accepted-artifact regeneration is authorized by this closure.
 

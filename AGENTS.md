@@ -34,6 +34,8 @@ Before material changes, read:
 
 For source-first P1.6 research or integration after November 13, 2026, also read `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`. It is a **status-only** handoff, not authorization to activate research candidates or override current product/domain/source/architecture contracts.
 
+For **P1.6 Stage B original-source/bilingual quality work**, read `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md` after the permanent governing documents and the November 13 Audit A1 record. This is the current **focused implementation plan** and is subordinate to product/domain/source/architecture/reasoning policy. Stage B plan existence does not authorize a new production P1.6 route or automatic promotion of experimental inference. Its B0 baseline/evaluation gate is the next execution task and its B6 promotion remains conditional.
+
 For changes to the accepted Market implementation, load at minimum after the stable documents:
 
 ```text

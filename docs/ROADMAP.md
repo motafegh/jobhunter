@@ -2,11 +2,34 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-10-26
+**Last reconciled:** 2026-11-13
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The next proposed feature gate is source-backed job-specific capability expectations, not another comparison UI iteration. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The formerly next candidate (November 11) was source-backed job-specific capability expectations; the November 13 source-fidelity findings now make Stage B the active next prerequisite. Capability-expectation work is retained but sequenced afterward. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
+
+## November 13 execution sequencing amendment — Stage B source fidelity
+
+**Current immediate prerequisite (planning approved, implementation pending):**
+P1.6 Stage B source-grounded bilingual job understanding. The completed Stage A
+passive original-source identity is on main; the delegated owner A1 source/model
+review found material duty/qualification/optional-strength and translation
+boundary failures on four **exposed diagnostic** vacancies. These are genuine
+correctness risks that can affect the next career-capability reasoning layer.
+
+**Sequencing decision:** build and verify source-owned original-item evidence,
+metadata/prose obligation reconciliation, bilingual item association and a
+bounded useful job-understanding candidate **before** resuming the previously
+proposed job-specific P2.3 capability-expectation experiment. This defers that
+feature in order without cancelling its accepted design questions or prior
+bounded P2.3A comparison closure. Market I1–I7/R1–R4, B2, Work v2, Capability v9
+and current Registry acceptance remain closed/unmodified. No new market,
+personal-readiness or profile authority follows from this amendment.
+
+**Controlling Stage B focused plan:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+B0 baseline/fresh-cohort protocol is next. B6 public routing is separate and
+conditional; English v30/v5 and original v9/v4 remain current throughout
+research. Stage B research is not a reopening of historical P2.2B-B1/B2.
 
 ---
 

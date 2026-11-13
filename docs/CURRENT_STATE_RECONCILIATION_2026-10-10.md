@@ -9,6 +9,30 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
+## November 13 Stage B plan adoption overlay — CURRENT execution precedence
+
+**Current next execution:** P1.6 Stage B B0, **not** the historical November 11
+next-feature candidate. The authoritative focused plan
+`docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`
+has reconciled all four delegated original-source/model A1 reviews and Stage A
+passive identity integration into explicit B0–B6 implementation/validation gates.
+
+- Stage B PLAN: CREATED / EXECUTION NOT STARTED. B0 baseline, source and
+  unseen-cohort protocol is next. B1–B4 research and B5 evaluation require
+  gate-specific results. B6 is conditional and separately promoted.
+- Current English P1.6: v30/v5; original P1.6: v9/v4; English projection v2;
+  Capability v9, Work v2, Registry and Market accepted states unchanged.
+- Previous November 11 proposed capability-expectation slice:
+  VALID / SEQUENCED AFTER Stage B qualification; **not cancelled** and
+  not permitted to become a parallel new persistent profile program.
+- Owner has delegated routine source/model review; assistant assessments
+  must remain labeled and cannot impersonate independent human certification.
+- Any old “review pending,” “next P2.3 capability increment now,” or “B2 active”
+  present-tense wording below is historical and superseded by this overlay.
+
+No new Stage B runtime behavior, accepted artifact, schema or migration exists
+at plan adoption.
+
 ## November 13 Owner Audit A1 completion overlay (supersedes Stage A review-pending wording)
 
 The owner submitted a partial, independent Pass A review covering two of the four A1 cases. That original submission was preserved verbatim and hashed. Under explicit owner delegation the assistant reviewed all four original Persian postings, froze 59 source-anchored assessment items, then compared the saved model outputs. The assistant identified 18 diagnostic model/pipeline flags and 11 original-versus-English translation observations. The remaining two cases were NOT human-owner reviewed. The assistant had prior context about earlier model failures, so this is not an independent blind human validation.
