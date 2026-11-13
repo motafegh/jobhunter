@@ -6,6 +6,9 @@
 **Product baseline:** `main` at `74ffec25533c5cd4b1afa90b0c3bc76ee023e7aa`
 **Method:** `2026-11-12_FRESH_SOURCE_COHORT_INDEPENDENT_ANALYSIS_PROTOCOL.md`
 
+**Source-interpretation correction (2026-11-13):** The original Persian tNDx statement says teamwork and accepting a defined management structure are an ADVANTAGE (`مزیت محسوب می‌شود`), not mandatory. The earlier Section 3 assertions that teamwork was required and the original-language model wrongly marked it preferred are superseded. See `2026-11-13_EDR_TEAMWORK_SOURCE_INTERPRETATION_ERRATUM.md`. Frozen original review notes and JSON remain unchanged as historical evidence. No P1.6 candidate or downstream result is newly approved.
+
+
 ## 1. Decision summary
 
 JobHunter can now acquire live Jobinja search and individual vacancy pages, preserve immutable original source evidence and complete local English translation. **The acquisition issue has been resolved.** The next material reliability bottleneck is **P1.6 semantic extraction**, not adding another market source or polishing the comparison UI.
