@@ -106,6 +106,7 @@
   "fixture_index_sha256": "493ee322d30aca1fc6afb583a4a62d02d68d3dc0b1fc46807438b729f68784ab",
   "fresh_unseen_evaluation_count": 0,
   "gate": "B1",
+  "github_pr_number": 18,
   "human_blind_review_established": false,
   "json_pointer_hardening": "Reject noncanonical array indices and malformed RFC6901 escape sequences",
   "known_limitations": [
@@ -121,7 +122,11 @@
   "local_pip_check": "passed",
   "local_ruff": "passed",
   "next_gate_after_B1": "B2",
+  "no_production_promotions": true,
   "no_public_source_text_exposed": true,
+  "pr_ci_run_url": "https://github.com/motafegh/jobhunter/actions/runs/43623310597",
+  "pr_ci_status": "success",
+  "pr_ci_verified_head_sha": "c5224e8abc9fedc04ca158ca65a13564d2191d2f",
   "private_B0_exact_source_identity_verified": true,
   "private_B0_exposed_original_snapshot_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
   "private_fixture_generator_ignored": true,
@@ -132,9 +137,9 @@
   "schema": "docs/contracts/p16-stage-b1/source_evidence_bundle.schema.json",
   "schema_sha256": "8304114a82076405aa0cd11227fb44fb2cde109efdadfae18018cb89a3c8d83a",
   "source_safe_validation_helper": "scripts/validate_stage_b1_design.py",
-  "status": "contract_architecture_design_passed_locally_CI_pending",
+  "status": "contract_architecture_design_passed_with_verified_PR_CI",
   "structured_board_refs": 5,
   "synthetic_truth_table_cases": 12,
   "test_command": "python -m pytest -q -W error tests/test_p16_stage_b1_contract_design.py",
-  "test_status": "39 focused tests and 946 full warnings-as-errors tests passed locally; Ruff and dependency checks clean; PR CI pending"
+  "test_status": "39 focused and 946 full warnings-as-errors tests passed locally; PR #18 CI quality passed at c5224e8"
 }
