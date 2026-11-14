@@ -27,7 +27,7 @@ and current Registry acceptance remain closed/unmodified. No new market,
 personal-readiness or profile authority follows from this amendment.
 
 **Controlling Stage B focused plan:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
-B0 baseline/fresh-cohort protocol is next. B6 public routing is separate and
+B0 baseline/fresh-cohort selection protocol was accepted November 14, 2026; B1 contract/ADR design is next. The fresh cohort itself has NOT been acquired. B6 public routing is separate and
 conditional; English v30/v5 and original v9/v4 remain current throughout
 research. Stage B research is not a reopening of historical P2.2B-B1/B2.
 

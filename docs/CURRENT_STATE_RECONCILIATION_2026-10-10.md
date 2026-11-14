@@ -2,12 +2,36 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-13
+**Last reconciled:** 2026-11-14
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 14 B0 baseline acceptance — LATEST current status
+
+**Current focused execution gate: P1.6 Stage B B1 (contract and ADR).** B0 baseline
+was completed on a separate evidence-only branch, with no production code,
+source, translation, schema, accepted artifact, or current router changes.
+
+B0 proves all selected nine original raw HTML evidence hashes against
+their stored identities; all 59 retained exposed original-source review
+anchors; all five accepted P1.6→Capability anchor pairs; three healthy
+private SQLite online backups; and 485 previously known job IDs across 45
+locally available SQLite datasets as an **initial** fresh-cohort exclusion index.
+The configured database remained byte-identical. B0 froze a source-first,
+predeclared evaluation/scoring and local provider budget protocol. **No fresh
+unseen cohort has been acquired or independently reviewed.** The next separate
+gate is B1; B2–B6 remain conditional.
+
+**B0 closure:** `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
+**Controlling Stage B implementation plan:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+
+The earlier November 13 "B0 next" status overlay below is **historical**;
+the November 11 "P2.3 capability expectations next" status remains sequenced
+after qualified Stage B results. Public English P1.6 still v30/v5; original
+v9/v4; translation v2; Capability v9, Work v2, Registry and Market unchanged.
 
 ## November 13 Stage B plan adoption overlay — CURRENT execution precedence
 

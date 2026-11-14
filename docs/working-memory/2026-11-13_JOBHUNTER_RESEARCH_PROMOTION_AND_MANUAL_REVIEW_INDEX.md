@@ -2,13 +2,13 @@
 
 ## Stage B authoritative focused plan adoption — 2026-11-13
 
-**Current next engineering gate:** B0 of `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
+**Current next engineering gate:** B1 of §docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md§. B0 baseline and evaluation selection protocol PASS (2026-11-14); §docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 The formerly planned P2.3 capability-expectation feature is sequenced *after*
 source-fidelity quality work, not cancelled. This index keeps the historical
 research paths and four-job owner-delegated audit evidence; the focused plan,
 roadmap, implementation plan and current-state overlay now control execution.
 
-**Plan created, not code implemented.** Stage A passive source anchors are on
+**Plan created; B0 evidence-only milestone completed, no Stage B runtime code implemented.** Stage A passive source anchors are on
 main; v31 prompt-only candidates, research semantic heading heuristics and
 source-bound model calls remain unmerged. No unchanged v30 artifact may silently
 consume original Persian source as extra evidence.

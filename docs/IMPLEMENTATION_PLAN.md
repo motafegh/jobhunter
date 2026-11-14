@@ -79,13 +79,15 @@ generalized reliability and cannot serve as unseen promotion evidence.
 
 | Gate | Deliverable / acceptance owner | State |
 | --- | --- | --- |
-| B0 | Frozen baseline/source versions, predeclared diagnostic and unseen cohort, resource bounds | NEXT / NOT STARTED |
-| B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | PLANNED |
+| B0 | Frozen baseline/source versions, exposed cases, new-cohort selection protocol, provider budget | PASS / 2026-11-14 |
+| B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | NEXT / NOT STARTED |
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | PLANNED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PLANNED |
 | B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | PLANNED |
 | B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
+
+**B0 closure 2026-11-14:** Read-only baseline and evaluation selection/scoring protocol accepted. Nine original HTML hashes verified, three private SQLite backups healthy, 59 source assertions checked, 485 known IDs excluded for future fresh-source selection. No new ads or local model calls were made; 6–8 unseen evaluation ads have NOT been captured. B1 design is next. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 
 No B1–B6 implementation is authorized merely by adding this plan to the
 repository; execute each bounded gate from a separate branch with its specified

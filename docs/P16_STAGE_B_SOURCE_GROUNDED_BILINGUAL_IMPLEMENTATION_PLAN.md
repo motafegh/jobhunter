@@ -2,10 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** APPROVED DIRECTION / IMPLEMENTATION PLAN; **implementation NOT STARTED**, no new semantic contract promoted
+**Disposition:** Stage B focused plan active; B0 baseline/protocol accepted 2026-11-14; **B1 contract design NEXT**, no new semantic/runtime contract promoted
 **Current accepted baseline:** main `8eded9e15949fc34a041984a90e40d930f91f6fd` (Stage A passive evidence identity accepted)
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
+**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 NEXT. B0 record: §docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 
@@ -252,7 +253,7 @@ resume bounded P2.3 capability-expectation experiment as separately authorized
 - Time/budget: no promise of fixed calendar delivery or background execution; measure real call costs and elapsed time, maintain capped trial budgets.
 - **Stop / redirect** if critical source errors persist after justified corrective revision, if input source provenance cannot be established, if a fresh verification set is unavailable, if an unauthorized data mutation is required, or if additional complexity has no demonstrated job-understanding benefit. Keep the safe brief if it is useful, defer unreliable durable inference.
 
-**Next executable task:** create the B0 baseline + source-exact test/adjudication matrix and B1 contract examples/ADR in a new branch from current main. Implement no new model prompt, translation schema, public routing or database migration before those decision artifacts pass review.
+**Next executable task after B0 acceptance (2026-11-14):** implement the B1 typed contract/ADR design on a separate branch, using the frozen B0 private snapshots, safe evaluation protocol, and A1 source-exact reference. No B2 classifier, model prompt, public routing, translation schema or database migration before B1 acceptance. B0 captured **zero** unseen jobs; B5 must obtain and source-review the predeclared 6–8 new cases.
 
 ---
 

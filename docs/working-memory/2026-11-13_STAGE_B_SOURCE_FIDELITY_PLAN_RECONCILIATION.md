@@ -6,6 +6,8 @@
 **Base accepted main when drafted:** `8eded9e15949fc34a041984a90e40d930f91f6fd`
 **Planning decision:** B0 is next; B1–B6 remain conditional on their gates. P2.3 capability-expectation idea moves after Stage B source-fidelity qualification.
 
+**November 14 execution supersession:** B0 is now PASS for frozen baseline/selection protocol and B1 contract/ADR is next. The historical B0-next steps below describe the prior planning decision, not current status. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`. No Stage B runtime behavior has changed.
+
 ## 1. Evidence used, with authority and exposure distinguished
 
 | Evidence/owner | What was actually established | Planning consequence |
