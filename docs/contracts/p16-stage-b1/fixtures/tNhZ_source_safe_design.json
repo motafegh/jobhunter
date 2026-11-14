@@ -1,0 +1,212 @@
+{
+  "alignments": [
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "llm_familiarity_optional",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 1,
+      "translation_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "ai_feature_duty",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 1,
+      "translation_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "hours_by_agreement",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 1,
+      "translation_sha256": "7d4f6f1fefb28d7ad29ff500c77b736a189560ad89c4eb524dd434165c744060"
+    }
+  ],
+  "authority": "candidate_only_no_downstream_reuse",
+  "brief": {
+    "analysis_outcome": "not_run",
+    "downstream_authority": "none",
+    "selected_item_ids": [],
+    "state": "candidate_only",
+    "unresolved_item_ids": []
+  },
+  "conflicts": [
+    {
+      "item_id_a": "llm_familiarity_optional",
+      "item_id_b": "board_llm_tag",
+      "resolution": "preserve_both_explicit_employer_wording",
+      "type": "board_vs_employer_strength"
+    },
+    {
+      "item_id_a": "hours_by_agreement",
+      "item_id_b": "board_fulltime",
+      "resolution": "preserve_both_explicit_employer_wording",
+      "type": "board_vs_employer_arrangement"
+    }
+  ],
+  "contract_version": "jobhunter-stage-b1-source-evidence-bundle-draft-v1",
+  "eligibility_graphs": [],
+  "items": [
+    {
+      "item_id": "llm_familiarity_optional",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "preferred",
+        "qualifier_status": "negative_explicit",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "d27692cabd61dd8d4c4f43647594476e8d8868f4693eca9ee1d71aaa5a29c45d",
+        "char_end": 1226,
+        "char_start": 1134,
+        "field_path": "description",
+        "field_sha256": "bc2499fff5cf4f40de21287aa3b2f060c4875faed2e22ac04261de0d0a27c2ca",
+        "kind": "original_description_span",
+        "text_sha256": "4f23713f22da6218ad04194df41f214db9b5183de44b0ddd29b36dfa928eae63"
+      }
+    },
+    {
+      "item_id": "ai_feature_duty",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_duty",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "d740c065c03be09c6e9b1f3b9c8398b1f02cf142c29dd11d9674caf268a89744",
+        "char_end": 824,
+        "char_start": 780,
+        "field_path": "description",
+        "field_sha256": "bc2499fff5cf4f40de21287aa3b2f060c4875faed2e22ac04261de0d0a27c2ca",
+        "kind": "original_description_span",
+        "text_sha256": "72194acacadf325e82593e06a7e7c30d441cf71d7978bef10621b34776de3f3e"
+      }
+    },
+    {
+      "item_id": "hours_by_agreement",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_arrangement",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "953883bd0a05598939f465c5b828d81aa8c8852dfdec2c22dcdb1a9c3df7dcef",
+        "char_end": 1581,
+        "char_start": 1541,
+        "field_path": "description",
+        "field_sha256": "bc2499fff5cf4f40de21287aa3b2f060c4875faed2e22ac04261de0d0a27c2ca",
+        "kind": "original_description_span",
+        "text_sha256": "ab3028ae98b1f0a669a07359a19f048199aa134a9828f1de2f74988760215b6d"
+      }
+    },
+    {
+      "item_id": "board_llm_tag",
+      "meaning": {
+        "basis": "board_metadata_only",
+        "category": "candidate_qualification",
+        "employer_strength": "unresolved",
+        "qualifier_status": "unresolved",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "field_json_sha256": "243b2d3fc286bb43bbd4a3e3c309c0899268a2629abeb454d4cae70569fb1619",
+        "field_path": "skills",
+        "kind": "structured_board_value",
+        "selected_value_json_sha256": "64d19b524189a445d0d7d19edb5cf29451577eb25bc5e60da1c896ba6378c56d",
+        "selector": "/skills/3"
+      }
+    },
+    {
+      "item_id": "board_fulltime",
+      "meaning": {
+        "basis": "board_metadata_only",
+        "category": "work_arrangement",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "field_json_sha256": "e841c48b360a24ccdf19cb1b51d606af04126aadb8b752acabe80e3415b06e93",
+        "field_path": "employment_type",
+        "kind": "structured_board_value",
+        "selected_value_json_sha256": "e841c48b360a24ccdf19cb1b51d606af04126aadb8b752acabe80e3415b06e93",
+        "selector": "/employment_type"
+      }
+    }
+  ],
+  "review_events": [
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "llm_familiarity_optional_src",
+      "evidence_digest": "4f23713f22da6218ad04194df41f214db9b5183de44b0ddd29b36dfa928eae63",
+      "finding": "valid",
+      "item_id": "llm_familiarity_optional",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "llm_familiarity_optional_sem",
+      "evidence_digest": "4f23713f22da6218ad04194df41f214db9b5183de44b0ddd29b36dfa928eae63",
+      "finding": "assistant_checked",
+      "item_id": "llm_familiarity_optional",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "ai_feature_duty_src",
+      "evidence_digest": "72194acacadf325e82593e06a7e7c30d441cf71d7978bef10621b34776de3f3e",
+      "finding": "valid",
+      "item_id": "ai_feature_duty",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "ai_feature_duty_sem",
+      "evidence_digest": "72194acacadf325e82593e06a7e7c30d441cf71d7978bef10621b34776de3f3e",
+      "finding": "assistant_checked",
+      "item_id": "ai_feature_duty",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "hours_by_agreement_src",
+      "evidence_digest": "ab3028ae98b1f0a669a07359a19f048199aa134a9828f1de2f74988760215b6d",
+      "finding": "valid",
+      "item_id": "hours_by_agreement",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "hours_by_agreement_sem",
+      "evidence_digest": "ab3028ae98b1f0a669a07359a19f048199aa134a9828f1de2f74988760215b6d",
+      "finding": "assistant_checked",
+      "item_id": "hours_by_agreement",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    }
+  ],
+  "source_version": {
+    "job_detail_version_id": 1,
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+    "source_job_id": "tNhZ"
+  }
+}

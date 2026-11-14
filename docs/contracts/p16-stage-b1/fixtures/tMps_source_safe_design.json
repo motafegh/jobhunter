@@ -1,0 +1,652 @@
+{
+  "alignments": [
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "middle_path",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "senior_path",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "middle_years",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "middle_domain_scope",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "middle_project",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "senior_years",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "senior_deployment",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "domain_LLM",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "domain_RAG",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "domain_Generative_AI",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "domain_Machine_Learning",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "domain_NLP",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "hybrid_hours",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 2,
+      "translation_sha256": "31c8d9462d936558e253136bbade91f8cf331140acdbd63a4d7f0b60edfdc609"
+    }
+  ],
+  "authority": "candidate_only_no_downstream_reuse",
+  "brief": {
+    "analysis_outcome": "not_run",
+    "downstream_authority": "none",
+    "selected_item_ids": [],
+    "state": "candidate_only",
+    "unresolved_item_ids": []
+  },
+  "conflicts": [
+    {
+      "item_id_a": "middle_path",
+      "item_id_b": "board_experience",
+      "resolution": "preserve_both_explicit_employer_wording",
+      "type": "board_vs_employer_experience"
+    }
+  ],
+  "contract_version": "jobhunter-stage-b1-source-evidence-bundle-draft-v1",
+  "eligibility_graphs": [
+    {
+      "basis_item_ids": [
+        "middle_path",
+        "senior_path",
+        "middle_domain_scope"
+      ],
+      "graph_id": "middle_or_senior",
+      "nodes": [
+        {
+          "children": [
+            "middle",
+            "senior"
+          ],
+          "id": "tracks",
+          "operator": "any_of"
+        },
+        {
+          "children": [
+            "m_years",
+            "domain_options",
+            "m_project"
+          ],
+          "id": "middle",
+          "operator": "all_of"
+        },
+        {
+          "children": [
+            "s_years",
+            "s_deployment"
+          ],
+          "id": "senior",
+          "operator": "all_of"
+        },
+        {
+          "children": [
+            "choice_0",
+            "choice_1",
+            "choice_2",
+            "choice_3",
+            "choice_4"
+          ],
+          "id": "domain_options",
+          "operator": "any_of"
+        },
+        {
+          "id": "m_years",
+          "item_id": "middle_years",
+          "operator": "item"
+        },
+        {
+          "id": "m_project",
+          "item_id": "middle_project",
+          "operator": "item"
+        },
+        {
+          "id": "s_years",
+          "item_id": "senior_years",
+          "operator": "item"
+        },
+        {
+          "id": "s_deployment",
+          "item_id": "senior_deployment",
+          "operator": "item"
+        },
+        {
+          "id": "choice_0",
+          "item_id": "domain_LLM",
+          "operator": "item"
+        },
+        {
+          "id": "choice_1",
+          "item_id": "domain_RAG",
+          "operator": "item"
+        },
+        {
+          "id": "choice_2",
+          "item_id": "domain_Generative_AI",
+          "operator": "item"
+        },
+        {
+          "id": "choice_3",
+          "item_id": "domain_Machine_Learning",
+          "operator": "item"
+        },
+        {
+          "id": "choice_4",
+          "item_id": "domain_NLP",
+          "operator": "item"
+        }
+      ],
+      "review_state": "assistant_checked_context_exposed",
+      "root_id": "tracks"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "middle_path",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "d9fb44914d8a892c7fdff2af6e7ab0e692c519547f8b2b9452a4a11ba88ab133",
+        "char_end": 1644,
+        "char_start": 1473,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "a6de907b1c4493889893e813e9c367aac97a836299a018e7cc18612c4ecc3865"
+      }
+    },
+    {
+      "item_id": "senior_path",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "9ed77fc6c2d83fd6e018dd81908e371278722f79c1d5bcec21c0bd3ea56f9a64",
+        "char_end": 1761,
+        "char_start": 1645,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "f7dc29bd85f6ffcb4967f436c02551321b03c750001bd6a3172e38d211663998"
+      }
+    },
+    {
+      "item_id": "middle_years",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "86f00418af1220b3e326783c4d1fa4b9053d5f3b5529e69fc02ca1bc791fb0bb",
+        "char_end": 1526,
+        "char_start": 1485,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "9d8b50b90c9e0fd30c159c894aef643243958175dc04448cb323d40c17bdd315"
+      }
+    },
+    {
+      "item_id": "middle_domain_scope",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "15cf8bf1afcb5c3f8f9e936450a495fea62395cdcef3e1d6cc06f0ca6d1e0309",
+        "char_end": 1613,
+        "char_start": 1537,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "aebe40ae44771baf08470262fd483b7d0d1e97033ed315b86cb9575524caae6a"
+      }
+    },
+    {
+      "item_id": "middle_project",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "963694dfe32186cced0b6bbfba67d95d7a1208d8a201dfb1d7b59bceaefc7024",
+        "char_end": 1644,
+        "char_start": 1616,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "243263b088194ed064c234331153eaa5ed9964f1264352894d0b5cd07a27e052"
+      }
+    },
+    {
+      "item_id": "senior_years",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "2eb4f10bf38ddf2067cb290675afb3456e6823fe3f1d5fb04286bc6fab5f31d3",
+        "char_end": 1699,
+        "char_start": 1657,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "20123be1857be77aa8406b1712e01a65cd94a80a1769f6ccfed45340eb16fce7"
+      }
+    },
+    {
+      "item_id": "senior_deployment",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "55d25dafed25717863ce2b22c3e21e680ee48ee7c55665538ecdda16da4452fb",
+        "char_end": 1761,
+        "char_start": 1701,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "745e9d529d4e75168b187e2f43c89597ec89ce934cf3fa068cb764f27f294873"
+      }
+    },
+    {
+      "item_id": "domain_LLM",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "anchor_id": "f8f3ef23e532c0a6f60235a45348bb8d7c7b453ad58ec783fa2858df7b7302ab",
+        "char_end": 1570,
+        "char_start": 1567,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "674900a77b798af1723bbfc31f01c199e4a1ea6f19aeff9791d6318ca12979b5"
+      }
+    },
+    {
+      "item_id": "domain_RAG",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "anchor_id": "68cbcfbf2a8f51c08938fdac73eceef45237297685ad0caca308e4dc69d56acb",
+        "char_end": 1575,
+        "char_start": 1572,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "f77fb5fc13e89e5de286469a9b2fdd328ecd27e1fa0779ae73b189e6c1d7bc7d"
+      }
+    },
+    {
+      "item_id": "domain_Generative_AI",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "anchor_id": "3983baa86704a95cd04ddda3df210c6c5a797df7e10860c791966d4033ff5c14",
+        "char_end": 1590,
+        "char_start": 1577,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "c95abd40e0f3ef3a5b859f4be7a7b112dab4d8f53fbf08f6636359b63ecfc677"
+      }
+    },
+    {
+      "item_id": "domain_Machine_Learning",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "anchor_id": "2e2e54dacda6b0e7f506d974febe178ac7727c5f30875b877597fc8510bf99ea",
+        "char_end": 1608,
+        "char_start": 1592,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "9316cd4d881e21d7494cada328686b37ef1ffda61a93354a0370c21d6f2f2c1e"
+      }
+    },
+    {
+      "item_id": "domain_NLP",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "anchor_id": "7ca5c39a56e9f37ddc2bf2062632aa4e79d96d9a358f6b63dd63abc31f53314d",
+        "char_end": 1613,
+        "char_start": 1610,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "b3782288b3dd220c397069a826fb0b4bbbf47ae9e42d856c1da731616fc5827d"
+      }
+    },
+    {
+      "item_id": "hybrid_hours",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_arrangement",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "f55a1405036cbfea6245cf64887aaffd5af9af37a832e61617df4a8f4c849fb4",
+        "char_end": 1829,
+        "char_start": 1774,
+        "field_path": "description",
+        "field_sha256": "2e6a3ff32253af2a24ef9c8705c2868b3f063092f077ddd74cbc779413cddf16",
+        "kind": "original_description_span",
+        "text_sha256": "c54159e999304dd9e3a6b1d0c11f5c55ef53487fe62c4bdf02e279c9ee165b76"
+      }
+    },
+    {
+      "item_id": "board_experience",
+      "meaning": {
+        "basis": "board_metadata_only",
+        "category": "candidate_qualification",
+        "employer_strength": "unresolved",
+        "qualifier_status": "unresolved",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "field_json_sha256": "c9de9dbb65b6cf927480fa98cc99f5d6ec4226e9ffa8f4fab88cac872c3f0958",
+        "field_path": "minimum_experience",
+        "kind": "structured_board_value",
+        "selected_value_json_sha256": "c9de9dbb65b6cf927480fa98cc99f5d6ec4226e9ffa8f4fab88cac872c3f0958",
+        "selector": "/minimum_experience"
+      }
+    }
+  ],
+  "review_events": [
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "middle_path_src",
+      "evidence_digest": "a6de907b1c4493889893e813e9c367aac97a836299a018e7cc18612c4ecc3865",
+      "finding": "valid",
+      "item_id": "middle_path",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "middle_path_sem",
+      "evidence_digest": "a6de907b1c4493889893e813e9c367aac97a836299a018e7cc18612c4ecc3865",
+      "finding": "assistant_checked",
+      "item_id": "middle_path",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "senior_path_src",
+      "evidence_digest": "f7dc29bd85f6ffcb4967f436c02551321b03c750001bd6a3172e38d211663998",
+      "finding": "valid",
+      "item_id": "senior_path",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "senior_path_sem",
+      "evidence_digest": "f7dc29bd85f6ffcb4967f436c02551321b03c750001bd6a3172e38d211663998",
+      "finding": "assistant_checked",
+      "item_id": "senior_path",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "middle_years_src",
+      "evidence_digest": "9d8b50b90c9e0fd30c159c894aef643243958175dc04448cb323d40c17bdd315",
+      "finding": "valid",
+      "item_id": "middle_years",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "middle_years_sem",
+      "evidence_digest": "9d8b50b90c9e0fd30c159c894aef643243958175dc04448cb323d40c17bdd315",
+      "finding": "assistant_checked",
+      "item_id": "middle_years",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "middle_domain_scope_src",
+      "evidence_digest": "aebe40ae44771baf08470262fd483b7d0d1e97033ed315b86cb9575524caae6a",
+      "finding": "valid",
+      "item_id": "middle_domain_scope",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "middle_domain_scope_sem",
+      "evidence_digest": "aebe40ae44771baf08470262fd483b7d0d1e97033ed315b86cb9575524caae6a",
+      "finding": "assistant_checked",
+      "item_id": "middle_domain_scope",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "middle_project_src",
+      "evidence_digest": "243263b088194ed064c234331153eaa5ed9964f1264352894d0b5cd07a27e052",
+      "finding": "valid",
+      "item_id": "middle_project",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "middle_project_sem",
+      "evidence_digest": "243263b088194ed064c234331153eaa5ed9964f1264352894d0b5cd07a27e052",
+      "finding": "assistant_checked",
+      "item_id": "middle_project",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "senior_years_src",
+      "evidence_digest": "20123be1857be77aa8406b1712e01a65cd94a80a1769f6ccfed45340eb16fce7",
+      "finding": "valid",
+      "item_id": "senior_years",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "senior_years_sem",
+      "evidence_digest": "20123be1857be77aa8406b1712e01a65cd94a80a1769f6ccfed45340eb16fce7",
+      "finding": "assistant_checked",
+      "item_id": "senior_years",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "senior_deployment_src",
+      "evidence_digest": "745e9d529d4e75168b187e2f43c89597ec89ce934cf3fa068cb764f27f294873",
+      "finding": "valid",
+      "item_id": "senior_deployment",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "senior_deployment_sem",
+      "evidence_digest": "745e9d529d4e75168b187e2f43c89597ec89ce934cf3fa068cb764f27f294873",
+      "finding": "assistant_checked",
+      "item_id": "senior_deployment",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "hybrid_hours_src",
+      "evidence_digest": "c54159e999304dd9e3a6b1d0c11f5c55ef53487fe62c4bdf02e279c9ee165b76",
+      "finding": "valid",
+      "item_id": "hybrid_hours",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "hybrid_hours_sem",
+      "evidence_digest": "c54159e999304dd9e3a6b1d0c11f5c55ef53487fe62c4bdf02e279c9ee165b76",
+      "finding": "assistant_checked",
+      "item_id": "hybrid_hours",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    }
+  ],
+  "source_version": {
+    "job_detail_version_id": 2,
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+    "source_job_id": "tMps"
+  }
+}

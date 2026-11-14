@@ -1,0 +1,706 @@
+{
+  "$defs": {
+    "alignment": {
+      "additionalProperties": false,
+      "properties": {
+        "meaning_review": {
+          "enum": [
+            "unreviewed",
+            "assistant_checked",
+            "independently_checked",
+            "contradicted"
+          ]
+        },
+        "source_item_id": {
+          "$ref": "#/$defs/id"
+        },
+        "state": {
+          "enum": [
+            "native_english_exact",
+            "source_bound_translation_candidate",
+            "legacy_field_only_unaligned",
+            "semantic_mismatch",
+            "unresolved"
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/target"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "translation_artifact_id": {
+          "minimum": 1,
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "translation_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "source_item_id",
+        "state",
+        "translation_artifact_id",
+        "translation_sha256",
+        "target",
+        "meaning_review"
+      ],
+      "type": "object"
+    },
+    "board_value": {
+      "additionalProperties": false,
+      "properties": {
+        "field_json_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "field_path": {
+          "enum": [
+            "skills",
+            "minimum_experience",
+            "education",
+            "employment_type",
+            "salary",
+            "location",
+            "job_category",
+            "gender",
+            "military_service"
+          ]
+        },
+        "kind": {
+          "const": "structured_board_value"
+        },
+        "selected_value_json_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "selector": {
+          "minLength": 2,
+          "pattern": "^/[^ ]+$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "field_path",
+        "selector",
+        "field_json_sha256",
+        "selected_value_json_sha256"
+      ],
+      "type": "object"
+    },
+    "brief": {
+      "additionalProperties": false,
+      "properties": {
+        "analysis_outcome": {
+          "enum": [
+            "not_run",
+            "full_candidate",
+            "partial_candidate",
+            "failed",
+            "timed_out"
+          ]
+        },
+        "downstream_authority": {
+          "const": "none"
+        },
+        "selected_item_ids": {
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "state": {
+          "const": "candidate_only"
+        },
+        "unresolved_item_ids": {
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "state",
+        "selected_item_ids",
+        "unresolved_item_ids",
+        "analysis_outcome",
+        "downstream_authority"
+      ],
+      "type": "object"
+    },
+    "conflict": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id_a": {
+          "$ref": "#/$defs/id"
+        },
+        "item_id_b": {
+          "$ref": "#/$defs/id"
+        },
+        "resolution": {
+          "enum": [
+            "preserve_both_explicit_employer_wording",
+            "unresolved",
+            "defer_for_review"
+          ]
+        },
+        "type": {
+          "enum": [
+            "board_vs_employer_strength",
+            "board_vs_employer_arrangement",
+            "board_vs_employer_experience",
+            "board_vs_employer_compensation",
+            "incompatible_source_statement",
+            "possible_duplicate"
+          ]
+        }
+      },
+      "required": [
+        "item_id_a",
+        "item_id_b",
+        "type",
+        "resolution"
+      ],
+      "type": "object"
+    },
+    "description_span": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_id": {
+          "$ref": "#/$defs/sha"
+        },
+        "char_end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "char_start": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "field_path": {
+          "const": "description"
+        },
+        "field_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "kind": {
+          "const": "original_description_span"
+        },
+        "text_sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      },
+      "required": [
+        "kind",
+        "anchor_id",
+        "field_path",
+        "field_sha256",
+        "text_sha256",
+        "char_start",
+        "char_end"
+      ],
+      "type": "object"
+    },
+    "graph": {
+      "additionalProperties": false,
+      "properties": {
+        "basis_item_ids": {
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "graph_id": {
+          "$ref": "#/$defs/id"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/node"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "review_state": {
+          "enum": [
+            "candidate",
+            "assistant_checked_context_exposed",
+            "independent_checked",
+            "rejected"
+          ]
+        },
+        "root_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "graph_id",
+        "root_id",
+        "nodes",
+        "review_state",
+        "basis_item_ids"
+      ],
+      "type": "object"
+    },
+    "id": {
+      "maxLength": 128,
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_:-]+$",
+      "type": "string"
+    },
+    "item": {
+      "additionalProperties": false,
+      "properties": {
+        "item_id": {
+          "$ref": "#/$defs/id"
+        },
+        "meaning": {
+          "$ref": "#/$defs/meaning"
+        },
+        "semantic_review": {
+          "enum": [
+            "candidate_unreviewed",
+            "assistant_checked_context_exposed",
+            "independent_source_checked",
+            "rejected"
+          ]
+        },
+        "source_ref": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/description_span"
+            },
+            {
+              "$ref": "#/$defs/board_value"
+            }
+          ]
+        }
+      },
+      "required": [
+        "item_id",
+        "source_ref",
+        "meaning",
+        "semantic_review"
+      ],
+      "type": "object"
+    },
+    "meaning": {
+      "additionalProperties": false,
+      "properties": {
+        "basis": {
+          "enum": [
+            "explicit_original_wording",
+            "original_section_context",
+            "candidate_semantic_inference",
+            "board_metadata_only",
+            "unresolved"
+          ]
+        },
+        "category": {
+          "enum": [
+            "work_duty",
+            "candidate_qualification",
+            "behavioral_expectation",
+            "work_arrangement",
+            "compensation",
+            "benefit",
+            "application_instruction",
+            "context",
+            "unresolved"
+          ]
+        },
+        "concept_label": {
+          "maxLength": 160,
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employer_strength": {
+          "enum": [
+            "required",
+            "preferred",
+            "stated_expectation",
+            "not_applicable",
+            "unresolved"
+          ]
+        },
+        "qualifier_status": {
+          "enum": [
+            "positive_explicit",
+            "negative_explicit",
+            "not_applicable",
+            "unresolved"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "standalone",
+            "alternative_path",
+            "chosen_option",
+            "not_applicable"
+          ]
+        }
+      },
+      "required": [
+        "category",
+        "employer_strength",
+        "basis",
+        "qualifier_status",
+        "scope"
+      ],
+      "type": "object"
+    },
+    "node": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "enum": [
+                  "all_of",
+                  "any_of"
+                ]
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "item_id"
+              ]
+            },
+            "required": [
+              "children"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "operator": {
+                "const": "item"
+              }
+            }
+          },
+          "then": {
+            "not": {
+              "required": [
+                "children"
+              ]
+            },
+            "required": [
+              "item_id"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "children": {
+          "items": {
+            "$ref": "#/$defs/id"
+          },
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "item_id": {
+          "$ref": "#/$defs/id"
+        },
+        "operator": {
+          "enum": [
+            "all_of",
+            "any_of",
+            "item"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "operator"
+      ],
+      "type": "object"
+    },
+    "review_event": {
+      "additionalProperties": false,
+      "properties": {
+        "dimension": {
+          "enum": [
+            "original_source_integrity",
+            "translation_association",
+            "linguistic_modality",
+            "semantic_classification",
+            "downstream_authorization"
+          ]
+        },
+        "event_id": {
+          "$ref": "#/$defs/id"
+        },
+        "evidence_digest": {
+          "$ref": "#/$defs/sha"
+        },
+        "finding": {
+          "enum": [
+            "valid",
+            "invalid",
+            "unreviewed",
+            "assistant_checked",
+            "independently_checked",
+            "contradicted",
+            "needs_clarification",
+            "not_authorized"
+          ]
+        },
+        "item_id": {
+          "$ref": "#/$defs/id"
+        },
+        "previous_event_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reviewer_kind": {
+          "enum": [
+            "deterministic_verifier",
+            "assistant_prior_context_exposed",
+            "independent_human",
+            "owner"
+          ]
+        }
+      },
+      "required": [
+        "event_id",
+        "item_id",
+        "dimension",
+        "finding",
+        "reviewer_kind",
+        "evidence_digest",
+        "previous_event_id"
+      ],
+      "type": "object"
+    },
+    "sha": {
+      "pattern": "^[a-f0-9]{64}$",
+      "type": "string"
+    },
+    "source_version": {
+      "additionalProperties": false,
+      "properties": {
+        "job_detail_version_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "parser_version": {
+          "const": "jobinja-detail-v2"
+        },
+        "semantic_sha256": {
+          "$ref": "#/$defs/sha"
+        },
+        "source_job_id": {
+          "$ref": "#/$defs/id"
+        }
+      },
+      "required": [
+        "source_job_id",
+        "job_detail_version_id",
+        "semantic_sha256",
+        "parser_version"
+      ],
+      "type": "object"
+    },
+    "target": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "native_exact_v2"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "translation_schema_version": {
+                "const": "english-projection-v2"
+              }
+            },
+            "required": [
+              "translation_artifact_id",
+              "translation_schema_version"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_kind": {
+                "const": "source_bound_item_output"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "provider_name",
+              "provider_model",
+              "prompt_version"
+            ]
+          }
+        }
+      ],
+      "properties": {
+        "prompt_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "provider_model": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "provider_name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "target_kind": {
+          "enum": [
+            "native_exact_v2",
+            "source_bound_item_output"
+          ]
+        },
+        "target_language": {
+          "const": "en"
+        },
+        "target_span": {
+          "$ref": "#/$defs/target_span"
+        },
+        "translation_artifact_id": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "translation_schema_version": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "translation_sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      },
+      "required": [
+        "target_kind",
+        "target_language",
+        "translation_sha256",
+        "target_span"
+      ],
+      "type": "object"
+    },
+    "target_span": {
+      "additionalProperties": false,
+      "properties": {
+        "char_end": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "char_start": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "text_sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      },
+      "required": [
+        "char_start",
+        "char_end",
+        "text_sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "urn:jobhunter:stage-b1:source-evidence-bundle-draft-v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "description": "Not a JobHunter production analysis artifact, API route, or migration. Excludes raw employer text and stores exact hashes/anchors.",
+  "properties": {
+    "alignments": {
+      "items": {
+        "$ref": "#/$defs/alignment"
+      },
+      "type": "array"
+    },
+    "authority": {
+      "const": "candidate_only_no_downstream_reuse"
+    },
+    "brief": {
+      "$ref": "#/$defs/brief"
+    },
+    "conflicts": {
+      "items": {
+        "$ref": "#/$defs/conflict"
+      },
+      "type": "array"
+    },
+    "contract_version": {
+      "const": "jobhunter-stage-b1-source-evidence-bundle-draft-v1"
+    },
+    "eligibility_graphs": {
+      "items": {
+        "$ref": "#/$defs/graph"
+      },
+      "type": "array"
+    },
+    "items": {
+      "items": {
+        "$ref": "#/$defs/item"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "review_events": {
+      "items": {
+        "$ref": "#/$defs/review_event"
+      },
+      "type": "array"
+    },
+    "source_version": {
+      "$ref": "#/$defs/source_version"
+    }
+  },
+  "required": [
+    "contract_version",
+    "authority",
+    "source_version",
+    "items",
+    "alignments",
+    "eligibility_graphs",
+    "conflicts",
+    "review_events",
+    "brief"
+  ],
+  "title": "Stage B1 source-owned bilingual evidence candidate (DESIGN ONLY)",
+  "type": "object"
+}

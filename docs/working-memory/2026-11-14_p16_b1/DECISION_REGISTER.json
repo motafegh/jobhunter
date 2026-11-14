@@ -1,0 +1,140 @@
+{
+  "B1_contracts_persisted_to_production": false,
+  "B1_model_outputs_accepted": 0,
+  "B1_new_LLM_calls": 0,
+  "B1_new_source_acquisitions": 0,
+  "accepted_downstream_changed": false,
+  "additional_review_gate_negative_tests": 5,
+  "architecture_adr": "docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md",
+  "baseline_main_commit": "73b170ced75d1ee424cf5d8a90f4d47b5ea1c893",
+  "contract": "jobhunter-p16-stage-b1-contract-decision-register-v1",
+  "current_P16_router_changed": false,
+  "date": "2026-11-14",
+  "decision_count": 16,
+  "decisions": [
+    {
+      "disposition": "selected",
+      "rationale": "Stage A exact original description anchor reused; no re-keyed research span identifiers",
+      "topic": "source_item_identity"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Separate JSON Pointer field value reference, frozen source semantic SHA and canonical JSON field/value hashes",
+      "topic": "structured_board_source_identity"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Exact, possibly overlapping original spans and explicit qualifier context; no invented heading or forced sentence split",
+      "topic": "source_item_split"
+    },
+    {
+      "disposition": "rejected",
+      "rationale": "Board tags alone may not produce mandatory employer qualifications",
+      "topic": "board_metadata_employer_obligation"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Separate category, required/preferred/unresolved strength, negative cue and conditional alternative scope",
+      "topic": "candidate_category_strength_scope"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Source-supported DAG with any_of and all_of, leaves bound to conditional qualification items and qualifier anchors",
+      "topic": "eligibility_boolean_graph"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Many-to-many item relations, source-bound candidate separate from linguistic meaning check; legacy v2 field remains item-unmapped",
+      "topic": "bilingual_alignment"
+    },
+    {
+      "disposition": "rejected",
+      "rationale": "Persian original evidence cannot be injected into unversioned English-only v30 semantic artifact",
+      "topic": "historic_v30_source_injection"
+    },
+    {
+      "disposition": "not_promoted",
+      "rationale": "Existing accepted row does not prove independent review of each employer fact",
+      "topic": "historical_v9_mechanical_acceptance"
+    },
+    {
+      "disposition": "selected",
+      "rationale": "Orthogonal original integrity, target relation, linguistic fidelity, semantic reviewer provenance and downstream permission",
+      "topic": "review_authority"
+    },
+    {
+      "disposition": "deferred",
+      "rationale": "No B1 database migration; B6 requires separate source-identity/rollback approval",
+      "topic": "persistent_sqlite_migration"
+    },
+    {
+      "disposition": "deferred",
+      "rationale": "New projection version only if B3 proves necessary; v2 artifact immutability protected",
+      "topic": "english_projection_v3"
+    },
+    {
+      "disposition": "conditional_future",
+      "rationale": "Candidate-only source-anchored view, unknowns separate, no Market/Capability/Work/Registry reuse",
+      "topic": "candidate_job_brief"
+    },
+    {
+      "disposition": "not_required",
+      "rationale": "Owner delegated routine review; assistant prior-context exposure must be labeled and not impersonate blind human",
+      "topic": "owner_review_per_job"
+    },
+    {
+      "disposition": "required_later",
+      "rationale": "B5 must use frozen B0 6-8 job protocol, not the exposed A1 development examples",
+      "topic": "fresh_unseen_validation"
+    },
+    {
+      "disposition": "planned_next",
+      "rationale": "Original item interpretation and board-field conflict candidate only; no provider calls by default",
+      "topic": "B2_first_slice"
+    }
+  ],
+  "eligibility_truth_graphs": 2,
+  "exposed_cases": [
+    "tNhZ",
+    "tMps",
+    "tNDx",
+    "tMjm"
+  ],
+  "exposed_original_span_refs": 30,
+  "fixture_case_count": 4,
+  "fixture_index": "docs/contracts/p16-stage-b1/fixtures/INDEX.json",
+  "fixture_index_sha256": "493ee322d30aca1fc6afb583a4a62d02d68d3dc0b1fc46807438b729f68784ab",
+  "fresh_unseen_evaluation_count": 0,
+  "gate": "B1",
+  "human_blind_review_established": false,
+  "json_pointer_hardening": "Reject noncanonical array indices and malformed RFC6901 escape sequences",
+  "known_limitations": [
+    "B1 schema proves shape/reference invariants, not employer-intent interpretation",
+    "real A1 source examples are exposed and assistant-reviewed with prior context, not holdouts",
+    "legacy English projection v2 still does not establish item translation meaning",
+    "all source-bound translation targets in B1 examples are synthetic design constructs only",
+    "B2 source segmentation quality, B3 local model fidelity, B4 usefulness, B5 fresh evaluation and B6 promotion not implemented"
+  ],
+  "local_focused_test_count": 39,
+  "local_full_suite_test_count": 946,
+  "local_git_diff_check": "passed",
+  "local_pip_check": "passed",
+  "local_ruff": "passed",
+  "next_gate_after_B1": "B2",
+  "no_public_source_text_exposed": true,
+  "private_B0_exact_source_identity_verified": true,
+  "private_B0_exposed_original_snapshot_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "private_fixture_generator_ignored": true,
+  "production_english_prompt": "job-analysis-english-v30",
+  "production_original_prompt": "job-analysis-original-v9",
+  "production_schema_or_migration_changed": false,
+  "review_dimension_hardening": "Semantic classification approval requires review event with dimension semantic_classification; source integrity or translation association events cannot substitute",
+  "schema": "docs/contracts/p16-stage-b1/source_evidence_bundle.schema.json",
+  "schema_sha256": "8304114a82076405aa0cd11227fb44fb2cde109efdadfae18018cb89a3c8d83a",
+  "source_safe_validation_helper": "scripts/validate_stage_b1_design.py",
+  "status": "contract_architecture_design_passed_locally_CI_pending",
+  "structured_board_refs": 5,
+  "synthetic_truth_table_cases": 12,
+  "test_command": "python -m pytest -q -W error tests/test_p16_stage_b1_contract_design.py",
+  "test_status": "39 focused tests and 946 full warnings-as-errors tests passed locally; Ruff and dependency checks clean; PR CI pending"
+}

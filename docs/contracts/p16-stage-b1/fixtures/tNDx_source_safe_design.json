@@ -1,0 +1,543 @@
+{
+  "alignments": [
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "edr_implementation",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "teamwork_optional",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "network_equivalence",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "certificate_or_knowledge",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "certificate",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "equivalent_knowledge",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "kaspersky_cert_unclear",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "government_client_unclear",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "remote_customer_support",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "salary_employer",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 4,
+      "translation_sha256": "9705ca9316b04083506db01de37bd7b5c588f9be018023767ffe2747aaadc039"
+    }
+  ],
+  "authority": "candidate_only_no_downstream_reuse",
+  "brief": {
+    "analysis_outcome": "not_run",
+    "downstream_authority": "none",
+    "selected_item_ids": [],
+    "state": "candidate_only",
+    "unresolved_item_ids": [
+      "kaspersky_cert_unclear",
+      "government_client_unclear"
+    ]
+  },
+  "conflicts": [
+    {
+      "item_id_a": "salary_employer",
+      "item_id_b": "salary_board",
+      "resolution": "preserve_both_explicit_employer_wording",
+      "type": "board_vs_employer_compensation"
+    }
+  ],
+  "contract_version": "jobhunter-stage-b1-source-evidence-bundle-draft-v1",
+  "eligibility_graphs": [
+    {
+      "basis_item_ids": [
+        "network_equivalence",
+        "certificate_or_knowledge"
+      ],
+      "graph_id": "certificate_or_equivalent",
+      "nodes": [
+        {
+          "children": [
+            "cert_path",
+            "knowledge_path"
+          ],
+          "id": "credential_choice",
+          "operator": "any_of"
+        },
+        {
+          "id": "cert_path",
+          "item_id": "certificate",
+          "operator": "item"
+        },
+        {
+          "id": "knowledge_path",
+          "item_id": "equivalent_knowledge",
+          "operator": "item"
+        }
+      ],
+      "review_state": "assistant_checked_context_exposed",
+      "root_id": "credential_choice"
+    }
+  ],
+  "items": [
+    {
+      "item_id": "edr_implementation",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_duty",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "9a11e70d83554370e2df2a1f48b92574adedac16df17945a45fb1e046ce743cd",
+        "char_end": 423,
+        "char_start": 311,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "7aad50eec656e74cb0b1553dca0d0861933e172e6b033e54bda3b33c63c61745"
+      }
+    },
+    {
+      "item_id": "teamwork_optional",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "behavioral_expectation",
+        "employer_strength": "preferred",
+        "qualifier_status": "not_applicable",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "1c2d341438db101875c5dd6548ed330f89065d032477b1f6997d4954ffc82b65",
+        "char_end": 965,
+        "char_start": 905,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "5ee80862073de9130f078a85469214b78147178f2f475f6b2b880413e0f3e8d3"
+      }
+    },
+    {
+      "item_id": "network_equivalence",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "895ee592688fc24ae54c071319382a6123fe6c942d941f4ad3e2a98fedfa6ab5",
+        "char_end": 773,
+        "char_start": 706,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "80f2d7e0332e9df9f6ba27fb044e64386aa73582332aac06a6893a0973857315"
+      }
+    },
+    {
+      "item_id": "certificate_or_knowledge",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "alternative_path"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "a4777c6239901215e45f76baea5ba536918b9443db2d2df33de213daf7ef9a97",
+        "char_end": 772,
+        "char_start": 743,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "45c9a4732cc522578377ae9f4052c863bcf288e3fe6bc1db455ddb968f396949"
+      }
+    },
+    {
+      "item_id": "certificate",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "4f55d7cfcfd215e97361d5032114aa0cdf9daa8755d49ea21e7ca41497199261",
+        "char_end": 758,
+        "char_start": 749,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "1b902fe02f82e5f4fea86869e89d7c85498520ebdee85f6bc4ca1bdedfef5ff5"
+      }
+    },
+    {
+      "item_id": "equivalent_knowledge",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "chosen_option"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "1d97d723322cc714415eac1dd970b737a905cd770f3fd2ee45ea9a1e656f4287",
+        "char_end": 772,
+        "char_start": 762,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "fcdb6f3e41b6679aacc2f6d6290097503d7ccda9494d59a0c357a2460921dc9f"
+      }
+    },
+    {
+      "item_id": "kaspersky_cert_unclear",
+      "meaning": {
+        "basis": "unresolved",
+        "category": "candidate_qualification",
+        "employer_strength": "unresolved",
+        "qualifier_status": "unresolved",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "04a6f19b33fdf83acfe562e6276aa1c22de00e1d0cf62bec40bb7c1cbafa43f1",
+        "char_end": 997,
+        "char_start": 968,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "ae29a2f4251b190a71718397bad605cd38be93516edafb48cd6685fbb5643901"
+      }
+    },
+    {
+      "item_id": "government_client_unclear",
+      "meaning": {
+        "basis": "unresolved",
+        "category": "candidate_qualification",
+        "employer_strength": "unresolved",
+        "qualifier_status": "unresolved",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "7f3f6417872ab4154e7509bcf5a9f627f479a42dc857ac4f07029149cd67426f",
+        "char_end": 1042,
+        "char_start": 1000,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "66b2c22c7e87aa74257c3b9f1d0d31d4b630a191c10a8f58ab53224cfe0b619c"
+      }
+    },
+    {
+      "item_id": "remote_customer_support",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_duty",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "157173957216ac3879f7541793336264616340c4cd70a9c25a34d0f607359900",
+        "char_end": 549,
+        "char_start": 485,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "e08d20b8330dde13affec27b7c10546599709b3ed5b6ff73e7e6255b3884732d"
+      }
+    },
+    {
+      "item_id": "salary_employer",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "compensation",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "52d6616dc95f36d7b2e1a9f5cbb867b5f12454b4943740b9e86041307db5516b",
+        "char_end": 1218,
+        "char_start": 1152,
+        "field_path": "description",
+        "field_sha256": "e9c9440e5e906a8a56d57379bdc4d02a8c5903edea575da728208d78233cfa7b",
+        "kind": "original_description_span",
+        "text_sha256": "d807bac66515674a418a562a7fabf28dda3212197a2e01f35ddd921a0670b69f"
+      }
+    },
+    {
+      "item_id": "salary_board",
+      "meaning": {
+        "basis": "board_metadata_only",
+        "category": "compensation",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "field_json_sha256": "415193b29457367c8667aa9d33861be04c1d8fad4daf37d35393240b7fe8b0a9",
+        "field_path": "salary",
+        "kind": "structured_board_value",
+        "selected_value_json_sha256": "415193b29457367c8667aa9d33861be04c1d8fad4daf37d35393240b7fe8b0a9",
+        "selector": "/salary"
+      }
+    }
+  ],
+  "review_events": [
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "edr_implementation_src",
+      "evidence_digest": "7aad50eec656e74cb0b1553dca0d0861933e172e6b033e54bda3b33c63c61745",
+      "finding": "valid",
+      "item_id": "edr_implementation",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "edr_implementation_sem",
+      "evidence_digest": "7aad50eec656e74cb0b1553dca0d0861933e172e6b033e54bda3b33c63c61745",
+      "finding": "assistant_checked",
+      "item_id": "edr_implementation",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "teamwork_optional_src",
+      "evidence_digest": "5ee80862073de9130f078a85469214b78147178f2f475f6b2b880413e0f3e8d3",
+      "finding": "valid",
+      "item_id": "teamwork_optional",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "teamwork_optional_sem",
+      "evidence_digest": "5ee80862073de9130f078a85469214b78147178f2f475f6b2b880413e0f3e8d3",
+      "finding": "assistant_checked",
+      "item_id": "teamwork_optional",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "network_equivalence_src",
+      "evidence_digest": "80f2d7e0332e9df9f6ba27fb044e64386aa73582332aac06a6893a0973857315",
+      "finding": "valid",
+      "item_id": "network_equivalence",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "network_equivalence_sem",
+      "evidence_digest": "80f2d7e0332e9df9f6ba27fb044e64386aa73582332aac06a6893a0973857315",
+      "finding": "assistant_checked",
+      "item_id": "network_equivalence",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "certificate_or_knowledge_src",
+      "evidence_digest": "45c9a4732cc522578377ae9f4052c863bcf288e3fe6bc1db455ddb968f396949",
+      "finding": "valid",
+      "item_id": "certificate_or_knowledge",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "certificate_or_knowledge_sem",
+      "evidence_digest": "45c9a4732cc522578377ae9f4052c863bcf288e3fe6bc1db455ddb968f396949",
+      "finding": "assistant_checked",
+      "item_id": "certificate_or_knowledge",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "certificate_src",
+      "evidence_digest": "1b902fe02f82e5f4fea86869e89d7c85498520ebdee85f6bc4ca1bdedfef5ff5",
+      "finding": "valid",
+      "item_id": "certificate",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "certificate_sem",
+      "evidence_digest": "1b902fe02f82e5f4fea86869e89d7c85498520ebdee85f6bc4ca1bdedfef5ff5",
+      "finding": "assistant_checked",
+      "item_id": "certificate",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "equivalent_knowledge_src",
+      "evidence_digest": "fcdb6f3e41b6679aacc2f6d6290097503d7ccda9494d59a0c357a2460921dc9f",
+      "finding": "valid",
+      "item_id": "equivalent_knowledge",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "equivalent_knowledge_sem",
+      "evidence_digest": "fcdb6f3e41b6679aacc2f6d6290097503d7ccda9494d59a0c357a2460921dc9f",
+      "finding": "assistant_checked",
+      "item_id": "equivalent_knowledge",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "kaspersky_cert_unclear_src",
+      "evidence_digest": "ae29a2f4251b190a71718397bad605cd38be93516edafb48cd6685fbb5643901",
+      "finding": "valid",
+      "item_id": "kaspersky_cert_unclear",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "kaspersky_cert_unclear_sem",
+      "evidence_digest": "ae29a2f4251b190a71718397bad605cd38be93516edafb48cd6685fbb5643901",
+      "finding": "assistant_checked",
+      "item_id": "kaspersky_cert_unclear",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "government_client_unclear_src",
+      "evidence_digest": "66b2c22c7e87aa74257c3b9f1d0d31d4b630a191c10a8f58ab53224cfe0b619c",
+      "finding": "valid",
+      "item_id": "government_client_unclear",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "government_client_unclear_sem",
+      "evidence_digest": "66b2c22c7e87aa74257c3b9f1d0d31d4b630a191c10a8f58ab53224cfe0b619c",
+      "finding": "assistant_checked",
+      "item_id": "government_client_unclear",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "remote_customer_support_src",
+      "evidence_digest": "e08d20b8330dde13affec27b7c10546599709b3ed5b6ff73e7e6255b3884732d",
+      "finding": "valid",
+      "item_id": "remote_customer_support",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "remote_customer_support_sem",
+      "evidence_digest": "e08d20b8330dde13affec27b7c10546599709b3ed5b6ff73e7e6255b3884732d",
+      "finding": "assistant_checked",
+      "item_id": "remote_customer_support",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "salary_employer_src",
+      "evidence_digest": "d807bac66515674a418a562a7fabf28dda3212197a2e01f35ddd921a0670b69f",
+      "finding": "valid",
+      "item_id": "salary_employer",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "salary_employer_sem",
+      "evidence_digest": "d807bac66515674a418a562a7fabf28dda3212197a2e01f35ddd921a0670b69f",
+      "finding": "assistant_checked",
+      "item_id": "salary_employer",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    }
+  ],
+  "source_version": {
+    "job_detail_version_id": 4,
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+    "source_job_id": "tNDx"
+  }
+}

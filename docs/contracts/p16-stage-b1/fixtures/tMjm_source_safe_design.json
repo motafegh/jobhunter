@@ -1,0 +1,227 @@
+{
+  "alignments": [
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "remote_option",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 5,
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "pentest_capability",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 5,
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "conscientiousness",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 5,
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b"
+    },
+    {
+      "meaning_review": "unreviewed",
+      "source_item_id": "salary_employer",
+      "state": "legacy_field_only_unaligned",
+      "target": null,
+      "translation_artifact_id": 5,
+      "translation_sha256": "6e59264113b1e7e2b5f2b1ac18106192d42bb439bca2ebd669a5e26275533a6b"
+    }
+  ],
+  "authority": "candidate_only_no_downstream_reuse",
+  "brief": {
+    "analysis_outcome": "not_run",
+    "downstream_authority": "none",
+    "selected_item_ids": [],
+    "state": "candidate_only",
+    "unresolved_item_ids": []
+  },
+  "conflicts": [],
+  "contract_version": "jobhunter-stage-b1-source-evidence-bundle-draft-v1",
+  "eligibility_graphs": [],
+  "items": [
+    {
+      "item_id": "remote_option",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "work_arrangement",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "cd4e80643c050912473e70566245481358d225c1df313ed2913015900cbf56ef",
+        "char_end": 569,
+        "char_start": 556,
+        "field_path": "description",
+        "field_sha256": "bfa0710f72614b1592593fb140f35bbfbcbb1c01850a8c45a2ab0621357195ef",
+        "kind": "original_description_span",
+        "text_sha256": "a91d5c100b8203a058e37e74e9f00e1c9d2e0967b6ab3c2bf1f47c52808dca1d"
+      }
+    },
+    {
+      "item_id": "pentest_capability",
+      "meaning": {
+        "basis": "original_section_context",
+        "category": "candidate_qualification",
+        "employer_strength": "required",
+        "qualifier_status": "not_applicable",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "9db90c224046c6e0659541de71fe98de7d826697a66d5552b9d730977f82268a",
+        "char_end": 428,
+        "char_start": 391,
+        "field_path": "description",
+        "field_sha256": "bfa0710f72614b1592593fb140f35bbfbcbb1c01850a8c45a2ab0621357195ef",
+        "kind": "original_description_span",
+        "text_sha256": "e4876084af0e6d7af2cef686233061763561baf0479b83588b37a1234cb38d0b"
+      }
+    },
+    {
+      "item_id": "conscientiousness",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "behavioral_expectation",
+        "employer_strength": "stated_expectation",
+        "qualifier_status": "not_applicable",
+        "scope": "standalone"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "ae80554669b0748e3ffa0ff773a74e0d2f58db0b743ebe7fe77a5400eeb61b21",
+        "char_end": 710,
+        "char_start": 700,
+        "field_path": "description",
+        "field_sha256": "bfa0710f72614b1592593fb140f35bbfbcbb1c01850a8c45a2ab0621357195ef",
+        "kind": "original_description_span",
+        "text_sha256": "677bc4feafdc7244c9677b4ef0b46802a7390021fcaa9f92e8b1b69225a3a434"
+      }
+    },
+    {
+      "item_id": "salary_employer",
+      "meaning": {
+        "basis": "explicit_original_wording",
+        "category": "compensation",
+        "employer_strength": "not_applicable",
+        "qualifier_status": "not_applicable",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "assistant_checked_context_exposed",
+      "source_ref": {
+        "anchor_id": "62c97419a3f56324fa8af3ba97173e27a88926a5f41ab642d6b4f477fd28b0fb",
+        "char_end": 804,
+        "char_start": 775,
+        "field_path": "description",
+        "field_sha256": "bfa0710f72614b1592593fb140f35bbfbcbb1c01850a8c45a2ab0621357195ef",
+        "kind": "original_description_span",
+        "text_sha256": "1b21d07feb744569d9ed7429427dca33839c52babdeb976938296888fb7a6297"
+      }
+    },
+    {
+      "item_id": "education_board",
+      "meaning": {
+        "basis": "board_metadata_only",
+        "category": "candidate_qualification",
+        "employer_strength": "unresolved",
+        "qualifier_status": "unresolved",
+        "scope": "not_applicable"
+      },
+      "semantic_review": "candidate_unreviewed",
+      "source_ref": {
+        "field_json_sha256": "4640dfbf2cd6a38062f9d899099157d36f47e824da42a1d7a379911f8d773dd8",
+        "field_path": "education",
+        "kind": "structured_board_value",
+        "selected_value_json_sha256": "4640dfbf2cd6a38062f9d899099157d36f47e824da42a1d7a379911f8d773dd8",
+        "selector": "/education"
+      }
+    }
+  ],
+  "review_events": [
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "remote_option_src",
+      "evidence_digest": "a91d5c100b8203a058e37e74e9f00e1c9d2e0967b6ab3c2bf1f47c52808dca1d",
+      "finding": "valid",
+      "item_id": "remote_option",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "remote_option_sem",
+      "evidence_digest": "a91d5c100b8203a058e37e74e9f00e1c9d2e0967b6ab3c2bf1f47c52808dca1d",
+      "finding": "assistant_checked",
+      "item_id": "remote_option",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "pentest_capability_src",
+      "evidence_digest": "e4876084af0e6d7af2cef686233061763561baf0479b83588b37a1234cb38d0b",
+      "finding": "valid",
+      "item_id": "pentest_capability",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "pentest_capability_sem",
+      "evidence_digest": "e4876084af0e6d7af2cef686233061763561baf0479b83588b37a1234cb38d0b",
+      "finding": "assistant_checked",
+      "item_id": "pentest_capability",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "conscientiousness_src",
+      "evidence_digest": "677bc4feafdc7244c9677b4ef0b46802a7390021fcaa9f92e8b1b69225a3a434",
+      "finding": "valid",
+      "item_id": "conscientiousness",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "conscientiousness_sem",
+      "evidence_digest": "677bc4feafdc7244c9677b4ef0b46802a7390021fcaa9f92e8b1b69225a3a434",
+      "finding": "assistant_checked",
+      "item_id": "conscientiousness",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    },
+    {
+      "dimension": "original_source_integrity",
+      "event_id": "salary_employer_src",
+      "evidence_digest": "1b21d07feb744569d9ed7429427dca33839c52babdeb976938296888fb7a6297",
+      "finding": "valid",
+      "item_id": "salary_employer",
+      "previous_event_id": null,
+      "reviewer_kind": "deterministic_verifier"
+    },
+    {
+      "dimension": "semantic_classification",
+      "event_id": "salary_employer_sem",
+      "evidence_digest": "1b21d07feb744569d9ed7429427dca33839c52babdeb976938296888fb7a6297",
+      "finding": "assistant_checked",
+      "item_id": "salary_employer",
+      "previous_event_id": null,
+      "reviewer_kind": "assistant_prior_context_exposed"
+    }
+  ],
+  "source_version": {
+    "job_detail_version_id": 5,
+    "parser_version": "jobinja-detail-v2",
+    "semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+    "source_job_id": "tMjm"
+  }
+}

@@ -2,7 +2,7 @@
 
 **Status:** Current translation/English-projection architecture guide  
 **Date:** 2026-08-21
-**Last reconciled:** 2026-11-13
+**Last reconciled:** 2026-11-14
 
 ## 1. Purpose
 
@@ -290,7 +290,7 @@ contract becomes accepted, it will be explicitly versioned, separately
 validated and routed through a later authorization; no Persian source text
 may silently appear as hidden English-v30 analysis evidence.
 
-**Status:** Plan adopted; B0 baseline and evaluation protocol accepted 2026-11-14, B1 contract/ADR design next; no new translation provider,
+**Status:** Plan adopted; B0 baseline and evaluation protocol accepted 2026-11-14, B1 contract/ADR design accepted 2026-11-14; B2 original-source candidate next, and B3 translation-fidelity work remains separate; no new translation provider,
 projection schema, P1.6 route or accepted translation record promoted.
 
 ---

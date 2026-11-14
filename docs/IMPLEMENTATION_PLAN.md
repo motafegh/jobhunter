@@ -2,7 +2,7 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-13
+**Last reconciled:** 2026-11-14
 
 **Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The formerly next candidate (November 11) was source-backed job-specific capability expectations; the November 13 source-fidelity findings now make Stage B the active next prerequisite. Capability-expectation work is retained but sequenced afterward. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
 
@@ -80,12 +80,14 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | Gate | Deliverable / acceptance owner | State |
 | --- | --- | --- |
 | B0 | Frozen baseline/source versions, exposed cases, new-cohort selection protocol, provider budget | PASS / 2026-11-14 |
-| B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | NEXT / NOT STARTED |
-| B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | PLANNED |
+| B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | DESIGN PASS / 2026-11-14 |
+| B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | NEXT / NOT STARTED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PLANNED |
 | B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | PLANNED |
 | B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
+
+**B1 closure 2026-11-14:** Source-item, board-value, obligation-scope, eligibility AND/OR, translation association and orthogonal reviewer authority contract design verified against four exposed A1 cases, 30 original text spans and 5 board references, including synthetic graph truth tables and negative reference tests. All production P1.6/currentness/database semantics remain unchanged. Read `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`; B2 original-source implementation is NEXT.
 
 **B0 closure 2026-11-14:** Read-only baseline and evaluation selection/scoring protocol accepted. Nine original HTML hashes verified, three private SQLite backups healthy, 59 source assertions checked, 485 known IDs excluded for future fresh-source selection. No new ads or local model calls were made; 6–8 unseen evaluation ads have NOT been captured. B1 design is next. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 

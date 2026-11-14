@@ -20,6 +20,18 @@
   "b0_production_model_calls": 0,
   "b0_safe_baseline_path": "docs/working-memory/2026-11-14_p16_b0/SAFE_BASELINE_METRICS.json",
   "b0_source_acquisition_calls": 0,
+  "b1_board_field_design_item_count": 5,
+  "b1_completed_on_date": "2026-11-14",
+  "b1_decision_register_path": "docs/working-memory/2026-11-14_p16_b1/DECISION_REGISTER.json",
+  "b1_design_ADR_path": "docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md",
+  "b1_design_exposed_case_count": 4,
+  "b1_independent_human_semantic_certification_established": false,
+  "b1_model_requests": 0,
+  "b1_new_job_source_requests": 0,
+  "b1_new_public_p16_contract_accepted": false,
+  "b1_schema_path": "docs/contracts/p16-stage-b1/source_evidence_bundle.schema.json",
+  "b1_source_anchored_design_item_count": 30,
+  "b1_source_exact_local_validation_passed": true,
   "baseline_main_commit": "8eded9e15949fc34a041984a90e40d930f91f6fd",
   "contract": "jobhunter-p16-stage-b-plan-gate-register-v1",
   "created_date": "2026-11-13",
@@ -55,9 +67,15 @@
       "exit_evidence": "item/alignment/obligation/review definitions; traceable alternatives; explicit persistence and rollout owners",
       "gate": "B1",
       "name": "versioned_contract_and_compatibility_ADR",
-      "report_path": null,
+      "report_path": "docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md",
       "source_version_sha256": null,
-      "status": "next_not_started"
+      "source_version_sha256_by_exposed_case": {
+        "tMjm": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+        "tMps": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+        "tNDx": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+        "tNhZ": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61"
+      },
+      "status": "passed_contract_architecture_design_only"
     },
     {
       "code_commit": null,
@@ -66,7 +84,7 @@
       "name": "original_item_and_board_metadata_semantics",
       "report_path": null,
       "source_version_sha256": null,
-      "status": "not_started"
+      "status": "next_not_started"
     },
     {
       "code_commit": null,
@@ -109,7 +127,7 @@
   "independently_evaluated_unseen_cases": 0,
   "manual_owner_review_all_jobs_required": false,
   "model_outcomes_exposed_not_general_reliability": true,
-  "next_gate": "B1",
+  "next_gate": "B2",
   "owner_a1_status": "assistant_review_completed_owner_partial_original_preserved",
   "plan_path": "docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
   "post_b_priority": "separately_gated_job_specific_capability_expectation_candidate",
@@ -118,7 +136,7 @@
   "reconciliation_path": "docs/working-memory/2026-11-13_STAGE_B_SOURCE_FIDELITY_PLAN_RECONCILIATION.md",
   "stage_a_status": "passive_source_identity_accepted_main",
   "stage_b_new_candidate_generated": false,
-  "status": "stage_b0_passed_b1_next_no_runtime_change",
+  "status": "stage_b0_and_b1_design_passed_b2_next_no_runtime_semantic_change",
   "unseen_cohort_target_size": [
     6,
     8

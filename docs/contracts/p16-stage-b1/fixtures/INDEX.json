@@ -1,0 +1,47 @@
+{
+  "contract": "jobhunter-stage-b1-exposed-source-design-example-index-v1",
+  "examples": [
+    {
+      "board_field_item_count": 2,
+      "eligibility_graph_count": 0,
+      "file": "docs/contracts/p16-stage-b1/fixtures/tNhZ_source_safe_design.json",
+      "job_id": "tNhZ",
+      "json_sha256": "f39bfd2f971bdab76fa5be9131cc5a71f6f68e97fe8b1f8a4f72bc39788672ae",
+      "original_item_count": 3,
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61"
+    },
+    {
+      "board_field_item_count": 1,
+      "eligibility_graph_count": 1,
+      "file": "docs/contracts/p16-stage-b1/fixtures/tMps_source_safe_design.json",
+      "job_id": "tMps",
+      "json_sha256": "486b7030293dd6c352beaf1c334e9f4f19cadfa7c0140fdea5603f578791c8a5",
+      "original_item_count": 13,
+      "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece"
+    },
+    {
+      "board_field_item_count": 1,
+      "eligibility_graph_count": 1,
+      "file": "docs/contracts/p16-stage-b1/fixtures/tNDx_source_safe_design.json",
+      "job_id": "tNDx",
+      "json_sha256": "e9676dbf13b2c23e8ca96ac93ece7d1f815503976c8df4cf1610423d6c2776b1",
+      "original_item_count": 10,
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963"
+    },
+    {
+      "board_field_item_count": 1,
+      "eligibility_graph_count": 0,
+      "file": "docs/contracts/p16-stage-b1/fixtures/tMjm_source_safe_design.json",
+      "job_id": "tMjm",
+      "json_sha256": "dddac5dd6e6510f60278b707b7b5d23b92cffdc0267e03d6335386977eff8486",
+      "original_item_count": 4,
+      "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a"
+    }
+  ],
+  "existing_source_evidence_sha_verified": true,
+  "fresh_unseen_cases": 0,
+  "legacy_translation_item_alignment_claimed": false,
+  "raw_source_text_in_git": false,
+  "reviewer": "assistant_prior_context_exposed",
+  "semantically_promoted_claims": 0
+}

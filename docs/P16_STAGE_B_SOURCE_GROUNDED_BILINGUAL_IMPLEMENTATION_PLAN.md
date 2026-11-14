@@ -2,11 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** Stage B focused plan active; B0 baseline/protocol accepted 2026-11-14; **B1 contract design NEXT**, no new semantic/runtime contract promoted
+**Disposition:** Stage B active; B0 PASS and **B1 contract/ADR design PASS 2026-11-14**; **B2 original-source candidate NEXT**. No new semantic/runtime contract promoted.
 **Current accepted baseline:** main `8eded9e15949fc34a041984a90e40d930f91f6fd` (Stage A passive evidence identity accepted)
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
-**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 NEXT. B0 record: §docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
+**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 DESIGN PASS (typed source-owned evidence/eligibility/review candidate; no analyzer); B2 NEXT. B0 record: `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 
@@ -75,7 +75,7 @@ Name new research contracts distinctly from current P1.6, with draft identities 
 
 **Identity and review are orthogonal.** Design separate review dimensions rather than one misleading `accepted` boolean: (i) source identity/integrity valid/invalid; (ii) translation association known/unknown/invalid; (iii) linguistic modality fidelity review unreviewed/assistant-checked/independently-checked/contradicted; (iv) semantic category/obligation review candidate/needs-review/qualified-for-bounded-view/rejected/approved-for-durable-use; (v) operational attempt completed/failed/timed-out/reused. An assistant check is useful but never silently relabeled independent human review.
 
-**Important unresolved design choices to resolve before coding:** exact item split/compound clause representation; structured-field anchor extension/version versus separate stable field reference; one-to-many English translation alignment; what is auto-qualified for a candidate brief; which reviewed checks are required for durable P1.6 promotion; whether a new English projection schema is actually necessary. B1 must resolve these with contract samples and explicit ADR-like rationale; do not silently decide them in implementation.
+**B1 selected contract decisions (November 14):** exact possibly overlapping original items bound to Stage A anchors; separate stable board-field JSON pointer+hash reference; many-to-many *candidate* translation relations; explicit alternative-path/chosen-option scope and source-owned AND/OR graph; orthogonal review and candidate-only brief authority; no immediate v3 projection or durable migration. See `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`. B2 must verify real segmentation and source/board semantics independently of this schema; B3 handles translation meaning and B6 controls public promotion.
 
 ## 4. Implementation slices, dependencies, and acceptance decisions
 
@@ -253,7 +253,7 @@ resume bounded P2.3 capability-expectation experiment as separately authorized
 - Time/budget: no promise of fixed calendar delivery or background execution; measure real call costs and elapsed time, maintain capped trial budgets.
 - **Stop / redirect** if critical source errors persist after justified corrective revision, if input source provenance cannot be established, if a fresh verification set is unavailable, if an unauthorized data mutation is required, or if additional complexity has no demonstrated job-understanding benefit. Keep the safe brief if it is useful, defer unreliable durable inference.
 
-**Next executable task after B0 acceptance (2026-11-14):** implement the B1 typed contract/ADR design on a separate branch, using the frozen B0 private snapshots, safe evaluation protocol, and A1 source-exact reference. No B2 classifier, model prompt, public routing, translation schema or database migration before B1 acceptance. B0 captured **zero** unseen jobs; B5 must obtain and source-review the predeclared 6–8 new cases.
+**Next executable task after B1 acceptance (2026-11-14):** implement B2's deterministic original-source item and board-metadata conflict candidate, from a new branch, reusing the frozen B0 and B1 references. It must keep ambiguous strength unresolved and preserve the conditional AND/OR DAG; no model prompt, persistent production schema, public route or automatic acceptance. B0/B1 captured **zero** unseen jobs; B5 must independently obtain and source-review the predeclared 6–8 new cases.
 
 ---
 

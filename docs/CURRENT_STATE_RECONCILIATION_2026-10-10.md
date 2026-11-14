@@ -9,7 +9,30 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 14 B0 baseline acceptance — LATEST current status
+## November 14 Stage B1 contract-design gate — LATEST current status
+
+**Current execution: P1.6 Stage B2 original-source item interpretation and
+structured board-field reconciliation.** B1 design gate is now accepted as
+*contract design* only, based on B0's frozen baseline, four exposed A1 jobs,
+30 source-exact description fragments, 5 typed board-field references,
+2 alternative-eligibility graphs, explicit source/reviewer/translation
+boundaries and a source-safe JSON Schema plus validation tests.
+
+**No** B1 actual extracted analysis model, source-bound translation model,
+new persistent source/analysis schema, public currentness route or new
+accepted P1.6 artifacts exist. The five accepted English anchors and
+Capability v9, Work v2, Registry, Market snapshot 15/report 2 remain unchanged.
+Legacy `english-projection-v2` still establishes field association only.
+
+**B1 ADR:** `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`.
+**Next B2 gate:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md` `B2.
+B5's genuinely new 6–8 job cohort remains not acquired.
+
+Earlier "B1 next" and "B0 next" messages below remain historical gate
+overlays superseded by this status, not a reopening of historical P2.2B-B2
+or a direct promotion of v31/research source heuristics.
+
+## November 14 B0 baseline acceptance — historical previous gate
 
 **Current focused execution gate: P1.6 Stage B B1 (contract and ADR).** B0 baseline
 was completed on a separate evidence-only branch, with no production code,
