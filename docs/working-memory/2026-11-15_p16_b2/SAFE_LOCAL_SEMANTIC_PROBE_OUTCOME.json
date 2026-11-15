@@ -1,0 +1,20 @@
+{
+  "aborted_remaining_calls_after_first_timeout": true,
+  "attempted_case_count": 1,
+  "contract": "jobhunter-b2-local-semantic-probe-interrupted-v1",
+  "first_case_elapsed_seconds": 95.02,
+  "first_case_id": "tNhZ",
+  "first_case_outcome": "timeout",
+  "first_case_source_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+  "frozen_source_database_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "main_or_downstream_changed": false,
+  "model": "gemma-4-e4b-it-ud",
+  "model_comparison": "not_established",
+  "no_model_semantic_judgments_available": true,
+  "planned_case_count": 4,
+  "private_partial_run_sha256": "74392e80d803deb9c1e41d165a575799a30a2b645e9c3f8b348bd6f97c8e200a",
+  "probe_contract": "jobhunter-b2-minimal-original-context-probe-v1",
+  "prompt_sha256": "7ac4dc5ac048ed18db2c301a67859afd9bdcd04ffc642dd3561bc1d1f3d77a07",
+  "response_count": 0,
+  "source_privacy": "full prompts and responses only retained in ignored local data"
+}

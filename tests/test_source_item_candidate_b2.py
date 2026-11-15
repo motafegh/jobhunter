@@ -293,7 +293,10 @@ def test_b1_design_real_alternative_paths_remain_candidate_only(tmp_path: Path) 
             assert draft["eligibility_graphs"][0]["nodes"][0]["operator"] == "any_of"
             assert any(x.kind == "one_of_technical_domains" for x in candidate.alternatives)
         elif job == "tNDx":
-            assert not draft["eligibility_graphs"]
+            assert len(draft["eligibility_graphs"]) == 1
+            assert draft["eligibility_graphs"][0]["graph_id"] == (
+                "candidate_certificate_or_knowledge"
+            )
             assert any(
                 x.kind == "certificate_or_equivalent_knowledge" for x in candidate.alternatives
             )

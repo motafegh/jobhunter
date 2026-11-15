@@ -16,6 +16,24 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
+## 2026-11-15 B2 second diagnostic increment — nested graphs, local model blocked
+
+On the existing draft B2 branch, candidate eligibility graphs now represent
+exact-source Middle-OR-Senior and certificate-OR-equivalent choices including
+within-track AND/OR structure. Two supported graph forms, 11 conditional
+source subspan leaves; draft B1 structural/source validation and synthetic
+Boolean truth tables pass. **Not independent semantic evidence or accepted
+employer eligibility.**
+
+LM Studio local endpoint is accessible after disabling environment proxy;
+a fixed four-case Gemma original-context trial began but the **first**
+`tNhZ` request timed out after 95.02 seconds without output. Remaining three
+calls stopped to respect latency budget. **No semantic model comparison is
+established.** Do not add excessive grammar/prompt complexity to compensate.
+Production and frozen B0 evidence unchanged; PR remains draft and B2 gate OPEN.
+
+Record: `docs/working-memory/2026-11-15_P16_B2_NESTED_ELIGIBILITY_AND_LOCAL_MODEL_PROBE_RESULT.md`.
+
 ## 2026-11-15 P1.6 B2 first diagnostic increment — full gate still OPEN
 
 A dedicated branch implements source-version-bound, read-only source item

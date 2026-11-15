@@ -9,7 +9,21 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 15 B2 first read-only diagnostic — latest implementation overlay
+## November 15 B2 second draft diagnostic — latest implementation overlay
+
+Draft PR #20 now carries exact-source, syntax-bounded nested AND/OR graph
+candidates for the exposed Middle/Senior and credential-equivalence cases.
+B1 validates each source subspan and Boolean topology; employer semantics
+and applicant eligibility remain **unreviewed**. The first bounded local
+Gemma original-description request timed out after 95.02 seconds with no
+model output; the remaining three planned calls were cancelled. Thus the
+LLM comparison is **NOT ESTABLISHED**, not evidence of superior rule accuracy.
+The B2 full gate is **OPEN**, no source/production/downstream data changed,
+and `main` is still the last accepted v30 state.
+
+Detail: `docs/working-memory/2026-11-15_P16_B2_NESTED_ELIGIBILITY_AND_LOCAL_MODEL_PROBE_RESULT.md`.
+
+## November 15 B2 first read-only diagnostic — prior diagnostic overlay
 
 B2 candidate code now exists **only on its dedicated feature branch**, not in
 accepted `main`, production analysis routing, P1.6 persisted artifacts,
