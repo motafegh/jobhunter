@@ -31,6 +31,8 @@ B0 baseline/fresh-cohort selection protocol was accepted November 14, 2026; B1 c
 conditional; English v30/v5 and original v9/v4 remain current throughout
 research. Stage B research is not a reopening of historical P2.2B-B1/B2.
 
+**November 15 B2 clarification (no sequencing change):** Preserve correlated duties, qualifications and operational capability in interpretation; avoid rigid disjoint classes or burdensome LLM rule proliferation. Employer-asserted eligibility stays distinct from work-implied ability. Details: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
+
 ---
 
 ## 1. Purpose

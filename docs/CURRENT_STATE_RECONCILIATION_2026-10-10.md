@@ -2,14 +2,30 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-14
+**Last reconciled:** 2026-11-15
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 14 Stage B1 contract-design gate — LATEST current status
+## November 15 B2 duty/capability calibration — latest planning overlay
+
+The owner approved a **planning-only** clarification to the upcoming B2
+implementation. Employer-stated duties and qualifications retain their
+separate evidence authority, but the system should preserve their conceptual
+overlap and useful work-implied capabilities. The implication does **not**
+become mandatory previous professional experience or a requirement for
+unstated tools. Avoid prompt bloat, rigid exclusive micro-classes, extra
+model-call stages and unnecessary validation rules; test both false mandatory
+claims and relevant context lost to over-separation.
+
+Accepted B1 contract, production P1.6 v30/v9 and downstream data are unchanged.
+B2 source-item/board-reconciliation implementation is **NOT STARTED**.
+Focused decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
+Documentation change based on main `a758952aa2a7e90ed63312dc228327c89df5039f`.
+
+## November 14 Stage B1 contract-design gate — previous accepted gate
 
 **Current execution: P1.6 Stage B2 original-source item interpretation and
 structured board-field reconciliation.** B1 design gate is now accepted as
@@ -25,7 +41,7 @@ Capability v9, Work v2, Registry, Market snapshot 15/report 2 remain unchanged.
 Legacy `english-projection-v2` still establishes field association only.
 
 **B1 ADR:** `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`.
-**Next B2 gate:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md` `B2.
+**Next B2 gate:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md` `B2`.
 B5's genuinely new 6–8 job cohort remains not acquired.
 
 Earlier "B1 next" and "B0 next" messages below remain historical gate
