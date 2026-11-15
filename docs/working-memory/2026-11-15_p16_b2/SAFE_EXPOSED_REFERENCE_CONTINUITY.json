@@ -1,0 +1,39 @@
+{
+  "cases": {
+    "tMjm": {
+      "any_intersecting_b2_item": 4,
+      "intersecting_proposed_category_strength_match": 4,
+      "one_b2_item_fully_contains_reference": 3,
+      "previous_exposed_original_ref_count": 4
+    },
+    "tMps": {
+      "any_intersecting_b2_item": 13,
+      "intersecting_proposed_category_strength_match": 13,
+      "one_b2_item_fully_contains_reference": 10,
+      "previous_exposed_original_ref_count": 13
+    },
+    "tNDx": {
+      "any_intersecting_b2_item": 10,
+      "intersecting_proposed_category_strength_match": 10,
+      "one_b2_item_fully_contains_reference": 9,
+      "previous_exposed_original_ref_count": 10
+    },
+    "tNhZ": {
+      "any_intersecting_b2_item": 3,
+      "intersecting_proposed_category_strength_match": 3,
+      "one_b2_item_fully_contains_reference": 2,
+      "previous_exposed_original_ref_count": 3
+    }
+  },
+  "cohort": "four_previously_exposed_not_independent",
+  "comparison_basis": "original source offsets plus B1 assistant-proposed categories; not semantic review",
+  "contract": "jobhunter-b2-a1-exposed-reference-continuity-v1",
+  "not_accuracy_or_holdout": true,
+  "reviewer": "assistant_prior_context_exposed",
+  "totals": {
+    "any_overlap": 30,
+    "one_item_containment": 24,
+    "previous_original_reference_count": 30,
+    "same_proposed_category_strength_on_overlap": 30
+  }
+}

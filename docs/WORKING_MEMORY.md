@@ -3,7 +3,7 @@
 **Last research-status reconciliation:** 2026-11-14 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** P1.6 Stage B **B0 PASS and B1 contract/ADR DESIGN PASS 2026-11-14; B2 source-item/board reconciliation NEXT / NOT STARTED**.
+**Current selected next stage:** P1.6 Stage B **B0 PASS and B1 contract/ADR DESIGN PASS 2026-11-14; B2 source-item/board reconciliation FIRST DIAGNOSTIC SLICE ON SEPARATE BRANCH, FULL GATE OPEN**.
 **November 15 approved B2 calibration (planning only):** Duty/qualification categories preserve evidence authority without prohibiting work-implied capability relationships. Do not fabricate employer-required prior professional experience or specific tools. Avoid mandatory per-ad micro-labels and extra model rules; evaluate useful context lost versus unsupported requirements. B1 schema and public v30/v9 remain unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`. B0 private baseline snapshots, 9 original HTML SHA verifications, 59 source assertions and 5 accepted anchors verified; 485 known source-job IDs excluded as first screen; source-only fresh evaluation protocol frozen. No unseen ads or model calls in B0. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`. Read `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`. B2–B6 remain gated; no new model/semantic/currentness/schema changes authorized. The November 11 capability-expectation next-feature proposal is preserved as a **subsequent** experiment, not an active parallel build. Stage A passive source identity accepted; four-job A1 assistant source/model review complete (59 source assertions, 18 diagnostic flags, 11 translation checks), not independent blind human verification. The user delegated routine review to the assistant; ambiguous employer intent must stay unresolved.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
@@ -16,7 +16,30 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
-## 2026-11-14 Stage B1 completion handoff (latest; B2 next)
+## 2026-11-15 P1.6 B2 first diagnostic increment — full gate still OPEN
+
+A dedicated branch implements source-version-bound, read-only source item
+candidates and source-labeled Jobinja board value reconciliation. First four
+exposed ads produced 78 original candidate items, 53 board value references,
+10 optional source-linked operational capability hints and 3 original
+alternative-group candidates. All anchor and board hashes and a conservative
+B1 draft structural projection validate on an isolated frozen B0 SQLite copy.
+The four earlier exposed B1 references intersect compatible candidate
+categories/strengths (30/30), but this is **not** independent accuracy evidence.
+
+20 focused tests; 966 full warnings-as-errors tests, Ruff and pip check
+passed locally. Zero model calls, no new acquisition, no accepted P1.6,
+Capability, Work, Registry or Market mutation. **Nested alternative-group
+semantics, full coverage, unseen generalization and useful model-based
+disambiguation remain unproven; B2 is not approved for production.**
+
+Detailed record: `docs/working-memory/2026-11-15_P16_B2_SOURCE_ITEM_DIAGNOSTIC_FIRST_SLICE_AND_OPEN_GATE.md`.
+Implementation branch: `feature/p16-b2-source-items-metadata-2026-11-15`.
+Keep B3–B6 separately gated. Prefer justified semantic improvements over
+extra mandatory regex/prompts; retain the November 15 duty/capability
+calibration.
+
+## 2026-11-14 Stage B1 completion handoff (historical; B2 diagnostic in progress)
 
 **B1 design selected:** source-exact Stage A anchor reuse, separate
 versioned JSON Pointer/hash reference for board metadata, explicit

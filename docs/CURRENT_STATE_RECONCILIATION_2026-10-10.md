@@ -9,7 +9,22 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 15 B2 duty/capability calibration — latest planning overlay
+## November 15 B2 first read-only diagnostic — latest implementation overlay
+
+B2 candidate code now exists **only on its dedicated feature branch**, not in
+accepted `main`, production analysis routing, P1.6 persisted artifacts,
+Capability/Work/Registry/Market or published corpus. It preserves exact
+original source anchors, separately referenced board metadata and optional
+work-implied capability hints. Four **exposed** cases and general negative
+tests pass locally; complete nested eligibility AND/OR semantics and
+independent semantic usefulness remain incomplete. **The full B2 gate stays
+OPEN**, and there is no authorization for production rollout.
+
+Record: `docs/working-memory/2026-11-15_P16_B2_SOURCE_ITEM_DIAGNOSTIC_FIRST_SLICE_AND_OPEN_GATE.md`. This newer implementation overlay supersedes previous
+"NOT STARTED" wording only for B2 *diagnostic engineering*, not for accepted
+product state.
+
+## November 15 B2 duty/capability calibration — prior planning decision
 
 The owner approved a **planning-only** clarification to the upcoming B2
 implementation. Employer-stated duties and qualifications retain their
