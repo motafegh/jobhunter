@@ -3,7 +3,7 @@
 **Last research-status reconciliation:** 2026-11-14 (documentation only; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** P1.6 Stage B **B0 PASS and B1 contract/ADR DESIGN PASS 2026-11-14; B2 source-item/board reconciliation FIRST DIAGNOSTIC SLICE ON SEPARATE BRANCH, FULL GATE OPEN**.
+**Current selected next stage:** P1.6 Stage B **B0 PASS and B1 contract/ADR DESIGN PASS; B2 has two mechanically verified research increments and the bounded native local-model comparison, but semantic gate OPEN / NO PROMOTION**.
 **November 15 approved B2 calibration (planning only):** Duty/qualification categories preserve evidence authority without prohibiting work-implied capability relationships. Do not fabricate employer-required prior professional experience or specific tools. Avoid mandatory per-ad micro-labels and extra model rules; evaluate useful context lost versus unsupported requirements. B1 schema and public v30/v9 remain unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`. B0 private baseline snapshots, 9 original HTML SHA verifications, 59 source assertions and 5 accepted anchors verified; 485 known source-job IDs excluded as first screen; source-only fresh evaluation protocol frozen. No unseen ads or model calls in B0. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`. Read `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`. B2–B6 remain gated; no new model/semantic/currentness/schema changes authorized. The November 11 capability-expectation next-feature proposal is preserved as a **subsequent** experiment, not an active parallel build. Stage A passive source identity accepted; four-job A1 assistant source/model review complete (59 source assertions, 18 diagnostic flags, 11 translation checks), not independent blind human verification. The user delegated routine review to the assistant; ambiguous employer intent must stay unresolved.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
@@ -15,6 +15,33 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-16 B2 local inference resolved; semantic promotion BLOCKED
+
+Original v1 timed out on first cold/blocked local inference. A warm
+unmodified-prompt run finished all four requests but spent ~757/760
+tokens on model reasoning with no visible answers. A supported local
+native `/api/v1/chat` call with `reasoning: off` produced complete
+seven-array JSON for **4/4** frozen exposed Persian sources in ~24 seconds.
+One bounded corrective prompt was tried, no per-job retuning.
+
+**Crucial:** source-aware assistant diagnostic review found v2
+4 passes/3 partial/5 failures and v3 6 passes/2 partial/4 failures
+across 12 selected exposed checks. Both incorrectly upgraded EDR teamwork
+to mandatory, inferred preference for uncertain credentials, and
+manufactured pentest duties from applicant capabilities. V3 also confused
+work arrangements with eligibility alternatives. These are diagnostic
+checks, **not independent accuracy estimates**.
+
+The new offline reconciliation verifies model/source/prompt hashes and
+assistant-review authority, and records `OPEN_NO_PROMOTION`. No model
+claim enters accepted P1.6/Capability/Work/Registry/Market. All **1013**
+local warnings-as-errors tests, Ruff and pip check pass. Branch PR #20
+remains draft and unmerged. **Next:** minimal candidate-only source
+grounding/reconciliation, not more prompt-only iterations or broad new
+rules. B3–B6 remain separately gated.
+
+Decision and detailed evidence: `docs/working-memory/2026-11-16_P16_B2_NATIVE_REASONING_OFF_SEMANTIC_COMPARISON_DECISION.md`.
 
 ## 2026-11-15 B2 second diagnostic increment — nested graphs, local model blocked
 

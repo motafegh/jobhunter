@@ -2,12 +2,35 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-15
+**Last reconciled:** 2026-11-16
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 16 B2 native model comparison — latest research overlay
+
+B2 research branch `feature/p16-b2-source-items-metadata-2026-11-15`
+has resolved **local inference-output availability**, NOT source
+semantic fidelity. The warm OpenAI-compatible endpoint exhausted its
+760-token answer allowance on reasoning; native local Gemma with
+`reasoning: off` returned complete JSON for all four frozen exposed
+cases in ~24s per four cases. A single short corrective prompt
+improved some alternative statements but left serious false employer
+requirements and invented duties. The exposed assistant diagnostic
+12-check tally is 4 pass/3 partial/5 fail (v2) versus 6/2/4 (v3);
+do not treat these as independent accuracy measurements.
+
+An offline source/prompt/review-fidelity gate records
+`OPEN_NO_PROMOTION`. B2 remains **full gate OPEN** and draft PR #20
+remains unmerged. `main` still serves P1.6 v30/v9; no accepted
+records, existing source identities, or downstream fact owners were
+changed. Next inspect source-grounded reconciliation of advisory model
+suggestions versus exact source candidates; do not add another
+unbounded prompt iteration.
+
+Decision: `docs/working-memory/2026-11-16_P16_B2_NATIVE_REASONING_OFF_SEMANTIC_COMPARISON_DECISION.md`.
 
 ## November 15 B2 second draft diagnostic — latest implementation overlay
 

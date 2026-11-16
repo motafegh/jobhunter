@@ -1,0 +1,137 @@
+{
+  "contract": "jobhunter-b2-exposed-model-source-first-reconciliation-v1",
+  "decision": "no_semantic_promotion_no_more_prompt_tuning_this_slice",
+  "model_output_suggestion_status": "candidate_only_not_employer_fact",
+  "not_generalization_accuracy": true,
+  "one_corrective_trial_only": true,
+  "prompt_versions": {
+    "corrective_v3": "430a9620273039423bda958cd2f8e5ca5da2eb601a565ad9075c61e361cd11fa",
+    "native_v2": "7ac4dc5ac048ed18db2c301a67859afd9bdcd04ffc642dd3561bc1d1f3d77a07"
+  },
+  "review_authority": "assistant_prior_context_exposed_not_independent_human_or_blind",
+  "reviewed_checks": [
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "prior_llm_familiarity_explicitly_nonmandatory",
+      "rationale": "positive employer preference preserved in both outputs",
+      "source_job_id": "tNhZ",
+      "v2_outcome": "pass",
+      "v2_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "part_full_remote_are_work_arrangements",
+      "rationale": "corrective version also placed work-mode options under untyped alternatives, unsafe as eligibility graph",
+      "source_job_id": "tNhZ",
+      "v2_outcome": "pass",
+      "v2_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "v3_outcome": "fail",
+      "v3_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "relevant_llm_python_operational_capability_links",
+      "rationale": "duties retain relevant technologies, derived capability arrays emphasize generic behavior instead",
+      "source_job_id": "tNhZ",
+      "v2_outcome": "partial",
+      "v2_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "v3_outcome": "partial",
+      "v3_source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "middle_or_senior_are_alternative_eligibility_paths",
+      "rationale": "initial alternatives array replaced eligibility with implementation tool examples; corrective version includes tier OR",
+      "source_job_id": "tMps",
+      "v2_outcome": "fail",
+      "v2_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "within_middle_any_one_domain_and_project_conjunction",
+      "rationale": "full path text appears in requirements but a complete machine-readable AND/OR topology is not given",
+      "source_job_id": "tMps",
+      "v2_outcome": "partial",
+      "v2_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "v3_outcome": "partial",
+      "v3_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "duty_tool_examples_are_not_eligibility_paths",
+      "rationale": "initial model claimed OR among tools named in engineering duties; corrective removed false alternative",
+      "source_job_id": "tMps",
+      "v2_outcome": "fail",
+      "v2_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "teamwork_is_preferred_not_mandatory",
+      "rationale": "both model versions place explicitly preferred teamwork under requirements",
+      "source_job_id": "tNDx",
+      "v2_outcome": "fail",
+      "v2_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "v3_outcome": "fail",
+      "v3_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "kaspersky_specialist_and_gov_client_strength_unresolved",
+      "rationale": "both assign preferred strength to clauses without independently explicit modality",
+      "source_job_id": "tNDx",
+      "v2_outcome": "fail",
+      "v2_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "v3_outcome": "fail",
+      "v3_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "certificate_or_equivalent_knowledge_alternative",
+      "rationale": "initial requirements contain certification equivalence but omit it from alternatives; corrective version preserves it there",
+      "source_job_id": "tNDx",
+      "v2_outcome": "partial",
+      "v2_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "five_explicit_edr_duties",
+      "rationale": "all five source-supported employee duties represented",
+      "source_job_id": "tNDx",
+      "v2_outcome": "pass",
+      "v2_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "ability_to_find_vulnerabilities_is_not_an_assigned_duty",
+      "rationale": "both versions fabricate direct employee duties from applicant capability language; corrective lists more",
+      "source_job_id": "tMjm",
+      "v2_outcome": "fail",
+      "v2_source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "v3_outcome": "fail",
+      "v3_source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a"
+    },
+    {
+      "authority": "assistant_diagnostic_not_employer_or_independent",
+      "check": "remote_work_possibility_is_arrangement",
+      "rationale": "both retain remote possibility as an arrangement rather than mandatory skill",
+      "source_job_id": "tMjm",
+      "v2_outcome": "pass",
+      "v2_source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "v3_outcome": "pass",
+      "v3_source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a"
+    }
+  ],
+  "semantic_acceptance": false,
+  "source_review_reference": "docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md",
+  "source_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe"
+}

@@ -1,0 +1,127 @@
+{
+  "accepted_employer_facts_from_model": 0,
+  "assistant_checks": {
+    "corrective_v3": {
+      "fail": 4,
+      "partial": 2,
+      "pass": 6,
+      "unresolved": 0
+    },
+    "native_v2": {
+      "fail": 5,
+      "partial": 3,
+      "pass": 4,
+      "unresolved": 0
+    }
+  },
+  "b2_semantic_gate": "OPEN_NO_PROMOTION",
+  "blockers": {
+    "exposed_development_cohort_only": true,
+    "material_source_interpretation_failures": true,
+    "nested_eligibility_from_model_not_accepted": true,
+    "semantics_not_independently_adjudicated": true,
+    "source_item_alignment_not_proven_for_model_text": true
+  },
+  "contract": "jobhunter-b2-native-reconciliation-gate-v1",
+  "downstream_authority": "none",
+  "model_generated_item_counts": {
+    "corrective_v3": {
+      "tMjm": {
+        "alternatives": 0,
+        "arrangements": 1,
+        "duties": 4,
+        "preferences": 1,
+        "requirements": 9,
+        "uncertainties": 1,
+        "work_implied_capabilities": 2
+      },
+      "tMps": {
+        "alternatives": 1,
+        "arrangements": 2,
+        "duties": 11,
+        "preferences": 3,
+        "requirements": 3,
+        "uncertainties": 1,
+        "work_implied_capabilities": 4
+      },
+      "tNDx": {
+        "alternatives": 1,
+        "arrangements": 3,
+        "duties": 5,
+        "preferences": 2,
+        "requirements": 5,
+        "uncertainties": 1,
+        "work_implied_capabilities": 5
+      },
+      "tNhZ": {
+        "alternatives": 2,
+        "arrangements": 1,
+        "duties": 5,
+        "preferences": 3,
+        "requirements": 4,
+        "uncertainties": 2,
+        "work_implied_capabilities": 3
+      }
+    },
+    "native_v2": {
+      "tMjm": {
+        "alternatives": 0,
+        "arrangements": 1,
+        "duties": 3,
+        "preferences": 1,
+        "requirements": 10,
+        "uncertainties": 1,
+        "work_implied_capabilities": 2
+      },
+      "tMps": {
+        "alternatives": 1,
+        "arrangements": 2,
+        "duties": 11,
+        "preferences": 3,
+        "requirements": 3,
+        "uncertainties": 1,
+        "work_implied_capabilities": 4
+      },
+      "tNDx": {
+        "alternatives": 0,
+        "arrangements": 3,
+        "duties": 5,
+        "preferences": 2,
+        "requirements": 5,
+        "uncertainties": 1,
+        "work_implied_capabilities": 5
+      },
+      "tNhZ": {
+        "alternatives": 0,
+        "arrangements": 2,
+        "duties": 5,
+        "preferences": 4,
+        "requirements": 5,
+        "uncertainties": 1,
+        "work_implied_capabilities": 3
+      }
+    }
+  },
+  "model_identity": "gemma-4-e4b-it-ud",
+  "model_output_format_valid_in_both_trials": true,
+  "model_reasoning": "off",
+  "notes": "Neither JSON validity nor a better assistant-reviewed diagnostic count establishes semantic accuracy or authorizes product acceptance.",
+  "prompt_change_count": 1,
+  "review_authority": "assistant_prior_context_exposed",
+  "source_cohort": "four_frozen_exposed_jobs_not_holdout",
+  "source_snapshot_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "trial_seconds": {
+    "corrective_v3": {
+      "tMjm": 4.202,
+      "tMps": 9.073,
+      "tNDx": 5.685,
+      "tNhZ": 5.33
+    },
+    "native_v2": {
+      "tMjm": 4.139,
+      "tMps": 9.133,
+      "tNDx": 5.453,
+      "tNhZ": 4.928
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "automatic_semantic_acceptance": false,
+  "b2_full_gate_closed": false,
+  "contract": "jobhunter-b2-native-output-and-semantic-reconciliation-v1",
+  "corrective_v3": {
+    "complete_json_cases": 4,
+    "endpoint": "/api/v1/chat",
+    "per_job": {
+      "tMjm": {
+        "array_counts": {
+          "alternatives": 0,
+          "arrangements": 1,
+          "duties": 4,
+          "preferences": 1,
+          "requirements": 9,
+          "uncertainties": 1,
+          "work_implied_capabilities": 2
+        },
+        "elapsed_seconds": 4.202,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 287,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+        "visible_chars": 1205
+      },
+      "tMps": {
+        "array_counts": {
+          "alternatives": 1,
+          "arrangements": 2,
+          "duties": 11,
+          "preferences": 3,
+          "requirements": 3,
+          "uncertainties": 1,
+          "work_implied_capabilities": 4
+        },
+        "elapsed_seconds": 9.073,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 614,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+        "visible_chars": 2715
+      },
+      "tNDx": {
+        "array_counts": {
+          "alternatives": 1,
+          "arrangements": 3,
+          "duties": 5,
+          "preferences": 2,
+          "requirements": 5,
+          "uncertainties": 1,
+          "work_implied_capabilities": 5
+        },
+        "elapsed_seconds": 5.685,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 385,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+        "visible_chars": 1822
+      },
+      "tNhZ": {
+        "array_counts": {
+          "alternatives": 2,
+          "arrangements": 1,
+          "duties": 5,
+          "preferences": 3,
+          "requirements": 4,
+          "uncertainties": 2,
+          "work_implied_capabilities": 3
+        },
+        "elapsed_seconds": 5.33,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 341,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+        "visible_chars": 1440
+      }
+    },
+    "private_record_sha256": "3912139e3b9b5efdb95c8e610495998ca223e1dc170e667714036cb5d87e885a",
+    "prompt_sha256": "430a9620273039423bda958cd2f8e5ca5da2eb601a565ad9075c61e361cd11fa",
+    "reasoning": "off"
+  },
+  "evidence_status": "exposed_and_assistant_reviewed_not_independently_certified",
+  "frozen_b0_source_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "model": "gemma-4-e4b-it-ud",
+  "native_v2": {
+    "complete_json_cases": 4,
+    "endpoint": "/api/v1/chat",
+    "per_job": {
+      "tMjm": {
+        "array_counts": {
+          "alternatives": 0,
+          "arrangements": 1,
+          "duties": 3,
+          "preferences": 1,
+          "requirements": 10,
+          "uncertainties": 1,
+          "work_implied_capabilities": 2
+        },
+        "elapsed_seconds": 4.139,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 282,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+        "visible_chars": 1190
+      },
+      "tMps": {
+        "array_counts": {
+          "alternatives": 1,
+          "arrangements": 2,
+          "duties": 11,
+          "preferences": 3,
+          "requirements": 3,
+          "uncertainties": 1,
+          "work_implied_capabilities": 4
+        },
+        "elapsed_seconds": 9.133,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 631,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+        "visible_chars": 2805
+      },
+      "tNDx": {
+        "array_counts": {
+          "alternatives": 0,
+          "arrangements": 3,
+          "duties": 5,
+          "preferences": 2,
+          "requirements": 5,
+          "uncertainties": 1,
+          "work_implied_capabilities": 5
+        },
+        "elapsed_seconds": 5.453,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 372,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+        "visible_chars": 1731
+      },
+      "tNhZ": {
+        "array_counts": {
+          "alternatives": 0,
+          "arrangements": 2,
+          "duties": 5,
+          "preferences": 4,
+          "requirements": 5,
+          "uncertainties": 1,
+          "work_implied_capabilities": 3
+        },
+        "elapsed_seconds": 4.928,
+        "json_valid_all_seven_arrays": true,
+        "output_tokens": 317,
+        "reasoning_tokens": 0,
+        "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+        "visible_chars": 1294
+      }
+    },
+    "private_record_sha256": "991f91c1f436603d48dbcc2b33e473d0c9846d91cd235e71615fe727e841d7bb",
+    "prompt_sha256": "7ac4dc5ac048ed18db2c301a67859afd9bdcd04ffc642dd3561bc1d1f3d77a07",
+    "reasoning": "off"
+  },
+  "notes": "Schema-valid response does not establish source-fidelity, eligibility, or downstream acceptance.",
+  "privacy": "raw employer descriptions, model text, and requests retained in ignored local data",
+  "warm_legacy_v1": {
+    "output_token_limit_each": 760,
+    "private_record_sha256": "81e81bbb6671b650a80241d26d4d6a9a9502cb0a7396ffaaa6fe9d04f11dce77",
+    "reasoning_tokens_each": 757,
+    "requested_jobs": 4,
+    "responses_returned": 4,
+    "usable_answer_text_count": 0
+  }
+}
