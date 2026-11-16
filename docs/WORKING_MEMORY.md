@@ -16,6 +16,16 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
+## 2026-11-16 B2 advisory source-link reconciliation — diagnostic only
+
+Draft PR #20 now has a **candidate-only, offline original-source claim-link reconciliation**. Exact Stage A anchors and model-claim fingerprints verify *where* assistant-supplied links point; no valid citation, model JSON or heuristic source classification proves the actual Persian-to-English meaning. Source-category and obligation mismatches become review signals, not automatic employer-fact verdicts. Unlinked model claims stay unknown instead of meaning "no employer requirements."
+
+Against the **same four exposed** native-v3 job outputs: 85 generated claims, 14 retrospective assistant-selected source links, nine source-candidate disagreement signals, and 71 unlinked claims. Five selected links remain linked/semantically unreviewed. These are **not** independent error rates or scalable automatic grounding: the saved seven-array model answers contain no item references. No new model calls, accepted records, source evidence, current routes or downstream authority. Local full suite now **1030 warnings-as-errors tests passed** with Ruff and dependency checks green; branch PR CI is a separate gate.
+
+**Full B2 still OPEN_NO_PROMOTION.** Next decide a bounded, versioned advisory-model source-link interface only if it offers measurable net source grounding and useful work context without complexity cost. Do not bulk expand heuristics or silently accept linked claims. B3–B6 remain independently gated.
+
+Decision: `docs/working-memory/2026-11-16_P16_B2_ADVISORY_SOURCE_CLAIM_GROUNDING_INCREMENT.md`.
+
 ## 2026-11-16 B2 local inference resolved; semantic promotion BLOCKED
 
 Original v1 timed out on first cold/blocked local inference. A warm

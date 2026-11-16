@@ -1,0 +1,63 @@
+{
+  "contract": "jobhunter-b2-advisory-grounding-diagnostic-v1",
+  "source_database_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "trial_file_sha256": "3912139e3b9b5efdb95c8e610495998ca223e1dc170e667714036cb5d87e885a",
+  "model_prompt_sha256": "430a9620273039423bda958cd2f8e5ca5da2eb601a565ad9075c61e361cd11fa",
+  "review_authority": "assistant_prior_context_exposed_not_independent",
+  "cohort": "four_exposed_cases_not_independent_holdout",
+  "source_links_are_semantic_proof": false,
+  "b2_gate": "OPEN_NO_PROMOTION",
+  "accepted_employer_facts": 0,
+  "cases": {
+    "tNhZ": {
+      "total_model_claims": 20,
+      "linked_claims": 4,
+      "unlinked_unknown": 16,
+      "linked_semantics_unreviewed": 2,
+      "source_candidate_disagreement": 2,
+      "diagnostic_signals": {
+        "eligibility_alternative_not_established_by_source_candidate": 2
+      },
+      "promoted_claims": 0
+    },
+    "tMps": {
+      "total_model_claims": 25,
+      "linked_claims": 1,
+      "unlinked_unknown": 24,
+      "linked_semantics_unreviewed": 1,
+      "source_candidate_disagreement": 0,
+      "diagnostic_signals": {},
+      "promoted_claims": 0
+    },
+    "tNDx": {
+      "total_model_claims": 22,
+      "linked_claims": 4,
+      "unlinked_unknown": 18,
+      "linked_semantics_unreviewed": 1,
+      "source_candidate_disagreement": 3,
+      "diagnostic_signals": {
+        "mandatory_strength_not_established_by_source_candidate": 1,
+        "preferred_strength_not_established_by_source_candidate": 2
+      },
+      "promoted_claims": 0
+    },
+    "tMjm": {
+      "total_model_claims": 18,
+      "linked_claims": 5,
+      "unlinked_unknown": 13,
+      "linked_semantics_unreviewed": 1,
+      "source_candidate_disagreement": 4,
+      "diagnostic_signals": {
+        "duty_not_established_by_source_candidate": 4
+      },
+      "promoted_claims": 0
+    }
+  },
+  "totals": {
+    "model_claims": 85,
+    "linked": 14,
+    "unlinked_unknown": 71,
+    "source_candidate_disagreement": 9,
+    "promoted": 0
+  }
+}

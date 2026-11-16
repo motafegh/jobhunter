@@ -9,7 +9,30 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 16 B2 native model comparison — latest research overlay
+## November 16 B2 advisory claim grounding — latest diagnostic overlay
+
+Draft PR #20 adds a pure, inactive, source-item-linked advisory claim
+reconciler. Valid Stage A anchors prove provenance **location** and
+source-version integrity only; associated original-source item category and
+model interpretation remain separate, unreviewed candidate semantics.
+
+On the same four exposed native-v3 jobs (no additional model/source calls):
+85 model-generated claims, 14 retrospective assistant-selected exact-source
+item links, 9 source-candidate discrepancy signals, and 71 unlinked claims
+that remain UNKNOWN, not false. Five linked claims remain semantically
+unreviewed. The 9 signals are not independently confirmed model errors.
+The saved model outputs contain no original-item citations and no
+automatic bilingual alignment is demonstrated.
+
+B2 full semantic gate **OPEN_NO_PROMOTION**; draft PR #20 unmerged,
+production v30/v9 and all accepted downstream facts unchanged.
+Local full suite: 1030 passed with warnings as errors; Ruff and pip check
+passed. Next decide a strictly bounded source-link output interface only
+if its accuracy/usefulness/cost merits an additional experimental trial.
+
+Decision: `docs/working-memory/2026-11-16_P16_B2_ADVISORY_SOURCE_CLAIM_GROUNDING_INCREMENT.md`.
+
+## November 16 B2 native model comparison — previous research overlay
 
 B2 research branch `feature/p16-b2-source-items-metadata-2026-11-15`
 has resolved **local inference-output availability**, NOT source
