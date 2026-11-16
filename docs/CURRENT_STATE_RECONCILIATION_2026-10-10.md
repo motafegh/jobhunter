@@ -9,7 +9,31 @@
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 16 B2 advisory claim grounding — latest diagnostic overlay
+## November 16 B2 native model-suggested item references — latest research overlay
+
+A fixed native Gemma `reasoning: off` source-ref prompt on four **already
+exposed** original-source cases returned 4/4 structured results: 75 model
+claims, 73 mechanically valid suggested item IDs, two unlinked claims,
+25 heuristic source-category/obligation disagreement signals. This proves
+**citation presence only**, not Persian employer-fact semantic entailment.
+
+Reapplying 12 previously selected assistant/exposed diagnostic checks
+produced v4 5 pass/4 partial/3 fail versus v3 6/2/4; formats and prompts
+differ and neither is an independent accuracy rate. Important errors
+persist: invented pentest assigned duties, Kaspersky/customer-experience
+strength overclaims, and wrongly represented eligibility alternatives.
+Technical work-implied capabilities were also partially lost. Relative
+to v3, model output count dropped 85 to 75 while four-request observed
+latency increased 24.290s to 33.606s and output tokens 1,627 to 2,227.
+
+B2 **OPEN_NO_PROMOTION**, PR #20 draft and main/current P1.6 v30/v9,
+B1, translation v2, Capability/Work/Registry/Market remain unaffected.
+Stop more prompt-only reference tuning; next is a separate B2 strategy
+decision, not an authorized production rollout or unseen-cohort use.
+
+Decision: `docs/working-memory/2026-11-16_P16_B2_NATIVE_SOURCE_REFERENCES_MIXED_SEMANTIC_RESULT.md`.
+
+## November 16 B2 advisory claim grounding — previous diagnostic overlay
 
 Draft PR #20 adds a pure, inactive, source-item-linked advisory claim
 reconciler. Valid Stage A anchors prove provenance **location** and

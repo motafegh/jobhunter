@@ -1,0 +1,125 @@
+{
+  "accepted_employer_facts": 0,
+  "authority": "candidate_only_no_downstream_reuse",
+  "b2_semantic_gate": "OPEN_NO_PROMOTION",
+  "case_count": 4,
+  "cases": {
+    "tMjm": {
+      "content_sha256": "2d4eb2abd892bbc515d160c223a11de121becbaf07aaa9dfe3685729c8196e0c",
+      "diagnostic_signal_counts": {
+        "duty_not_established_by_source_candidate": 3,
+        "mandatory_strength_not_established_by_source_candidate": 5,
+        "preferred_strength_not_established_by_source_candidate": 1,
+        "work_implied_capability_without_duty_candidate": 2
+      },
+      "elapsed_seconds": 6.449,
+      "field_counts": {
+        "alternatives": 0,
+        "arrangements": 1,
+        "duties": 3,
+        "preferences": 1,
+        "requirements": 11,
+        "uncertainties": 1,
+        "work_implied_capabilities": 2
+      },
+      "invalid_ref_claims": [],
+      "link_counts": {
+        "linked_semantics_unreviewed": 8,
+        "source_candidate_disagreement": 11
+      },
+      "model_claim_count": 19,
+      "outcome": "response",
+      "source_semantic_sha256": "89f56c5f876fd8fe2cb7e36ab829b0e3431aa7e15699b9f391384643c346306a",
+      "structured": true
+    },
+    "tMps": {
+      "content_sha256": "fb241e6bd67be689bc75849835d109dd207f2cdb9ef51915064b9038a2543a7d",
+      "diagnostic_signal_counts": {
+        "work_implied_capability_without_duty_candidate": 2
+      },
+      "elapsed_seconds": 12.793,
+      "field_counts": {
+        "alternatives": 0,
+        "arrangements": 2,
+        "duties": 11,
+        "preferences": 2,
+        "requirements": 3,
+        "uncertainties": 0,
+        "work_implied_capabilities": 2
+      },
+      "invalid_ref_claims": [],
+      "link_counts": {
+        "linked_semantics_unreviewed": 18,
+        "source_candidate_disagreement": 2
+      },
+      "model_claim_count": 20,
+      "outcome": "response",
+      "source_semantic_sha256": "ff59550482016b6e5d5111ddff22e7d4abbffd2c12de373d1f292fbd0651cece",
+      "structured": true
+    },
+    "tNDx": {
+      "content_sha256": "e7551d70473ca876bbb2121e82dc2439bfceccf0848c462e50c0ce6894ee3fd7",
+      "diagnostic_signal_counts": {
+        "preferred_strength_not_established_by_source_candidate": 2,
+        "work_implied_capability_without_duty_candidate": 2
+      },
+      "elapsed_seconds": 7.224,
+      "field_counts": {
+        "alternatives": 1,
+        "arrangements": 3,
+        "duties": 5,
+        "preferences": 3,
+        "requirements": 3,
+        "uncertainties": 1,
+        "work_implied_capabilities": 2
+      },
+      "invalid_ref_claims": [],
+      "link_counts": {
+        "linked_semantics_unreviewed": 13,
+        "source_candidate_disagreement": 4,
+        "unlinked_unknown": 1
+      },
+      "model_claim_count": 18,
+      "outcome": "response",
+      "source_semantic_sha256": "dd524eff809a4f628c1915fa2a52e1d70b1f91c2159cd218f1ce008700dc4963",
+      "structured": true
+    },
+    "tNhZ": {
+      "content_sha256": "d6b89cd7c910f3a0c0a91d0ea6bef74c826ef77a55754081ca305a00ee57be03",
+      "diagnostic_signal_counts": {
+        "eligibility_alternative_not_established_by_source_candidate": 1,
+        "mandatory_strength_not_established_by_source_candidate": 1,
+        "preferred_strength_not_established_by_source_candidate": 1,
+        "work_implied_capability_without_duty_candidate": 5
+      },
+      "elapsed_seconds": 7.14,
+      "field_counts": {
+        "alternatives": 1,
+        "arrangements": 2,
+        "duties": 6,
+        "preferences": 2,
+        "requirements": 1,
+        "uncertainties": 1,
+        "work_implied_capabilities": 5
+      },
+      "invalid_ref_claims": [],
+      "link_counts": {
+        "linked_semantics_unreviewed": 9,
+        "source_candidate_disagreement": 8,
+        "unlinked_unknown": 1
+      },
+      "model_claim_count": 18,
+      "outcome": "response",
+      "source_semantic_sha256": "fefc8ec2a0e90a05e6a8d8db654e821657dafaa3ff0a779e18fd5c724a501b61",
+      "structured": true
+    }
+  },
+  "contract": "jobhunter-b2-native-source-references-v1",
+  "max_output_tokens": 2700,
+  "model": "gemma-4-e4b-it-ud",
+  "private_trial_sha256": "8b058afe51b9452c6b5cf2829d7b684255b842bfa7a0cd5f31f3b2c78a5419b7",
+  "prompt_sha256": "5c2130651e416bd2a0def98713f924355b1bd89480eec5d0a690dfcf2f259fc9",
+  "source_database_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "source_exposure": "four_existing_development_cases_no_holdout",
+  "stopped_early": false
+}

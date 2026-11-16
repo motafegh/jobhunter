@@ -1,0 +1,79 @@
+{
+  "assistant_exposed_selected_checks": {
+    "previous_v3": {
+      "fail": 4,
+      "partial": 2,
+      "pass": 6
+    },
+    "source_ref_v4": {
+      "fail": 3,
+      "partial": 4,
+      "pass": 5
+    }
+  },
+  "b2_semantic_gate": "OPEN_NO_PROMOTION",
+  "contract": "jobhunter-b2-native-source-reference-comparison-v1",
+  "decision": "Model source citation feasibility established on exposed examples; semantics still fail material requirements/duty/alternative checks. Retain research only, do not promote or prompt-iterate blindly.",
+  "development_cases_exposed": true,
+  "independent_accuracy": false,
+  "model": "gemma-4-e4b-it-ud",
+  "per_case": {
+    "tMjm": {
+      "source_ref_candidate_disagreements": 11,
+      "source_ref_claims": 19,
+      "source_ref_claims_with_valid_links": 19,
+      "source_ref_elapsed_seconds": 6.449,
+      "source_ref_invalid_claim_citations": 0,
+      "source_ref_unlinked_unknown": 0,
+      "v3_claims": 18,
+      "v3_elapsed_seconds": 4.202
+    },
+    "tMps": {
+      "source_ref_candidate_disagreements": 2,
+      "source_ref_claims": 20,
+      "source_ref_claims_with_valid_links": 20,
+      "source_ref_elapsed_seconds": 12.793,
+      "source_ref_invalid_claim_citations": 0,
+      "source_ref_unlinked_unknown": 0,
+      "v3_claims": 25,
+      "v3_elapsed_seconds": 9.073
+    },
+    "tNDx": {
+      "source_ref_candidate_disagreements": 4,
+      "source_ref_claims": 18,
+      "source_ref_claims_with_valid_links": 17,
+      "source_ref_elapsed_seconds": 7.224,
+      "source_ref_invalid_claim_citations": 0,
+      "source_ref_unlinked_unknown": 1,
+      "v3_claims": 22,
+      "v3_elapsed_seconds": 5.685
+    },
+    "tNhZ": {
+      "source_ref_candidate_disagreements": 8,
+      "source_ref_claims": 18,
+      "source_ref_claims_with_valid_links": 17,
+      "source_ref_elapsed_seconds": 7.14,
+      "source_ref_invalid_claim_citations": 0,
+      "source_ref_unlinked_unknown": 1,
+      "v3_claims": 20,
+      "v3_elapsed_seconds": 5.33
+    }
+  },
+  "production_promotions": 0,
+  "raw_source_ref_trial_sha256": "8b058afe51b9452c6b5cf2829d7b684255b842bfa7a0cd5f31f3b2c78a5419b7",
+  "review_authority": "assistant_prior_context_exposed_not_independent_or_blind",
+  "sample_cases": 4,
+  "semantic_acceptance": false,
+  "source_link_equals_semantic_entailment": false,
+  "source_ref_candidate_disagreements": 25,
+  "source_ref_claim_count": 75,
+  "source_ref_prompt_sha256": "5c2130651e416bd2a0def98713f924355b1bd89480eec5d0a690dfcf2f259fc9",
+  "source_ref_total_elapsed_seconds": 33.606,
+  "source_ref_total_output_tokens": 2227,
+  "source_ref_unlinked_unknown": 2,
+  "source_ref_valid_linked_claim_count": 73,
+  "source_snapshot_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "v3_claim_count": 85,
+  "v3_total_elapsed_seconds": 24.29,
+  "v3_total_output_tokens": 1627
+}

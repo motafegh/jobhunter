@@ -16,7 +16,17 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
-## 2026-11-16 B2 advisory source-link reconciliation — diagnostic only
+## 2026-11-16 B2 native original-item citations — feasible references, SEMANTIC NO PROMOTION
+
+The previously approved **single bounded source-ref native Gemma trial** is now complete. On the same four already-exposed B0 ads, one fixed no-retry `reasoning: off` prompt produced 4/4 structured responses, 75 English claims and 73 valid model-suggested original-item links. The pure source-candidate reconciliation raised 25 warning signals and left 2 claims unlinked; **valid links prove reference location, not employer meaning**. The former baseline v3 produced 85 claims without citations. New inference total 33.606s/2,227 output tokens versus 24.290s/1,627 for v3 (single serial runs; not controlled comparative latency statistics).
+
+Assistant-with-prior-exposure review using the earlier same 12 diagnostic cases: v3 6 pass/2 partial/4 fail, source-ref v4 5 pass/4 partial/3 fail. This is **not independent accuracy**. EDR teamwork moved to preferred, but credentials with unclear strength remain improperly preferred; applicant pentest abilities remain invented duties; work-mode/eligibility alternatives are still confused; Middle/Senior OR and certificate-or-equivalent structure are lost from the alternatives array, and useful LLM/Python work-implied ability is suppressed. No semantic acceptance, automatic reviewer certification or claims of improved user decisions.
+
+**B2 gate remains OPEN_NO_PROMOTION.** Local full suite 1,043 warnings-as-errors tests, Ruff and pip check passed; GitHub CI must be checked at new PR head. Research trial/scorecards are isolated on PR #20; accepted P1.6/translation, downstream authority and main are unchanged. Do not continue prompt-only patches to raise citation counts. The next work is an explicit bounded B2 strategy decision (source-first partial usability vs justified different-model comparison) before any model matrix, B3/B4 promotion, or unseen holdout use.
+
+Decision: `docs/working-memory/2026-11-16_P16_B2_NATIVE_SOURCE_REFERENCES_MIXED_SEMANTIC_RESULT.md`.
+
+## 2026-11-16 B2 advisory source-link reconciliation — previous diagnostic overlay
 
 Draft PR #20 now has a **candidate-only, offline original-source claim-link reconciliation**. Exact Stage A anchors and model-claim fingerprints verify *where* assistant-supplied links point; no valid citation, model JSON or heuristic source classification proves the actual Persian-to-English meaning. Source-category and obligation mismatches become review signals, not automatic employer-fact verdicts. Unlinked model claims stay unknown instead of meaning "no employer requirements."
 

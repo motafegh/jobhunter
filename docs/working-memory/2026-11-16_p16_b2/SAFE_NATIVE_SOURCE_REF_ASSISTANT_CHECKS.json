@@ -1,0 +1,145 @@
+{
+  "contract": "jobhunter-b2-native-source-reference-exposed-review-v1",
+  "date": "2026-11-16",
+  "source_snapshot_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "private_model_run_sha256": "8b058afe51b9452c6b5cf2829d7b684255b842bfa7a0cd5f31f3b2c78a5419b7",
+  "prompt_sha256": "5c2130651e416bd2a0def98713f924355b1bd89480eec5d0a690dfcf2f259fc9",
+  "review_authority": "assistant_prior_context_exposed_not_independent_or_blind",
+  "review_scope": "same twelve selected previously exposed checks; changed output format; no generalization, no paired control",
+  "reference_provenance": "model_suggested_original_item_numbers_not_semantic_certification",
+  "semantic_acceptance": false,
+  "b2_gate": "OPEN_NO_PROMOTION",
+  "reviewed_checks": [
+    {
+      "source_job_id": "tNhZ",
+      "check": "prior_llm_familiarity_explicitly_nonmandatory",
+      "v4_outcome": "pass",
+      "rationale": "LLM familiarity is presented as an advantage, not mandatory previous employment.",
+      "model_slots": [
+        "preferences:0"
+      ]
+    },
+    {
+      "source_job_id": "tNhZ",
+      "check": "part_full_remote_are_work_arrangements",
+      "v4_outcome": "fail",
+      "rationale": "Part/full-time option remains incorrectly classified under eligibility alternatives; remote location is correctly an arrangement.",
+      "model_slots": [
+        "alternatives:0",
+        "arrangements:0"
+      ]
+    },
+    {
+      "source_job_id": "tNhZ",
+      "check": "relevant_llm_python_operational_capability_links",
+      "v4_outcome": "partial",
+      "rationale": "Six concrete duties preserve technical context, but derived work-implied capabilities emphasize generic behaviors and omit LLM/Python operational ability.",
+      "model_slots": [
+        "duties:0-5",
+        "work_implied_capabilities:0-4"
+      ]
+    },
+    {
+      "source_job_id": "tMps",
+      "check": "middle_or_senior_are_alternative_eligibility_paths",
+      "v4_outcome": "partial",
+      "rationale": "Both tracks are listed in requirements; the alternatives array is empty and does not explicitly establish the Middle OR Senior path.",
+      "model_slots": [
+        "requirements:1-2",
+        "alternatives:empty"
+      ]
+    },
+    {
+      "source_job_id": "tMps",
+      "check": "within_middle_any_one_domain_and_project_conjunction",
+      "v4_outcome": "partial",
+      "rationale": "The Middle wording includes one-of domains and implemented project, but no machine-readable nested AND/OR eligibility structure is returned.",
+      "model_slots": [
+        "requirements:1"
+      ]
+    },
+    {
+      "source_job_id": "tMps",
+      "check": "duty_tool_examples_are_not_eligibility_paths",
+      "v4_outcome": "pass",
+      "rationale": "No technical implementation tools were invented as independent eligibility alternatives.",
+      "model_slots": [
+        "alternatives:empty"
+      ]
+    },
+    {
+      "source_job_id": "tNDx",
+      "check": "teamwork_is_preferred_not_mandatory",
+      "v4_outcome": "pass",
+      "rationale": "The source-referenced interpretation correctly places teamwork/management structure under preferences rather than requirements.",
+      "model_slots": [
+        "preferences:0"
+      ]
+    },
+    {
+      "source_job_id": "tNDx",
+      "check": "kaspersky_specialist_and_gov_client_strength_unresolved",
+      "v4_outcome": "fail",
+      "rationale": "Bare credential/customer-experience mentions still become employer preferences although their strength remains unresolved.",
+      "model_slots": [
+        "preferences:1-2"
+      ]
+    },
+    {
+      "source_job_id": "tNDx",
+      "check": "certificate_or_equivalent_knowledge_alternative",
+      "v4_outcome": "partial",
+      "rationale": "Certificate or equivalent knowledge is preserved inside a requirement, but the alternatives array incorrectly states no explicit alternatives.",
+      "model_slots": [
+        "requirements:1",
+        "alternatives:0"
+      ]
+    },
+    {
+      "source_job_id": "tNDx",
+      "check": "five_explicit_edr_duties",
+      "v4_outcome": "pass",
+      "rationale": "All five direct assigned EDR work items are represented with source references.",
+      "model_slots": [
+        "duties:0-4"
+      ]
+    },
+    {
+      "source_job_id": "tMjm",
+      "check": "ability_to_find_vulnerabilities_is_not_an_assigned_duty",
+      "v4_outcome": "fail",
+      "rationale": "Applicant competence and capability clauses continue to be rewritten as three assigned duties.",
+      "model_slots": [
+        "duties:0-2"
+      ]
+    },
+    {
+      "source_job_id": "tMjm",
+      "check": "remote_work_possibility_is_arrangement",
+      "v4_outcome": "pass",
+      "rationale": "Remote-work possibility remains under arrangements, not applicant eligibility or technical skill.",
+      "model_slots": [
+        "arrangements:0"
+      ]
+    }
+  ],
+  "additional_non_scored_findings": [
+    {
+      "source_job_id": "tNDx",
+      "finding": "Explicit alternative incorrectly negated by model despite correct source-number citation in requirements"
+    },
+    {
+      "source_job_id": "tMps",
+      "finding": "Two generic teamwork dispositions appear as work-implied capabilities, not technical capabilities from assigned duties"
+    },
+    {
+      "source_job_id": "tMjm",
+      "finding": "Three invented employee duties cite applicant qualification sources; matching source references do not establish correct role semantics"
+    },
+    {
+      "source_job_id": "tNhZ",
+      "finding": "Work-implied capability output omits key technical capability despite correctly citing LLM/Python duties"
+    }
+  ],
+  "conclusion": "Model citation compliance improved traceability on exposed cases but material source-semantic errors persist; no promotion, no accuracy-rate claim."
+}
