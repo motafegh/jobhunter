@@ -16,6 +16,7 @@ import hashlib
 import json
 import re
 from dataclasses import dataclass
+from decimal import Decimal, InvalidOperation
 from typing import Any, Literal
 
 from jobhunter.source_span_identity import (
@@ -122,6 +123,13 @@ _ARRANGEMENT = re.compile(
     re.I,
 )
 _COMPENSATION = re.compile(r"^(?:حقوق\s*(?:[:：]|از)|salary\s*(?:[:：]|from))", re.I)
+_SALARY_NUMBER = re.compile(
+    r"(?<![\w])([0-9][0-9,]*(?:\.[0-9]+)?)\s*"
+    r"(میلیارد|میلیون|هزار|billion|million|thousand)?",
+    re.I,
+)
+_TOMAN_CURRENCY = re.compile(r"(?:تومان|تومن|toman)", re.I)
+_RIAL_CURRENCY = re.compile(r"(?:ریال|rial)", re.I)
 _TRACK = re.compile(r"سطح\s+(Middle|Senior|میانی|ارشد)\s*[:：]", re.I)
 _EQUIVALENT = re.compile(
     r"(?:گواهینامه\s+یا\s+دانش\s+معادل|certificate\s+or\s+equivalent\s+knowledge)", re.I
@@ -156,6 +164,64 @@ def _digest(data: Any) -> str:
     return hashlib.sha256(
         json.dumps(data, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
+
+
+_DIGIT_TRANSLATION = str.maketrans(
+    "۰۱۲۳۴۵۶۷۸۹٠١٢٣٤٥٦٧٨٩",
+    "01234567890123456789",
+)
+_SALARY_MULTIPLIERS = {
+    "هزار": Decimal("1000"),
+    "thousand": Decimal("1000"),
+    "میلیون": Decimal("1000000"),
+    "million": Decimal("1000000"),
+    "میلیارد": Decimal("1000000000"),
+    "billion": Decimal("1000000000"),
+}
+
+
+def _salary_amounts(text: str) -> tuple[str | None, tuple[Decimal, ...]]:
+    """Extract only explicit currency-backed numeric amounts; no currency guessing."""
+    normalized = text.translate(_DIGIT_TRANSLATION).replace("٬", ",")
+    has_toman = bool(_TOMAN_CURRENCY.search(normalized))
+    has_rial = bool(_RIAL_CURRENCY.search(normalized))
+    currency = "toman" if has_toman and not has_rial else "rial" if has_rial and not has_toman else None
+    if currency is None:
+        return None, ()
+
+    matches = list(_SALARY_NUMBER.finditer(normalized))
+    amounts: list[Decimal] = []
+    for index, match in enumerate(matches):
+        try:
+            number = Decimal(match.group(1).replace(",", ""))
+        except InvalidOperation:
+            return currency, ()
+        unit = match.group(2).casefold() if match.group(2) else None
+        if unit is None and index + 1 < len(matches):
+            following = matches[index + 1]
+            separator = normalized[match.end() : following.start()]
+            if following.group(2) and re.search(r"(?:تا|to|[-–—])", separator, re.I):
+                unit = following.group(2).casefold()
+        amounts.append(number * _SALARY_MULTIPLIERS.get(unit or "", Decimal("1")))
+    return currency, tuple(amounts)
+
+
+def _salary_values_materially_differ(board_value: Any, employer_text: str) -> bool:
+    """Flag clearly disjoint numeric salary values; never choose a source as truth."""
+    if not isinstance(board_value, str) or not isinstance(employer_text, str):
+        return False
+    board_currency, board_amounts = _salary_amounts(board_value)
+    employer_currency, employer_amounts = _salary_amounts(employer_text)
+    if (
+        board_currency is None
+        or board_currency != employer_currency
+        or not board_amounts
+        or not employer_amounts
+    ):
+        return False
+    return max(board_amounts) < min(employer_amounts) or max(employer_amounts) < min(
+        board_amounts
+    )
 
 
 def _trim(text: str, a: int, b: int) -> tuple[int, int]:
@@ -534,6 +600,26 @@ def interpret_original_source_candidate(source: TranslationSourceVersion) -> B2S
                     logical_operator="any_of_within_source_clause",
                 )
             )
+    # Flag only clearly non-overlapping, explicit same-currency amounts.
+    # Both values remain source-owned; the signal never selects a winner.
+    for board in boards:
+        if board.field_path != "salary":
+            continue
+        for unit in units:
+            if unit.category != "compensation" or not _salary_values_materially_differ(
+                board.value, unit.anchor.exact_text
+            ):
+                continue
+            signals.append(
+                DiagnosticSignal(
+                    "board_prose_compensation_values_materially_differ",
+                    unit.anchor.anchor_id,
+                    board.selector,
+                    "Explicit numeric salary ranges do not overlap; preserve both source values "
+                    "and leave the discrepancy unresolved",
+                )
+            )
+
     if any(group.kind == "seniority_tracks" for group in alternatives):
         for board in boards:
             if board.field_path == "minimum_experience":

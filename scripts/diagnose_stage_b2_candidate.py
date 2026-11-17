@@ -184,7 +184,46 @@ def b1_design_from_b2(
                     "item_id_a": source_ids[signal.source_anchor_id],
                     "item_id_b": board_ids[signal.board_selector],
                     "type": "board_vs_employer_strength",
-                    "resolution": "unresolved",
+                    "resolution": "preserve_both_explicit_employer_wording",
+                }
+            )
+        elif (
+            signal.kind == "board_employment_mode_may_hide_prose_alternative"
+            and signal.source_anchor_id in source_ids
+            and signal.board_selector in board_ids
+        ):
+            conflicts.append(
+                {
+                    "item_id_a": source_ids[signal.source_anchor_id],
+                    "item_id_b": board_ids[signal.board_selector],
+                    "type": "board_vs_employer_arrangement",
+                    "resolution": "preserve_both_explicit_employer_wording",
+                }
+            )
+        elif (
+            signal.kind == "board_experience_range_may_hide_seniority_alternatives"
+            and signal.source_anchor_id in source_ids
+            and signal.board_selector in board_ids
+        ):
+            conflicts.append(
+                {
+                    "item_id_a": source_ids[signal.source_anchor_id],
+                    "item_id_b": board_ids[signal.board_selector],
+                    "type": "board_vs_employer_experience",
+                    "resolution": "preserve_both_explicit_employer_wording",
+                }
+            )
+        elif (
+            signal.kind == "board_prose_compensation_values_materially_differ"
+            and signal.source_anchor_id in source_ids
+            and signal.board_selector in board_ids
+        ):
+            conflicts.append(
+                {
+                    "item_id_a": source_ids[signal.source_anchor_id],
+                    "item_id_b": board_ids[signal.board_selector],
+                    "type": "board_vs_employer_compensation",
+                    "resolution": "preserve_both_explicit_employer_wording",
                 }
             )
     return {
@@ -222,6 +261,7 @@ def diagnose(database: Path, jobs: tuple[str, ...], out: Path) -> dict[str, Any]
         raise ValueError("Provide one to eight distinct source IDs")
     if not database.is_file() or out.exists():
         raise ValueError("Missing frozen input or refusing output overwrite")
+    database_sha256 = hashlib.sha256(database.read_bytes()).hexdigest()
     with tempfile.TemporaryDirectory(prefix="jobhunter-b2-") as temp:
         copied = Path(temp) / "source.sqlite3"
         read_only = "file:" + str(database.resolve()) + "?mode=ro"
@@ -277,6 +317,10 @@ def diagnose(database: Path, jobs: tuple[str, ...], out: Path) -> dict[str, Any]
                 "board_preference_disagreement_count": sum(
                     x.kind == "board_skill_tag_vs_preferred_prose" for x in candidate.signals
                 ),
+                "board_compensation_disagreement_count": sum(
+                    x.kind == "board_prose_compensation_values_materially_differ"
+                    for x in candidate.signals
+                ),
                 "board_possible_arrangement_scope_loss_count": sum(
                     x.kind == "board_employment_mode_may_hide_prose_alternative"
                     for x in candidate.signals
@@ -288,7 +332,7 @@ def diagnose(database: Path, jobs: tuple[str, ...], out: Path) -> dict[str, Any]
                 "alternative_groups_candidate": dict(sorted(alternatives.items())),
                 "work_capability_hint_count": len(candidate.work_capability_links),
                 "b1_compatibility": "schema_reference_valid_candidate_only",
-                "b1_nested_alternatives_not_yet_proven": bool(candidate.alternatives),
+                "b1_nested_alternatives_semantic_review_pending": bool(candidate.alternatives),
                 "b1_nested_syntactically_unsupported": list(logic.unresolved_group_kinds),
                 "b1_nested_semantic_review": "candidate_unreviewed",
                 "b1_candidate_eligibility_graph_count": len(design["eligibility_graphs"]),
@@ -297,13 +341,18 @@ def diagnose(database: Path, jobs: tuple[str, ...], out: Path) -> dict[str, Any]
                     for graph in design["eligibility_graphs"]
                     for node in graph["nodes"]
                 ),
+                "b1_conflict_count": len(design["conflicts"]),
+                "b1_conflict_types": sorted({item["type"] for item in design["conflicts"]}),
             }
+    if hashlib.sha256(database.read_bytes()).hexdigest() != database_sha256:
+        raise ValueError("Frozen source database changed during diagnostic")
     out.mkdir(parents=True)
     (out / "PRIVATE_B2_CANDIDATES.json").write_text(
         json.dumps(private, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     )
     report = {
         "contract": "jobhunter-b2-private-first-run-summary-v1",
+        "source_database_sha256": database_sha256,
         "job_count": len(jobs),
         "model_calls": 0,
         "new_source_acquisitions": 0,
