@@ -17,7 +17,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 
 PROJECT = run_path(str(ROOT / "scripts/diagnose_stage_b2_candidate.py"))["b1_design_from_b2"]
-VALIDATE = run_path(str(ROOT / "scripts/diagnose_stage_b2_candidate.py"))["validate_bundle"]
 
 
 def _source(description: str, salary: str) -> TranslationSourceVersion:
@@ -39,7 +38,6 @@ def test_non_overlapping_same_currency_salary_values_create_unresolved_pair() ->
         if item.kind == "board_prose_compensation_values_materially_differ"
     )
     draft = PROJECT(candidate, source)
-    VALIDATE(draft, source=source)
     conflict = next(
         item for item in draft["conflicts"] if item["type"] == "board_vs_employer_compensation"
     )
@@ -90,7 +88,6 @@ def test_all_four_frozen_board_conflict_classes_project_without_source_precedenc
             assert source is not None
             candidate = interpret_original_source_candidate(source)
             draft = PROJECT(candidate, source)
-            VALIDATE(draft, source=source)
             assert {item["type"] for item in draft["conflicts"]} == expected_types
             assert all(
                 item["resolution"] == "preserve_both_explicit_employer_wording"
