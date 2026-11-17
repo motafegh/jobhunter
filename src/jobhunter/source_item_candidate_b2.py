@@ -185,7 +185,12 @@ def _salary_amounts(text: str) -> tuple[str | None, tuple[Decimal, ...]]:
     normalized = text.translate(_DIGIT_TRANSLATION).replace("٬", ",")
     has_toman = bool(_TOMAN_CURRENCY.search(normalized))
     has_rial = bool(_RIAL_CURRENCY.search(normalized))
-    currency = "toman" if has_toman and not has_rial else "rial" if has_rial and not has_toman else None
+    if has_toman and not has_rial:
+        currency = "toman"
+    elif has_rial and not has_toman:
+        currency = "rial"
+    else:
+        currency = None
     if currency is None:
         return None, ()
 

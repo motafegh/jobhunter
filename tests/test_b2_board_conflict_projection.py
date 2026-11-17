@@ -10,11 +10,11 @@ from runpy import run_path
 
 import pytest
 
-ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "scripts"))
-
 from jobhunter.source_item_candidate_b2 import interpret_original_source_candidate
 from jobhunter.translation_store import TranslationSourceVersion, TranslationStore
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "scripts"))
 
 PROJECT = run_path(str(ROOT / "scripts/diagnose_stage_b2_candidate.py"))["b1_design_from_b2"]
 VALIDATE = run_path(str(ROOT / "scripts/diagnose_stage_b2_candidate.py"))["validate_bundle"]
@@ -65,7 +65,10 @@ def test_compatible_salary_range_and_negotiable_values_do_not_create_conflicts()
 
 
 def test_all_four_frozen_board_conflict_classes_project_without_source_precedence() -> None:
-    database = ROOT / "data/local-acceptance/p16-stage-b0-2026-11-14/frozen/exposed_original_snapshot.sqlite3"
+    database = (
+        ROOT
+        / "data/local-acceptance/p16-stage-b0-2026-11-14/frozen/exposed_original_snapshot.sqlite3"
+    )
     if not database.is_file():
         pytest.skip("Frozen B0 source snapshot is intentionally absent in CI")
     expected = {
