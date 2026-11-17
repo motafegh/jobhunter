@@ -1,0 +1,94 @@
+{
+  "contract": "jobhunter-p16-b2-bounded-candidate-milestone-v1",
+  "source_database_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+  "private_candidate_sha256": "2b3618dbd9d68b939a974bb81b0ce2200bcdc8ee4d9dc1a805cb73102c450f31",
+  "safe_diagnostic_metrics_sha256": "11031e6b4c2c6b53db165c4730479153cf006b7f67c6ee4e7045f137cff79847",
+  "source_cohort": "four frozen, previously exposed A1 development ads; not a holdout",
+  "candidate_milestone": "PASS_BOUNDED_EXPOSED_COHORT",
+  "b2_full_semantic_generalization": "NOT_ESTABLISHED",
+  "candidate_semantic_review": "candidate_unreviewed",
+  "model_generated_source_reference_route": "RESEARCH_ONLY_NO_PROMOTION",
+  "independent_accuracy_claim": false,
+  "b1_structural_and_source_reference_validation": "PASS",
+  "production_route_changed": false,
+  "accepted_employer_facts_promoted": 0,
+  "downstream_authority": "none",
+  "aggregate": {
+    "source_item_count": 78,
+    "board_value_count": 53,
+    "work_duty_candidate_count": 22,
+    "work_capability_hint_count": 10,
+    "candidate_alternative_group_count": 3,
+    "candidate_eligibility_graph_count": 2,
+    "candidate_eligibility_leaf_count": 11,
+    "board_conflict_count": 4
+  },
+  "board_conflict_type_counts": {
+    "board_vs_employer_arrangement": 1,
+    "board_vs_employer_compensation": 1,
+    "board_vs_employer_experience": 1,
+    "board_vs_employer_strength": 1
+  },
+  "per_case": {
+    "tMjm": {
+      "source_item_count": 18,
+      "board_value_count": 11,
+      "work_duty_candidate_count": 0,
+      "work_capability_hint_count": 0,
+      "candidate_alternative_group_count": 0,
+      "candidate_eligibility_graph_count": 0,
+      "candidate_eligibility_leaf_count": 0,
+      "board_conflict_types": [],
+      "semantic_review": "candidate_unreviewed"
+    },
+    "tMps": {
+      "source_item_count": 19,
+      "board_value_count": 19,
+      "work_duty_candidate_count": 11,
+      "work_capability_hint_count": 6,
+      "candidate_alternative_group_count": 2,
+      "candidate_eligibility_graph_count": 1,
+      "candidate_eligibility_leaf_count": 9,
+      "board_conflict_types": [
+        "board_vs_employer_experience"
+      ],
+      "semantic_review": "candidate_unreviewed"
+    },
+    "tNDx": {
+      "source_item_count": 19,
+      "board_value_count": 11,
+      "work_duty_candidate_count": 5,
+      "work_capability_hint_count": 1,
+      "candidate_alternative_group_count": 1,
+      "candidate_eligibility_graph_count": 1,
+      "candidate_eligibility_leaf_count": 2,
+      "board_conflict_types": [
+        "board_vs_employer_compensation"
+      ],
+      "semantic_review": "candidate_unreviewed"
+    },
+    "tNhZ": {
+      "source_item_count": 22,
+      "board_value_count": 12,
+      "work_duty_candidate_count": 6,
+      "work_capability_hint_count": 3,
+      "candidate_alternative_group_count": 0,
+      "candidate_eligibility_graph_count": 0,
+      "candidate_eligibility_leaf_count": 0,
+      "board_conflict_types": [
+        "board_vs_employer_arrangement",
+        "board_vs_employer_strength"
+      ],
+      "semantic_review": "candidate_unreviewed"
+    }
+  },
+  "limitations": [
+    "The four original ads are previously exposed development cases, not independent holdout evidence.",
+    "Exact source spans and B1 references establish provenance and structure, not semantic correctness.",
+    "Candidate category and strength labels remain unreviewed and have no downstream authority.",
+    "Unsupported eligibility syntax remains unresolved; the two admitted graphs are candidate-only.",
+    "The model-generated source-reference route remains research-only because material semantic errors persisted.",
+    "B3 item translation, B4 usefulness, B5 unseen generalization, and B6 production promotion remain separate gates."
+  ],
+  "next_stage": "B3_SOURCE_BOUND_ITEM_TRANSLATION_CANDIDATE"
+}

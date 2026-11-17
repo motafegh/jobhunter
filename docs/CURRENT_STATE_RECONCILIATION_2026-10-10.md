@@ -2,7 +2,7 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-16
+**Last reconciled:** 2026-11-17
 **Branch:** `main`  
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
@@ -55,6 +55,14 @@ passed. Next decide a strictly bounded source-link output interface only
 if its accuracy/usefulness/cost merits an additional experimental trial.
 
 Decision: `docs/working-memory/2026-11-16_P16_B2_ADVISORY_SOURCE_CLAIM_GROUNDING_INCREMENT.md`.
+
+## November 17 B2 bounded source-first candidate milestone — PASS for exposed scope
+
+The deterministic candidate-only source inventory and B1 projection now pass the bounded four-ad exposed-cohort engineering milestone. Recomputed from the exact frozen B0 source DB: **78 original items, 53 board refs, 10 optional work-capability hints, 3 alternative groups, 2 candidate eligibility graphs / 11 B1 item leaves, and 4 correctly typed board/prose conflict pairs** (strength, arrangement, experience, compensation). The five EDR duties, explicit preferred teamwork, unresolved Kaspersky/customer-experience strength, certificate OR equivalent knowledge, Middle OR Senior topology, and the zero-duty pentesting case remain represented without converting candidate output into accepted facts.
+
+Salary discrepancy detection is narrow: explicit same-currency, non-overlapping numeric amounts only; compatible ranges and negotiated salary do not generate false conflict signals. All four conflict pairs preserve both source-owned values. Focused source/eligibility tests: 50 passed locally before the three new conflict-projection regressions were added; new-head GitHub CI is pending.
+
+**Milestone scope:** `PASS_BOUNDED_EXPOSED_COHORT`; candidate labels remain unreviewed, no independent accuracy/generalization claim, no accepted employer facts or downstream authority. B2 generalization remains **NOT ESTABLISHED**; the source-reference model route remains research-only / no promotion. Next stage: B3 source-bound item translation under the existing 64-request budget. See `docs/working-memory/2026-11-17_P16_B2_BOUNDED_SOURCE_CANDIDATE_MILESTONE.md`.
 
 ## November 16 B2 native model comparison — previous research overlay
 
