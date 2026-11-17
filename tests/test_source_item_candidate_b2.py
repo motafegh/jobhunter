@@ -265,7 +265,7 @@ def test_b1_design_projection_is_candidate_only_and_reference_valid() -> None:
     assert draft["brief"]["downstream_authority"] == "none"
     assert draft["alignments"] == []
     assert len(draft["conflicts"]) == 1
-    assert draft["conflicts"][0]["resolution"] == "unresolved"
+    assert draft["conflicts"][0]["resolution"] == "preserve_both_explicit_employer_wording"
     assert all(x["semantic_review"] == "candidate_unreviewed" for x in draft["items"])
 
 
