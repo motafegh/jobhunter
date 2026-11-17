@@ -50,8 +50,8 @@ Salary discrepancy detection is intentionally narrow: it compares only explicit 
 - Frozen B0 database SHA-256: \`bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe\`.
 - Private candidate-output SHA-256: \`2b3618dbd9d68b939a974bb81b0ce2200bcdc8ee4d9dc1a805cb73102c450f31\`.
 - Safe diagnostic-metrics SHA-256: \`11031e6b4c2c6b53db165c4730479153cf006b7f67c6ee4e7045f137cff79847\`.
-- Focused source-candidate and eligibility tests: **50 passed** locally; three new conflict-projection regressions are included in the current CI run.
-- Full local suite and new-head GitHub CI remain separate verification steps.
+- Focused source-candidate and eligibility tests: **46 passed** locally; a separate local milestone-reconciliation check added 4 passing tests.
+- The three new board-conflict regressions passed in clean GitHub CI at commit c604600f ([run 43985803756](https://github.com/motafegh/jobhunter/actions/runs/43985803756)). The full local suite was not rerun after the final CI correction.
 
 Full private source and candidate text remains under ignored \`data/local-acceptance/\`. The tracked scorecard contains counts, hashes and authority boundaries only.
 
