@@ -140,6 +140,8 @@ Actions:
 
 **Gate B3 PASS:** original-to-target association mechanically exact for new candidates, source meaning verified on exposed diagnostic clauses (including EDR heading distortion and `وظیفه شناس`), no invented implicit equivalence for legacy v2; original/translated modality agreement or blocked flag; no mixed-evidence currentness violation; local provider privacy and bounded behavior verified.
 
+**B3 result (2026-11-18): PASS_BOUNDED_EXPOSED_COHORT.** The frozen four-ad selection contained 63 Persian source items and one native-English identity. The local Gemma translation-v2 run made 63 primary requests and one evidence-justified corrective request (64/64 total); primary prompts carried exactly one source item without heading context. All 64 request/response hash pairs were verified, all four B1-compatible bundles passed, and 63 Persian translations received assistant exposed-cohort review. One material personal-trait mistranslation was superseded by a corrective candidate and documented terminology normalization. The selected translations have no remaining material meaning-changing issue on these exposed cases. Twelve nested eligibility leaves retain source identity without separate target offsets. This is not blind independent human review or unseen generalization. No accepted fact, downstream authority, production database or public route changed. Decision and safe scorecard: docs/working-memory/2026-11-18_P16_B3_SOURCE_BOUND_TRANSLATION_MILESTONE.md and docs/working-memory/2026-11-18_p16_b3/SAFE_B3_MILESTONE.json. B4 is next.
+
 ### B4 — Useful non-authoritative job understanding and P1.6 candidate comparison
 
 **Purpose:** Return job-relevant insight without corrupting durable accepted facts.

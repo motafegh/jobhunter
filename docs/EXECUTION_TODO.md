@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-18 (documentation/status reconciliation; accepted application contracts unchanged).
+**Last research-status reconciliation:** 2026-11-18 (B3 bounded translation milestone completed; accepted application contracts unchanged).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The original research parser and source-bound model translation remain unmerged. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** P1.6 Stage B **B0 PASS; B1 design PASS; B2 bounded source-first candidate-engine milestone PASS on four exposed cases; B2 full semantic generalization NOT ESTABLISHED; B3 source-bound item translation is next.** Draft PR #20 remains unmerged; no accepted employer facts, downstream authority, or production route changed. Read `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`. B3 is a private candidate-only experiment using the configured local `gemma-4-e2b-it` translation-v2 provider under the predeclared 64-item ceiling; B4–B6 remain separate gates. The November 11 capability-expectation next-feature proposal is preserved as a **subsequent** experiment, not an active parallel build. Stage A passive source identity accepted; four-job A1 assistant source/model review complete (59 source assertions, 18 diagnostic flags, 11 translation checks), not independent blind human verification. Ambiguous employer intent must stay unresolved.
+**Current selected next stage:** P1.6 Stage B B0 PASS; B1 design PASS; B2 bounded source-first candidate milestone PASS; B3 bounded source-bound translation PASS on four exposed ads; B2 full semantic generalization and B5 unseen generalization NOT ESTABLISHED; B4 useful non-authoritative job understanding is next. B3 completed 63 primary plus one justified corrective local Gemma request, 64/64 total, with four B1 bundles and final audit passing. No accepted facts, downstream authority or production route changed. B2 PR #20 remains draft; B3 is stacked on the B2 branch and awaits its own CI.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -15,7 +15,7 @@
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
 
-## 2026-11-14 ACTIVE P1.6 Stage B execution plan (B2 next)
+## 2026-11-14 ACTIVE P1.6 Stage B execution plan (B4 next)
 
 **Controlling scope:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
 Distinct from the historically closed P2.2B-B1 and P2.2B-B2 work.
@@ -38,8 +38,8 @@ Distinct from the historically closed P2.2B-B1 and P2.2B-B2 work.
 - [ ] **B2 FULL GATE OPEN:** verify nested AND/OR alternatives and bounded semantic completeness under ambiguity, compare context preservation against unsupported required claims, and finish acceptance evidence before any product promotion.
 - [x] **November 15 B2 calibration recorded (planning only):** optional work-implied capability links, no invented employer eligibility, no required new B1 fields; complexity must earn its value. See `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
 - [ ] B2 diagnostics compare false mandatory claims, **suppressed useful work-capability context**, abstentions, and model/prompt complexity. Optional capability links are not mandatory coverage items.
-- [ ] B3: isolated source-bound English alignment with semantic modality and heading checks; do not inject Persian into current v30 artifacts.
-- [ ] B4: useful candidate-only job-understanding brief and fail-soft source-based view; comparative v30/v9 diagnostic runs.
+- [x] B3: isolated source-bound English alignment, semantic modality and heading checks completed as candidate-only sidecar; no Persian injected into current v30 artifacts.
+- [ ] B4 NEXT: useful candidate-only job-understanding brief and fail-soft source-based view; compare against unchanged v30/v9 on the same frozen source snapshots. No production routing.
 - [ ] B5: independently checked fresh unseen cohort and full negative/positive evidence scorecard; if not available, mark generalization NOT ESTABLISHED.
 - [ ] B6: separate explicit accept/no-promotion, narrow user route or sidecar-only; source-version, downstream/corpus, migration/rollback, UI/CLI and CI acceptance.
 

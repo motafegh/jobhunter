@@ -3,19 +3,24 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-18
-**Branch:** `main` unchanged; active research on draft PR #20
+**Branch:** main unchanged; B2 draft PR #20; B3 work on feature/p16-b3-source-bound-item-translation-2026-11-18 stacked on the B2 branch
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 18 local B2 reconciliation and B3 preparation — latest status overlay
+## November 18 B3 bounded source-bound translation milestone — latest status overlay
 
-The local WSL checkout was safely fast-forwarded to the B2 research branch head `94362315`; the earlier local state is retained on backup branch `backup/local-b2-pre-reconcile-2026-11-18` and in a named stash. The ignored frozen B0 source database and B2 private candidate outputs remain present. No reset/clean, production database write, or `main` change occurred.
+The local checkout is on feature/p16-b3-source-bound-item-translation-2026-11-18, based on the B2 research branch at 97d5fda. The B2 PR #20 remains draft and unmerged. Main and all accepted P1.6/v30/v9, Capability, Work, Registry and Market records remain unchanged.
 
-A local-only reproducibility runner now reconstructs the B2 candidates from the frozen source snapshot and compares them with the private candidate output. The tracked safe scorecard includes source, candidate, schema and implementation-code fingerprints. Focused B2 tests: **50 passed with warnings as errors**. Latest PR-head GitHub CI at `94362315`: **1,018 passed / 28 skipped**, Ruff and dependency consistency passed. Full local suite has not yet been rerun after reconciliation.
+B3 selection and execution completed on the four frozen, previously exposed B0 ads: 78 source items; 64 eligible top-level items (63 Persian translation candidates and one native-English identity); 12 context-only and two generic application instructions excluded; 12 nested eligibility leaves retained as source subspans without duplicate model calls or separate target offsets. Local gemma-4-e2b-it translation-v2 completed 63 primary requests plus one evidence-justified corrective request (64/64 total), with zero retries and zero truncation recoveries. All 64 request/response hash pairs were verified; all four B1-compatible bundles pass.
 
-B3 selection is frozen at **64 eligible top-level source items: 63 Persian translation requests plus one native-English identity**. Exclude 12 context-only items and two generic `tNhZ` application instructions; include the three `tNDx` EDR exam-related statements. Twelve B1 eligibility leaves are nested subspans within selected parent qualification items; no separate child translation request or target subspan alignment will be claimed. B3 has not yet issued a model request. No accepted P1.6/translation, downstream authority, or public route changed.
+Assistant review covered all 63 Persian translations on this exposed cohort. One material primary mistranslation of a personal trait was retained for audit, corrected with the single allowed corrective candidate, and selected with a documented terminology normalization. No material meaning-changing issue remains in the selected translations for these four ads. This is not independent blind human review or unseen generalization. Twelve nested child target offsets remain not established.
+
+Local quality: 1,063 passed with warnings as errors; Ruff lint, pip dependency check, compileall, and targeted formatting checks passed. No production database write, accepted fact promotion, downstream authority, or public route change occurred. Full-repository format-check baseline still has unrelated pre-existing deviations; no global reformat was applied. B3 final audit: ignored/private data/local-acceptance/p16-stage-b3-2026-11-18/primary-v1/B3_FINAL_AUDIT.json; safe decision: docs/working-memory/2026-11-18_P16_B3_SOURCE_BOUND_TRANSLATION_MILESTONE.md.
+
+Next: B4 useful non-authoritative job-understanding brief and isolated comparison against unchanged v30/v9 on the same frozen sources. B2 full semantic generalization, B5 unseen-cohort generalization and B6 promotion remain NOT ESTABLISHED. B3 GitHub CI and PR #21 are pending; PR #20 remains draft.
+
 
 ## November 16 B2 native model-suggested item references — previous research overlay
 

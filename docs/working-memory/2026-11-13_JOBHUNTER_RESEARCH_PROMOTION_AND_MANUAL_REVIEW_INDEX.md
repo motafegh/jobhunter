@@ -2,13 +2,13 @@
 
 ## Stage B authoritative focused plan adoption — 2026-11-13
 
-**Current next engineering gate:** P1.6 **B2 original-source candidate** of `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`. B0 baseline/protocol and B1 source-item/bilingual contract design PASS (2026-11-14); ADR: `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`.
+**Current next engineering gate:** P1.6 B4 useful non-authoritative job-understanding brief. B0 PASS; B1 design PASS; B2 bounded source-first candidate milestone PASS; B3 bounded source-bound translation PASS on four exposed ads (2026-11-18). B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED.
 The formerly planned P2.3 capability-expectation feature is sequenced *after*
 source-fidelity quality work, not cancelled. This index keeps the historical
 research paths and four-job owner-delegated audit evidence; the focused plan,
 roadmap, implementation plan and current-state overlay now control execution.
 
-**B0 evidence-only and B1 contract-design milestones complete; no Stage B runtime semantic implementation or public route changed.** Stage A passive source anchors are on
+**B0/B1 design, B2 candidate-engine, and B3 source-bound translation research milestones are complete for their bounded exposed scopes; no public route or accepted semantic authority changed. Stage A passive source anchors are on main; Stage B candidates remain isolated from production.
 main; v31 prompt-only candidates, research semantic heading heuristics and
 source-bound model calls remain unmerged. No unchanged v30 artifact may silently
 consume original Persian source as extra evidence.
@@ -23,6 +23,15 @@ required before any claim of generalized improvement or a B6 public switch.
 -> B3 bilingual alignment -> B4 useful candidate brief -> B5 fresh evaluation
 -> B6 explicit accept/no-promote integration. Every gate retains auditable
 evidence, test counts and source version/model identity.
+
+
+## B3 bounded source-bound translation completion — 2026-11-18
+
+B3 passed on four previously exposed B0 ads. The 78 exact B2 source items yielded 64 eligible top-level items: 63 Persian translation candidates plus one native-English identity. Twelve context-only items and two generic application instructions were excluded; twelve nested eligibility leaves remain source subspans without duplicate calls or separate target offsets. Local Gemma 4 E2B translation-v2 completed 63 primary requests plus one justified corrective request (64/64), with no retries or truncation recovery. All 64 request/response hashes and four B1-compatible bundles were verified.
+
+Assistant review covered all 63 Persian translations. One primary personal-trait mistranslation was corrected with the single corrective candidate and explicit terminology normalization. This is assistant review on an exposed cohort, not blind independent human certification. B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED. No accepted facts, downstream authority, production DB or public route changed. B4 useful non-authoritative job understanding is next.
+
+Decision: docs/working-memory/2026-11-18_P16_B3_SOURCE_BOUND_TRANSLATION_MILESTONE.md; safe scorecard: docs/working-memory/2026-11-18_p16_b3/SAFE_B3_MILESTONE.json.
 
 
 **Recorded:** 2026-11-13
@@ -75,11 +84,11 @@ Start with a small risk-stratified packet (e.g. optional vs required LLM, EDR pr
 
 1. The human review packets/forms and independent reviewed verdicts DO NOT YET EXIST. They must be prepared before a semantic promotion gate.
 2. The source-first research code has not been merged to main, and no P1.6 integration/migration has been verified.
-3. Only two source-bound local translation examples exist, both exposed developer cases; there is no separate unseen external/generalization validation.
+3. B3 now contains 63 Persian source-bound translations plus one native identity across four exposed ads; there is still no separate unseen external/generalization validation.
 4. The current English-projection-v2 has field-level provenance but not per-item aligned evidence; the new research code documents that lack rather than inventing links.
 5. A durable qualified, source-linked English projection, explicit candidate-to-reviewed state machine and compatible acceptance migration are not yet implemented.
 6. The original-language v9 path can persist a mechanically `accepted` artifact without independent source review; that must be treated as a review-authority concern.
-7. Full model-provider wire request/response retention and lossless reproducibility of ignored local raw trial data have NOT been established for the new source-bound prototype. Private local evidence must be preserved before cleanup; GitHub contains only safe hashes and counts.
+7. B3 model-provider request/response retention and lossless reproducibility are established for the bounded November 18 run; earlier Stage A prototype raw-retention limitations remain historical. Private local B3 evidence must be preserved; GitHub contains only safe hashes and counts.
 8. Older main governance and current-state reconciliation files predate this research. This index is the current status-only research handoff; future accepted architectural changes must be reflected in controlling documents, not only working-memory records.
 9. Retained original source evidence includes real public job text; preserve source-usage, retention and privacy constraints. Do not commit local raw captures or personal review annotations without explicit screening.
 

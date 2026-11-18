@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-11-14
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. The bounded P2.3A factual comparison is delivered, and the verified frozen-Market navigation defect is repaired. The optional at-a-glance prototype is archived without promotion; owner time savings are unmeasured. The formerly next candidate (November 11) was source-backed job-specific capability expectations; the November 13 source-fidelity findings now make Stage B the active next prerequisite. Capability-expectation work is retained but sequenced afterward. Persistent P2.3 profiles, promoted families/archetypes, personal scoring, and Market v2 remain separately gated. Current status: `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`; closure: `docs/working-memory/2026-11-11_P23A_COMPARISON_STAGE_CLOSURE_AND_NEXT_CAPABILITY_GATE.md`.
+**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. B3 source-bound translation passed November 18 on four exposed cases with one justified corrective candidate; B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED. B4 useful non-authoritative job understanding is next. The unseen cohort has not been acquired; no production route or accepted semantic authority changed.
 
 ## 1. Purpose and authority
 
@@ -82,14 +82,14 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | B0 | Frozen baseline/source versions, exposed cases, new-cohort selection protocol, provider budget | PASS / 2026-11-14 |
 | B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | DESIGN PASS / 2026-11-14 |
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
-| B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | NEXT / BOUNDED EXPERIMENT |
-| B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | PLANNED |
+| B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PASS_BOUNDED_EXPOSED_COHORT / 2026-11-18; one corrective selected; no promotion |
+| B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | NEXT |
 | B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 
 **B2 interpretive calibration (2026-11-15):** Duties, qualifications and work-implied capabilities can overlap and remain related; separating employer-stated facts must not block useful source-supported capability inference. Never upgrade inferred ability into mandatory prior employment or unstated named tools. Keep candidate links optional, simple and source-labeled; test context loss and prompt/validation burden alongside false requirements. B1 schema and runtime are unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
 
-**B1 closure 2026-11-14:** Source-item, board-value, obligation-scope, eligibility AND/OR, translation association and orthogonal reviewer authority contract design verified against four exposed A1 cases, 30 original text spans and 5 board references, including synthetic graph truth tables and negative reference tests. All production P1.6/currentness/database semantics remain unchanged. Read `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`; B2 bounded candidate-engine milestone passed, but full semantic generalization remains open; B3 source-bound translation is NEXT.
+**B1 closure 2026-11-14:** Source-item, board-value, obligation-scope, eligibility AND/OR, translation association and orthogonal reviewer authority contract design verified against four exposed A1 cases, 30 original text spans and 5 board references, including synthetic graph truth tables and negative reference tests. All production P1.6/currentness/database semantics remain unchanged. Read the B1 ADR. B2 bounded candidate-engine milestone passed; B3 source-bound translation passed on four exposed ads, without an unseen-generalization claim; B4 useful candidate brief is NEXT.
 
 **B0 closure 2026-11-14:** Read-only baseline and evaluation selection/scoring protocol accepted. Nine original HTML hashes verified, three private SQLite backups healthy, 59 source assertions checked, 485 known IDs excluded for future fresh-source selection. No new ads or local model calls were made; 6–8 unseen evaluation ads have NOT been captured. B1 design is next. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 

@@ -1,0 +1,103 @@
+{
+  "contract": "jobhunter-p16-b3-safe-milestone-v1",
+  "status": "PASS_BOUNDED_EXPOSED_COHORT",
+  "date": "2026-11-18",
+  "branch": "feature/p16-b3-source-bound-item-translation-2026-11-18",
+  "base_branch": "feature/p16-b2-source-items-metadata-2026-11-15",
+  "base_commit": "97d5fda",
+  "source_cohort": {
+    "job_ids": [
+      "tNhZ",
+      "tMps",
+      "tNDx",
+      "tMjm"
+    ],
+    "exposure": "previously exposed development ads; not holdout"
+  },
+  "selection": {
+    "source_item_count": 78,
+    "eligible_top_level_item_count": 64,
+    "persian_primary_translation_count": 63,
+    "native_english_identity_count": 1,
+    "context_only_excluded_count": 12,
+    "generic_application_instruction_excluded_count": 2,
+    "nested_eligibility_leaf_count": 12,
+    "nested_leaf_offsets": "not_established"
+  },
+  "execution": {
+    "primary_generation_requests": 63,
+    "corrective_generation_requests": 1,
+    "total_generation_requests": 64,
+    "request_budget": 64,
+    "exact_source_only_primary_requests": 63,
+    "corrective_exact_source_plus_note_requests": 1,
+    "heading_context_sent": false,
+    "request_response_hash_pairs_verified": 64,
+    "model": "gemma-4-e2b-it",
+    "provider": "local-lm-studio-translation-v2",
+    "model_completion_attempts": 64,
+    "transport_retries": 0,
+    "truncation_recoveries": 0,
+    "prompt_tokens": 18462,
+    "completion_tokens": 24496
+  },
+  "semantic_review": {
+    "assistant_reviewed_persian_translation_count": 63,
+    "native_identity_reviewed_count": 1,
+    "material_primary_issue_count": 1,
+    "corrective_candidate_count": 1,
+    "corrective_candidate_selected_count": 1,
+    "selected_translation_unresolved_count": 0,
+    "reviewer_terminology_normalization_count": 1,
+    "selected_translation_diagnostic_flags": 0,
+    "review_scope": "assistant review with prior exposure; not independent blind human review",
+    "unseen_generalization_established": false
+  },
+  "validation": {
+    "b1_compatible_bundles_passed": 4,
+    "mechanical_audit": "PASS",
+    "final_audit": "PASS",
+    "authorization_headers_persisted": false,
+    "safe_metrics_raw_text_leak_check": "PASS"
+  },
+  "authority": {
+    "candidate_only": true,
+    "accepted_employer_facts_promoted": 0,
+    "production_database_written": false,
+    "public_route_changed": false,
+    "downstream_authority": "none"
+  },
+  "limitations": [
+    "Four exposed ads are not an unseen holdout.",
+    "Assistant review is not independent blind human certification.",
+    "Twelve nested eligibility leaves have source identity but no separate target subspan offsets.",
+    "B2 full semantic generalization and B5 unseen generalization remain NOT_ESTABLISHED.",
+    "Minor fluency observations remain; no material meaning-changing issue remains in the selected exposed-cohort translations."
+  ],
+  "hashes": {
+    "source_database_sha256": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+    "b2_private_candidate_sha256": "2b3618dbd9d68b939a974bb81b0ce2200bcdc8ee4d9dc1a805cb73102c450f31",
+    "run_manifest_sha256": "8dfd174a41c8340d91a13ce5e2e5d06d1ec79547548bceb5da070b5521d6d0b1",
+    "private_candidate_output_sha256": "3f98c82de06e7d4abff94679a154e600813f7145f994d51dcee1040a5c0c8be2",
+    "corrective_candidate_sha256": "c67157c228ba610553206b7c621ac84d3aa9e2202b9a76809bd3db34140280ed",
+    "selected_b1_drafts_sha256": "058478e38c8164744a7bcb2e96c01a914f5ff809f7df3eaa22d5b07dd1854814",
+    "safe_metrics_sha256": "06bb68ae08c0ed22361d3f70a0d40756460e796d324bd5bb2c6fbc912d22b7f3",
+    "semantic_review_sha256": "dcac3dda47e3d8d7e24ee527468ef0a2a33862bab9b69b9f7638a570858e24cb",
+    "review_flag_reassessment_sha256": "3b3032cc4ade0bd83f1ca4c58fee32e58ba63926a792005d77f83239230b9ddf",
+    "mechanical_audit_sha256": "d9ad9017152b00ccf27effa5ce69f5ff8c703a373d9fb856d130a0fd1a401006",
+    "final_audit_sha256": "0b1d43a8fcda7365d6e5aba26426580724105240dc9ef5ad33f7fc6eff5d3731",
+    "raw_capture_index_sha256": "5e344addd2077f50acf95d3ab2228c758b7890af3058edcd7b160fbea3ef3092",
+    "checkpoint_sha256": "b9980839c96234d2b8b44d1cd6c7952fa74aaaca1a135a992fb7ada95497c7cd"
+  },
+  "code_fingerprints": {
+    "run_time_b3_runner_sha256": "ff8d8cecbec4250fdd8bcb771f1ff32f42609399f8e48bd47fe75b81eb925986",
+    "run_time_b3_support_module_sha256": "8cdf32f3a868396d540730fb88a860bf43a415adeaf91863b60bfc8a5dcd02a5",
+    "reassessment_support_module_sha256": "e432cdb6dd5130e5bdf73e359fa71f608e736ac9fe6910289a661243d2626609",
+    "corrective_runner_sha256": "ec09285504d942d13645dc695853d44e15d9b0f83b383f37b0a2121242183644",
+    "reconciliation_script_sha256": "84099a83e0fd81d0bda31ee4cfe671066c20cd28135bf6e80b513cff037f39ac",
+    "validator_script_sha256": "12d0bfb03b51f9cb7acf54feef01ea9f6ecf94b8cb908114c3b46fb7d8b2ba88",
+    "semantic_review_finalizer_sha256": "c0dff09fac27a190847092e62df3bab2710430565fe8ea20cf73a0762ca430b5",
+    "safe_milestone_verifier_sha256": "b43134d724635ee44abd5d5391d1a1983c4c9104c0b39de23446baa5df200706"
+  },
+  "next_gate": "B4_USEFUL_NON_AUTHORITATIVE_JOB_UNDERSTANDING"
+}
