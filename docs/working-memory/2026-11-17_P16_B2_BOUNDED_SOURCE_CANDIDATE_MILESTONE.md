@@ -50,10 +50,10 @@ Salary discrepancy detection is intentionally narrow: it compares only explicit 
 - Frozen B0 database SHA-256: \`bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe\`.
 - Private candidate-output SHA-256: \`2b3618dbd9d68b939a974bb81b0ce2200bcdc8ee4d9dc1a805cb73102c450f31\`.
 - Safe diagnostic-metrics SHA-256: \`11031e6b4c2c6b53db165c4730479153cf006b7f67c6ee4e7045f137cff79847\`.
-- Focused source-candidate and eligibility tests: **46 passed** locally; a separate local milestone-reconciliation check added 4 passing tests.
-- The three new board-conflict regressions passed in clean GitHub CI at commit c604600f ([run 43985803756](https://github.com/motafegh/jobhunter/actions/runs/43985803756)). The full local suite was not rerun after the final CI correction.
+- Focused source-candidate and eligibility tests: **46 passed** locally; the separate local milestone-reconciliation tests add 4, for **50 focused tests passed with warnings as errors**. The reproducibility runner is `scripts/reconcile_b2_candidate_milestone.py`; it recomputes the source-first candidate from the frozen B0 snapshot and checks exact private-output equality.
+- The three board-conflict regression tests passed in clean GitHub CI at code commit c604600f ([run 43985803756](https://github.com/motafegh/jobhunter/actions/runs/43985803756)). Latest PR head `94362315` also passed GitHub CI: **1,018 passed / 28 skipped**, Ruff and dependency consistency passed ([run 43986120906](https://github.com/motafegh/jobhunter/actions/runs/43986120906)). The full local suite was not rerun after the final CI correction.
 
-Full private source and candidate text remains under ignored \`data/local-acceptance/\`. The tracked scorecard contains counts, hashes and authority boundaries only.
+Full private source, raw model records and candidate text remain under ignored `data/local-acceptance/`. The tracked scorecard contains counts, source/candidate/schema/code hashes and authority boundaries only; it contains no raw employer or model text.
 
 ## Explicit limits and next stage
 

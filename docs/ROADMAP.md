@@ -2,7 +2,7 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-14
+**Last reconciled:** 2026-11-18
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
@@ -27,9 +27,7 @@ and current Registry acceptance remain closed/unmodified. No new market,
 personal-readiness or profile authority follows from this amendment.
 
 **Controlling Stage B focused plan:** `docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md`.
-B0 baseline/fresh-cohort selection protocol was accepted November 14, 2026; B1 contract/ADR design was accepted November 14, and B2 original-source/board reconciliation candidate is next. The fresh cohort itself has NOT been acquired. B6 public routing is separate and
-conditional; English v30/v5 and original v9/v4 remain current throughout
-research. Stage B research is not a reopening of historical P2.2B-B1/B2.
+B0 baseline/fresh-cohort selection protocol and B1 contract/ADR design were accepted November 14, 2026. The B2 bounded source-first candidate-engine milestone passed November 17 on four exposed cases; **B2 full semantic generalization remains NOT ESTABLISHED**. B3 source-bound item translation is next. The fresh unseen cohort itself has NOT been acquired. B6 public routing is separate and conditional; English v30/v5 and original v9/v4 remain current throughout research. Stage B research is not a reopening of historical P2.2B-B1/B2.
 
 **November 15 B2 clarification (no sequencing change):** Preserve correlated duties, qualifications and operational capability in interpretation; avoid rigid disjoint classes or burdensome LLM rule proliferation. Employer-asserted eligibility stays distinct from work-implied ability. Details: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
 

@@ -81,15 +81,15 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | --- | --- | --- |
 | B0 | Frozen baseline/source versions, exposed cases, new-cohort selection protocol, provider budget | PASS / 2026-11-14 |
 | B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | DESIGN PASS / 2026-11-14 |
-| B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | NEXT / NOT STARTED |
-| B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PLANNED |
+| B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
+| B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | NEXT / BOUNDED EXPERIMENT |
 | B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | PLANNED |
 | B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 
 **B2 interpretive calibration (2026-11-15):** Duties, qualifications and work-implied capabilities can overlap and remain related; separating employer-stated facts must not block useful source-supported capability inference. Never upgrade inferred ability into mandatory prior employment or unstated named tools. Keep candidate links optional, simple and source-labeled; test context loss and prompt/validation burden alongside false requirements. B1 schema and runtime are unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
 
-**B1 closure 2026-11-14:** Source-item, board-value, obligation-scope, eligibility AND/OR, translation association and orthogonal reviewer authority contract design verified against four exposed A1 cases, 30 original text spans and 5 board references, including synthetic graph truth tables and negative reference tests. All production P1.6/currentness/database semantics remain unchanged. Read `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`; B2 original-source implementation is NEXT.
+**B1 closure 2026-11-14:** Source-item, board-value, obligation-scope, eligibility AND/OR, translation association and orthogonal reviewer authority contract design verified against four exposed A1 cases, 30 original text spans and 5 board references, including synthetic graph truth tables and negative reference tests. All production P1.6/currentness/database semantics remain unchanged. Read `docs/working-memory/2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md`; B2 bounded candidate-engine milestone passed, but full semantic generalization remains open; B3 source-bound translation is NEXT.
 
 **B0 closure 2026-11-14:** Read-only baseline and evaluation selection/scoring protocol accepted. Nine original HTML hashes verified, three private SQLite backups healthy, 59 source assertions checked, 485 known IDs excluded for future fresh-source selection. No new ads or local model calls were made; 6–8 unseen evaluation ads have NOT been captured. B1 design is next. See `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 

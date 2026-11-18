@@ -2,14 +2,22 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-17
-**Branch:** `main`  
+**Last reconciled:** 2026-11-18
+**Branch:** `main` unchanged; active research on draft PR #20
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 16 B2 native model-suggested item references — latest research overlay
+## November 18 local B2 reconciliation and B3 preparation — latest status overlay
+
+The local WSL checkout was safely fast-forwarded to the B2 research branch head `94362315`; the earlier local state is retained on backup branch `backup/local-b2-pre-reconcile-2026-11-18` and in a named stash. The ignored frozen B0 source database and B2 private candidate outputs remain present. No reset/clean, production database write, or `main` change occurred.
+
+A local-only reproducibility runner now reconstructs the B2 candidates from the frozen source snapshot and compares them with the private candidate output. The tracked safe scorecard includes source, candidate, schema and implementation-code fingerprints. Focused B2 tests: **50 passed with warnings as errors**. Latest PR-head GitHub CI at `94362315`: **1,018 passed / 28 skipped**, Ruff and dependency consistency passed. Full local suite has not yet been rerun after reconciliation.
+
+B3 selection is frozen at **64 eligible top-level source items: 63 Persian translation requests plus one native-English identity**. Exclude 12 context-only items and two generic `tNhZ` application instructions; include the three `tNDx` EDR exam-related statements. Twelve B1 eligibility leaves are nested subspans within selected parent qualification items; no separate child translation request or target subspan alignment will be claimed. B3 has not yet issued a model request. No accepted P1.6/translation, downstream authority, or public route changed.
+
+## November 16 B2 native model-suggested item references — previous research overlay
 
 A fixed native Gemma `reasoning: off` source-ref prompt on four **already
 exposed** original-source cases returned 4/4 structured results: 75 model

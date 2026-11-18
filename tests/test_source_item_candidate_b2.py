@@ -121,6 +121,49 @@ def test_unknowns_and_board_source_are_kept_separate() -> None:
     )
 
 
+def test_board_salary_and_prose_compensation_are_preserved_as_a_pair() -> None:
+    source = _source(
+        "حقوق: حدود ۸۰ میلیون تومان",
+        salary="از ۴۵,۰۰۰,۰۰۰ تومان",
+    )
+    candidate = _units(source)
+    compensation = next(x for x in candidate.items if x.category == "compensation")
+    signal = next(
+        x
+        for x in candidate.signals
+        if x.kind == "board_prose_compensation_values_materially_differ"
+    )
+    assert signal.source_anchor_id == compensation.anchor.anchor_id
+    assert signal.board_selector == "/salary"
+    assert "leave the discrepancy unresolved" in signal.interpretation
+
+    project = run_path(str(ROOT / "scripts/diagnose_stage_b2_candidate.py"))["b1_design_from_b2"]
+    draft = project(candidate, source)
+    conflict = next(x for x in draft["conflicts"] if x["type"] == "board_vs_employer_compensation")
+    assert conflict["resolution"] == "preserve_both_explicit_employer_wording"
+    assert conflict["item_id_a"] != conflict["item_id_b"]
+    assert any(
+        x["item_id"] == conflict["item_id_a"] and x["meaning"]["category"] == "compensation"
+        for x in draft["items"]
+    )
+    assert any(
+        x["item_id"] == conflict["item_id_b"]
+        and x["source_ref"]["kind"] == "structured_board_value"
+        for x in draft["items"]
+    )
+
+
+def test_salary_pair_signal_is_not_created_without_both_source_sides() -> None:
+    prose_only = _units(_source("حقوق: توافقی"))
+    board_only = _units(_source("Responsibilities: Build Python APIs.", salary="45 million"))
+    assert not any(
+        x.kind == "board_prose_compensation_values_materially_differ" for x in prose_only.signals
+    )
+    assert not any(
+        x.kind == "board_prose_compensation_values_materially_differ" for x in board_only.signals
+    )
+
+
 def test_source_version_and_anchor_tampering_are_rejected() -> None:
     source = _source("Responsibilities: Build Python APIs.")
     c = _units(source)
@@ -172,6 +215,7 @@ def test_real_exposed_source_diagnostics_on_private_copy(tmp_path: Path) -> None
     assert any(x.kind == "board_employment_mode_may_hide_prose_alternative" for x in n.signals)
     assert any(x.capability == "LLM" for x in n.work_capability_links)
     assert all(x.employer_prior_experience_required is None for x in n.work_capability_links)
+    assert not any(x.kind == "board_prose_compensation_values_materially_differ" for x in n.signals)
 
     m = cases["tMps"]
     assert len([x for x in m.alternatives if x.kind == "seniority_tracks"]) == 1
@@ -196,6 +240,7 @@ def test_real_exposed_source_diagnostics_on_private_copy(tmp_path: Path) -> None
             if x.category == "candidate_qualification"
         )
     assert any(x.kind == "certificate_or_equivalent_knowledge" for x in d.alternatives)
+    assert any(x.kind == "board_prose_compensation_values_materially_differ" for x in d.signals)
     assert not any(
         x.category == "work_arrangement" and "ریموت" in x.anchor.exact_text for x in d.items
     )
@@ -219,6 +264,9 @@ def test_real_exposed_source_diagnostics_on_private_copy(tmp_path: Path) -> None
     assert any(
         x.category == "compensation" and x.anchor.exact_text.startswith("30") for x in q.items
     )
+    # Board "from 30m" overlaps the employer's 30–50m range; do not flag it
+    # as a contradiction merely because the source strings differ.
+    assert not any(x.kind == "board_prose_compensation_values_materially_differ" for x in q.signals)
     assert all(x.authority == "candidate_only_no_downstream_reuse" for x in cases.values())
 
 
@@ -292,6 +340,11 @@ def test_b1_design_real_alternative_paths_remain_candidate_only(tmp_path: Path) 
             assert len(draft["eligibility_graphs"]) == 1
             assert draft["eligibility_graphs"][0]["nodes"][0]["operator"] == "any_of"
             assert any(x.kind == "one_of_technical_domains" for x in candidate.alternatives)
+            assert any(
+                x["type"] == "board_vs_employer_experience"
+                and x["resolution"] == "preserve_both_explicit_employer_wording"
+                for x in draft["conflicts"]
+            )
         elif job == "tNDx":
             assert len(draft["eligibility_graphs"]) == 1
             assert draft["eligibility_graphs"][0]["graph_id"] == (
@@ -300,8 +353,20 @@ def test_b1_design_real_alternative_paths_remain_candidate_only(tmp_path: Path) 
             assert any(
                 x.kind == "certificate_or_equivalent_knowledge" for x in candidate.alternatives
             )
+            assert any(
+                x["type"] == "board_vs_employer_compensation"
+                and x["resolution"] == "preserve_both_explicit_employer_wording"
+                for x in draft["conflicts"]
+            )
         elif job == "tNhZ":
-            assert any(x["type"] == "board_vs_employer_strength" for x in draft["conflicts"])
+            assert {x["type"] for x in draft["conflicts"]} == {
+                "board_vs_employer_strength",
+                "board_vs_employer_arrangement",
+            }
+            assert all(
+                x["resolution"] == "preserve_both_explicit_employer_wording"
+                for x in draft["conflicts"]
+            )
 
 
 def test_diagnostic_is_local_only_and_bounded(tmp_path: Path) -> None:
