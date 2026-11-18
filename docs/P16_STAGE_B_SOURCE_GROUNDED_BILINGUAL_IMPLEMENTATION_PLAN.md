@@ -2,11 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** Stage B active; B0 PASS and **B1 contract/ADR design PASS 2026-11-14**; **B2 bounded source-first candidate-engine milestone PASS 2026-11-17 on four exposed cases**; B2 full semantic generalization NOT ESTABLISHED; **B3 source-bound item translation NEXT**. No new semantic/runtime contract promoted.
-**Current accepted baseline:** main `8eded9e15949fc34a041984a90e40d930f91f6fd` (Stage A passive evidence identity accepted)
+**Disposition:** Stage B active; B0 PASS and **B1 contract/ADR design PASS 2026-11-14**; **B2 bounded source-first candidate-engine milestone PASS 2026-11-17 on four exposed cases**; B2 full semantic generalization and B5 unseen generalization NOT ESTABLISHED; **B3 bounded translation PASS, B4 useful candidate brief NEXT**. No new semantic/runtime contract promoted.
+**Accepted runtime:** English v30/v5 and original v9/v4 remain authoritative; the historical Stage A source anchor was accepted at `8eded9e`. Current `main` includes candidate-only B2/B3 code.
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
-**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 DESIGN PASS (typed source-owned evidence/eligibility/review candidate; no analyzer); B2 bounded source-first candidate-engine milestone PASS for the four exposed cases; **B2 semantic/generalization gate remains OPEN**; B3 source-bound translation candidate is next. B0 record: `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
+**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 DESIGN PASS (typed source-owned evidence/eligibility/review candidate; no analyzer); B2 bounded source-first candidate-engine milestone PASS for the four exposed cases; **B2 semantic/generalization gate remains OPEN**; B3 bounded exposed-cohort gate passed and its code is now on `main` without production routing; B4 is next. B0 record: `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 

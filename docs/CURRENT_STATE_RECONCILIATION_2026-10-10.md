@@ -3,13 +3,21 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-18
-**Branch:** main unchanged; B2 draft PR #20; B3 work on feature/p16-b3-source-bound-item-translation-2026-11-18 stacked on the B2 branch
+**Branch:** `main` — B2/B3 candidate code integrated via clean fast-forward; production routing unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
 
-## November 18 B3 bounded source-bound translation milestone — latest status overlay
+## November 18 B2/B3 integration into main — latest status overlay
+
+The repository owner requested direct-main development. All 13 B2/B3 commits were applied in ancestry order via two conflict-free fast-forwards, preserving B2 `97d5fda` and B3 `939f99f`. GitHub Actions for both feature heads passed. Candidate modules, tests and safe scorecards are committed to `main`; private source/model request-response data remains ignored locally.
+
+**Engineering integration does not imply semantic promotion.** Current English v30/v5 and original v9/v4 are still the active production routes; Capability, Work, Registry, Market and persistence authority remain unchanged. B2 full semantic generalization and B5 unseen generalization remain unestablished. B4 source-qualified job-level candidate briefs are next, with B6 promotion/rollback still separately gated.
+
+Integration handoff: `docs/working-memory/2026-11-18_B2_B3_MAIN_INTEGRATION_AND_B4_HANDOFF.md`. The following B3 entry is pre-integration historical context.
+
+## November 18 B3 bounded source-bound translation milestone — historical pre-integration overlay
 
 The local checkout is on feature/p16-b3-source-bound-item-translation-2026-11-18, based on the B2 research branch at 97d5fda. The B2 PR #20 remains draft and unmerged. Main and all accepted P1.6/v30/v9, Capability, Work, Registry and Market records remain unchanged.
 
