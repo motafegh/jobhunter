@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-14
+**Last reconciled:** 2026-11-19
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 are closed. B3 source-bound translation passed November 18 on four exposed cases with one justified corrective candidate; B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED. B4 useful non-authoritative job understanding is next. The unseen cohort has not been acquired; no production route or accepted semantic authority changed.
+**Current execution bridge:** P1.6 B0/B1 design PASS; B2 bounded source-first and B3 source-bound translation PASS for their exposed development scopes. The B4 candidate-only engineering milestone passed 2026-11-19 (2 partial source-referenced model briefs, 1 intentional source-only abstention, 1 rejected model output); **B4 semantic usefulness/acceptance is still OPEN**, with conditional/optional omissions, a Middle/Senior alternative-path failure and possible named-system translation drift. B5 unseen verification NOT ESTABLISHED; B6 promotion unauthorized. Direct development on `main`; accepted English v30 and original v9 routes unchanged.
 
 ## 1. Purpose and authority
 
@@ -83,7 +83,7 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | B1 | Versioned source-item, bilingual-alignment, obligation and review contracts; ADR; compatibility design | DESIGN PASS / 2026-11-14 |
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PASS_BOUNDED_EXPOSED_COHORT / 2026-11-18; one corrective selected; no promotion |
-| B4 | Useful, source-grounded job-level candidate brief and isolated P1.6 comparison/fallback | NEXT |
+| B4 | Source-qualified job-level candidate brief with fail-soft and frozen v30/v9 comparison | ENGINEERING PASS 2026-11-19; 2 partial + 1 source-only + 1 rejected; SEMANTIC GATE OPEN / NO PROMOTION |
 | B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 

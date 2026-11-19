@@ -2,11 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** Stage B active; B0 PASS and **B1 contract/ADR design PASS 2026-11-14**; **B2 bounded source-first candidate-engine milestone PASS 2026-11-17 on four exposed cases**; B2 full semantic generalization and B5 unseen generalization NOT ESTABLISHED; **B3 bounded translation PASS, B4 useful candidate brief NEXT**. No new semantic/runtime contract promoted.
+**Disposition:** Stage B active. B0/B1 design and B2/B3 bounded exposed engineering gates PASS; B4 candidate-only engineering result delivered 2026-11-19 with two partial model candidates, one source-only abstention and one blocked model case. **B4 semantic usefulness/acceptance OPEN; B5 unseen verification NOT ESTABLISHED; B6 promotion unauthorized.**
 **Accepted runtime:** English v30/v5 and original v9/v4 remain authoritative; the historical Stage A source anchor was accepted at `8eded9e`. Current `main` includes candidate-only B2/B3 code.
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
-**Current execution status:** B0 PASS (read-only backups, 4 exposed sources, 5 accepted anchors, 485 known exclusions, no unseen cohort yet); B1 DESIGN PASS (typed source-owned evidence/eligibility/review candidate; no analyzer); B2 bounded source-first candidate-engine milestone PASS for the four exposed cases; **B2 semantic/generalization gate remains OPEN**; B3 bounded exposed-cohort gate passed and its code is now on `main` without production routing; B4 is next. B0 record: `docs/working-memory/2026-11-14_P16_B0_FROZEN_BASELINE_AND_EVALUATION_PROTOCOL.md`.
+**Current execution status:** B2/B3 source-owned candidate modules and B4 bounded source-grounded job-level prototype are on `main`, with no production activation. Four previously exposed ads preserved; B4 isolated v30/v9 comparison and private audit PASS at engineering level only. Model-output conditional/alternative semantics and possible ticketing proper-name drift prevent B4 semantic acceptance. See `docs/working-memory/2026-11-19_P16_B4_PARTIAL_JOB_UNDERSTANDING_ENGINEERING_MILESTONE.md`.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 
@@ -154,6 +154,8 @@ Actions:
 - Prototype user-facing readability (read-only brief or diagnostic HTML/CLI), avoiding raw provenance-overload. Show fast understanding, supporting original quote on demand, and no erroneous job skill conclusions. No production router/normal page changes yet.
 
 **Gate B4 PASS:** useful source-grounded brief for all four exposed test cases, or explicit per-case blocked explanation without invented facts; original-language quote + target item provenance; acceptance of uncertainty where justified; no critical mandatory/preferred or duty/arrangement mistakes in tested known cases; typed failure states with preserved partial success. Compare useful information / review time to raw ads honestly; do not assert measured owner-time savings until measured.
+
+**B4 outcome 2026-11-19: PASS_ENGINEERING_BOUNDARIES_SEMANTIC_GATE_OPEN.** Source-qualified partial/fail-soft candidate and read-only job briefs are proven mechanically on four exposed frozen cases: 2 partial model candidates, 1 rejected model output and 1 correct no-duty source-only abstention. All original/translated source identities, board conflicts, eligibility candidates and separate v30/v9 outcomes are preserved; 4 unsupported fragments quarantined; 1,085 local tests and integrity checks passed. Exposed assistant review found open semantic issues in optionality/completeness, Middle/Senior alternative paths and possible named-platform drift. Do not advance B5 on an unqualified B4 semantic result. Full details: `docs/working-memory/2026-11-19_P16_B4_PARTIAL_JOB_UNDERSTANDING_ENGINEERING_MILESTONE.md`.
 
 ### B5 — Fresh, independent verification (do not tune on this cohort)
 

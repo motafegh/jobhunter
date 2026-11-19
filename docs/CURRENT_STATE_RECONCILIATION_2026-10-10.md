@@ -2,12 +2,18 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-18
-**Branch:** `main` — B2/B3 candidate code integrated via clean fast-forward; production routing unchanged
+**Last reconciled:** 2026-11-19
+**Branch:** `main` — B4 candidate-only engineering milestone; accepted P1.6 routes unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 19 B4 source-grounded partial job understanding — latest status overlay
+
+B4 candidate engineering is implemented directly on `main`: two validated partial, source-referenced Gemma responses, one rejected model response with a source-only fallback, and one intentional source-only no-duty abstention. Three local model calls, zero retries; four mismatched fragments quarantined. The four-ad frozen source, B2/B3 evidence, separate board values and eligibility graph candidates remain traceable. Local 1,085-test suite and standalone SQLite/provenance verifier PASS.
+
+**B4 semantic acceptance remains OPEN.** A material Middle/Senior alternate-path problem persists in rejected model text; optional/conditional information needs better readable treatment; a possible ticketing-platform proper-name translation shift requires verification. Assistant review is exposed, not blind; unseen B5 verification and B6 promotion are not established. English v30/v5, original v9/v4, Capability/Work/Registry/Market and production persistence are unchanged. Source of detailed status: `docs/working-memory/2026-11-19_P16_B4_PARTIAL_JOB_UNDERSTANDING_ENGINEERING_MILESTONE.md`.
 
 ## November 18 B2/B3 integration into main — latest status overlay
 

@@ -2,11 +2,11 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-18
+**Last reconciled:** 2026-11-19
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** Phase 1, P2.1, P2.2A, Market I1-I7, report R1-R4 and B2 remain closed. B3 source-bound translation passed November 18 on four exposed cases with one justified corrective candidate; B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED. B4 useful non-authoritative job understanding is next. The unseen cohort has not been acquired; no production route or accepted semantic authority changed.
+**Current execution bridge:** P1.6 B0/B1 design PASS; B2 bounded source-first and B3 source-bound translation PASS for their exposed development scopes. The B4 candidate-only engineering milestone passed 2026-11-19 (2 partial source-referenced model briefs, 1 intentional source-only abstention, 1 rejected model output); **B4 semantic usefulness/acceptance is still OPEN**, with conditional/optional omissions, a Middle/Senior alternative-path failure and possible named-system translation drift. B5 unseen verification NOT ESTABLISHED; B6 promotion unauthorized. Direct development on `main`; accepted English v30 and original v9 routes unchanged.
 
 ## November 13 execution sequencing amendment — Stage B source fidelity
 
