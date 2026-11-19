@@ -6,7 +6,7 @@
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** P1.6 B0/B1 design PASS; B2 bounded source-first and B3 source-bound translation PASS for their exposed development scopes. The B4 candidate-only engineering milestone passed 2026-11-19 (2 partial source-referenced model briefs, 1 intentional source-only abstention, 1 rejected model output); **B4 semantic usefulness/acceptance is still OPEN**, with conditional/optional omissions, a Middle/Senior alternative-path failure and possible named-system translation drift. B5 unseen verification NOT ESTABLISHED; B6 promotion unauthorized. Direct development on `main`; accepted English v30 and original v9 routes unchanged.
+**Current execution bridge:** B4v4c engineering PASS; B4v5 source-qualified readable presentation/provenance PASS for the four exposed development cases (64 selected source items, 2 source OR/AND graphs, visible preferred and exam conditions, one exact Fadak source-name review correction). The prior B3 assistant review missed an FDC/Fadak mistranslation; B3 original is unchanged, and two dependent old model claims are withheld. B2 candidate source labels and model claims are NOT accepted employer facts. B5 unseen generalization OPEN, B6 production promotion NOT AUTHORIZED. Direct work on main, old v30/v9 and downstream accepted behavior unchanged.
 
 ## November 13 execution sequencing amendment — Stage B source fidelity
 

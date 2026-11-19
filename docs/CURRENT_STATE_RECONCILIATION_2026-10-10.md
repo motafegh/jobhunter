@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-19
-**Branch:** `main` — B4 candidate-only engineering milestone; accepted P1.6 routes unchanged
+**Branch:** main, B4v5 source-first candidate view, production P1.6 routes unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## 2026-11-19 B4v5 source-qualified exposed presentation milestone
+
+B4v5 read-only source-first presentation PASS on the four previously exposed B0 cases: all 64 selected source items and exact original quotes are available; optional and explicit entry-exam conditions, Middle OR Senior and certificate OR equivalent paths are visible. A source-SHA reviewed Fadak/FDC terminology correction applies only to the new candidate view while the B3 artifact remains immutable; two dependent old model claims are withheld. Both sealed B4v4c and B4v5 replay verifiers PASS, zero new model calls or production writes. The previously reported B3 semantic review missed the named-entity drift and must not be characterized as flawless. **B2/model semantic generalization and B5 unseen verification are OPEN; B6 promotion remains unauthorized.** See docs/working-memory/2026-11-19_P16_B4V5_SOURCE_QUALIFIED_PRESENTATION_MILESTONE.md.
 
 ## November 19 B4 source-grounded partial job understanding — latest status overlay
 

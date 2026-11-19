@@ -2,11 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** Stage B active. B0/B1 design and B2/B3 bounded exposed engineering gates PASS; B4 candidate-only engineering result delivered 2026-11-19 with two partial model candidates, one source-only abstention and one blocked model case. **B4 semantic usefulness/acceptance OPEN; B5 unseen verification NOT ESTABLISHED; B6 promotion unauthorized.**
+**Disposition:** Stage B active; B4v4c engineering and B4v5 source-qualified presentation PASS for four exposed ads. Prior B3 semantic review missed Fadak/FDC drift; history preserved and B4v5 reviewed overlay added. B2 semantic generalization and B5 unseen verification NOT ESTABLISHED. B6 promotion unauthorized.
 **Accepted runtime:** English v30/v5 and original v9/v4 remain authoritative; the historical Stage A source anchor was accepted at `8eded9e`. Current `main` includes candidate-only B2/B3 code.
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
-**Current execution status:** B2/B3 source-owned candidate modules and B4 bounded source-grounded job-level prototype are on `main`, with no production activation. Four previously exposed ads preserved; B4 isolated v30/v9 comparison and private audit PASS at engineering level only. Model-output conditional/alternative semantics and possible ticketing proper-name drift prevent B4 semantic acceptance. See `docs/working-memory/2026-11-19_P16_B4_PARTIAL_JOB_UNDERSTANDING_ENGINEERING_MILESTONE.md`.
+**Current execution status:** B4v5 source-first view contains all 64 selected original-source items, candidate qualifier strengths, both OR/AND paths, explicit entry-exam and preferred conditions; SHA-bound Fadak terminology review overlays only the B4v5 presentation. Prior B3/B4v4c immutable. See docs/working-memory/2026-11-19_P16_B4V5_SOURCE_QUALIFIED_PRESENTATION_MILESTONE.md.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 
@@ -156,6 +156,10 @@ Actions:
 **Gate B4 PASS:** useful source-grounded brief for all four exposed test cases, or explicit per-case blocked explanation without invented facts; original-language quote + target item provenance; acceptance of uncertainty where justified; no critical mandatory/preferred or duty/arrangement mistakes in tested known cases; typed failure states with preserved partial success. Compare useful information / review time to raw ads honestly; do not assert measured owner-time savings until measured.
 
 **B4 outcome 2026-11-19: PASS_ENGINEERING_BOUNDARIES_SEMANTIC_GATE_OPEN.** Source-qualified partial/fail-soft candidate and read-only job briefs are proven mechanically on four exposed frozen cases: 2 partial model candidates, 1 rejected model output and 1 correct no-duty source-only abstention. All original/translated source identities, board conflicts, eligibility candidates and separate v30/v9 outcomes are preserved; 4 unsupported fragments quarantined; 1,085 local tests and integrity checks passed. Exposed assistant review found open semantic issues in optionality/completeness, Middle/Senior alternative paths and possible named-platform drift. Do not advance B5 on an unqualified B4 semantic result. Full details: `docs/working-memory/2026-11-19_P16_B4_PARTIAL_JOB_UNDERSTANDING_ENGINEERING_MILESTONE.md`.
+
+## 2026-11-19 B4v5 source-qualified exposed presentation milestone
+
+B4v5 read-only source-first presentation PASS on the four previously exposed B0 cases: all 64 selected source items and exact original quotes are available; optional and explicit entry-exam conditions, Middle OR Senior and certificate OR equivalent paths are visible. A source-SHA reviewed Fadak/FDC terminology correction applies only to the new candidate view while the B3 artifact remains immutable; two dependent old model claims are withheld. Both sealed B4v4c and B4v5 replay verifiers PASS, zero new model calls or production writes. The previously reported B3 semantic review missed the named-entity drift and must not be characterized as flawless. **B2/model semantic generalization and B5 unseen verification are OPEN; B6 promotion remains unauthorized.** See docs/working-memory/2026-11-19_P16_B4V5_SOURCE_QUALIFIED_PRESENTATION_MILESTONE.md.
 
 ### B5 — Fresh, independent verification (do not tune on this cohort)
 

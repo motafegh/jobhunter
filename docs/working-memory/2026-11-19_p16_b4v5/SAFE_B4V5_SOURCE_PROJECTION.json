@@ -1,0 +1,72 @@
+{
+  "application_condition_candidate_count": 1,
+  "assistant_exposed_source_review": true,
+  "authority": "candidate_only_no_downstream_reuse",
+  "b3_selected_translation_artifacts_unchanged": true,
+  "b3_translation_review_reconciliation": "One previously missed named-entity transliteration error; B3 history preserved, B4v5 reviewed overlay candidate only",
+  "case_count": 4,
+  "code_version": "B4v5 source-qualified presentation over immutable B4v4c",
+  "contract": "jobhunter-p16-b4v5-safe-source-projection-v1",
+  "corrected_reviewed_terminology_items": 1,
+  "distinct_eligibility_graph_count": 2,
+  "downstream_authority": "none",
+  "eligibility_graph_root_operators": {
+    "any_of": 2
+  },
+  "excluded_item_count": 14,
+  "independent_blind_human_review": false,
+  "limitations": [
+    "assistant prior-exposed source review; not blind or independent",
+    "B2 semantic classification/strength still candidate",
+    "no accepted model job-level output or B5 generalization",
+    "B3 source name issue fixed in B4v5 presentation only; B3 artifact unchanged"
+  ],
+  "llm_requests": 0,
+  "owner_time_savings_measured": false,
+  "per_case": {
+    "tMjm": {
+      "alternate_eligibility_graphs": 0,
+      "displayed_source_qualified_items": 17,
+      "total_source_items": 18,
+      "visible_model_source": "source_only_candidate"
+    },
+    "tMps": {
+      "alternate_eligibility_graphs": 1,
+      "displayed_source_qualified_items": 18,
+      "total_source_items": 19,
+      "visible_model_source": "failed"
+    },
+    "tNDx": {
+      "alternate_eligibility_graphs": 1,
+      "displayed_source_qualified_items": 17,
+      "total_source_items": 19,
+      "visible_model_source": "partial_candidate"
+    },
+    "tNhZ": {
+      "alternate_eligibility_graphs": 0,
+      "displayed_source_qualified_items": 12,
+      "total_source_items": 22,
+      "visible_model_source": "partial_candidate"
+    }
+  },
+  "prior_b4v4c_evidence_unchanged": true,
+  "private_fingerprint_checks": {
+    "code_projector_sha256": "1e614b969bc0c8e4b096cde8213b534393a344df7ad9d4efcf445743936bc312",
+    "code_runner_sha256": "a28bd4d1979a5c915e94b7f9c392382b7f8c9d092b12925531d7e634e121a3aa",
+    "frozen_b4v4c_private_sha256": "8d7155448f0311ad0fff4e3d739c4fd3fb57dca33d08e46815e2618686837bc3",
+    "private_final_audit_sha256": "16078e2c8e894289cb3a5174f76d4d1fb985bba3fd76fffcf8877982d86ee6ee",
+    "private_source_projection_sha256": "a9ea424cfa497620799600947d31ee3906f8b351a959d8325c983dc5abc63a27",
+    "reviewed_correction_sha256": "054c1065c54e0a1abdf27e93803dbf3feedac25859f01e2778a3e464594450f4",
+    "source_projection_markdown_sha256": "1002236e7d63ec19c212f8ff7115f4c3982ed9227354dbecaa63d41332e5e0f0"
+  },
+  "production_database_written": false,
+  "raw_original_unchanged": true,
+  "semantically_accepted_employer_facts": 0,
+  "source_behavioral_expectation_candidate_count": 7,
+  "source_item_count": 78,
+  "source_qualification_candidate_count": 23,
+  "source_qualified_item_count": 64,
+  "status": "PASS_SOURCE_PRESENTATION_EXPOSED_COHORT_SEMANTIC_GATE_SEPARATE",
+  "suppressed_v4_model_claims_due_to_translation_repair": 2,
+  "unseen_generalization_established": false
+}
