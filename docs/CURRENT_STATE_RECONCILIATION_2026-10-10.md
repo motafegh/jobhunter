@@ -3,7 +3,7 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-21
-**Branch:** main, B4v5 source-first candidate view, production P1.6 routes unchanged
+**Branch:** main — B5 exposed translation batch sidecar/pilot; public v30/v9 and production routes unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 

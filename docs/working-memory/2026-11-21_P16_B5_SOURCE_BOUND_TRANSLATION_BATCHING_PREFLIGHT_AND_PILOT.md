@@ -41,11 +41,13 @@ Observed: **3 logical invocations, 3 HTTP 200 completions, 2/2 exact batch-versu
 
 Two original-source B1 item identities were also rebuilt and aligned to their exact candidate translations through an opt-in `src/jobhunter/source_bound_translation_b1_alignment_b5.py` bridge. The earlier B1 draft validator passed; both alignments remain unreviewed candidates with no downstream authority.
 
-The batched call took roughly 16 seconds; subsequent singles roughly 2.7 and 2.9 seconds each. The sequence is not randomized or warmup-controlled, so fewer requests did **not** establish a latency saving. All raw source excerpts, provider requests/responses and item-level assistant review were retained only in ignored private local acceptance evidence.
+The batched request reported 801 total model tokens; the two separate single-item controls reported 1,230 combined. This is a **one-pair observation**, not a general cost claim or controlled throughput result. The batched call took roughly 16 seconds; subsequent singles roughly 2.7 and 2.9 seconds each. The sequence is not randomized or warmup-controlled, so fewer requests did **not** establish a latency saving. All raw source excerpts, provider requests/responses and item-level assistant review were retained only in ignored private local acceptance evidence.
 
 Replay and boundary verifier: `scripts/verify_p16_b5_translation_batch_pilot.py`. Safe outcome: `docs/working-memory/2026-11-21_p16_b5_translation_batch/SAFE_EXPOSED_TRANSLATION_BATCH_PILOT.json`.
 
 ## Decision and next milestone
+
+**Verification:** 1,150 local warnings-as-errors tests passed. Ruff, strict formatting checks on new files, dependency checks, compilation, candidate batching/planning/pilot/B1-alignment replayers and historical B2v2/B4v5 replayers all passed. Private raw source/model payloads are excluded from Git. GitHub CI is checked separately.
 
 **PASS — experimental source-association/transport proof on exposed cases only.** There are no new accepted employer facts, public routing changes, production database writes, or approved B5 model-quality claims.
 

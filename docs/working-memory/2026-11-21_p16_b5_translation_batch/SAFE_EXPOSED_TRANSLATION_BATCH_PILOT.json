@@ -9,6 +9,8 @@
   "accepted_employer_facts_promoted": 0,
   "all_ruff_lint": "pass",
   "batched_translation_requests": 1,
+  "candidate_B1_alignment_replayer": "pass",
+  "candidate_translation_batch_preflight_replayer": "pass",
   "cohort_status": "previously_exposed_development_only_not_B5_holdout",
   "completed_http_200_responses": 3,
   "contract": "jobhunter-p16-b5-bounded-batch-pilot-safe-scorecard-v1",
@@ -29,7 +31,9 @@
   },
   "full_b5_accuracy_established": false,
   "full_b5_usefulness_established": false,
+  "full_local_warnings_as_errors_regression_tests_passed": 1150,
   "full_local_warnings_as_errors_tests_passed": 1150,
+  "historical_B2v2_and_B4v5_replayers": "pass",
   "item_level_assistant_exposed_source_meaning_review_supported": 2,
   "item_level_exact_batch_vs_single_text_matches": 2,
   "item_level_source_association_verified": 2,
@@ -52,21 +56,39 @@
   "physical_http_completion_calls_observed": 3,
   "pilot_latency_interpretation": "batch_request_was_first_then_two_single_controls;warming_and_order_not_controlled;no_inferred_latency_savings",
   "pilot_logical_invocations": 3,
+  "pilot_observed_token_usage": {
+    "batch_minus_control_total_tokens": -429,
+    "batched_request": {
+      "completion_tokens": 479,
+      "prompt_tokens": 322,
+      "total_tokens": 801
+    },
+    "cold_first_batch_vs_later_warm_singles_not_a_fair_latency_benchmark": true,
+    "observed_on_two_exposed_items_only": true,
+    "two_single_item_controls_total": {
+      "completion_tokens": 669,
+      "prompt_tokens": 561,
+      "total_tokens": 1230
+    }
+  },
   "pilot_request_timings_seconds_by_stage": {
     "batch": 16.06,
     "single_0": 2.721,
     "single_1": 2.921
   },
   "pip_check": "pass",
+  "pip_check_and_compileall": "pass",
   "planned_logical_translation_items_for_eight_exposed_jobs": 142,
   "planning_is_not_observed_full_run": true,
   "preferred_source_modality_preserved_in_separate_candidate_metadata": true,
   "private_B1_alignment_replay": "pass",
   "private_model_pilot_replay": "pass",
   "private_planning_replay": "pass",
+  "private_raw_original_source_or_model_prompts_committed": false,
   "production_database_written": false,
   "public_corpus_changed": false,
   "python_compileall": "pass",
+  "ruff_lint_and_target_format": "pass",
   "selected_original_source_item_count": 2,
   "selected_source_strength": "preferred",
   "single_item_control_requests": 2,
