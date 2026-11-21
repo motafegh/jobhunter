@@ -1,0 +1,87 @@
+{
+  "B0_original_protocol_sha256": "78cde44eaadd2cf3f90e009ab8caa842c2429bc2d8a0f955da35370f55eb4c43",
+  "B2v2_engine_sha256": "65a6239728481afa26d5d5a99d4856b5a0b6b650c8e14d3f3a169f3cbbeab7c4",
+  "B5_80_paired_analysis_calls_not_translation_budget": 80,
+  "B5_translation_model_budget": "NOT_YET_SEPARATELY_APPROVED",
+  "batch_candidate_engine_sha256": "eca6fc1532798bdfc4d3a622195252f5c9d3ace66623e53d67e41b8f8e255549",
+  "candidate_source_items": 258,
+  "cohort_status": "EXPOSED_DEVELOPMENT_CASES_NOT_UNSEEN",
+  "contract": "jobhunter-p16-b5-translation-batching-candidate-v1",
+  "eligible_logical_translation_items": 142,
+  "excluded_context_items": 20,
+  "historical_B3_64_logical_source_item_limit": 64,
+  "http_requests_issued": 0,
+  "model_calls_issued": 0,
+  "native_identity_items": 96,
+  "next_gate": "bound_one_small_live_local_exposed_pilot_if_provider_available;assess_translation_semantic_fidelity_and_failure_rates;explicit_translation_budget_then_new_unseen_B5",
+  "no_sample_model_quality_claim": true,
+  "original_parser_sha256": "f46fe2f832c5b6e0b01ef4177084be6eb57150d9b09dba3ec5b4fa40b8803f73",
+  "physical_batch_candidates": [
+    {
+      "deferred_oversized_source_items": 0,
+      "logical_items": 142,
+      "max_items_per_request": 1,
+      "max_source_chars_per_request": 1200,
+      "number_of_batches_by_cardinality": {
+        "1": 142
+      },
+      "plan_sha256": "a91dca7e4b96a8819957ea6823db7159f9e6fd1d2ff3a87517a2de04c8d1a00a",
+      "planned_count_not_observed_model_calls": true,
+      "planned_physical_request_batches": 142
+    },
+    {
+      "deferred_oversized_source_items": 0,
+      "logical_items": 142,
+      "max_items_per_request": 2,
+      "max_source_chars_per_request": 1200,
+      "number_of_batches_by_cardinality": {
+        "1": 32,
+        "2": 55
+      },
+      "plan_sha256": "dd1f5097fc2d1622f42ad0efa8e9d8dcd51bfe9990edb6a414ee4111186e03a0",
+      "planned_count_not_observed_model_calls": true,
+      "planned_physical_request_batches": 87
+    },
+    {
+      "deferred_oversized_source_items": 0,
+      "logical_items": 142,
+      "max_items_per_request": 3,
+      "max_source_chars_per_request": 1200,
+      "number_of_batches_by_cardinality": {
+        "1": 31,
+        "2": 18,
+        "3": 25
+      },
+      "plan_sha256": "f4978b4ef99df2e89c9da18be3f45694989dcb8927875b505d5bb253cb058df2",
+      "planned_count_not_observed_model_calls": true,
+      "planned_physical_request_batches": 74
+    },
+    {
+      "deferred_oversized_source_items": 0,
+      "logical_items": 142,
+      "max_items_per_request": 4,
+      "max_source_chars_per_request": 1200,
+      "number_of_batches_by_cardinality": {
+        "1": 26,
+        "2": 21,
+        "3": 6,
+        "4": 14
+      },
+      "plan_sha256": "20caaec3fa09aa7e66e7e469a5a2214761fae6b4cdafd5787b4ab5a8ec8adda5",
+      "planned_count_not_observed_model_calls": true,
+      "planned_physical_request_batches": 67
+    }
+  ],
+  "preflight_at_utc": "2026-11-21T16:42:43.312776+00:00",
+  "private_plan_receipt_sha256": "4fa5135979299390c5373c150d35bfed517587e93f49bd6f74a6a92aacd95217",
+  "production_db_sha256": "d9068fcb503860638cb2187b537e57151bea0192ff69ab7dbe381c84fb2353d8",
+  "production_writes": 0,
+  "public_corpus_manifest_sha256": "7a65485c813a855d144160f1009559decaf0383dba06a089760d2101726fda4a",
+  "selected_candidate_batch_max_items": 3,
+  "selected_candidate_logical_items": 142,
+  "selected_candidate_physical_batches": 74,
+  "selected_candidate_plan_sha256": "f4978b4ef99df2e89c9da18be3f45694989dcb8927875b505d5bb253cb058df2",
+  "source_job_acquisition": 0,
+  "source_provenance_private_not_committed": true,
+  "unseen_B5_or_B6_acceptance": false
+}

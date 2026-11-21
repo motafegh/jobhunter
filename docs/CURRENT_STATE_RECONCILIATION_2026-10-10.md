@@ -2,12 +2,16 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-19
+**Last reconciled:** 2026-11-21
 **Branch:** main, B4v5 source-first candidate view, production P1.6 routes unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 21 B5 translation batching — exposed preflight and pilot
+
+B2v2 exposed original-source improvement remains candidate-only. B5 translation batching now has a bounded source-ID/SHA-preserving offline plan (142 Persian items across the eight EXPOSED ads -> 74 PLANNED physical requests at <=3 items/request) and a local two-item pilot (1 batch + 2 single-item controls, 3 actual HTTP completions, both batch/single English results identical). The two preferred source items retain preferred modality in source-owned B1/B2 metadata, not standalone English translations; two B1 alignment source IDs replay. Neither speedup nor unseen linguistic accuracy is established. Model-budget and physical-attempt stop rules must be frozen before any new unseen B5. Current accepted v30/v9, public corpus, database and downstream routes unchanged. B6 promotion unauthorized. Decision: docs/working-memory/2026-11-21_P16_B5_SOURCE_BOUND_TRANSLATION_BATCHING_PREFLIGHT_AND_PILOT.md.
 
 ## November 21 B2v2 exposed source-structure correction
 

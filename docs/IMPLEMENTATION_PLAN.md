@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-19
+**Last reconciled:** 2026-11-21
 
-**Current execution bridge:** B2v2 general source-structure candidate is now an exposed-regression engineering milestone: on the frozen eight-job B5 source-first review (93 selected anchors; 86 role-comparable) source-role matches improved 25→82, role mismatches 58→1, missing explicit-duty anchors 19→0, false required 2→0; one-or-more specialties is now recorded as unresolved OR scope, NOT a graph. Four prior B0 jobs retain duty counts and two eligibility graphs. Original B2/B3/B4 history and accepted v30/v9 unchanged. These eight are exposed and CANNOT establish B5 unseen generalization; next obtain a new sealed cohort and paired inference. B6 remains unauthorized. docs/working-memory/2026-11-21_P16_B2V2_EXPOSED_SOURCE_STRUCTURE_REPAIR_MILESTONE.md.
+**Current execution bridge:** B2v2 exposed original-source improvement remains candidate-only. B5 translation batching now has a bounded source-ID/SHA-preserving offline plan (142 Persian items across the eight EXPOSED ads -> 74 PLANNED physical requests at <=3 items/request) and a local two-item pilot (1 batch + 2 single-item controls, 3 actual HTTP completions, both batch/single English results identical). The two preferred source items retain preferred modality in source-owned B1/B2 metadata, not standalone English translations; two B1 alignment source IDs replay. Neither speedup nor unseen linguistic accuracy is established. Model-budget and physical-attempt stop rules must be frozen before any new unseen B5. Current accepted v30/v9, public corpus, database and downstream routes unchanged. B6 promotion unauthorized. Decision: docs/working-memory/2026-11-21_P16_B5_SOURCE_BOUND_TRANSLATION_BATCHING_PREFLIGHT_AND_PILOT.md.
 
 ## 1. Purpose and authority
 
@@ -84,7 +84,7 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PASS_BOUNDED_EXPOSED_COHORT / 2026-11-18; one corrective selected; no promotion |
 | B4 | Source-grounded job understanding and isolated comparison | B4v4c ENGINEERING PASS; B4v5 EXPOSED SOURCE-PRESENTATION PASS; model semantic and B5 unseen OPEN, no promotion |
-| B5 | Fresh preselected held-out evaluation, source-first comparison and production guardrails | 2026-11-21 FIRST FRESH SOURCE GATE BLOCKED by B2 semantic failures; new cohort needed after generic B2 repair; B6 unauthorized |
+| B5 | New independently reserved source-first evaluation and fair unchanged-v30 comparison | Exposed B2v2 source repair plus offline B5 batch planning/two-item local pilot PASS mechanically; fresh heldout source+translation semantic evaluation and explicit translation budget still OPEN; B6 unauthorized |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 
 **B2 interpretive calibration (2026-11-15):** Duties, qualifications and work-implied capabilities can overlap and remain related; separating employer-stated facts must not block useful source-supported capability inference. Never upgrade inferred ability into mandatory prior employment or unstated named tools. Keep candidate links optional, simple and source-labeled; test context loss and prompt/validation burden alongside false requirements. B1 schema and runtime are unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
