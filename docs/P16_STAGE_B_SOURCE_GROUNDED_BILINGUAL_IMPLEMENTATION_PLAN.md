@@ -2,11 +2,11 @@
 ## Authoritative focused implementation plan and acceptance gates
 
 **Date:** 2026-11-13
-**Disposition:** Stage B active; B4v4c engineering and B4v5 source-qualified presentation PASS for four exposed ads. Prior B3 semantic review missed Fadak/FDC drift; history preserved and B4v5 reviewed overlay added. B2 semantic generalization and B5 unseen verification NOT ESTABLISHED. B6 promotion unauthorized.
+**Disposition:** Stage B active: B4v5 exposed source-presentation gate passed; first B5 newly frozen 8-source evaluation on 2026-11-21 STOPPED at B2 source semantics before B3/B4/v30 model calls. 93 original-source anchors reviewed, 19 explicit-duty misses, 2 preferred-to-required errors and a missing multi-specialty alternative. B5 independent generalization NOT ESTABLISHED, B6 promotion NOT AUTHORIZED.
 **Accepted runtime:** English v30/v5 and original v9/v4 remain authoritative; the historical Stage A source anchor was accepted at `8eded9e`. Current `main` includes candidate-only B2/B3 code.
 **Current English P1.6:** `job-analysis-english-v30 / job-analysis-v5`
 **Current original-language P1.6:** `job-analysis-original-v9 / job-analysis-v4`
-**Current execution status:** B4v5 source-first view contains all 64 selected original-source items, candidate qualifier strengths, both OR/AND paths, explicit entry-exam and preferred conditions; SHA-bound Fadak terminology review overlays only the B4v5 presentation. Prior B3/B4v4c immutable. See docs/working-memory/2026-11-19_P16_B4V5_SOURCE_QUALIFIED_PRESENTATION_MILESTONE.md.
+**Current execution status:** First new B5 source cohort of eight distinct jobs was selected without detail review, all eight originals were obtained and exact hashes verified, and 93 assistant original-source assertions frozen before candidate output. Unchanged B2 failed semantic source-gate checks on 7/8 jobs, including false mandatory strength and a missing OR specialty choice. Stop evaluation, use the eight only for new exposed regressions, repair general parser/source semantics, then acquire another independent held-out sample. Decision: docs/working-memory/2026-11-21_P16_B5_UNSEEN_SOURCE_GATE_FAILURE_AND_HALTED_EVALUATION.md.
 **Priority:** Material source-fidelity recovery before the previously proposed job-specific capability-expectation slice. That earlier P2.3 candidate is **deferred in sequence, not cancelled or disapproved**.
 **Scope:** Job-level source-to-translation alignment, factual and obligation quality, useful candidate output, evidence-qualified acceptance and eventual bounded rollout. **Not** P2.2B-B1/B2, which are separate previously closed work programs.
 

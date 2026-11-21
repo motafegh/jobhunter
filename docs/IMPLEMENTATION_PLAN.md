@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-11-19
 
-**Current execution bridge:** B4v4c engineering PASS; B4v5 source-qualified readable presentation/provenance PASS for the four exposed development cases (64 selected source items, 2 source OR/AND graphs, visible preferred and exam conditions, one exact Fadak source-name review correction). The prior B3 assistant review missed an FDC/Fadak mistranslation; B3 original is unchanged, and two dependent old model claims are withheld. B2 candidate source labels and model claims are NOT accepted employer facts. B5 unseen generalization OPEN, B6 production promotion NOT AUTHORIZED. Direct work on main, old v30/v9 and downstream accepted behavior unchanged.
+**Current execution bridge:** B5 first frozen fresh-source evaluation was deliberately HALTED (2026-11-21): 8 source-exact Jobinja descriptions were acquired from a metadata-preselected, isolated 2 backend / 3 applied-AI / 3 security cohort; 93 selected original-source assertions were sealed BEFORE candidate inspection. Unchanged B2 mechanically verified all eight but misclassified 58 reviewed role/category anchors, missed 19 explicit-duty anchors, incorrectly marked two preferred skills required and omitted a multi-specialty OR pathway. Seven of eight cases had source-gate issues. This is a STOP, not a B5 accuracy PASS: the eight are now exposed development regressions and a NEW reserved unseen cohort is required after general source-parser repairs. No B3/B4/v30 model calls or accepted data writes; B6 production promotion closed. Decision: docs/working-memory/2026-11-21_P16_B5_UNSEEN_SOURCE_GATE_FAILURE_AND_HALTED_EVALUATION.md.
 
 ## 1. Purpose and authority
 
@@ -84,7 +84,7 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PASS_BOUNDED_EXPOSED_COHORT / 2026-11-18; one corrective selected; no promotion |
 | B4 | Source-grounded job understanding and isolated comparison | B4v4c ENGINEERING PASS; B4v5 EXPOSED SOURCE-PRESENTATION PASS; model semantic and B5 unseen OPEN, no promotion |
-| B5 | New, separately frozen unseen-source verification with independent claim checks and truthful denominators | PLANNED |
+| B5 | Fresh preselected held-out evaluation, source-first comparison and production guardrails | 2026-11-21 FIRST FRESH SOURCE GATE BLOCKED by B2 semantic failures; new cohort needed after generic B2 repair; B6 unauthorized |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 
 **B2 interpretive calibration (2026-11-15):** Duties, qualifications and work-implied capabilities can overlap and remain related; separating employer-stated facts must not block useful source-supported capability inference. Never upgrade inferred ability into mandatory prior employment or unstated named tools. Keep candidate links optional, simple and source-labeled; test context loss and prompt/validation burden alongside false requirements. B1 schema and runtime are unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
