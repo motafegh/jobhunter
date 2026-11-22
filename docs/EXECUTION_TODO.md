@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-22 (B4v5 exposed usefulness study, v30 zero comparable valid outputs; B5/B6 closed).
+**Last research-status reconciliation:** 2026-11-22 (calibrated original-source B5 evaluator; B2v6 exposed-only diagnostics; B5/B6 closed).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** Frozen exposed B4v5 usefulness audit REPLAY PASSED (4 previously exposed jobs, 9 diagnostic questions: 5 source-supported visible, 4 partial/uncertain). Archived same-source English v30 produced 0 valid artifacts (3 failed, 1 rejected); one original-language v9 artifact existed. No fair v30 semantic-output accuracy comparison, independently measured user value or time savings is established. Next: predeclared compact, decision-question-first B4v6 source-linked candidate/usefulness trial on already exposed cases; investigate selective bounded local semantics, not another automatic fresh B5 cohort. B5 independent acceptance NOT ESTABLISHED, B6 CLOSED, accepted v30/v9 and downstream facts unchanged. Decision: docs/working-memory/2026-11-22_P16_EXPOSED_USEFULNESS_COMPARISON_RESULT_AND_NEXT_DECISION.md.
+**Current selected next stage:** NEW calibrated (versioned) B5 source-evaluator repair on the FOURTH EXPOSED cohort: original B2v4 failed gate/frozen evaluator remains unchanged; corrected multi-item duty coverage and illustrative-versus-eligibility alternatives eliminate two mis-scored hard stops without hiding B2v4's 12 material category mismatches. New opt-in B2v6 source-evidence candidate matches 73/73 selected fourth role anchors retrospectively, zero critical mismatch or missed duty in that selected review; all 32 B1 bundle validations across four exposed cohorts passed. First exposed cohort still has a material category mismatch and earlier alternative meanings remain unresolved. This is EXPOSED-only engineering, NOT independent generalization, NOT B5 accepted or B6 promoted; accepted English v30/original v9 unchanged. Next: prefreeze corrected future evaluation method and evaluate compact B4v6 decision usefulness, with no automatic fifth cohort. Decision: docs/working-memory/2026-11-22_P16_B5_CALIBRATED_EVALUATOR_AND_B2V6_EXPOSED_REPAIR.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,16 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-22 Calibrated B5 evaluation correction — latest execution overlay
+
+- [x] Audit exact frozen fourth source gate: two adjacent duty bullets were separately retained; illustrative Agile examples were not an explicit formal OR. Historical frozen failed verdict untouched.
+- [x] Implement new versioned evaluator with exact-source multi-item coverage, local alternatives, flexible nonmandatory behavioral/qualification compatibility and high-impact false-required/missed-duty safeguards.
+- [x] Implement opt-in B2v6 source-evidence candidate; recovered false-heading/list content remains unresolved, not automatically accepted. Regress across all four exposed cohorts and preserve B1 contract.
+- [x] Seal private read-only calibrated fourth replay, public-safe hash/count scorecard and engineering decision; do not call models or write production.
+- [ ] Before the NEXT untouched prospective B5 source acquisition, explicitly prefreeze the calibrated review/selection protocol (source item granularity, example vs formal eligibility, uncertain semantics, critical guard thresholds).
+- [ ] Continue previously approved B4v6 compact source-qualified decision-first usefulness trial on exposed ads with truthful uncertainty and source click-through.
+- [ ] Require independent or isolated semantic/user usefulness assessment, bilingual/baseline comparison where genuinely available, measured costs and rollback review before any B5/B6 claim.
 
 ## 2026-11-22 Exposed usefulness comparison — latest next-gate owner
 

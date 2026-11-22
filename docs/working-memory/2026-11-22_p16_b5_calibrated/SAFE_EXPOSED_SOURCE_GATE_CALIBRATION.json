@@ -1,0 +1,94 @@
+{
+  "B5_accepted": false,
+  "B6_promotion_authorized": false,
+  "b1_candidate_contract_validations": 8,
+  "candidate_scope": "all_fourth_sources_now_exposed",
+  "candidates": {
+    "B2v4_frozen_prospective": {
+      "counts": {
+        "broad_qualification_compatible": 1,
+        "critical_category_mismatches": 12,
+        "cross_item_covered": 1,
+        "exact_role": 57,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 4,
+        "reviewed_assertions": 80,
+        "role_comparable_assertions": 73,
+        "uncovered": 4,
+        "unresolved_alternatives": 0
+      },
+      "disposition": "BLOCKED_REMAINING_MATERIAL_SOURCE_ERRORS"
+    },
+    "B2v5_exposed": {
+      "counts": {
+        "broad_qualification_compatible": 1,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 1,
+        "exact_role": 72,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 4,
+        "reviewed_assertions": 80,
+        "role_comparable_assertions": 73,
+        "uncovered": 1,
+        "unresolved_alternatives": 0
+      },
+      "disposition": "INCOMPLETE_SOURCE_COVERAGE_OR_ALTERNATIVE_MEANING"
+    },
+    "B2v6_exposed": {
+      "counts": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 1,
+        "exact_role": 73,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 4,
+        "reviewed_assertions": 80,
+        "role_comparable_assertions": 73,
+        "uncovered": 0,
+        "unresolved_alternatives": 0
+      },
+      "disposition": "NO_SELECTED_CRITICAL_FAILURE_EXPOSED_ONLY"
+    }
+  },
+  "code_sha256": {
+    "src/jobhunter/source_gate_evaluation_v2.py": "2537f927f25f273921c38f9a0dee01c7a86bc66f8d33bdc6144b6cab2705dfdf",
+    "src/jobhunter/source_item_candidate_b2_v4_dom.py": "0ec87e02c46c5c7fe3da7c67753dfc94625088ed04a3605cc006337ec40c24fe",
+    "src/jobhunter/source_item_candidate_b2_v5_dom.py": "c553eab461c406bb7e53f600044d2c5231599fce67441c60922c0abdab4e0082",
+    "src/jobhunter/source_item_candidate_b2_v6_dom.py": "ec8c4187388115f406710f66c6f008999b396c8e40d9385d295c2107efd90ee2"
+  },
+  "contract": "jobhunter-p16-b5-exposed-calibrated-gate-v2",
+  "example_lists_do_not_imply_mandatory_eligibility_OR": true,
+  "frozen_original_record_sha256": "dbdb31bfef7265e957ff34febbec54bf6d565cc34d3dfbbea6999d08be932be2",
+  "frozen_source_first_alternatives_sha256": "3b2edf822a0bf1d4e5adf1bbdf2fd4b3066b1796f9f79455e1c6559ec80cb4e0",
+  "frozen_source_first_review_sha256": "ed0ebdb19c96aba51a025c2cebb01fdcc6096011130569a7c4dbb101b15677ae",
+  "independent_generalization_established": false,
+  "limitations": [
+    "Original fourth cohort is exposed and cannot validate new candidates prospectively",
+    "Source-first assertions were assistant selected, not exhaustive or independent human truth",
+    "A source-covered alternative example is not a certified employer eligibility DAG",
+    "Corrected segmentation scoring and broad taxonomy compatibility need independent calibration",
+    "No paired bilingual/English v30 or real user decision evidence acquired"
+  ],
+  "material_category_errors_still_counted": true,
+  "multiple_contiguous_original_duty_bullets_preserve_separate_items": true,
+  "new_accepted_employer_facts": 0,
+  "new_model_requests": 0,
+  "new_source_requests": 0,
+  "original_B2v4_source_gate_failed": true,
+  "original_frozen_evaluation_status": "PASS_REPLAY_FOURTH_UNSEEN_SOURCE_GATE_FAILURE_NOT_B5_ACCEPTANCE",
+  "private_calibrated_details_sha256": "b1ca5da0f63baa52936ca922409094b5a63b211af16b57f4a9330c3501b9d9d7",
+  "production_database_sha256": "d9068fcb503860638cb2187b537e57151bea0192ff69ab7dbe381c84fb2353d8",
+  "public_corpus_manifest_sha256": "7a65485c813a855d144160f1009559decaf0383dba06a089760d2101726fda4a",
+  "review_blind_to_candidate_at_original_time": true,
+  "review_independent_human": false,
+  "selected_original_source_assertions": 80,
+  "source_jobs": 8,
+  "status": "PASS_EXPOSED_METHOD_REPAIR_NO_B5_ACCEPTANCE",
+  "user_usefulness_measured": false
+}

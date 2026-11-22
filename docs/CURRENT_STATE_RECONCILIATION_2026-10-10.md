@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-22
-**Branch:** main — B4v5 exposed usefulness evidence replayed; no valid same-source v30, B5/B6 not promoted; accepted v30/v9 unchanged
+**Branch:** main — versioned calibrated fourth B5 source-gate re-score and exposed B2v6 candidate; original historical failure intact, B5/B6 unpromoted, accepted v30/v9 unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 latest calibrated source-gate methodology correction and B2v6 exposed candidate
+
+NEW calibrated (versioned) B5 source-evaluator repair on the FOURTH EXPOSED cohort: original B2v4 failed gate/frozen evaluator remains unchanged; corrected multi-item duty coverage and illustrative-versus-eligibility alternatives eliminate two mis-scored hard stops without hiding B2v4's 12 material category mismatches. New opt-in B2v6 source-evidence candidate matches 73/73 selected fourth role anchors retrospectively, zero critical mismatch or missed duty in that selected review; all 32 B1 bundle validations across four exposed cohorts passed. First exposed cohort still has a material category mismatch and earlier alternative meanings remain unresolved. This is EXPOSED-only engineering, NOT independent generalization, NOT B5 accepted or B6 promoted; accepted English v30/original v9 unchanged. Next: prefreeze corrected future evaluation method and evaluate compact B4v6 decision usefulness, with no automatic fifth cohort. Decision: docs/working-memory/2026-11-22_P16_B5_CALIBRATED_EVALUATOR_AND_B2V6_EXPOSED_REPAIR.md.
 
 ## November 22 latest B4v5 exposed usefulness outcome and next question-first candidate
 

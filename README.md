@@ -241,6 +241,10 @@ The architecture deliberately avoids microservices, Kubernetes, a separate SPA, 
 
 The fourth independently selected original-source B5 cohort failed its frozen B2v4 source gate. A later B2v5 candidate improves retrospective diagnostics only; one explicit duty and one alternative still require resolution. No new P1.6, Capability/Work/Registry/Market accepted fact was promoted. The public English v30/v5 and original v9/v4 paths remain unchanged. The next bounded research decision tests source-qualified **user usefulness on already exposed cases** before another frozen fresh-cohort attempt. See [fourth B5 decision](docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md).
 
+## Latest source-gate calibration (November 22, 2026)
+
+A versioned, read-only evaluation repair now distinguishes legitimate multi-bullet source-duty evidence from genuinely missing duties, and illustrative technology/method examples from formal applicant-eligibility alternatives. The original fourth B5 prospective failure remains untouched; a separate exposed-only B2v6 candidate recovers source-grounded classifications without production promotion. The selected fourth review is fully covered under the revised diagnostic method, but B5 generalization and B6 rollout remain unapproved. See [calibration decision](docs/working-memory/2026-11-22_P16_B5_CALIBRATED_EVALUATOR_AND_B2V6_EXPOSED_REPAIR.md).
+
 ## Most recent bounded research result (November 22, 2026)
 
 The existing source-qualified B4v5 presentation has a reproducible, four-job, nine-question *exposed* usefulness inspection. Five high-risk questions show source-supported information and four remain partial/uncertain; zero archived same-source English v30 results qualify for a semantic-output head-to-head. This is engineering evidence for fallback availability, **not** independently measured user benefit or authorization to promote experimental semantic facts. Next: a compact B4v6 decision-question-first candidate trial; B5/B6 remain gated. See [exposed usefulness decision](docs/working-memory/2026-11-22_P16_EXPOSED_USEFULNESS_COMPARISON_RESULT_AND_NEXT_DECISION.md).
