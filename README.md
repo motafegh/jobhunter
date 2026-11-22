@@ -237,6 +237,10 @@ Use `--config config/local.toml` (or set `JOBHUNTER_CONFIG`) for local commands 
 
 The architecture deliberately avoids microservices, Kubernetes, a separate SPA, vector infrastructure, queues, or cloud dependencies until a measured product need justifies them.
 
+## Latest Stage B research boundary (November 22, 2026)
+
+The fourth independently selected original-source B5 cohort failed its frozen B2v4 source gate. A later B2v5 candidate improves retrospective diagnostics only; one explicit duty and one alternative still require resolution. No new P1.6, Capability/Work/Registry/Market accepted fact was promoted. The public English v30/v5 and original v9/v4 paths remain unchanged. The next bounded research decision tests source-qualified **user usefulness on already exposed cases** before another frozen fresh-cohort attempt. See [fourth B5 decision](docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md).
+
 ## Current maturity
 
 Accepted/current foundation and active frontier:

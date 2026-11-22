@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-22
-**Branch:** main — second new B5 source cohort failed B2v2; B2v3 candidate-only exposed engineering; v30/v9 unchanged
+**Branch:** main — fourth frozen B5 original-source FAIL on B2v4; B2v5 exposed-only regression; B5/B6 not promoted; accepted v30/v9 unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 latest fourth B5 source failure, B2v5 exposed engineering, utility-first next gate
+
+FOURTH genuine B5 frozen-source gate FAILED on B2v4 (8 jobs, 80 source-first assistant assertions, 56/73 role-comparable matches, 13 role mismatches, 1 missed explicit duty, 1 job with missing alternative scope). No B3/B4/v30 inference; the cohort is exposed. After exposure, B2v5 source-DOM overlay improved retrospective fourth-cohort role matches to 71/73 but retains the missed duty/alternative; all four cohorts are now exposed. B5 semantic acceptance NOT ESTABLISHED, B6 closed, accepted v30/v9 unchanged. Next: bounded exposed-source usefulness/architecture decision, not an automatic fifth fresh cohort. Decision: docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md.
 
 ## November 22 second fresh B5 source failure and B2v3 exposed repair
 

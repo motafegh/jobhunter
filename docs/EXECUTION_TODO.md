@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-22 (second B5 fresh source gate failed, B2v3 exposed repair; B6 closed).
+**Last research-status reconciliation:** 2026-11-22 (fourth B5 prospective failure, exposed B2v5 repair; no B6).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** SECOND B5 truly fresh eight-source evaluation on 2026-11-22 FAILED on unchanged B2v2 after 91 source-first sealed assistant assertions: 24 role matches, 59 role mismatches, 26 missed explicit-duty assertions and 3 jobs with missing alternative scopes. STOP before any B3/B4/v30 model calls; these eight are NOW EXPOSED. A separately versioned B2v3 generic flattened-heading source candidate retrospectively recovers 79 of 85 comparable role assertions, no missed duty or false mandatory assertions in the selected review, and retains 82 matches on the earlier exposed 8 and B0 2 conditional graphs. Two new jobs still contain uncontained reviewed qualifications; not unseen B5 or production acceptance. Next examine bounded source-grounded semantic interpretation versus escalating regex rules, then only after freezing the candidate obtain a completely distinct third unseen B5 sample; B6 remains unauthorized. Decision: docs/working-memory/2026-11-22_P16_B5_SECOND_FRESH_SOURCE_FAILURE_AND_B2V3_EXPOSED_REPAIR.md.
+**Current selected next stage:** FOURTH genuine B5 frozen-source gate FAILED on B2v4 (8 jobs, 80 source-first assistant assertions, 56/73 role-comparable matches, 13 role mismatches, 1 missed explicit duty, 1 job with missing alternative scope). No B3/B4/v30 inference; the cohort is exposed. After exposure, B2v5 source-DOM overlay improved retrospective fourth-cohort role matches to 71/73 but retains the missed duty/alternative; all four cohorts are now exposed. B5 semantic acceptance NOT ESTABLISHED, B6 closed, accepted v30/v9 unchanged. Next: bounded exposed-source usefulness/architecture decision, not an automatic fifth fresh cohort. Decision: docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,15 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-22 Latest Stage B5 execution overlay — controls next work
+
+- [x] Fourth genuinely fresh eight-source B5 candidate frozen at `f2e396a`, source-only review sealed (80 assertions), original B2v4 FAIL and hard stop replay verified before B3/B4/v30. Fourth set now exposed.
+- [x] Versioned, opt-in B2v5 source-DOM overlay tested on all four EXPOSED cohorts: 32 B1 bundles valid, fourth role matches 56→71/73; one missed duty and one alternative remain. No production or prior-source promotion.
+- [x] Publish private replay checker, public-safe SHA/count scorecard and engineering/no-promotion decision.
+- [ ] Next: preregister bounded usefulness comparison on exposed cases (B4v5 source brief versus unchanged v30/v9 where available), diagnose residual original-source failures and decide whether selectively model-assisted interpretation is preferable to additional regex micro-rules.
+- [ ] Any NEW B5 acceptance requires a materially justified frozen candidate, separate unseen cohort, source-first review, local physical-request budgets, fidelity and paired usefulness evidence.
+- [ ] B6 still CLOSED pending independent B5 and separate rollback-verified promotion decision.
 
 ## 2026-11-14 ACTIVE P1.6 Stage B execution plan (B4 next)
 
