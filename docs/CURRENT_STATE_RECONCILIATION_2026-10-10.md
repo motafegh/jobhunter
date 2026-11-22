@@ -2,12 +2,16 @@
 
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
-**Last reconciled:** 2026-11-21
+**Last reconciled:** 2026-11-22
 **Branch:** main — B5 exposed translation batch sidecar/pilot; public v30/v9 and production routes unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 B5 hard physical budget and exposed semantic probe
+
+B5 bounded local inference now enforces real physical HTTP attempt and POSIX wall-clock limits (retries/truncation included); a sealed 5-batch, 10-source-item EXPOSED pilot used 5/7 HTTP attempts, completed in 60.8s within 240s, and retained all source associations. Assistant source-grounded review: 9 individual meanings supported, 1 materially partial technical-term omission (Secure SDLC). HTTP/JSON success is NOT semantic acceptance; none of these are unseen B5, accepted employer facts or B6 promotion. Next freeze a separate full-cohort translation budget and a DIFFERENT unseen 6-8-source B5 cohort. Decision: docs/working-memory/2026-11-22_P16_B5_HARD_LOCAL_TRANSLATION_BUDGET_AND_EXPOSED_MEANING_REVIEW.md.
 
 ## November 21 B5 translation batching — exposed preflight and pilot
 

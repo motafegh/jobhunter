@@ -2,11 +2,11 @@
 
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-21
+**Last reconciled:** 2026-11-22
 **Scope:** Product delivery from the accepted foundation through sustained personal career intelligence  
 **Execution authority:** `docs/IMPLEMENTATION_PLAN.md` and the current focused plan/decision control exact implementation order and acceptance. This roadmap controls strategic sequencing and proposal disposition only when it does not conflict with those more specific execution owners.
 
-**Current execution bridge:** B2v2 exposed original-source improvement remains candidate-only. B5 translation batching now has a bounded source-ID/SHA-preserving offline plan (142 Persian items across the eight EXPOSED ads -> 74 PLANNED physical requests at <=3 items/request) and a local two-item pilot (1 batch + 2 single-item controls, 3 actual HTTP completions, both batch/single English results identical). The two preferred source items retain preferred modality in source-owned B1/B2 metadata, not standalone English translations; two B1 alignment source IDs replay. Neither speedup nor unseen linguistic accuracy is established. Model-budget and physical-attempt stop rules must be frozen before any new unseen B5. Current accepted v30/v9, public corpus, database and downstream routes unchanged. B6 promotion unauthorized. Decision: docs/working-memory/2026-11-21_P16_B5_SOURCE_BOUND_TRANSLATION_BATCHING_PREFLIGHT_AND_PILOT.md.
+**Current execution bridge:** B5 bounded local inference now enforces real physical HTTP attempt and POSIX wall-clock limits (retries/truncation included); a sealed 5-batch, 10-source-item EXPOSED pilot used 5/7 HTTP attempts, completed in 60.8s within 240s, and retained all source associations. Assistant source-grounded review: 9 individual meanings supported, 1 materially partial technical-term omission (Secure SDLC). HTTP/JSON success is NOT semantic acceptance; none of these are unseen B5, accepted employer facts or B6 promotion. Next freeze a separate full-cohort translation budget and a DIFFERENT unseen 6-8-source B5 cohort. Decision: docs/working-memory/2026-11-22_P16_B5_HARD_LOCAL_TRANSLATION_BUDGET_AND_EXPOSED_MEANING_REVIEW.md.
 
 ## November 13 execution sequencing amendment — Stage B source fidelity
 

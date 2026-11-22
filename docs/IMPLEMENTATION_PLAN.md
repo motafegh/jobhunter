@@ -2,9 +2,9 @@
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  
-**Last reconciled:** 2026-11-21
+**Last reconciled:** 2026-11-22
 
-**Current execution bridge:** B2v2 exposed original-source improvement remains candidate-only. B5 translation batching now has a bounded source-ID/SHA-preserving offline plan (142 Persian items across the eight EXPOSED ads -> 74 PLANNED physical requests at <=3 items/request) and a local two-item pilot (1 batch + 2 single-item controls, 3 actual HTTP completions, both batch/single English results identical). The two preferred source items retain preferred modality in source-owned B1/B2 metadata, not standalone English translations; two B1 alignment source IDs replay. Neither speedup nor unseen linguistic accuracy is established. Model-budget and physical-attempt stop rules must be frozen before any new unseen B5. Current accepted v30/v9, public corpus, database and downstream routes unchanged. B6 promotion unauthorized. Decision: docs/working-memory/2026-11-21_P16_B5_SOURCE_BOUND_TRANSLATION_BATCHING_PREFLIGHT_AND_PILOT.md.
+**Current execution bridge:** B5 bounded local inference now enforces real physical HTTP attempt and POSIX wall-clock limits (retries/truncation included); a sealed 5-batch, 10-source-item EXPOSED pilot used 5/7 HTTP attempts, completed in 60.8s within 240s, and retained all source associations. Assistant source-grounded review: 9 individual meanings supported, 1 materially partial technical-term omission (Secure SDLC). HTTP/JSON success is NOT semantic acceptance; none of these are unseen B5, accepted employer facts or B6 promotion. Next freeze a separate full-cohort translation budget and a DIFFERENT unseen 6-8-source B5 cohort. Decision: docs/working-memory/2026-11-22_P16_B5_HARD_LOCAL_TRANSLATION_BUDGET_AND_EXPOSED_MEANING_REVIEW.md.
 
 ## 1. Purpose and authority
 
@@ -84,7 +84,7 @@ generalized reliability and cannot serve as unseen promotion evidence.
 | B2 | Exact original-source item interpretation and source-labeled board metadata conflict reconciliation | BOUNDED ENGINEERING PASS / 2026-11-17; full semantic generalization NOT ESTABLISHED |
 | B3 | Source-bound translation candidate, semantic fidelity checks and explicit unresolved alignment | PASS_BOUNDED_EXPOSED_COHORT / 2026-11-18; one corrective selected; no promotion |
 | B4 | Source-grounded job understanding and isolated comparison | B4v4c ENGINEERING PASS; B4v5 EXPOSED SOURCE-PRESENTATION PASS; model semantic and B5 unseen OPEN, no promotion |
-| B5 | New independently reserved source-first evaluation and fair unchanged-v30 comparison | Exposed B2v2 source repair plus offline B5 batch planning/two-item local pilot PASS mechanically; fresh heldout source+translation semantic evaluation and explicit translation budget still OPEN; B6 unauthorized |
+| B5 | Independently reserved original-source assessment and unchanged-v30 paired comparison | Physical HTTP attempt/wall budget now enforced in EXPOSED local pilot (5/7 calls, 240s cap); 9 source meanings supported and 1 partial technical-token omission; separate full translation budget and new unseen B5 cohort still OPEN, B6 unauthorized |
 | B6 | Explicit accept/no-promote, controlled new route or sidecar-only, migration/rollback/CI and downstream regressions | CONDITIONAL |
 
 **B2 interpretive calibration (2026-11-15):** Duties, qualifications and work-implied capabilities can overlap and remain related; separating employer-stated facts must not block useful source-supported capability inference. Never upgrade inferred ability into mandatory prior employment or unstated named tools. Keep candidate links optional, simple and source-labeled; test context loss and prompt/validation burden alongside false requirements. B1 schema and runtime are unchanged. Decision: `docs/working-memory/2026-11-15_P16_B2_DUTY_CAPABILITY_RELATIONSHIP_AND_COMPLEXITY_CALIBRATION.md`.
