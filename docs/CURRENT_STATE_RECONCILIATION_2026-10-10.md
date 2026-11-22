@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-22
-**Branch:** main — B5 exposed translation batch sidecar/pilot; public v30/v9 and production routes unchanged
+**Branch:** main — second new B5 source cohort failed B2v2; B2v3 candidate-only exposed engineering; v30/v9 unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 second fresh B5 source failure and B2v3 exposed repair
+
+SECOND B5 truly fresh eight-source evaluation on 2026-11-22 FAILED on unchanged B2v2 after 91 source-first sealed assistant assertions: 24 role matches, 59 role mismatches, 26 missed explicit-duty assertions and 3 jobs with missing alternative scopes. STOP before any B3/B4/v30 model calls; these eight are NOW EXPOSED. A separately versioned B2v3 generic flattened-heading source candidate retrospectively recovers 79 of 85 comparable role assertions, no missed duty or false mandatory assertions in the selected review, and retains 82 matches on the earlier exposed 8 and B0 2 conditional graphs. Two new jobs still contain uncontained reviewed qualifications; not unseen B5 or production acceptance. Next examine bounded source-grounded semantic interpretation versus escalating regex rules, then only after freezing the candidate obtain a completely distinct third unseen B5 sample; B6 remains unauthorized. Decision: docs/working-memory/2026-11-22_P16_B5_SECOND_FRESH_SOURCE_FAILURE_AND_B2V3_EXPOSED_REPAIR.md.
 
 ## November 22 B5 hard physical budget and exposed semantic probe
 
