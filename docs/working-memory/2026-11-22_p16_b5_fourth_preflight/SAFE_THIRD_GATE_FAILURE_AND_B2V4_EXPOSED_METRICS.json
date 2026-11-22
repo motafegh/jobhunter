@@ -1,0 +1,88 @@
+{
+  "B2v4_DOM_EXPOSED_REPLAY": {
+    "first": {
+      "comparable": 86,
+      "false_required": 0,
+      "missed_explicit_duties": 0,
+      "missing_option_job": 0,
+      "role_match": 80,
+      "role_mismatch": 3,
+      "source_review_assertions": 93
+    },
+    "second": {
+      "comparable": 85,
+      "false_required": 0,
+      "missed_explicit_duties": 0,
+      "missing_option_job": 0,
+      "role_match": 83,
+      "role_mismatch": 0,
+      "source_review_assertions": 91
+    },
+    "third": {
+      "comparable": 78,
+      "false_required": 0,
+      "missed_explicit_duties": 0,
+      "missing_option_job": 0,
+      "role_match": 77,
+      "role_mismatch": 0,
+      "source_review_assertions": 85
+    }
+  },
+  "B6_promotion_authorized": false,
+  "contract": "jobhunter-p16-b5-third-failed-holdout-dom-v4-exposed-and-fourth-candidate-freeze-v1",
+  "date": "2026-11-22",
+  "fourth_candidate_selected": "B2v4_DOM_candidate_only",
+  "fourth_prospective_source_semantics": "NOT_YET_EVALUATED",
+  "new_production_model_or_analyzer_writes": 0,
+  "privacy": "original HTML and source-only assertions in ignored private data",
+  "sha256": {
+    "B2v3_old_candidate": "9f600f87cf6e25a4624eb3842760721cb4213a433cc62ca7be3d800d415ff8f5",
+    "B2v4_DOM_candidate": "0ec87e02c46c5c7fe3da7c67753dfc94625088ed04a3605cc006337ec40c24fe",
+    "B2v4_synthetic_and_exposed_tests": "3b74349e33c62137a39c9070c66b4065d47fc6377c04a39bd7a0e8c780369d56",
+    "production_db_before_fourth": "d9068fcb503860638cb2187b537e57151bea0192ff69ab7dbe381c84fb2353d8",
+    "public_corpus_manifest_before_fourth": "7a65485c813a855d144160f1009559decaf0383dba06a089760d2101726fda4a"
+  },
+  "source_B1_candidate_bundle_contracts_passed": 24,
+  "source_derived_obligations_automatically_accepted": 0,
+  "source_or_model_network_calls_during_retro_DOM_replays": 0,
+  "source_raw_DOM_normalization_equal_to_v2_frozen_description": 24,
+  "third_B2v3_unseen_source_gate": "FAILED_STOP_BEFORE_TRANSLATION_AND_V30",
+  "third_after_first_comparison_exposure": "EXPOSED_NOT_REUSABLE_FOR_UNSEEN",
+  "third_initial_failure_sha256": "e3198d30b2c7af66e731de4f0676a118984665dc9e57752259f0c5b23bd46731",
+  "third_source_first_assistant_assertions": 85,
+  "third_source_first_review_sha256": "0d5bc59323e7a95b76496cfd2fac47a7207a01d741e4ab9398616196756e94fe",
+  "third_source_holdout_initial_frozen_B2v3": {
+    "candidate_role_match_anchor_count": 48,
+    "candidate_role_mismatch_anchor_count": 25,
+    "explicit_duty_missed_anchor_count": 12,
+    "frozen_source_first_anchor_count": 85,
+    "job_count_with_critical_structural_or_category_gaps": 7,
+    "multi_specialty_alternative_structure_missing_jobs": 4,
+    "optional_or_negative_required_overstatement_count": 3,
+    "source_type_anchor_count": 78
+  },
+  "third_source_only_original_count": 8,
+  "translation_preflight": {
+    "first": {
+      "batches": 69,
+      "excluded": 19,
+      "native": 107,
+      "source_items": 276,
+      "translate": 150
+    },
+    "second": {
+      "batches": 79,
+      "excluded": 14,
+      "native": 49,
+      "source_items": 238,
+      "translate": 175
+    },
+    "third": {
+      "batches": 76,
+      "excluded": 11,
+      "native": 38,
+      "source_items": 204,
+      "translate": 155
+    }
+  }
+}
