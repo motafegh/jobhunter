@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-22 (fourth B5 prospective failure, exposed B2v5 repair; no B6).
+**Last research-status reconciliation:** 2026-11-22 (B4v5 exposed usefulness study, v30 zero comparable valid outputs; B5/B6 closed).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** FOURTH genuine B5 frozen-source gate FAILED on B2v4 (8 jobs, 80 source-first assistant assertions, 56/73 role-comparable matches, 13 role mismatches, 1 missed explicit duty, 1 job with missing alternative scope). No B3/B4/v30 inference; the cohort is exposed. After exposure, B2v5 source-DOM overlay improved retrospective fourth-cohort role matches to 71/73 but retains the missed duty/alternative; all four cohorts are now exposed. B5 semantic acceptance NOT ESTABLISHED, B6 closed, accepted v30/v9 unchanged. Next: bounded exposed-source usefulness/architecture decision, not an automatic fifth fresh cohort. Decision: docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md.
+**Current selected next stage:** Frozen exposed B4v5 usefulness audit REPLAY PASSED (4 previously exposed jobs, 9 diagnostic questions: 5 source-supported visible, 4 partial/uncertain). Archived same-source English v30 produced 0 valid artifacts (3 failed, 1 rejected); one original-language v9 artifact existed. No fair v30 semantic-output accuracy comparison, independently measured user value or time savings is established. Next: predeclared compact, decision-question-first B4v6 source-linked candidate/usefulness trial on already exposed cases; investigate selective bounded local semantics, not another automatic fresh B5 cohort. B5 independent acceptance NOT ESTABLISHED, B6 CLOSED, accepted v30/v9 and downstream facts unchanged. Decision: docs/working-memory/2026-11-22_P16_EXPOSED_USEFULNESS_COMPARISON_RESULT_AND_NEXT_DECISION.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,15 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-22 Exposed usefulness comparison — latest next-gate owner
+
+- [x] Predeclare four already exposed B4v5 source jobs, nine applicant questions, source SHA and status baseline in protocol committed before evaluating outcomes.
+- [x] Offline source-qualified B4v5 replay and existing v30/v9 status comparison: nine tasks, 5 source-supported-visible, 4 partial/uncertain; 0 valid same-source English v30 outputs; 1 accepted v9 artifact, not a human semantics certificate.
+- [x] No provider/source calls, accepted fact promotion, or production/corpus modification; private exact employer text ignored, public scorecard source-safe.
+- [ ] Freeze limited compact decision-question-first B4v6 candidate and source-linked evaluation on exposed cohort; compare misleading mandatory claims, duties and alternatives, unknowns, readability, inspection burden and any measured local-model cost.
+- [ ] Obtain real owner/context-isolated usefulness judgment before claiming user time/decision benefit; model failure availability is not comparative model accuracy.
+- [ ] Later B5 prospective semantics/translation/usefulness gate still unpassed; B6 separate promotion and rollback still unauthorized.
 
 ## 2026-11-22 Latest Stage B5 execution overlay — controls next work
 

@@ -1,0 +1,156 @@
+{
+  "B5_independent_generalization_pass": false,
+  "B6_promotion_authorized": false,
+  "accepted_employer_facts_promoted": 0,
+  "assistant_exposed_review_counts": {
+    "partially_visible_or_uncertain": 4,
+    "source_supported_visible": 5
+  },
+  "b4v5_alternative_graphs": 2,
+  "b4v5_reviewed_terminology_overlays": 1,
+  "b4v5_withheld_old_model_claims": 2,
+  "baseline_identity": "same_frozen_job_detail_source",
+  "blind_independent_human_review": false,
+  "candidate_source_categories_semantically_certified": false,
+  "candidate_version": "B4v5_existing_source_qualified_projection_only",
+  "case_count": 4,
+  "contract": "jobhunter-p16-exposed-usefulness-scorecard-v1",
+  "evaluation_scope": "four_previously_exposed_jobs_nine_selected_diagnostic_questions",
+  "evaluator_sha256": "a2869d55aee502b1cd7562a37ce3e0ad3206dec2254559b79224366581f095d6",
+  "frozen_input_sha256": {
+    "corpus/manifest.json": "7a65485c813a855d144160f1009559decaf0383dba06a089760d2101726fda4a",
+    "data/jobhunter.sqlite3": "d9068fcb503860638cb2187b537e57151bea0192ff69ab7dbe381c84fb2353d8",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/primary-v4c/B4_BASELINE_COMPARISON.json": "e7d6b37235136bd98df568240ae36e1a05deb79c2ccf5ed58ac9e9eda22a279d",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/primary-v4c/B4_EXPOSED_ASSISTANT_SEMANTIC_REVIEW.json": "a3a61f5cc35fa460102d0c0960c7ff3a9c58536d3ed74dcb1448315e92087d26",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/primary-v4c/PRIVATE_B4_CANDIDATES.json": "8d7155448f0311ad0fff4e3d739c4fd3fb57dca33d08e46815e2618686837bc3",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/reviewed-terminology-correction-v5.json": "054c1065c54e0a1abdf27e93803dbf3feedac25859f01e2778a3e464594450f4",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/source-projection-v5c/FINAL_AUDIT.json": "16078e2c8e894289cb3a5174f76d4d1fb985bba3fd76fffcf8877982d86ee6ee",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/source-projection-v5c/PRIVATE_SOURCE_PROJECTIONS.json": "a9ea424cfa497620799600947d31ee3906f8b351a959d8325c983dc5abc63a27"
+  },
+  "frozen_protocol_commit": "1abd1e0",
+  "limitations": [
+    "Same assistant, previously exposed source cohort; nine high-risk questions selected from prior failures, not a representative denominator",
+    "B4v5 source-role/strength/eligibility semantics remain candidate-only; original quotes are authoritative but English translations may be incomplete",
+    "No valid same-source v30 English output for qualitative semantic comparison; historical v9 accepted artifact is not a calibrated human assessment",
+    "No independently observed user decision, time saved, comprehension, reading effort, or A/B comparison",
+    "More displayed source items may increase reading burden; comparison measures presence and caution, not validated usability"
+  ],
+  "measured_owner_time_savings": false,
+  "new_LLM_or_source_network_requests": 0,
+  "per_case": {
+    "tMjm": {
+      "b4_model_candidate_state": "source_only_candidate",
+      "b4v5_alternative_graph_count": 0,
+      "b4v5_reviewed_translation_overlays": 0,
+      "b4v5_source_item_count": 18,
+      "b4v5_visible_source_qualified_item_count": 17,
+      "b4v5_withheld_old_model_claims": 0,
+      "baseline_output_semantic_pair_comparable": false,
+      "english_v30_status": "rejected_candidate_no_valid_artifact",
+      "english_v30_valid_artifact_count": 0,
+      "original_v9_accepted_artifact_count": 0,
+      "original_v9_status": "no_v9_artifact",
+      "same_source_snapshot": true,
+      "task_results": [
+        {
+          "task_id": "tMjm-work",
+          "verdict": "partially_visible_or_uncertain"
+        },
+        {
+          "task_id": "tMjm-remote",
+          "verdict": "source_supported_visible"
+        }
+      ]
+    },
+    "tMps": {
+      "b4_model_candidate_state": "failed",
+      "b4v5_alternative_graph_count": 1,
+      "b4v5_reviewed_translation_overlays": 0,
+      "b4v5_source_item_count": 19,
+      "b4v5_visible_source_qualified_item_count": 18,
+      "b4v5_withheld_old_model_claims": 0,
+      "baseline_output_semantic_pair_comparable": false,
+      "english_v30_status": "failed_no_artifact",
+      "english_v30_valid_artifact_count": 0,
+      "original_v9_accepted_artifact_count": 0,
+      "original_v9_status": "no_v9_artifact",
+      "same_source_snapshot": true,
+      "task_results": [
+        {
+          "task_id": "tMps-work",
+          "verdict": "partially_visible_or_uncertain"
+        },
+        {
+          "task_id": "tMps-path",
+          "verdict": "partially_visible_or_uncertain"
+        }
+      ]
+    },
+    "tNDx": {
+      "b4_model_candidate_state": "partial_candidate",
+      "b4v5_alternative_graph_count": 1,
+      "b4v5_reviewed_translation_overlays": 1,
+      "b4v5_source_item_count": 19,
+      "b4v5_visible_source_qualified_item_count": 17,
+      "b4v5_withheld_old_model_claims": 2,
+      "baseline_output_semantic_pair_comparable": false,
+      "english_v30_status": "failed_no_artifact",
+      "english_v30_valid_artifact_count": 0,
+      "original_v9_accepted_artifact_count": 1,
+      "original_v9_status": "artifact_present_accepted",
+      "same_source_snapshot": true,
+      "task_results": [
+        {
+          "task_id": "tNDx-work",
+          "verdict": "source_supported_visible"
+        },
+        {
+          "task_id": "tNDx-certificate-preference",
+          "verdict": "partially_visible_or_uncertain"
+        },
+        {
+          "task_id": "tNDx-name-exam",
+          "verdict": "source_supported_visible"
+        }
+      ]
+    },
+    "tNhZ": {
+      "b4_model_candidate_state": "partial_candidate",
+      "b4v5_alternative_graph_count": 0,
+      "b4v5_reviewed_translation_overlays": 0,
+      "b4v5_source_item_count": 22,
+      "b4v5_visible_source_qualified_item_count": 12,
+      "b4v5_withheld_old_model_claims": 0,
+      "baseline_output_semantic_pair_comparable": false,
+      "english_v30_status": "failed_no_artifact",
+      "english_v30_valid_artifact_count": 0,
+      "original_v9_accepted_artifact_count": 0,
+      "original_v9_status": "no_v9_artifact",
+      "same_source_snapshot": true,
+      "task_results": [
+        {
+          "task_id": "tNhZ-work",
+          "verdict": "source_supported_visible"
+        },
+        {
+          "task_id": "tNhZ-optional",
+          "verdict": "source_supported_visible"
+        }
+      ]
+    }
+  },
+  "preselected_task_count": 9,
+  "private_exposed_task_review_sha256": "5e9cbe84d6361bfc2cfcbe51999098dcf4e03c782d121c2007d6e6c7214b2d05",
+  "production_database_modified": false,
+  "public_corpus_modified": false,
+  "same_source_model_semantic_pair_count": 0,
+  "source_item_count": 78,
+  "status": "PASS_OFFLINE_EXPOSED_TASK_EVIDENCE_NOT_USER_VALUE_OR_B5",
+  "user_usefulness_advantage_established": false,
+  "v30_accuracy_superiority_established": false,
+  "v30_failed_case_count": 3,
+  "v30_rejected_only_case_count": 1,
+  "v30_valid_same_source_artifact_count": 0,
+  "v9_accepted_artifact_count": 1,
+  "visible_source_qualified_items": 64
+}

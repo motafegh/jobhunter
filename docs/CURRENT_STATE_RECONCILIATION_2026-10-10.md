@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-22
-**Branch:** main — fourth frozen B5 original-source FAIL on B2v4; B2v5 exposed-only regression; B5/B6 not promoted; accepted v30/v9 unchanged
+**Branch:** main — B4v5 exposed usefulness evidence replayed; no valid same-source v30, B5/B6 not promoted; accepted v30/v9 unchanged
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 latest B4v5 exposed usefulness outcome and next question-first candidate
+
+Frozen exposed B4v5 usefulness audit REPLAY PASSED (4 previously exposed jobs, 9 diagnostic questions: 5 source-supported visible, 4 partial/uncertain). Archived same-source English v30 produced 0 valid artifacts (3 failed, 1 rejected); one original-language v9 artifact existed. No fair v30 semantic-output accuracy comparison, independently measured user value or time savings is established. Next: predeclared compact, decision-question-first B4v6 source-linked candidate/usefulness trial on already exposed cases; investigate selective bounded local semantics, not another automatic fresh B5 cohort. B5 independent acceptance NOT ESTABLISHED, B6 CLOSED, accepted v30/v9 and downstream facts unchanged. Decision: docs/working-memory/2026-11-22_P16_EXPOSED_USEFULNESS_COMPARISON_RESULT_AND_NEXT_DECISION.md.
 
 ## November 22 latest fourth B5 source failure, B2v5 exposed engineering, utility-first next gate
 

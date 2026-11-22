@@ -4,7 +4,7 @@
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-11-22
 
-**Current execution bridge:** FOURTH genuine B5 frozen-source gate FAILED on B2v4 (8 jobs, 80 source-first assistant assertions, 56/73 role-comparable matches, 13 role mismatches, 1 missed explicit duty, 1 job with missing alternative scope). No B3/B4/v30 inference; the cohort is exposed. After exposure, B2v5 source-DOM overlay improved retrospective fourth-cohort role matches to 71/73 but retains the missed duty/alternative; all four cohorts are now exposed. B5 semantic acceptance NOT ESTABLISHED, B6 closed, accepted v30/v9 unchanged. Next: bounded exposed-source usefulness/architecture decision, not an automatic fifth fresh cohort. Decision: docs/working-memory/2026-11-22_P16_B5_FOURTH_FAILURE_B2V5_EXPOSED_AND_NEXT_UTILITY_GATE.md.
+**Current execution bridge:** Frozen exposed B4v5 usefulness audit REPLAY PASSED (4 previously exposed jobs, 9 diagnostic questions: 5 source-supported visible, 4 partial/uncertain). Archived same-source English v30 produced 0 valid artifacts (3 failed, 1 rejected); one original-language v9 artifact existed. No fair v30 semantic-output accuracy comparison, independently measured user value or time savings is established. Next: predeclared compact, decision-question-first B4v6 source-linked candidate/usefulness trial on already exposed cases; investigate selective bounded local semantics, not another automatic fresh B5 cohort. B5 independent acceptance NOT ESTABLISHED, B6 CLOSED, accepted v30/v9 and downstream facts unchanged. Decision: docs/working-memory/2026-11-22_P16_EXPOSED_USEFULNESS_COMPARISON_RESULT_AND_NEXT_DECISION.md.
 
 ## 1. Purpose and authority
 
