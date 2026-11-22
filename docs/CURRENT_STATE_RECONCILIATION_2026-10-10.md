@@ -3,11 +3,15 @@
 **Status:** CURRENT / CONTROLLING STATUS-ONLY OVERLAY  
 **Date:** 2026-10-10
 **Last reconciled:** 2026-11-22
-**Branch:** main — versioned calibrated fourth B5 source-gate re-score and exposed B2v6 candidate; original historical failure intact, B5/B6 unpromoted, accepted v30/v9 unchanged
+**Branch:** main — source-grounded B4v6 exposed compact decision view (no user-time proof), candidate-only B2v6 evaluator repair, original B5 failure preserved, accepted v30/v9 unchanged, B5/B6 gated
 **Scope:** Present-tense project state and execution routing.  
 **Supersedes for current-state reading:** `docs/CURRENT_STATE_RECONCILIATION_2026-09-12.md`
 
 This file changes present-tense status/routing only. It does not replace durable product, domain, source, architecture, roadmap, implementation-plan, or phase-plan semantics.
+
+## November 22 latest compact B4v6 decision-view study and next user gate
+
+NEW B4v6 compact source-qualified first-view engineering PASS on four previously EXPOSED B4v5 jobs and nine pre-frozen applicant questions: immediately visible evidence 34/64 vs prior 64/64; 19,345 vs 25,259 Markdown characters; all 64 original candidates retained in private drilldown; six questions immediately source-navigable (including one honest no-distinct-duty abstention), three full-duty questions require drilldown. Both unreviewed eligibility candidate graphs, one reviewed terminology overlay and two suppressed old model claims preserved. No provider/source requests, production writes, accepted facts or valid same-source v30 semantic comparison. These are presentation/inspection proxies, NOT measured owner time, independent usefulness, unseen B5 generalization or B6 production promotion. Next: real owner/context-isolated comprehension and reading-burden test against original source and B4v5; freeze calibrated semantics protocol before any further unseen B5. Decision: docs/working-memory/2026-11-22_P16_B4V6_COMPACT_DECISION_VIEW_EXPOSED_RESULT_AND_NEXT_USER_GATE.md.
 
 ## November 22 latest calibrated source-gate methodology correction and B2v6 exposed candidate
 

@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-22 (calibrated original-source B5 evaluator; B2v6 exposed-only diagnostics; B5/B6 closed).
+**Last research-status reconciliation:** 2026-11-22 (B4v6 compact decision view and nine-question exposed research check; B5/B6 gated).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** NEW calibrated (versioned) B5 source-evaluator repair on the FOURTH EXPOSED cohort: original B2v4 failed gate/frozen evaluator remains unchanged; corrected multi-item duty coverage and illustrative-versus-eligibility alternatives eliminate two mis-scored hard stops without hiding B2v4's 12 material category mismatches. New opt-in B2v6 source-evidence candidate matches 73/73 selected fourth role anchors retrospectively, zero critical mismatch or missed duty in that selected review; all 32 B1 bundle validations across four exposed cohorts passed. First exposed cohort still has a material category mismatch and earlier alternative meanings remain unresolved. This is EXPOSED-only engineering, NOT independent generalization, NOT B5 accepted or B6 promoted; accepted English v30/original v9 unchanged. Next: prefreeze corrected future evaluation method and evaluate compact B4v6 decision usefulness, with no automatic fifth cohort. Decision: docs/working-memory/2026-11-22_P16_B5_CALIBRATED_EVALUATOR_AND_B2V6_EXPOSED_REPAIR.md.
+**Current selected next stage:** NEW B4v6 compact source-qualified first-view engineering PASS on four previously EXPOSED B4v5 jobs and nine pre-frozen applicant questions: immediately visible evidence 34/64 vs prior 64/64; 19,345 vs 25,259 Markdown characters; all 64 original candidates retained in private drilldown; six questions immediately source-navigable (including one honest no-distinct-duty abstention), three full-duty questions require drilldown. Both unreviewed eligibility candidate graphs, one reviewed terminology overlay and two suppressed old model claims preserved. No provider/source requests, production writes, accepted facts or valid same-source v30 semantic comparison. These are presentation/inspection proxies, NOT measured owner time, independent usefulness, unseen B5 generalization or B6 production promotion. Next: real owner/context-isolated comprehension and reading-burden test against original source and B4v5; freeze calibrated semantics protocol before any further unseen B5. Decision: docs/working-memory/2026-11-22_P16_B4V6_COMPACT_DECISION_VIEW_EXPOSED_RESULT_AND_NEXT_USER_GATE.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,16 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-22 B4v6 exposed compact view — latest execution overlay
+
+- [x] Freeze four-job nine-question source-first view protocol on main before building B4v6.
+- [x] Build candidate-only four-question compact view with complete source drilldown, no new employer facts or translation.
+- [x] Compare original B4v5 to compact B4v6 on identical frozen source versions; record 34/64 first-view items, 6/9 immediately navigable question evidence, 3/9 drilldown-needed full duty sets.
+- [x] Preserve source-SHA, unreviewed alternative graph/OR-AND locality, conditional exam, optional/required strength, Fadak translation overlay, suppressed old model claims.
+- [x] Publish public-safe aggregate and private SHA-sealed replay; run full local tests/CI; no new provider calls or production writes.
+- [ ] Obtain genuine owner or independent context-isolated applicant comprehension/time/accuracy measurements against original ad and verbose B4v5, not invalid v30 outputs.
+- [ ] Only after useful user results consider opt-in local browser integration, without promoting candidate facts. B5 untouched-source calibration, bilingual/semantic gates and B6 rollback review remain separate.
 
 ## 2026-11-22 Calibrated B5 evaluation correction — latest execution overlay
 

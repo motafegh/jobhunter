@@ -1,0 +1,56 @@
+{
+  "B4v5_markdown_chars": 25259,
+  "B4v5_original_plus_english_evidence_chars": 8795,
+  "B4v6_full_drilldown_source_items": 64,
+  "B4v6_immediately_visible_source_items": 34,
+  "B4v6_markdown_chars": 19345,
+  "B4v6_visible_original_plus_english_evidence_chars": 5244,
+  "B5_independent_generalization_accepted": false,
+  "B6_production_promotion_authorized": false,
+  "blind_independent_human_review": false,
+  "case_count": 4,
+  "code_sha256": {
+    "src/jobhunter/source_qualified_b4v6.py": "1c01e2f337469a093c9bb0661ab26229c20baf3b3b5e72c62a4da63efeda367b"
+  },
+  "cohort": "four_previously_exposed_original_source_jobs",
+  "contract": "jobhunter-p16-b4v6-compact-usefulness-exposed-v1",
+  "eligibility_candidate_graphs_retained": 2,
+  "existing_v30_valid_same_source_artifact_count": 0,
+  "frozen_inputs_sha256": {
+    "data/local-acceptance/p16-stage-b4-2026-11-19/primary-v4c/B4_BASELINE_COMPARISON.json": "e7d6b37235136bd98df568240ae36e1a05deb79c2ccf5ed58ac9e9eda22a279d",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/source-projection-v5c/PRIVATE_SOURCE_PROJECTIONS.json": "a9ea424cfa497620799600947d31ee3906f8b351a959d8325c983dc5abc63a27",
+    "data/local-acceptance/p16-stage-b4-2026-11-19/source-projection-v5c/SOURCE_QUALIFIED_BRIEFS.md": "1002236e7d63ec19c212f8ff7115f4c3982ed9227354dbecaa63d41332e5e0f0",
+    "docs/working-memory/2026-11-22_P16_B4V6_COMPACT_DECISION_VIEW_FROZEN_PROTOCOL.md": "d899b2d0c97f2709d2f89b2485e1acc482e648552ebff28595ba2e62a7fb2e39"
+  },
+  "frozen_protocol_preimplementation_commit": "e830c3c",
+  "limitations": [
+    "Display-size and evidence-navigation proxies are not measured human reading time",
+    "Nine selected high-risk questions across four previously exposed cases are not representative",
+    "Original-first assistant review is not independent applicant comprehension",
+    "Source-bound B2 categories and B3 translations remain candidate-only",
+    "No valid same-source English v30 semantic-output comparison exists",
+    "Full source drilldown remains required for hidden evidence and ambiguous eligibility"
+  ],
+  "model_claims_still_suppressed": 2,
+  "navigation_state_counts": {
+    "immediate_no_separate_duties_not_no_real_work": 1,
+    "immediate_source_navigation": 5,
+    "source_drilldown_needed": 3
+  },
+  "new_accepted_employer_facts": 0,
+  "new_model_http_requests": 0,
+  "new_source_requests": 0,
+  "original_B4v5_source_qualified_items": 64,
+  "predeclared_task_count": 9,
+  "private_markdown_sha256": "7f2117ca2cb969407f324af20545ddd4dc979a11d34d9e637d70446bc6d920bf",
+  "private_review_sha256": "8b307c5a50b66aa8da69cf65d5c18781f7e12af6a4964c48c9a49c1a5b61e0c9",
+  "production_database_modified": false,
+  "public_corpus_modified": false,
+  "semantic_accuracy_superiority_established": false,
+  "source_refs_behind_drilldown_for_selected_tasks": 13,
+  "status": "PASS_EXPOSED_COMPACT_PRESENTATION_ENGINEERING_NOT_USER_BENEFIT",
+  "task_all_original_evidence_available": true,
+  "tasks_requiring_drilldown": 3,
+  "translation_corrections_retained": 1,
+  "user_time_saved_measured": false
+}
