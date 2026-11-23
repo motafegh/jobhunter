@@ -1,0 +1,58 @@
+{
+  "B2v6_B1_contracts_passed": 3,
+  "B5_unseen_independent_gate_accepted": false,
+  "B6_production_promotion_authorized": false,
+  "archived_original_description_duplicates_identified": 3,
+  "baseline_sha256": {
+    "corpus/manifest.json": "7a65485c813a855d144160f1009559decaf0383dba06a089760d2101726fda4a",
+    "data/jobhunter.sqlite3": "d9068fcb503860638cb2187b537e57151bea0192ff69ab7dbe381c84fb2353d8"
+  },
+  "capability_blocked_missing_accepted_current_english_P16": true,
+  "contract": "jobhunter-2026-11-23-real-ad-e2e-source-first-audit-v1",
+  "current_capability_artifacts": 0,
+  "current_english_v30_attempts": 3,
+  "current_english_v30_failure_types": {
+    "missing_required_responsibility_coverage": 1,
+    "strong_or_solid_depth_in_requirement_concept": 2
+  },
+  "current_english_v30_valid_artifacts": 0,
+  "current_v2_translation_artifacts": 3,
+  "detail_source_http_requests": 6,
+  "duplicate_under_different_job_id_identified": true,
+  "fresh_search_page_http_requests": 3,
+  "limitations": [
+    "Three deliberately selected source-distinct live ads; not a population accuracy denominator",
+    "No accepted current English P1.6 artifact means no fair semantic-output accuracy comparison",
+    "Original v9 automatic accepted status does not mean semantic truth",
+    "Source differences and manual review performed by same assistant, not blinded adjudication",
+    "No production parser/model/schema fixes made in this diagnostic run"
+  ],
+  "manual_comparison_scope": "assistant source-first; actual independent user or second reviewer not performed",
+  "material_B2v6_source_meaning_failures": {
+    "context_instead_of_explicit_duty_pieces": 7,
+    "required_heading_instead_of_requirement_bullets": 1,
+    "unresolved_despite_explicit_must_have_qualifications": 5
+  },
+  "material_v2_translation_review_findings": {
+    "bonus_meaning_fragmented": 1,
+    "distinct_responsibilities_conflated_in_english": 1,
+    "proper_name_drift": 1
+  },
+  "model_or_provider_http_requests_external": false,
+  "original_v9_attempts": 1,
+  "original_v9_mechanically_accepted_artifacts": 1,
+  "original_v9_semantically_problematic_according_to_assistant_manual_review": 1,
+  "original_v9_unreviewed_promotion_authorized": false,
+  "privacy": "aggregate only; no employer prose, candidate IDs, links, model responses",
+  "private_final_receipt_sha256": "097afa1d5974270c661b686de1221a0e8d493e19cccb930d894cae49c514b508",
+  "product_perfection_established": false,
+  "production_database_sha256_unchanged": true,
+  "public_corpus_sha256_unchanged": true,
+  "source": "live approved Jobinja pages; local Gemma E2B translations and Gemma E4B analysis",
+  "source_company_board_vs_description_conflict_detected": true,
+  "source_distinct_cases_audited": 3,
+  "source_years_board_vs_prose_conflict_detected": true,
+  "status": "FAIL_CURRENT_END_TO_END_SEMANTIC_USEFULNESS_NOT_B5_OR_B6",
+  "temporary_cli_public_corpus_side_effect_restored": true,
+  "unique_job_ids_from_search": 59
+}

@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-22 (B4v6 compact decision view and nine-question exposed research check; B5/B6 gated).
+**Last research-status reconciliation:** 2026-11-23 (live real-ad E2E manual semantic audit; source/translation mechanics succeeded, current v30 blocked 3/3 and original v9 semantic review failed; no B5/B6 promotion).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** NEW B4v6 compact source-qualified first-view engineering PASS on four previously EXPOSED B4v5 jobs and nine pre-frozen applicant questions: immediately visible evidence 34/64 vs prior 64/64; 19,345 vs 25,259 Markdown characters; all 64 original candidates retained in private drilldown; six questions immediately source-navigable (including one honest no-distinct-duty abstention), three full-duty questions require drilldown. Both unreviewed eligibility candidate graphs, one reviewed terminology overlay and two suppressed old model claims preserved. No provider/source requests, production writes, accepted facts or valid same-source v30 semantic comparison. These are presentation/inspection proxies, NOT measured owner time, independent usefulness, unseen B5 generalization or B6 production promotion. Next: real owner/context-isolated comprehension and reading-burden test against original source and B4v5; freeze calibrated semantics protocol before any further unseen B5. Decision: docs/working-memory/2026-11-22_P16_B4V6_COMPACT_DECISION_VIEW_EXPOSED_RESULT_AND_NEXT_USER_GATE.md.
+**Current selected next stage:** 2026-11-23 LIVE SOURCE-FIRST E2E TEST: six public pages fetched, three source-distinct descriptions retained after cross-ID/source-hash dedup; B2v6/B1 mechanics and English v2 translation succeeded on all three, but current v30 failed 3/3 (depth/concept schema twice, dense responsibility coverage once), preventing Capability. One isolated original-language v9 analysis auto-accepted an unsupported required experience concept drawn from a benefit and omitted a skill, so failed source-first semantic review. The research CLI temporarily regenerated tracked corpus files from the isolated DB; original hashes and Git state were restored. NO product code or accepted production state changed. B5 and B6 remain CLOSED. Next work is a review/decision on these findings, not an automatically approved fix or another unseen B5 gate. Decision owner: docs/working-memory/2026-11-23_P16_LIVE_REAL_AD_END_TO_END_SOURCE_FIRST_AUDIT.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,15 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-23 Live real-ad full-pipeline source-first manual audit (current)
+
+- [x] Freeze metadata-only source selection; live acquire six pages, check semantic text SHA against all archived trial source descriptions; retain three source-distinct examples and explicitly exclude three duplicate texts
+- [x] Replay B2v6 and B1 source-integrity checks; current v2 translation through local LM Studio; no lasting production/public-corpus changes
+- [x] Run current accepted English v30 path on all three; record all three independent hard failures and do NOT manufacture valid artifacts
+- [x] Run separately original-language v9 on one Persian original; flag its automatically accepted artifact as semantically UNSUPPORTED under manual source-first comparison, no semantic approval or downstream promotion
+- [x] Verify current Capability prerequisite stops without accepted English v30; private and safe research receipts sealed
+- [ ] OWNER DECISION: prioritize generic section-role/obligation errors (explicit duties and Must Have), structured-depth/model response validation, original-v9 source/requirement gate, translation segmentation/name fidelity, cross-ID content dedup, isolated CLI corpus write boundary. Record approved remediation scope before implementation; preserve this now-exposed case set for regressions only
 
 ## 2026-11-22 B4v6 exposed compact view — latest execution overlay
 
