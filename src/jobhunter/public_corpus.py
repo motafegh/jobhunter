@@ -34,6 +34,21 @@ from jobhunter.translation_store import TranslationArtifact, TranslationStore
 
 PUBLIC_CORPUS_SCHEMA_VERSION = "jobhunter-public-corpus-v1"
 DEFAULT_PUBLIC_CORPUS_DIR = Path("corpus")
+DEFAULT_RUNTIME_DATABASE = Path("data/jobhunter.sqlite3")
+
+
+def automatic_corpus_destination(database_path: Path) -> Path:
+    """Never let an isolated runtime silently overwrite the repository corpus.
+
+    Explicit `jobhunter-corpus export --output-dir` remains authoritative.
+    The normal canonical runtime retains the established repository default;
+    alternate/test databases get an independent export beside their SQLite.
+    """
+    if database_path.resolve() == DEFAULT_RUNTIME_DATABASE.resolve():
+        return DEFAULT_PUBLIC_CORPUS_DIR
+    return database_path.resolve().parent / "public-corpus"
+
+
 _SAFE_JOB_ID_RE = re.compile(r"^[A-Za-z0-9_-]+$")
 
 

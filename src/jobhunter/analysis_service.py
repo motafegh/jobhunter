@@ -667,6 +667,11 @@ class JobAnalysisService:
                 request_body=result.request_body,
                 raw_response=result.raw_response,
                 created_at=attempted_at,
+                # Original-language extraction is an independent unverified
+                # model candidate. It cannot become semantically accepted
+                # merely because its JSON and source spans passed validation.
+                # The accepted English contract is unchanged here.
+                semantic_review_status="pending" if mode == "original" else "accepted",
             )
             self._analysis_store.record_attempt(
                 job_detail_version_id=source.job_detail_version_id,

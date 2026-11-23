@@ -193,6 +193,8 @@ def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path
 
     assert english.artifact_id != original.artifact_id
     assert original.analysis_mode == "original"
+    assert original.semantic_review_status == "pending"
+    assert original_again.semantic_review_status == "pending"
     assert original_again.outcome == "reused"
     assert original_again.artifact_id == original.artifact_id
     assert [request["analysis_mode"] for request in requests] == ["english", "original"]
@@ -214,6 +216,14 @@ def test_original_analysis_is_separate_and_does_not_reuse_english(tmp_path: Path
     assert english_artifact.translation_artifact_id is not None
     assert original_artifact.translation_artifact_id is None
     assert original_artifact.prompt_version == "job-analysis-original-v9"
+    assert original_artifact.semantic_review_status == "pending"
+    assert store.latest_current(
+        "eng1",
+        model="analysis-model",
+        prompt_version=ORIGINAL_PROMPT_VERSION,
+        schema_version=ANALYSIS_SCHEMA_VERSION,
+        accepted_only=True,
+    ) is None
 
 
 def test_english_and_original_requests_never_mix_text_representations(tmp_path: Path) -> None:

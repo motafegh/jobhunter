@@ -16,7 +16,7 @@ import uvicorn
 from pydantic import ValidationError
 
 from jobhunter.config import ConfigLoadError, Settings
-from jobhunter.public_corpus import DEFAULT_PUBLIC_CORPUS_DIR, export_public_corpus
+from jobhunter.public_corpus import automatic_corpus_destination, export_public_corpus
 from jobhunter.web.app import create_app
 from jobhunter.web.blueprint import register_blueprint_routes
 from jobhunter.web.capability import register_capability_routes
@@ -180,7 +180,7 @@ def _existing_jobhunter(url: str) -> bool:
 def _synchronize_public_corpus(settings: Settings) -> None:
     export_public_corpus(
         settings.database_path,
-        output_dir=DEFAULT_PUBLIC_CORPUS_DIR,
+        output_dir=automatic_corpus_destination(settings.database_path),
         analysis_model=(settings.analysis_lm_studio_model or settings.lm_studio_model),
         capability_model=(settings.capability_lm_studio_model or settings.lm_studio_model),
     )

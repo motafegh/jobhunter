@@ -1,9 +1,9 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-23 (live real-ad E2E manual semantic audit; source/translation mechanics succeeded, current v30 blocked 3/3 and original v9 semantic review failed; no B5/B6 promotion).
+**Last research-status reconciliation:** 2026-11-23 (bounded B2v7/CLI original-source fallback, v9 pending, isolated corpus and duplicate-source safeguards; English v30 and translation semantic gates open).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
-**Current selected next stage:** 2026-11-23 LIVE SOURCE-FIRST E2E TEST: six public pages fetched, three source-distinct descriptions retained after cross-ID/source-hash dedup; B2v6/B1 mechanics and English v2 translation succeeded on all three, but current v30 failed 3/3 (depth/concept schema twice, dense responsibility coverage once), preventing Capability. One isolated original-language v9 analysis auto-accepted an unsupported required experience concept drawn from a benefit and omitted a skill, so failed source-first semantic review. The research CLI temporarily regenerated tracked corpus files from the isolated DB; original hashes and Git state were restored. NO product code or accepted production state changed. B5 and B6 remain CLOSED. Next work is a review/decision on these findings, not an automatically approved fix or another unseen B5 gate. Decision owner: docs/working-memory/2026-11-23_P16_LIVE_REAL_AD_END_TO_END_SOURCE_FIRST_AUDIT.md.
+**Current selected next stage:** 2026-11-23 BOUNDED SOURCE-FIRST REPAIR: new opt-in B2v7 candidate recovers 15/15 backend work passages and 5/5 AI mandatory capabilities from three EXPOSED original jobs, preserves all four older exposed 8-job cohort B1 and selected role results without new duty/required regressions. Original-language v9 NEW artifacts now PENDING review, verified by live local-model regeneration on a separate cloned source database (0 newly accepted facts). Read-only original-language `jobs source-brief` CLI gives complete SHA-linked duty/required/preferred/conditions evidence when model v30 fails. Isolated CLI/browser auto corpus exports can no longer mutate the repository root, and a read-only SHA original-description matcher detects duplicates across different job IDs. CURRENT ENGLISH v30 0/3 and translation semantic flaws remain OPEN; even the bounded guidance-only v31 model trial failed and was not promoted. Historical bad original v9 artifacts require review; no automatic retrospective approval/rejection. B5 unseen verification and B6 production rollout CLOSED. Decision: docs/working-memory/2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md.
 
 **Prior accepted P2.3A execution overlay (below):** 2026-11-11.
 
@@ -14,6 +14,17 @@
 **Current status owner:** `docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md`
 
 The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pending selected responsibility claims; ten concepts, eighteen decisions, one alias). Historical checklists below are superseded for present execution.
+
+## 2026-11-23 Live source repair (latest)
+
+- [x] Implement conservative source-exact opt-in B2v7, correct new-case heading/section contamination and preserve previous 32 exposed B1 regression decisions without new critical category/mandatory failures
+- [x] Implement read-only original-language source-brief CLI with provisional separated duties, required/preferred, conditions, metadata conflicts, source hashes and full original drilldown; never manufacture accepted English v30
+- [x] Prevent NEW original-language v9 artifact auto-acceptance (pending only), verify against actual local model on isolated cloned source; preserve historical review status unchanged
+- [x] Route noncanonical DB automatic public corpus export to private isolated destination in CLI and browser; test original root export for canonical DB
+- [x] Add exact original-description SHA dedup against supplied archives, including a different source job ID and honest limit of archive-relative novelty
+- [x] Record failed experimental v31 prompt-only local trial, retain strict English v30 depth/coverage validation and no valid v30 production success claim
+- [ ] Resolve current v30 0/3 model/schema reliability and cross-source translation fidelity via separate versioned budgeted candidate and independent semantic review
+- [ ] Audit historical accepted original-language v9 artifacts before treating them as semantically verified; B5/B6 remain gated
 
 ## 2026-11-23 Live real-ad full-pipeline source-first manual audit (current)
 

@@ -12,8 +12,8 @@ from jobhunter.config import ConfigLoadError, Settings
 from jobhunter.entrypoint import main as core_main
 from jobhunter.market_cli import main as market_main
 from jobhunter.public_corpus import (
-    DEFAULT_PUBLIC_CORPUS_DIR,
     PublicCorpusError,
+    automatic_corpus_destination,
     export_public_corpus,
 )
 
@@ -91,7 +91,7 @@ def _synchronize_public_corpus(arguments: Sequence[str]) -> None:
     settings = Settings.load(_config_path(arguments))
     summary = export_public_corpus(
         settings.database_path,
-        output_dir=DEFAULT_PUBLIC_CORPUS_DIR,
+        output_dir=automatic_corpus_destination(settings.database_path),
         analysis_model=_effective_analysis_model(settings),
         capability_model=_effective_capability_model(settings),
     )
@@ -106,6 +106,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     """Run established CLI; private diagnostics/review never synchronize public corpus."""
     arguments = list(argv if argv is not None else sys.argv[1:])
     tokens = _command_tokens(arguments)
+    if tokens[:2] == ("jobs", "source-brief"):
+        from jobhunter.source_brief_cli import main as source_brief_main
+
+        # Read-only source-first fallback: it never creates semantic artifacts,
+        # fetches job pages or synchronizes the repository corpus.
+        return source_brief_main(
+            list(tokens[2:]), config_path=_config_path(arguments)
+        )
     if tokens and tokens[0] == "diagnostics":
         from jobhunter.analysis_diagnostic_cli import main as diagnostics_main
 
