@@ -1,0 +1,1045 @@
+{
+  "base_commit": "9c924d1288b419170e1b84ffa4e4acd5091b289a",
+  "base_prompts": [
+    {
+      "bullet_lines": 55,
+      "characters": 12094,
+      "sha256": "d5c2a9742268c2b64fc0c99ca25ede869c6c73a3c88b7089adb7fe1ceb04bef0",
+      "utf8_bytes": 12102,
+      "version": 14,
+      "whitespace_words": 1639
+    },
+    {
+      "bullet_lines": 84,
+      "characters": 19044,
+      "sha256": "e4a02ce83bd6648adc011b0919602e95313002ef0d642e8778483a5ba3559503",
+      "utf8_bytes": 19064,
+      "version": 20,
+      "whitespace_words": 2569
+    },
+    {
+      "bullet_lines": 96,
+      "characters": 21943,
+      "sha256": "7a5da543c98c485f4a074dfe20a60085e6b46cee5fee09f01413eadb533ae41f",
+      "utf8_bytes": 21965,
+      "version": 21,
+      "whitespace_words": 2983
+    },
+    {
+      "bullet_lines": 106,
+      "characters": 24527,
+      "sha256": "1311b1031162ac7500688776a0e734bedbdaaca0ec1f36da3a05991e50ee91a1",
+      "utf8_bytes": 24551,
+      "version": 23,
+      "whitespace_words": 3361
+    },
+    {
+      "bullet_lines": 124,
+      "characters": 27328,
+      "sha256": "d08c76fbc022546f1d88f478c438ca394e1d017fc2fdbd8255ca58c33dba2870",
+      "utf8_bytes": 27352,
+      "version": 28,
+      "whitespace_words": 3774
+    },
+    {
+      "bullet_lines": 128,
+      "characters": 28068,
+      "sha256": "08693e43017c63e40be2fa9e6d968680b4f8f07cec84b58deedc25f450fe9c79",
+      "utf8_bytes": 28092,
+      "version": 30,
+      "whitespace_words": 3889
+    }
+  ],
+  "contract": "jobhunter-p16-e1-6-prompt-constraint-audit-v1",
+  "effective_field_validators": {
+    "AnalysisRequirementV30": [
+      {
+        "name": "evidence_must_be_grounded",
+        "owner": "AnalysisRequirement.evidence_must_be_grounded"
+      }
+    ],
+    "JobAnalysisResponseV30": []
+  },
+  "effective_model_validators": {
+    "AnalysisRequirementV30": [
+      {
+        "mode": "after",
+        "name": "validate_requirement_semantics",
+        "owner": "AnalysisRequirementV21.validate_requirement_semantics"
+      },
+      {
+        "mode": "before",
+        "name": "normalize_schedule_only_depth",
+        "owner": "AnalysisRequirementV14.normalize_schedule_only_depth"
+      },
+      {
+        "mode": "before",
+        "name": "normalize_depth_optionality_boundary",
+        "owner": "AnalysisRequirementV19.normalize_depth_optionality_boundary"
+      },
+      {
+        "mode": "before",
+        "name": "normalize_preferred_non_depth_signal",
+        "owner": "AnalysisRequirementV20.normalize_preferred_non_depth_signal"
+      },
+      {
+        "mode": "after",
+        "name": "reject_unproven_preferred_experience",
+        "owner": "AnalysisRequirementV20.reject_unproven_preferred_experience"
+      },
+      {
+        "mode": "before",
+        "name": "abstain_from_unproven_experience",
+        "owner": "AnalysisRequirementV22.abstain_from_unproven_experience"
+      },
+      {
+        "mode": "before",
+        "name": "preserve_source_alternatives",
+        "owner": "AnalysisRequirementV23.preserve_source_alternatives"
+      },
+      {
+        "mode": "after",
+        "name": "retain_disjunctive_minimum",
+        "owner": "AnalysisRequirementV23.retain_disjunctive_minimum"
+      },
+      {
+        "mode": "before",
+        "name": "repair_exact_source_labels",
+        "owner": "AnalysisRequirementV25.repair_exact_source_labels"
+      },
+      {
+        "mode": "before",
+        "name": "retain_explicit_prior_work_type",
+        "owner": "AnalysisRequirementV27.retain_explicit_prior_work_type"
+      },
+      {
+        "mode": "after",
+        "name": "retain_exact_depth_modifier",
+        "owner": "AnalysisRequirementV27.retain_exact_depth_modifier"
+      },
+      {
+        "mode": "before",
+        "name": "retain_mixed_source_ontology",
+        "owner": "AnalysisRequirementV29.retain_mixed_source_ontology"
+      },
+      {
+        "mode": "before",
+        "name": "preserve_explicit_prior_experience",
+        "owner": "AnalysisRequirementV30.preserve_explicit_prior_experience"
+      }
+    ],
+    "JobAnalysisResponseV30": [
+      {
+        "mode": "after",
+        "name": "normalize_and_validate_quality",
+        "owner": "JobAnalysisResponseV17.normalize_and_validate_quality"
+      },
+      {
+        "mode": "before",
+        "name": "drop_redundant_coverage_exclusions",
+        "owner": "JobAnalysisResponseV20.drop_redundant_coverage_exclusions"
+      },
+      {
+        "mode": "before",
+        "name": "restore_unique_candidate_fact_parents",
+        "owner": "JobAnalysisResponseV21.restore_unique_candidate_fact_parents"
+      },
+      {
+        "mode": "after",
+        "name": "validate_candidate_fact_coverage",
+        "owner": "JobAnalysisResponseV21.validate_candidate_fact_coverage"
+      }
+    ]
+  },
+  "historical_accepted_artifacts": [
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 12094,
+              "role": "system"
+            },
+            {
+              "characters": 4709,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2189,
+          "prompt_tokens": 3711,
+          "total_tokens": 5900
+        }
+      ],
+      "version": "job-analysis-english-v14"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19543,
+              "role": "system"
+            },
+            {
+              "characters": 7790,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19543,
+              "role": "system"
+            },
+            {
+              "characters": 6837,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19543,
+              "role": "system"
+            },
+            {
+              "characters": 7316,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19543,
+              "role": "system"
+            },
+            {
+              "characters": 7288,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19543,
+              "role": "system"
+            },
+            {
+              "characters": 6022,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2924,
+          "prompt_tokens": 6262,
+          "total_tokens": 9186
+        },
+        {
+          "completion_tokens": 1668,
+          "prompt_tokens": 5991,
+          "total_tokens": 7659
+        },
+        {
+          "completion_tokens": 2295,
+          "prompt_tokens": 6139,
+          "total_tokens": 8434
+        },
+        {
+          "completion_tokens": 1987,
+          "prompt_tokens": 6123,
+          "total_tokens": 8110
+        },
+        {
+          "completion_tokens": 559,
+          "prompt_tokens": 5740,
+          "total_tokens": 6299
+        }
+      ],
+      "version": "job-analysis-english-v20"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19126,
+              "role": "system"
+            },
+            {
+              "characters": 4602,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19126,
+              "role": "system"
+            },
+            {
+              "characters": 4246,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 3484,
+          "prompt_tokens": 11549,
+          "total_tokens": 15033
+        },
+        {
+          "completion_tokens": 1235,
+          "prompt_tokens": 5087,
+          "total_tokens": 6322
+        }
+      ],
+      "version": "job-analysis-english-v20"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19126,
+              "role": "system"
+            },
+            {
+              "characters": 3572,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2175,
+          "prompt_tokens": 4845,
+          "total_tokens": 7020
+        }
+      ],
+      "version": "job-analysis-english-v20"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19529,
+              "role": "system"
+            },
+            {
+              "characters": 3539,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2206,
+          "prompt_tokens": 4929,
+          "total_tokens": 7135
+        }
+      ],
+      "version": "job-analysis-english-v20"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 19529,
+              "role": "system"
+            },
+            {
+              "characters": 6278,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2842,
+          "prompt_tokens": 5675,
+          "total_tokens": 8517
+        }
+      ],
+      "version": "job-analysis-english-v20"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 23964,
+              "role": "system"
+            },
+            {
+              "characters": 7502,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 23964,
+              "role": "system"
+            },
+            {
+              "characters": 7961,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 23964,
+              "role": "system"
+            },
+            {
+              "characters": 8109,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 8136,
+          "prompt_tokens": 16325,
+          "total_tokens": 24461
+        },
+        {
+          "completion_tokens": 1902,
+          "prompt_tokens": 6819,
+          "total_tokens": 8721
+        },
+        {
+          "completion_tokens": 1093,
+          "prompt_tokens": 6880,
+          "total_tokens": 7973
+        }
+      ],
+      "version": "job-analysis-english-v23"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24402,
+              "role": "system"
+            },
+            {
+              "characters": 6577,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24402,
+              "role": "system"
+            },
+            {
+              "characters": 4810,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24402,
+              "role": "system"
+            },
+            {
+              "characters": 5255,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 3215,
+          "prompt_tokens": 14488,
+          "total_tokens": 17703
+        },
+        {
+          "completion_tokens": 2986,
+          "prompt_tokens": 13188,
+          "total_tokens": 16174
+        },
+        {
+          "completion_tokens": 2035,
+          "prompt_tokens": 6379,
+          "total_tokens": 8414
+        }
+      ],
+      "version": "job-analysis-english-v23"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24572,
+              "role": "system"
+            },
+            {
+              "characters": 10078,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24572,
+              "role": "system"
+            },
+            {
+              "characters": 6494,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 6395,
+          "prompt_tokens": 17722,
+          "total_tokens": 24117
+        },
+        {
+          "completion_tokens": 1705,
+          "prompt_tokens": 6525,
+          "total_tokens": 8230
+        }
+      ],
+      "version": "job-analysis-english-v23"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "gemma-4-e4b-it-ud",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24912,
+              "role": "system"
+            },
+            {
+              "characters": 8263,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24912,
+              "role": "system"
+            },
+            {
+              "characters": 6663,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 24912,
+              "role": "system"
+            },
+            {
+              "characters": 7206,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 3636,
+          "prompt_tokens": 7393,
+          "total_tokens": 11029
+        },
+        {
+          "completion_tokens": 1099,
+          "prompt_tokens": 6868,
+          "total_tokens": 7967
+        },
+        {
+          "completion_tokens": 3685,
+          "prompt_tokens": 15190,
+          "total_tokens": 18875
+        }
+      ],
+      "version": "job-analysis-english-v23"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "mimo-v2.6-distill-qwen-9b",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 27938,
+              "role": "system"
+            },
+            {
+              "characters": 4795,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 27938,
+              "role": "system"
+            },
+            {
+              "characters": 3028,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 27938,
+              "role": "system"
+            },
+            {
+              "characters": 1477,
+              "role": "user"
+            }
+          ]
+        },
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 27938,
+              "role": "system"
+            },
+            {
+              "characters": 1353,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 2024,
+          "prompt_tokens": 14886,
+          "total_tokens": 16910
+        },
+        {
+          "completion_tokens": 1464,
+          "prompt_tokens": 6416,
+          "total_tokens": 7880
+        },
+        {
+          "completion_tokens": 351,
+          "prompt_tokens": 6038,
+          "total_tokens": 6389
+        },
+        {
+          "completion_tokens": 215,
+          "prompt_tokens": 6003,
+          "total_tokens": 6218
+        }
+      ],
+      "version": "job-analysis-english-v28"
+    },
+    {
+      "context_tokens_recorded": 16384,
+      "model": "mimo-v2.6-distill-qwen-9b",
+      "partition_requests": [
+        {
+          "max_tokens": 8192,
+          "message_lengths": [
+            {
+              "characters": 28678,
+              "role": "system"
+            },
+            {
+              "characters": 6714,
+              "role": "user"
+            }
+          ]
+        }
+      ],
+      "reported_usage": [
+        {
+          "completion_tokens": 1931,
+          "prompt_tokens": 7275,
+          "total_tokens": 9206
+        }
+      ],
+      "version": "job-analysis-english-v30"
+    }
+  ],
+  "historical_snapshot_sha256": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c",
+  "isolated_config": {
+    "actual_http_read_timeout": null,
+    "configured_timeout_seconds": 75.0,
+    "configured_transport_retries": 0,
+    "max_output_tokens": 8192,
+    "model": "gemma-4-e4b-it-ud",
+    "openai_transport_retries": 0,
+    "requested_context_tokens": 16384,
+    "validation_retries_per_partition": 1
+  },
+  "library_versions": {
+    "httpx": "0.28.1",
+    "instructor": "1.15.4",
+    "openai": "2.53.0",
+    "pydantic": "2.13.4",
+    "tenacity": "9.1.4"
+  },
+  "limitations": [
+    "Prompt sizes are code-derived character and whitespace counts, not model-token measurements; response_format prepared offline by installed Instructor.",
+    "Historical requests/usage are saved successful artifact records, not exhaustive physical-call logs; token usage may be aggregate/provider-reported, not evidence of single-call context overflow.",
+    "Offline reask uses retained decoded JSON serialized locally and synthetic completion wrapper; not exact historical second HTTP request.",
+    "Historical versions, source difficulty and model identity differ; no controlled causal attribution to prompt length.",
+    "November 12 timeout is recorded in closure/log history, not as a terminal attempt row; no promotion."
+  ],
+  "local_metadata_receipt_sha256": "28014a624e5d9cd7d4f358c649f8bf67f4db7b46ea658fa72369338c9f316052",
+  "model_calls": 0,
+  "new_source_requests": 0,
+  "nov12_source_section_v31": {
+    "artifact_review_states": [
+      "pending"
+    ],
+    "attempt_outcome_counts": {
+      "completed": 1,
+      "failed": 2
+    },
+    "diagnostic_count": 4
+  },
+  "nov23_guidance_only_v31": {
+    "artifact_review_states": [],
+    "attempt_outcome_counts": {
+      "failed": 1
+    },
+    "diagnostic_count": 2
+  },
+  "partition_contexts": [
+    {
+      "case": "backend",
+      "exact_item_entries": 0,
+      "partition": 1,
+      "prepared_message_lengths": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 6090,
+          "role": "user"
+        }
+      ],
+      "prepared_response_format_characters_default_json": 3019,
+      "requirement_refs": 2,
+      "responsibility_refs": 13,
+      "system_characters": 28678,
+      "user_characters": 6090,
+      "visible_evidence_refs": 15
+    },
+    {
+      "case": "ai_speech",
+      "exact_item_entries": 0,
+      "partition": 1,
+      "prepared_message_lengths": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 5002,
+          "role": "user"
+        }
+      ],
+      "prepared_response_format_characters_default_json": 3019,
+      "requirement_refs": 8,
+      "responsibility_refs": 7,
+      "system_characters": 28678,
+      "user_characters": 5002,
+      "visible_evidence_refs": 15
+    },
+    {
+      "case": "ai_speech",
+      "exact_item_entries": 0,
+      "partition": 2,
+      "prepared_message_lengths": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 1582,
+          "role": "user"
+        }
+      ],
+      "prepared_response_format_characters_default_json": 3019,
+      "requirement_refs": 2,
+      "responsibility_refs": 0,
+      "system_characters": 28678,
+      "user_characters": 1582,
+      "visible_evidence_refs": 2
+    },
+    {
+      "case": "ai_speech",
+      "exact_item_entries": 0,
+      "partition": 3,
+      "prepared_message_lengths": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 977,
+          "role": "user"
+        }
+      ],
+      "prepared_response_format_characters_default_json": 3019,
+      "requirement_refs": 1,
+      "responsibility_refs": 0,
+      "system_characters": 28678,
+      "user_characters": 977,
+      "visible_evidence_refs": 1
+    },
+    {
+      "case": "security_reporting",
+      "exact_item_entries": 0,
+      "partition": 1,
+      "prepared_message_lengths": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 3542,
+          "role": "user"
+        }
+      ],
+      "prepared_response_format_characters_default_json": 3019,
+      "requirement_refs": 1,
+      "responsibility_refs": 8,
+      "system_characters": 28678,
+      "user_characters": 3542,
+      "visible_evidence_refs": 9
+    }
+  ],
+  "reask": [
+    {
+      "added_characters": 9893,
+      "after": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 6090,
+          "role": "user"
+        },
+        {
+          "characters": 6432,
+          "role": "assistant"
+        },
+        {
+          "characters": 3461,
+          "role": "user"
+        }
+      ],
+      "before": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 6090,
+          "role": "user"
+        }
+      ],
+      "case": "backend",
+      "partition": 1,
+      "validation_error_count": 6
+    },
+    {
+      "added_characters": 1545,
+      "after": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 1582,
+          "role": "user"
+        },
+        {
+          "characters": 1161,
+          "role": "assistant"
+        },
+        {
+          "characters": 384,
+          "role": "user"
+        }
+      ],
+      "before": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 1582,
+          "role": "user"
+        }
+      ],
+      "case": "ai_speech",
+      "partition": 2,
+      "validation_error_count": 1
+    },
+    {
+      "added_characters": 5014,
+      "after": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 3542,
+          "role": "user"
+        },
+        {
+          "characters": 3844,
+          "role": "assistant"
+        },
+        {
+          "characters": 1170,
+          "role": "user"
+        }
+      ],
+      "before": [
+        {
+          "characters": 28678,
+          "role": "system"
+        },
+        {
+          "characters": 3542,
+          "role": "user"
+        }
+      ],
+      "case": "security_reporting",
+      "partition": 1,
+      "validation_error_count": 2
+    }
+  ],
+  "replay_receipt_sha256": "6e868598bd3cd0b7e912d682d0602de72b61f89a2d40a3b55277f7e42085f055",
+  "response_schema": {
+    "characters": 2703,
+    "definition_count": 4,
+    "requirement_properties": [
+      "concept",
+      "depth_signal",
+      "requirement_type",
+      "concept_type",
+      "evidence",
+      "confidence",
+      "rationale",
+      "item_excerpt"
+    ],
+    "requirement_required": [
+      "concept",
+      "depth_signal",
+      "requirement_type",
+      "concept_type",
+      "evidence",
+      "confidence",
+      "rationale",
+      "item_excerpt"
+    ],
+    "root_properties": [
+      "role_purpose",
+      "responsibilities",
+      "requirements",
+      "coverage_exclusions"
+    ],
+    "root_required": [
+      "role_purpose",
+      "responsibilities",
+      "requirements"
+    ],
+    "sha256": "1d78d76e7929fbea830a5cc9dc49f9b1f9c225f12c500b4d994a935baf9f0dac",
+    "utf8_bytes": 2703,
+    "whitespace_words": 16
+  }
+}

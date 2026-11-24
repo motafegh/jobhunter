@@ -1,6 +1,6 @@
 # JobHunter Master Implementation Plan
 
-**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.5 completed; next E1.6 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.6 and DOC.1 completed; next E1.7 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
 
 **Status:** Controlling product-level implementation plan  
 **Date:** 2026-08-23  

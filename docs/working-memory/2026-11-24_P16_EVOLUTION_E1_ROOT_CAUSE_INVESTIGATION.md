@@ -1,9 +1,9 @@
 # P1.6 evolution E1 — root-cause investigation, initial evidence and architecture trace
 
 **Date:** 2026-11-24
-**Scope:** E1.1–E1.5, including dated continuation below; intermediate investigation record, not E1 closure.
+**Scope:** E1.1–E1.6, including dated continuations below; intermediate investigation record, not E1 closure.
 **Base:** `962611a405d22374159237e29bfe753d8e61e0fb` (main); unchanged production contracts.
-**Disposition:** Governance, runtime trace, evidence inventory and offline depth/coverage causal replay complete. Next E1.6; E1.7–E1.11 and V9 remain open.
+**Disposition:** E1.1–E1.6 and DOC.1 complete. Next E1.7; DOC.2, E1.8–E1.11 and V9 remain open.
 **Authority:** [Evolution tracker](../P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md); [Stage B plan](../P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md); [Nov 23 repair/Nov 24 reconciliation](2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md). Owner authorized the investigation-first sequence, not a new production contract.
 
 ## E1.1 — Requirements, constraints and governing owners
@@ -150,3 +150,68 @@ The active v21 duty plan erroneously requires **eight** refs. Seven represent th
 | All observed failures recorded as before_partition, no index | Verified diagnostic limitation; actual reconstructed partitions match | E1.6/E1.9 diagnostic/partial retention |
 
 15 bounded counterfactual checks (8 validations pass, 7 reject as expected; includes deliberately misleading/lossy passes, **not** semantic accuracy). No LLM calls, no new HTTP source requests, no runtime or review/persistence changes; actual model timing/token use N/A. Existing E1.1–E1.3 and all frozen gate decisions preserved. Public-safe receipts only; production database/corpus hashes and SQLite integrity verified separately. Next E1.6 assembled prompt/schema/retry burden, with DOC.1/2 companion work still open and E1.7–E1.11, V9, E2–E5 gated as recorded.
+
+
+## 2026-11-24 continuation — E1.6 assembled prompt, schema and retry audit
+
+**Base:** `9c924d1288b419170e1b84ffa4e4acd5091b289a` (main). E1.6 complete as investigation; no new inference, source requests, runtime changes or promotion. DOC.1 is a separate companion record; DOC.2 remains open.
+
+### Method and measurements
+
+Read actual assembled system prompts from installed versioned service classes/constants, active Pydantic decorators and generated JSON schema. Reuse five E1.4/5 captured planner contexts. Reconstruct Instructor JSON_SCHEMA reask offline using retained decoded completions, actual validation exceptions and synthetic ChatCompletion wrappers. Read historical request/response metadata and v31 attempts from read-only SQLite. Helper: `data/local-acceptance/p16-evolution-e1-2026-11-24/audit_prompt_constraints.py`; run with .venv/bin/python from root. Local metadata receipt SHA-256: `28014a624e5d9cd7d4f358c649f8bf67f4db7b46ea658fa72369338c9f316052`. Public-safe [quantitative receipt](2026-11-24_p16_evolution_e1/SAFE_E1_6_PROMPT_CONSTRAINT_AUDIT.json). Installed Instructor 1.15.4, Pydantic 2.13.4, OpenAI 2.53.0, HTTPX 0.28.1, Tenacity 9.1.4; not necessarily the versions at all historical runs.
+
+| Assembled base prompt | Characters | Whitespace words | Bullet lines |
+| --- | ---: | ---: | ---: |
+| v14 | 12,094 | 1,639 | 55 |
+| v20 | 19,044 | 2,569 | 84 |
+| v21 | 21,943 | 2,983 | 96 |
+| v23 | 24,527 | 3,361 | 106 |
+| v28 | 27,328 | 3,774 | 124 |
+| v30 | 28,068 | 3,889 | 128 |
+
+v30 is 2.32 times v14's character count. Bullet counts are not independent-rule counts; these are not token measurements. Each reconstructed partition repeats the entire system prompt plus 610 partition-instruction characters. v24/v20 assembly removes analysis_fields from model-facing user JSON; selected evidence, coverage, exact-item checklist, qualification/residual lists, partition metadata and field names remain. Full fields/catalog stay in local validation context.
+
+| Case/partition | Requirement refs | Duty refs | System chars | User JSON chars |
+| --- | ---: | ---: | ---: | ---: |
+| Backend/1 | 2 | 13 | 28,678 | 6,090 |
+| AI/speech/1 | 8 | 7 | 28,678 | 5,002 |
+| AI/speech/2 | 2 | 0 | 28,678 | 1,582 |
+| AI/speech/3 | 1 | 0 | 28,678 | 977 |
+| Security/1 | 1 | 8 | 28,678 | 3,542 |
+
+These are planned contexts, not five confirmed physical calls. Full first-pass AI execution would repeat 86,034 system characters; reconstructed failure in partition 2 does not establish partition 3 ran. Partitioning reduces source scope but not fixed instruction burden.
+
+Actual JobAnalysisResponseV30 JSON schema: 2,703 canonical JSON characters, four top-level fields, four definitions. Requirement has eight mandatory keys (concept, depth_signal nullable, requirement_type, concept_type, evidence, confidence, rationale, item_excerpt). Instructor's offline prepared response_format: 3,019 characters under ordinary JSON serialization; not wire bytes or tokens. Actual effective decorators: 13 requirement model validators plus one evidence field validator; four response model validators; conditional responsibility validator also applies. See receipt for owners. Prevalidators normalize ontology, alternatives, depth/optionality, schedule, experience, labels; postvalidators check exact item/strength/depth/experience/alternatives. Response v17 quality, v20 exclusion normalization, v21 parent restoration and exact-item coverage are additional cross-item checks. Postfilter, merge and persistence add other constraints. Schema syntax alone cannot express all of them.
+
+### Instruction conflicts and redundancy
+
+| Earlier assembled prompt instruction | Later instruction/implementation | Assessment |
+| --- | --- | --- |
+| v10 lines 94–98: emit every structured skill as required | v18 block lines 207–210: skill tags absent from model input and materialized deterministically | Superseded model ownership remains. No observed model invention inferred from conflict alone. |
+| v11 lines 110–118: raw candidate_required_qualification_spans, exclude decomposed coarse parent | v13 lines 130–141: reference IDs, no bookkeeping exclusions for mechanically decomposed parent | Obsolete input key absent in all five contexts; incompatible bookkeeping guidance. |
+| v21 lines 267–271: full shared qualifier group for each child; don't cite bare child | v25 lines 344–346: quote bare child for same construction | Direct representational conflict; E2 should address group/child linkage. |
+| Base 57–69 and v21 260–266: separate depth from concept | v23 311–314: depth optional when no independently stated degree; v27 364–365: preserve complete qualifier | Intent compatible, but E1.4 proves lexical validators can reject correct motivation/compound degree. |
+| Repeated keep-all-prior-rules directives | Accumulated superseded clauses above | Precedence unclear; consolidate coherent current constraints, preserve trust/evidence invariants. |
+
+Omit uncertain claims vs non-excludable coverage is a tension, not universally contradictory: genuine explicit facts should not disappear; E1.5 shows a false duty obligation makes coverage impossible without inventing work. Do not attribute all failures to instruction length.
+
+### Retry mechanics and budget
+
+v20 _run_once assigns duty refs to first partition, v25 normally packs up to eight requirement refs, v30 uses v24/v20 transport with validation_retries=1. Installed Instructor stop_after_attempt(max_retries+1) permits initial call + one parse/validation reask. HTTPX/OpenAI transport retries zero. Isolated config inference_max_retries=0, timeout=75s, requested context=16,384, output ceiling=8,192. HTTP read timeout=None and connect capped at 10s: 75s is NOT a hard completion deadline. v14.complete_structured separately catches AnalysisValidationError (not generic InferenceResponseError) and may rerun the whole plan with correction prompt. For P initial and P' recovery partitions, structural bound 2(P+P') parse calls if both plans run to completion; early failure reduces calls; no claim of historical count. No guaranteed context headroom or physical-call/wall-clock budget from settings alone. Explicit bounded experiment controls required in E2.
+
+| Offline reask | Initial message chars | Added prior output + feedback | Final message chars |
+| --- | ---: | ---: | ---: |
+| Backend | 34,768 | 9,893 | 44,661 |
+| AI/speech partition 2 | 30,260 | 1,545 | 31,805 |
+| Security | 32,220 | 5,014 | 37,234 |
+
+Actual installed Instructor reask appends prior failed response and feedback, not an isolated item correction. Backend feedback 3,461 chars (six requirement errors). Locally serialized decoded output/synthetic wrapper, not exact historical second request; no new model calls. Validator-induced contradictions/false planner obligations may not be repairable by prompting.
+
+### Historical comparison and conclusions
+
+Read 12 accepted historical English artifacts (v14/v20/v23/v28/v30), 27 saved partition requests, from the B0 frozen configured snapshot. v14 saved request: 12,094 system chars; provider-reported 3,711 prompt and 2,189 completion tokens. Five v20 accepted anchors contain 10 partition requests (5/2/1/1/1); four v23 artifacts contain 11 (3/3/2/3); v28 one with four, v30 one with one. The accepted v30 example has 28,678 system/6,714 user chars and provider-reported 7,275 prompt/1,931 completion tokens using mimo-v2.6-distill-qwen-9b; latest exposed failures used gemma-4-e4b-it-ud. Earlier acceptance therefore does not establish v30 reliability or a causal size-vs-success curve: model, source, contract and configuration differ. Saved artifact metadata is not an exhaustive physical retry log. Some provider-reported usage totals exceed recorded context; this is not proof of single-call context overflow, given accounting/retry ambiguity. Actual tokenizer equivalence, per-call usage/latency and context headroom remain unestablished; E1.10 will reconcile resource evidence.
+
+- November 12 source-section v31: branch experiment/p16-source-fidelity-2026-11-12 live commit 37e1383, post-trial safety revision e35b28a not live-tested. Branch closure record and B0 trial snapshot agree: four attempted jobs, one pending candidate (119s), two failed (105s, 56s), one timed out (306s, absent terminal attempt row). Snapshot: three terminal attempts, four retained failed completions, one pending artifact. Partial duty recovery but false-required board skill, duty omission and wrong explicit preference hint; no independent semantic approval. Timeout unresolved. This is a planner/schema/prompt experiment, not a prompt-only comparator.
+- November 23 guidance-only v31 probe: same v30 response model and validator; isolated AI source. One failed terminal attempt, two retained failed completions, zero new artifacts; approximately 92.6s per prior receipt. Same depth failure family persists. More guidance was not sufficient in this case, but that does not prove prompt simplification alone improves reliability.
+
+**Established:** fixed prompt growth and repetition, superseded/conflicting model instructions, effective inherited validator counts, reask expansion and lack of HTTP read deadline. **Unestablished:** prompt length as dominant cause, a failure token threshold, superiority of smaller schemas/models/fewer calls, fresh holdout benefit. E2 should compare coherent current-contract instructions, explicit source/semantic ownership, group/child depth representation, qualified partial/unknown state and bounded repair rather than automatically increase context/retries. Maintain evidence integrity and compare paired exposed cases before fresh B5. Next E1.7 role/heading/metadata classification audit. DOC.2 incorporates this trace; DOC.1 recorded separately. No inference or production change; E1.8–E1.11, V9 and promotion gates unchanged.
