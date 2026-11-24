@@ -1,5 +1,7 @@
 # JobHunter research, manual-review and promotion index
 
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. Start E1.1; use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+
 ## Current status — 2026-11-24 reconciliation
 
 The latest bounded repair is on `main` at `76c497b80a2c8fa83b26d330ba2f9d1106c96b18` ([CI passed](https://github.com/motafegh/jobhunter/actions/runs/45238410379)). See [real-ad repair and open semantic gates](2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md). B2v7 is opt-in, with an original-source CLI brief, not an accepted production semantic replacement. New original-language v9 artifacts start pending review; historical acceptance statuses remain unchanged. Automatic isolated-database corpus exports and exact-description archive duplicate detection have been repaired in their documented scopes.

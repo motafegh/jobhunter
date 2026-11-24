@@ -1,5 +1,7 @@
 # JobHunter Roadmap
 
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. Start E1.1; use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+
 **Status:** Current strategic roadmap  
 **Date:** 2026-08-23  
 **Last reconciled:** 2026-11-22
