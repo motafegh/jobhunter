@@ -1,9 +1,9 @@
 # P1.6 evolution E1 — root-cause investigation, initial evidence and architecture trace
 
 **Date:** 2026-11-24
-**Scope:** E1.1–E1.3 only; intermediate investigation record, not E1 closure.
+**Scope:** E1.1–E1.5, including dated continuation below; intermediate investigation record, not E1 closure.
 **Base:** `962611a405d22374159237e29bfe753d8e61e0fb` (main); unchanged production contracts.
-**Disposition:** Governance map, active execution ownership and primary exposed diagnostic inventory established. Next E1.4 (depth/concept failure replay). E1.5–E1.11 and V9 remain open.
+**Disposition:** Governance, runtime trace, evidence inventory and offline depth/coverage causal replay complete. Next E1.6; E1.7–E1.11 and V9 remain open.
 **Authority:** [Evolution tracker](../P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md); [Stage B plan](../P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md); [Nov 23 repair/Nov 24 reconciliation](2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md). Owner authorized the investigation-first sequence, not a new production contract.
 
 ## E1.1 — Requirements, constraints and governing owners
@@ -76,6 +76,77 @@ The helper reads existing snapshots by original manifest hashes, recomputes orig
 
 **Limits and next evidence gaps:** These are 44 source-version checks across retained sets (not asserted to be 44 unique independent jobs), not a new accuracy denominator. Original B5 source-only snapshots intentionally contain no generation attempts for selected sources; later exposed translation/model probes are separate. B0 v31 trial snapshot hash and integrity verified, but individual historical failed-trial outputs remain for E1.6. Bounded failure diagnostics can lack full raw request/response and partition context; E1.4/5 must identify availability per attempt before attributing causation. No new source or model calls; token/latency measurements N/A. No new semantic judgments from hash checks. Existing frozen evidence not rewritten.
 
-## Continuation
+## E1.1–E1.3 handoff (preserved initial checkpoint)
 
 E1.1–E1.3 completed for the initial trace/inventory scope; E1 overall remains open. Next E1.4: replay both depth/concept failures with retained completions, actual inherited validators and exact source-local degree/obligation/experience checks. Establish whether each error is representational, semantic, evidence-related or mixed, and whether normalization can preserve meaning. E1.5 then traces dense duty coverage. Do not start E2 architecture selection, new inference, B5 or B6 yet. V9 historical acceptance review remains an independent pending track. No product code or contracts changed; this is an investigation/documentation increment only.
+
+
+## 2026-11-24 continuation — E1.4 and E1.5 offline causal replay
+
+**Base:** `dbe9ea07f252abc27f09d6116710d27c3ab30a9d` (main). **Scope:** exposed Nov 23 cases only; no product implementation, new source acquisition, inference, review status change or B5/B6 authorization. E1.4 and E1.5 complete as investigations; residual questions explicitly carried to E1.6–E1.9. DOC.2 may reuse this traced behavior, but is not completed by this record.
+
+### Replay method and evidence
+
+Use the frozen Nov 23 isolated cohort database (SHA-256 `136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68`), the exact retained translations and six failed-completion diagnostic rows. Read SQLite in URI mode=ro with query_only. Recompute actual v30 model-facing context by invoking the real provider, inherited source plan construction, v24 wrapper and v20 Instructor request assembly. Replace LM Studio context setup, HTTP/OpenAI/Instructor transport with in-memory stubs; capture the exact reconstructed Pydantic validation contexts at create_with_completion. Fake empty responses solely allow enumeration of all planned partitions; temporarily bypass post-partition scope check in this offline capture, then abort before merging or persisting. No fake response is evidence of valid inference. Re-run actual JobAnalysisResponseV30.model_validate and AnalysisRequirementV30.model_validate against retained JSON and matched reconstructed context. No validator patch in the replay; counterfactual inputs/contexts separately identified. Unique best partition match for each completion based on raw evidence IDs, all raw cited IDs in its reconstructed assigned refs/catalog. Actual historic partition indexes and complete transport messages were not retained; reconstruction is at unchanged runtime code, not byte-exact historic request recovery. Capture placeholder source job ID and fixed max_tokens used for planning, not historical model timing measurement.
+
+| Case | Reconstructed partitions | Retained responses | Matching partition | Validation outcome |
+| --- | ---: | ---: | ---: | --- |
+| Native-English backend | 1 (2 requirement parent refs, 13 duty refs) | 2 | 1 | First: 6 failing requirement items; second: 2 failing items |
+| Native-English AI/speech | 3 (8/2/1 requirement refs; duties only in first) | 2 | 2 | Both: 1 failing motivation item |
+| Persian security/reporting | 1 (1 requirement parent ref, 8 duty refs) | 2 | 1 | First: 2 degree-field failures; second: one missing duty coverage error |
+
+All six actual completion replays reject. Diagnostics' generic before_partition label and null partition indexes cannot alone prove when/how the failure arose; active code and reconstruction locate actual Pydantic checks. No claim that the first AI partition produced a persisted artifact; earlier successful partition payload is not retained here. This also identifies a diagnostic provenance improvement opportunity for E1.6/E1.9.
+
+Reproducible local commands from project root:
+
+```bash
+.venv/bin/python data/local-acceptance/p16-evolution-e1-2026-11-24/replay_depth_failures.py
+.venv/bin/python data/local-acceptance/p16-evolution-e1-2026-11-24/replay_depth_coverage_counterfactuals.py
+```
+
+Private replay receipt SHA-256 `6e868598bd3cd0b7e912d682d0602de72b61f89a2d40a3b55277f7e42085f055`; counterfactual receipt SHA-256 `97c9cb1ccc32e643ec1458197a8ea10fd8ff0533f38bac6256f73fc4a622bfa2`. Both helpers and receipts stay under ignored local-acceptance, not Git. Public-safe [E1.4/5 receipt](2026-11-24_p16_evolution_e1/SAFE_E1_4_5_REPLAY.json) records counts, code owners and result categories. Original source descriptions/IDs and model completions not published.
+
+### E1.4 — Depth/concept failures: three distinct mechanisms
+
+**1. Backend: inherited deterministic alternative normalization introduces the final failure.**
+
+The original description is native English, equal to projection description. It explicitly states a programming-language OR choice at strong proficiency, followed by a separate software-engineering knowledge expectation at a solid level. Both retained completions cite the full two-subject sentence in item_excerpt. First attempt includes depth in some concept strings and invalid degree values. On the retry, the model actually produces two depth-neutral concepts, one preserving the programming alternatives and one the separate engineering subject. However:
+
+- `AnalysisRequirementV23.preserve_source_alternatives` (instructor_lm_studio_v23.py:72) invokes `_source_alternative_concept` (line 46) on ANY short item containing OR. It strips the leading proficiency wrapper then overwrites BOTH concepts with the compound two-subject text. Direct function replay confirms the mutation even for the already correct OR concept and the separately scoped engineering concept.
+- `AnalysisRequirementV21.validate_requirement_semantics` calls `_canonicalize_scoped_leading_depth` only for a null depth value, then `_validate_depth_fields_v20` (instructor_lm_studio_v20.py:100). This rejects the depth word injected into concept by v23. The second actual completion has two rejected items despite their raw concepts already being depth-neutral. This is a real inherited-rule interaction; not merely an LLM ignoring instructions.
+- The original item still spans two separate subjects. Narrowing each to its own exact source substring preserves both OR and the distinct engineering expectation. The engineering item then validates, but canonical depth is only its single recognized adjective. The programming item's complete modifier+proficiency phrase still rejects because v20 counts two regex hits as two distinct levels, although they are one grammatical degree phrase. Reducing the signal to the single proficiency token passes but loses explicit modifier from the structured depth field (exact item remains). This is not full fidelity. A borrowed degree from the other subject and a fabricated evidence ID still reject.
+- First completion also has a genuine representation error: familiarity embedded in a distributed-systems concept despite the separate depth field. Removing the literal leading familiarity wrapper while retaining exact item/strength/type/signal passes the actual item validator. Three other items pass with null replacing unsupported depth vocabulary. Plain understanding can be knowledge rather than quantified degree; good knowledge is explicit qualitative wording not recognized by this lexicon, so null alone is not full preservation. Do not count passing these as semantic approval.
+
+**2. AI/speech: lexical depth overreach creates conflicting representational demands.**
+
+Original description is native English and projection description matches. The must-have education passage includes degree OR current enrollment and a strong interest in practical product development. The model's interest item has type other; first retry has null depth, second supplies a motivation phrase as depth. The actual item refers to motivation and the nature of desired activity, not employer-stated technical proficiency or required past work. _depth_matches finds two markers merely because the words strong and hands-on occur. v21 requires a depth_signal when any recognized token exists and rejects the null; v20 prohibits those tokens in concept and rejects the next completion. A neutral interest concept with null still fails; an intentionally misleading alternative with a neutral interest concept and the single strong token as depth passes, demonstrating a validator can reward semantically wrong depth. No model failure claim solely on first null: it is a reasonable semantic distinction under current product meaning. Preserve interest, activity context, qualification modality, education alternatives and original wording; don't upgrade to technical proficiency or prior professional experience. No broad word deletion or forced degree assignment.
+
+**3. Additional security first-completion issue: recognized lexicon is incomplete.** Its first completion contains two exact translated full-knowledge phrases that the validator rejects because no accepted regex recognizes them. Original Persian wording expresses complete familiarity; translation quality and modifier equivalence remain E1.8 checks. Cannot erase a material degree merely to satisfy current schema. On retry the degree errors no longer block partition validation, but a different coverage failure appears (E1.5).
+
+**Safe vs unsafe design implications (not implementation selection):** separate exact source item from normalized concept and scoped degree; preserve exact qualitative wording, modality, alternatives, and explicit experience. Permit source-proven representation repair where no change to meaning occurs. A single grammatical degree may have multiple lexical tokens; distinguish actual degrees from motivation, work context and prior-exposure language. If a compound item cannot be safely split, retain source context/uncertainty as a qualified candidate instead of fabricating mandatory facts or silently removing content. Never globally suppress depth, force a single adjective into structured degree, conflate OR alternatives into all mandatory skills, accept fabricated references, or borrow adjacent depth. No production fix, new ontology, broad regex expansion, model replacement or threshold decision yet. E1.6 must quantify prompt/schema burden; E2 compares targeted repairs against simpler semantic contract alternatives.
+
+### E1.5 — Dense-duty coverage failure: false obligation originates in planner
+
+The original Persian posting has six responsibility passages, then a skills heading and qualification list, then benefits. The v2 English projection has seven duty sentences because it splits a compound passage and merges two separate original duties near the end; the translated skills paragraph remains clearly separated by an explicit Skills heading. This translation fidelity defect precedes inference; 7 translated duty units cannot establish original duty completeness.
+
+The active v21 duty plan erroneously requires **eight** refs. Seven represent the translated work sentences. The eighth is the entire translated Skills paragraph, already owned by the requirement coverage plan. Code-level root cause:
+
+1. The initial `build_responsibility_coverage_plan_v21` pass uses base segmented responsibility coverage and produces the seven work refs.
+2. Its second fallback loop (`evidence_refs_v21.py:506`) calls `_candidate_duty_sections` (line 432). The regex `_CANDIDATE_DUTY_SECTION_RE` (line 103) recognizes Responsibilities and Benefits but not standalone Skills; the section therefore continues through the qualifications up to Benefits. _duty_units emits the entire Skills sentence. The heading-fragment guard only catches a bare heading, not a heading plus content. The fallback adds the eighth false duty ref.
+3. The v20 runtime assigns all duty refs to partition 1. Both retained model completions cover precisely the seven translated work refs, not the skills paragraph. First completion fails on degree validation before full coverage; second reaches `JobAnalysisResponseV17.normalize_and_validate_quality` (instructor_lm_studio_v17.py:35, error assembly at 185) which rejects the one missing duty ref. This is BEFORE v23 post-inference scope filter and global reconciliation, so those cannot have removed it. No missing actual translated work ref in the raw retry. The model should not invent a duty from the qualifications merely to satisfy planner coverage.
+4. Counterfactual: remove ONLY the false responsibility ref from the reconstructed context, retain the unchanged second response, full evidence catalog and requirement plan. Actual full partition validator passes. Negative control: remove one genuine translated work statement from that unchanged response with corrected plan; validation still fails for missing actual work. The result proves causal contribution of the misplanned obligation at the partition gate. It does NOT show current runtime persistence/full end-to-end success or original-language semantic completeness. No real runtime change and no weakening of coverage validation.
+
+**Further observed planner warning:** native-English AI/speech reconstructed plan marks two explicitly nice-to-have experience passages as required; one residual candidate requirement is a truncated actual work sentence. Native-English backend duty plan fragments an action list and includes a tech-stack passage; a requirement parent extends through benefits. These are reproducible plan observations requiring E1.7 source/role audit, not comprehensive quantified defect counts or fixes.
+
+### Interim root-cause matrix and next checkpoint
+
+| Issue | Causal confidence / impact | Next |
+| --- | --- | --- |
+| Compound OR rewrite injects adjacent depth into correct raw concepts | Directly reproduced; blocks backend retry | E1.6 constraint interaction, E2 repair/alternative comparison |
+| Depth regex count conflates compound degree tokens, incomplete vocabulary | Directly reproduced; correct rich degree can reject, lossy passing output | E1.6/E2 scope-aware representation |
+| Motivation words treated as technical depth | Directly reproduced; two AI failures and misleading passing counterfactual | E1.6/E2 contextual semantics |
+| Skills paragraph misplanned as required duty | Directly reproduced; unchanged response passes only corrected partition context; genuine duty negative control still rejects | E1.7 source classification / E2 compare |
+| Translation merges/splits original work passages | Source/target comparison; meaning and alignment incomplete | E1.8 |
+| All observed failures recorded as before_partition, no index | Verified diagnostic limitation; actual reconstructed partitions match | E1.6/E1.9 diagnostic/partial retention |
+
+15 bounded counterfactual checks (8 validations pass, 7 reject as expected; includes deliberately misleading/lossy passes, **not** semantic accuracy). No LLM calls, no new HTTP source requests, no runtime or review/persistence changes; actual model timing/token use N/A. Existing E1.1–E1.3 and all frozen gate decisions preserved. Public-safe receipts only; production database/corpus hashes and SQLite integrity verified separately. Next E1.6 assembled prompt/schema/retry burden, with DOC.1/2 companion work still open and E1.7–E1.11, V9, E2–E5 gated as recorded.

@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-24, following owner agreement to the strategic review and staged investigation.
 **Status:** ACTIVE — investigation and planning authorized; architectural outcome undecided.
 **Baseline:** main at `c1770ff688eb3e28309cdcf843f51d8d8c0bdeff`.
-**Active next item:** E1.4 (replay v30 depth/concept failures).
+**Active next item:** E1.6 (assembled prompt/schema/constraint and retry burden).
 **Authority:** This is the single execution tracker for the P1.6 evolution within Stage B, not a parallel product roadmap or a replacement of Stage B acceptance gates. The existing [Stage B focused plan](P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md), permanent governance and explicit promotion rules control. The previously proposed P2.3 capability-expectation slice remains deferred.
 
 ## 1. Purpose and protected boundaries
@@ -39,8 +39,8 @@ For each milestone use one dated record under `docs/working-memory/` (suggested 
 - [x] E1.1 Read controlling product, architecture, domain, source and reasoning policy, roadmap/master plan, focused Stage B plan, ADRs and relevant historical decisions; map existing requirements and constraints to concrete owners. Identify what is settled versus open and any genuine contradictions.
 - [x] E1.2 Inventory semantic architecture evolution (v30 inheritance, relevant historical variants and failed prompt probes, B1-B4 candidates, parser/translation routes, downstream gates). Trace real execution from source capture to review/persistence and consumption; record file/function boundaries, not only a conceptual diagram.
 - [x] E1.3 Freeze an exposed diagnostic evidence inventory from the November 23 real-ad audit, four prior B5 cohorts and relevant accepted anchor/sparse/dense cases. Verify source/translation/attempt IDs, hashes and isolation; enumerate unavailable evidence. No unseen sources or model calls needed for this step.
-- [ ] E1.4 Replay the two v30 depth/concept failures from retained outputs; trace schema/validators and inheritance, distinguish recoverable representation from actual wrong meaning and unsupported evidence. Demonstrate safe and unsafe normalization examples with source-local degree/obligation/experience.
-- [ ] E1.5 Replay the v30 dense-duty coverage failure: trace source plan, partition/context, model response, filters, reconciliation and coverage validation. Locate the loss or mark it unresolved with evidence.
+- [x] E1.4 Replay the two v30 depth/concept failures from retained outputs; trace schema/validators and inheritance, distinguish recoverable representation from actual wrong meaning and unsupported evidence. Demonstrate safe and unsafe normalization examples with source-local degree/obligation/experience.
+- [x] E1.5 Replay the v30 dense-duty coverage failure: trace source plan, partition/context, model response, filters, reconciliation and coverage validation. Locate the loss or mark it unresolved with evidence.
 - [ ] E1.6 Audit actual model-facing schemas, assembled prompts, constraints, retries and token/context budgets for burden, redundancy and contradiction; compare with earlier failed/successful variants. Separate measured findings from conjecture.
 - [ ] E1.7 Audit B2v7 semantic classification/heading dependence, unresolved items, formal alternatives, metadata conflicts, duty-capability relationships and known remaining exposed failures. Identify where structure helps and where semantic rules risk lost context.
 - [ ] E1.8 Audit bilingual path: compare original and v2 translation and B3 evidence-bound candidates for proper names, technical terminology, distinct duties, depth, modality, alternatives and source attribution. Test whether translation is a necessary intermediate step versus a presentation/alignment function; establish hypotheses, not premature changes.
@@ -101,7 +101,7 @@ Result record: `YYYY-MM-DD_P16_EVOLUTION_V9_HISTORICAL_ACCEPTANCE_AUDIT.md`. Sta
 
 **Adopted:** 2026-11-24, owner approved recording DOC.1–DOC.7 for their appropriate execution windows.
 **Purpose:** Make the current implementation understandable to the owner, engineers, reviewers and AI assistants without reconstructing months of historical decisions. Understandability is an engineering quality attribute alongside correctness, reliability, maintainability, traceability and evolvability.
-**Disposition:** Planned; no new tooling, architecture rewrite or DOC completion claimed. E1.4 remains the immediate main-track task. Reuse verified E1 evidence, but require inspectable DOC deliverables. Do not create a competing roadmap.
+**Disposition:** Planned; no new tooling, architecture rewrite or DOC completion claimed. E1.6 remains the immediate main-track task. Reuse verified E1 evidence, but require inspectable DOC deliverables. Do not create a competing roadmap.
 
 Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEMANTIC_ANALYSIS.md` and `docs/README.md` as living references, with linked supporting maps only where needed. Distinguish production-current, active transitive, accepted-only compatibility, experimental, historical-only and deferred components. Use concise layered C4-inspired diagrams (context, system/container, component, concrete execution) plus data, evidence/authority and state-transition views. Distinguish actual calls, data dependencies, optional paths and conceptual relationships. Stamp verified code revisions and limitations; design intent is not runtime proof.
 
@@ -121,11 +121,12 @@ Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEM
 | --- | --- | --- | --- |
 | E0.1-E0.3 | DONE (planning) | This file; owner agreement; baseline decision and CI above; routing links | E1.1 |
 | E1.1-E1.3 | DONE (investigation) | [Initial governance, runtime trace and evidence inventory](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md); safe receipt linked there | E1.4 |
-| E1.4-E1.11 | OPEN | Causal replay, schema/translation/partial-output and resource investigations pending | E1.4 |
+| E1.4-E1.5 | DONE (investigation) | [Offline causal replay](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-24-continuation--e14-and-e15-offline-causal-replay); six retained completions, 15 counterfactual checks | E1.6 |
+| E1.6-E1.11 | OPEN | Prompt/schema, classification, translation, partial-output, resource and synthesis investigations pending | E1.6 |
 | V9 | NOT STARTED | New-v9 pending guard exists; historical review still open | V9.1 |
 | DOC.1-DOC.7 | PLANNED / NOT STARTED | Owner-approved understandability track; existing E1 evidence may be reused; no DOC deliverables claimed | DOC.1 during E1; DOC.2 before E1 closure; later tasks by their gates |
 | E2-E3 | GATED | No architecture selected or new candidate implemented | After E1 |
 | E4 / B5 | GATED / NOT ACCEPTED | Four prior prospective source gates failed; all cohorts exposed | After E3 |
 | E5 / B6 | CLOSED | No production authorization | After B5 and explicit decision |
 
-**Next action:** E1.4, then E1.5; replay retained v30 failures offline against exact source and active validators/coverage. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump. DOC.1–DOC.2 are parallel E1 deliverables, not prerequisites for E1.4; track their closure before completing E1.
+**Next action:** E1.6, then E1.7; audit actual assembled prompts, schemas, retry/constraint interactions and source classification. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump. DOC.1–DOC.2 are parallel E1 deliverables, not prerequisites for E1.6; track their closure before completing E1.

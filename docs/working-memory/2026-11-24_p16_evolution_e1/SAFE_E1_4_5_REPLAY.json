@@ -1,0 +1,57 @@
+{
+  "all_retained_completions_rejected": true,
+  "base_commit": "dbe9ea07f252abc27f09d6116710d27c3ab30a9d",
+  "case_results": [
+    {
+      "case": "backend",
+      "failed_requirement_items": [
+        6,
+        2
+      ],
+      "multiple_lexical_tokens_one_degree_rejection": true,
+      "native_english": true,
+      "partitions": 1,
+      "v23_compound_alternative_overwrite_reproduced": true
+    },
+    {
+      "case": "AI_speech",
+      "failed_requirement_items": [
+        1,
+        1
+      ],
+      "matched_partition": 2,
+      "motivation_as_degree_reproduced": true,
+      "native_english": true,
+      "partitions": 3
+    },
+    {
+      "case": "security_reporting",
+      "failed_requirement_items_first_completion": 2,
+      "genuine_missing_duty_negative_control_rejects": true,
+      "missing_duty_refs_second_completion": 1,
+      "missing_ref_is_qualification_paragraph": true,
+      "partitions": 1,
+      "planned_duty_refs": 8,
+      "raw_covered_translated_work_refs": 7,
+      "unchanged_response_passes_corrected_partition_context": true
+    }
+  ],
+  "contract": "jobhunter-p16-evolution-e1-depth-coverage-replay-v1",
+  "counterfactual_checks": 15,
+  "counterfactual_pass": 8,
+  "counterfactual_reject": 7,
+  "exposed_only": true,
+  "frozen_isolated_db_sha256": "136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68",
+  "limitations": [
+    "Reconstructed context from unchanged code and frozen translations, not full original network request logs",
+    "Counterfactual passes include deliberate semantic-negative/degree-loss examples; not accuracy or full runtime acceptance",
+    "No change to production code, source or historical artifacts; no independent review, unseen verification or promotion"
+  ],
+  "matched_partitions_unique": true,
+  "model_calls": 0,
+  "new_source_requests": 0,
+  "partition_contexts_reconstructed": 5,
+  "private_counterfactual_sha256": "97c9cb1ccc32e643ec1458197a8ea10fd8ff0533f38bac6256f73fc4a622bfa2",
+  "private_replay_sha256": "6e868598bd3cd0b7e912d682d0602de72b61f89a2d40a3b55277f7e42085f055",
+  "retained_failed_completions_replayed": 6
+}

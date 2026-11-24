@@ -1,6 +1,6 @@
 # JobHunter Documentation Map
 
-**2026-11-24 architecture understandability track:** Owner approved DOC.1–DOC.7 in [the evolution plan](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md#5-parallel-architecture-understandability-and-living-documentation-track). Verified runtime diagrams, execution/dependency maps, component profiles, code-derived inspection feasibility, orientation and documentation-currentness are planned companion work. DOC.1–DOC.2 during E1; later items at their specified gates. E1.4 remains the immediate main-track task; no DOC item is complete and no production change is authorized by this amendment.
+**2026-11-24 architecture understandability track:** Owner approved DOC.1–DOC.7 in [the evolution plan](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md#5-parallel-architecture-understandability-and-living-documentation-track). Verified runtime diagrams, execution/dependency maps, component profiles, code-derived inspection feasibility, orientation and documentation-currentness are planned companion work. DOC.1–DOC.2 during E1; later items at their specified gates. E1.6 remains the immediate main-track task; no DOC item is complete and no production change is authorized by this amendment.
 
 This directory contains both **current product/engineering authority** and the project’s retained **execution, experiment, and decision history**.
 
