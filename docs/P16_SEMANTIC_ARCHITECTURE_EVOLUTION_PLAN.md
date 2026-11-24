@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-24, following owner agreement to the strategic review and staged investigation.
 **Status:** ACTIVE — investigation and planning authorized; architectural outcome undecided.
 **Baseline:** main at `c1770ff688eb3e28309cdcf843f51d8d8c0bdeff`.
-**Active next item:** E1.7 (source classification, role/heading/metadata authority).
+**Active next item:** E1.8 (bilingual fidelity and translation architecture).
 **Authority:** This is the single execution tracker for the P1.6 evolution within Stage B, not a parallel product roadmap or a replacement of Stage B acceptance gates. The existing [Stage B focused plan](P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md), permanent governance and explicit promotion rules control. The previously proposed P2.3 capability-expectation slice remains deferred.
 
 ## 1. Purpose and protected boundaries
@@ -42,7 +42,7 @@ For each milestone use one dated record under `docs/working-memory/` (suggested 
 - [x] E1.4 Replay the two v30 depth/concept failures from retained outputs; trace schema/validators and inheritance, distinguish recoverable representation from actual wrong meaning and unsupported evidence. Demonstrate safe and unsafe normalization examples with source-local degree/obligation/experience.
 - [x] E1.5 Replay the v30 dense-duty coverage failure: trace source plan, partition/context, model response, filters, reconciliation and coverage validation. Locate the loss or mark it unresolved with evidence.
 - [x] E1.6 Audit actual model-facing schemas, assembled prompts, constraints, retries and token/context budgets for burden, redundancy and contradiction; compare with earlier failed/successful variants. Separate measured findings from conjecture.
-- [ ] E1.7 Audit B2v7 semantic classification/heading dependence, unresolved items, formal alternatives, metadata conflicts, duty-capability relationships and known remaining exposed failures. Identify where structure helps and where semantic rules risk lost context.
+- [x] E1.7 Audit B2v7 semantic classification/heading dependence, unresolved items, formal alternatives, metadata conflicts, duty-capability relationships and known remaining exposed failures. Identify where structure helps and where semantic rules risk lost context.
 - [ ] E1.8 Audit bilingual path: compare original and v2 translation and B3 evidence-bound candidates for proper names, technical terminology, distinct duties, depth, modality, alternatives and source attribution. Test whether translation is a necessary intermediate step versus a presentation/alignment function; establish hypotheses, not premature changes.
 - [ ] E1.9 Inspect authority and delivery boundaries for partial output, including B4v6 and source-brief, pending/rejected results and accepted-only consumers. Specify what can be shown safely vs what requires whole-artifact acceptance.
 - [ ] E1.10 Baseline comparative model/resource characteristics and practical user workflow; distinguish model capability, schema/prompt burden, translation error, validation, coverage and architecture hypotheses. Record available model versions and measured latency/calls; any new inference needs a frozen bounded protocol in E2/E3.
@@ -101,7 +101,7 @@ Result record: `YYYY-MM-DD_P16_EVOLUTION_V9_HISTORICAL_ACCEPTANCE_AUDIT.md`. Sta
 
 **Adopted:** 2026-11-24, owner approved recording DOC.1–DOC.7 for their appropriate execution windows.
 **Purpose:** Make the current implementation understandable to the owner, engineers, reviewers and AI assistants without reconstructing months of historical decisions. Understandability is an engineering quality attribute alongside correctness, reliability, maintainability, traceability and evolvability.
-**Disposition:** DOC.1 audit complete; DOC.2–DOC.7 open. No new tooling or architecture rewrite. E1.7 remains the immediate main-track task. Reuse verified E1 evidence, but require inspectable DOC deliverables. Do not create a competing roadmap.
+**Disposition:** DOC.1 audit complete; DOC.2–DOC.7 open. No new tooling or architecture rewrite. E1.8 remains the immediate main-track task. Reuse verified E1 evidence, but require inspectable DOC deliverables. Do not create a competing roadmap.
 
 Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEMANTIC_ANALYSIS.md` and `docs/README.md` as living references, with linked supporting maps only where needed. Distinguish production-current, active transitive, accepted-only compatibility, experimental, historical-only and deferred components. Use concise layered C4-inspired diagrams (context, system/container, component, concrete execution) plus data, evidence/authority and state-transition views. Distinguish actual calls, data dependencies, optional paths and conceptual relationships. Stamp verified code revisions and limitations; design intent is not runtime proof.
 
@@ -123,7 +123,8 @@ Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEM
 | E1.1-E1.3 | DONE (investigation) | [Initial governance, runtime trace and evidence inventory](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md); safe receipt linked there | E1.4 |
 | E1.4-E1.5 | DONE (investigation) | [Offline causal replay](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-24-continuation--e14-and-e15-offline-causal-replay); six retained completions, 15 counterfactual checks | E1.6 |
 | E1.6 | DONE (investigation) | [Prompt/schema/retry audit](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-24-continuation--e16-assembled-prompt-schema-and-retry-audit); quantitative receipt | E1.7 |
-| E1.7-E1.11 | OPEN | Classification, bilingual, partial-output, resource and synthesis investigations pending | E1.7 |
+| E1.7 | DONE (investigation) | [Source classification audit](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-24-continuation--e17-original-source-classification-and-semantic-relationships); 32 archived and 3 recent sources, 7 synthetic probes | E1.8 |
+| E1.8-E1.11 | OPEN | Bilingual, partial-output, resource and synthesis investigations pending | E1.8 |
 | V9 | NOT STARTED | New-v9 pending guard exists; historical review still open | V9.1 |
 | DOC.1 | DONE (audit/design) | [Documentation gap audit and prioritized design](working-memory/2026-11-24_ARCHITECTURE_UNDERSTANDABILITY_DOC1_GAP_AUDIT.md) | DOC.2 |
 | DOC.2-DOC.7 | OPEN | Verified diagrams/profiles/tool feasibility/orientation not delivered yet | DOC.2 before E1 closure; later tasks by their gates |
@@ -131,4 +132,4 @@ Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEM
 | E4 / B5 | GATED / NOT ACCEPTED | Four prior prospective source gates failed; all cohorts exposed | After E3 |
 | E5 / B6 | CLOSED | No production authorization | After B5 and explicit decision |
 
-**Next action:** E1.7, then E1.8; audit source roles/heading/metadata and bilingual fidelity. DOC.2 is the next companion deliverable. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump. DOC.1 is complete; DOC.2 is a parallel E1 deliverable, not a prerequisite for E1.7; close it before completing E1.
+**Next action:** E1.8, then E1.9; audit bilingual fidelity, translation role and partial-output authority. DOC.2 is the next companion deliverable. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump. DOC.1 is complete; DOC.2 is a parallel E1 deliverable, not a prerequisite for E1.8; close it before completing E1.

@@ -1,0 +1,462 @@
+{
+  "B5_pass": false,
+  "B6_authorized": false,
+  "accepted_facts": 0,
+  "b1_mechanical_validated": 35,
+  "base_commit": "a06e0badf98b38c013694839e2dfc7f327195c31",
+  "cohorts": [
+    {
+      "alternatives": {
+        "source_dom_explicit_unresolved_option_scope": 19
+      },
+      "changes": {
+        "candidate_qualification/unresolved -> candidate_qualification/preferred": 15,
+        "context/not_applicable -> candidate_qualification/preferred": 2,
+        "removed": 0
+      },
+      "cohort": "first",
+      "db_sha256": "6288ece6571cfd95e62b847f67fef5e6d59205858a76d183cefc2881ffa1f49d",
+      "signals": {
+        "board_skill_tag_vs_preferred_prose": 4
+      },
+      "sources": 8,
+      "unresolved": {
+        "candidate_qualification/unresolved": 102
+      },
+      "v6": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 1,
+        "cross_item_covered": 1,
+        "exact_role": 83,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 93,
+        "role_comparable_assertions": 86,
+        "uncovered": 2,
+        "unresolved_alternatives": 3
+      },
+      "v7": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 1,
+        "cross_item_covered": 1,
+        "exact_role": 83,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 93,
+        "role_comparable_assertions": 86,
+        "uncovered": 2,
+        "unresolved_alternatives": 3
+      },
+      "v7_disposition": "BLOCKED_REMAINING_MATERIAL_SOURCE_ERRORS",
+      "work_links": {
+        "API": 4,
+        "Docker": 2,
+        "Kubernetes": 1,
+        "LLM": 1,
+        "Python": 1,
+        "RAG": 1
+      }
+    },
+    {
+      "alternatives": {
+        "explicit_unresolved_option_scope": 2,
+        "source_dom_explicit_unresolved_option_scope": 11
+      },
+      "changes": {
+        "removed": 0
+      },
+      "cohort": "second",
+      "db_sha256": "482ed84243783f32530628b6a18513993850a58685601078c735d9bc38ccd43f",
+      "signals": {
+        "board_skill_tag_vs_preferred_prose": 4,
+        "possible_page_copy_in_board_skills": 2
+      },
+      "sources": 8,
+      "unresolved": {
+        "candidate_qualification/unresolved": 29,
+        "unresolved/unresolved": 2
+      },
+      "v6": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 0,
+        "exact_role": 84,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 91,
+        "role_comparable_assertions": 85,
+        "uncovered": 2,
+        "unresolved_alternatives": 4
+      },
+      "v7": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 0,
+        "exact_role": 84,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 91,
+        "role_comparable_assertions": 85,
+        "uncovered": 2,
+        "unresolved_alternatives": 4
+      },
+      "v7_disposition": "INCOMPLETE_SOURCE_COVERAGE_OR_ALTERNATIVE_MEANING",
+      "work_links": {
+        "API": 6,
+        "LLM": 2,
+        "Python": 1
+      }
+    },
+    {
+      "alternatives": {
+        "source_dom_explicit_unresolved_option_scope": 10,
+        "source_dom_unresolved_seniority_or": 1
+      },
+      "changes": {
+        "removed": 0
+      },
+      "cohort": "third",
+      "db_sha256": "1b1a426c6ff4c44e76c4abcd6b4414003fd804f18c0bc9c425139acea7e86bfb",
+      "signals": {
+        "possible_page_copy_in_board_skills": 3
+      },
+      "sources": 8,
+      "unresolved": {
+        "candidate_qualification/unresolved": 30,
+        "unresolved/unresolved": 2
+      },
+      "v6": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 0,
+        "exact_role": 78,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 85,
+        "role_comparable_assertions": 78,
+        "uncovered": 0,
+        "unresolved_alternatives": 4
+      },
+      "v7": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 0,
+        "exact_role": 78,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 0,
+        "reviewed_assertions": 85,
+        "role_comparable_assertions": 78,
+        "uncovered": 0,
+        "unresolved_alternatives": 4
+      },
+      "v7_disposition": "INCOMPLETE_SOURCE_COVERAGE_OR_ALTERNATIVE_MEANING",
+      "work_links": {
+        "API": 4,
+        "EDR": 1,
+        "LLM": 3,
+        "RAG": 1
+      }
+    },
+    {
+      "alternatives": {
+        "source_dom_explicit_unresolved_option_scope": 10
+      },
+      "changes": {
+        "removed": 3
+      },
+      "cohort": "fourth",
+      "db_sha256": "53387beb6ada2e9d39a1e5a03f5bef205b41dfa99c8df6eff9fc14f521709f65",
+      "signals": {
+        "possible_page_copy_in_board_skills": 1
+      },
+      "sources": 8,
+      "unresolved": {
+        "candidate_qualification/unresolved": 71,
+        "unresolved/unresolved": 1
+      },
+      "v6": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 1,
+        "exact_role": 73,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 4,
+        "reviewed_assertions": 80,
+        "role_comparable_assertions": 73,
+        "uncovered": 0,
+        "unresolved_alternatives": 0
+      },
+      "v7": {
+        "broad_qualification_compatible": 0,
+        "critical_category_mismatches": 0,
+        "cross_item_covered": 1,
+        "exact_role": 73,
+        "explicit_duty_missed": 0,
+        "explicit_eligibility_scope_missing": 0,
+        "false_mandatory": 0,
+        "illustrative_alternatives": 4,
+        "reviewed_assertions": 80,
+        "role_comparable_assertions": 73,
+        "uncovered": 0,
+        "unresolved_alternatives": 0
+      },
+      "v7_disposition": "NO_SELECTED_CRITICAL_FAILURE_EXPOSED_ONLY",
+      "work_links": {
+        "API": 3,
+        "Docker": 2,
+        "LLM": 1
+      }
+    }
+  ],
+  "graph_signal_counts": [
+    {
+      "cohort": "first",
+      "graphs": 0,
+      "jobs_with_graph": 0,
+      "lexical_matching_preferred_pairs": 6,
+      "lexical_pairs_with_inherited_signal": 4,
+      "lexical_pairs_without_signal": 2,
+      "signal_pairs_not_matching_current_label": 0
+    },
+    {
+      "cohort": "second",
+      "graphs": 0,
+      "jobs_with_graph": 0,
+      "lexical_matching_preferred_pairs": 24,
+      "lexical_pairs_with_inherited_signal": 2,
+      "lexical_pairs_without_signal": 22,
+      "signal_pairs_not_matching_current_label": 0
+    },
+    {
+      "cohort": "third",
+      "graphs": 0,
+      "jobs_with_graph": 0,
+      "lexical_matching_preferred_pairs": 4,
+      "lexical_pairs_with_inherited_signal": 0,
+      "lexical_pairs_without_signal": 4,
+      "signal_pairs_not_matching_current_label": 0
+    },
+    {
+      "cohort": "fourth",
+      "graphs": 0,
+      "jobs_with_graph": 0,
+      "lexical_matching_preferred_pairs": 1,
+      "lexical_pairs_with_inherited_signal": 0,
+      "lexical_pairs_without_signal": 1,
+      "signal_pairs_not_matching_current_label": 0
+    }
+  ],
+  "limitations": [
+    "Role counts on selected reviewed assertions only, not semantic accuracy.",
+    "Lexical tag/phrase overlap not a verified conflict.",
+    "No independent fresh verification."
+  ],
+  "model_calls": 0,
+  "new_source_requests": 0,
+  "private_local_receipt_hashes": {
+    "PRIVATE_E1_7_REPLAY.json": "b5d444dc88b2dbe5e4fd4a30cd24d04a20593bfba09a4c7d07a8b1dbc7b86951",
+    "SAFE_E1_7_COHORT_METRICS.json": "bd0a542fbd6dc8f513f3a61ae3339131e3515acc6765d0b866b67b4ddfa6d832",
+    "SAFE_E1_7_GRAPH_SIGNAL_COUNTS.json": "8e2f9ea7125f21e456f35e67bf2b05f54907ed01a4cd3e208bd619bfa74baaa2",
+    "SAFE_E1_7_SYNTHETIC_PROBES.json": "b58c9a0932c1e98d4d9e7d177dd30a9736f15a80c4084e789af2e345691b920f"
+  },
+  "scope": "exposed_retrospective_and_synthetic_only",
+  "synthetic_probes": [
+    {
+      "case": "same_text_explicit_heading",
+      "description": "Must Have Familiarity with Python Design dashboards",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Familiarity with Python"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Design dashboards"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "same_text_plain",
+      "description": "Must Have Familiarity with Python Design dashboards",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "context",
+          "strength": "not_applicable",
+          "text": "Must Have"
+        },
+        {
+          "basis": "explicit_original_wording",
+          "role": "candidate_qualification",
+          "strength": "unresolved",
+          "text": "Familiarity with Python"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "context",
+          "strength": "not_applicable",
+          "text": "Design dashboards"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "generic_section",
+      "description": "Skills Familiarity with Python Design dashboards",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "unresolved",
+          "role": "candidate_qualification",
+          "strength": "unresolved",
+          "text": "Familiarity with Python"
+        },
+        {
+          "basis": "unresolved",
+          "role": "candidate_qualification",
+          "strength": "unresolved",
+          "text": "Design dashboards"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "unknown_section_boundary",
+      "description": "Must Have Familiarity with Python Life at our company Mentorship from senior engineers",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Familiarity with Python"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Life at our company"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Mentorship from senior engineers"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "explicit_conflict",
+      "description": "Must Have Python skill Degree is not required Optional Docker knowledge",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Python skill"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "unresolved",
+          "text": "Degree is not required"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "unresolved",
+          "text": "Optional Docker knowledge"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "duty_example",
+      "description": "Responsibilities Build AI workflows using tools such as LangChain or similar frameworks. Deploy Docker containers and develop FastAPI endpoints. Investigate incidents and write remediation plans.",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "work_duty",
+          "strength": "not_applicable",
+          "text": "Build AI workflows using tools such as LangChain or similar frameworks."
+        },
+        {
+          "basis": "original_section_context",
+          "role": "work_duty",
+          "strength": "not_applicable",
+          "text": "Deploy Docker containers and develop FastAPI endpoints."
+        },
+        {
+          "basis": "original_section_context",
+          "role": "work_duty",
+          "strength": "not_applicable",
+          "text": "Investigate incidents and write remediation plans."
+        }
+      ],
+      "links": [
+        {
+          "capability": "Docker",
+          "prior_experience_required": null
+        }
+      ],
+      "options": [],
+      "signals": []
+    },
+    {
+      "case": "formal_or",
+      "description": "Must Have Python or Go proficiency A degree or equivalent experience",
+      "graph_count": 0,
+      "items": [
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "Python or Go proficiency"
+        },
+        {
+          "basis": "original_section_context",
+          "role": "candidate_qualification",
+          "strength": "required",
+          "text": "A degree or equivalent experience"
+        }
+      ],
+      "links": [],
+      "options": [],
+      "signals": []
+    }
+  ]
+}
