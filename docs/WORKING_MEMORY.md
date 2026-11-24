@@ -1,5 +1,7 @@
 # JobHunter Working Memory / Handoff
 
+**2026-11-24 architecture understandability track:** Owner approved DOC.1–DOC.7 in [the evolution plan](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md#5-parallel-architecture-understandability-and-living-documentation-track). Verified runtime diagrams, execution/dependency maps, component profiles, code-derived inspection feasibility, orientation and documentation-currentness are planned companion work. DOC.1–DOC.2 during E1; later items at their specified gates. E1.4 remains the immediate main-track task; no DOC item is complete and no production change is authorized by this amendment.
+
 **2026-11-24 evolution E1 update:** E1.1-E1.3 complete for governance, active runtime trace and retained evidence inventory; 32 B5 source versions, 5 accepted anchors, 4 A1 exposed originals and 3 Nov 23 cases verified. No semantic accuracy claim, new inference or production mutation. Next E1.4 depth/concept failure replay. Record: `docs/working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md`.
 
 **2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.3 completed; next E1.4 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
