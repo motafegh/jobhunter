@@ -1,6 +1,8 @@
 # JobHunter Working Memory / Handoff
 
-**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. Start E1.1; use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+**2026-11-24 evolution E1 update:** E1.1-E1.3 complete for governance, active runtime trace and retained evidence inventory; 32 B5 source versions, 5 accepted anchors, 4 A1 exposed originals and 3 Nov 23 cases verified. No semantic accuracy claim, new inference or production mutation. Next E1.4 depth/concept failure replay. Record: `docs/working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md`.
+
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.3 completed; next E1.4 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
 
 **Last research-status reconciliation:** 2026-11-24 (Nov 23 bounded repair verified on published CI; governing-document alignment, local database integrity and frozen audit receipt checked; English v30 and translation semantic gates remain open).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.

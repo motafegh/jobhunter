@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-24, following owner agreement to the strategic review and staged investigation.
 **Status:** ACTIVE — investigation and planning authorized; architectural outcome undecided.
 **Baseline:** main at `c1770ff688eb3e28309cdcf843f51d8d8c0bdeff`.
-**Active next item:** E1.1 (governance and design/history review).
+**Active next item:** E1.4 (replay v30 depth/concept failures).
 **Authority:** This is the single execution tracker for the P1.6 evolution within Stage B, not a parallel product roadmap or a replacement of Stage B acceptance gates. The existing [Stage B focused plan](P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md), permanent governance and explicit promotion rules control. The previously proposed P2.3 capability-expectation slice remains deferred.
 
 ## 1. Purpose and protected boundaries
@@ -36,9 +36,9 @@ For each milestone use one dated record under `docs/working-memory/` (suggested 
 
 **Goal:** isolate causal mechanisms, not simply catalogue symptoms. Result record: `YYYY-MM-DD_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md`.
 
-- [ ] E1.1 Read controlling product, architecture, domain, source and reasoning policy, roadmap/master plan, focused Stage B plan, ADRs and relevant historical decisions; map existing requirements and constraints to concrete owners. Identify what is settled versus open and any genuine contradictions.
-- [ ] E1.2 Inventory semantic architecture evolution (v30 inheritance, relevant historical variants and failed prompt probes, B1-B4 candidates, parser/translation routes, downstream gates). Trace real execution from source capture to review/persistence and consumption; record file/function boundaries, not only a conceptual diagram.
-- [ ] E1.3 Freeze an exposed diagnostic evidence inventory from the November 23 real-ad audit, four prior B5 cohorts and relevant accepted anchor/sparse/dense cases. Verify source/translation/attempt IDs, hashes and isolation; enumerate unavailable evidence. No unseen sources or model calls needed for this step.
+- [x] E1.1 Read controlling product, architecture, domain, source and reasoning policy, roadmap/master plan, focused Stage B plan, ADRs and relevant historical decisions; map existing requirements and constraints to concrete owners. Identify what is settled versus open and any genuine contradictions.
+- [x] E1.2 Inventory semantic architecture evolution (v30 inheritance, relevant historical variants and failed prompt probes, B1-B4 candidates, parser/translation routes, downstream gates). Trace real execution from source capture to review/persistence and consumption; record file/function boundaries, not only a conceptual diagram.
+- [x] E1.3 Freeze an exposed diagnostic evidence inventory from the November 23 real-ad audit, four prior B5 cohorts and relevant accepted anchor/sparse/dense cases. Verify source/translation/attempt IDs, hashes and isolation; enumerate unavailable evidence. No unseen sources or model calls needed for this step.
 - [ ] E1.4 Replay the two v30 depth/concept failures from retained outputs; trace schema/validators and inheritance, distinguish recoverable representation from actual wrong meaning and unsupported evidence. Demonstrate safe and unsafe normalization examples with source-local degree/obligation/experience.
 - [ ] E1.5 Replay the v30 dense-duty coverage failure: trace source plan, partition/context, model response, filters, reconciliation and coverage validation. Locate the loss or mark it unresolved with evidence.
 - [ ] E1.6 Audit actual model-facing schemas, assembled prompts, constraints, retries and token/context budgets for burden, redundancy and contradiction; compare with earlier failed/successful variants. Separate measured findings from conjecture.
@@ -102,10 +102,11 @@ Result record: `YYYY-MM-DD_P16_EVOLUTION_V9_HISTORICAL_ACCEPTANCE_AUDIT.md`. Sta
 | Task/gate | State | Evidence / result | Next |
 | --- | --- | --- | --- |
 | E0.1-E0.3 | DONE (planning) | This file; owner agreement; baseline decision and CI above; routing links | E1.1 |
-| E1 | NOT STARTED | Existing exposed evidence retained; investigation not yet executed | E1.1-E1.11 |
+| E1.1-E1.3 | DONE (investigation) | [Initial governance, runtime trace and evidence inventory](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md); safe receipt linked there | E1.4 |
+| E1.4-E1.11 | OPEN | Causal replay, schema/translation/partial-output and resource investigations pending | E1.4 |
 | V9 | NOT STARTED | New-v9 pending guard exists; historical review still open | V9.1 |
 | E2-E3 | GATED | No architecture selected or new candidate implemented | After E1 |
 | E4 / B5 | GATED / NOT ACCEPTED | Four prior prospective source gates failed; all cohorts exposed | After E3 |
 | E5 / B6 | CLOSED | No production authorization | After B5 and explicit decision |
 
-**Next action:** E1.1, then E1.2 and E1.3; start with read-only governance/design and evidence inventory. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump.
+**Next action:** E1.4, then E1.5; replay retained v30 failures offline against exact source and active validators/coverage. Update checkboxes with actual records as each deliverable is verified. If evidence supports a different sequence, record the rationale and dependency changes here before execution. Do not skip the causal investigation for another version bump.

@@ -1,0 +1,68 @@
+{
+  "b0_accepted_anchors_verified": 5,
+  "b0_exposed_originals_verified": 4,
+  "b0_manifest_sha256": "13243eedf9ed4534a6a67e03eee6cb92df5d3d0749d40b8181066b543346ac8a",
+  "b0_snapshots_verified": 3,
+  "cohorts": [
+    {
+      "analysis_attempts_in_source_snapshot": 0,
+      "cohort": 1,
+      "frozen_gate_sha256": "a9b04c11a77649ee2caae2df0a893d83d6849eef14ee910795c9c8b2aaa4c589",
+      "manifest_sha256": "ff3a9a8356486a91f6b4da39d619b1a3e9827234a28bbbd4b97cbecafd1222af",
+      "review_sha256": "5430a171e5088c191fbe96f1aaf78123731aede7e576031623c31a266d570686",
+      "snapshot_sha256": "6288ece6571cfd95e62b847f67fef5e6d59205858a76d183cefc2881ffa1f49d",
+      "source_versions_verified": 8,
+      "translation_rows_in_source_snapshot": 0
+    },
+    {
+      "analysis_attempts_in_source_snapshot": 0,
+      "cohort": 2,
+      "frozen_gate_sha256": "738f6d8aba494936d3ddec628de6b9c2ceac34d3a799a8c6bab6b2cea3214ae0",
+      "manifest_sha256": "38193ec3cc0d763a1d13770b98421f8331536406d18c7cdb862cc1c975b67332",
+      "review_sha256": "4b0933e6d9b57395e5299fe033f2f87da082aaebd3d64f56c1e38093f0799f24",
+      "snapshot_sha256": "482ed84243783f32530628b6a18513993850a58685601078c735d9bc38ccd43f",
+      "source_versions_verified": 8,
+      "translation_rows_in_source_snapshot": 0
+    },
+    {
+      "analysis_attempts_in_source_snapshot": 0,
+      "cohort": 3,
+      "frozen_gate_sha256": "e3198d30b2c7af66e731de4f0676a118984665dc9e57752259f0c5b23bd46731",
+      "manifest_sha256": "a942d7c30b17d03dad3c777071aa212a25b91518d54e4ee435971df9048408f6",
+      "review_sha256": "0d5bc59323e7a95b76496cfd2fac47a7207a01d741e4ab9398616196756e94fe",
+      "snapshot_sha256": "1b1a426c6ff4c44e76c4abcd6b4414003fd804f18c0bc9c425139acea7e86bfb",
+      "source_versions_verified": 8,
+      "translation_rows_in_source_snapshot": 0
+    },
+    {
+      "analysis_attempts_in_source_snapshot": 0,
+      "cohort": 4,
+      "frozen_gate_sha256": "dbdb31bfef7265e957ff34febbec54bf6d565cc34d3dfbbea6999d08be932be2",
+      "manifest_sha256": "6c986eb669d2de29c75b251b91ea786c119f2612bde531d6245411fa203fb9b3",
+      "review_sha256": "ed0ebdb19c96aba51a025c2cebb01fdcc6096011130569a7c4dbb101b15677ae",
+      "snapshot_sha256": "53387beb6ada2e9d39a1e5a03f5bef205b41dfa99c8df6eff9fc14f521709f65",
+      "source_versions_verified": 8,
+      "translation_rows_in_source_snapshot": 0
+    }
+  ],
+  "contract": "jobhunter-p16-e1-evidence-inventory-v1",
+  "exposed_only": true,
+  "limitations": [
+    "Historical snapshots, not unseen sources or independent semantic review.",
+    "Source-only B5 gates intentionally stopped before semantic generation; separate exposed pilot artifacts are later investigation inputs.",
+    "Retained failure diagnostics are bounded snapshots, not necessarily complete model request/response transcripts.",
+    "B0 v31 trial database hash and integrity verified; individual failed-trial outputs reserved for E1.6."
+  ],
+  "new_model_requests": 0,
+  "new_source_requests": 0,
+  "nov23": {
+    "analysis_attempts_verified": 4,
+    "diagnostic_rows_retained": 6,
+    "frozen_db_sha256": "136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68",
+    "original_receipt_sha256": "097afa1d5974270c661b686de1221a0e8d493e19cccb930d894cae49c514b508",
+    "source_versions_verified": 3,
+    "translation_artifacts_verified": 3
+  },
+  "private_inventory_sha256": "b6efcc2648e17b3b172c1baa7548df2438e399332201752de282d6d8f2cf2e77",
+  "production_baseline_matches": true
+}
