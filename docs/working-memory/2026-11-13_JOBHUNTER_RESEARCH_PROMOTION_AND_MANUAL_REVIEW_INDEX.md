@@ -1,6 +1,12 @@
 # JobHunter research, manual-review and promotion index
 
-## Stage B authoritative focused plan adoption — 2026-11-13
+## Current status — 2026-11-24 reconciliation
+
+The latest bounded repair is on `main` at `76c497b80a2c8fa83b26d330ba2f9d1106c96b18` ([CI passed](https://github.com/motafegh/jobhunter/actions/runs/45238410379)). See [real-ad repair and open semantic gates](2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md). B2v7 is opt-in, with an original-source CLI brief, not an accepted production semantic replacement. New original-language v9 artifacts start pending review; historical acceptance statuses remain unchanged. Automatic isolated-database corpus exports and exact-description archive duplicate detection have been repaired in their documented scopes.
+
+**Current next engineering gate:** resolve English v30 generation/coverage failures and translation meaning fidelity with a versioned, budgeted experiment and independent source review. The live trial produced zero valid English v30 artifacts across three exposed jobs; the guidance-only v31 probe also failed. B5 independent acceptance and B6 production rollout remain closed. B4 usefulness evidence is exposed-only; browser integration is not yet approved. Earlier status and branch descriptions below are historical, not current execution instructions. Retain unmerged research branches as evidence, not automatic merge candidates.
+
+## Stage B authoritative focused plan adoption — 2026-11-13 (historical)
 
 **Current next engineering gate:** P1.6 B4 useful non-authoritative job-understanding brief. B0 PASS; B1 design PASS; B2 bounded source-first candidate milestone PASS; B3 bounded source-bound translation PASS on four exposed ads (2026-11-18). B2 full semantic generalization and B5 unseen generalization remain NOT ESTABLISHED.
 The formerly planned P2.3 capability-expectation feature is sequenced *after*

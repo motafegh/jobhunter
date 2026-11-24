@@ -1,6 +1,6 @@
 # JobHunter Execution TODO
 
-**Last research-status reconciliation:** 2026-11-23 (bounded B2v7/CLI original-source fallback, v9 pending, isolated corpus and duplicate-source safeguards; English v30 and translation semantic gates open).
+**Last research-status reconciliation:** 2026-11-24 (Nov 23 bounded repair verified on published CI; governing-document alignment, local database integrity and frozen audit receipt checked; English v30 and translation semantic gates remain open).
 **Latest P1.6 research/manual review index:** `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`.
 **Stage A status:** The passive exact-source-span identity/legacy alignment utility and offline source-only review packet builder are on main. Owner Audit A1 is now **assistant-reviewed on all four exposed cases**, using a frozen partial owner Pass A (two cases), source-anchored assistant Pass A (59 assertions), and separately saved model evidence (18 diagnostic flags). No remaining mandatory routine owner audit or fabricated owner verdict; original user submission preserved unchanged. No new English P1.6 authority is approved. The B2 parser and B3 source-bound translator are integrated into `main` as candidate-only code, without production activation. Fresh independent verification is still pending. Stage A closure: `docs/working-memory/2026-11-13_P16_PASSIVE_SOURCE_IDENTITY_STAGE_A_CLOSURE.md`. Latest audit: `docs/working-memory/2026-11-13_OWNER_A1_ASSISTANT_SOURCE_AND_MODEL_RECONCILIATION.md`.
 **Current selected next stage:** 2026-11-23 BOUNDED SOURCE-FIRST REPAIR: new opt-in B2v7 candidate recovers 15/15 backend work passages and 5/5 AI mandatory capabilities from three EXPOSED original jobs, preserves all four older exposed 8-job cohort B1 and selected role results without new duty/required regressions. Original-language v9 NEW artifacts now PENDING review, verified by live local-model regeneration on a separate cloned source database (0 newly accepted facts). Read-only original-language `jobs source-brief` CLI gives complete SHA-linked duty/required/preferred/conditions evidence when model v30 fails. Isolated CLI/browser auto corpus exports can no longer mutate the repository root, and a read-only SHA original-description matcher detects duplicates across different job IDs. CURRENT ENGLISH v30 0/3 and translation semantic flaws remain OPEN; even the bounded guidance-only v31 model trial failed and was not promoted. Historical bad original v9 artifacts require review; no automatic retrospective approval/rejection. B5 unseen verification and B6 production rollout CLOSED. Decision: docs/working-memory/2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md.
@@ -26,14 +26,14 @@ The October 26 B2 closure and Registry state remain unchanged (12 mapped/23 pend
 - [ ] Resolve current v30 0/3 model/schema reliability and cross-source translation fidelity via separate versioned budgeted candidate and independent semantic review
 - [ ] Audit historical accepted original-language v9 artifacts before treating them as semantically verified; B5/B6 remain gated
 
-## 2026-11-23 Live real-ad full-pipeline source-first manual audit (current)
+## 2026-11-23 Live real-ad full-pipeline source-first manual audit (historical baseline)
 
 - [x] Freeze metadata-only source selection; live acquire six pages, check semantic text SHA against all archived trial source descriptions; retain three source-distinct examples and explicitly exclude three duplicate texts
 - [x] Replay B2v6 and B1 source-integrity checks; current v2 translation through local LM Studio; no lasting production/public-corpus changes
 - [x] Run current accepted English v30 path on all three; record all three independent hard failures and do NOT manufacture valid artifacts
 - [x] Run separately original-language v9 on one Persian original; flag its automatically accepted artifact as semantically UNSUPPORTED under manual source-first comparison, no semantic approval or downstream promotion
 - [x] Verify current Capability prerequisite stops without accepted English v30; private and safe research receipts sealed
-- [ ] OWNER DECISION: prioritize generic section-role/obligation errors (explicit duties and Must Have), structured-depth/model response validation, original-v9 source/requirement gate, translation segmentation/name fidelity, cross-ID content dedup, isolated CLI corpus write boundary. Record approved remediation scope before implementation; preserve this now-exposed case set for regressions only
+- [x] OWNER DECISION: remediation requested after review of the live-ad failures. Bounded source-section, new original-v9 acceptance, duplicate detection and isolated-export repairs completed; English v30 reliability and translation fidelity remain open in the latest checklist above. Preserve this exposed case set for regressions only.
 
 ## 2026-11-22 B4v6 exposed compact view — latest execution overlay
 
