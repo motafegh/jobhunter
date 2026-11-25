@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-24, following owner agreement to the strategic review and staged investigation.
 **Status:** ACTIVE — investigation and planning authorized; architectural outcome undecided.
 **Baseline:** main at `c1770ff688eb3e28309cdcf843f51d8d8c0bdeff`.
-**Active next item:** E2.1 (architecture alternatives; E1 closed as investigation only, DOC.1–DOC.2 complete).
+**Active next item:** E2.1 (alternatives design published; local synchronization and milestone verification pending).
 **Authority:** This is the single execution tracker for the P1.6 evolution within Stage B, not a parallel product roadmap or a replacement of Stage B acceptance gates. The existing [Stage B focused plan](P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md), permanent governance and explicit promotion rules control. The previously proposed P2.3 capability-expectation slice remains deferred.
 
 **2026-11-25 AI research companion:** [AI Architecture, Research and Evolution Plan](AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md) records the owner-approved research directions (model comparison, RAG, specialized models, agents, dataset/training, continual improvement, graph and future intelligence). E1.10/E2/E3 model evaluation is explicitly routed below; other research options are not extra prerequisites or implementation authorization. No checkbox status changes.
@@ -134,9 +134,10 @@ Prefer existing `ARCHITECTURE.md`, `CURRENT_RUNTIME_AND_VERSIONED_CODE.md`, `SEM
 | DOC.1 | DONE (audit/design) | [Documentation gap audit and prioritized design](working-memory/2026-11-24_ARCHITECTURE_UNDERSTANDABILITY_DOC1_GAP_AUDIT.md) | DOC.2 |
 | DOC.2 | DONE (as-built baseline) | [Verified P1.6 map](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md); [static/replay/test receipt](working-memory/2026-11-25_doc2_runtime/SAFE_DOC2_RUNTIME_VERIFICATION.json); 65 static symbols, 10 effective method owners, 2 retry controls, 90 focused tests | DOC.3 during E2 |
 | DOC.3-DOC.7 | OPEN | Profiles/tool feasibility/orientation and later maps not delivered yet | By their gates |
-| E2 | OPEN (design) | E1 investigation complete; compare alternatives, freeze protocol and obtain applicable decisions | E2.1 |
+| E2.1 | DESIGN PUBLISHED; RECONCILIATION OPEN | [Architecture alternatives](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md); local device offline, checkbox not closed | Reconcile local/CI then E2.2 |
+| E2.2-E2.6 | OPEN (design) | Authority contract, protocol, thresholds, selected decision and freeze not yet delivered | After E2.1 |
 | E3 | GATED | No architecture selected or new candidate implemented | After E2 |
 | E4 / B5 | GATED / NOT ACCEPTED | Four prior prospective source gates failed; all cohorts exposed | After E3 |
 | E5 / B6 | CLOSED | No production authorization | After B5 and explicit decision |
 
-**Next action:** E2.1, define and compare architecture alternatives using E1.11 and DOC.2. DOC.3/DOC.4/DOC.7 are E2 companions before E2.6; DOC.5 follows selection. No inference, new cohort or implementation before the frozen E2/E3 protocol and applicable owner decisions. V9 remains independently open. E1 closure is investigation only, not B5/B6 acceptance.
+**Next action:** E2.1 design published; reconcile local main/protected state and CI, then close its checkbox and proceed to E2.2 candidate authority/meaning contract. DOC.3/DOC.4/DOC.7 before E2.6; DOC.5 follows selection. No inference, new cohort or implementation before frozen E2/E3 protocol and applicable decisions. V9 independently open.
