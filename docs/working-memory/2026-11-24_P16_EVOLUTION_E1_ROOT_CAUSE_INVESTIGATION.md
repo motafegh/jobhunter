@@ -1,9 +1,9 @@
 # P1.6 evolution E1 — root-cause investigation, initial evidence and architecture trace
 
 **Date:** 2026-11-24
-**Scope:** E1.1–E1.9, including dated continuations below; intermediate investigation record, not E1 closure.
+**Scope:** E1.1–E1.10, including dated continuations below; intermediate investigation record, not E1 closure.
 **Base:** `962611a405d22374159237e29bfe753d8e61e0fb` (main); unchanged production contracts.
-**Disposition:** E1.1–E1.9 and DOC.1 complete. Next E1.10; DOC.2, E1.10–E1.11 and V9 remain open.
+**Disposition:** E1.1–E1.10 and DOC.1 complete. Next E1.11; DOC.2, E1.11 and V9 remain open.
 **Authority:** [Evolution tracker](../P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md); [Stage B plan](../P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md); [Nov 23 repair/Nov 24 reconciliation](2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md). Owner authorized the investigation-first sequence, not a new production contract.
 
 ## E1.1 — Requirements, constraints and governing owners
@@ -348,3 +348,79 @@ Actual Capability v9 uses inherited capability_service_v8._current_dependencies,
 ### E2 design hypothesis and next
 
 Consider separate axes: execution (not run/partial/failed/complete), evidence association (linked/unlinked/stale), semantic assessment (unreviewed/supported/partial/contradicted/unknown), coverage (retained/not represented/unresolved/excluded), presentation (visible with caveats/withheld) and authority (candidate/accepted). Do NOT necessarily require all as model-generated fields; deterministic ledger and reviewed state ownership can carry most. Preserve independently valid partition/claim artifacts only if versioned immutable identities, dependency links, original evidence, explicit error/coverage and global relationship reconciliation exist. Never accept fragments merely because JSON/evidence matches. Cross-item OR, modality, conflicts and shared qualifier can make isolated claim unsafe; quarantine whole dependent group when needed. Partial display should never imply absence of unprocessed facts or user eligibility, or silently remove failed portions. Build complete source drilldown including untranslated/uncategorized content, clear candidate labels and source/translation corrections, diagnostics separate; user usefulness compared against originals and verbose views with independent source-first tasks. Keep full current accepted pipeline as comparator and authority fence. Explicit owner approval, E2 protocol and B5/B6 gates required before promotion. Next E1.10 resource/model/workflow evidence; DOC.2 verified maps before E1 closure. No code fix, new acceptance semantics, user utility claim or full regression claim now.
+
+
+## 2026-11-25 continuation — E1.10 model, resource and workflow evidence
+
+**Base:** `9ec5fae861636e95feb8e65933c0430524877bba` (main). Complete as read-only investigation, not model qualification or architecture selection. AR.1 in [AI research plan](../AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md). No new inference, downloads, load/unload, acquisition, training, indexing or production changes. Date is local investigation date.
+
+### Reproduction and evidence
+
+Local ignored helpers `data/local-acceptance/p16-evolution-e1-2026-11-24/audit_model_resources.py` and `audit_gguf_metadata.py` run with .venv/bin/python from project root. Read-only Windows LM Studio CLI ls --json, ps --json, runtime ls, server status, --version; local GET /v1/models with proxy bypass (initial curl without bypass failed with empty reply; bypass worked). GPU via nvidia-smi, WSL /proc/meminfo/lscpu; selected settings only, no secrets; GGUF relative paths/stat sizes and bounded header parser (skips large token arrays, no tensor reads). B0 configured snapshot SQL mode=ro, PRAGMA query_only, SHA verified before/after; retained E1.6, B2 native comparison, B3/B5 and Nov23 receipts, no new benchmarking. Private helper output `SAFE_E1_10_MODEL_RESOURCE_AUDIT.json` SHA `1c7d072ae9edb465c12aad4436acc02e476ca08b8ef54cfaf792ea5ddcc7b723`; augmented `SAFE_E1_10_MODEL_RESOURCE_WITH_HEADERS.json` SHA `a9f7ebc91c825e1137871462ba079d3a42c15b5332213e34d1bc0fef29358c77`. [Safe aggregate/model metadata receipt](2026-11-24_p16_evolution_e1/SAFE_E1_10_MODEL_RESOURCE_AUDIT.json). Exact upstream revisions, full weight hashes, effective runtime templates and license terms not verified; header license strings are not independent license evidence. File sizes/catalog entries not cryptographic identity. Freeze exact finalist identities/rights in E2 before inference; do not spend time hashing every nonfinalist model.
+
+### Observed local environment and model inventory
+
+RTX 3070 Laptop 8192 MiB, driver 621.24, first observation 6810 MiB free and latest receipt 6605 MiB free (used 1414; reserved remainder). WSL MemTotal 53458744 KiB (~50.98 GiB), available 51445800 KiB (~49.06 GiB), 16 GiB swap, i7-12700H /20 visible logical CPUs. Owner-reported host 64 GB not independently measured today; WSL allocation is not host availability. LM Studio last recorded app 0.4.28 build2, CLI 43d4b26, selected CUDA12 AVX2 llama.cpp 2.83.0; actual backend per model execution untested. Default app context 4096, no loaded instances. Local /v1/models IDs match CLI catalog 14/14, 12 LLM +2 embeddings. Server port18080 running. API metadata context maxima not actual allocated context. GGUF headers parsed for 14 catalog entries, 12 embedded chat-template hashes. 12 exact path-size matches; google/gemma-4-12b catalog alias package size differs from two located candidate GGUF files combined (7556574286 vs 7556500160 bytes; 74126 difference); Mxbai 669604389 catalog vs 669603712 file (677 bytes). No conclusion of corruption; resolve identity/metadata before trial. One uncataloged Qwen3VL 8B file also located but no supported catalog route established. No full load checks. No external model lookup necessary to screen already-installed candidates; upstream card/terms/variant verification needed for finalists.
+
+| Catalog key | Quantization as reported | Package GiB | Proposed role (not selection) |
+| --- | --- | ---: | --- |
+| gemma-4-e4b-it-ud | Q4_K_XL | 4.751 | Incumbent semantic control |
+| mimo-v2.6-distill-qwen-9b | Q4_K_L | 5.776 | First cross-family challenger; two historical accepted artifacts, incomplete attempt lineage |
+| gemma-4-12b-it-qat | Q4_0 | 6.497 | Higher-capacity within-family challenger, tighter memory; historical Work reviewer composite only |
+| gemma-4-e2b-it | Q4_K_M | 3.192 | Translation/Capability incumbent; economical semantic screening arm if justified |
+| google/gemma-4-12b | Q4_K_M | 7.038 | Optional QAT comparison; resolve alias discrepancy first |
+| qwen3.6-35b-a3b-ud | IQ2_M | 10.731 | Optional MoE/offload challenger; one old failed v5 logical attempt not quality verdict |
+| bonsai-27b | Q1_0 | 3.542 | Optional low-bit quantization probe only; quality unestablished |
+| qwen3.8-27b-ud | Q4_K_M | 15.334 | Higher-memory/offload reserve |
+| muse-glimmer-30b-kquant-17gb | not reported | 15.606 | Reserve; actual catalog 28B metadata despite alias |
+| qwopus3.5-9b-coder-mtp | Q4_K_S | 5.112 | Coding-specialized reserve, no semantic advantage assumed |
+| qwen3.5-4b-uncensored-hauhaucs-aggressive | Q8_0 | 4.175 | Modified variant, no initial priority; task and provenance uncertain |
+| qwen2.5-coder-7b-instruct | Q3_K_M | 3.547 | Coding baseline reserve |
+| text-embedding-nomic-embed-text-v1.5 | Q4_K_M | 0.078 | Later lexical/hybrid retrieval comparator |
+| text-embedding-mxbai-embed-large-v1 | F16 | 0.624 | Later retrieval comparator after file discrepancy reconciliation |
+
+Catalog parameter strings E2B=4.6B, E4B=7.5B; 35B-A3B label is not resident-memory estimate. Context metadata 131072/262144 for most LLMs (older coder 32768), embeddings 2048/512 respectively; no claim these contexts fit. Package sizes omit actual context/KV, runtime buffers, GPU placement and host overhead. E4B and MiMo likely reasonable screening candidates by footprint, but even MiMo leaves little free VRAM for context; 12B QAT package alone ~6653 MiB slightly exceeds latest free 6605 MiB; offload/context evaluation required. MoE total weight residency matters even if active parameters fewer. High-memory reserve not mandatory. No selected model can be called load-verified or superior from this inventory.
+
+### Current runtime and practical workflow constraints
+
+Settings.load jobhunter.toml/config/local.toml both: E4B analysis, E2B translation/Capability, 12B QAT Blueprint; effective analysis output cap8192, translation4096, configured inference and translation timeout30s, retries1 each. Nov23 isolated 75s and retries0. Current v30 inherits runtime requested16384 context and exclusive_llm=True; ensure_lm_studio_model_context reads native model state, unloads other LLMs, reloads wrong-context instance, verifies requested instance/context; embedding instances not unloaded by that path. Context actual not measured today because no loads. App default4096 does not determine JobHunter analysis context. E1.6 actual Instructor read timeout None and OpenAI transport retries0 despite configured inference timeout; validation retry one per partition, possible full-plan rerun; not enforceable hard wall limit. Translation provider separate retry/truncation semantics. B5 physical budget guard is research-only scoped transport/deadline (1–8 calls, 1–900s) and not a universal v30 budget. Model specialization may introduce model switching cost; measure cold/warm load, translation-to-analysis transition, reuse, end-to-end elapsed and actual peak host/GPU memory, not only model generation latency. Need per-arm budgets including model control preflights separately, no silent truncation, explicit load failure/unsupported schema, actual generation attempts and terminal outcomes. User reading/review time remains unmeasured; no inference throughput or live comparison today.
+
+### Historical outcome reconciliation (not controlled model ranking)
+
+Frozen B0 configured DB SHA `693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c`; 137 logical analysis attempt rows, 47 retained artifact rows (46 accepted,1 rejected). Attempts may include reuse, archived/deleted artifacts or different historical runs; accepted rows are not quality certification, attempt counts not physical HTTP totals. No joining different denominators to infer success rates.
+
+| Model | Completed logical | Failed logical | Reused logical | Retained accepted artifact |
+| --- | ---: | ---: | ---: | ---: |
+| Gemma E2B | 25 | 16 | 4 | 25 |
+| Gemma E4B | 34 | 51 | 4 | 19 |
+| MiMo distill Qwen 9B | 0 | 1 | 0 | 2 |
+| Qwen3.5-27B distilled (historical key, not current Qwen3.8) | 0 | 1 | 0 | 0 |
+| Qwen3.6-35B-A3B | 0 | 1 | 0 | 0 |
+
+MiMo retained v28 and v30 accepted rows despite no completed attempt in this snapshot; lineage incomplete, not zero generation. E2B earlier v1–v5 and legacy prompt versions differ from E4B v5–v30; no fair rate ranking. Other artifacts: all49 translations E2B (19v1,30v2), all15 Capability E2B,13 Work rows (6 E2B,5 E4B,1 E4B+12B QAT authority-review,1 deterministic limited). Existing model roles reflect historical routing, not specialized comparative validation.
+
+E1.6 retained accepted subset: 12 artifacts,27 saved partitions, reported usage available in all27 rows. E4B v14 1 artifact/1 partition 3711 prompt/2189 completion tokens; v20 5/10 62340/21375; v23 4/11 117777/35887. MiMo v28 1/4 33343/4054, v30 1/1 7275/1931. These are saved provider usage sums (not all attempted calls, possible provider aggregation). Different jobs/contracts and tokenizers; not controlled efficiency. Prompt/schema audit E1.6 2.32x character growth with known contradictions, not proven latency cause.
+
+| Historical bounded study | Observed cost and result | Limits |
+| --- | --- | --- |
+| Nov16 native legacy E4B | Four responses, each 757 reasoning tokens against760 output cap; zero usable answer texts | Reasoning/output-budget mismatch; endpoint/prompt also changed in following arms |
+| Nov16 E4B native v2, reasoning off | 4/4 complete seven-array JSON; 4.139–9.133s, median5.1905s; 1602 output tokens total,0 reasoning | Same exposed four ads; incorrect semantics persisted, not accepted |
+| Nov16 E4B corrective v3, reasoning off | 4/4 JSON;4.202–9.073s, median5.5075s;1627 output tokens,0 reasoning | Changed prompt; not fair against v30 as task/schema differs |
+| B3 E2B item translation | 64 physical calls,18462 prompt/24496 completion tokens, no retry/truncation | 63 primary +1 correction; one trait mistranslation; heading context missing |
+| B5 E2B bounded batch | 5 physical calls/7 cap,60.8s for10 items, first ~41.9s;9 supported/1 partial | Warmup/order uncontrolled; not throughput or speedup study |
+| B4 E4B | 3 requests for4 exposed ads,2 partial/1 rejected/1 skipped | Reference checks not semantic correctness |
+| Nov23 E4B v30 | 111.1/76.0/71.5s =258.6s,3 failed logical,0 valid artifacts;6 retained failed completions | Total physical calls not established; E1.4/5 causes not solely model |
+| Nov23 original v9 clone | 27.2s, pending mechanically valid | Separate route/contract; no independent semantic acceptance |
+| Nov23 v31 guidance diagnostic | 92.6s failure | Same strict response model, prompt changed |
+
+B4v6 34/64 initially visible,6/9 immediate diagnostic navigation; source-brief 82 extracted across3 failed v30 cases with no new inference (E1.9). No measured owner time/accuracy gain; raw source still available. These demonstrate why optimize useful results per end-to-end user time rather than model token speed or schema completion.
+
+### E2/E3 hypotheses and staged comparison recommendation
+
+1. Baseline E4B plus MiMo 9B as initial cross-family model-only pair, if exact artifact/rights/endpoint/schema/context and local memory preflight allow. MiMo historical v30 accepted artifact motivates but does not establish advantage. Same sources, current v30 contract and comparable budgets; preserve failures, do not weaken validators for model. Then same incumbent model across targeted repair and simpler source-local/original/bilingual architecture arms. Selected feasible interaction pairs, not full 12-model matrix.
+2. Add 12B QAT as third capacity challenger only if staged memory/latency evidence and protocol budget allow; E2B small baseline or dedicated translation comparator when question is task specialization. Same translation/semantic separation and source-first review; native identity where applicable. Do not assume translation necessary for interpretation; test original-first/hybrid with same semantic task/model. No external calls; already-installed embeddings are later AR.5 comparators, Persian relevance not known.
+3. Reasoning-mode contrast only if selected and supported with fixed contract/template and output allowance; explicitly separate reasoning tokens from final response. Native v2/v3 show viable faster JSON generation under other task, not proof reasoning off or shorter prompt causally solves v30. Do not mandate reasoning off for every model or use unsupported native parameters.
+4. Model/architecture interaction, quantization, format/template/context effects and resource feasibility are independent hypotheses; test actual load config, model digest, backend, template/reasoning settings, tokenization and output constraints before freezing trials; no seed-equivalence assumptions across families. Memory preflight and budgets, cold/warm repeat/order, per-source paired outcomes and hard evidence/authority gates. Predeclare thresholds and exact run sizes in E2.3/4; if challenger blocked document reason, smaller design and unresolved model question. No model benchmark now and no new source cohort.
+5. Preserve existing accepted anchors and exposed failures, use source-first review not historical status as labels, no training/holdout leakage. Compare coverage/obligation/alternatives/depth/translation fidelity, partial useful delivery, false claims, failure/retry and actual end-to-end latency, review burden and maintainability. Determine whether specialist routing/critic helps only after baseline; no mandatory RAG/agents/training infrastructure in E3. Resource savings must not sacrifice semantic/contextual fidelity.
+
+**Disposition:** E1.10 read-only investigation complete; candidate shortlist not final selection, no evidence of best model or actual fit, no exact upstream revision/rights/full SHA yet, no independent user benefit. E1.11 synthesize causes/impact/confidence/unknowns; DOC.2 verified architecture maps before E1 closure. E2 frozen design and explicit decisions remain required before new inference. Local API metadata and file inspections only. No production or accepted authority changes.

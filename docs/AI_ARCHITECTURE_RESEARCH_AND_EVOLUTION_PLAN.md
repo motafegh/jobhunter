@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** E1.10 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** E1.11 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -76,7 +76,7 @@ Each ID below denotes a future research question or capability family. **REGISTE
 | ID | Direction | Status / first eligible window |
 | --- | --- | --- |
 | AR.0 | Record and reconcile research strategy | DONE (planning only), this document |
-| AR.1 | Comparative model inventory and resource profile | ROUTED E1.10 (read-only) |
+| AR.1 | Comparative model inventory and resource profile | INVESTIGATED E1.10 (read-only); no qualification/selection |
 | AR.2 | JobHunter AI Lab and benchmark/data foundation | ROUTED E2.3–E2.4 design; E3 bounded runner |
 | AR.3 | Specialized models and task-specific routing | ROUTED E2/E3 model screening; routing later if justified |
 | AR.4 | Original-first / translation / bilingual semantic architecture | ROUTED existing E1.8/E2/E3 |
@@ -291,7 +291,7 @@ Record resource budgets by physical request (retry/truncation included, prefligh
 
 | Window | Eligible work and result | Must not imply |
 | --- | --- | --- |
-| Now (E1.10) | Read-only inventory, historical model/resource/workflow evidence, candidate screening on paper, data gaps | New inference/download/training, selected architecture or RAG/agent implementation |
+| E1.10 (completed investigation) | Read-only inventory, historical model/resource/workflow evidence, candidate screening on paper, data gaps | New inference/download/training, selected architecture or RAG/agent implementation |
 | E1.11 + DOC.2 | Consolidated root causes, unresolved model/architecture hypotheses, verified runtime maps | E1 completion by plan publication |
 | E2 | Select bounded competing architectures and model/task experiment, evaluation/data protocol, decide if RAG/specialist/critic arm justified; explicit owner decision for governing changes | Blanket research deployment or whole portfolio as prerequisite |
 | E3 | Isolated versioned candidates and controlled exposed evaluation; minimal AI Lab runner if justified | Unseen B5 or automatic production acceptance |
@@ -327,6 +327,7 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-08-02 | [Original comprehensive AI proposal](AI_INTELLIGENCE_RAG_CONTINUAL_LEARNING_PROPOSAL.md) | Historical design material; retain unchanged |
 | 2026-11-24–25 | [P1.6 E1.1–E1.9 investigation](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md) and DOC.1 | Evidence and causal findings; not new acceptance |
 | 2026-11-25 | AR.0: owner-approved strategy recorded; E1.10/E2/E3 model evaluation made explicit | DONE planning only; no runtime changes, no models selected, no new inference |
-| Next | AR.1 via E1.10; E1.11 and DOC.2 before E1 closure | OPEN in existing tracker |
+| 2026-11-25 | AR.1 via [E1.10 model/resource audit](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e110-model-resource-and-workflow-evidence) | INVESTIGATED; 14 catalog/headers and historical costs, no model qualification |
+| Next | E1.11 and DOC.2 before E1 closure | OPEN in existing tracker |
 
-**Resume:** [E1.10](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), inventory and reconcile model/resource/workflow evidence. Then E1.11, verified DOC.2 and existing E2 decision path. No change to E0–E5, V9 or DOC status, existing B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
+**Resume:** [E1.11](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), consolidate root causes using completed E1.10 model/resource/workflow evidence; verified DOC.2 before E1 closure, then existing E2 decision path. No change to E0–E5, V9 or DOC status, existing B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.

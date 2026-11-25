@@ -1,0 +1,1168 @@
+{
+  "base_commit": "9ec5fae861636e95feb8e65933c0430524877bba",
+  "catalog": [
+    {
+      "actual_file_sizes_bytes": [
+        16464440224
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35",
+      "artifact_catalog_path": "lmstudio-community/Qwen3.8-27B-UD-Q4_K_M/Qwen3.8-27B-UD-Q4_K_M.gguf",
+      "catalog_bytes": 16464440224,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35",
+        "general.basename": "Qwen3.8-27B",
+        "general.file_type": 15,
+        "general.license": "apache-2.0",
+        "general.name": "Qwen3.8-27B",
+        "general.quantization_version": 2,
+        "general.size_label": "27B",
+        "gguf_version": 3,
+        "metadata_count": 50,
+        "qwen35.attention.head_count": 24,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.block_count": 65,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 5120,
+        "tensor_count": 866,
+        "tokenizer.chat_template_sha256": "12827f24b742ea4e80cdc12dbcf9622227056b9f797252a3149263d4f9aaadce",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "qwen3.8-27b-ud",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "27B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_M"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 15.334
+    },
+    {
+      "actual_file_sizes_bytes": [
+        6202021408
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35",
+      "artifact_catalog_path": "lmstudio-community/MiMo-V2.6-Distill-Qwen-9B-Q4_K_L/MiMo-V2.6-Distill-Qwen-9B-Q4_K_L.gguf",
+      "catalog_bytes": 6202021408,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35",
+        "general.basename": "MiMo-V2.6-Distill-Qwen",
+        "general.file_type": 15,
+        "general.name": "MiMo V2.6 Distill Qwen 9B",
+        "general.quantization_version": 2,
+        "general.size_label": "9B",
+        "gguf_version": 3,
+        "metadata_count": 46,
+        "qwen35.attention.head_count": 16,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.block_count": 32,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 4096,
+        "tensor_count": 427,
+        "tokenizer.chat_template_sha256": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "mimo-v2.6-distill-qwen-9b",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "9B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_L"
+      },
+      "tool_use_metadata": false,
+      "type": "llm",
+      "weight_only_gib": 5.776
+    },
+    {
+      "actual_file_sizes_bytes": [
+        3803452576
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35",
+      "artifact_catalog_path": "lmstudio-community/Bonsai-27B-Q1_0-gguf/Bonsai-27B-Q1_0.gguf",
+      "catalog_bytes": 3803452576,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35",
+        "general.basename": "prism-ml_Bonsai",
+        "general.file_type": 40,
+        "general.name": "Bonsai-27B",
+        "general.quantization_version": 2,
+        "general.size_label": "27B",
+        "gguf_version": 3,
+        "metadata_count": 39,
+        "qwen35.attention.head_count": 24,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.block_count": 64,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 5120,
+        "tensor_count": 851,
+        "tokenizer.chat_template_sha256": "e84f32a23fdda27689f868aa4a1a5621f41133e51a48d7f3efcbea2839574259",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "bonsai-27b",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "27B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 1,
+        "name": "Q1_0"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 3.542
+    },
+    {
+      "actual_file_sizes_bytes": [
+        16756681056
+      ],
+      "advertised_max_context": 131072,
+      "architecture": "muse-glimmer",
+      "artifact_catalog_path": "lmstudio-community/muse-glimmer-30B-kquant-17gb-gguf/muse-glimmer-30B-kquant-17gb.gguf",
+      "catalog_bytes": 16756681056,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "muse-glimmer",
+        "general.file_type": 15,
+        "general.name": "Muse Glimmer Hf",
+        "general.quantization_version": 2,
+        "general.size_label": "28B",
+        "gguf_version": 3,
+        "metadata_count": 32,
+        "muse-glimmer.attention.head_count": 32,
+        "muse-glimmer.attention.head_count_kv": 2,
+        "muse-glimmer.block_count": 52,
+        "muse-glimmer.context_length": 131072,
+        "muse-glimmer.embedding_length": 6656,
+        "tensor_count": 731,
+        "tokenizer.chat_template_sha256": "114f55ebdc1804c1af371197b9fdf2d6bb925966c9dfe46b73782a71bc07965e",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "llama4"
+      },
+      "key": "muse-glimmer-30b-kquant-17gb",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "28B",
+      "publisher": "lmstudio-community",
+      "quantization": null,
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 15.606
+    },
+    {
+      "actual_file_sizes_bytes": [
+        7381384864,
+        175115296
+      ],
+      "advertised_max_context": 131072,
+      "architecture": "gemma4",
+      "artifact_catalog_path": "google/gemma-4-12b",
+      "catalog_bytes": 7556574286,
+      "file_status": "package_size_mismatch",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "gemma4.attention.head_count": 16,
+        "gemma4.block_count": 48,
+        "gemma4.context_length": 131072,
+        "gemma4.embedding_length": 3840,
+        "general.architecture": "gemma4",
+        "general.basename": "google_gemma-4",
+        "general.file_type": 15,
+        "general.name": "Google_Gemma 4 12B It",
+        "general.quantization_version": 2,
+        "general.size_label": "12B",
+        "gguf_version": 3,
+        "metadata_count": 45,
+        "tensor_count": 667,
+        "tokenizer.chat_template_sha256": "031f45711a263bdb0b9642fdba78e2cdf6990d6d965a0873aae05da49682d0ec",
+        "tokenizer.ggml.model": "gemma4"
+      },
+      "key": "google/gemma-4-12b",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "12B",
+      "publisher": "google",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_M"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 7.038
+    },
+    {
+      "actual_file_sizes_bytes": [
+        6975878560
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "gemma4",
+      "artifact_catalog_path": "lmstudio-community/gemma-4-12B-it-QAT-Q4_0/gemma-4-12B-it-QAT-Q4_0.gguf",
+      "catalog_bytes": 6975878560,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "gemma4.attention.head_count": 16,
+        "gemma4.block_count": 48,
+        "gemma4.context_length": 262144,
+        "gemma4.embedding_length": 3840,
+        "general.architecture": "gemma4",
+        "general.basename": "gg-hf-qat_gemma-4",
+        "general.file_type": 2,
+        "general.name": "Gg Hf Qat_Gemma 4 12B It Qat Q4_0 Unquantized",
+        "general.quantization_version": 2,
+        "general.size_label": "12B",
+        "gguf_version": 3,
+        "metadata_count": 45,
+        "tensor_count": 667,
+        "tokenizer.chat_template_sha256": "9abc5d44ba649151b05d8350315cda3040a678482c01bffa242fedf9b1fd5471",
+        "tokenizer.ggml.model": "gemma4"
+      },
+      "key": "gemma-4-12b-it-qat",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "12B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_0"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 6.497
+    },
+    {
+      "actual_file_sizes_bytes": [
+        84106624
+      ],
+      "advertised_max_context": 2048,
+      "architecture": "nomic-bert",
+      "artifact_catalog_path": "nomic-ai/nomic-embed-text-v1.5-GGUF/nomic-embed-text-v1.5.Q4_K_M.gguf",
+      "catalog_bytes": 84106624,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "nomic-bert",
+        "general.file_type": 15,
+        "general.name": "nomic-embed-text-v1.5",
+        "general.quantization_version": 2,
+        "gguf_version": 3,
+        "metadata_count": 23,
+        "nomic-bert.attention.head_count": 12,
+        "nomic-bert.block_count": 12,
+        "nomic-bert.context_length": 2048,
+        "nomic-bert.embedding_length": 768,
+        "tensor_count": 112,
+        "tokenizer.ggml.model": "bert"
+      },
+      "key": "text-embedding-nomic-embed-text-v1.5",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": null,
+      "publisher": "nomic-ai",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_M"
+      },
+      "tool_use_metadata": null,
+      "type": "embedding",
+      "weight_only_gib": 0.078
+    },
+    {
+      "actual_file_sizes_bytes": [
+        669603712
+      ],
+      "advertised_max_context": 512,
+      "architecture": "bert",
+      "artifact_catalog_path": "mixedbread-ai/mxbai-embed-large-v1/mxbai-embed-large-v1-f16.gguf",
+      "catalog_bytes": 669604389,
+      "file_status": "size_mismatch",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "bert.attention.head_count": 16,
+        "bert.block_count": 24,
+        "bert.context_length": 512,
+        "bert.embedding_length": 1024,
+        "general.architecture": "bert",
+        "general.file_type": 1,
+        "general.name": "mxbai-embed-large-v1",
+        "gguf_version": 3,
+        "metadata_count": 23,
+        "tensor_count": 389,
+        "tokenizer.ggml.model": "bert"
+      },
+      "key": "text-embedding-mxbai-embed-large-v1",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "335M",
+      "publisher": "mixedbread-ai",
+      "quantization": {
+        "bits": 16,
+        "name": "F16"
+      },
+      "tool_use_metadata": null,
+      "type": "embedding",
+      "weight_only_gib": 0.624
+    },
+    {
+      "actual_file_sizes_bytes": [
+        5488549600
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35",
+      "artifact_catalog_path": "lmstudio-community/Qwopus3.5-9B-Coder-MTP-Q4_K_S/Qwopus3.5-9B-Coder-MTP-Q4_K_S.gguf",
+      "catalog_bytes": 5488549600,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35",
+        "general.basename": "Qwopus3.5",
+        "general.file_type": 14,
+        "general.name": "Qwopus3.5 9B Coder",
+        "general.quantization_version": 2,
+        "general.size_label": "9B",
+        "gguf_version": 3,
+        "metadata_count": 35,
+        "qwen35.attention.head_count": 16,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.block_count": 33,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 4096,
+        "tensor_count": 442,
+        "tokenizer.chat_template_sha256": "0800c03b537cb0d60244f37ac6d717b06c42c4828a40853b1f9853791f9afdae",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "qwopus3.5-9b-coder-mtp",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "9B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_S"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 5.112
+    },
+    {
+      "actual_file_sizes_bytes": [
+        11522702304
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35moe",
+      "artifact_catalog_path": "lmstudio-community/Qwen3.6-35B-A3B-UD-IQ2_M/Qwen3.6-35B-A3B-UD-IQ2_M.gguf",
+      "catalog_bytes": 11522702304,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35moe",
+        "general.basename": "Qwen3.6-35B-A3B",
+        "general.file_type": 29,
+        "general.license": "apache-2.0",
+        "general.name": "Qwen3.6-35B-A3B",
+        "general.quantization_version": 2,
+        "general.size_label": "35B-A3B",
+        "gguf_version": 3,
+        "metadata_count": 54,
+        "qwen35moe.attention.head_count": 16,
+        "qwen35moe.attention.head_count_kv": 2,
+        "qwen35moe.block_count": 40,
+        "qwen35moe.context_length": 262144,
+        "qwen35moe.embedding_length": 2048,
+        "qwen35moe.expert_count": 256,
+        "qwen35moe.expert_used_count": 8,
+        "tensor_count": 733,
+        "tokenizer.chat_template_sha256": "55d4931433fe502b794226ee7f4d206a6bdd436ac9f80eb7d8ebb4c639f9ea0c",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "qwen3.6-35b-a3b-ud",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "35B-A3B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 2,
+        "name": "IQ2_M"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 10.731
+    },
+    {
+      "actual_file_sizes_bytes": [
+        3427873920
+      ],
+      "advertised_max_context": 131072,
+      "architecture": "gemma4",
+      "artifact_catalog_path": "lmstudio-community/gemma-4-E2B-it-Q4_K_M/gemma-4-E2B-it-Q4_K_M.gguf",
+      "catalog_bytes": 3427873920,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "gemma4.attention.head_count": 8,
+        "gemma4.attention.head_count_kv": 1,
+        "gemma4.block_count": 35,
+        "gemma4.context_length": 131072,
+        "gemma4.embedding_length": 1536,
+        "general.architecture": "gemma4",
+        "general.basename": "Gemma-4-E2B-It",
+        "general.file_type": 15,
+        "general.license": "apache-2.0",
+        "general.name": "Gemma-4-E2B-It",
+        "general.quantization_version": 2,
+        "general.size_label": "4.6B",
+        "gguf_version": 3,
+        "metadata_count": 52,
+        "tensor_count": 601,
+        "tokenizer.chat_template_sha256": "55572b8d3c8342044e25874c73fe5234b661fa0a57a57f6ef75b58e03d7d959a",
+        "tokenizer.ggml.model": "gemma4"
+      },
+      "key": "gemma-4-e2b-it",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "4.6B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_M"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 3.192
+    },
+    {
+      "actual_file_sizes_bytes": [
+        4482402656
+      ],
+      "advertised_max_context": 262144,
+      "architecture": "qwen35",
+      "artifact_catalog_path": "lmstudio-community/Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0/Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0.gguf",
+      "catalog_bytes": 4482402656,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen35",
+        "general.basename": "Qwen3.5",
+        "general.file_type": 7,
+        "general.name": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-BF16",
+        "general.quantization_version": 2,
+        "general.size_label": "4B",
+        "gguf_version": 3,
+        "metadata_count": 33,
+        "qwen35.attention.head_count": 16,
+        "qwen35.attention.head_count_kv": 4,
+        "qwen35.block_count": 32,
+        "qwen35.context_length": 262144,
+        "qwen35.embedding_length": 2560,
+        "tensor_count": 426,
+        "tokenizer.chat_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen35"
+      },
+      "key": "qwen3.5-4b-uncensored-hauhaucs-aggressive",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "4B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 8,
+        "name": "Q8_0"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 4.175
+    },
+    {
+      "actual_file_sizes_bytes": [
+        5101713792
+      ],
+      "advertised_max_context": 131072,
+      "architecture": "gemma4",
+      "artifact_catalog_path": "lmstudio-community/gemma-4-E4B-it-UD-Q4_K_XL/gemma-4-E4B-it-UD-Q4_K_XL.gguf",
+      "catalog_bytes": 5101713792,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "gemma4.attention.head_count": 8,
+        "gemma4.attention.head_count_kv": 2,
+        "gemma4.block_count": 42,
+        "gemma4.context_length": 131072,
+        "gemma4.embedding_length": 2560,
+        "general.architecture": "gemma4",
+        "general.basename": "Gemma-4-E4B-It",
+        "general.file_type": 15,
+        "general.license": "apache-2.0",
+        "general.name": "Gemma-4-E4B-It",
+        "general.quantization_version": 2,
+        "general.size_label": "7.5B",
+        "gguf_version": 3,
+        "metadata_count": 56,
+        "tensor_count": 720,
+        "tokenizer.chat_template_sha256": "55572b8d3c8342044e25874c73fe5234b661fa0a57a57f6ef75b58e03d7d959a",
+        "tokenizer.ggml.model": "gemma4"
+      },
+      "key": "gemma-4-e4b-it-ud",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "7.5B",
+      "publisher": "lmstudio-community",
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_XL"
+      },
+      "tool_use_metadata": true,
+      "type": "llm",
+      "weight_only_gib": 4.751
+    },
+    {
+      "actual_file_sizes_bytes": [
+        3808391680
+      ],
+      "advertised_max_context": 32768,
+      "architecture": "qwen2",
+      "artifact_catalog_path": "tensorblock/Qwen2.5-Coder-7B-Instruct-GGUF/Qwen2.5-Coder-7B-Instruct-Q3_K_M.gguf",
+      "catalog_bytes": 3808391680,
+      "file_status": "exact_path_size_match",
+      "format": "gguf",
+      "gguf_header_metadata": {
+        "general.architecture": "qwen2",
+        "general.basename": "Qwen-Qwen2.5-Coder",
+        "general.file_type": 12,
+        "general.license": "apache-2.0",
+        "general.name": "Qwen Qwen2.5 Coder 7B Instruct",
+        "general.quantization_version": 2,
+        "general.size_label": "7B",
+        "gguf_version": 3,
+        "metadata_count": 34,
+        "qwen2.attention.head_count": 28,
+        "qwen2.attention.head_count_kv": 4,
+        "qwen2.block_count": 28,
+        "qwen2.context_length": 32768,
+        "qwen2.embedding_length": 3584,
+        "tensor_count": 339,
+        "tokenizer.chat_template_sha256": "cd8e9439f0570856fd70470bf8889ebd8b5d1107207f67a5efb46e342330527f",
+        "tokenizer.ggml.model": "gpt2",
+        "tokenizer.ggml.pre": "qwen2"
+      },
+      "key": "qwen2.5-coder-7b-instruct",
+      "license_revision_hash_template": "not_verified",
+      "parameters_reported": "7B",
+      "publisher": "tensorblock",
+      "quantization": {
+        "bits": 3,
+        "name": "Q3_K_M"
+      },
+      "tool_use_metadata": false,
+      "type": "llm",
+      "weight_only_gib": 3.547
+    }
+  ],
+  "hardware": {
+    "cpu": "i7-12700H, 20 visible logical CPUs",
+    "driver": "621.24",
+    "free_vram_mib": 6605,
+    "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "total_vram_mib": 8192,
+    "used_vram_mib": 1414,
+    "wsl_memory_kib": {
+      "MemAvailable": 51445800,
+      "MemTotal": 53458744,
+      "SwapFree": 16777216,
+      "SwapTotal": 16777216
+    }
+  },
+  "historical": {
+    "b3_translation": {
+      "completion_tokens": 24496,
+      "physical_calls": 64,
+      "prompt_tokens": 18462
+    },
+    "b5_budgeted_translation": {
+      "elapsed_seconds": 60.8,
+      "partial": 1,
+      "physical_calls": 5,
+      "selected_items": 10,
+      "supported": 9
+    },
+    "logical_attempt_totals_by_model": {
+      "gemma-4-e2b-it": {
+        "completed": 25,
+        "failed": 16,
+        "reused": 4
+      },
+      "gemma-4-e4b-it-ud": {
+        "completed": 34,
+        "failed": 51,
+        "reused": 4
+      },
+      "mimo-v2.6-distill-qwen-9b": {
+        "failed": 1
+      },
+      "qwen3.5-27b-claude-4.6-opus-reasoning-distilled.i1": {
+        "failed": 1
+      },
+      "qwen3.6-35b-a3b-ud": {
+        "failed": 1
+      }
+    },
+    "logical_attempts_by_model_prompt": [
+      {
+        "count": 5,
+        "model": "gemma-4-e2b-it",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v1"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v1"
+      },
+      {
+        "count": 17,
+        "model": "gemma-4-e2b-it",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v2"
+      },
+      {
+        "count": 4,
+        "model": "gemma-4-e2b-it",
+        "outcome": "reused",
+        "prompt": "job-analysis-english-v2"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v3"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v4"
+      },
+      {
+        "count": 3,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v5"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "outcome": "completed",
+        "prompt": "job-analysis-prompt-v1"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-prompt-v1"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-prompt-v2"
+      },
+      {
+        "count": 6,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-prompt-v3"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e2b-it",
+        "outcome": "failed",
+        "prompt": "job-analysis-prompt-v4"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v10"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v11"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v12"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v13"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v13"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v14"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v14"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "reused",
+        "prompt": "job-analysis-english-v14"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v15"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v15"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v16"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v16"
+      },
+      {
+        "count": 3,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v17"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v18"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v19"
+      },
+      {
+        "count": 13,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v20"
+      },
+      {
+        "count": 18,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v20"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "reused",
+        "prompt": "job-analysis-english-v20"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v21"
+      },
+      {
+        "count": 11,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v23"
+      },
+      {
+        "count": 15,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v23"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v30"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v5"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v5"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v6"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v7"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v8"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "completed",
+        "prompt": "job-analysis-english-v9"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v9"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "outcome": "reused",
+        "prompt": "job-analysis-english-v9"
+      },
+      {
+        "count": 1,
+        "model": "mimo-v2.6-distill-qwen-9b",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v28"
+      },
+      {
+        "count": 1,
+        "model": "qwen3.5-27b-claude-4.6-opus-reasoning-distilled.i1",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v5"
+      },
+      {
+        "count": 1,
+        "model": "qwen3.6-35b-a3b-ud",
+        "outcome": "failed",
+        "prompt": "job-analysis-english-v5"
+      }
+    ],
+    "native_e4b": {
+      "corrective_v3": {
+        "cases": 4,
+        "complete_json": 4,
+        "elapsed_seconds": [
+          4.202,
+          9.073,
+          5.685,
+          5.33
+        ],
+        "median_seconds": 5.5075,
+        "output_tokens_total": 1627,
+        "reasoning_tokens_total": 0
+      },
+      "native_v2": {
+        "cases": 4,
+        "complete_json": 4,
+        "elapsed_seconds": [
+          4.139,
+          9.133,
+          5.453,
+          4.928
+        ],
+        "median_seconds": 5.1905,
+        "output_tokens_total": 1602,
+        "reasoning_tokens_total": 0
+      }
+    },
+    "native_legacy_v1": {
+      "output_cap": 760,
+      "reasoning_tokens_each": 757,
+      "responses": 4,
+      "usable": 0
+    },
+    "nov23_v30": {
+      "elapsed_seconds": [
+        111.1,
+        76.0,
+        71.5
+      ],
+      "failed_logical": 3,
+      "physical_total": "not_established",
+      "retained_failure_completions": 6,
+      "valid_artifacts": 0
+    },
+    "nov23_v31_guidance_failure_seconds": 92.6,
+    "nov23_v9_pending_clone_seconds": 27.2,
+    "other_artifact_counts": {
+      "job_capability_intelligence_artifacts": {
+        "gemma-4-e2b-it": 15
+      },
+      "job_translation_artifacts": {
+        "gemma-4-e2b-it": 49
+      },
+      "job_work_intelligence_artifacts": {
+        "gemma-4-e2b-it": 6,
+        "gemma-4-e4b-it-ud": 5,
+        "gemma-4-e4b-it-ud | authority-review=gemma-4-12b-it-qat": 1,
+        "jobhunter-deterministic-limited-work-v2": 1
+      }
+    },
+    "retained_accepted_usage_subset": {
+      "gemma-4-e4b-it-ud / job-analysis-english-v14": {
+        "artifacts": 1,
+        "completion_tokens_reported_sum": 2189,
+        "missing_usage_rows": 0,
+        "prompt_tokens_reported_sum": 3711,
+        "retained_partitions": 1,
+        "usage_rows": 1
+      },
+      "gemma-4-e4b-it-ud / job-analysis-english-v20": {
+        "artifacts": 5,
+        "completion_tokens_reported_sum": 21375,
+        "missing_usage_rows": 0,
+        "prompt_tokens_reported_sum": 62340,
+        "retained_partitions": 10,
+        "usage_rows": 10
+      },
+      "gemma-4-e4b-it-ud / job-analysis-english-v23": {
+        "artifacts": 4,
+        "completion_tokens_reported_sum": 35887,
+        "missing_usage_rows": 0,
+        "prompt_tokens_reported_sum": 117777,
+        "retained_partitions": 11,
+        "usage_rows": 11
+      },
+      "mimo-v2.6-distill-qwen-9b / job-analysis-english-v28": {
+        "artifacts": 1,
+        "completion_tokens_reported_sum": 4054,
+        "missing_usage_rows": 0,
+        "prompt_tokens_reported_sum": 33343,
+        "retained_partitions": 4,
+        "usage_rows": 4
+      },
+      "mimo-v2.6-distill-qwen-9b / job-analysis-english-v30": {
+        "artifacts": 1,
+        "completion_tokens_reported_sum": 1931,
+        "missing_usage_rows": 0,
+        "prompt_tokens_reported_sum": 7275,
+        "retained_partitions": 1,
+        "usage_rows": 1
+      }
+    },
+    "retained_artifacts_by_model_prompt_review": [
+      {
+        "count": 5,
+        "model": "gemma-4-e2b-it",
+        "prompt": "job-analysis-english-v1",
+        "review": "accepted"
+      },
+      {
+        "count": 17,
+        "model": "gemma-4-e2b-it",
+        "prompt": "job-analysis-english-v2",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "prompt": "job-analysis-english-v3",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "prompt": "job-analysis-english-v4",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e2b-it",
+        "prompt": "job-analysis-prompt-v1",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v10",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v13",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v14",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v15",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v16",
+        "review": "accepted"
+      },
+      {
+        "count": 5,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v20",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v20",
+        "review": "rejected"
+      },
+      {
+        "count": 4,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v23",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v5",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v6",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v8",
+        "review": "accepted"
+      },
+      {
+        "count": 2,
+        "model": "gemma-4-e4b-it-ud",
+        "prompt": "job-analysis-english-v9",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "mimo-v2.6-distill-qwen-9b",
+        "prompt": "job-analysis-english-v28",
+        "review": "accepted"
+      },
+      {
+        "count": 1,
+        "model": "mimo-v2.6-distill-qwen-9b",
+        "prompt": "job-analysis-english-v30",
+        "review": "accepted"
+      }
+    ],
+    "snapshot_sha256": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c"
+  },
+  "limitations": [
+    "Local catalog and exact file sizes are not cryptographic identity or verified upstream revision/license/template.",
+    "No model load, actual context allocation, peak memory, throughput, comparative quality or training fit measured today.",
+    "Historical logical attempts, retained artifacts and saved response usage have different denominators and incomplete physical-call telemetry.",
+    "Same exposed source/prompt/model comparison absent; reasoning, endpoint, model, version, data and runtime differ.",
+    "GGUF header metadata and embedded chat-template hashes are metadata only: no full weight digests, upstream license verification or effective runtime template proof. Package aliases and two size discrepancies must be resolved before frozen trial."
+  ],
+  "local_augmented_receipt_sha256": "a9f7ebc91c825e1137871462ba079d3a42c15b5332213e34d1bc0fef29358c77",
+  "model_loads": 0,
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "runtime": {
+    "api_catalog_count": 14,
+    "app_build_last_recorded": "2",
+    "app_version_last_recorded": "0.4.28",
+    "default_context": {
+      "type": "custom",
+      "value": 4096
+    },
+    "lms_cli_commit": "CLI commit: 43d4b26",
+    "loaded_instances_count": 0,
+    "selected_backend": "llama.cpp-win-x86_64-nvidia-cuda12-avx2@2.83.0       \u2713            GGUF"
+  },
+  "settings": {
+    "jobhunter.toml": {
+      "analysis": "gemma-4-e4b-it-ud",
+      "analysis_max_tokens": 8192,
+      "blueprint": "gemma-4-12b-it-qat",
+      "capability": "gemma-4-e2b-it",
+      "inference_max_retries": 1,
+      "inference_timeout_seconds": 30.0,
+      "translation": "gemma-4-e2b-it",
+      "translation_max_retries": 1,
+      "translation_max_tokens": 4096,
+      "translation_timeout_seconds": 30.0
+    },
+    "local.toml": {
+      "analysis": "gemma-4-e4b-it-ud",
+      "analysis_max_tokens": 8192,
+      "blueprint": "gemma-4-12b-it-qat",
+      "capability": "gemma-4-e2b-it",
+      "inference_max_retries": 1,
+      "inference_timeout_seconds": 30.0,
+      "translation": "gemma-4-e2b-it",
+      "translation_max_retries": 1,
+      "translation_max_tokens": 4096,
+      "translation_timeout_seconds": 30.0
+    },
+    "nov23_isolated": {
+      "analysis": "gemma-4-e4b-it-ud",
+      "analysis_max_tokens": 8192,
+      "blueprint": "gemma-4-12b-it-qat",
+      "capability": "gemma-4-e2b-it",
+      "inference_max_retries": 0,
+      "inference_timeout_seconds": 75.0,
+      "translation": "gemma-4-e2b-it",
+      "translation_max_retries": 0,
+      "translation_max_tokens": 4096,
+      "translation_timeout_seconds": 75.0
+    }
+  }
+}
