@@ -1,5 +1,7 @@
 # Evidence-Backed Semantic Analysis
 
+**2026-11-25 verified P1.6 baseline:** Read the [DOC.2 runtime walkthrough and maps](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) for resolved call/method ownership, current source/English/original/candidate routes, nested V15/V16 recovery, failure/review/currentness and accepted-only boundaries. New original v9 artifacts are pending, not auto-accepted. Earlier dated runtime descriptions remain historical where superseded. [E1 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) records limitations; no new production architecture selected.
+
 **Status:** English P1.6 v30/v5 promoted/current; accepted-only v20/v21/v23/v28 v5 compatibility
 **Last reconciled:** 2026-10-15
 **Date:** 2026-08-21

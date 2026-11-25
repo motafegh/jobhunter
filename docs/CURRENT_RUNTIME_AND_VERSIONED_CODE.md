@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**2026-11-25 verified P1.6 baseline:** Read the [DOC.2 runtime walkthrough and maps](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) for resolved call/method ownership, current source/English/original/candidate routes, nested V15/V16 recovery, failure/review/currentness and accepted-only boundaries. New original v9 artifacts are pending, not auto-accepted. Earlier dated runtime descriptions remain historical where superseded. [E1 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) records limitations; no new production architecture selected.
+
 **Status:** Current / supporting engineering reference  
 **Date:** 2026-09-02
 **Last reconciled:** 2026-10-15
@@ -38,10 +40,10 @@ Original-language:    job-analysis-original-v9 / job-analysis-v4
 ```text
 analysis_current.py
 ├── English  → analysis_runtime_v30 / analysis_service_v30
-└── Original → analysis_runtime / analysis_service (accepted v9/v4 path)
+└── Original → analysis_runtime / analysis_service (v9/v4; new pending, historical accepted retained)
 ```
 
-The public English v30 path reuses the v29→v24 service/provider lineage, the v23 partition/persistence helpers, and earlier transitive components. Accepted v20/v21/v23/v28 v5 artifacts are compatibility-current only when accepted and exact source/translation dependencies match; their historical identity remains visible.
+The public English v30 path reuses deep service/provider/schema lineages: see the verified DOC.2 map above (effective V16→V15 recovery, V27→V25→V23→V21→V20 planning/engine, v30→v24→v20 completion, V28 persistence). Accepted v20/v21/v23/v28 v5 artifacts are compatibility-current only when accepted and exact source/translation dependencies match; their historical identity remains visible.
 
 The retained PR4 audit below describes the earlier v20 checkpoint. It is historical dependency evidence, not a complete current import inventory or removal proof:
 

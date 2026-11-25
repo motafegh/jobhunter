@@ -1,7 +1,7 @@
 # P1.6 Stage B — Source-grounded bilingual job understanding
 ## Authoritative focused implementation plan and acceptance gates
 
-**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.10 and DOC.1 completed; next E1.11 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.11 and DOC.1-DOC.2 completed (investigation only); next E2.1 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
 
 **Date:** 2026-11-13
 **Disposition:** Original prospective fourth B5 frozen-source failure retained; new calibrated source-gate re-score detects two flawed evaluation hard-stop criteria while preserving material B2v4 category defects; B2v6 is EXPOSED-only candidate. No independent B5 acceptance, B6 production authorization or v30/v9 changes.

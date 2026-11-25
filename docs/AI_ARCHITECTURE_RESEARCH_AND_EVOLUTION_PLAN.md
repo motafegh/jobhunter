@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** E1.11 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** E2.1 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -292,7 +292,7 @@ Record resource budgets by physical request (retry/truncation included, prefligh
 | Window | Eligible work and result | Must not imply |
 | --- | --- | --- |
 | E1.10 (completed investigation) | Read-only inventory, historical model/resource/workflow evidence, candidate screening on paper, data gaps | New inference/download/training, selected architecture or RAG/agent implementation |
-| E1.11 + DOC.2 | Consolidated root causes, unresolved model/architecture hypotheses, verified runtime maps | E1 completion by plan publication |
+| E1.11 + DOC.2 (completed) | Consolidated root causes, unresolved model/architecture hypotheses, verified runtime maps | E1 completion by plan publication |
 | E2 | Select bounded competing architectures and model/task experiment, evaluation/data protocol, decide if RAG/specialist/critic arm justified; explicit owner decision for governing changes | Blanket research deployment or whole portfolio as prerequisite |
 | E3 | Isolated versioned candidates and controlled exposed evaluation; minimal AI Lab runner if justified | Unseen B5 or automatic production acceptance |
 | E4 / B5 | Genuine owner/context-isolated usefulness, frozen independent prospective source/meaning/translation protocol | Reuse exposed sources as unseen or auto-acquire another set after failure |
@@ -328,6 +328,7 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-24–25 | [P1.6 E1.1–E1.9 investigation](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md) and DOC.1 | Evidence and causal findings; not new acceptance |
 | 2026-11-25 | AR.0: owner-approved strategy recorded; E1.10/E2/E3 model evaluation made explicit | DONE planning only; no runtime changes, no models selected, no new inference |
 | 2026-11-25 | AR.1 via [E1.10 model/resource audit](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e110-model-resource-and-workflow-evidence) | INVESTIGATED; 14 catalog/headers and historical costs, no model qualification |
-| Next | E1.11 and DOC.2 before E1 closure | OPEN in existing tracker |
+| 2026-11-25 | [E1.11 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) and [DOC.2 runtime baseline](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) | E1 closed as investigation only |
+| Next | E2.1 architecture alternatives | OPEN in existing tracker |
 
-**Resume:** [E1.11](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), consolidate root causes using completed E1.10 model/resource/workflow evidence; verified DOC.2 before E1 closure, then existing E2 decision path. No change to E0–E5, V9 or DOC status, existing B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
+**Resume:** [E2.1](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), compare architecture alternatives from E1.11 and DOC.2. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
