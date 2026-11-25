@@ -1,0 +1,63 @@
+{
+  "base_commit": "8025bf71fea090624dfff835a2e9c904d5cd8c4e",
+  "focused_regressions": {
+    "batches": [
+      97,
+      60
+    ],
+    "full_suite": false,
+    "passed": 157
+  },
+  "historical_replays": {
+    "B4": "PASS_ENGINEERING_BOUNDARIES_SEMANTIC_GATE_OPEN",
+    "B4v5": "PASS_EXPOSED_SOURCE_QUALIFIED_PRESENTATION_NO_SEMANTIC_PROMOTION",
+    "B4v6": "PASS_EXPOSED_COMPACT_PRESENTATION_ENGINEERING_NOT_USER_BENEFIT"
+  },
+  "limits": [
+    "Exposed source inventory not full source coverage, not semantic acceptance.",
+    "Synthetic filter tests do not establish observed live model errors.",
+    "No independent usefulness or new promotion."
+  ],
+  "local_receipt_sha256": "dc3761c7a78b4f0c6a8caffe4d2c2192b789a53b9216a0f2c1badb056ad4775a",
+  "new_model_calls": 0,
+  "new_source_requests": 0,
+  "source_brief_cases": [
+    {
+      "candidate_only": true,
+      "case": "backend",
+      "drilldown_items": 34,
+      "duty_candidates": 15,
+      "extracted_items": 49,
+      "initial_visible": 15,
+      "native_v30_artifacts": 0,
+      "native_v30_failed_attempts": 1
+    },
+    {
+      "candidate_only": true,
+      "case": "ai_speech",
+      "drilldown_items": 5,
+      "duty_candidates": 6,
+      "extracted_items": 15,
+      "initial_visible": 10,
+      "native_v30_artifacts": 0,
+      "native_v30_failed_attempts": 1
+    },
+    {
+      "candidate_only": true,
+      "case": "security_reporting",
+      "drilldown_items": 8,
+      "duty_candidates": 6,
+      "extracted_items": 18,
+      "initial_visible": 10,
+      "native_v30_artifacts": 0,
+      "native_v30_failed_attempts": 1
+    }
+  ],
+  "synthetic_controls": {
+    "category_invalid_fragment_quarantined": true,
+    "false_mandatory_with_valid_ref_passes_candidate_filter": true,
+    "full_candidate_can_contain_unresolved": true,
+    "unknown_role_summary_ref_blocks_filter": true,
+    "untranslated_duty_omitted_from_b4_source_only_brief_original_retained": true
+  }
+}
