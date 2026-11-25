@@ -1,0 +1,129 @@
+{
+  "B3": {
+    "excluded_items": 14,
+    "historical_corrective_requests": 1,
+    "historical_physical_completion_attempts": 64,
+    "historical_primary_requests": 63,
+    "nested_leaves_without_separate_target_spans": 12,
+    "primary_states": {
+      "native_identity": 1,
+      "source_bound_translation_candidate": 63
+    },
+    "selected_correction_hash_verified": true,
+    "selected_items": 64,
+    "semantic_review": "existing_exposed_assistant_review_not_independent",
+    "source_hashes_verified": 64,
+    "target_hashes_verified": 64
+  },
+  "base_commit": "4158a5dd96998c3ab075b36ad1f88a810c4c6212",
+  "limitations": [
+    "No controlled paired original-language vs English analysis experiment; versions differ.",
+    "Whole-field provenance not item-level alignment.",
+    "B3 selected subset, not full source or independent semantic certification.",
+    "No live cost or accuracy estimate."
+  ],
+  "new_model_calls": 0,
+  "new_source_requests": 0,
+  "original_v9_artifacts": [
+    {
+      "cohort": "A1",
+      "model": "gemma-4-e4b-it-ud",
+      "prior_source_review": "material_semantic_defects",
+      "stored_review_state": "accepted",
+      "translation_dependency": null
+    },
+    {
+      "cohort": "Nov23",
+      "model": "gemma-4-e4b-it-ud",
+      "prior_source_review": "material_semantic_defects",
+      "stored_review_state": "accepted",
+      "translation_dependency": null
+    }
+  ],
+  "projection_pairs": [
+    {
+      "cohort": "A1",
+      "description_provenance": "translated",
+      "integrity_clean": true,
+      "native_segments": 4,
+      "original_description_chars": 1790,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 2215,
+      "translated_segments": 13,
+      "unique_translatable_strings": 12
+    },
+    {
+      "cohort": "A1",
+      "description_provenance": "translated",
+      "integrity_clean": true,
+      "native_segments": 2,
+      "original_description_chars": 1830,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 2151,
+      "translated_segments": 22,
+      "unique_translatable_strings": 22
+    },
+    {
+      "cohort": "A1",
+      "description_provenance": "translated",
+      "integrity_clean": true,
+      "native_segments": 4,
+      "original_description_chars": 1274,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 1755,
+      "translated_segments": 12,
+      "unique_translatable_strings": 12
+    },
+    {
+      "cohort": "A1",
+      "description_provenance": "translated",
+      "integrity_clean": true,
+      "native_segments": 3,
+      "original_description_chars": 804,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 1113,
+      "translated_segments": 13,
+      "unique_translatable_strings": 12
+    },
+    {
+      "cohort": "Nov23",
+      "description_provenance": "native",
+      "integrity_clean": true,
+      "native_segments": 6,
+      "original_description_chars": 4575,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 4575,
+      "translated_segments": 10,
+      "unique_translatable_strings": 10
+    },
+    {
+      "cohort": "Nov23",
+      "description_provenance": "native",
+      "integrity_clean": true,
+      "native_segments": 7,
+      "original_description_chars": 1536,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 1536,
+      "translated_segments": 10,
+      "unique_translatable_strings": 10
+    },
+    {
+      "cohort": "Nov23",
+      "description_provenance": "translated",
+      "integrity_clean": true,
+      "native_segments": 2,
+      "original_description_chars": 1047,
+      "source_and_projection_hash_verified": true,
+      "target_description_chars": 1465,
+      "translated_segments": 14,
+      "unique_translatable_strings": 14
+    }
+  ],
+  "scope": "seven_exposed_source_projection_pairs_plus_existing_B3_and_synthetic",
+  "synthetic_integrity_controls": {
+    "B3_lexical_warning_on_negative_to_required": true,
+    "faithful_passes": true,
+    "false_mandatory_and_name_drift_passes": true,
+    "isolated_phrase_has_no_heading_strength": true
+  }
+}
