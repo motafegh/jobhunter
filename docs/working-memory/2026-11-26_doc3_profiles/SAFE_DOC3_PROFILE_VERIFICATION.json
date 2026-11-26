@@ -1,0 +1,407 @@
+{
+  "checklist": {
+    "done": 22,
+    "next": "DOC.4",
+    "total": 45
+  },
+  "doc2_static_fingerprints_verified": {
+    "src/jobhunter/analysis_current.py": {
+      "sha256": "38da2369c4bd828003d192119a9f4fbc9010805e98c7e52cb1fd59ba02c225e2",
+      "symbols": {
+        "JobAnalysisService.analyze_english_job": 56,
+        "JobAnalysisService.analyze_original_job": 61,
+        "build_job_analysis_service": 147
+      }
+    },
+    "src/jobhunter/analysis_failure_diagnostics.py": {
+      "sha256": "6db4a2be7506c57f2d1d50c14bad711bc94a217b20fe46af4a1f59afcfb5e3c8",
+      "symbols": {
+        "AnalysisFailureDiagnosticStore.record_failure": 221
+      }
+    },
+    "src/jobhunter/analysis_item_review.py": {
+      "sha256": "882025a81f221a7dd9b07014ef8e0c2df5aff31ef61a77562945fa24e648b505",
+      "symbols": {
+        "AnalysisItemReviewStore.begin": 166,
+        "AnalysisItemReviewStore.complete": 320,
+        "AnalysisItemReviewStore.review_gap": 251,
+        "AnalysisItemReviewStore.review_item": 199
+      }
+    },
+    "src/jobhunter/analysis_persistence_v23.py": {
+      "sha256": "f607304847236d8300840aeea4b7965a1dc58a589541beedda818169ee3e4c7b",
+      "symbols": {
+        "persisted_analysis_v23": 58
+      }
+    },
+    "src/jobhunter/analysis_runtime.py": {
+      "sha256": "77cfe2c223959f7c1ebd9ee83b913db3dc2ffa095bdcb9129c8e0a3201683e65",
+      "symbols": {
+        "RuntimeManagedAnalysisProvider.complete_structured": 45,
+        "build_job_analysis_service": 112
+      }
+    },
+    "src/jobhunter/analysis_runtime_v20.py": {
+      "sha256": "18aadbe0654c19a0231e150c9c9802125ef71b40382c83235e154c4a19cdcb05",
+      "symbols": {
+        "V20CandidateAnalysisProvider._run_once": 327,
+        "_assert_partition_scope": 185,
+        "_merge_partition_structured": 251,
+        "_v20_complete_requirement_plan": 104,
+        "_v20_deterministic_structured_skills": 45
+      }
+    },
+    "src/jobhunter/analysis_runtime_v23.py": {
+      "sha256": "f67e574b4f54db5e42207479286a4e0601f60aea50f6d072ce26db6543a7d131",
+      "symbols": {
+        "_filter_unassigned_partition_claims": 85
+      }
+    },
+    "src/jobhunter/analysis_service.py": {
+      "sha256": "d1f28ffda1d7fbddf41d5921653ff39952cbe4d69f372ed53f664c9d9913ef41",
+      "symbols": {
+        "JobAnalysisService._analyze_job": 595,
+        "_persisted_analysis": 457,
+        "_validate_evidence": 309
+      }
+    },
+    "src/jobhunter/analysis_store.py": {
+      "sha256": "73e76a7454524210ffb0af6117d2bf90a4eb4f466d4a46e4303e18022fc81bd9",
+      "symbols": {
+        "AnalysisStore.find_artifact": 250,
+        "AnalysisStore.latest_current": 407,
+        "AnalysisStore.list_current": 480,
+        "AnalysisStore.record_artifact": 329,
+        "AnalysisStore.record_attempt": 370,
+        "AnalysisStore.review_current": 588
+      }
+    },
+    "src/jobhunter/app_entrypoint.py": {
+      "sha256": "b5d8991519b22e7fd4da31b127dd2ae10d39ae6f32431c6c17501d7c9c36dbc7",
+      "symbols": {
+        "_synchronize_public_corpus": 90,
+        "main": 105
+      }
+    },
+    "src/jobhunter/canonical_registry_review.py": {
+      "sha256": "9fbbd327aac21acc3f67b15acaf730f9f0e34de19203f67cfd703547c15c8a41",
+      "symbols": {
+        "CanonicalRegistryReviewReader._is_current_translation_dependency": 268,
+        "CanonicalRegistryReviewReader._mapping_is_current": 250,
+        "CanonicalRegistryReviewReader.list_current_claims": 160
+      }
+    },
+    "src/jobhunter/capability_service_v8.py": {
+      "sha256": "486f2d5b8afdeccba38e60999a1c20a33362289dc2877a79d6e9d25909ca4fe6",
+      "symbols": {
+        "CapabilityIntelligenceServiceV8._current_dependencies": 222
+      }
+    },
+    "src/jobhunter/entrypoint.py": {
+      "sha256": "b085ec26a8e8e4e6b2279db9f1f4811fd663ee33fe9368be6c7c0d501a2df1cc",
+      "symbols": {
+        "_review_job_analysis": 510,
+        "_run_job_analysis": 449
+      }
+    },
+    "src/jobhunter/inference/instructor_lm_studio_v20.py": {
+      "sha256": "55eec7c0d4e221a0d0cab2a2ad7c9e92916f3d3671fe82e6c7fc9153c42a08a1",
+      "symbols": {
+        "_complete_analysis_partition_with_instructor": 372
+      }
+    },
+    "src/jobhunter/inference/instructor_lm_studio_v23.py": {
+      "sha256": "e5863aa02998c70b1b5d9622fc96ab64d8496e77c85a4723768e4ce874a1c7f4",
+      "symbols": {
+        "AnalysisRequirementV23.preserve_source_alternatives": 73
+      }
+    },
+    "src/jobhunter/inference/instructor_lm_studio_v24.py": {
+      "sha256": "8e10b89f2eaaca43a80303226babe45346cf0c9c51024e9a8adff7ee18df7df3",
+      "symbols": {
+        "complete_analysis_partition_with_instructor_v24": 15
+      }
+    },
+    "src/jobhunter/inference/lm_studio_runtime.py": {
+      "sha256": "bef19de7f8e20dd4a30acd0305be5118de6623f1b36e316bb68539acd9541f3c",
+      "symbols": {
+        "ensure_lm_studio_model_context": 49
+      }
+    },
+    "src/jobhunter/jobinja_detail_service.py": {
+      "sha256": "3a3a27acc4349013bb367ba5e63c45044de63c5b33bfcc9a01b7780aac19eded",
+      "symbols": {
+        "JobinjaDetailService.fetch": 74,
+        "_semantic_sha256": 205
+      }
+    },
+    "src/jobhunter/public_corpus.py": {
+      "sha256": "c082139cd0d40113285cb8055b40f9824d4cb357fa8ff097829bcea417099ae3",
+      "symbols": {
+        "automatic_corpus_destination": 40,
+        "export_public_corpus": 434
+      }
+    },
+    "src/jobhunter/source_bound_translation_b3.py": {
+      "sha256": "e432cdb6dd5130e5bdf73e359fa71f608e736ac9fe6910289a661243d2626609",
+      "symbols": {
+        "make_b1_source_bound_alignment": 232,
+        "select_b3_items": 100
+      }
+    },
+    "src/jobhunter/source_brief_cli.py": {
+      "sha256": "9013206b3213adbd06080a0049121370d8234307ea4d59c8274f3fb7f33c7ab6",
+      "symbols": {
+        "source_brief": 40
+      }
+    },
+    "src/jobhunter/source_item_candidate_b2_v7_dom.py": {
+      "sha256": "29a6f60a2ac215ce52d55f2e0f8500569310bc861ecc529aded4e3b9b7eb37f7",
+      "symbols": {
+        "interpret_original_source_candidate_v7": 224
+      }
+    },
+    "src/jobhunter/source_job_understanding_b4.py": {
+      "sha256": "f19780e1c22968e86139761e694c33e1c3f74768cd3cfc9598cfc1fcc6942ff0",
+      "symbols": {
+        "build_b4_evidence_bundle": 130,
+        "build_b4_model_payload": 399,
+        "build_coverage_ledger": 621,
+        "build_source_only_brief": 594,
+        "filter_b4_model_fragments": 545,
+        "finalize_b4_case": 686,
+        "validate_b4_model_response": 464
+      }
+    },
+    "src/jobhunter/source_qualified_b4v5.py": {
+      "sha256": "1e614b969bc0c8e4b096cde8213b534393a344df7ad9d4efcf445743936bc312",
+      "symbols": {
+        "project_source_qualified_case": 151
+      }
+    },
+    "src/jobhunter/source_qualified_b4v6.py": {
+      "sha256": "1c01e2f337469a093c9bb0661ab26229c20baf3b3b5e72c62a4da63efeda367b",
+      "symbols": {
+        "build_compact_decision_view": 98
+      }
+    },
+    "src/jobhunter/source_span_identity.py": {
+      "sha256": "356eb096f0b43c4de17c6a139b9c37f98a22480be8a7f114b57cbd4edda6cf86",
+      "symbols": {
+        "bind_original_source_span": 78,
+        "verify_original_source_anchor": 130
+      }
+    },
+    "src/jobhunter/translation/projection.py": {
+      "sha256": "e034cb2ac096f73936593f3bb0740b9e6af109ecd0f566e893ad8b43046b4ff9",
+      "symbols": {
+        "build_english_projection": 172,
+        "collect_translatable_texts": 82
+      }
+    },
+    "src/jobhunter/translation_service.py": {
+      "sha256": "ae81cccd0610ef4275399796325d462c7401f56d69f219ea54465614c4a46f93",
+      "symbols": {
+        "TranslationService._translate_source": 126,
+        "TranslationService.current_artifact": 237
+      }
+    },
+    "src/jobhunter/translation_store.py": {
+      "sha256": "dc991ba0ed2ebeebcd47c5bb87cdb5982e946ac9ae14b7a5875aa8d4ee455655",
+      "symbols": {
+        "TranslationStore.latest_source_version": 115,
+        "TranslationStore.record_artifact": 328
+      }
+    },
+    "src/jobhunter/web/app.py": {
+      "sha256": "2d6f625e42baa5f2d6c054bf73020bb7947d3a2c46df9f1576cefb5b944550f2",
+      "symbols": {
+        "_analysis_service": 116
+      }
+    },
+    "src/jobhunter/work_intelligence_service.py": {
+      "sha256": "903376bf546c6b711e338382229e34f245173e69f6226caab708c44896db5c7d",
+      "symbols": {
+        "WorkIntelligenceService._current_p16": 377
+      }
+    }
+  },
+  "document_sha256": {
+    "docs/COMPONENT_PROFILE_STANDARD.md": "f433eae0d4745960366664502957d2df00841966a020fab3feb1f0bfd8dc2f89",
+    "docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md": "9356d4e6787b7dd4959c70d2b8fbfe62fe4320b7775f674c9725a3e44e870a10"
+  },
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_analysis_current.py tests/test_analysis_runtime.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_v30_prior_experience.py tests/test_analysis_v30_currentness.py tests/test_source_brief_cli.py tests/test_source_span_identity.py tests/test_p16_stage_b1_contract_design.py tests/test_analysis_item_review.py tests/test_analysis_semantic_review.py tests/test_capability_v9_boundary.py",
+    "passed": 112
+  },
+  "limitations": [
+    "Curated static fingerprints and method resolution, not a dynamic call graph or full dependency proof.",
+    "Three worked profiles, not full-system coverage or semantic verification.",
+    "Mermaid source reviewed; rendering not tested."
+  ],
+  "mro": {
+    "AnalysisRequirementV30": [
+      "AnalysisRequirementV30",
+      "AnalysisRequirementV29",
+      "AnalysisRequirementV27",
+      "AnalysisRequirementV25",
+      "AnalysisRequirementV23",
+      "AnalysisRequirementV22",
+      "AnalysisRequirementV21",
+      "AnalysisRequirementV20",
+      "AnalysisRequirementV19",
+      "AnalysisRequirementV14",
+      "AnalysisRequirement",
+      "_StrictModel",
+      "BaseModel",
+      "object"
+    ],
+    "JobAnalysisResponseV30": [
+      "JobAnalysisResponseV30",
+      "JobAnalysisResponseV29",
+      "JobAnalysisResponseV27",
+      "JobAnalysisResponseV25",
+      "JobAnalysisResponseV23",
+      "JobAnalysisResponseV22",
+      "JobAnalysisResponseV21",
+      "JobAnalysisResponseV20",
+      "JobAnalysisResponseV19",
+      "JobAnalysisResponseV17",
+      "JobAnalysisResponseV14",
+      "JobAnalysisResponse",
+      "_StrictModel",
+      "BaseModel",
+      "object"
+    ],
+    "JobAnalysisServiceV30": [
+      "JobAnalysisServiceV30",
+      "JobAnalysisServiceV29",
+      "JobAnalysisServiceV28",
+      "JobAnalysisServiceV27",
+      "JobAnalysisServiceV26",
+      "JobAnalysisServiceV25",
+      "JobAnalysisServiceV24",
+      "JobAnalysisServiceV23",
+      "JobAnalysisServiceV22",
+      "JobAnalysisServiceV21",
+      "JobAnalysisServiceV20",
+      "object"
+    ],
+    "V30CandidateAnalysisProvider": [
+      "V30CandidateAnalysisProvider",
+      "V29CandidateAnalysisProvider",
+      "V28CandidateAnalysisProvider",
+      "V27CandidateAnalysisProvider",
+      "V26CandidateAnalysisProvider",
+      "V25CandidateAnalysisProvider",
+      "V24CandidateAnalysisProvider",
+      "V23CandidateAnalysisProvider",
+      "V21CandidateAnalysisProvider",
+      "V20CandidateAnalysisProvider",
+      "V19CandidateAnalysisProvider",
+      "V18CandidateAnalysisProvider",
+      "V17CandidateAnalysisProvider",
+      "V16CandidateAnalysisProvider",
+      "V15CandidateAnalysisProvider",
+      "V14CandidateAnalysisProvider",
+      "object"
+    ]
+  },
+  "new_model_calls": 0,
+  "new_source_requests": 0,
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 45859825925
+  },
+  "production_changes": 0,
+  "profiles": [
+    "P16-EN",
+    "P16-BRIEF",
+    "P16-REVIEW"
+  ],
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "resolved_method_owners": {
+    "JobAnalysisServiceV30._persist_analysis": {
+      "file": "src/jobhunter/analysis_service_v28.py",
+      "line": 25,
+      "owner": "JobAnalysisServiceV28._persist_analysis",
+      "sha256": "8229f899b0aae322d9d55dc8a0193b00ca4839d85404b2c86eecdfbf74d54ee4"
+    },
+    "JobAnalysisServiceV30._record_failed_attempt": {
+      "file": "src/jobhunter/analysis_service_v21.py",
+      "line": 86,
+      "owner": "JobAnalysisServiceV21._record_failed_attempt",
+      "sha256": "6214cfb3234e4285e06c6a19ceb831635a036301a1ab58c91f3920fa903c0947"
+    },
+    "JobAnalysisServiceV30.analyze_english_job": {
+      "file": "src/jobhunter/analysis_service_v21.py",
+      "line": 110,
+      "owner": "JobAnalysisServiceV21.analyze_english_job",
+      "sha256": "6214cfb3234e4285e06c6a19ceb831635a036301a1ab58c91f3920fa903c0947"
+    },
+    "V30CandidateAnalysisProvider._complete_partition": {
+      "file": "src/jobhunter/analysis_runtime_v30.py",
+      "line": 19,
+      "owner": "V30CandidateAnalysisProvider._complete_partition",
+      "sha256": "79cceb4b13b375cbabb7ef90b283dc40b4a611d02407d0b6c9b871f8f04f772b"
+    },
+    "V30CandidateAnalysisProvider._persistable_structured": {
+      "file": "src/jobhunter/analysis_runtime_v23.py",
+      "line": 73,
+      "owner": "V23CandidateAnalysisProvider._persistable_structured",
+      "sha256": "f67e574b4f54db5e42207479286a4e0601f60aea50f6d072ce26db6543a7d131"
+    },
+    "V30CandidateAnalysisProvider._requirement_coverage_plan": {
+      "file": "src/jobhunter/analysis_runtime_v26.py",
+      "line": 21,
+      "owner": "V26CandidateAnalysisProvider._requirement_coverage_plan",
+      "sha256": "095d0e6d6e7494c1bd44497f6deb97bc8dfc67692743bf03019005b6a45e44d7"
+    },
+    "V30CandidateAnalysisProvider._requirement_partitions": {
+      "file": "src/jobhunter/analysis_runtime_v25.py",
+      "line": 130,
+      "owner": "V25CandidateAnalysisProvider._requirement_partitions",
+      "sha256": "51281293ab1f05f40a76014d5293bb9cc42bcc2a657e30361b584e39e6b77c4f"
+    },
+    "V30CandidateAnalysisProvider._responsibility_coverage_plan": {
+      "file": "src/jobhunter/analysis_runtime_v21.py",
+      "line": 107,
+      "owner": "V21CandidateAnalysisProvider._responsibility_coverage_plan",
+      "sha256": "fc08ddaf15b474e936c948547e58cab2ad0f600742f2806e9a2339b94229e677"
+    },
+    "V30CandidateAnalysisProvider._run_once": {
+      "file": "src/jobhunter/analysis_runtime_v27.py",
+      "line": 26,
+      "owner": "V27CandidateAnalysisProvider._run_once",
+      "sha256": "df24069ffb563a515d9cf30d392318be54588ddc1eb300f1cf80c106f3493f46"
+    },
+    "V30CandidateAnalysisProvider.complete_structured": {
+      "file": "src/jobhunter/analysis_runtime_v16.py",
+      "line": 62,
+      "owner": "V16CandidateAnalysisProvider.complete_structured",
+      "sha256": "68964da52184b9d1545e88e7ded122faf3b713773aeccc0f3872f9ad04f50d4c"
+    }
+  },
+  "revision": "cebbf3750c426567257e25a2558a14e88835d427"
+}

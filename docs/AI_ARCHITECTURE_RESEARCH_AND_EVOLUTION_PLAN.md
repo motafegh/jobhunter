@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** DOC.3, DOC.4, DOC.7 and DOC.5 before E2.6 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** DOC.4, DOC.7 and DOC.5 before E2.6 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -334,6 +334,7 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-26 | [E2.1–E2.4 architecture, protocol and scoring design](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md) | DONE design only; model/architecture decision pending |
 | 2026-11-26 | [Model discovery and qualification register](working-memory/2026-11-26_AI_MODEL_DISCOVERY_AND_QUALIFICATION_REGISTER.md) | REGISTERED; owner plans downloads, no actual qualification or extra calls |
 | 2026-11-26 | [E2.5 selected experimental scope](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md#2026-11-26-continuation--e25-bounded-experimental-design-selection) | DONE design only; 47 cells and rubric unchanged; new model/translation/retrieval screens deferred |
-| Next | DOC.3/4/7/5 before E2.6 | OPEN in existing tracker |
+| 2026-11-26 | [DOC.3 component profile standard](COMPONENT_PROFILE_STANDARD.md) and [P1.6 profiles](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md) | DONE documentation pilot; no runtime changes |
+| Next | DOC.4/7/5 before E2.6 | OPEN in existing tracker |
 
-**Resume:** [DOC.3/4/7/5 then E2.6](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), document selected experiments and freeze requirements; E2.5 selected existing bounded protocol, no winning architecture or model. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
+**Resume:** [DOC.4/7/5 then E2.6](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), document selected experiments and freeze requirements; E2.5 selected existing bounded protocol, no winning architecture or model. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
