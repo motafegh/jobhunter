@@ -1,0 +1,122 @@
+{
+  "A1_repairs": [
+    {
+      "id": "R1",
+      "negative": "borrowed/deleted explicit degree and OR loss",
+      "scope": "compound alternative child and modifier"
+    },
+    {
+      "id": "R2",
+      "negative": "false proficiency and erased genuine degree",
+      "scope": "motivation versus technical degree"
+    },
+    {
+      "id": "R3",
+      "negative": "genuine missing duty still rejected",
+      "scope": "explicit duty boundary and ambiguous scope"
+    },
+    {
+      "id": "R4",
+      "negative": "preferred prose plus tag, board-only, explicit required prose, duplicate/distinct",
+      "scope": "board skill metadata distinct from employer obligation"
+    }
+  ],
+  "A2": {
+    "candidate_only": true,
+    "components": [
+      "source packet",
+      "context planner and model call",
+      "candidate reconciliation",
+      "partial decision view",
+      "AI Lab run and receipt",
+      "source-first evaluator"
+    ],
+    "new_persistence": "private immutable files/JSONL initially",
+    "optional_semantic_dimensions": true,
+    "proposed_versions": [
+      "p16-e3-a1-repair-v1",
+      "p16-e3-a2-semantic-v1",
+      "p16-e3-a2-context-v1",
+      "p16-e3-candidate-envelope-v1",
+      "p16-e3-lab-receipt-v1"
+    ],
+    "required_statement_fields": [
+      "ref",
+      "meaning",
+      "evidence",
+      "basis"
+    ],
+    "system_owned_evidence_and_status": true
+  },
+  "base": "fa7ba6a67da051930186b12d998b98f4945f3e56",
+  "contract": "jobhunter-p16-e2-experiment-selection-v1",
+  "deferred": [
+    "L1 specialized translation / Hy-MT3",
+    "new model screening tranche",
+    "larger/low-bit reasoning",
+    "retrieval/RAG/graph",
+    "agents/critic",
+    "training/continual learning",
+    "prompt-only arm",
+    "new production route or schema"
+  ],
+  "gates": [
+    "DOC prerequisites and E2.6 requirements freeze",
+    "E3 isolated guards tested before probes",
+    "offline A1/A2 tests and actual version seals",
+    "source-only reference/tasks and full scorer sealed before diagnostic output",
+    "rights/runtime/context/memory/dispatch preflight",
+    "E2.4 strict paired evaluation",
+    "E4/B5 and explicit B6 owner decision before durable promotion"
+  ],
+  "new_calls": 0,
+  "next_order": [
+    "DOC.3",
+    "DOC.4",
+    "DOC.7",
+    "DOC.5",
+    "E2.6",
+    "E3.1",
+    "E3.2",
+    "E3.3",
+    "E3.4",
+    "E3.5",
+    "E3.6"
+  ],
+  "owner_scope": "existing approved exposed research plan; no expansion or production/governing contract changes",
+  "prior_artifacts_sha256": {
+    "EVALUATION_RUBRIC_DRAFT.json": "9a0b0d48b6da3bfbd74fad062e6a2ee23821a8477d67e377d55a6c76208fcd62",
+    "EXPERIMENT_PROTOCOL_DRAFT.json": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+    "MODEL_ARTIFACT_IDENTITIES.json": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+    "SCORING_DESIGN_CONTROLS.json": "ca28e2ee3f7eb04e65f4a4348665f73c08067a19a66530b4303946c2fee09a7f",
+    "SEMANTIC_CONTRACT_EXAMPLES.json": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4"
+  },
+  "rollback": "stop dispatch, confirm server idle, preserve isolated receipts, restore experiment-owned state only; no production migration or accepted-row mutation; future additive migration and restore rehearsal separately authorized",
+  "selected": {
+    "budget_unchanged": true,
+    "cell_count": 47,
+    "language": [
+      "L0",
+      "L2",
+      "L3"
+    ],
+    "models": {
+      "M0": "gemma-4-e4b-it-ud",
+      "M1": "mimo-v2.6-distill-qwen-9b",
+      "M2": "gemma-4-e2b-it only documented preflight blocker before results"
+    },
+    "rubric_unchanged": true,
+    "semantic_architectures": [
+      "A0 unchanged v30/v5",
+      "A1 isolated four-repair family",
+      "A2 contextual candidate"
+    ],
+    "stage_additional_cells": {
+      "architecture": 22,
+      "conditional_interaction": 5,
+      "language": 10,
+      "model": 10
+    }
+  },
+  "state": "selected experimental design only; no winning model/architecture or execution authorization"
+}
