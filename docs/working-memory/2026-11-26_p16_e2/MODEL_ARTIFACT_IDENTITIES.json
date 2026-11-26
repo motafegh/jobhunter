@@ -1,0 +1,69 @@
+{
+  "artifacts": [
+    {
+      "artifact_catalog_path": "lmstudio-community/gemma-4-E4B-it-UD-Q4_K_XL/gemma-4-E4B-it-UD-Q4_K_XL.gguf",
+      "bytes": 5101713792,
+      "header_template_sha256": "55572b8d3c8342044e25874c73fe5234b661fa0a57a57f6ef75b58e03d7d959a",
+      "key": "gemma-4-e4b-it-ud",
+      "license_header": "apache-2.0",
+      "local_license_or_card_files": [],
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_XL"
+      },
+      "role": "M0",
+      "sha256": "e8cd1a4c5162dfa355c567b4099206793793b5548951f077f376a0076dc0a058",
+      "viability": "candidate; load/context/rights preflight required"
+    },
+    {
+      "artifact_catalog_path": "lmstudio-community/MiMo-V2.6-Distill-Qwen-9B-Q4_K_L/MiMo-V2.6-Distill-Qwen-9B-Q4_K_L.gguf",
+      "bytes": 6202021408,
+      "header_template_sha256": "59a64ebb4df6d1489d09a91267cf3ceb106162d4a893c4f84833cfb8c897ff63",
+      "key": "mimo-v2.6-distill-qwen-9b",
+      "license_header": null,
+      "local_license_or_card_files": [],
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_L"
+      },
+      "role": "M1",
+      "sha256": "db6b5e7b5d25525da87f4a3899555215693e8cf4ab1be9fff90ea5dee4ba957d",
+      "viability": "candidate; load/context/rights preflight required"
+    },
+    {
+      "artifact_catalog_path": "lmstudio-community/gemma-4-E2B-it-Q4_K_M/gemma-4-E2B-it-Q4_K_M.gguf",
+      "bytes": 3427873920,
+      "header_template_sha256": "55572b8d3c8342044e25874c73fe5234b661fa0a57a57f6ef75b58e03d7d959a",
+      "key": "gemma-4-e2b-it",
+      "license_header": "apache-2.0",
+      "local_license_or_card_files": [],
+      "quantization": {
+        "bits": 4,
+        "name": "Q4_K_M"
+      },
+      "role": "M2",
+      "sha256": "95182e70dd6694a797a3d832547e0dd1e19be3f45f03ecdcee0283276b660028",
+      "viability": "candidate; load/context/rights preflight required"
+    }
+  ],
+  "private_receipt_sha256": "c6f15538528a94e324ce06f0d9299ec856eca6ca15ee7b7d971989548f95d671",
+  "public_license_reconnaissance": {
+    "M0": {
+      "candidate_quantization_repository": "https://huggingface.co/unsloth/gemma-4-E4B-it-GGUF",
+      "declared": "Apache-2.0",
+      "url": "https://huggingface.co/google/gemma-4-E4B-it"
+    },
+    "M1": {
+      "candidate_quantization_repository": "https://huggingface.co/bartowski/MiMo-V2.6-Distill-Qwen-9B-GGUF",
+      "declared": "MIT",
+      "url": "https://huggingface.co/XiaomiMiMo/MiMo-V2.6-Distill-Qwen-9B"
+    },
+    "M2": {
+      "declared": "Apache-2.0",
+      "url": "https://huggingface.co/google/gemma-4-E2B-it"
+    },
+    "date": "2026-11-26",
+    "limitation": "Base model card declarations, not exact local quantization lineage/use-rights verification. E3 gate."
+  },
+  "status": "local exact bytes verified; no live preflight"
+}

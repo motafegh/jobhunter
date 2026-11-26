@@ -1,0 +1,748 @@
+{
+  "base": "e015d4d6839f85bd0dc62e32698f4abfdc30a00c",
+  "budget": {
+    "active_seconds_per_session_cap": 3600,
+    "active_total_seconds_cap": 14400,
+    "all_control_http_cap": 800,
+    "all_generation_post_cap": 382,
+    "control_cap_per_cell_or_preflight_model": 16,
+    "diagnostic_cell_count": 47,
+    "diagnostic_cells_per_session_cap": 12,
+    "diagnostic_context_reservation_cap": 6160384,
+    "diagnostic_generation_post_cap": 376,
+    "diagnostic_output_reservation_cap": 3080192,
+    "diagnostic_wall_seconds_cap": 11280,
+    "generation_post_cap_per_cell": 8,
+    "max_context_reservations_per_cell": 131072,
+    "max_output_reservations_per_cell": 65536,
+    "max_swap_growth_mib": 512,
+    "memory_poll_target_seconds": 1,
+    "minimum_free_vram_mib": 512,
+    "minimum_windows_available_gib": 8,
+    "minimum_wsl_available_gib": 8,
+    "preflight_context_tokens": 16384,
+    "preflight_model_cap": 3,
+    "preflight_output_cap_per_post": 512,
+    "preflight_posts_per_model": 2,
+    "preflight_seconds_per_model": 180,
+    "requested_context_tokens": 16384,
+    "requested_output_tokens_per_call": 8192,
+    "wall_seconds_per_cell": 240
+  },
+  "cases": [
+    {
+      "alias": "D1",
+      "description_chars": 4575,
+      "english_chars": 4575,
+      "exposure": "previously_exposed",
+      "native_description_identity": true,
+      "retained_id": "tdIF",
+      "snapshot": "nov23",
+      "use": "comparative"
+    },
+    {
+      "alias": "D2",
+      "description_chars": 1536,
+      "english_chars": 1536,
+      "exposure": "previously_exposed",
+      "native_description_identity": true,
+      "retained_id": "td0u",
+      "snapshot": "nov23",
+      "use": "comparative"
+    },
+    {
+      "alias": "D3",
+      "description_chars": 1047,
+      "english_chars": 1465,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "td0r",
+      "snapshot": "nov23",
+      "use": "comparative"
+    },
+    {
+      "alias": "D4",
+      "description_chars": 1790,
+      "english_chars": 2215,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tNhZ",
+      "snapshot": "exposed",
+      "use": "comparative"
+    },
+    {
+      "alias": "D5",
+      "description_chars": 1830,
+      "english_chars": 2151,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tMps",
+      "snapshot": "exposed",
+      "use": "comparative"
+    },
+    {
+      "alias": "D6",
+      "description_chars": 1274,
+      "english_chars": 1755,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tNDx",
+      "snapshot": "exposed",
+      "use": "comparative"
+    },
+    {
+      "alias": "D7",
+      "description_chars": 804,
+      "english_chars": 1113,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tMjm",
+      "snapshot": "exposed",
+      "use": "comparative"
+    },
+    {
+      "alias": "R1",
+      "description_chars": 2110,
+      "english_chars": 2110,
+      "exposure": "previously_exposed",
+      "native_description_identity": true,
+      "retained_id": "tG9K",
+      "snapshot": "accepted",
+      "use": "comparative"
+    },
+    {
+      "alias": "R2",
+      "description_chars": 344,
+      "english_chars": 436,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "t4jp",
+      "snapshot": "accepted",
+      "use": "comparative"
+    },
+    {
+      "alias": "R3",
+      "description_chars": 709,
+      "english_chars": 861,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tmBK",
+      "snapshot": "accepted",
+      "use": "offline_compatibility_only"
+    },
+    {
+      "alias": "R4",
+      "description_chars": 1016,
+      "english_chars": 1210,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "t4qV",
+      "snapshot": "accepted",
+      "use": "offline_compatibility_only"
+    },
+    {
+      "alias": "R5",
+      "description_chars": 1257,
+      "english_chars": 1550,
+      "exposure": "previously_exposed",
+      "native_description_identity": false,
+      "retained_id": "tmyX",
+      "snapshot": "accepted",
+      "use": "offline_compatibility_only"
+    }
+  ],
+  "cells": [
+    {
+      "architecture": "A0",
+      "case": "D1",
+      "cell_id": "D1-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 1,
+      "stage": "1a"
+    },
+    {
+      "architecture": "A0",
+      "case": "D2",
+      "cell_id": "D2-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 2,
+      "stage": "1a"
+    },
+    {
+      "architecture": "A0",
+      "case": "D3",
+      "cell_id": "D3-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 3,
+      "stage": "1a"
+    },
+    {
+      "architecture": "A0",
+      "case": "D7",
+      "cell_id": "D7-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 4,
+      "stage": "1a"
+    },
+    {
+      "architecture": "A0",
+      "case": "R1",
+      "cell_id": "R1-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 5,
+      "stage": "1a"
+    },
+    {
+      "architecture": "A0",
+      "case": "R1",
+      "cell_id": "R1-challenger-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 6,
+      "stage": "1b"
+    },
+    {
+      "architecture": "A0",
+      "case": "D7",
+      "cell_id": "D7-challenger-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 7,
+      "stage": "1b"
+    },
+    {
+      "architecture": "A0",
+      "case": "D3",
+      "cell_id": "D3-challenger-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 8,
+      "stage": "1b"
+    },
+    {
+      "architecture": "A0",
+      "case": "D2",
+      "cell_id": "D2-challenger-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 9,
+      "stage": "1b"
+    },
+    {
+      "architecture": "A0",
+      "case": "D1",
+      "cell_id": "D1-challenger-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 10,
+      "stage": "1b"
+    },
+    {
+      "architecture": "A0",
+      "case": "D4",
+      "cell_id": "D4-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 11,
+      "stage": "2a"
+    },
+    {
+      "architecture": "A0",
+      "case": "D5",
+      "cell_id": "D5-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 12,
+      "stage": "2a"
+    },
+    {
+      "architecture": "A0",
+      "case": "D6",
+      "cell_id": "D6-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 13,
+      "stage": "2a"
+    },
+    {
+      "architecture": "A0",
+      "case": "R2",
+      "cell_id": "R2-M0-A0-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 14,
+      "stage": "2a"
+    },
+    {
+      "architecture": "A1",
+      "case": "R2",
+      "cell_id": "R2-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 15,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "R1",
+      "cell_id": "R1-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 16,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D7",
+      "cell_id": "D7-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 17,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D6",
+      "cell_id": "D6-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 18,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D5",
+      "cell_id": "D5-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 19,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D4",
+      "cell_id": "D4-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 20,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D3",
+      "cell_id": "D3-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 21,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D2",
+      "cell_id": "D2-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 22,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A1",
+      "case": "D1",
+      "cell_id": "D1-M0-A1-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 23,
+      "stage": "2b"
+    },
+    {
+      "architecture": "A2",
+      "case": "D1",
+      "cell_id": "D1-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 24,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D2",
+      "cell_id": "D2-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 25,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D3",
+      "cell_id": "D3-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 26,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D4",
+      "cell_id": "D4-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 27,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D5",
+      "cell_id": "D5-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 28,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D6",
+      "cell_id": "D6-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 29,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "D7",
+      "cell_id": "D7-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 30,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "R1",
+      "cell_id": "R1-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 31,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "R2",
+      "cell_id": "R2-M0-A2-L0",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "M0",
+      "ordinal": 32,
+      "stage": "2c"
+    },
+    {
+      "architecture": "A2",
+      "case": "R1",
+      "cell_id": "R1-challenger-A2-L0",
+      "conditional_interaction": true,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 33,
+      "stage": "3"
+    },
+    {
+      "architecture": "A2",
+      "case": "D7",
+      "cell_id": "D7-challenger-A2-L0",
+      "conditional_interaction": true,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 34,
+      "stage": "3"
+    },
+    {
+      "architecture": "A2",
+      "case": "D3",
+      "cell_id": "D3-challenger-A2-L0",
+      "conditional_interaction": true,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 35,
+      "stage": "3"
+    },
+    {
+      "architecture": "A2",
+      "case": "D2",
+      "cell_id": "D2-challenger-A2-L0",
+      "conditional_interaction": true,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 36,
+      "stage": "3"
+    },
+    {
+      "architecture": "A2",
+      "case": "D1",
+      "cell_id": "D1-challenger-A2-L0",
+      "conditional_interaction": true,
+      "initial_status": "not_attempted",
+      "language": "L0",
+      "model_role": "challenger",
+      "ordinal": 37,
+      "stage": "3"
+    },
+    {
+      "architecture": "A2",
+      "case": "D2",
+      "cell_id": "D2-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 38,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D3",
+      "cell_id": "D3-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 39,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D4",
+      "cell_id": "D4-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 40,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D5",
+      "cell_id": "D5-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 41,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D6",
+      "cell_id": "D6-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 42,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D7",
+      "cell_id": "D7-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 43,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "R2",
+      "cell_id": "R2-M0-A2-L2",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L2",
+      "model_role": "M0",
+      "ordinal": 44,
+      "stage": "4a"
+    },
+    {
+      "architecture": "A2",
+      "case": "D6",
+      "cell_id": "D6-M0-A2-L3",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L3",
+      "model_role": "M0",
+      "ordinal": 45,
+      "stage": "4b"
+    },
+    {
+      "architecture": "A2",
+      "case": "D5",
+      "cell_id": "D5-M0-A2-L3",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L3",
+      "model_role": "M0",
+      "ordinal": 46,
+      "stage": "4b"
+    },
+    {
+      "architecture": "A2",
+      "case": "D3",
+      "cell_id": "D3-M0-A2-L3",
+      "conditional_interaction": false,
+      "initial_status": "not_attempted",
+      "language": "L3",
+      "model_role": "M0",
+      "ordinal": 47,
+      "stage": "4b"
+    }
+  ],
+  "challenger_policy": "M1 default; M2 substitute only documented technical/rights preflight blocker before diagnostic outputs; else narrower amended M0 protocol",
+  "contract": "jobhunter-p16-e2-comparative-protocol-draft-v1",
+  "fixed_decode": {
+    "A0_A1": "existing temp0 and actual base seed+partition offset; unchanged runtime settings",
+    "A2": "temp0 base seed17; deterministic per-unit mapping sealed before generation",
+    "reasoning": "same supported effective mode where feasible; record differences; no hidden override"
+  },
+  "language": {
+    "L0": "frozen v2",
+    "L1": "deferred; no new translation calls",
+    "L2": "original",
+    "L3": "original plus labeled frozen v2 field-only aid"
+  },
+  "model_identity_receipt_sha256": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+  "model_roles": {
+    "M0": "gemma-4-e4b-it-ud",
+    "M1": "mimo-v2.6-distill-qwen-9b",
+    "M2": "gemma-4-e2b-it"
+  },
+  "no_new_model_calls": true,
+  "private_source_manifest_sha256": "45161b2cdb22d3ca74e93612ba4ce71da9af3fddca9412fca191666b69d85c37",
+  "review": "original-source-only seal before new outputs; exposed, no independence claim; E2.4 exact rubric and thresholds pending",
+  "sets": {
+    "core": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "R1",
+      "R2"
+    ],
+    "hybrid": [
+      "D3",
+      "D5",
+      "D6"
+    ],
+    "language": [
+      "D2",
+      "D3",
+      "D4",
+      "D5",
+      "D6",
+      "D7",
+      "R2"
+    ],
+    "offline_only": [
+      "R3",
+      "R4",
+      "R5"
+    ],
+    "screen": [
+      "D1",
+      "D2",
+      "D3",
+      "D7",
+      "R1"
+    ]
+  },
+  "snapshot_hashes": {
+    "accepted": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c",
+    "exposed": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+    "nov23": "136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68"
+  },
+  "status": "design preregistration only; execution prohibited until E2.4/E2.5/E2.6 and E3 implementation/preflight seals",
+  "stop_rules": [
+    "hard evidence/currentness/authority/privacy breach stops affected experiment",
+    "preflight failure no hidden fallback; record blocker",
+    "any cap hit stop dispatch and record remaining cells",
+    "no next cell until server idle/cancellation verified",
+    "no new cohort or extra scored repeat",
+    "no change after output without new run ID"
+  ]
+}

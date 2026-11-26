@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** E2.3 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** E2.4 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -331,4 +331,4 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-25 | [E1.11 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) and [DOC.2 runtime baseline](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) | E1 closed as investigation only |
 | Next | E2.1 architecture alternatives | OPEN in existing tracker |
 
-**Resume:** [E2.3](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), design bounded comparative experiments using completed E2.1/E2.2. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
+**Resume:** [E2.4](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), define scoring and acceptance thresholds for completed E2.1–E2.3 design. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.

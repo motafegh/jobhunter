@@ -1,0 +1,68 @@
+{
+  "base": "e015d4d6839f85bd0dc62e32698f4abfdc30a00c",
+  "checklist": {
+    "done": 19,
+    "next": "E2.4",
+    "total": 45
+  },
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_source_span_identity.py tests/test_p16_stage_b1_contract_design.py tests/test_source_bound_translation_budget_b5.py tests/test_source_bound_translation_batch_b5.py tests/test_analysis_v30_currentness.py tests/test_analysis_item_review.py tests/test_analysis_semantic_review.py tests/test_capability_v9_boundary.py",
+    "passed": 113
+  },
+  "helpers": [
+    "data/local-acceptance/p16-evolution-e1-2026-11-24/freeze_e2_3_inputs.py",
+    "data/local-acceptance/p16-evolution-e1-2026-11-24/verify_e2_3_protocol.py"
+  ],
+  "limitations": [
+    "Protocol proposed and machine checked, not implemented/run.",
+    "Exact upstream quantization lineage, local rights and actual runtime viability not established; preflight required.",
+    "Existing B5 transport tests do not prove new E3 enforcement.",
+    "All cases exposed; no independent semantic accuracy, utility or model superiority.",
+    "Budgets are chosen design ceilings, not measured latency."
+  ],
+  "model_identities_sha256": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+  "new_inference_calls": 0,
+  "new_model_loads": 0,
+  "new_source_requests": 0,
+  "previous_ci": {
+    "conclusion": "success",
+    "head_sha": "e015d4d6839f85bd0dc62e32698f4abfdc30a00c",
+    "id": 45817475794
+  },
+  "private_source_selection_sha256": "45161b2cdb22d3ca74e93612ba4ce71da9af3fddca9412fca191666b69d85c37",
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "protocol_sha256": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+  "record_sha256": "d7feb8dbce184b264a21b50e5e8abaad83a1ef3b63baab33fa209db3329d5e5e",
+  "verified": {
+    "model_file_bytes_total": 14731609120,
+    "models_full_sha256": 3,
+    "paired_subsets_and_budget_arithmetic": "pass",
+    "source_versions": 12,
+    "unchanged_snapshots_integrity_fk": 3,
+    "unique_description_hashes": 12,
+    "unique_planned_cells": 47,
+    "v2_projection_hashes": 12
+  }
+}
