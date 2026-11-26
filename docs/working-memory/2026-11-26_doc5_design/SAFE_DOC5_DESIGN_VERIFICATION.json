@@ -1,0 +1,94 @@
+{
+  "checklist": {
+    "done": 25,
+    "next": "E2.6",
+    "total": 45
+  },
+  "design_consistency": {
+    "authored_statements": 10,
+    "budget_unchanged": true,
+    "conditional_interaction": 5,
+    "core": 9,
+    "design_controls": 12,
+    "fixture_refs_resolved": true,
+    "maximum_control_http": 800,
+    "maximum_generation_posts": 382,
+    "offline_only": 3,
+    "proposed_diagrams": 3,
+    "required_statement_fields": [
+      "ref",
+      "meaning",
+      "evidence",
+      "basis"
+    ],
+    "stages": {
+      "1a": 5,
+      "1b": 5,
+      "2a": 4,
+      "2b": 9,
+      "2c": 9,
+      "3": 5,
+      "4a": 7,
+      "4b": 3
+    },
+    "unique_ordered_cells": 47
+  },
+  "design_document_sha256": "1ee476a48168647a23464909cc8fb56f6754ab5692d870f6d9d27e9bb107daf5",
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_inspect_p16_architecture.py tests/test_source_span_identity.py tests/test_p16_stage_b1_contract_design.py tests/test_analysis_v20_candidate.py tests/test_analysis_v16_candidate.py tests/test_analysis_v30_currentness.py tests/test_source_bound_translation_budget_b5.py tests/test_source_qualified_b4v6.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py",
+    "passed": 139
+  },
+  "limitations": [
+    "Selected proposed architecture only; actual code/interfaces/guard/scorer/model feasibility unestablished.",
+    "Diagrams checked as source, no rendering verification.",
+    "Existing regression tests and authored fixture consistency not semantic evaluation.",
+    "No new authority or execution authorization."
+  ],
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "previous_ci": {
+    "conclusion": "success",
+    "head_sha": "6f2214d9d0cd538c43c18c016d62847f415cd162",
+    "id": 45873047605
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "revision": "6f2214d9d0cd538c43c18c016d62847f415cd162",
+  "runtime_comparison": {
+    "all_matched": true,
+    "files": 31,
+    "method_owners": 10,
+    "mros": 4,
+    "symbols": 65
+  },
+  "source_tree_unchanged_since": "e015d4d6839f85bd0dc62e32698f4abfdc30a00c",
+  "unchanged_prior_design_artifacts": {
+    "EVALUATION_RUBRIC_DRAFT.json": "9a0b0d48b6da3bfbd74fad062e6a2ee23821a8477d67e377d55a6c76208fcd62",
+    "EXPERIMENT_PROTOCOL_DRAFT.json": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+    "EXPERIMENT_SELECTION.json": "bb3ac3a7e41c804762557de61d69db1fb5a919c3bffe12490b65ef6901b9407f",
+    "MODEL_ARTIFACT_IDENTITIES.json": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+    "SCORING_DESIGN_CONTROLS.json": "ca28e2ee3f7eb04e65f4a4348665f73c08067a19a66530b4303946c2fee09a7f",
+    "SEMANTIC_CONTRACT_EXAMPLES.json": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4"
+  }
+}

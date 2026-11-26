@@ -1,5 +1,7 @@
 # Evidence-Backed Semantic Analysis
 
+**Selected experimental design (DOC.5; proposed only):** [Implementation-facing maps and profiles](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC5_SELECTED_DESIGN.md) document isolated A0/A1/A2 and language comparisons. No production route or accepted authority changed; use current maps below for as-built behavior. E2.6 freeze and E3 guards/verification precede model experiments.
+
 **Component profiles (DOC.3):** [Reusable profile standard](COMPONENT_PROFILE_STANDARD.md) and [verified P1.6 examples](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md) provide responsibility-oriented entrypoints, model/deterministic boundaries, persistence, failure, review/currentness and tests. Read alongside DOC.2; no selected research architecture is presented as implemented.
 
 **2026-11-25 verified P1.6 baseline:** Read the [DOC.2 runtime walkthrough and maps](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) for resolved call/method ownership, current source/English/original/candidate routes, nested V15/V16 recovery, failure/review/currentness and accepted-only boundaries. New original v9 artifacts are pending, not auto-accepted. Earlier dated runtime descriptions remain historical where superseded. [E1 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) records limitations; no new production architecture selected.

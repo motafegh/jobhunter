@@ -51,6 +51,6 @@ Keep primary living references at existing stable paths; dated profile receipts 
 - [P1.6 current English analysis orchestration and execution](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md#p16-english-analysis) — model/deterministic boundaries, inherited owners, source/projection reuse, candidate persistence and failure.
 - [P1.6 source brief](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md#p16-source-brief) — contrasting deterministic, read-only candidate route.
 - [Review and consumer boundary](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md#p16-review-and-consumers) — separate authority profile.
-- [Selected research design](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md) remains proposed. DOC.5 documents it separately before E3.
+- [Selected research design](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md) remains proposed; [DOC.5 implementation-facing profiles](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC5_SELECTED_DESIGN.md) document it separately before E3. Reconcile as-built after implementation.
 
 The standard covers this P1.6 pilot; whole-system profile completeness is not established. Use the tracker for completion and next steps.

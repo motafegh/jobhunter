@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**Selected experimental design (DOC.5; proposed only):** [Implementation-facing maps and profiles](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC5_SELECTED_DESIGN.md) document isolated A0/A1/A2 and language comparisons. No production route or accepted authority changed; use current maps below for as-built behavior. E2.6 freeze and E3 guards/verification precede model experiments.
+
 **Optional inspection aid (DOC.4):** [Feasibility and commands](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC4_INSPECTION_FEASIBILITY.md) describe the curated read-only developer script and its limitations. Generated AST/import/schema/MRO reports supplement, not replace, verified runtime narratives and authority checks.
 
 **Component profiles (DOC.3):** [Reusable profile standard](COMPONENT_PROFILE_STANDARD.md) and [verified P1.6 examples](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md) provide responsibility-oriented entrypoints, model/deterministic boundaries, persistence, failure, review/currentness and tests. Read alongside DOC.2; no selected research architecture is presented as implemented.
