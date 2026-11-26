@@ -1,0 +1,161 @@
+{
+  "checklist": {
+    "done": 24,
+    "next": "DOC.5",
+    "total": 45
+  },
+  "current_baseline_comparison": {
+    "all_matched": true,
+    "files": 31,
+    "method_owners": 10,
+    "mros": 4,
+    "named_symbols": 65
+  },
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_inspect_p16_architecture.py tests/test_analysis_service.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_item_review.py tests/test_source_brief_cli.py tests/test_source_item_candidate_b2_v7_dom.py tests/test_source_novelty.py tests/test_isolated_corpus_destination.py tests/test_capability_v9_boundary.py",
+    "passed": 62
+  },
+  "historical_diff_fingerprints": [
+    {
+      "change_sha256": "d1f28ffda1d7fbddf41d5921653ff39952cbe4d69f372ed53f664c9d9913ef41",
+      "current_sha256": "d1f28ffda1d7fbddf41d5921653ff39952cbe4d69f372ed53f664c9d9913ef41",
+      "parent_sha256": "ad906c4ac01228e6f017c68b201efc5bd07bed0989ac1a0e4427ce9ca779af99",
+      "path": "src/jobhunter/analysis_service.py",
+      "status": "M",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "b5d8991519b22e7fd4da31b127dd2ae10d39ae6f32431c6c17501d7c9c36dbc7",
+      "current_sha256": "b5d8991519b22e7fd4da31b127dd2ae10d39ae6f32431c6c17501d7c9c36dbc7",
+      "parent_sha256": "ca0ade49436319475afbbe30c6e8347e19d25e0ea7747d90959d17e58a2753f1",
+      "path": "src/jobhunter/app_entrypoint.py",
+      "status": "M",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "c082139cd0d40113285cb8055b40f9824d4cb357fa8ff097829bcea417099ae3",
+      "current_sha256": "c082139cd0d40113285cb8055b40f9824d4cb357fa8ff097829bcea417099ae3",
+      "parent_sha256": "67e47b9497005dec1fe269fa163ae6f2e4ecc2ec9b2cd55c2a1bc5b0087ddf2d",
+      "path": "src/jobhunter/public_corpus.py",
+      "status": "M",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "9013206b3213adbd06080a0049121370d8234307ea4d59c8274f3fb7f33c7ab6",
+      "current_sha256": "9013206b3213adbd06080a0049121370d8234307ea4d59c8274f3fb7f33c7ab6",
+      "parent_sha256": null,
+      "path": "src/jobhunter/source_brief_cli.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "29a6f60a2ac215ce52d55f2e0f8500569310bc861ecc529aded4e3b9b7eb37f7",
+      "current_sha256": "29a6f60a2ac215ce52d55f2e0f8500569310bc861ecc529aded4e3b9b7eb37f7",
+      "parent_sha256": null,
+      "path": "src/jobhunter/source_item_candidate_b2_v7_dom.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "288cda6d18d62e9c2a97ae803cc42f258fcdb0c2a318a8e72cf313936cb0c1f9",
+      "current_sha256": "288cda6d18d62e9c2a97ae803cc42f258fcdb0c2a318a8e72cf313936cb0c1f9",
+      "parent_sha256": null,
+      "path": "src/jobhunter/source_novelty.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "89a7c0c5c685a3ccb60a25a345cd7b1d9090dd8cc4696823bfa332b8689e9ae6",
+      "current_sha256": "89a7c0c5c685a3ccb60a25a345cd7b1d9090dd8cc4696823bfa332b8689e9ae6",
+      "parent_sha256": "05657fde49e52b005bca33830815f7d3f7600d658207108153efe269365242e7",
+      "path": "src/jobhunter/web/launcher.py",
+      "status": "M",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "c727e822411a1fb9960fb16112536715ed6b73d3e3149c6218345965d62d134d",
+      "current_sha256": "c727e822411a1fb9960fb16112536715ed6b73d3e3149c6218345965d62d134d",
+      "parent_sha256": "b83aa151589ca658d2963fce2a5c9cf0d9ebeb720332788712f719beec97a619",
+      "path": "tests/test_analysis_service.py",
+      "status": "M",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "f040b6b532cd79b86bcc241ead39db81223b9b8a56f4ceb706fbed625842ec9a",
+      "current_sha256": "f040b6b532cd79b86bcc241ead39db81223b9b8a56f4ceb706fbed625842ec9a",
+      "parent_sha256": null,
+      "path": "tests/test_isolated_corpus_destination.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "12e3c1ea10b13b4d8fd97ed4e7f143e02588769f49adebfb1db7d3599ad30281",
+      "current_sha256": "12e3c1ea10b13b4d8fd97ed4e7f143e02588769f49adebfb1db7d3599ad30281",
+      "parent_sha256": null,
+      "path": "tests/test_source_brief_cli.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "5f9f86f07c17713a26a5e63cb6ad230c486dca095ddd4ff50645fe97bd4a50ec",
+      "current_sha256": "5f9f86f07c17713a26a5e63cb6ad230c486dca095ddd4ff50645fe97bd4a50ec",
+      "parent_sha256": null,
+      "path": "tests/test_source_item_candidate_b2_v7_dom.py",
+      "status": "A",
+      "unchanged_since_change": true
+    },
+    {
+      "change_sha256": "715f678d3921cf8c24f729723883510b881c5a445d77015382b395902c7b69de",
+      "current_sha256": "715f678d3921cf8c24f729723883510b881c5a445d77015382b395902c7b69de",
+      "parent_sha256": null,
+      "path": "tests/test_source_novelty.py",
+      "status": "A",
+      "unchanged_since_change": true
+    }
+  ],
+  "limitations": [
+    "Bounded real change review, not whole-system orientation.",
+    "No current browser live verification or original-v9 audit.",
+    "No new CI drift gate or measured time savings."
+  ],
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "parent_revision": "cd31ce1e9b27e66088d0068e76edef89dc8d4538",
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 45867590818
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_change_revision": "76c497b80a2c8fa83b26d330ba2f9d1106c96b18",
+  "reconciled": [
+    "AGENTS.md",
+    "README.md",
+    "docs/ARCHITECTURE.md",
+    "docs/SEMANTIC_ANALYSIS.md",
+    "docs/CURRENT_RUNTIME_AND_VERSIONED_CODE.md",
+    "docs/COMPONENT_PROFILE_STANDARD.md"
+  ],
+  "revision": "2bc08a7786a0a4737f8f0e1e095de423c8b694f0"
+}

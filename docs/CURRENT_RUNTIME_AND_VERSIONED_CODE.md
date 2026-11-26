@@ -32,7 +32,7 @@ Do not route new product code directly to an older versioned semantic module unl
 
 ## 2. P1.6 current routing
 
-Accepted contracts:
+Public generation contract identities (generation is not acceptance):
 
 ```text
 English P1.6:          job-analysis-english-v30 / job-analysis-v5

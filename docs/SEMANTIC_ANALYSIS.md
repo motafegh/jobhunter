@@ -128,7 +128,7 @@ An English analysis artifact records:
 - raw final local-model response in local runtime history;
 - creation timestamp.
 
-Original-language analysis records no translation dependency.
+Original-language analysis records no translation dependency. New original v9 artifacts are pending; exact reuse preserves the stored status, including historical accepted artifacts. Browser ready/model badges do not establish review status. No original-as-accepted-English shortcut.
 
 Attempts record operational outcomes such as:
 

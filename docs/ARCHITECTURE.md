@@ -409,7 +409,7 @@ Important invariants:
 - pending candidates are inspectable but excluded from accepted downstream layers;
 - rejection archives local candidate evidence and removes it from current/reuse selection so the same contract can be rebuilt; when a historical pending Market snapshot references the candidate, its payload and ID remain retained with rejected review status, while the snapshot keeps its original point-in-time pending state.
 
-`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v30/v5 while original-language P1.6 remains on independently validated v9/v4. Explicitly accepted v20/v21/v23/v28 v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected older candidates do not cross the v30 current boundary.
+`src/jobhunter/analysis_current.py` is the current public routing boundary: new English generation uses v30/v5 while original-language P1.6 remains on v9/v4 with new generation pending review, historical accepted artifacts retained, and semantic generalization not established. The browser's existence-based original-ready badge does not certify acceptance (V9 audit remains open). Explicitly accepted v20/v21/v23/v28 v5 English artifacts remain accepted-only compatibility inputs; their exact artifact identity is preserved and pending/rejected older candidates do not cross the v30 current boundary.
 
 ---
 

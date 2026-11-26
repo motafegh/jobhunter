@@ -1,8 +1,8 @@
 # JobHunter Repository Instructions
 
-**2026-11-25 AI research strategy:** [JobHunter AI Architecture, Research and Evolution Plan](docs/AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md) records the owner-approved research directions and controlled evaluation gates. It is a strategic companion, not a production route or parallel execution plan. E1 closed as investigation only; E2.1-E2.5 design complete; DOC.7/5 then E2.6 next; E2/E3 explicitly compare viable local models and architecture alternatives. Broader RAG/agents/training/learning/graph work remains gated. The August 2 proposal is preserved as history; local-only inference and B5/B6 boundaries remain unchanged.
+**2026-11-25 AI research strategy:** [JobHunter AI Architecture, Research and Evolution Plan](docs/AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md) records the owner-approved research directions and controlled evaluation gates. It is a strategic companion, not a production route or parallel execution plan. E1 closed as investigation only; E2.1-E2.5 design complete; DOC.5 then E2.6 next; E2/E3 explicitly compare viable local models and architecture alternatives. Broader RAG/agents/training/learning/graph work remains gated. The August 2 proposal is preserved as history; local-only inference and B5/B6 boundaries remain unchanged.
 
-**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.11 and DOC.1-DOC.2 completed (investigation only); E2.1-E2.5 design complete; next DOC.7/5 then E2.6 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
+**2026-11-24 active evolution sequence:** Owner-approved investigation-first execution tracker: `docs/P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md`. E1.1-E1.11 completed (investigation only); DOC.1-DOC.4 and DOC.7 complete; E2.1-E2.5 design complete; next DOC.5 then E2.6 (see tracker); use its milestone checkboxes and linked evidence records. This sequences the existing Stage B work; no new production contract, B5 acceptance, B6 authorization or downstream promotion. Earlier dated next-action wording remains historical where superseded.
 
 These instructions apply to AI assistants and human contributors.
 
@@ -38,7 +38,7 @@ Before material changes, read:
 
 For source-first P1.6 research or integration after November 13, 2026, also read `docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md`. It is a **status-only** handoff, not authorization to activate research candidates or override current product/domain/source/architecture contracts.
 
-**2026-11-23 LATEST bounded source-first repair:** 2026-11-23 BOUNDED SOURCE-FIRST REPAIR: new opt-in B2v7 candidate recovers 15/15 backend work passages and 5/5 AI mandatory capabilities from three EXPOSED original jobs, preserves all four older exposed 8-job cohort B1 and selected role results without new duty/required regressions. Original-language v9 NEW artifacts now PENDING review, verified by live local-model regeneration on a separate cloned source database (0 newly accepted facts). Read-only original-language `jobs source-brief` CLI gives complete SHA-linked duty/required/preferred/conditions evidence when model v30 fails. Isolated CLI/browser auto corpus exports can no longer mutate the repository root, and a read-only SHA original-description matcher detects duplicates across different job IDs. CURRENT ENGLISH v30 0/3 and translation semantic flaws remain OPEN; even the bounded guidance-only v31 model trial failed and was not promoted. Historical bad original v9 artifacts require review; no automatic retrospective approval/rejection. B5 unseen verification and B6 production rollout CLOSED. Decision: docs/working-memory/2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md.
+**2026-11-23 LATEST bounded source-first repair:** 2026-11-23 BOUNDED SOURCE-FIRST REPAIR: new opt-in B2v7 candidate recovers 15/15 backend work passages and 5/5 AI mandatory capabilities from three EXPOSED original jobs, preserves all four older exposed 8-job cohort B1 and selected role results without new duty/required regressions. Original-language v9 NEW artifacts now PENDING review, verified by live local-model regeneration on a separate cloned source database (0 newly accepted facts). Read-only original-language `jobs source-brief` CLI exposes SHA-linked extracted original items and candidate duty/required/preferred/conditions labels when model v30 fails; --all shows all extracted items, not proven exhaustive semantic coverage. Isolated CLI/browser auto corpus exports can no longer mutate the repository root, and a read-only SHA original-description matcher detects duplicates across different job IDs. CURRENT ENGLISH v30 0/3 and translation semantic flaws remain OPEN; even the bounded guidance-only v31 model trial failed and was not promoted. Historical bad original v9 artifacts require review; no automatic retrospective approval/rejection. B5 unseen verification and B6 production rollout CLOSED. Decision: docs/working-memory/2026-11-23_P16_REAL_AD_SOURCE_FIRST_REPAIR_AND_OPEN_SEMANTIC_GATES.md.
 
 **2026-11-23 LATEST real-source e2e semantic audit:** 2026-11-23 LIVE SOURCE-FIRST E2E TEST: six public pages fetched, three source-distinct descriptions retained after cross-ID/source-hash dedup; B2v6/B1 mechanics and English v2 translation succeeded on all three, but current v30 failed 3/3 (depth/concept schema twice, dense responsibility coverage once), preventing Capability. One isolated original-language v9 analysis auto-accepted an unsupported required experience concept drawn from a benefit and omitted a skill, so failed source-first semantic review. The research CLI temporarily regenerated tracked corpus files from the isolated DB; original hashes and Git state were restored. NO product code or accepted production state changed. B5 and B6 remain CLOSED. Next work is a review/decision on these findings, not an automatically approved fix or another unseen B5 gate. Decision owner: docs/working-memory/2026-11-23_P16_LIVE_REAL_AD_END_TO_END_SOURCE_FIRST_AUDIT.md.
 
@@ -698,6 +698,14 @@ Personal/private state must never enter the public corpus merely because it live
 
 ---
 
+### 13.1 Proportionate architecture orientation and documentation-currentness
+
+Before claiming orientation or making meaningful implementation changes, follow the required reading order and inspect the affected scope at the actual Git revision. Follow entrypoints to resolved method owners (including active inherited code), inputs/outputs and contracts, relevant transitive dependencies, deterministic/model responsibilities, persistence and side effects, validation/failure/reuse/currentness, downstream consumers and authority, tests and remaining unknowns. Match depth to blast radius: a narrow documentation or test change needs only the affected slice; cross-component/routing/storage/model/authority changes require producer/consumer, compatibility, privacy and rollback checks. A comprehensive orientation claim requires an explicit covered inventory, workflows and exclusions, not only plans or import lists.
+
+Use [the runtime index](docs/CURRENT_RUNTIME_AND_VERSIONED_CODE.md), [component standard](docs/COMPONENT_PROFILE_STANDARD.md) and [DOC.7 practice and worked review](docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC7_ORIENTATION_CURRENTNESS.md) as supporting guides. The optional P1.6 inspection tool provides lexical/source/owner/schema evidence, not semantic correctness, execution proof or a full dependency closure. Reinspect changed or consequential uninspected paths; do not claim currentness from unchanged fingerprints alone. Record evidence kind, verified revision or base plus local changes, scope and unknowns in existing work records as appropriate. Keep historical, accepted/current, candidate and proposed views distinct. Do not initialize production state or access private payloads just to document architecture.
+
+For material implementation changes, reconcile affected living maps/profiles, contracts and navigation within the same increment; if behavior is unchanged, state why and what was checked rather than rewriting every map. Preserve dated evidence, link superseding scope, and resolve or explicitly hold consequential authority/currentness drift before promotion. Change author updates affected references; reviewer verifies actual behavior and limitations. Use targeted Git diff/fingerprint/owner checks and existing tests on demand; no mandatory new generator, CI architecture gate or wider scope implied.
+
 ## 14. Development and definition of done
 
 - build coherent vertical increments;
@@ -705,7 +713,7 @@ Personal/private state must never enter the public corpus merely because it live
 - keep handlers thin and SQL focused;
 - use typed config and versioned contracts;
 - preserve historical artifacts;
-- reconcile current-state docs when behavior materially changes;
+- reconcile current-state docs and affected architecture maps/profiles when behavior materially changes, with revision/scope and evidence per §13.1;
 - normal tests never contact Jobinja/Google/LM Studio;
 - convert repeatable deterministic incidents into fixtures when practical;
 - test high-blast-radius authority/persistence invariants strongly;
@@ -720,7 +728,7 @@ An increment is done only when:
 4. analytical outputs communicate authority/uncertainty honestly;
 5. live behavior is reviewed when scope/impact justifies it;
 6. failures remain bounded/inspectable;
-7. docs match behavior;
+7. docs match behavior; affected architecture/authority paths are rechecked and updated or explicitly accounted for, with limitations preserved;
 8. no unrelated future scope is claimed; and
 9. **the increment materially reduces user effort or improves the speed/quality of a real career-intelligence task.**
 

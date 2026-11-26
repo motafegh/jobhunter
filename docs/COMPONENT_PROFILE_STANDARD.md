@@ -15,7 +15,7 @@ Document meaningful components and workflows, not every Python file. A component
 | Reviewer | Change scope -> verified revision/authority -> input identity and data flow -> failure/currentness -> tests and observed evidence -> unresolved risk. |
 | AI assistant | AGENTS and controlling docs -> current task ledger -> affected profile/actual owners -> transitive dependencies and consumer contracts -> tests/unknowns. Profile is a guide, never a substitute for inspecting actual code. |
 
-The paths are progressive, not compulsory exhaustive history reading. For a narrow change inspect the affected slice and boundaries; for broad orientation extend systematically. DOC.7 will define and demonstrate the permanent change/orientation practice; this standard alone does not complete it.
+The paths are progressive, not compulsory exhaustive history reading. For a narrow change inspect the affected slice and boundaries; for broad orientation extend systematically. [DOC.7 practice](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC7_ORIENTATION_CURRENTNESS.md) defines and demonstrates the permanent change/orientation procedure; use AGENTS §13.1.
 
 ## 2. Profile template
 
@@ -44,7 +44,7 @@ For diagrams use solid arrows for direct calls or labeled concrete sequence, das
 
 At creation or affected change, verify symbols, resolved owners, contract IDs, actual read/write paths and consumer currentness against source at recorded revision; link tests/replays, not just file names where substantive claim requires evidence. Use read-only inspection of frozen data, no production initialization merely for documentation. Compare known prior fingerprints when reusing a dated map; a match only establishes identical inspected bytes, not correctness of uninspected dependencies. Record revision, file digest and check output in a safe receipt if useful. Do not claim full dynamic coverage from AST, schema or MRO. Use exact code links and concise known gaps.
 
-Keep primary living references at existing stable paths; dated profile receipts and decision records remain historical evidence. Change author owns affected profile/map update, reviewer checks actual code/authority/limitations, product owner retains substantive policy decisions. If implementation is not yet written, use a separate proposed design profile (P/D), not a current profile. If changed behavior makes a dated record obsolete, link a new version and mark scope superseded rather than rewriting history. DOC.4 evaluates optional inspection tooling; DOC.6 expands component coverage in bounded slices; DOC.7 establishes permanent orientation and drift checks. No new documentation bureaucracy, generator or CI obligation implied by this standard.
+Keep primary living references at existing stable paths; dated profile receipts and decision records remain historical evidence. Change author owns affected profile/map update, reviewer checks actual code/authority/limitations, product owner retains substantive policy decisions. If implementation is not yet written, use a separate proposed design profile (P/D), not a current profile. If changed behavior makes a dated record obsolete, link a new version and mark scope superseded rather than rewriting history. DOC.4 delivered optional inspection tooling; DOC.6 expands component coverage in bounded slices; DOC.7 established permanent orientation and on-demand drift checks. No new documentation bureaucracy, generator or CI obligation implied by this standard.
 
 ## 4. Worked P1.6 profiles and next steps
 
