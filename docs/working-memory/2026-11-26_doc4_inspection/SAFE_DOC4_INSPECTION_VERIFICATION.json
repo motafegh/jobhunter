@@ -1,0 +1,86 @@
+{
+  "checklist": {
+    "done": 23,
+    "next": "DOC.7",
+    "total": 45
+  },
+  "closed_snapshot_sha256": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c",
+  "comparison": {
+    "absent_tables": [
+      "job_analysis_item_review_events",
+      "job_analysis_item_review_sessions"
+    ],
+    "definitions": 456,
+    "file_internal_import_pairs": 281,
+    "files": 44,
+    "foreign_keys": 6,
+    "frozen_table_scope": 7,
+    "method_owners_matched": 10,
+    "mros_matched": 4,
+    "present_tables": 5,
+    "prior_file_fingerprints_matched": 31,
+    "prior_named_symbols_matched": 65,
+    "schema_counts": {
+      "AnalysisRequirementV30": {
+        "fields": 8,
+        "model_validators": 13,
+        "sha256": "708d4821843f71b2b99a39a303f2d6857a90731765cec6573c186fe3cc8ead21"
+      },
+      "JobAnalysisResponseV30": {
+        "fields": 4,
+        "model_validators": 4,
+        "sha256": "07e9c8723153f0eb9fd4933064e7746e2474acb70962ffd6264252001d715b9a"
+      }
+    },
+    "selected_triggers": 0
+  },
+  "decision_sha256": "e16b52eab9701681df7edf78cdd3fc9fa7869caf65a8847fb5438cc19d042f04",
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_inspect_p16_architecture.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_source_brief_cli.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py",
+    "new_tests": 12,
+    "passed": 40
+  },
+  "generated_markdown_sha256": "fb6e412e657b0772a6bba143cb5e19cc7d1cd5338ae52e1cbe63c85a54b3fc9e",
+  "limitations": [
+    "Curated scope, not dynamic graph or full closure.",
+    "Optional audit hook not an OS sandbox.",
+    "Frozen schema not live state.",
+    "No semantic acceptance or Mermaid renderer verification."
+  ],
+  "local_report_sha256": "36359d9dee9a818f622919313dcc98215b5109cb6530a9be0518e49f974ebcf8",
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 45860931648
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "prototype_sha256": "2480aa7961f0a01962c151935972222beebe9c75591ddca563b879c7d3c587e3",
+  "repeat_byte_identical": true,
+  "revision": "ab5dca798e60283eb32fed366fe516b7f833e557",
+  "ruff": "passed changed Python",
+  "schema_safety": "original refused due to sidecars; closed verified byte copy inspected, no row queries; no mutation",
+  "tests_sha256": "58265ead155b9ea3a3b300cef1a553d4dc67da3e017d9115219a190aac450baf"
+}

@@ -1,5 +1,7 @@
 # Component profile standard
 
+**Optional inspection aid (DOC.4):** [Feasibility and commands](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC4_INSPECTION_FEASIBILITY.md) describe the curated read-only developer script and its limitations. Generated AST/import/schema/MRO reports supplement, not replace, verified runtime narratives and authority checks.
+
 **Status:** adopted supporting engineering documentation (DOC.3, 2026-11-26). Subordinate to [AGENTS](../AGENTS.md), [Architecture](ARCHITECTURE.md), [Domain](DOMAIN_AND_ANALYSIS_MODEL.md), [Source policy](SOURCE_POLICY.md) and [Reasoning/authority policy](UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md). This is a description standard, not a new runtime contract or acceptance gate.
 
 ## 1. Purpose and reading routes
