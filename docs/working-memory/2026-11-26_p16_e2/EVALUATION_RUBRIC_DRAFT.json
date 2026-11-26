@@ -1,0 +1,100 @@
+{
+  "comparison": {
+    "absolute_gates_required": true,
+    "efficiency_median_paired_ratio_max": "4/5",
+    "max_other_comparable_primary_loss_pp": 5,
+    "max_usd_loss": 0,
+    "min_jointly_useful_measured_pairs": 3,
+    "missing_comparator_precision": "N/A not noninferiority",
+    "no_weighted_total": true,
+    "quality_comparator_critical_error_reduction_min": 1,
+    "quality_gain_macro_recall_pp": 10,
+    "quality_usd_gain_cases": 1
+  },
+  "contract": "jobhunter-p16-e2-evaluation-rubric-draft-v1",
+  "hard_stops": {
+    "consequential_unresolved_adjudication": 0,
+    "critical_displayed_action": "block retain, preserve isolated predetermined diagnostic schedule if safe",
+    "critical_displayed_semantic": 0,
+    "technical_breach_action": "stop affected experiment/session and reconcile",
+    "technical_integrity_authority_privacy": 0
+  },
+  "protocol_sha256": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+  "scoring": {
+    "claim_states": [
+      "supported_complete",
+      "partial",
+      "contradicted",
+      "unsupported",
+      "asserted_unresolved",
+      "reference_unresolved_separate"
+    ],
+    "claim_zero_denominator": "null, not pass",
+    "duplicate_meaning": "one assertion credit, separate repeat burden",
+    "nonassertive_uncertainty": "separate denominator; genuine ambiguity only earns uncertainty credit",
+    "planned_scope": "all predeclared cells, unavailable output contributes zero supported definite reference units; N/A only source-grounded absence",
+    "raw_quarantined": "separate raw error counts, not displayed claims",
+    "reference_states": [
+      "supported_complete",
+      "partial",
+      "contradicted",
+      "omitted",
+      "explicit_unresolved",
+      "reference_unresolved_separate"
+    ],
+    "review": "seal original assertions/tasks before outputs; exposed; mask labels where possible; versioned symmetric corrections",
+    "source_only": "no model-derived recall or USD credit",
+    "unknown_reference": "record; consequential unresolved blocks retain"
+  },
+  "state": "pre-output design only; E2.5 decision and E3 implementation/reference seal required",
+  "thresholds": {
+    "ambiguity_correct_pct": 90,
+    "explicit_duty_pooled_recall_pct": 85,
+    "explicit_qualification_pooled_recall_pct": 85,
+    "fabricated_explicit_duties": 0,
+    "group_fidelity_pct": 90,
+    "negative_control_critical_errors": 0,
+    "new_translation_case_fidelity_pct": 90,
+    "new_translation_critical_changes": 0,
+    "new_translation_pooled_fidelity_pct": 95,
+    "new_translation_unsupported_additions": 0,
+    "planned_macro_recall_pct": 80,
+    "planned_sets": {
+      "C": 9,
+      "H": 3,
+      "L": 7,
+      "S": 5
+    },
+    "pooled_precision_pct": 95,
+    "resource_and_maintenance": "all applicable hard caps and checks pass; no per-ad hacks, hidden retries or duplicated authority",
+    "silent_material_omission": 0,
+    "task_correct_pct": 80,
+    "usd_case_precision_pct": 90,
+    "usd_case_recall_pct": 80,
+    "usd_case_task_correct_pct": 80,
+    "usd_macro_recall_pct": 90,
+    "usd_min_fraction": "4/5",
+    "useful_semantic_delivery_min_count": {
+      "C": 8,
+      "H": 3,
+      "L": 6,
+      "S": 4
+    }
+  },
+  "utility": {
+    "E3": "answerability proxy only",
+    "E4_proposed": {
+      "accuracy_loss_allowed": 0,
+      "alternative_accuracy_gain_pp": 10,
+      "alternative_median_time_ratio_max": "1",
+      "critical_wrong_answers": 0,
+      "human_review_cap_seconds_proposed": 180,
+      "median_time_ratio_max": "4/5",
+      "min_comparable_observations_per_view": 3,
+      "note": "E4.1 separately freezes actual protocol; not current B5 acceptance"
+    },
+    "questions_per_case_max": 7,
+    "questions_per_case_min": 5,
+    "strict_score": "correct supported actionable or justified unknown=1, incorrect/partial/unjustified unknown=0"
+  }
+}

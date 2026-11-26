@@ -1,0 +1,1757 @@
+{
+  "checks": [
+    {
+      "expected_subset_pass": true,
+      "id": "complete_correct",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": true
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "all_empty",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": false,
+          "quals": true,
+          "recall": false,
+          "tasks": false,
+          "usd": false
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "0",
+          "pooled_precision": null,
+          "task_correctness": "0",
+          "usd": 0,
+          "usd_macro_recall": null
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": true,
+      "id": "one_failed_planned_not_dropped",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "8/9",
+          "pooled_precision": "1",
+          "task_correctness": "8/9",
+          "usd": 8,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": true
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "two_failed_planned",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": false,
+          "tasks": false,
+          "usd": false
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "7/9",
+          "pooled_precision": "1",
+          "task_correctness": "7/9",
+          "usd": 7,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "perfect_precision_low_recall",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 4,
+            "claim_total": 4,
+            "critical": 0,
+            "ref_supported": 4,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": false,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "2/5",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "2/5"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "one_critical_blocks_high_aggregate",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 1,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": false,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "integrity_breach",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ],
+        "hard": 1
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": false,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "material_reference_disagreement",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ],
+        "unresolved": 1
+      },
+      "observed": {
+        "gates": {
+          "adjudication": false,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "unresolved_alternative_zero_credit",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ],
+        "groups": [
+          8,
+          9
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": false,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": true,
+      "id": "true_na_group_not_penalty",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ],
+        "groups": null
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": true
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "missing_material_qualification",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ],
+        "quals": [
+          16,
+          20
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": false,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "per_case_precision_floor",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 8,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": false,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "44/45",
+          "task_correctness": "1",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "per_case_task_floor",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 3,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": false,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 9,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "43/45",
+          "usd": 9,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected_subset_pass": true,
+      "id": "hybrid_three_of_three",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": true,
+          "tasks": true,
+          "usd": true
+        },
+        "metrics": {
+          "planned": 3,
+          "planned_macro_recall": "1",
+          "pooled_precision": "1",
+          "task_correctness": "1",
+          "usd": 3,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": true
+      }
+    },
+    {
+      "expected_subset_pass": false,
+      "id": "hybrid_two_of_three",
+      "input": {
+        "cells": [
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 10,
+            "claim_total": 10,
+            "critical": 0,
+            "ref_supported": 10,
+            "ref_total": 10,
+            "task_correct": 5,
+            "task_total": 5,
+            "usd": true
+          },
+          {
+            "claim_supported": 0,
+            "claim_total": 0,
+            "critical": 0,
+            "ref_supported": 0,
+            "ref_total": 10,
+            "task_correct": 0,
+            "task_total": 5,
+            "usd": false
+          }
+        ]
+      },
+      "observed": {
+        "gates": {
+          "adjudication": true,
+          "ambiguity": true,
+          "critical": true,
+          "duties": true,
+          "groups": true,
+          "hard": true,
+          "precision": true,
+          "quals": true,
+          "recall": false,
+          "tasks": false,
+          "usd": false
+        },
+        "metrics": {
+          "planned": 3,
+          "planned_macro_recall": "2/3",
+          "pooled_precision": "1",
+          "task_correctness": "2/3",
+          "usd": 2,
+          "usd_macro_recall": "1"
+        },
+        "pass_subset": false
+      }
+    },
+    {
+      "expected": true,
+      "id": "95_pct_exact",
+      "observed": true
+    },
+    {
+      "expected": false,
+      "id": "rounding_not_allowed",
+      "observed": false
+    },
+    {
+      "expected": true,
+      "id": "efficiency_three_equal_boundary",
+      "observed": true
+    },
+    {
+      "expected": false,
+      "id": "efficiency_two_pairs_insufficient",
+      "observed": false
+    },
+    {
+      "expected": false,
+      "id": "fast_failed_not_speed_gain",
+      "observed": false
+    },
+    {
+      "expected": true,
+      "id": "unknown_usage_not_zero",
+      "observed": true
+    }
+  ],
+  "count": 21,
+  "scope": "synthetic arithmetic only; subset of numeric gates, not semantic scoring, runtime evaluator, task labels or independent result"
+}

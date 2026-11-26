@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** E2.4 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** E2.5 in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -102,6 +102,8 @@ E1.10 must reconcile configured versus actually installed/loadable models, prior
 Owner-reported environment: RTX 3070 8 GB VRAM, 64 GB RAM, LM Studio local endpoint; verify usable runtime and free-memory constraints rather than assuming all weights fit. Prior receipts refer to Gemma E2B translation, Gemma E4B analysis, and a Qwen-derived distill model. Check exact variants and availability in E1.10. Nominal parameter counts (especially MoE active vs total) do not predict memory footprint alone: weight quantization, context/KV cache, output length, batch size and offload matter. Do not promise a 12–14B or larger MoE fits GPU, or that CPU offload is fast enough. Screen local viability before expensive trials. Model cards and external benchmarks are hypotheses, not JobHunter task evidence.
 
 Candidate families to investigate, not endorsements or downloads: existing small/medium Gemma variants; suitable Qwen-family or other multilingual instruction models; a stronger model if the hardware budget permits; dedicated multilingual translation and embedding models; small classifiers/rerankers where a generative LLM is unnecessary. Check Persian/mixed script, technical entities, context handling, format constraints and license. Translation model output quality is independent of analysis quality.
+
+**2026-11-26 discovery/qualification update:** [Model research register](working-memory/2026-11-26_AI_MODEL_DISCOVERY_AND_QUALIFICATION_REGISTER.md) records the owner's planned manual downloads, exact candidate repositories/quantization leads, runtime/rights and task-specific screening. New artifacts are REGISTERED only. AR.1/AR.3/AR.4/AR.5 use the staged qualification process; optional bounded screening requires a separate manifest and implemented guard. E2.3's 47 cells/M0/M1/M2 policy unchanged; no automatic expansion, loading, training or production routing. E2.5 assesses whether an explicit amendment is justified before outputs.
 
 ### 5.2 Controlled model versus architecture evaluation
 
@@ -329,6 +331,8 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-25 | AR.0: owner-approved strategy recorded; E1.10/E2/E3 model evaluation made explicit | DONE planning only; no runtime changes, no models selected, no new inference |
 | 2026-11-25 | AR.1 via [E1.10 model/resource audit](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e110-model-resource-and-workflow-evidence) | INVESTIGATED; 14 catalog/headers and historical costs, no model qualification |
 | 2026-11-25 | [E1.11 synthesis](working-memory/2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md#2026-11-25-continuation--e111-consolidated-causal-findings-and-e2-decision-inputs) and [DOC.2 runtime baseline](working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) | E1 closed as investigation only |
-| Next | E2.1 architecture alternatives | OPEN in existing tracker |
+| 2026-11-26 | [E2.1–E2.4 architecture, protocol and scoring design](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md) | DONE design only; model/architecture decision pending |
+| 2026-11-26 | [Model discovery and qualification register](working-memory/2026-11-26_AI_MODEL_DISCOVERY_AND_QUALIFICATION_REGISTER.md) | REGISTERED; owner plans downloads, no actual qualification or extra calls |
+| Next | E2.5 experimental selection | OPEN in existing tracker |
 
-**Resume:** [E2.4](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), define scoring and acceptance thresholds for completed E2.1–E2.3 design. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.
+**Resume:** [E2.5](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), select bounded experiments from E2.1–E2.4 design; model discovery does not expand the protocol by default. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or local-only policy; explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.

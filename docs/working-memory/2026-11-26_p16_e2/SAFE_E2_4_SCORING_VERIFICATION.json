@@ -1,0 +1,67 @@
+{
+  "base": "78536fe7d8856f19ca3d06d2e8703842a2e64fbd",
+  "checklist": {
+    "done": 20,
+    "next": "E2.5",
+    "total": 45
+  },
+  "design_artifact_sha256": {
+    "docs/working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md": "b579b45eb456818c9c96f94217218b70a4186be22598c852122a937697321d6e",
+    "docs/working-memory/2026-11-26_AI_MODEL_DISCOVERY_AND_QUALIFICATION_REGISTER.md": "f44cce2458f2d3a7fa95eb542b87747f0bb91c7e4e67f2fef3c76c0c4196668d",
+    "docs/working-memory/2026-11-26_p16_e2/EVALUATION_RUBRIC_DRAFT.json": "9a0b0d48b6da3bfbd74fad062e6a2ee23821a8477d67e377d55a6c76208fcd62",
+    "docs/working-memory/2026-11-26_p16_e2/SCORING_DESIGN_CONTROLS.json": "ca28e2ee3f7eb04e65f4a4348665f73c08067a19a66530b4303946c2fee09a7f"
+  },
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_source_span_identity.py tests/test_p16_stage_b1_contract_design.py tests/test_source_bound_translation_budget_b5.py tests/test_source_job_understanding_b4.py tests/test_source_qualified_b4v6.py tests/test_analysis_v30_currentness.py tests/test_analysis_item_review.py tests/test_analysis_semantic_review.py tests/test_capability_v9_boundary.py",
+    "passed": 132
+  },
+  "limitations": [
+    "Thresholds and optional screening budgets proposed engineering defaults, not empirical performance.",
+    "New model artifacts not yet verified present/qualified; no expanded E2.3 schedule.",
+    "Full scorer, original-source reference seals, runtime guard and actual experiments still required.",
+    "All exposed; no independent accuracy, utility or promotion."
+  ],
+  "new_downloads": 0,
+  "new_inference_calls": 0,
+  "new_model_loads": 0,
+  "new_source_requests": 0,
+  "previous_ci": {
+    "conclusion": "success",
+    "head_sha": "78536fe7d8856f19ca3d06d2e8703842a2e64fbd",
+    "id": 45819165603
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "synthetic_design_checks": {
+    "count": 21,
+    "helper": "data/local-acceptance/p16-evolution-e1-2026-11-24/verify_e2_4_scoring.py",
+    "scope": "numeric subset and decision arithmetic; not production scoring or semantic evidence"
+  },
+  "unchanged_prior_artifact_sha256": {
+    "docs/working-memory/2026-11-26_p16_e2/EXPERIMENT_PROTOCOL_DRAFT.json": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+    "docs/working-memory/2026-11-26_p16_e2/MODEL_ARTIFACT_IDENTITIES.json": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+    "docs/working-memory/2026-11-26_p16_e2/SAFE_E2_3_PROTOCOL_VERIFICATION.json": "a8629a84349a1c0d8f99483c839332af955eee79f6e85be9f71860dd51e8a935",
+    "docs/working-memory/2026-11-26_p16_e2/SEMANTIC_CONTRACT_EXAMPLES.json": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4"
+  }
+}
