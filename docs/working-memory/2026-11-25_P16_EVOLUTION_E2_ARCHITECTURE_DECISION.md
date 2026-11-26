@@ -179,3 +179,123 @@ The sequence is a recommendation, not selected implementation. A1 and A2 are bot
 E2.1 design deliverable contains required four directions, comparable dimensions, concrete processing responsibilities, causal evidence links, existing component reuse and no-change alternative. E2.2 should specify candidate authority, evidence group/child alignment, optional depth/experience, source vs inference relations, uncertainty and partial state, alternative scope, reconciliation and promotion compatibility. This is the next design task after E2.1 reconciliation; no final schema, implementation, model selection or scoring thresholds here.
 
 Remote-only documentation increment: Desktop Commander reported both registered local devices offline. Remote main verified at exact base and E1 CI successful; reviewed repository tracker, E1 matrix, DOC.2 owners, architecture/domain/reasoning policy, Stage B and AI research references via GitHub. No new private source/DB access, no local verification/tests, no inference or production work. Reproducibility of E1 remains existing receipts, not new replay. Remote document-only diff, linked paths and tracker count to be verified at publication. E2.1 checkbox intentionally remains open pending local main synchronization and protected-state reconciliation under existing milestone discipline. Recheck with `git status --short --branch`, `git pull --ff-only` only if safe, exact HEAD/origin/main, `.venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py`, and CI at new revision; then close E2.1 and proceed. If local changed or pull conflicts, preserve state and reconcile, not force. No data exports or automatic promotion. User has approved continuing design, not a selected architecture or governing contract change.
+
+
+## 2026-11-26 continuation — E2.1 reconciliation and E2.2 candidate semantic contract
+
+**Base:** `74555ad4d6b0bc0b361e5b00260bece96419b467`. Local WSL device restored; clean main fast-forwarded from a092f68 to exact remote base. Prior E2.1 [CI 45694817594](https://github.com/motafegh/jobhunter/actions/runs/45694817594) completed successfully at exact base. Protected-state reconciliation passed (production DB and corpus manifest SHA, frozen private receipt, four SQLite integrity/FK checks and nine routing references). E2.1 now meets its recorded closure conditions. This entry designs E2.2, not the selected architecture, final production schema or implementation. Existing [B1 ADR](2026-11-14_P16_B1_SOURCE_ITEM_BILINGUAL_CONTRACT_ARCHITECTURE_DECISION.md), [E1 matrix](2026-11-24_P16_EVOLUTION_E1_ROOT_CAUSE_INVESTIGATION.md), [DOC.2 map](2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md) and permanent policy control. Preserve B1 and v30/v9 contracts and historical artifacts byte-for-byte. No model call, load, acquisition, new accepted facts, database migration or consumer change.
+
+### 11. Design decision — separate meaning from bookkeeping and authority
+
+Design two interfaces rather than one large Pydantic model that simultaneously serves generation, persistence, evidence verification and user presentation. These are conceptual draft contracts for E2.3–5 selection; not yet runtime interfaces or accepted new versions.
+
+| Interface | Purpose | Owner |
+| --- | --- | --- |
+| Context packet | Source units in order, headings and neighboring context, stable short handles, original or derived language per arm, clearly named board observations | Deterministic preparation; no authoritative semantic labels |
+| Model response | Compact contextual statements, evidence handles, basis and optional meaning/scope/relations; open questions when material | LLM, semantic judgment only |
+| Candidate envelope | Exact dependencies, source/target association, immutable claim identity, normalized representation, execution/coverage/assessment and review state, error and resource receipts | System, except separately attributed semantic assessment |
+| Decision view | Useful grouped candidate statements, original drilldown, explicit unresolved/partial status and observed metadata | Deterministic presentation + optional attributed model synthesis |
+| Accepted artifact | Reviewed, compatible, current version under approved contract | Existing production rules today; future promotion only B6 |
+
+The first two form the model-facing task; the last three are **not** fields the model must generate. Never ask it to calculate hashes, assign persistent IDs, establish review status, declare its own acceptance, count completeness or invent exact offsets. Prefer a single coherent prompt/task and short evidence handles; no obligation to emit every semantic axis on every statement. If a model omits a material qualifier, this is a semantic omission to detect/assess, not a reason to manufacture it deterministically. This direction respects E1 RC01–18 and B1's orthogonal authority principle. A0 retains its exact schema and A1 remains an experimental targeted-repair option; A2 draft does not replace their comparators.
+
+### 12. Compact model-facing contract (proposed)
+
+Illustrative names, to be frozen only after E2.3–5. Minimum valid response is an object with a statements array (possibly empty; never proof of absence). Each statement has local reference, short natural meaning, evidence handles (nonempty for source-linked claims) and basis. Basis is explicit source interpretation, contextual inference, or unresolved reading. Explicit means the model *claims* that source says it; not verified truth. Local refs are request-local aliases, not stable IDs. System validates association against the exact packet, not model-provided arbitrary text. A whole uncertain group may remain an exact quote with an unresolved statement. Optional open questions reference context and identify a material ambiguity; they do not require an answer or cause automatic retry.
+
+| Model field | Required? | Interpretation |
+| --- | --- | --- |
+| ref | yes | unique within returned response; system resolves it to candidate ID |
+| meaning | yes | concise natural interpretation with all material qualifiers |
+| evidence | yes | one or more handles scoped to packet; may cite overlapping/group and context units |
+| basis | yes | explicit / inferred / unresolved (proposal, not approval) |
+| roles | optional | one or more useful semantic roles (work, qualification, behavior, arrangement, compensation/benefit, application, purpose, context); overlap allowed, no exhaustive closed taxonomy required |
+| strength | optional | required / preferred / stated expectation / unresolved when source supports distinction; never convert an inferred capability into explicit obligation |
+| depth / experience | optional | source-local depth wording, stated prior-exposure/duration or implied work scope; distinguish dimensions, no arbitrary numeric score |
+| relations | optional, response-level | source-supported alternatives/conditions/shared qualifier links or inferred work-capability relation; omit if not established, preserve group wording |
+| open_questions | optional, response-level | unresolved material interpretation or relationship, source handles and reason |
+
+Only four statement fields are mandatory (ref, meaning, evidence, basis); optional attributes carry meaning where useful. The exact encoding of depth/experience/roles and relation types is to be kept minimal in the frozen implementation; optional is not permission to silently discard source meaning. No required rationale/confidence/ontology per claim, no technical degree forced from adjectives. Model-facing examples show overlap and abstention; prohibit adding a second checklist of all E1 edge cases to the prompt. Treat source/retrieved content as data, never instructions. No arbitrary tools or external retrieval in the initial arm. The system sets max context/output, passes exact context scope and records omitted units. Avoid item-by-item prompting by default; use intact ad or meaningful contextual groups, not isolated taxonomy buckets.
+
+### 13. Source identity, group and child alignment
+
+Reuse `source_span_identity.bind_original_source_span` / `verify_original_source_anchor` and B1 original description source anchor identity (field, source job/version, semantic hash, character/UTF-8 offsets, exact substring/hash). Board metadata uses separate B1 JSON Pointer/canonical selected-value and field digests. Source hash verifies content; no claim of linguistic meaning. Reuse B2v7 DOM group structure as a candidate aid only; independently inventory original text and preserve meaningful non-list passages, headings/context and units that its classifier missed. Overlap legal; stable group reference for enclosing qualifier and relation. Never synthesize a child exact span from approximate translation or concatenate noncontiguous text as a single contiguous span. For actual discontiguous evidence use multiple anchors. Context handles may help meaning but not replace required evidence: an original heading alone cannot support an unrelated child's named skill; group and child references may jointly support a statement.
+
+Packet has deterministic handle->immutable reference map, ordered unit inventory and source/version/representation fingerprint. Each returned handle resolves to an included reference; child text boundaries may be resolved only from exact source and parent scope, with ambiguity marked unresolved, not fuzzy-bound. Child identity is content+scope, not text-only; identical phrase at different positions may differ in modality. Group/child edges reflect containment, not semantic equivalence. For L0 v2 English only, retain exact English reference and source-field association, original child alignment unresolved; do not claim exact original anchor without proof. L1/L3 B3 alignment may be many-to-many and source-bound candidate; native exact separate. Preserve source/target offset/hash lineage, semantic translation review separate, unresolved target not a reason to hide original text. Derived translation or reviewed correction has distinct revision; invalidation affects dependent statements. No destructive edits of original or previous target.
+
+### 14. Meaning, normalization and relationships
+
+Maintain independent dimensions, not disjoint classifications. A statement can describe both work and qualification if source context says so; an inferred work-capability statement explicitly links to the work evidence and remains inference. Do not count the same employer statement twice merely because two roles share an identity; distinct material assertions in a group may have separate candidate IDs. Distinguish employer-expressed obligation from model-inferred practical necessity and from personal eligibility (latter deferred). Board skill presence is a board observation, not automatic employer-required qualification; board/prose conflicting values coexist with typed conflict, no overwriting or automatic strength upgrade. Preserve conditions, uncertainty and qualifications even if no canonical concept available. Unknown role is not source omission and unknown strength is not optional. Behavioral expectations can be explicit qualifications; employment arrangement can be an explicit eligibility condition if actual source says so. No blanket semantic rule excluding either, only typed meaning and scope. No applicant score or decision.
+
+| Dimension | Example and safe boundary |
+| --- | --- |
+| Depth | "solid knowledge of engineering principles" attaches solid only to that concept. "Strong interest in learning" is motivation, not technical proficiency. Omit structured depth when inapplicable; preserve actual source phrase. |
+| Prior exposure | "Build APIs" implies ability to do work, not paid employment or years. "2 years of experience" preserves duration/unit/comparator and scope; "project experience" is not automatically professional experience. |
+| Modality | "Python preferred" remains preferred even with board Python tag or duty involving Python. "Expected" is not automatically formal mandatory eligibility. |
+| Alternative | "Python or Go" as work tooling may be work options, not eligibility; "degree or equivalent project experience" is an eligibility alternative if source supports it. |
+| Negation and condition | "No prior work experience required" is explicit negative obligation, not lack of evidence; "if selected, pass exam" is conditional, not unconditional prerequisite. |
+
+Safe mechanical normalization: whitespace/escaping, source-backed exact span binding, recognized harmless representation aliases with unchanged meaning, canonical serialization and de-dup of byte/identity-identical records. Record raw/normalized digests, operation/version/reason and lineage. Never silently remove a source modifier, join alternative concepts, infer missing duration, replace model category from lexical heading, reclassify obligation, change negation or assume equivalence. If malformed depth can be made unknown without losing material source wording and evidence, preserve wording, mark unknown and keep unaffected meaning; explicit depth omitted remains an unresolved coverage/meaning issue. Ambiguous representation that affects meaning gets targeted semantic review or abstention. Exact evidence association alone does not establish entailment. No general lexical semantic validator as final truth; deterministic guard rejects known invalid references, authority transitions or structurally inconsistent representations, while semantic judgments remain attributed and scored.
+
+### 15. Alternative groups and conditional scope
+
+Reuse B1 graph semantics as a candidate internal representation only when source supports topology. Keep group quote, qualifier references, ordered children and relation type (AND / OR / conditional / example / unresolved). Distinguish formal eligibility routes from tool options, illustrative examples and work-capability relations; no treating every "or" as applicant eligibility. A group may contain nested groups; every edge resolves, DAG acyclic, leaves inside allowed job/version and their scoped evidence, duplicate/unreachable references rejected. For formal paths, all_of requires each child, any_of one path, conditional implication only inside established scope; do not compute user's eligibility. Local mandatory leaf in chosen option is not globally mandatory. For example:
+
+```text
+candidate group: degree OR equivalent project experience
+  degree: required_if_path_chosen
+  project experience: required_if_path_chosen
+  shared qualifier: equivalent
+global mandatory leaves: none (unless supported elsewhere)
+```
+
+If topology/qualifier/leaf scope unresolved, show intact group as unresolved; withhold simplified eligibility summary dependent on group. Preserve safe unrelated claims. Do not force graph construction when exact compound wording is more useful and no structured route necessary. E2.4 evaluates material preserved paths, not graph count. B1 validator validates references and Boolean graph structure, not employer intent. Model suggests relation, deterministic system verifies structure and dependency, semantic assessment evaluates actual meaning. Record reason if relation unresolved rather than adding arbitrary edges.
+
+### 16. Candidate envelope, independent state axes and partial delivery
+
+Use a versioned private isolated sidecar for A2 research initially (append-only run/claim revisions plus receipts); no new production SQLite tables or public route. Conceptual envelope:
+
+```text
+run identity = source job/version/hash + packet/representation hash
+               + source/translation dependencies + model artifact/config
+               + semantic contract/prompt/runner versions + unique attempt/run ID
+claim revision = run ID + system-assigned local ID + digest of meaning,
+                 basis, roles, scoped evidence and material relation dependencies
+fragment = immutable claim revision set + dependency IDs + validation/assessment state
+```
+
+Reuse only when exact inputs/contract/config/evidence/dependencies match and review/authority still compatible; explicit attempt/cache/reuse receipts. Do not dedup distinct independent runs solely on text equality; exact identity and claim equivalence different. Corrections create successor revisions, never mutate raw response or accepted historical state. Relation groups refer to immutable claim revisions; compute content digests of normalized relation records separately, avoid cyclic ID hash dependency. Stale status derived from current dependencies, not retrospective deletion. Every record retains source and run lineage; no public raw content export. New candidate contract has distinct ID from v5/B1. A1 if selected may produce existing-shape output inside separate experimental envelope, never assign existing accepted contract authority.
+
+| Axis | Proposed states / ownership | Not implied |
+| --- | --- | --- |
+| Execution | not attempted / completed / failed / budget stopped / timeout; system receipt per unit and physical call | Semantic correctness |
+| Association/integrity | verified exact / verified field only / unresolved / invalid; system | Entailment or precise original alignment |
+| Semantic assessment | unreviewed / supported / partially supported / contradicted / unsupported / unresolved; attributed reviewer or assessment provenance | Independent human approval or durable acceptance |
+| Coverage | observed inventory per unit: attempted, not attempted, linked, excluded with reason, unresolved; separately meaning coverage review | Exhaustive ad understanding from all refs linked |
+| Relation consistency | resolved candidate / unresolved / invalid; structural vs semantic assessment separate | Correct eligibility |
+| Delivery | source-only / qualified partial / whole candidate / withheld; system from known states + semantic scope | Accepted artifact, complete understanding |
+| Authority | candidate_only, no downstream; existing accepted historical/current separate | New promotion by generation or review label |
+
+A whole candidate means all **planned** processing completed and no known material unresolved delivery dependency for the stated scope; explicitly distinguish planned scope from complete original semantic coverage. Never call it "complete understanding" absent source-first assessment. Budget or model failure may deliver source-only or partial candidate; execution remains failed/stopped. Invalid identity/source hash blocks affected evidence, not a guessed quote. Invalid claim association quarantines claim and dependent relations; valid unrelated source still accessible. Wrong/unsupported semantic claim withheld from supported view; unreviewed candidate may be shown as labeled proposal under bounded authority, never called supported solely by citation. Global group failure withhold dependent claims/summary, not unrelated material. No hidden not-attempted content or absence inference. If source is invalid or stale, no current candidate claims; historical display clearly labeled only if allowed. Missing translation does not hide original source. Review can be selective/proportionate for candidate use; consequential claims with unresolved meaning are explicitly qualified/withheld. Whole accepted state requires separate applicable policy, not merely all local items reviewed.
+
+### 17. Delivery controls and promotion compatibility
+
+| Situation | Allowed user-facing result | Downstream result |
+| --- | --- | --- |
+| Valid source, no model output | Source inventory with original text, candidate classification label, missing analysis | No new accepted semantics |
+| Exact ref, unreviewed interpretation | Bounded labeled candidate; evidence drilldown, uncertainty | None |
+| Supported fragment, unrelated failure | Qualified partial with failed/not-attempted inventory, safe fragment + originals | None |
+| Unresolved alternative or conflicting meaning | Preserve exact group/board and narrative, label ambiguity; suppress dependent mandatory/eligibility summary | None |
+| Source/translation revision changed | Historical only or withheld; new candidate needed | No current reuse of stale dependencies |
+| Whole candidate, individually reviewed | Candidate with review scope/provenance | No automatic accepted conversion |
+| Future B6 decision | Separate compatible approved artifact, explicit review/migration/rollback; currentness verified | Accepted-only consumers under approved rules |
+
+No candidate adapter for Capability/Work/Registry/Market, no implicit public corpus export, no original v9 as English accepted substitute. Existing v20/v21/v23/v28 accepted-only compatibility and new v9 pending rule unchanged; V9 historical audit independently open. B6 must define durable representation compatibility, review/promotion transition, migration/backup, versioned consumer checks and rollback; if unable to faithfully represent new claims in legacy v5, retain separate candidate or choose new explicitly approved contract rather than coerce. Reuse principles of AnalysisItemReviewStore (append-only provenance, separate whole acceptance) but do not write its current v5 tables from candidate runner. Review event binds exact claim/group/source/target digest, dimension, reviewer class/exposure, disposition, reason and predecessor; different review dimensions not interchangeable. No model reviewer certifies its own output. No change to current owner acceptance policy.
+
+### 18. Design-only worked fixture and negative controls
+
+The companion [synthetic contract examples](2026-11-26_p16_e2/SEMANTIC_CONTRACT_EXAMPLES.json) contain authored fictional source passages, a compact example response, explicit system-owned expected states and negative/partial scenarios. They are design illustrations, not generated predictions, real job source evidence or independent gold labels. Exact sample refs are local handles only. E3 must implement deterministic cross-reference/identity/dependency checks and evaluate semantic meaning on frozen source-first cases; do not claim semantic validators from illustrative expected outputs. Design controls cover compound OR/depth scope, motivational adjective, board/prose preference, overlap and prior work, conditional eligibility, malformed/unsupported reference, unaligned translation, incomplete processing, dependent group failure and stale state. Existing B1 fixture validator/source-span tests and B4/source-brief/authority tests remain baseline; no new runtime code. E2.3 chooses minimal arms and exact frozen fixture/model protocol, E2.4 thresholds, E2.5 decision/owner approval as applicable. Do not demand all optional fields, all relations, separate agents or full production persistence in first trial.
+
+**Disposition:** E2.2 design complete when linked fixture, structural design checks and existing regression/protected-state evidence recorded. Candidate contract remains experimental draft; no selected model/architecture, no production schema/authority change. Next E2.3 bounded comparative protocol. DOC.3/4/7 remain required before E2.6; DOC.5 after selection. Local/remote main reconciliation and CI recorded per milestone.
+
+**Local design verification:** 130 existing focused tests passed with warnings as errors (B1 contract, exact spans, B4/B4v5/v6, source brief, item/semantic review, v30 currentness and Capability v9 boundary). The ignored helper `data/local-acceptance/p16-evolution-e1-2026-11-24/verify_e2_2_design.py` built synthetic examples using the existing span binder/verifier: 12 exact anchors including four child spans, two expected tamper/stale rejections, 10 authored candidate statements and 12 prospective design scenarios. Statement/ref/relationship reference assertions passed; semantic scenarios are expectations only, not tested implementation. [Verification receipt](2026-11-26_p16_e2/SAFE_E2_1_2_DESIGN_VERIFICATION.json) records commands and protected-state checks. No new source/model calls. E2.1/E2.2 closed as design only; E2.3 next.

@@ -1,0 +1,444 @@
+{
+  "checks": {
+    "actual_existing_span_verifications": 12,
+    "authored_statements": 10,
+    "design_scenarios": 12,
+    "limitations": "Only existing anchor identity checks and example structure/reference assertions executed; semantic/partial/authority scenarios are expectations, not implemented tests or model results.",
+    "tamper_and_stale_rejections": 2
+  },
+  "context_packet": {
+    "anchors": {
+      "g1": {
+        "anchor_id": "108bf25bb9e408a4faaf3e6d8315fafa26587be6ce9fe8132b0b4eb903729af1",
+        "char_end": 30,
+        "char_start": 0,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Build APIs using Python or Go.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "a025ac2039f947dc80888ccf4c8b0fe125ddceee97be91b9ae309992a6eeff5a",
+        "utf8_end": 30,
+        "utf8_start": 0
+      },
+      "g1a": {
+        "anchor_id": "50e0a09bc647704b70c7c08248853052e995dd1d3cd342d8e33b8faed6f50e7c",
+        "char_end": 23,
+        "char_start": 17,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Python",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "18885f27b5af9012df19e496460f9294d5ab76128824c6f993787004f6d9a7db",
+        "utf8_end": 23,
+        "utf8_start": 17
+      },
+      "g1b": {
+        "anchor_id": "a115fe1a25afa8dcf08eb82ac87e1014fafee08acaadba5263426e40f696c30a",
+        "char_end": 29,
+        "char_start": 27,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Go",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "6cc8519b91584e8bd435d63341e0838a99721948718b1c9c1e9c358c64ba992a",
+        "utf8_end": 29,
+        "utf8_start": 27
+      },
+      "g2": {
+        "anchor_id": "3bb5fadcbc03e6ebff22eace6e6afd4838642cef12af861742027467f8504220",
+        "char_end": 85,
+        "char_start": 31,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Solid knowledge of engineering principles is expected.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "9fc5dce1d00f3b5726457e8bb0d649632e779e18b4d76d7c7249214e22d809d3",
+        "utf8_end": 85,
+        "utf8_start": 31
+      },
+      "g3": {
+        "anchor_id": "62ca8e3680e32f923b488bc63edff92c8ae196bd17ed3d810f6b095589f9271d",
+        "char_end": 106,
+        "char_start": 86,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Python is preferred.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "d7e44c840484d8b9dcf49d330ff9dcf40dae50d0f05d286f04a82b623bd863b3",
+        "utf8_end": 106,
+        "utf8_start": 86
+      },
+      "g4": {
+        "anchor_id": "2561ac36781f678931211f87fb00dc7b604bd00c04a5a3340f696dd0e8c890ed",
+        "char_end": 163,
+        "char_start": 107,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "A degree or equivalent project experience is acceptable.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "755ea76473c3c84b72f86a5a83d2810dcdf1411a5e5203cbbc5343dfa531bae8",
+        "utf8_end": 163,
+        "utf8_start": 107
+      },
+      "g4a": {
+        "anchor_id": "40811b1471a2e82e6b0407beca588da60c6d76d9f7d6aaa5472d1a33f1a96620",
+        "char_end": 115,
+        "char_start": 107,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "A degree",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "87226a0cec00b801f1d2cadb150d1b671f4916ef37dc937d4633bac682c8eac3",
+        "utf8_end": 115,
+        "utf8_start": 107
+      },
+      "g4b": {
+        "anchor_id": "707c4373a967b86acf7614c794ad87367445019f90cd7b8fef90dd094b3b143d",
+        "char_end": 148,
+        "char_start": 119,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "equivalent project experience",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "9795d102278e3383a59929eee43291c81040813473198580186a085217a9b370",
+        "utf8_end": 148,
+        "utf8_start": 119
+      },
+      "g5": {
+        "anchor_id": "56445dec001e79348078cc76180346222e24a39c297251225e8fbadf8b6757bc",
+        "char_end": 205,
+        "char_start": 164,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Strong interest in learning is important.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "38e67f45237d8d8ee6257d2d77ab6b6222c86ad6fc8a93022b3b40e872b1bdfd",
+        "utf8_end": 205,
+        "utf8_start": 164
+      },
+      "g6": {
+        "anchor_id": "97b772128f4521eafb261eb0ba67e40167c1848c18f1142e3069e62b3d0c1cf9",
+        "char_end": 232,
+        "char_start": 206,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "If selected, pass an exam.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "c994259320dfac9c346e001357218a048605b489e2101485d7ca2ffaf0eb3d8b",
+        "utf8_end": 232,
+        "utf8_start": 206
+      },
+      "g7": {
+        "anchor_id": "71c5034292a6263d6fbe018110da2726653fa585a8ce9f1a24794bef84a7012f",
+        "char_end": 258,
+        "char_start": 233,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "Hybrid work by agreement.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "aeb92f35ec0e2db7e5fc8e23e7113231e297870995cae5ce10507292cd97ff70",
+        "utf8_end": 258,
+        "utf8_start": 233
+      },
+      "g8": {
+        "anchor_id": "77a13ff23d1bf84c06892cf56aeebdac5508669d9d2a50f809a34bb9e136d709",
+        "char_end": 298,
+        "char_start": 259,
+        "contract_version": "jobhunter-source-span-identity-v1",
+        "exact_text": "No prior paid work experience required.",
+        "field_path": "description",
+        "field_sha256": "dc0f0cc50071b38febe90aebe904ab31dfc8158535c86d8fca777041d2ac6e04",
+        "job_detail_version_id": 1,
+        "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+        "source_job_id": "synthetic-e2",
+        "text_sha256": "f379181bf89c4f84f224019f03ac5ae1a34de687a4a1d932de05d8f6082b05d6",
+        "utf8_end": 298,
+        "utf8_start": 259
+      }
+    },
+    "board_observation": {
+      "field_json_sha256": "96f6e85f0342bd7665257990c92c4c65a28fe7687019c637815c7faadc58479b",
+      "kind": "structured_board_value",
+      "selected_value_json_sha256": "45f13bf50ac1fca6e27296d5383380ef0a471d3d5d04f78c829a445829f7d05a",
+      "selector": "/skills/0",
+      "source_semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a"
+    },
+    "child_parent": {
+      "g1a": "g1",
+      "g1b": "g1",
+      "g4a": "g4",
+      "g4b": "g4"
+    },
+    "ordered_groups": [
+      "g1",
+      "g2",
+      "g3",
+      "g4",
+      "g5",
+      "g6",
+      "g7",
+      "g8"
+    ]
+  },
+  "design_controls": [
+    {
+      "dimension": "integrity",
+      "expected": "quarantine claim and dependent relations; no accepted authority",
+      "id": "unknown_handle",
+      "scenario": "A response cites g999 absent from packet."
+    },
+    {
+      "dimension": "integrity",
+      "expected": "reject affected source association",
+      "id": "tampered_span",
+      "scenario": "Exact source anchor offset/hash altered."
+    },
+    {
+      "dimension": "currentness",
+      "expected": "historical only; no current reuse",
+      "id": "stale_version",
+      "scenario": "Source version increments even if wording identical."
+    },
+    {
+      "dimension": "semantic",
+      "expected": "meaning unsupported; exact refs alone do not establish correctness",
+      "id": "wrong_depth",
+      "scenario": "Attach solid to programming or strong to motivation as proficiency."
+    },
+    {
+      "dimension": "semantic",
+      "expected": "keep separate observations; withhold false required",
+      "id": "board_strength",
+      "scenario": "Board Python tag treated as mandatory despite preferred prose."
+    },
+    {
+      "dimension": "semantic",
+      "expected": "withhold false experience claim; inferred ability remains possible",
+      "id": "prior_exposure",
+      "scenario": "API duty rewritten as prior paid work required."
+    },
+    {
+      "dimension": "semantic",
+      "expected": "preserve OR clause; withhold dependent eligibility summary",
+      "id": "alternative_scope",
+      "scenario": "Degree and project experience flattened into two global mandatory leaves."
+    },
+    {
+      "dimension": "delivery",
+      "expected": "retain exact group unresolved; independent hybrid condition remains visible",
+      "id": "alternative_unresolved",
+      "scenario": "One leaf is unresolved or relation evidence missing."
+    },
+    {
+      "dimension": "association",
+      "expected": "mark field-only and unresolved child; no fabricated original span",
+      "id": "missing_translation",
+      "scenario": "English field association only; no exact child alignment."
+    },
+    {
+      "dimension": "execution",
+      "expected": "partial/source-only with unattempted groups; no complete or absence claims",
+      "id": "incomplete_run",
+      "scenario": "Group g6 onward not attempted after budget stop."
+    },
+    {
+      "dimension": "semantic",
+      "expected": "withhold false obligation; preserve source qualifiers",
+      "id": "condition_negation",
+      "scenario": "Exam unconditional or no prior paid experience reversed."
+    },
+    {
+      "dimension": "authority",
+      "expected": "candidate_only; no durable accepted consumer authority",
+      "id": "review_not_promotion",
+      "scenario": "All local candidate claims reviewed."
+    }
+  ],
+  "illustrative_model_response": {
+    "relations": [
+      {
+        "evidence": [
+          "g1"
+        ],
+        "from": "s1",
+        "to": "s2",
+        "type": "work_implies_capability"
+      },
+      {
+        "evidence": [
+          "g4"
+        ],
+        "members": [
+          "s5",
+          "s6"
+        ],
+        "scope": "conditional_choice_not_global_requirement",
+        "type": "eligibility_any_of"
+      }
+    ],
+    "statements": [
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g1"
+        ],
+        "meaning": "Build APIs using Python or Go.",
+        "ref": "s1",
+        "roles": [
+          "work"
+        ]
+      },
+      {
+        "basis": "inferred",
+        "evidence": [
+          "g1"
+        ],
+        "meaning": "Ability to build APIs using one of the stated tools.",
+        "ref": "s2",
+        "roles": [
+          "qualification"
+        ]
+      },
+      {
+        "basis": "explicit",
+        "depth": "solid knowledge",
+        "evidence": [
+          "g2"
+        ],
+        "meaning": "Solid knowledge of engineering principles.",
+        "ref": "s3",
+        "strength": "stated expectation"
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g3"
+        ],
+        "meaning": "Python is preferred.",
+        "ref": "s4",
+        "roles": [
+          "qualification"
+        ],
+        "strength": "preferred"
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g4",
+          "g4a"
+        ],
+        "meaning": "A degree is one acceptable pathway.",
+        "ref": "s5"
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g4",
+          "g4b"
+        ],
+        "meaning": "Equivalent project experience is an alternative pathway.",
+        "ref": "s6"
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g5"
+        ],
+        "meaning": "Strong interest in learning.",
+        "ref": "s7",
+        "roles": [
+          "behavior",
+          "qualification"
+        ]
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g6"
+        ],
+        "meaning": "Exam applies if selected.",
+        "ref": "s8"
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g7"
+        ],
+        "meaning": "Hybrid work by agreement.",
+        "ref": "s9",
+        "roles": [
+          "arrangement"
+        ]
+      },
+      {
+        "basis": "explicit",
+        "evidence": [
+          "g8"
+        ],
+        "meaning": "No prior paid work experience required.",
+        "ref": "s10"
+      }
+    ]
+  },
+  "source": {
+    "fields": {
+      "description": "Build APIs using Python or Go.\nSolid knowledge of engineering principles is expected.\nPython is preferred.\nA degree or equivalent project experience is acceptable.\nStrong interest in learning is important.\nIf selected, pass an exam.\nHybrid work by agreement.\nNo prior paid work experience required.",
+      "language": "en",
+      "skills": [
+        "Python"
+      ]
+    },
+    "hash_note": "synthetic canonical JSON digest; not production parser contract",
+    "job_id": "synthetic-e2",
+    "semantic_sha256": "3f2d443ef4734637a84f562ddef43372e86984c0b458446eb7aabab88d13fc8a",
+    "version": 1
+  },
+  "status": "design_example_only",
+  "system_owned_expected": {
+    "association": "exact original spans verified",
+    "authority": "candidate_only",
+    "conditional_choice_leaves": [
+      "s5",
+      "s6"
+    ],
+    "coverage": "planned groups linked; semantic completeness not established",
+    "delivery": "whole candidate for planned scope only",
+    "downstream_authority": "none",
+    "execution": "completed (illustrative only)",
+    "global_mandatory_alternative_leaves": [],
+    "semantic_assessment": "unreviewed"
+  }
+}

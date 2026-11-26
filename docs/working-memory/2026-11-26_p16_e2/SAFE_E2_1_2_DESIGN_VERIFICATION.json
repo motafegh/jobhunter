@@ -1,0 +1,56 @@
+{
+  "base": "74555ad4d6b0bc0b361e5b00260bece96419b467",
+  "checklist": {
+    "done": 18,
+    "next": "E2.3",
+    "total": 45
+  },
+  "design_checks": {
+    "actual_existing_span_verifications": 12,
+    "authored_statements": 10,
+    "design_scenarios": 12,
+    "limitations": "Only existing anchor identity checks and example structure/reference assertions executed; semantic/partial/authority scenarios are expectations, not implemented tests or model results.",
+    "tamper_and_stale_rejections": 2
+  },
+  "design_examples_sha256": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4",
+  "design_helper": "data/local-acceptance/p16-evolution-e1-2026-11-24/verify_e2_2_design.py",
+  "focused_tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_p16_stage_b1_contract_design.py tests/test_source_span_identity.py tests/test_source_job_understanding_b4.py tests/test_source_qualified_b4v5.py tests/test_source_qualified_b4v6.py tests/test_source_brief_cli.py tests/test_analysis_item_review.py tests/test_analysis_semantic_review.py tests/test_analysis_v30_currentness.py tests/test_capability_v9_boundary.py",
+    "passed": 130
+  },
+  "limitations": [
+    "Existing source identity and regression checks only; new response schema and semantic/authority controls are design not implemented.",
+    "No model suitability, semantic accuracy, user benefit or production promotion established."
+  ],
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "prior_ci": {
+    "conclusion": "success",
+    "head_sha": "74555ad4d6b0bc0b361e5b00260bece96419b467",
+    "id": 45694817594
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "record_sha256": "27e443a99d567d4e7631c075e5b74916d17949e44ecd6c1a406cd76a08997b73"
+}
