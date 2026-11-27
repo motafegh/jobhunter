@@ -1,5 +1,7 @@
 # JobHunter Documentation Map
 
+**2026-11-27 E3.1a increment 3:** [Execution identity and isolated V30 provider rehearsal](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT3.md) verified (81 lab tests, 157 focused passed; 4+4 nested mock calls; no real requests). E3.1 open; next actual runtime/model/context/rights/resource proof and remaining guard coverage. No production or accepted authority change.
+
 **2026-11-27 E3.1a increment 2:** [Offline preflight, clean checkpoint and provider seam tests](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT2.md) verified (70 lab tests, 146 focused passed; 382/800 synthetic ceiling, two-process continuation). Real dispatch still disabled; E3.1 remains open; next checkpoint identity, runtime proof and isolated provider guard work.
 
 **2026-11-27 AR.15:** [Optional hosted LLM API capability](AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md#54-optional-hosted-llm-apis-and-hybrid-execution-ar15-future-capability) registered at owner request: explicit local/hosted selection, secure API credentials, approved egress/data scope, cost controls and separately qualified adapters. No implementation, keys, external calls or frozen E3 changes; E3.1a continuation remains next.

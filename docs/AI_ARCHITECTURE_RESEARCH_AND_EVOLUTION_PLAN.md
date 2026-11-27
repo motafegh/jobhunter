@@ -3,7 +3,7 @@
 **Adopted:** 2026-11-25 — owner approved the research directions discussed after E1.9.
 **Revision anchor:** main at `44181746a58002889440eccb254526cf8b1d183a`.
 **Status:** ACTIVE strategic research companion; planning approved, implementation and promotion individually gated.
-**Next execution:** E3.1a continuation (two offline lab increments verified) in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
+**Next execution:** E3.1a continuation (three offline lab increments verified) in [P1.6 semantic architecture evolution](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md). This document does not create a new immediate implementation phase.
 
 ## 1. Mission, authority and relationship to existing work
 
@@ -374,6 +374,7 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-27 | [E3.1a offline lab increment 1](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT1.md) | Verified offline only; no actual provider/preflight qualification |
 | 2026-11-27 | [AR.15 optional hosted LLM APIs](#54-optional-hosted-llm-apis-and-hybrid-execution-ar15-future-capability) | REGISTERED by owner request; no implementation, key or external dispatch; E3 unchanged |
 | 2026-11-27 | [E3.1a increment 2](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT2.md) | Offline preflight/checkpoints and selected provider seams verified; no live qualification |
+| 2026-11-27 | [E3.1a increment 3](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT3.md) | Execution identity and isolated V30 provider rehearsal verified; actual runtime proof pending |
 | Next | E3.1a continuation | OPEN within E3.1 in existing tracker |
 
 **Resume:** [E3.1](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), start offline AI Lab guard/runner; E2.6 froze selected bounded protocol, no winning architecture or model. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or current local-only execution policy; AR.15 is a separately gated future capability. Explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.

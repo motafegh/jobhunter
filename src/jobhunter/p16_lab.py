@@ -10,11 +10,13 @@ import os
 import re
 import shutil
 import sqlite3
+import sys
 import threading
 import time
 from collections.abc import Callable
 from contextlib import closing
 from dataclasses import dataclass
+from importlib.metadata import version
 from pathlib import Path
 from typing import Any
 
@@ -87,6 +89,56 @@ def load_requirements(root: Path = ROOT) -> tuple[dict, dict]:
     if protocol["budget"] != freeze["budget"]:
         raise ValueError("budget mismatch")
     return freeze, protocol
+
+
+def execution_identity() -> dict:
+    """Bind offline continuation to checkout source bytes and key installed versions.
+
+    Not a full dependency lock or attestation of loaded modules/native runtime.
+    """
+    source = ROOT / "src/jobhunter"
+    files = {str(p.relative_to(ROOT)): file_digest(p) for p in sorted(source.rglob("*.py"))}
+    files["pyproject.toml"] = file_digest(ROOT / "pyproject.toml")
+    return {
+        "contract": "p16-offline-execution-identity-v1",
+        "source_tree_sha256": digest(canonical(files)),
+        "source_files": len(files),
+        "python": sys.version,
+        "packages": {
+            name: version(name)
+            for name in (
+                "httpx",
+                "httpcore",
+                "openai",
+                "instructor",
+                "pydantic",
+                "pydantic-core",
+                "tenacity",
+                "jsonschema",
+            )
+        },
+    }
+
+
+def verify_private_copies(path: Path, rows: list[dict], expected: dict) -> None:
+    """Match named clone events and immutable copies; no DB initialization."""
+    cloned = {}
+    for row in rows:
+        if row["event"] == "snapshot_cloned":
+            name = row["snapshot"]
+            if name in cloned or name not in expected or row["sha256"] != expected[name]:
+                raise ValueError("snapshot event mismatch")
+            cloned[name] = row["sha256"]
+    for name in SNAPSHOTS:
+        copy = checked_path(path, f"{name}.sqlite3")
+        if name in cloned:
+            if not copy.is_file() or file_digest(copy) != cloned[name]:
+                raise ValueError("private copy mismatch")
+            for suffix in ("-wal", "-journal", "-shm"):
+                if Path(str(copy) + suffix).exists():
+                    raise ValueError("private copy sidecar")
+        elif copy.exists():
+            raise ValueError("unrecorded private copy")
 
 
 def sync_directory(path: Path) -> None:
@@ -251,6 +303,7 @@ class OfflineRun:
         freeze, protocol = load_requirements(root)
         self.root = root.resolve(strict=True)
         self.snapshot_hashes = freeze["frozen_snapshot_sha256"]
+        self.execution = execution_identity()
         self.diagnostic_only = diagnostic_only
         self.preflight_results: dict[str, str] = {}
         self.preflight_gen = self.preflight_control = 0
@@ -281,6 +334,7 @@ class OfflineRun:
                     "real_dispatch_enabled": False,
                     "simulated_challenger": "M1",
                     "diagnostic_only": diagnostic_only,
+                    "execution_identity": self.execution,
                 }
             ),
         )
@@ -552,6 +606,12 @@ class OfflineRun:
         self.require_open()
         if self.session_start is not None or self.cell is not None or self.in_flight:
             self.stop("unsafe_checkpoint")
+        try:
+            if execution_identity() != self.execution:
+                raise ValueError("execution identity changed")
+            verify_private_copies(self.path, read_events(self.journal.path), self.snapshot_hashes)
+        except Exception:
+            self.stop("checkpoint_identity_mismatch")
         self.event(
             "session_checkpoint",
             active_seconds=self.active_elapsed,
@@ -578,10 +638,13 @@ class OfflineRun:
                 or manifest["run_id"] != run_id
                 or manifest["real_dispatch_enabled"] is not False
                 or type(manifest["diagnostic_only"]) is not bool
+                or manifest.get("execution_identity") != execution_identity()
                 or (path / "receipt.json").exists()
             ):
                 raise ValueError("checkpoint manifest mismatch")
+            verify_private_copies(path, rows, freeze["frozen_snapshot_sha256"])
             r = cls.__new__(cls)
+            r.execution = manifest["execution_identity"]
             r.root, r.path, r.journal = root.resolve(strict=True), path, journal
             r.snapshot_hashes, r.budget = freeze["frozen_snapshot_sha256"], freeze["budget"]
             r.cells = tuple(protocol["cells"])
@@ -696,15 +759,28 @@ class OfflineRun:
     def seal(self) -> dict:
         if self.sealed or self.paused:
             raise LabStopped("already sealed or paused")
+        if threading.get_ident() != self.owner_thread or self.in_flight:
+            raise LabStopped("unsafe seal")
         if self.cell is not None and not self.stopped:
             self.stop("unfinished_cell")
         if self.session_start is not None:
-            self.active_elapsed += self.clock() - self.session_start
+            elapsed = self.clock() - self.session_start
+            if (
+                not math.isfinite(elapsed)
+                or elapsed < 0
+                or elapsed >= self.budget["active_seconds_per_session_cap"]
+                or self.active_elapsed + elapsed >= self.budget["active_total_seconds_cap"]
+            ):
+                self.stopped = True
+                self.event("stopped", reason="seal_deadline_or_clock")
+            if math.isfinite(elapsed) and elapsed >= 0:
+                self.active_elapsed += elapsed
             self.session_start = None
         report = {
             "contract": CONTRACT,
             "mode": "offline_simulation",
             "authority": "candidate_only",
+            "execution_identity": self.execution,
             "generation_reservations": self.gen,
             "control_reservations": self.control,
             "stopped": self.stopped,
@@ -914,6 +990,8 @@ class OfflineGuard(httpx.BaseTransport):
         error = None
         try:
             r.check_time()
+            if not 0 <= r.clock() - sample.observed_at <= b["memory_poll_target_seconds"]:
+                r.stop("resource_sample_expired")
             mock_dispatched = True
             response = self.inner.handle_request(request)
             response.read()

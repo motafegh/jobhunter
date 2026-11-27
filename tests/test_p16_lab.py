@@ -773,3 +773,112 @@ def test_actual_instructor_boundary_fake_http(active, monkeypatch):
     )
     assert result.structured == {"text": "synthetic"}
     assert len(seen) == active[0].gen == 2
+
+
+def test_resume_refuses_changed_execution_identity(root, monkeypatch):
+    from jobhunter import p16_lab
+
+    r = OfflineRun(root, "identity")
+    r.start_session()
+    r.finish_session()
+    r.pause()
+    monkeypatch.setattr(p16_lab, "execution_identity", lambda: {"changed": True})
+    with pytest.raises(ValueError, match="manifest"):
+        OfflineRun.resume(root, "identity")
+
+
+def test_pause_refuses_changed_execution_identity(root, monkeypatch):
+    from jobhunter import p16_lab
+
+    r = OfflineRun(root, "identity-pause")
+    r.start_session()
+    r.finish_session()
+    monkeypatch.setattr(p16_lab, "execution_identity", lambda: {"changed": True})
+    with pytest.raises(LabStopped, match="checkpoint_identity_mismatch"):
+        r.pause()
+    assert r.seal()["stopped"]
+
+
+def test_resume_refuses_unrecorded_copy(root):
+    r = OfflineRun(root, "copy-identity")
+    r.start_session()
+    r.finish_session()
+    r.pause()
+    (r.path / "accepted.sqlite3").write_bytes(b"unexpected")
+    with pytest.raises(ValueError, match="unrecorded private copy"):
+        OfflineRun.resume(root, "copy-identity")
+
+
+def test_pause_refuses_unrecorded_copy(root):
+    r = OfflineRun(root, "copy-pause")
+    r.start_session()
+    r.finish_session()
+    (r.path / "accepted.sqlite3").write_bytes(b"unexpected")
+    with pytest.raises(LabStopped, match="checkpoint_identity_mismatch"):
+        r.pause()
+    assert r.seal()["stopped"]
+
+
+def test_resource_expiry_after_reservation(active, monkeypatch):
+    r, clock = active
+    original = r.journal.append
+
+    def append(event, **fields):
+        seq = original(event, **fields)
+        if event == "reserved":
+            clock.now += 2
+        return seq
+
+    monkeypatch.setattr(r.journal, "append", append)
+    g = guard(active, handler=lambda req: pytest.fail("must not dispatch"))
+    with pytest.raises(LabStopped, match="resource_sample_expired"):
+        g.handle_request(request())
+    assert r.gen == 1
+    rows = [json.loads(line) for line in r.journal.path.read_text().splitlines()]
+    assert rows[-1]["mock_dispatched"] is False
+    assert r.seal()["stopped"]
+
+
+@pytest.mark.parametrize(
+    ("scenario", "generation", "control", "finished"),
+    [
+        ("success", 1, 1, 1),
+        ("nested", 4, 4, 1),
+        ("malformed", 2, 1, 0),
+        ("unowned", 0, 1, 0),
+        ("network_denied", 0, 0, 0),
+    ],
+)
+def test_isolated_actual_v30_provider(root, scenario, generation, control, finished):
+    from jobhunter.p16_lab_provider_worker import rehearse_provider
+
+    evidence = rehearse_provider(root, "provider-" + scenario, scenario)
+    assert evidence["status"] == "child_completed"
+    child = evidence["child"]
+    assert evidence["journal"]["sealed"]
+    assert child["generation_reservations"] == generation
+    assert child["control_reservations"] == control
+    assert child["finished"] == finished
+    assert child["stopped"] is (finished == 0)
+    assert child["real_dispatches"] == 0
+    assert not evidence["server_idle_established"]
+    if scenario == "nested":
+        assert child["validation_calls"] == {"v15": 4, "v16": 2}
+    if scenario == "network_denied":
+        assert "socket.__new__" in child["denied_event_names"]
+    if finished:
+        assert child["denied_operations"] == 0
+
+
+def test_isolated_provider_timeout(root):
+    from jobhunter.p16_lab_provider_worker import rehearse_provider
+
+    evidence = rehearse_provider(root, "provider-stall", "stall", timeout=8)
+    assert evidence["status"] == "child_timeout"
+    assert not evidence["retry_allowed"]
+    assert evidence["child"] is None
+    assert evidence["journal"] is not None
+    assert evidence["journal"]["outstanding_reservations"]
+    assert not evidence["journal"]["sealed"]
+    with pytest.raises(ValueError):
+        OfflineRun.resume(root, "provider-stall")
