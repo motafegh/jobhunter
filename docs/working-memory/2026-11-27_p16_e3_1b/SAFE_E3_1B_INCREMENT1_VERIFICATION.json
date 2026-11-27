@@ -1,0 +1,395 @@
+{
+  "a0_smokes": {
+    "retained": {
+      "control": 1,
+      "finished": 0,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 15
+      },
+      "journal_sha256": "8f48af59e737bb142ee10289f21062f95c922a8c0f7324b23f29a9bf536c5f6f",
+      "manifest_sha256": "67d97971843ca102384bb9aff7e3f6784bffb1aed666030d4ba8005524f75bbe",
+      "receipt_sha256": "d5d2b8c3bca2687c58db702bd9e8350d3f29cd38e8df360c9e72f7abe14a8aac",
+      "storage": {
+        "event": "a0_storage_verified",
+        "foreign_keys": true,
+        "frozen_preserved": true,
+        "history_preserved": null,
+        "integrity": true,
+        "latest_attempt": [
+          "failed",
+          null
+        ],
+        "replayed_completions": 2,
+        "seq": 14,
+        "working_sha256": "962e589182560a8c32fa6bb90e5a3bad8c54e4ccf67fb8781b5b406cbd06831b"
+      }
+    },
+    "synthetic": {
+      "control": 1,
+      "finished": 1,
+      "generation": 1,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 12
+      },
+      "journal_sha256": "14282ce86c3f60ceeadf841016461419ae4290d15e12d707beb27a52014bffa9",
+      "manifest_sha256": "23e6da5baa22f5464cac7dd8209017c2df456b63cd61d0af5dfe1086104132b2",
+      "receipt_sha256": "13b153f3cf0e691cac4963529b6c9de3e7e853aaccc970c0b9a331f2bfe7a4b9",
+      "storage": {
+        "event": "a0_storage_verified",
+        "foreign_keys": true,
+        "frozen_preserved": null,
+        "history_preserved": true,
+        "integrity": true,
+        "latest_attempt": [
+          "completed",
+          2
+        ],
+        "replayed_completions": 0,
+        "seq": 11,
+        "working_sha256": "6549680a682bb32be4d8691acccf32d42097830f960f8117f4a86a6a8c98b14b"
+      }
+    }
+  },
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "E3.1b finish A1 repair family and integration; general A0 schedule binding; A2",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 221,
+    "source_tree_sha256": "8819532a25e0f2dc6ba8765a62e4008d140c9334266ee3e09a9c44fe32412fd4"
+  },
+  "file_sha256": {
+    "scripts/verify_p16_a1_r1_replay.py": "4e17feb32b525cf6f60f4506ec36a815c51027007c1e61363235af0f6e91b1ca",
+    "src/jobhunter/p16_lab_a0.py": "a6f34c4d394483d748d5b35809bc4e00e3ad9b04fe7f919108600b8388a0c0b3",
+    "src/jobhunter/p16_lab_a1_r1.py": "1966d22756299bc792c58e609addee77faf28dd8ac0c16cb677419f7dd18116f",
+    "src/jobhunter/p16_lab_provider_worker.py": "631195216ff2d2cafc139826490a8f5c029c18dfbc52acb2f59d5236ba17fec5",
+    "tests/test_p16_lab_semantics.py": "c19b9399d31fab9594a1727dd61cbcc3b4f7ed1af0433d509c713a49776da2d2"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "A0 fixed D1 retained failure and synthetic positive rehearsal, not full scheduled comparator",
+    "R1 four item-level recoveries, no full response success, candidate schema not yet integrated with provider/persistence",
+    "Live runtime and executable preflight gates still open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46042840564
+  },
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "r1_replay": {
+    "authority": "offline_diagnostic_only",
+    "full_responses_valid": 0,
+    "model_calls": 0,
+    "private_replay_sha256": "6e868598bd3cd0b7e912d682d0602de72b61f89a2d40a3b55277f7e42085f055",
+    "responses": [
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 1,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 1,
+        "partition": 1,
+        "targets": [
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 1
+          },
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 2
+          }
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 1,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              0
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 2,
+        "partition": 1,
+        "targets": [
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 0
+          },
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 1
+          }
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 2,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 3,
+        "partition": 2,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 2,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 4,
+        "partition": 2,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 3,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 5,
+        "partition": 1,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 3,
+        "before_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 6,
+        "partition": 1,
+        "targets": []
+      }
+    ],
+    "target_items_recovered": 4
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "ba2cf88b6658e20a4e80ad07b688e025d69a29f9",
+  "ruff": "passed",
+  "tests": {
+    "additional": 15,
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py",
+    "focused_passed": 208,
+    "lab_qualification_semantic_total": 127
+  }
+}

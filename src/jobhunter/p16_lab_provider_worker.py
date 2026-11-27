@@ -11,9 +11,11 @@ import os
 import platform
 import re
 import socket
+import sqlite3
 import subprocess
 import sys
 import time
+from contextlib import closing
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -27,6 +29,7 @@ from jobhunter.p16_lab import (
     Resources,
     checked_path,
     digest,
+    file_digest,
     inspect_journal,
     read_events,
 )
@@ -37,17 +40,49 @@ from jobhunter.p16_lab_qualification import (
     pinned_artifacts,
 )
 
-SCENARIOS = frozenset({"success", "nested", "malformed", "unowned", "network_denied", "stall"})
+SCENARIOS = frozenset(
+    {
+        "success",
+        "nested",
+        "malformed",
+        "unowned",
+        "network_denied",
+        "stall",
+        "a0-retained",
+        "a0-synthetic",
+    }
+)
 BASE = "http://127.0.0.1:18080/v1"
 
 
 def _child(root: Path, run_id: str, scenario: str) -> dict:
-    if scenario not in SCENARIOS:
-        raise ValueError("unsupported fixed scenario")
+    if scenario not in SCENARIOS or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}", run_id):
+        raise ValueError("unsupported fixed scenario or run ID")
+    a0 = scenario in {"a0-retained", "a0-synthetic"}
+    run_path = checked_path(root, f"data/local-acceptance/p16-evolution-e3/{run_id}")
+    allowed_sqlite = (
+        {
+            str(run_path / "working.sqlite3"),
+            (run_path / "nov23.copy.tmp").as_uri() + "?mode=ro&immutable=1",
+            (run_path / "nov23.sqlite3").as_uri() + "?mode=ro&immutable=1",
+        }
+        if a0
+        else set()
+    )
     denied = []
     blocked_import_probes = []
 
+    sqlite_pending = False
+
     def deny(event, args):
+        nonlocal sqlite_pending
+        if event == "sqlite3.connect":
+            sqlite_pending = bool(args and str(args[0]) in allowed_sqlite)
+            if sqlite_pending:
+                return
+        if event == "sqlite3.connect/handle" and sqlite_pending:
+            sqlite_pending = False
+            return
         if (
             event.startswith("socket.")
             or event.startswith("sqlite3.connect")
@@ -85,13 +120,26 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     platform.platform = lambda *args, **kwargs: "offline-rehearsal"
     run = OfflineRun(root, run_id, diagnostic_only=True)
     run.start_session()
+    if a0:
+        run.event(
+            "a0_rehearsal_scope",
+            fixture_kind=("retained_response_replay" if scenario == "a0-retained" else "synthetic"),
+            actual_experiment_cell=False,
+        )
+    a0_input = None
+    if a0:
+        from jobhunter.p16_lab_a0 import prepare_retained_d1, prepare_synthetic
+
+        a0_input = prepare_retained_d1(run) if scenario == "a0-retained" else prepare_synthetic(run)
     run.start_cell(run.cells[0]["cell_id"])
     model = run.models["M0"]
     attempts = {"v15": 0, "v16": 0}
+    reply_index = 0
     original15 = rt20.validate_v15_candidate_structured
     original16 = rt16.validate_v16_candidate_structured
 
     def mock(req):
+        nonlocal reply_index
         if req.method == "GET":
             models = [
                 {
@@ -119,6 +167,12 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
                 }
             )
         )
+        if scenario == "a0-retained":
+            replies = a0_input[3]
+            if reply_index >= len(replies):
+                run.stop("retained_replay_exhausted")
+            content = replies[reply_index]
+            reply_index += 1
         return httpx.Response(
             200,
             json={
@@ -133,7 +187,9 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
                         "message": {"role": "assistant", "content": content},
                     }
                 ],
-                "usage": {"prompt_tokens": 10, "completion_tokens": 10},
+                "usage": None
+                if scenario == "a0-retained"
+                else {"prompt_tokens": 10, "completion_tokens": 10},
             },
         )
 
@@ -204,6 +260,7 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     rt20.validate_v15_candidate_structured = validate15
     rt16.validate_v16_candidate_structured = validate16
     error = None
+    a0_result = None
     try:
         if scenario == "network_denied":
             try:
@@ -218,32 +275,95 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
             timeout_seconds=30,
             max_retries=0,
         )
-        result = p.complete_structured(
-            model=model,
-            system_prompt=JobAnalysisServiceV30.system_prompt,
-            user_payload={"analysis_fields": {"title": "Synthetic"}, "analysis_mode": "english"},
-            max_tokens=8192,
-            seed=17,
-        )
+        if a0:
+            from jobhunter.p16_lab_a0 import analyze_fresh
+
+            result = analyze_fresh(run, *a0_input[:3], provider=p)
+            a0_result = {
+                "artifact_id": result.artifact_id,
+                "outcome": result.outcome,
+                "semantic_review_status": result.semantic_review_status,
+            }
+        else:
+            result = p.complete_structured(
+                model=model,
+                system_prompt=JobAnalysisServiceV30.system_prompt,
+                user_payload={
+                    "analysis_fields": {"title": "Synthetic"},
+                    "analysis_mode": "english",
+                },
+                max_tokens=8192,
+                seed=17,
+            )
+            if set(result.structured) != {
+                "role_purpose",
+                "responsibilities",
+                "requirements",
+                "coverage_exclusions",
+            }:
+                run.stop("unexpected_response_shape")
         if denied or run.stopped:
             run.stop("unexpected_denial")
-        if set(result.structured) != {
-            "role_purpose",
-            "responsibilities",
-            "requirements",
-            "coverage_exclusions",
-        }:
-            run.stop("unexpected_response_shape")
         run.finish_cell(idle_confirmed=True)  # only synthetic, not server evidence
     except Exception as exc:
         error = type(exc).__name__
         if not run.stopped:
             with contextlib.suppress(LabStopped):
                 run.stop("provider_failed")
+    a0_storage = None
+    if a0:
+        database = a0_input[0]
+        with closing(sqlite3.connect(database)) as db:
+            db.execute("PRAGMA wal_checkpoint(TRUNCATE)")
+            integrity = db.execute("PRAGMA integrity_check").fetchall() == [("ok",)]
+            fk = db.execute("PRAGMA foreign_key_check").fetchone() is None
+            latest_attempt = db.execute(
+                "SELECT outcome,artifact_id FROM job_analysis_attempts ORDER BY id DESC LIMIT 1"
+            ).fetchone()
+            if scenario == "a0-synthetic":
+                history = db.execute(
+                    "SELECT semantic_review_status FROM job_analysis_artifacts WHERE id=1"
+                ).fetchone()
+                history_preserved = history == ("accepted",)
+            else:
+                history_preserved = None
+        frozen_preserved = (
+            file_digest(run.path / "nov23.sqlite3") == run.snapshot_hashes["nov23"]
+            if scenario == "a0-retained"
+            else None
+        )
+        a0_storage = {
+            "integrity": integrity,
+            "foreign_keys": fk,
+            "latest_attempt": list(latest_attempt) if latest_attempt else None,
+            "history_preserved": history_preserved,
+            "frozen_preserved": frozen_preserved,
+            "working_sha256": file_digest(database),
+            "replayed_completions": reply_index,
+        }
+        run.event("a0_storage_verified", **a0_storage)
+        expected_attempt = (
+            ["completed", a0_result["artifact_id"]] if a0_result else ["failed", None]
+        )
+        if (
+            not integrity
+            or not fk
+            or list(latest_attempt or ()) != expected_attempt
+            or history_preserved is False
+            or frozen_preserved is False
+            or (scenario == "a0-retained" and reply_index != len(a0_input[3]))
+        ):
+            with contextlib.suppress(LabStopped):
+                run.stop("a0_storage_or_replay_unverified")
+            a0_result = None
+            error = "A0StorageOrReplayUnverified"
     report = run.seal()
     return {
         "scenario": scenario,
+        "a0_result": a0_result,
+        "a0_storage": a0_storage,
         "synthetic_only": True,
+        "fixture_kind": "retained_response_replay" if scenario == "a0-retained" else "synthetic",
         "error_type": error,
         "validation_calls": attempts,
         "denied_operations": len(denied),
