@@ -31,7 +31,7 @@ SCENARIOS = frozenset({"complete", "crash", "stall"})
 def supervise_offline(root: Path, run_id: str, scenario: str, timeout: float) -> dict:
     if scenario not in SCENARIOS or not 0 < timeout <= 240:
         raise ValueError("invalid synthetic worker specification")
-    run = OfflineRun(root, run_id)
+    run = OfflineRun(root, run_id, diagnostic_only=True)
     run.start_session()
     run.start_cell(run.cells[0]["cell_id"])
     status = "not_started"

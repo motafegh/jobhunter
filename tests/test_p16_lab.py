@@ -46,7 +46,7 @@ class Clock:
 @pytest.fixture
 def active(root):
     clock = Clock()
-    run = OfflineRun(root, "test-run", clock=clock)
+    run = OfflineRun(root, "test-run", clock=clock, diagnostic_only=True)
     run.start_session()
     run.start_cell(run.cells[0]["cell_id"])
     yield run, clock
@@ -280,7 +280,7 @@ def test_no_real_transport(active):
 
 
 def test_schedule_and_session_limit(root):
-    run = OfflineRun(root, "schedule", clock=Clock())
+    run = OfflineRun(root, "schedule", clock=Clock(), diagnostic_only=True)
     try:
         run.start_session()
         for cell in run.cells[:12]:
@@ -294,7 +294,7 @@ def test_schedule_and_session_limit(root):
 
 
 def test_out_of_order(root):
-    run = OfflineRun(root, "order", clock=Clock())
+    run = OfflineRun(root, "order", clock=Clock(), diagnostic_only=True)
     run.start_session()
     with pytest.raises(LabStopped, match="out_of_order"):
         run.start_cell(run.cells[1]["cell_id"])
@@ -439,7 +439,7 @@ def test_clone_refuses_invalid_snapshot(root, case):
 
 def test_full_schedule_simulated_diagnostic_reservations(root):
     clock = Clock()
-    run = OfflineRun(root, "all-cells", clock=clock)
+    run = OfflineRun(root, "all-cells", clock=clock, diagnostic_only=True)
     g = guard((run, clock))
     for i, cell in enumerate(run.cells):
         if i % 12 == 0:
@@ -460,3 +460,316 @@ def test_full_schedule_simulated_diagnostic_reservations(root):
     assert report["real_dispatches"] == 0
     assert not report["remaining_cell_ids"]
     assert inspect_journal(run.journal.path)["sealed"]
+
+
+def fit_for_body(req):
+    return Fit(digest(req.content), 200, json.loads(req.content)["max_tokens"], 16384)
+
+
+def preflight(run, clock, role, *, blocked=False):
+    run.start_preflight(role)
+    g = guard((run, clock), fit=fit_for_body)
+    for _ in range(2):
+        g.handle_request(request(model=run.models[role], max_tokens=512))
+    run.finish_preflight(
+        outcome="blocked" if blocked else "qualified",
+        idle_confirmed=True,
+        blocker="technical" if blocked else None,
+    )
+
+
+def test_preflight_required(root):
+    run = OfflineRun(root, "no-preflight")
+    run.start_session()
+    with pytest.raises(LabStopped, match="preflight_required"):
+        run.start_cell(run.cells[0]["cell_id"])
+    run.seal()
+
+
+def test_preflight_caps(root):
+    clock = Clock()
+    run = OfflineRun(root, "preflight-cap", clock=clock)
+    run.start_session()
+    run.start_preflight("M0")
+    g = guard((run, clock), fit=fit_for_body)
+    for _ in range(2):
+        g.handle_request(request(max_tokens=512))
+    with pytest.raises(LabStopped, match="generation_limit"):
+        g.handle_request(request(max_tokens=512))
+    receipt = run.seal()
+    assert receipt["preflight_generation_reservations"] == 2
+    assert receipt["diagnostic_generation_reservations"] == 0
+
+
+@pytest.mark.parametrize("kind", ["output", "time", "order", "idle", "probes", "failed"])
+def test_preflight_negative(root, kind):
+    clock = Clock()
+    run = OfflineRun(root, "negative-" + kind, clock=clock)
+    run.start_session()
+    with pytest.raises(LabStopped):
+        if kind == "order":
+            run.start_preflight("M2")
+        else:
+            run.start_preflight("M0")
+            g = guard((run, clock), fit=fit_for_body)
+            if kind == "output":
+                g.handle_request(request(max_tokens=513))
+            elif kind == "time":
+                clock.now += 180
+                g.handle_request(request(max_tokens=512))
+            elif kind == "failed":
+                g = guard((run, clock), handler=lambda req: httpx.Response(503), fit=fit_for_body)
+                for _ in range(2):
+                    g.handle_request(request(max_tokens=512))
+                run.finish_preflight(outcome="qualified", idle_confirmed=True)
+            else:
+                run.finish_preflight(outcome="qualified", idle_confirmed=kind != "idle")
+    assert run.seal()["stopped"]
+
+
+def test_clean_checkpoint_preserves_budget_and_fallback(root):
+    clock = Clock()
+    r = OfflineRun(root, "checkpoint", clock=clock)
+    r.start_session()
+    preflight(r, clock, "M0")
+    preflight(r, clock, "M1", blocked=True)
+    preflight(r, clock, "M2")
+    clock.now += 11
+    r.finish_session()
+    r.pause()
+    with pytest.raises(LabStopped):
+        r.start_session()
+    # Different monotonic epoch is safe at a clean boundary.
+    clock.now = 1
+    r = OfflineRun.resume(root, "checkpoint", clock=clock)
+    assert r.gen == r.preflight_gen == 6
+    assert r.active_elapsed == 11
+    assert r.models["challenger"] == r.models["M2"]
+    with pytest.raises((ValueError, BlockingIOError)):
+        OfflineRun.resume(root, "checkpoint")
+    r.start_session()
+    g = guard((r, clock), fit=fit_for_body)
+    for cell in r.cells[:6]:
+        r.start_cell(cell["cell_id"])
+        g.handle_request(request(model=r.models[cell["model_role"]]))
+        r.finish_cell(idle_confirmed=True)
+    r.finish_session()
+    r.pause()
+    r = OfflineRun.resume(root, "checkpoint", clock=clock)
+    assert r.gen == 12 and r.next_index == 6 and r.diagnostic_gen == 6
+    receipt = r.seal()
+    assert receipt["preflight_results"] == {"M0": "qualified", "M1": "blocked", "M2": "qualified"}
+    assert receipt["generation_reservations"] == 12
+
+
+@pytest.mark.parametrize("kind", ["torn", "manifest", "prefix", "active", "sealed"])
+def test_resume_denies_invalid_state(root, kind):
+    r = OfflineRun(root, "resume-" + kind, diagnostic_only=True)
+    if kind == "active":
+        r.start_session()
+        r.start_cell(r.cells[0]["cell_id"])
+        r.journal.close()
+    elif kind == "sealed":
+        r.seal()
+    else:
+        r.start_session()
+        r.finish_session()
+        r.pause()
+        if kind == "torn":
+            with r.journal.path.open("ab") as f:
+                f.write(b"broken")
+        elif kind == "manifest":
+            p = r.path / "manifest.json"
+            p.write_bytes(p.read_bytes() + b" ")
+        else:
+            p = r.journal.path
+            p.write_bytes(
+                p.read_bytes().replace(
+                    b'"mode":"offline_simulation"', b'"mode":"offline_modified"', 1
+                )
+            )
+    with pytest.raises((ValueError, KeyError, BlockingIOError)):
+        OfflineRun.resume(root, "resume-" + kind)
+
+
+def test_full_budget_with_preflight_and_checkpoints(root):
+    clock = Clock()
+    r = OfflineRun(root, "full-caps", clock=clock)
+    r.start_session()
+    for role in ("M0", "M1", "M2"):
+        r.start_preflight(role)
+        g = guard((r, clock), fit=fit_for_body)
+        for _ in range(2):
+            g.handle_request(request(model=r.models[role], max_tokens=512))
+        for _ in range(16):
+            g.handle_request(httpx.Request("GET", BASE + "/api/v1/models"))
+        r.finish_preflight(
+            outcome="blocked" if role == "M1" else "qualified",
+            idle_confirmed=True,
+            blocker="rights" if role == "M1" else None,
+        )
+    for i, cell in enumerate(r.cells):
+        if i and i % 12 == 0:
+            r.finish_session()
+            r.pause()
+            r = OfflineRun.resume(root, "full-caps", clock=clock)
+            r.start_session()
+        if cell["conditional_interaction"] and r.conditional_eligible is None:
+            r.decide_interaction(eligible=True)
+        r.start_cell(cell["cell_id"])
+        g = guard((r, clock), fit=fit_for_body)
+        for _ in range(8):
+            g.handle_request(request(model=r.models[cell["model_role"]]))
+        for _ in range(16):
+            g.handle_request(httpx.Request("GET", BASE + "/api/v1/models"))
+        r.finish_cell(idle_confirmed=True)
+    r.finish_session()
+    receipt = r.seal()
+    assert receipt["generation_reservations"] == 382
+    assert receipt["control_reservations"] == 800
+    assert receipt["preflight_generation_reservations"] == 6
+    assert receipt["diagnostic_generation_reservations"] == 376
+    assert receipt["simulated_cells_finished"] == 47
+
+
+def test_conditional_skip_receipt(root):
+    clock = Clock()
+    r = OfflineRun(root, "skip-interaction", clock=clock)
+    r.start_session()
+    preflight(r, clock, "M0")
+    preflight(r, clock, "M1")
+    for i, cell in enumerate(r.cells):
+        if i and i % 12 == 0:
+            r.finish_session()
+            r.start_session()
+        if cell["conditional_interaction"]:
+            if r.conditional_eligible is None:
+                r.decide_interaction(eligible=False)
+            r.skip_interaction(cell["cell_id"])
+            continue
+        r.start_cell(cell["cell_id"])
+        r.finish_cell(idle_confirmed=True)
+    r.finish_session()
+    receipt = r.seal()
+    assert receipt["simulated_cells_finished"] == 42
+    assert len(receipt["skipped_cell_ids"]) == 5
+    assert not receipt["remaining_cell_ids"]
+
+
+def test_actual_native_control_helper_injected(active):
+    from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
+
+    run, _ = active
+    model = run.models["M0"]
+    seen = []
+
+    def handler(req):
+        seen.append(req.url.path)
+        if req.method == "GET":
+            return httpx.Response(
+                200, json={"models": [{"key": model, "type": "llm", "loaded_instances": []}]}
+            )
+        return httpx.Response(
+            200, json={"instance_id": model, "load_config": {"context_length": 16384}}
+        )
+
+    g = guard(active, handler)
+    state = ensure_lm_studio_model_context(
+        openai_base_url=BASE + "/v1", model=model, context_length=16384, transport=g
+    )
+    assert state.instance_id == model
+    assert seen == ["/api/v1/models", "/api/v1/models/load"]
+    assert run.control == 2
+
+
+def test_native_exclusive_unowned_unload_blocked(active):
+    from jobhunter.inference.lm_studio_runtime import ensure_lm_studio_model_context
+
+    r, _ = active
+    model = r.models["M0"]
+    seen = []
+
+    def handler(req):
+        seen.append(req.url.path)
+        return httpx.Response(
+            200,
+            json={
+                "models": [
+                    {"key": model, "type": "llm", "loaded_instances": []},
+                    {"key": "other", "type": "llm", "loaded_instances": [{"id": "user-model"}]},
+                ]
+            },
+        )
+
+    g = guard(active, handler)
+    with pytest.raises(LabStopped, match="unowned_instance"):
+        ensure_lm_studio_model_context(
+            openai_base_url=BASE + "/v1",
+            model=model,
+            context_length=16384,
+            transport=g,
+            exclusive_llm=True,
+        )
+    assert seen == ["/api/v1/models"]
+    assert r.control == 1
+
+
+def test_actual_instructor_boundary_fake_http(active, monkeypatch):
+    from types import SimpleNamespace
+
+    from pydantic import BaseModel
+
+    from jobhunter.inference import instructor_lm_studio_v20 as v20
+
+    class SyntheticResponse(BaseModel):
+        text: str
+
+    replies = iter(["not valid JSON", '{"text":"synthetic"}'])
+    seen = []
+
+    def handler(req):
+        seen.append(json.loads(req.content))
+        return httpx.Response(
+            200,
+            json={
+                "id": "synthetic",
+                "object": "chat.completion",
+                "created": 1,
+                "model": active[0].models["M0"],
+                "choices": [
+                    {
+                        "index": 0,
+                        "finish_reason": "stop",
+                        "message": {"role": "assistant", "content": next(replies)},
+                    }
+                ],
+                "usage": {"prompt_tokens": 20, "completion_tokens": 5},
+            },
+        )
+
+    g = guard(active, handler, fit=fit_for_body)
+
+    def client(**kwargs):
+        assert kwargs["trust_env"] is False
+        return httpx.Client(**kwargs, transport=g, follow_redirects=False)
+
+    # Substitute only the module's httpx reference, not global httpx.Client.
+    monkeypatch.setattr(v20, "httpx", SimpleNamespace(Client=client, Timeout=httpx.Timeout))
+    result = v20._complete_analysis_partition_with_instructor(
+        base_url=BASE + "/v1",
+        api_token=None,
+        timeout_seconds=30,
+        network_retries=0,
+        selected_model=active[0].models["M0"],
+        system_prompt="synthetic",
+        user_payload={"analysis_fields": {"title": "Synthetic"}, "analysis_mode": "english"},
+        max_tokens=8192,
+        seed=17,
+        requirement_coverage_plan={},
+        responsibility_coverage_plan={},
+        response_model=SyntheticResponse,
+        contract_version="synthetic",
+        validation_retries=2,
+    )
+    assert result.structured == {"text": "synthetic"}
+    assert len(seen) == active[0].gen == 2
