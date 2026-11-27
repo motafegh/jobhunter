@@ -10,6 +10,8 @@
 
 **2026-11-26 model discovery:** Owner plans manual downloads for later research; [qualification register](working-memory/2026-11-26_AI_MODEL_DISCOVERY_AND_QUALIFICATION_REGISTER.md) records new candidates and task-specific screening prerequisites. Registration does not qualify models, authorize new inference or expand E2.3. E2.5 selects any justified separate amendment before diagnostic output.
 
+**2026-11-27 future provider capability:** Owner requested optional online LLM API keys and provider choice. [AR.15](AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md#54-optional-hosted-llm-apis-and-hybrid-execution-ar15-future-capability) records this separately gated requirement. Current E3 remains local-only, offline until guarded; no new calls, changed freeze, automatic cloud fallback or new master checkbox.
+
 ## 1. Purpose and protected boundaries
 
 Optimize for useful, decision-relevant job intelligence per unit of user time, not structural PASS counts alone. Investigate before committing to an architecture. Preserve local-first modular monolith, SQLite, source acquisition/lifecycle, original-source identity and provenance, privacy, currentness, accepted historical artifacts, and downstream authority boundaries. Work on main unless an explicit isolation decision is made; use isolated private DB copies for experiments.

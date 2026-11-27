@@ -1,5 +1,7 @@
 # JobHunter Documentation Map
 
+**2026-11-27 AR.15:** [Optional hosted LLM API capability](AI_ARCHITECTURE_RESEARCH_AND_EVOLUTION_PLAN.md#54-optional-hosted-llm-apis-and-hybrid-execution-ar15-future-capability) registered at owner request: explicit local/hosted selection, secure API credentials, approved egress/data scope, cost controls and separately qualified adapters. No implementation, keys, external calls or frozen E3 changes; E3.1a continuation remains next.
+
 **2026-11-27 E3.1a increment 1:** [Offline AI Lab implementation and limits](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT1.md) verified (51 new tests, 126 focused passed, three frozen copies, synthetic guarded worker). Real dispatch disabled; E3.1 remains open. Continue E3.1a preflight/worker/provider guard coverage before E3.1b. No production runtime or accepted authority change.
 
 **2026-11-27 E2.6:** [Final requirements freeze](working-memory/2026-11-25_P16_EVOLUTION_E2_ARCHITECTURE_DECISION.md#2026-11-27-continuation--e26-final-implementation-requirements-freeze) and [machine-readable seal](working-memory/2026-11-27_p16_e2_freeze/E3_REQUIREMENTS_FREEZE.json) complete. E2 closed as design; E3.1a offline guard/runner next, then E3.1b adapters and reconciliation. 47 cells, 382 generation POST ceiling, existing rubric and selected model roles unchanged; all 1,286 tests with warnings as errors, Ruff, pip check, protected checks and prior CI 45877475918 passed. No model qualification, inference, production routing or B5/B6. DOC.6 incremental; V9 separate.
