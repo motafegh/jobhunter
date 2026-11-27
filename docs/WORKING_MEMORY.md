@@ -1,5 +1,7 @@
 # JobHunter Working Memory / Handoff
 
+**2026-11-27 E3.1a increment 4:** [Runtime evidence and bounded offline handoff](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT4.md) verified (112 lab/qualification tests, 188 focused; 3 exact artifact hashes matched). E3.1b offline semantic adapters next; actual runtime qualification and full live guard remain open, no real dispatch or production change. E3.1 checkbox unchanged.
+
 **2026-11-27 E3.1a increment 3:** [Execution identity and isolated V30 provider rehearsal](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT3.md) verified (81 lab tests, 157 focused passed; 4+4 nested mock calls; no real requests). E3.1 open; next actual runtime/model/context/rights/resource proof and remaining guard coverage. No production or accepted authority change.
 
 **2026-11-27 E3.1a increment 2:** [Offline preflight, clean checkpoint and provider seam tests](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT2.md) verified (70 lab tests, 146 focused passed; 382/800 synthetic ceiling, two-process continuation). Real dispatch still disabled; E3.1 remains open; next checkpoint identity, runtime proof and isolated provider guard work.

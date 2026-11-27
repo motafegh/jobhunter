@@ -899,6 +899,8 @@ class OfflineGuard(httpx.BaseTransport):
                 r.stop("generation_limit")
             try:
                 proof = self.fit(request)
+            except LabStopped:
+                raise
             except Exception:
                 r.stop("fit_probe_failed")
             try:

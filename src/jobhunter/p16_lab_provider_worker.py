@@ -21,7 +21,6 @@ import httpx
 
 from jobhunter.p16_lab import (
     ROOT,
-    Fit,
     LabStopped,
     OfflineGuard,
     OfflineRun,
@@ -30,6 +29,12 @@ from jobhunter.p16_lab import (
     digest,
     inspect_journal,
     read_events,
+)
+from jobhunter.p16_lab_qualification import (
+    ExactFit,
+    RuntimeBinding,
+    guarded_synthetic_fit,
+    pinned_artifacts,
 )
 
 SCENARIOS = frozenset({"success", "nested", "malformed", "unowned", "network_denied", "stall"})
@@ -132,10 +137,44 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
             },
         )
 
+    expected = pinned_artifacts(root)
+    identity = expected["M0"]
+
+    # These are explicitly synthetic fixtures, not measured tokenizer, rights or
+    # runtime evidence. The request digest is computed at the HTTP seam.
+    def binding():
+        return RuntimeBinding(
+            model_key=model,
+            artifact_sha256=identity["sha256"],
+            runtime_sha256="a" * 64,
+            tokenizer_sha256="b" * 64,
+            effective_template_sha256="c" * 64,
+            rights_receipt_sha256="d" * 64,
+            instance_id=model,
+            allocated_context=16384,
+            lease_id=run.path.name,
+            idle_confirmed=True,
+            synthetic=True,
+            observed_at=run.clock(),
+        )
+
+    def proof(req):
+        return ExactFit(
+            request_sha256=digest(req.content),
+            artifact_sha256=identity["sha256"],
+            runtime_sha256="a" * 64,
+            tokenizer_sha256="b" * 64,
+            effective_template_sha256="c" * 64,
+            input_tokens=100,
+            output_tokens=json.loads(req.content)["max_tokens"],
+            context_tokens=16384,
+            synthetic=True,
+        )
+
     g = OfflineGuard(
         run,
         inner=httpx.MockTransport(mock),
-        fit=lambda req: Fit(digest(req.content), 100, json.loads(req.content)["max_tokens"], 16384),
+        fit=guarded_synthetic_fit(run, expected, binding=binding, proof=proof),
         resources=lambda: Resources(run.clock(), 1024, 16, 16, 0),
     )
 

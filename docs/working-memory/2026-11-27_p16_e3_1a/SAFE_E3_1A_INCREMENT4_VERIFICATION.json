@@ -1,0 +1,138 @@
+{
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "E3.1b offline A0/A1/A2 implementation; outstanding guards before any real probes",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 219,
+    "source_tree_sha256": "440328f1f7374fdc4894c9711f3649fb01f9783fe5bb9699b8bd964fefdf5b5f"
+  },
+  "file_sha256": {
+    "src/jobhunter/p16_lab.py": "3509fa93e8b0c2bea568fac43ccd4eb4e8b9ec376ca8f7b6638e1b2640b8e986",
+    "src/jobhunter/p16_lab_provider_worker.py": "973beb93ff80a0b51fd6f2c2560ad95240e4b6f1689ac0584283d9b6ef473d2d",
+    "src/jobhunter/p16_lab_qualification.py": "81e6526aeabed8cdb3defc866f55b6a9e32ad7ea0efa88630833c6f4b54a64be",
+    "tests/test_p16_lab_qualification.py": "67bcf083e4799bd08f962552bbefa82a224935f6ea0a055cda39cd490bcb8150"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "Actual tokenizer, rights, runtime identity, context allocation, resource monitoring, idle/lease evidence and live dispatch still unverified",
+    "Evidence-shape validation and synthetic fixture only; no live authorization",
+    "Remaining effective paths instrument as concrete adapters are built; no real probes before full guard and applicable seals"
+  ],
+  "model_rehash": {
+    "actual_runtime_rights_verified": false,
+    "elapsed_seconds": 137.18,
+    "method": "read-only checked_path + streamed file_digest; stable size/mtime/inode",
+    "records": [
+      {
+        "bytes": 5101713792,
+        "elapsed_seconds": 58.412,
+        "match": true,
+        "role": "M0",
+        "sha256": "e8cd1a4c5162dfa355c567b4099206793793b5548951f077f376a0076dc0a058"
+      },
+      {
+        "bytes": 6202021408,
+        "elapsed_seconds": 56.939,
+        "match": true,
+        "role": "M1",
+        "sha256": "db6b5e7b5d25525da87f4a3899555215693e8cf4ab1be9fff90ea5dee4ba957d"
+      },
+      {
+        "bytes": 3427873920,
+        "elapsed_seconds": 21.431,
+        "match": true,
+        "role": "M2",
+        "sha256": "95182e70dd6694a797a3d832547e0dd1e19be3f45f03ecdcee0283276b660028"
+      }
+    ],
+    "total_bytes": 14731609120
+  },
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46036625761
+  },
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "provider_smoke": {
+    "control": 4,
+    "finished": 1,
+    "generation": 4,
+    "journal": {
+      "damaged_suffix": false,
+      "journal_final_event": true,
+      "outstanding_reservations": [],
+      "resume_allowed": false,
+      "sealed": true,
+      "valid_events": 21
+    },
+    "journal_sha256": "7ed6355a5b34ec0f9d48add76c8db3655bd856171d7b2a95f8372abcf914f574",
+    "manifest_sha256": "976a03e2ad18d7356a77a7e6146f5db65a6c08328cc49e7117acd399652e1dfd",
+    "receipt_sha256": "91af890fdfefbbe648c2c08145f10bf7a63356e128d038c80a356262b1a3454a"
+  },
+  "raw_direct_provider_mock_generation": 2,
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "resource_smoke": {
+    "duration_seconds": 0.08487812999737798,
+    "gpu_free_mib": 6306,
+    "gpu_temperature_c": 49.4,
+    "gpu_total_mib": 8192,
+    "qualified": false,
+    "swap_free_kib": 16777216,
+    "swap_growth_mib": null,
+    "swap_total_kib": 16777216,
+    "thermal_or_oom": null,
+    "windows_available_gib": null,
+    "wsl_mem_available_kib": 51191280
+  },
+  "revision": "ca9063d3765a8e16965079a0f17377e2773b5083",
+  "ruff": "passed",
+  "tests": {
+    "additional": 31,
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py",
+    "focused_total_passed": 188,
+    "lab_and_qualification_passed": 112
+  },
+  "tokenizer_modules_available": {
+    "gguf": false,
+    "llama_cpp": false,
+    "tokenizers": false,
+    "transformers": false
+  }
+}
