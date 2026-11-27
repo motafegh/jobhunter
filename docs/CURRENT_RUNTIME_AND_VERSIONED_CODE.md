@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**2026-11-28 E3.1b increment 2:** [Independent R2/R3/R4 seams](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT2.md) verified (27 new tests, 235 focused; 2 motivational items, one corrected duty partition, 52 original board tags across 12 source versions). All four A1 seams available individually; combined provider/persistence and A2 remain open. No real dispatch or production change.
+
 **2026-11-27 E3.1b increment 1:** [A0 service rehearsal and R1 scoped repair](working-memory/2026-11-27_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT1.md) verified (15 new tests, 208 focused passed; 4/4 targeted retained items recovered, 0/6 full responses pass). Fixed D1 baseline failure and fresh synthetic pending persistence verified; complete A1 repairs/integration and A2 next. No real dispatch or production change; E3.1 open.
 
 **2026-11-27 E3.1a increment 4:** [Runtime evidence and bounded offline handoff](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT4.md) verified (112 lab/qualification tests, 188 focused; 3 exact artifact hashes matched). E3.1b offline semantic adapters next; actual runtime qualification and full live guard remain open, no real dispatch or production change. E3.1 checkbox unchanged.

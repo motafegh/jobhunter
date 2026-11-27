@@ -1,0 +1,690 @@
+{
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "combined A1 integration and candidate envelope; general A0 binding; A2",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 223,
+    "source_tree_sha256": "b42a43ae49c3e23bb3bcbccaff7ae623fb66782b4a2c884e79e2b9bf2ff8ec9d"
+  },
+  "file_sha256": {
+    "scripts/verify_p16_a1_r234_replay.py": "c7386e459fcd2ac5a523d221a3436054174302055f4d40744961473cc945517f",
+    "src/jobhunter/p16_lab_a1_r23.py": "e5a79bb9c8425c577cc4b3daa9e72d20afdec87b6623159482dc13e157ff6f18",
+    "src/jobhunter/p16_lab_a1_r4.py": "5328b757e3b0bb8a2891070686409b08624bdad8d2fecfe3a4b3d9dcc22667ac",
+    "tests/test_p16_lab_a1_repairs.py": "7168e2df584baa24d2c3b41af15d78fd7c5e5bffab84edc36ec728f32b23b3ae"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "Independent repair seams only; no combined provider or persistence verified",
+    "R2 item recovery not full response; R3 partition not complete service; R4 metadata observation not semantic assessment",
+    "All live runtime and preflight gates remain open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46052599131
+  },
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "r1_replay": {
+    "authority": "offline_diagnostic_only",
+    "full_responses_valid": 0,
+    "model_calls": 0,
+    "private_replay_sha256": "6e868598bd3cd0b7e912d682d0602de72b61f89a2d40a3b55277f7e42085f055",
+    "responses": [
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 1,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 1,
+        "partition": 1,
+        "targets": [
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 1
+          },
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 2
+          }
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 1,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              0
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 2,
+        "partition": 1,
+        "targets": [
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 0
+          },
+          {
+            "after_valid": true,
+            "before_valid": false,
+            "exact_parent_child_degree_preserved": true,
+            "index": 1
+          }
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 2,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 3,
+        "partition": 2,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 2,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 4,
+        "partition": 2,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 3,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 5,
+        "partition": 1,
+        "targets": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_full_valid": false,
+        "attempt": 3,
+        "before_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "before_full_valid": false,
+        "diagnostic": 6,
+        "partition": 1,
+        "targets": []
+      }
+    ],
+    "target_items_recovered": 4
+  },
+  "r234_replay": {
+    "authority": "offline_diagnostic_only",
+    "model_calls": 0,
+    "r2": [
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              3
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              4
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              5
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              6
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 1,
+        "recovered": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              0
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              0
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 2,
+        "recovered": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 3,
+        "recovered": [
+          1
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 4,
+        "recovered": [
+          1
+        ]
+      },
+      {
+        "after_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 5,
+        "recovered": []
+      },
+      {
+        "after_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "after_valid": false,
+        "before_errors": [
+          {
+            "location": [],
+            "type": "value_error"
+          }
+        ],
+        "before_valid": false,
+        "diagnostic": 6,
+        "recovered": []
+      }
+    ],
+    "r3": [
+      {
+        "after_duties": 7,
+        "after_valid": false,
+        "before_duties": 8,
+        "before_valid": false,
+        "diagnostic": 5,
+        "errors": [
+          {
+            "location": [
+              "requirements",
+              1
+            ],
+            "type": "value_error"
+          },
+          {
+            "location": [
+              "requirements",
+              2
+            ],
+            "type": "value_error"
+          }
+        ],
+        "missing_genuine_duty_rejected": false,
+        "removed": [
+          "field:description:v21:duty:0:item:7"
+        ]
+      },
+      {
+        "after_duties": 7,
+        "after_valid": true,
+        "before_duties": 8,
+        "before_valid": false,
+        "diagnostic": 6,
+        "errors": [],
+        "missing_genuine_duty_rejected": true,
+        "removed": [
+          "field:description:v21:duty:0:item:7"
+        ]
+      }
+    ],
+    "r4": {
+      "sources": [
+        {
+          "board_tags": 6,
+          "employer_obligation_asserted": 0,
+          "group": "accepted",
+          "source_version": 40
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "accepted",
+          "source_version": 41
+        },
+        {
+          "board_tags": 5,
+          "employer_obligation_asserted": 0,
+          "group": "accepted",
+          "source_version": 44
+        },
+        {
+          "board_tags": 4,
+          "employer_obligation_asserted": 0,
+          "group": "accepted",
+          "source_version": 30
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "accepted",
+          "source_version": 35
+        },
+        {
+          "board_tags": 4,
+          "employer_obligation_asserted": 0,
+          "group": "exposed",
+          "source_version": 1
+        },
+        {
+          "board_tags": 11,
+          "employer_obligation_asserted": 0,
+          "group": "exposed",
+          "source_version": 2
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "exposed",
+          "source_version": 4
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "exposed",
+          "source_version": 5
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "nov23",
+          "source_version": 1
+        },
+        {
+          "board_tags": 4,
+          "employer_obligation_asserted": 0,
+          "group": "nov23",
+          "source_version": 4
+        },
+        {
+          "board_tags": 3,
+          "employer_obligation_asserted": 0,
+          "group": "nov23",
+          "source_version": 6
+        }
+      ],
+      "total_tags": 52
+    }
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "20d6de04ee606aa6560d7de1348f763377923371",
+  "ruff": "passed",
+  "tests": {
+    "additional": 27,
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_p16_lab_a1_repairs.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py",
+    "focused_passed": 235,
+    "lab_qualification_semantic_total": 154
+  }
+}
