@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**2026-11-27 E3.1a increment 1:** [Offline AI Lab implementation and limits](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT1.md) verified (51 new tests, 126 focused passed, three frozen copies, synthetic guarded worker). Real dispatch disabled; E3.1 remains open. Continue E3.1a preflight/worker/provider guard coverage before E3.1b. No production runtime or accepted authority change.
+
 **Selected experimental design (DOC.5; proposed only):** [Implementation-facing maps and profiles](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC5_SELECTED_DESIGN.md) document isolated A0/A1/A2 and language comparisons. No production route or accepted authority changed; use current maps below for as-built behavior. [E2.6 requirements](working-memory/2026-11-27_p16_e2_freeze/E3_REQUIREMENTS_FREEZE.json) frozen; E3.1 offline implementation next, guards and execution seal precede model experiments.
 
 **Optional inspection aid (DOC.4):** [Feasibility and commands](working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC4_INSPECTION_FEASIBILITY.md) describe the curated read-only developer script and its limitations. Generated AST/import/schema/MRO reports supplement, not replace, verified runtime narratives and authority checks.

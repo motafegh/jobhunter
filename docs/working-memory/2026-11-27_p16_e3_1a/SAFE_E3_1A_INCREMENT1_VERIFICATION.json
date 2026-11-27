@@ -1,0 +1,89 @@
+{
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "E3.1a continuation",
+    "total": 45
+  },
+  "copy_integrity_fk": "passed on all three copies",
+  "design_inputs_matched": 11,
+  "frozen_copy_hashes": {
+    "accepted": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c",
+    "exposed": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+    "nov23": "136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68"
+  },
+  "limitations": [
+    "Offline MockTransport only; actual provider paths not instrumented.",
+    "No preflight accounting, safe process-resume, real resource/tokenizer/idle qualification or live watchdog yet.",
+    "All schedule outcomes synthetic, no semantic outputs or actual experiment execution.",
+    "Trusted local filesystem/worker, not OS sandbox."
+  ],
+  "new_file_hashes": {
+    "src/jobhunter/p16_lab.py": "4fdefe648219b8a76a5cbb44e1604ba47ac4faf21beac5950a9e9cf38305cdbc",
+    "src/jobhunter/p16_lab_watchdog.py": "863291cbdc2a337f3d4742f4f13d3d88ceba9b05ecd2d77ebde40f197205685c",
+    "tests/test_p16_lab.py": "1a8988012536082082ee57686e073713f6f31ea6f0516ba57c41b80b72d86175"
+  },
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46004007928
+  },
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "5ea7e38c9696cfec9220b893485e3f7df6d8a87a",
+  "ruff": "passed repository",
+  "synthetic_full_schedule": {
+    "cells": 47,
+    "control_reservations": 752,
+    "generation_reservations": 376,
+    "preflight": 0,
+    "real_dispatches": 0
+  },
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q -W error tests/test_p16_lab.py tests/test_inspect_p16_architecture.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_source_bound_translation_budget_b5.py tests/test_source_span_identity.py tests/test_analysis_item_review.py tests/test_isolated_corpus_destination.py tests/test_capability_v9_boundary.py",
+    "focused_total_passed": 126,
+    "new": 51
+  },
+  "watchdog_smokes": {
+    "complete": {
+      "elapsed_seconds": 0.12285984300069686,
+      "real_dispatches": 0,
+      "receipt_sha256": "266abd9e1f8d2957afb1b7e4bca01fb65cec67ec980d3d8201361a9ce737e4d9",
+      "status": "completed"
+    },
+    "crash": {
+      "elapsed_seconds": 0.11914628699923924,
+      "real_dispatches": 0,
+      "receipt_sha256": "a393c7967db93c1f77a359d3bbf1265face58a75c2cfe3212e68bc654cedd662",
+      "status": "worker_failed"
+    },
+    "stall": {
+      "elapsed_seconds": 2.026695924001615,
+      "real_dispatches": 0,
+      "receipt_sha256": "8017e6dbb3354806ed6f98f859bbf449e0dd7583cc5374cc039249d5e2f03b8d",
+      "status": "worker_timeout"
+    }
+  }
+}
