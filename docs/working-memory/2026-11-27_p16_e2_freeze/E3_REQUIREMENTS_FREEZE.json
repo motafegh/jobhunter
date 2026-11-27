@@ -1,0 +1,176 @@
+{
+  "A1_repairs": [
+    {
+      "id": "R1",
+      "negative": "borrowed/deleted explicit degree and OR loss",
+      "scope": "compound alternative child and modifier"
+    },
+    {
+      "id": "R2",
+      "negative": "false proficiency and erased genuine degree",
+      "scope": "motivation versus technical degree"
+    },
+    {
+      "id": "R3",
+      "negative": "genuine missing duty still rejected",
+      "scope": "explicit duty boundary and ambiguous scope"
+    },
+    {
+      "id": "R4",
+      "negative": "preferred prose plus tag, board-only, explicit required prose, duplicate/distinct",
+      "scope": "board skill metadata distinct from employer obligation"
+    }
+  ],
+  "base": "c9106961eccf7684e6536ed734aa02f6a02530b9",
+  "budget": {
+    "active_seconds_per_session_cap": 3600,
+    "active_total_seconds_cap": 14400,
+    "all_control_http_cap": 800,
+    "all_generation_post_cap": 382,
+    "control_cap_per_cell_or_preflight_model": 16,
+    "diagnostic_cell_count": 47,
+    "diagnostic_cells_per_session_cap": 12,
+    "diagnostic_context_reservation_cap": 6160384,
+    "diagnostic_generation_post_cap": 376,
+    "diagnostic_output_reservation_cap": 3080192,
+    "diagnostic_wall_seconds_cap": 11280,
+    "generation_post_cap_per_cell": 8,
+    "max_context_reservations_per_cell": 131072,
+    "max_output_reservations_per_cell": 65536,
+    "max_swap_growth_mib": 512,
+    "memory_poll_target_seconds": 1,
+    "minimum_free_vram_mib": 512,
+    "minimum_windows_available_gib": 8,
+    "minimum_wsl_available_gib": 8,
+    "preflight_context_tokens": 16384,
+    "preflight_model_cap": 3,
+    "preflight_output_cap_per_post": 512,
+    "preflight_posts_per_model": 2,
+    "preflight_seconds_per_model": 180,
+    "requested_context_tokens": 16384,
+    "requested_output_tokens_per_call": 8192,
+    "wall_seconds_per_cell": 240
+  },
+  "contract": "jobhunter-p16-e3-requirements-freeze-v1",
+  "date": "2026-11-27",
+  "decision_record_sha256": "521bb6477c95c529337cc30c3736ddbe018b78947fbfd07e519a620b972efeda",
+  "deferred": [
+    "L1 specialized translation / Hy-MT3",
+    "new model screening tranche",
+    "larger/low-bit reasoning",
+    "retrieval/RAG/graph",
+    "agents/critic",
+    "training/continual learning",
+    "prompt-only arm",
+    "new production route or schema"
+  ],
+  "design_inputs_sha256": {
+    "docs/working-memory/2026-11-25_ARCHITECTURE_UNDERSTANDABILITY_DOC2_P16_RUNTIME_BASELINE.md": "7f63f2c492fb4058d7162df199933106d06da9c4998eecbf0e6082803bbab413",
+    "docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC3_COMPONENT_PROFILES.md": "9356d4e6787b7dd4959c70d2b8fbfe62fe4320b7775f674c9725a3e44e870a10",
+    "docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC4_INSPECTION_FEASIBILITY.md": "e16b52eab9701681df7edf78cdd3fc9fa7869caf65a8847fb5438cc19d042f04",
+    "docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC5_SELECTED_DESIGN.md": "1ee476a48168647a23464909cc8fb56f6754ab5692d870f6d9d27e9bb107daf5",
+    "docs/working-memory/2026-11-26_ARCHITECTURE_UNDERSTANDABILITY_DOC7_ORIENTATION_CURRENTNESS.md": "f027ce76e99b75ba998ad5105c4b4305289ee96954c686b4c6c50bcfb12e118e",
+    "docs/working-memory/2026-11-26_p16_e2/EVALUATION_RUBRIC_DRAFT.json": "9a0b0d48b6da3bfbd74fad062e6a2ee23821a8477d67e377d55a6c76208fcd62",
+    "docs/working-memory/2026-11-26_p16_e2/EXPERIMENT_PROTOCOL_DRAFT.json": "307e216ed7e887d02030d11b4ed052184729fc25a5bda8352b85161c55cbf84d",
+    "docs/working-memory/2026-11-26_p16_e2/EXPERIMENT_SELECTION.json": "bb3ac3a7e41c804762557de61d69db1fb5a919c3bffe12490b65ef6901b9407f",
+    "docs/working-memory/2026-11-26_p16_e2/MODEL_ARTIFACT_IDENTITIES.json": "76144e17f0f49fdd054e3ab0cc0282fc7d9fb8044c54dd74de78564209729e1b",
+    "docs/working-memory/2026-11-26_p16_e2/SCORING_DESIGN_CONTROLS.json": "ca28e2ee3f7eb04e65f4a4348665f73c08067a19a66530b4303946c2fee09a7f",
+    "docs/working-memory/2026-11-26_p16_e2/SEMANTIC_CONTRACT_EXAMPLES.json": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4"
+  },
+  "execution_gates": [
+    "no actual inference until offline guards verified and applicable preflight seal",
+    "all original-only references and task keys plus full scorer sealed before diagnostic output",
+    "actual model identity/rights/runtime/tokenizer/context/memory/idle and transport instrumentation required",
+    "hard integrity/authority/privacy breach stops affected session; critical displayed error blocks retain",
+    "versioned prospective amendment before output if infeasible; separate experiment ID after output; owner approval for material scope expansion"
+  ],
+  "frozen_snapshot_sha256": {
+    "accepted": "693c054338cdd2a4e6652f3d78129d24b4ae6c29d6ea35413ab08986eba8ac7c",
+    "exposed": "bef0e876819735cba12a712271b7ae4eef0b397c82edd8ee6c2aec7d1bb91ebe",
+    "nov23": "136a5383f6bccfea13616d369577a508a6e5a12c0db8ae1716c3c09f8b0fde68"
+  },
+  "governing_documents_sha256_at_freeze": {
+    "AGENTS.md": "1d7eaf5c40f1b9ca3ecc71b20d4bd53e6873dfac733ccb37c7fd82955bddc812",
+    "docs/ARCHITECTURE.md": "d2ab5df6ed27b8f4cdb538e11cb0144dac1a5c2075e31aad285be8927ba8c612",
+    "docs/DOMAIN_AND_ANALYSIS_MODEL.md": "d86f32a3725e9455e76da044ffa21ec7b5297ae5e29cc4a4b565c78151745432",
+    "docs/PRODUCT_SPECIFICATION.md": "e0f7eca98491a2251cfb59892681f4d4c206d87cd8e3a6a3c42edfc5fa48d5d4",
+    "docs/SOURCE_POLICY.md": "6b32a8da7a63753cbd5d56b1528e1c25e38675851958cb6c8f97dd4cb0760145",
+    "docs/UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md": "98a06eb9f26c259f9ff7565ac48c50bdf7c6a0efa1ce1339638d79303f818bc6"
+  },
+  "implementation_slices": [
+    {
+      "exit": "no real calls; instrumented seams and remaining paths recorded",
+      "id": "E3.1a",
+      "scope": "offline isolated manifest/runner/guard, journal, physical accounting, watchdog, endpoint/path/context/memory/idle gates and adversarial fake tests"
+    },
+    {
+      "exit": "full E3.1 tests and isolation; actual transport paths verified before probes",
+      "id": "E3.1b",
+      "scope": "A0 unchanged adapter, A1 four repair replay, A2 compact candidate contract and reconciliation"
+    },
+    {
+      "id": "E3.2",
+      "scope": "L0/L2/L3 exact representation association"
+    },
+    {
+      "id": "E3.3",
+      "scope": "qualified partial/source-only views and authority"
+    },
+    {
+      "id": "E3.4",
+      "scope": "source-only references/tasks and full scorer, executable manifest seal, technical preflight, fixed diagnostic schedule within caps"
+    },
+    {
+      "id": "E3.5",
+      "scope": "source-first review paired scoring offline compatibility regressions"
+    },
+    {
+      "id": "E3.6",
+      "scope": "retain/revise/reject/defer using unchanged absolute and paired benefit gates"
+    }
+  ],
+  "new_inference_calls": 0,
+  "not_established": [
+    "actual executable implementation",
+    "physical dispatch enforcement",
+    "model identity rehash/rights/runtime viability",
+    "sealed source-only review keys and executable scorer",
+    "semantic quality/usefulness or winner"
+  ],
+  "private_model_receipt_sha256": "c6f15538528a94e324ce06f0d9299ec856eca6ca15ee7b7d971989548f95d671",
+  "private_source_manifest_sha256": "45161b2cdb22d3ca74e93612ba4ce71da9af3fddca9412fca191666b69d85c37",
+  "production_boundary": "current v30/v9 and accepted state unchanged; candidate-only private research, no production migration/routing/consumer adapters or corpus export; E4/B5 and explicit B6 decision later",
+  "required_statement_fields": [
+    "ref",
+    "meaning",
+    "evidence",
+    "basis"
+  ],
+  "selected": {
+    "budget_unchanged": true,
+    "cell_count": 47,
+    "language": [
+      "L0",
+      "L2",
+      "L3"
+    ],
+    "models": {
+      "M0": "gemma-4-e4b-it-ud",
+      "M1": "mimo-v2.6-distill-qwen-9b",
+      "M2": "gemma-4-e2b-it only documented preflight blocker before results"
+    },
+    "rubric_unchanged": true,
+    "semantic_architectures": [
+      "A0 unchanged v30/v5",
+      "A1 isolated four-repair family",
+      "A2 contextual candidate"
+    ],
+    "stage_additional_cells": {
+      "architecture": 22,
+      "conditional_interaction": 5,
+      "language": 10,
+      "model": 10
+    }
+  },
+  "state": "requirements frozen; isolated offline implementation may begin; no real dispatch until applicable guard and executable seals"
+}

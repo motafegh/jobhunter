@@ -1,0 +1,69 @@
+{
+  "catalog_observation": {
+    "entries": 14,
+    "limitation": "catalog only, no new weight hash, local rights/runtime/load qualification",
+    "new_shortlist_not_visible_under_expected_keys": true,
+    "pinned_sizes_match": true
+  },
+  "checklist": {
+    "done": 26,
+    "next": "E3.1a",
+    "total": 45
+  },
+  "limitations": [
+    "Requirements seal only, not executable experiment seal or qualification.",
+    "No source-only reference/task gold seal or full evaluator yet.",
+    "No new model file hashes; no performance or usefulness claim."
+  ],
+  "new_inference_calls": 0,
+  "new_source_requests": 0,
+  "policy_review": {
+    "status_only_amendments": true,
+    "unchanged_durable_policy": [
+      "DOMAIN_AND_ANALYSIS_MODEL.md",
+      "SOURCE_POLICY.md",
+      "UTILITY_EPISTEMIC_AUTHORITY_AND_REASONING_POLICY.md"
+    ]
+  },
+  "previous_ci": {
+    "conclusion": "success",
+    "head_sha": "c9106961eccf7684e6536ed734aa02f6a02530b9",
+    "id": 45877475918
+  },
+  "private_manifest_and_model_receipt_hashes_matched": true,
+  "production_changes": 0,
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "quality": {
+    "command": ".venv/bin/python -m pytest -q -W error",
+    "full_suite_passed": 1286,
+    "pip_check": "passed",
+    "ruff": "passed"
+  },
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "retained_review_hashes_matched": 5,
+  "revision": "c9106961eccf7684e6536ed734aa02f6a02530b9",
+  "snapshot_hashes_matched": 3,
+  "source_distinct_cases": 12,
+  "unchanged_design_artifacts": 11
+}
