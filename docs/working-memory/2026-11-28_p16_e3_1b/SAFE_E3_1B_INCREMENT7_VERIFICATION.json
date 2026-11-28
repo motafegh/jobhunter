@@ -1,0 +1,305 @@
+{
+  "a2_worker_smokes": {
+    "malformed": {
+      "aggregate_sha256": "579f5cd4e7575838d264c9adfa6093b39de2e2bcb0e4f99a2fb1e7fb90046f4d",
+      "control": 1,
+      "generation": 1,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 14
+      },
+      "journal_sha256": "d386a141025b353aefb29b7bd75d204cee936db6fbe79b3a9ae6d0a243ae68f9",
+      "manifest_sha256": "f0aecb7642815214a694839b7c159a4e5cbefd675756c4d950bdeba56a357b72",
+      "receipt_sha256": "38e27d81116284a72b347faa2eb7f7abe51b84d1670c8fa7140476bf90e7933c",
+      "summary": {
+        "delivery": "source_only",
+        "failed": true,
+        "manifest_sha256": "a68d3b014a7b6ea934c816929331974124e8126b071aace3ddf6fe9d687c5c88",
+        "planned": 1,
+        "recorded": 1,
+        "strategy": "whole",
+        "visible_proposals": 0
+      }
+    },
+    "overflow": {
+      "aggregate_sha256": "3a5bb18635204700e323aa8033b3f8fdd11b4ff37d2a4c9aba662aabcf968637",
+      "control": 0,
+      "generation": 0,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 8
+      },
+      "journal_sha256": "e35ebe2da2a3bc35e795e5921c5f39a4c66e1b3d92a6bd79b2595f3780734a82",
+      "manifest_sha256": "32227ae52255c1bbeed45ebf9c57eb1b46b87e8deb86cd525dd95568a8c54aa4",
+      "receipt_sha256": "41ed1da9267614a6fd00f0e0044fda3502addda68472b126768523ae375ae781",
+      "summary": {
+        "delivery": "source_only",
+        "failed": true,
+        "manifest_sha256": "eae11f441e290a35f8f53dbb6fec96b537b0c8a5a7dd7c40274da04da4233370",
+        "planned": 0,
+        "recorded": 0,
+        "strategy": "sections",
+        "visible_proposals": 0
+      }
+    },
+    "repair": {
+      "aggregate_sha256": "916c6922e263e9c75e94b236cbd0ec18a9d0260682dfc6f7749038ab0bbe4a14",
+      "control": 1,
+      "generation": 3,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 24
+      },
+      "journal_sha256": "7fa0fa9b017581fe90f880efe1615e62f55f872955e06e13e7b9e16f3964a610",
+      "manifest_sha256": "d1dd4f111c7341ade94668b5594e943131891236ea7be5d2c05e711607c1f9f2",
+      "receipt_sha256": "e500a63b4636191cea547a9f108b1064e56328423b6690ef1bd3189adb900240",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "3bce3f7678923ee683190a0d56f3500c4b8e01257afee2bb2b4aa4ca9628f30c",
+        "planned": 3,
+        "recorded": 3,
+        "strategy": "sections",
+        "visible_proposals": 3
+      }
+    },
+    "repair-loss": {
+      "aggregate_sha256": "54da42a60c5dac05ef05ee7b7353c5e9b010de2d283c9998249a2dc66a109c3a",
+      "control": 1,
+      "generation": 3,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 24
+      },
+      "journal_sha256": "c360b0e4cbd7c937f4dd8b14f2c7a9d75776eb807f8c8ea0334b44849d87143b",
+      "manifest_sha256": "289d1533f8702f16d44e7d720367ca3423d0802747a5cdcb7d94f6de0ab3f86f",
+      "receipt_sha256": "5e2de4a4fcc39de1ed7991d5b720fea40ef0a75941533e7ab1cd2607fd65fa79",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "70633b1145711eca6b360aeb7af0346f8e16a87de6f80dd8140b5bf53acc82c0",
+        "planned": 3,
+        "recorded": 3,
+        "strategy": "sections",
+        "visible_proposals": 2
+      }
+    },
+    "repair-overflow": {
+      "aggregate_sha256": "257d27246173c8eb01b7f0abcdd47df0297d757f420990f9b675877db17a5fb6",
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 19
+      },
+      "journal_sha256": "13f8715d00933df77da9a693883eed711c0dac2b54e45b2cd74afb6d501b4615",
+      "manifest_sha256": "85a4ad6fe0d4b2282cd6f5d0edb64ed4086470287559247da621deb1886b8687",
+      "receipt_sha256": "c7af4053bcca64949bb0245d6364159411ee96076dd63826240faf162962041f",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "240cbb940e8b78cb768ee189235cfa46b27478f9061db6960d1548b04771191b",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 2
+      }
+    },
+    "second-fails": {
+      "aggregate_sha256": "1305af1f04c3bae30cdc170a07e511ca36334f99a8647eac3c1ddfa6ac279ea1",
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 18
+      },
+      "journal_sha256": "1db7fd826991f17a3e82797ff90c45c349e3b4fd6ea87f01c9ae59c8b355fc85",
+      "manifest_sha256": "b6fe9c59f1a0064b24c799dbc779f0f5771d1fe28b68796cf0961c833b90a825",
+      "receipt_sha256": "7604d7e682be954c8ebf7b7a3bb924164b314e3faabbe75dea430113543ffed2",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": true,
+        "manifest_sha256": "2d1203bbb3f57b49a10782c5602a9b4716ace61d86b04c1ad6a30df20742237e",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 1
+      }
+    },
+    "sections": {
+      "aggregate_sha256": "9357da127d9424dd3de62ef0a5ce7fd7488bbe0bce5f438b92b5067faa365bc5",
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 18
+      },
+      "journal_sha256": "42978ec6ef6dd32dfae3b8b160c63830acb2e25522461f229fd0b2973f2cba93",
+      "manifest_sha256": "00e6b776768006e4302ae4184a81adf196fa00b7ea41de5117c1a84733737fe4",
+      "receipt_sha256": "17b7a7317aa85c317b57a1a5356f2edee4b2892348a78cfd686c0a83296ad18e",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "f3605ab1c565192d3250e4a0d2ba0438d123ae54cd65e9fb3e1732d014bcd978",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 2
+      }
+    },
+    "shared": {
+      "aggregate_sha256": "e53e807b5934663cb036853f6707c06664e605d180865d7bd4681fae71e0e51c",
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 18
+      },
+      "journal_sha256": "4a253a06544fb33ba867171cb51881e38eb2ed4377bf6dddcf643768aa49a32f",
+      "manifest_sha256": "1950af2ac71b298c0f01e37b4d5d2483c113f133eb61f8127e2b5a2318e52c41",
+      "receipt_sha256": "79beb5f83db415c4f26fa79c4d2fb3fd89b8488c212f0926bda028b0b4c50d33",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "f8641ada4263b925154f97ee2df5a88dacdcf2dd630a743422762d6c03d06d63",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 3
+      }
+    },
+    "whole": {
+      "aggregate_sha256": "a764d6b36c14631720cda543d4533615dabdd30682d34c073f8a6d2ee6638f6b",
+      "control": 1,
+      "generation": 1,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 14
+      },
+      "journal_sha256": "241a5ef63d685126ed580b324fcc9535ff9279ba8371217ce0b5cdc0cb8ddd30",
+      "manifest_sha256": "5e13a6ab1d62e01b43482367c6b10506180209de137456cf27b18ca92d07d918",
+      "receipt_sha256": "beb04fa0e4225aad309310ee1605541fbaba11d6c0c6a67f6fd8e236145b96af",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "d27898b51db5c6fc4d90ce237862274ea7e8619d313f0da118b61597f99384e8",
+        "planned": 1,
+        "recorded": 1,
+        "strategy": "whole",
+        "visible_proposals": 1
+      }
+    }
+  },
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "general frozen scheduled adapter integration and remaining runtime guard/qualification gates",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 229,
+    "source_tree_sha256": "e250de3a62d34a9199810ac34641b31284fcd5735ba4ab3a25327bd116339360"
+  },
+  "file_sha256": {
+    "src/jobhunter/p16_lab_a2_aggregate.py": "046fa97ca09eb34c6e2d9505cac801f1e98381c001ace7dd449ed46cd1ec42ff",
+    "src/jobhunter/p16_lab_a2_execution.py": "9204dd086dcba2f1484436acf7cc03ad1a178725286ade356d7e6dbb94129ded",
+    "src/jobhunter/p16_lab_a2_semantic.py": "cc9476dd35a48288607c61e8fbcb2a5f2749dc621b2f94fdc1d90bebcdc6228f",
+    "src/jobhunter/p16_lab_provider_worker.py": "bcd8935f05b4f75318dfd233485b1ae6f979c38ef38e20c52437df67fd672197",
+    "tests/test_p16_lab_a2_aggregate.py": "6a49bddfc9a8f83c28643c6ceaf4a3e456e9c5a3dbf8ac92d988d33c9981520f"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "Synthetic fit and authored mock responses only",
+    "Structural exact equivalence and preservation, not semantic equivalence or repair correctness",
+    "No cross-request local-ref resolution or semantic conflict adjudication",
+    "No whole candidate, review-backed support, source-first scorer or actual schedule execution",
+    "Actual runtime and executable preflight gates remain open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46173337118
+  },
+  "prompt_sha256": "e9efc0fb388a8eb78e449f86a072938c36c0491dce49153671fe37db6aeb74d5",
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "b5d5d3d39c2087642e05b9392d0eaeddf3ad0d89",
+  "ruff": "passed",
+  "tests": {
+    "additional": 13,
+    "command": ".venv/bin/pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_p16_lab_a1_repairs.py tests/test_p16_lab_a1_combined.py tests/test_p16_lab_a2_context.py tests/test_p16_lab_a2_semantic.py tests/test_p16_lab_a2_execution.py tests/test_p16_lab_a2_aggregate.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py tests/test_source_span_identity.py",
+    "elapsed_seconds": 62.45,
+    "focused_passed": 353,
+    "lab_qualification_semantic_context_execution_aggregate_total": 256
+  }
+}

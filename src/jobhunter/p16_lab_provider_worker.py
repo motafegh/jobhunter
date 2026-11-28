@@ -58,6 +58,10 @@ SCENARIOS = frozenset(
         "a2-malformed",
         "a2-overflow",
         "a2-second-fails",
+        "a2-shared",
+        "a2-repair",
+        "a2-repair-loss",
+        "a2-repair-overflow",
     }
 )
 BASE = "http://127.0.0.1:18080/v1"
@@ -204,6 +208,34 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
                     ]
                 }
             )
+            if scenario == "a2-shared":
+                title = next(u for u in user["units"] if u.get("field") == "title")
+                payload = json.loads(content)
+                payload["statements"].append(
+                    {
+                        "ref": "s2",
+                        "meaning": title["value"],
+                        "basis": "explicit",
+                        "evidence": [title["handle"]],
+                    }
+                )
+                content = json.dumps(payload)
+            if scenario.startswith("a2-repair"):
+                payload = json.loads(content)
+                extra = {
+                    "ref": "s2",
+                    "meaning": "Rust or Go are work tooling alternatives",
+                    "basis": "explicit",
+                    "evidence": [evidence["handle"]],
+                }
+                if reply_index == 1:
+                    payload["statements"].append({**extra, "evidence": ["g999"]})
+                elif "repair" in user:
+                    if scenario == "a2-repair-loss":
+                        payload["statements"] = [extra]
+                    else:
+                        payload["statements"].append(extra)
+                content = json.dumps(payload)
             if scenario == "a2-malformed" or (scenario == "a2-second-fails" and reply_index == 2):
                 content = "not valid JSON"
         if a1:
@@ -265,8 +297,14 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
         if a2:
             user = json.loads(json.loads(body)["messages"][1]["content"])
             if scenario == "a2-overflow" or (
-                scenario in {"a2-sections", "a2-second-fails"} and user["whole_context"]
+                (
+                    scenario in {"a2-sections", "a2-second-fails", "a2-shared"}
+                    or scenario.startswith("a2-repair")
+                )
+                and user["whole_context"]
             ):
+                tokens = 9000
+            if scenario == "a2-repair-overflow" and "repair" in user:
                 tokens = 9000
         return ExactFit(
             request_sha256=digest(body),

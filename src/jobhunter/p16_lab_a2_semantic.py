@@ -286,6 +286,8 @@ def reconcile_response(
                     raise ValueError("unknown_or_out_of_scope_evidence")
                 # Keep unknown types as meaning proposals; structure alone is checked.
                 valid_rel[i] = rel
+                if rel.type.strip().casefold() == "unresolved":
+                    held.update(_held_dependencies(item))
                 if ref is not None:
                     relation_by_ref[ref] = i
             except ValidationError:

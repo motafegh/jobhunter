@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**2026-11-28 E3.1b increment 7:** [A2 run-local aggregation and bounded targeted recovery](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT7.md) verified (13 new tests, 353 focused; nine fixed mock scenarios, 16 generation/eight control reservations). Exact duplicate lineage, dependency holds, preserving successor selection and blocked repair receipts; general schedule integration next. Synthetic fit and structural controls only; no actual model calls, semantic-quality or production change.
+
 **2026-11-28 E3.1b increment 6:** [A2 context planning and guarded offline execution](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT6.md) verified (20 new tests, 340 focused; five fixed mock scenarios, six generation/four control reservations; durable raw/candidate lineage). Cross-request reconciliation, recovery and schedule integration next. Synthetic fit only; no actual model calls or production change.
 
 **2026-11-28 E3.1b increment 5:** [A2 compact semantic contract and reconciliation](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT5.md) verified (42 new tests, 320 focused; 10 authored proposals, 8 independent retained after broken group). Context planning, guarded adapter, durable lineage and schedule integration next. No actual model calls, semantic-quality/authority result or production change.
