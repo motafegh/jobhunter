@@ -1,5 +1,7 @@
 # JobHunter Execution TODO
 
+**2026-11-28 E3.1b increment 4:** [Frozen input binding and A2 context packet](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT4.md) verified (20 new tests, 278 focused; 47 cell mappings, 12 exact source versions, 307 structural groups, 36 offline packet forms). Compact semantics/reconciliation, context planning and schedule integration next. No real dispatch, production change or actual experimental cells executed.
+
 **2026-11-28 E3.1b increment 3:** [Combined A1 provider and candidate envelope](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT3.md) verified (7 new tests, 242 focused; 2 synthetic pending candidates, genuine missing duty rejected; 6 retained and 15 counterfactuals replayed). General schedule binding and A2 next; known semantic loss and live gates open. No real dispatch or production change.
 
 **2026-11-28 E3.1b increment 2:** [Independent R2/R3/R4 seams](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT2.md) verified (27 new tests, 235 focused; 2 motivational items, one corrected duty partition, 52 original board tags across 12 source versions). All four A1 seams available individually; combined provider/persistence and A2 remain open. No real dispatch or production change.

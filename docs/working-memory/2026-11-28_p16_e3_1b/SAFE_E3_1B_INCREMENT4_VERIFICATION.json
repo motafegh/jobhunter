@@ -1,0 +1,806 @@
+{
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "A2 compact response and reconciliation, context planning, partial delivery and schedule adapter integration",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 226,
+    "source_tree_sha256": "0a158fc7090167e71d8d3b877598c516ca890b804dc223c2b6c729ce6bf15f4c"
+  },
+  "file_sha256": {
+    "scripts/verify_p16_a2_frozen_context.py": "68af82cc0e55b7273e3d7a79683afd56e38a652e40921efcff2b76f687b05e32",
+    "src/jobhunter/p16_lab_a2_context.py": "2c2e24e84ca1ad6390a5208269e4975f4e91d0d8c7cea2e4f161cb4d145ae8ff",
+    "src/jobhunter/p16_lab_inputs.py": "a7c23f0c3f60935c800d9c0005f27ec50bc9a3ef6dd52193801bb13930b33e8e",
+    "tests/test_p16_lab_a2_context.py": "417942ced77789e0fb7f38826e11fe244a197c6d993bf8a590a53e61ee9bcc89"
+  },
+  "frozen_context_verification": {
+    "actual_experiment_cells_executed": 0,
+    "authority": "offline_input_identity_only",
+    "cases": [
+      {
+        "alias": "D1",
+        "dom_groups": 56,
+        "native_description": true,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 56,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "458d5634f4ce2fa6b7270d8f9c42b9dd67a55dbb1a4ec66efbac78589284d824",
+            "units": 70
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 56,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "fd174d1b4a59712d9f4a36abc76c6d3a31befbbb2a77c06c32a256f48c445676",
+            "units": 72
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 56,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 56,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "5e069d9de3b8f0f747fdec342139d3920d81fbc52cbd68b9e67835269c959f9e",
+            "units": 142
+          }
+        },
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "alias": "D2",
+        "dom_groups": 20,
+        "native_description": true,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 20,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "f6ef7b15be3f98c75825f787409ac6bdf29d7f087170bf6429b35151f8eec3f4",
+            "units": 34
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 20,
+              "verified_exact_original_field": 17
+            },
+            "sha256": "350fb14766697e87ccb31132a25a1f047deb9d91ec8a48e66aecdbe7382ae729",
+            "units": 37
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 20,
+              "verified_exact_original_field": 17,
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 20,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "62a673e4e07a00ad2e8131986e4cb55f7bbac70f51ce42443d3644d80d6d7cb8",
+            "units": 71
+          }
+        },
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "alias": "D3",
+        "dom_groups": 21,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "67005b5f1b39ce3aff54d14a4fa90ae12903101538de3465e082e9076c577ef6",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 21,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "ece929828779bba6c11fca2013a65653fc356cf1259dea92613f6fdc2a0de9d2",
+            "units": 37
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 21,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "28f9989e65546e1019bfed00c179014e2d71e509328b3208788eedacb28f68f4",
+            "units": 52
+          }
+        },
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "alias": "D4",
+        "dom_groups": 22,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 14,
+              "verified_native_exact_field": 1
+            },
+            "sha256": "932fa0c13a3dd69e0eb4e93fdb8665d4450deb69b42197269ef51b78b6c326eb",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 22,
+              "verified_exact_original_field": 17
+            },
+            "sha256": "78fbeddbe45029e0cb8af67761a2e001426f50dd2d719e299a41f749ff6cbcb6",
+            "units": 39
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 22,
+              "verified_exact_original_field": 17,
+              "verified_field_only_unaligned": 14,
+              "verified_native_exact_field": 1
+            },
+            "sha256": "b35b1c66d0d413c1334a808484a5a5ec137c3317ce34f560f1337d6b2643be60",
+            "units": 54
+          }
+        },
+        "projection_id": 1,
+        "snapshot_group": "exposed",
+        "source_version": 1
+      },
+      {
+        "alias": "D5",
+        "dom_groups": 26,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "23b9fbfaaa5f637190a773795a321c6ae931b3a64865fa04d19b69c18b43c2ec",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 26,
+              "verified_exact_original_field": 24
+            },
+            "sha256": "0b443bd7c04afe6b5a0aa1248e6a0bf36a023f5ea9912c76beec04797cea5e7b",
+            "units": 50
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 26,
+              "verified_exact_original_field": 24,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "56552b50f87a674e4343c3efc84323aa0055277423850c0029a13c3ffd054371",
+            "units": 65
+          }
+        },
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "alias": "D6",
+        "dom_groups": 24,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "cbae54c8ed2dddf35c040a452f2644a5522930423485a23b51a46568ea8faeb7",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 24,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "110bf115219f31e049f4293cc0b669185c3a3ed641ceb36f799ff35063a46445",
+            "units": 40
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 24,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "9910d081c5889abf9a41795863da31c8cdf02a68e9dfb672e66118a86535d214",
+            "units": 55
+          }
+        },
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "alias": "D7",
+        "dom_groups": 21,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "fa5a4d6f6a0a23e31444712c4c5b072e69b285a8562b8625479f0a4adf24bcac",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 21,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "6894e1be8b310538eda37c5554e7c30b1b2f09002751aba931e3d2616a0a510c",
+            "units": 37
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 21,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "3accb54581a0fae3292d33561dd87c6c58fe745117a295358bc807d909ccfdfb",
+            "units": 52
+          }
+        },
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "alias": "R1",
+        "dom_groups": 26,
+        "native_description": true,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 26,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "d07169700456b01eec05bfd063dfe620d2ef8f5b1180f8401264fc7176956af4",
+            "units": 40
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 26,
+              "verified_exact_original_field": 19
+            },
+            "sha256": "bc1b8ca2d1e78a8a627f9a490ccad4766bbf0d67828edd333739f4eae73f33b7",
+            "units": 45
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 26,
+              "verified_exact_original_field": 19,
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact": 26,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "fa3372bc7e78d2b4d835b9fb940ddddbea954a5438c441135dd24c6e39649685",
+            "units": 85
+          }
+        },
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "alias": "R2",
+        "dom_groups": 12,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 14,
+              "verified_native_exact_field": 1
+            },
+            "sha256": "627ecb65d036ce58573e5c57da5b695b450be12e58fc240c292614b750db7369",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 12,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "1d35de0daa7388ec7c8fd661eb8355924f1dfa46c37b8205267abb6b0ff03bfd",
+            "units": 28
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 12,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 14,
+              "verified_native_exact_field": 1
+            },
+            "sha256": "7f608a7dad27c66fe024d0f77c60bcc6c46f19afdd24abdb43717693ac2510a3",
+            "units": 43
+          }
+        },
+        "projection_id": 34,
+        "snapshot_group": "accepted",
+        "source_version": 41
+      },
+      {
+        "alias": "R3",
+        "dom_groups": 13,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "05265bf5dfea63cd5e80bc98103de70d5acb2fe42b7199c6e0a4ab061ec190bf",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 13,
+              "verified_exact_original_field": 18
+            },
+            "sha256": "b0c9283ab2a188342fa4ba9bf00bf12756488d1b1cbdcef197aef561db7220ab",
+            "units": 31
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 13,
+              "verified_exact_original_field": 18,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "19ce46007d850ff7e83243751bf0dd27dbd4d2945ce6e86322e8d6068066c729",
+            "units": 46
+          }
+        },
+        "projection_id": 38,
+        "snapshot_group": "accepted",
+        "source_version": 44
+      },
+      {
+        "alias": "R4",
+        "dom_groups": 50,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact_field": 3
+            },
+            "sha256": "230e58ce0044cc52cf43b39858ade20f43dabf1337b3ffae4c35f7e41ea49b37",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 50,
+              "verified_exact_original_field": 17
+            },
+            "sha256": "f5574e879ae5f9e5e35290934c1e3c6a23a96659e1e8d7e28be76fda65083b9f",
+            "units": 67
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 50,
+              "verified_exact_original_field": 17,
+              "verified_field_only_unaligned": 12,
+              "verified_native_exact_field": 3
+            },
+            "sha256": "f1316cddcbec475aaaed57c7508c1412eb39cce836426e1b236a97c49c48d5de",
+            "units": 82
+          }
+        },
+        "projection_id": 20,
+        "snapshot_group": "accepted",
+        "source_version": 30
+      },
+      {
+        "alias": "R5",
+        "dom_groups": 16,
+        "native_description": false,
+        "packets": {
+          "L0": {
+            "associations": {
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "e3887609037e3c5a769e4779fef500a61aaf5160614622dc9a2d03db6baab4f0",
+            "units": 15
+          },
+          "L2": {
+            "associations": {
+              "verified_exact_original": 16,
+              "verified_exact_original_field": 16
+            },
+            "sha256": "868c8434d8409911969cf30c89467c4163a2ad6207e5ed16431d9176c8ea6b59",
+            "units": 32
+          },
+          "L3": {
+            "associations": {
+              "verified_exact_original": 16,
+              "verified_exact_original_field": 16,
+              "verified_field_only_unaligned": 13,
+              "verified_native_exact_field": 2
+            },
+            "sha256": "4525bd1e9a15d5fd2762097609ed645befd001ca70404e1d77982fdae7099b7d",
+            "units": 47
+          }
+        },
+        "projection_id": 24,
+        "snapshot_group": "accepted",
+        "source_version": 35
+      }
+    ],
+    "cells": [
+      {
+        "cell_id": "D1-M0-A0-L0",
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D2-M0-A0-L0",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D3-M0-A0-L0",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D7-M0-A0-L0",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "R1-M0-A0-L0",
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "cell_id": "R1-challenger-A0-L0",
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "cell_id": "D7-challenger-A0-L0",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "D3-challenger-A0-L0",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D2-challenger-A0-L0",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D1-challenger-A0-L0",
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D4-M0-A0-L0",
+        "projection_id": 1,
+        "snapshot_group": "exposed",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D5-M0-A0-L0",
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "cell_id": "D6-M0-A0-L0",
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "cell_id": "R2-M0-A0-L0",
+        "projection_id": 34,
+        "snapshot_group": "accepted",
+        "source_version": 41
+      },
+      {
+        "cell_id": "R2-M0-A1-L0",
+        "projection_id": 34,
+        "snapshot_group": "accepted",
+        "source_version": 41
+      },
+      {
+        "cell_id": "R1-M0-A1-L0",
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "cell_id": "D7-M0-A1-L0",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "D6-M0-A1-L0",
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D5-M0-A1-L0",
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "cell_id": "D4-M0-A1-L0",
+        "projection_id": 1,
+        "snapshot_group": "exposed",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D3-M0-A1-L0",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D2-M0-A1-L0",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D1-M0-A1-L0",
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D1-M0-A2-L0",
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D2-M0-A2-L0",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D3-M0-A2-L0",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D4-M0-A2-L0",
+        "projection_id": 1,
+        "snapshot_group": "exposed",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D5-M0-A2-L0",
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "cell_id": "D6-M0-A2-L0",
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D7-M0-A2-L0",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "R1-M0-A2-L0",
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "cell_id": "R2-M0-A2-L0",
+        "projection_id": 34,
+        "snapshot_group": "accepted",
+        "source_version": 41
+      },
+      {
+        "cell_id": "R1-challenger-A2-L0",
+        "projection_id": 33,
+        "snapshot_group": "accepted",
+        "source_version": 40
+      },
+      {
+        "cell_id": "D7-challenger-A2-L0",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "D3-challenger-A2-L0",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D2-challenger-A2-L0",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D1-challenger-A2-L0",
+        "projection_id": 1,
+        "snapshot_group": "nov23",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D2-M0-A2-L2",
+        "projection_id": 4,
+        "snapshot_group": "nov23",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D3-M0-A2-L2",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      },
+      {
+        "cell_id": "D4-M0-A2-L2",
+        "projection_id": 1,
+        "snapshot_group": "exposed",
+        "source_version": 1
+      },
+      {
+        "cell_id": "D5-M0-A2-L2",
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "cell_id": "D6-M0-A2-L2",
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D7-M0-A2-L2",
+        "projection_id": 5,
+        "snapshot_group": "exposed",
+        "source_version": 5
+      },
+      {
+        "cell_id": "R2-M0-A2-L2",
+        "projection_id": 34,
+        "snapshot_group": "accepted",
+        "source_version": 41
+      },
+      {
+        "cell_id": "D6-M0-A2-L3",
+        "projection_id": 4,
+        "snapshot_group": "exposed",
+        "source_version": 4
+      },
+      {
+        "cell_id": "D5-M0-A2-L3",
+        "projection_id": 2,
+        "snapshot_group": "exposed",
+        "source_version": 2
+      },
+      {
+        "cell_id": "D3-M0-A2-L3",
+        "projection_id": 5,
+        "snapshot_group": "nov23",
+        "source_version": 6
+      }
+    ],
+    "packet_checks": 36,
+    "real_requests": 0,
+    "tokenizer_fit_established": false
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "All schedule source/projection mappings verified, not actual scheduled execution",
+    "No exact template/tokenizer context planning or semantic validation established",
+    "No original child alignment for translated descriptions; field-only association",
+    "Live preflight, executable seals and source-only review/scorer gates remain open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46127153953
+  },
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "f98a0c8f0c6a51d8fd35ca3fee2cb1196b706de6",
+  "ruff": "passed",
+  "tests": {
+    "additional": 20,
+    "command": ".venv/bin/pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_p16_lab_a1_repairs.py tests/test_p16_lab_a1_combined.py tests/test_p16_lab_a2_context.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py tests/test_source_span_identity.py",
+    "elapsed_seconds": 46.36,
+    "focused_passed": 278,
+    "lab_qualification_semantic_context_total": 181
+  }
+}
