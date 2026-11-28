@@ -1,0 +1,93 @@
+{
+  "authored_contract_control": {
+    "adaptation": "DOM groups; g4a/g4b mapped to parent g4; no exact child claim",
+    "authority": "offline_authored_control_only",
+    "fixture_sha256": "2384cdfd257d4bdf3450e8d25a752c860bf87e552a88357dfc62b37183f9d2f4",
+    "independent_arrangement_retained": true,
+    "malformed_group_visible_independent": 8,
+    "malformed_group_withheld": [
+      "s5",
+      "s6"
+    ],
+    "real_requests": 0,
+    "relations": 2,
+    "semantic_quality_established": false,
+    "source_only_budget_stopped": true,
+    "statements": 10,
+    "visible_unreviewed_proposals": 10
+  },
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "A2 context planning and guarded offline adapter, durable raw/normalized lineage, cross-request reconciliation and scheduled integration",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 227,
+    "source_tree_sha256": "68e9ddc693f673dcd184b72212f67c6f34ca7bc48f5e27824c8c087643e1c47b"
+  },
+  "file_sha256": {
+    "scripts/verify_p16_a2_semantic_contract.py": "cd7cdde6136f034f92cac826ea7466079b4c39fdf866ecf4ff3fdb105e8c303b",
+    "src/jobhunter/p16_lab_a2_semantic.py": "ad3eddda4026965a333daca126360e79e131c82c67f5106312777c4ef9009250",
+    "tests/test_p16_lab_a2_semantic.py": "8cebcc919b776855e0b84d5325e01861e85d45baffe5b2008a18076807eb6162"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "Authored controls, no model or actual scheduled execution",
+    "Exact group references, no exact child excerpt binding in this slice",
+    "Trusted logical scope, no physical dispatch or durable raw/candidate publication yet",
+    "One-response partial/source-only view, no semantic review or whole candidate",
+    "Live runtime and executable/source-only reference/scorer gates remain open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46144051882
+  },
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "5124f06c5ba8b03ef53740b4c710399f2fc51f37",
+  "ruff": "passed",
+  "schema_sha256": "5b24dd473553b4994805af0348deb8807858b558791e8024bb74711677e544f3",
+  "tests": {
+    "additional": 42,
+    "command": ".venv/bin/pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_p16_lab_a1_repairs.py tests/test_p16_lab_a1_combined.py tests/test_p16_lab_a2_context.py tests/test_p16_lab_a2_semantic.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py tests/test_source_span_identity.py",
+    "elapsed_seconds": 45.38,
+    "focused_passed": 320,
+    "lab_qualification_semantic_context_total": 223
+  }
+}

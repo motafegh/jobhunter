@@ -1,5 +1,7 @@
 # Current Runtime and Versioned Semantic Code
 
+**2026-11-28 E3.1b increment 5:** [A2 compact semantic contract and reconciliation](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT5.md) verified (42 new tests, 320 focused; 10 authored proposals, 8 independent retained after broken group). Context planning, guarded adapter, durable lineage and schedule integration next. No actual model calls, semantic-quality/authority result or production change.
+
 **2026-11-28 E3.1b increment 4:** [Frozen input binding and A2 context packet](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT4.md) verified (20 new tests, 278 focused; 47 cell mappings, 12 exact source versions, 307 structural groups, 36 offline packet forms). Compact semantics/reconciliation, context planning and schedule integration next. No real dispatch, production change or actual experimental cells executed.
 
 **2026-11-28 E3.1b increment 3:** [Combined A1 provider and candidate envelope](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT3.md) verified (7 new tests, 242 focused; 2 synthetic pending candidates, genuine missing duty rejected; 6 retained and 15 counterfactuals replayed). General schedule binding and A2 next; known semantic loss and live gates open. No real dispatch or production change.
