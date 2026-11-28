@@ -934,7 +934,11 @@ class OfflineGuard(httpx.BaseTransport):
                 or r.output_reserved + proof.output_tokens > b["max_output_reservations_per_cell"]
             ):
                 r.stop("reservation_limit")
-            reservation = {"context": proof.context_tokens, "output": proof.output_tokens}
+            reservation = {
+                "context": proof.context_tokens,
+                "output": proof.output_tokens,
+                "request_sha256": proof.request_sha256,
+            }
         else:
             if (
                 r.cell_control >= b["control_cap_per_cell_or_preflight_model"]

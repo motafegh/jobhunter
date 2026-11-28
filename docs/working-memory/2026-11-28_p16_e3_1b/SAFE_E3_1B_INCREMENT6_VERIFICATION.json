@@ -1,0 +1,199 @@
+{
+  "a2_worker_smokes": {
+    "malformed": {
+      "control": 1,
+      "generation": 1,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 14
+      },
+      "journal_sha256": "d11cd183d59254916fb60772378c7d8a19cb8fc7d2d7edc4b2ba94415fad29fa",
+      "manifest_sha256": "2a23c5309ec673d48f3c55e7f284fa79aa9804c798724a10485369a042c3ac41",
+      "receipt_sha256": "da0f89e14e0e44de576351263229392f4dc499de12858cacb22357d6744c13d3",
+      "summary": {
+        "delivery": "source_only",
+        "failed": true,
+        "manifest_sha256": "21659d97b3e06f56f3804af3e8a58cf94e8dc464fcb720102a67640d646580fe",
+        "planned": 1,
+        "recorded": 1,
+        "strategy": "whole",
+        "visible_proposals": 0
+      }
+    },
+    "overflow": {
+      "control": 0,
+      "generation": 0,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 8
+      },
+      "journal_sha256": "4eef795b700bd9e436db0ec98d0da6bda8a5850532969317e4b6716784fde107",
+      "manifest_sha256": "236ad8da3a3953f952bd3030f4b7b1a69812eb1b930c83af65f461e1689e141e",
+      "receipt_sha256": "d523b17deff08cefa025e76bc998ea05aed417a491a9549eb2c6dd14e3d5482e",
+      "summary": {
+        "delivery": "source_only",
+        "failed": true,
+        "manifest_sha256": "7407c3cdcf52e74e8138a544bda96b3020c53669fe0b04f5297897b6bd08bea0",
+        "planned": 0,
+        "recorded": 0,
+        "strategy": "sections",
+        "visible_proposals": 0
+      }
+    },
+    "second-fails": {
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 18
+      },
+      "journal_sha256": "d8029b2c10c26aff95b4a2745c29b52a96f3fb3a61c08b3a7349f571b3a3829a",
+      "manifest_sha256": "bc094e749abb8f1a0bae71f51e9cdca1331678e937183d675f2ed04f069a9aac",
+      "receipt_sha256": "7d4815dc928bc805e786cf3966f783c98469cb1510d977bd08be4ed2836b4776",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": true,
+        "manifest_sha256": "e63c171b4fade67277dd48c471f7b259563d96aca50480498b31ade97baa41f0",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 1
+      }
+    },
+    "sections": {
+      "control": 1,
+      "generation": 2,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 18
+      },
+      "journal_sha256": "7b6b8afd145f63a86a235cb011f7c8c95ba18c6d22b16844f213b2d64e66eec6",
+      "manifest_sha256": "a46c7bb4ce8e97d9a538749639922b02c5da64929fe52a5adc4a8455bb0855e7",
+      "receipt_sha256": "4ee232cf5dbd6812eb488e2a3ec24695e69a571bdda6f90cdb19f47210da10a0",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "76e0f032d66f2e63728fd4e9aff961d13dffc306e0e104396d36248807a07988",
+        "planned": 2,
+        "recorded": 2,
+        "strategy": "sections",
+        "visible_proposals": 2
+      }
+    },
+    "whole": {
+      "control": 1,
+      "generation": 1,
+      "journal": {
+        "damaged_suffix": false,
+        "journal_final_event": true,
+        "outstanding_reservations": [],
+        "resume_allowed": false,
+        "sealed": true,
+        "valid_events": 14
+      },
+      "journal_sha256": "76da31caf497804d7e1d7935aaed58dbda777416605e5e6684d31e6e57874fd2",
+      "manifest_sha256": "d76853083758657a7cad7e71212aded4b5c3f8090d23854599f6d30fe14aee1f",
+      "receipt_sha256": "6d3ab5c4a73e3331253411fbbc7264730ff9531a2d42d0e2548e3cfff96adc90",
+      "summary": {
+        "delivery": "qualified_partial",
+        "failed": false,
+        "manifest_sha256": "df8abe906d88c0622d3513f040c06c2d1af39186fb8a6fa561c36d46c948385f",
+        "planned": 1,
+        "recorded": 1,
+        "strategy": "whole",
+        "visible_proposals": 1
+      }
+    }
+  },
+  "checklist": {
+    "E3.1_closed": false,
+    "done": 26,
+    "next": "cross-request reconciliation and bounded recovery; general frozen scheduled adapter execution; live qualification",
+    "total": 45
+  },
+  "design_inputs_matched": 11,
+  "execution_identity": {
+    "contract": "p16-offline-execution-identity-v1",
+    "packages": {
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "instructor": "1.15.4",
+      "jsonschema": "4.26.0",
+      "openai": "2.53.0",
+      "pydantic": "2.13.4",
+      "pydantic-core": "2.46.4",
+      "tenacity": "9.1.4"
+    },
+    "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+    "source_files": 228,
+    "source_tree_sha256": "12c4a50efa89a446875e0b1241ff10f5bb3d27258fc24e0410f3868e14944f70"
+  },
+  "file_sha256": {
+    "src/jobhunter/p16_lab.py": "4d7db17df6941bfaa642b1577505b73a75fbab2062c3849055cc3f066b05aac7",
+    "src/jobhunter/p16_lab_a2_execution.py": "0e51b5af2cc604877c4aff9ec6bd4aebbc88e759a14e3dda9f84e72991066712",
+    "src/jobhunter/p16_lab_provider_worker.py": "45e88b8fdaa3ffc4492bc2b0358decb7476b55b27c58d3541e9726079be3aa57",
+    "tests/test_p16_lab_a2_execution.py": "0c13ca400a8bc36349c4f34ce257cdaaeb04377fde3147c18fe757c6ec81060d"
+  },
+  "governing_documents_matched": 6,
+  "limitations": [
+    "Synthetic fit fixtures, not actual tokenizer/template/runtime proof",
+    "Fixed L2 worker, no real or scheduled comparative execution",
+    "Multi-fragment manifest, no semantic merge/recovery or review",
+    "Interrupted-worker final publication and source-only recovery still open",
+    "Live runtime, executable and source-first reference/scorer gates remain open"
+  ],
+  "previous_ci": {
+    "conclusion": "success",
+    "id": 46166210838
+  },
+  "prompt_sha256": "e9efc0fb388a8eb78e449f86a072938c36c0491dce49153671fe37db6aeb74d5",
+  "protected_state": {
+    "command": ".venv/bin/python data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/verify_reconciliation_2026_11_24.py",
+    "output": [
+      "BASELINE_MATCH corpus/manifest.json",
+      "BASELINE_MATCH data/jobhunter.sqlite3",
+      "PRIVATE_FROZEN_RECEIPT_MATCH",
+      "INTEGRITY_AND_FK_OK data/jobhunter.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/data/current-cohort.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-fresh-e2e-manual-audit/v9-new-pending-clone.sqlite3",
+      "INTEGRITY_AND_FK_OK data/local-acceptance/2026-11-23-v31-prompt-probe/isolated-probe.sqlite3",
+      "MILESTONE_LINK_PRESENT AGENTS.md",
+      "MILESTONE_LINK_PRESENT README.md",
+      "MILESTONE_LINK_PRESENT docs/WORKING_MEMORY.md",
+      "MILESTONE_LINK_PRESENT docs/EXECUTION_TODO.md",
+      "MILESTONE_LINK_PRESENT docs/ROADMAP.md",
+      "MILESTONE_LINK_PRESENT docs/IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/CURRENT_STATE_RECONCILIATION_2026-10-10.md",
+      "MILESTONE_LINK_PRESENT docs/P16_STAGE_B_SOURCE_GROUNDED_BILINGUAL_IMPLEMENTATION_PLAN.md",
+      "MILESTONE_LINK_PRESENT docs/working-memory/2026-11-13_JOBHUNTER_RESEARCH_PROMOTION_AND_MANUAL_REVIEW_INDEX.md",
+      "CHECK_COMPLETE"
+    ]
+  },
+  "real_generation_or_control_calls": 0,
+  "requirements_sha256": "e687bac59e54ed4e137e67a0944325aaecc56149e17c5da8612ef18b0fee8df4",
+  "revision": "6563b42708b90c31534adc5c478c374f375b424f",
+  "ruff": "passed",
+  "tests": {
+    "additional": 20,
+    "command": ".venv/bin/pytest -q -W error tests/test_p16_lab.py tests/test_p16_lab_qualification.py tests/test_p16_lab_semantics.py tests/test_p16_lab_a1_repairs.py tests/test_p16_lab_a1_combined.py tests/test_p16_lab_a2_context.py tests/test_p16_lab_a2_semantic.py tests/test_p16_lab_a2_execution.py tests/test_analysis_current.py tests/test_analysis_v30_currentness.py tests/test_analysis_v16_candidate.py tests/test_analysis_v20_candidate.py tests/test_analysis_item_review.py tests/test_capability_v9_boundary.py tests/test_source_bound_translation_budget_b5.py tests/test_inspect_p16_architecture.py tests/test_analysis_v23_persistence.py tests/test_analysis_v30_prior_experience.py tests/test_source_span_identity.py",
+    "elapsed_seconds": 49.78,
+    "focused_passed": 340,
+    "lab_qualification_semantic_context_execution_total": 243
+  }
+}

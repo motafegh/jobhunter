@@ -53,6 +53,11 @@ SCENARIOS = frozenset(
         "a1-synthetic",
         "a1-motivation",
         "a1-missing-duty",
+        "a2-whole",
+        "a2-sections",
+        "a2-malformed",
+        "a2-overflow",
+        "a2-second-fails",
     }
 )
 BASE = "http://127.0.0.1:18080/v1"
@@ -61,6 +66,7 @@ BASE = "http://127.0.0.1:18080/v1"
 def _child(root: Path, run_id: str, scenario: str) -> dict:
     if scenario not in SCENARIOS or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}", run_id):
         raise ValueError("unsupported fixed scenario or run ID")
+    a2 = scenario.startswith("a2-")
     a1 = scenario.startswith("a1-")
     a0 = scenario in {"a0-retained", "a0-synthetic"}
     run_path = checked_path(root, f"data/local-acceptance/p16-evolution-e3/{run_id}")
@@ -124,6 +130,8 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     platform.platform = lambda *args, **kwargs: "offline-rehearsal"
     run = OfflineRun(root, run_id, diagnostic_only=True)
     run.start_session()
+    if a2:
+        run.event("a2_rehearsal_scope", actual_experiment_cell=False)
     if a1:
         run.event("a1_rehearsal_scope", actual_experiment_cell=False)
     if a0:
@@ -173,6 +181,31 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
                 }
             )
         )
+        if a2:
+            reply_index += 1
+            user = json.loads(json.loads(req.content)["messages"][1]["content"])
+            primary = user["primary_handles"]
+            evidence = next(
+                u
+                for u in user["units"]
+                if u["handle"] in primary
+                and u["kind"].startswith("description")
+                and not u.get("structure", {}).get("in_html_heading")
+            )
+            content = json.dumps(
+                {
+                    "statements": [
+                        {
+                            "ref": "s1",
+                            "meaning": evidence["value"],
+                            "basis": "explicit",
+                            "evidence": [evidence["handle"]],
+                        }
+                    ]
+                }
+            )
+            if scenario == "a2-malformed" or (scenario == "a2-second-fails" and reply_index == 2):
+                content = "not valid JSON"
         if a1:
             from jobhunter.p16_lab_a1 import synthetic_reply
 
@@ -227,18 +260,28 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
             observed_at=run.clock(),
         )
 
-    def proof(req):
+    def measure(body):
+        tokens = 100
+        if a2:
+            user = json.loads(json.loads(body)["messages"][1]["content"])
+            if scenario == "a2-overflow" or (
+                scenario in {"a2-sections", "a2-second-fails"} and user["whole_context"]
+            ):
+                tokens = 9000
         return ExactFit(
-            request_sha256=digest(req.content),
+            request_sha256=digest(body),
             artifact_sha256=identity["sha256"],
             runtime_sha256="a" * 64,
             tokenizer_sha256="b" * 64,
             effective_template_sha256="c" * 64,
-            input_tokens=100,
-            output_tokens=json.loads(req.content)["max_tokens"],
+            input_tokens=tokens,
+            output_tokens=json.loads(body)["max_tokens"],
             context_tokens=16384,
             synthetic=True,
         )
+
+    def proof(req):
+        return measure(req.content)
 
     g = OfflineGuard(
         run,
@@ -275,6 +318,7 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     error = None
     a0_result = None
     a1_result = None
+    a2_result = None
     try:
         if scenario == "network_denied":
             try:
@@ -289,7 +333,21 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
             timeout_seconds=30,
             max_retries=0,
         )
-        if a1:
+        if a2:
+            from jobhunter.p16_lab_a2_execution import execute_a2, synthetic_case
+
+            a2_result = execute_a2(
+                run,
+                g,
+                synthetic_case(),
+                language="L2",
+                binding=binding(),
+                expected=identity,
+                measure=measure,
+            )
+            if a2_result["failed"]:
+                run.stop("a2_incomplete_or_failed")
+        elif a1:
             from jobhunter.p16_lab_a1 import execute_a1, synthetic_input
 
             a1_result = execute_a1(run, g, *synthetic_input(motivation=scenario == "a1-motivation"))
@@ -380,6 +438,7 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
         "scenario": scenario,
         "a0_result": a0_result,
         "a1_result": a1_result,
+        "a2_result": a2_result,
         "a0_storage": a0_storage,
         "synthetic_only": True,
         "fixture_kind": "retained_response_replay" if scenario == "a0-retained" else "synthetic",
@@ -473,6 +532,20 @@ def rehearse_provider(root: Path, run_id: str, scenario: str, timeout: float = 2
             or file_digest(candidate) != summary.get("candidate_sha256")
             or len(events) != 1
             or any(events[0].get(k) != v for k, v in summary.items())
+        ):
+            status = "child_receipt_unverified"
+    if status == "child_completed" and scenario.startswith("a2-"):
+        from jobhunter.p16_lab_a2_execution import verify_manifest
+
+        summary = report.get("a2_result")
+        rows = read_events(journal)
+        events = [r for r in rows if r["event"] == "a2_manifest_published"]
+        if (
+            not isinstance(summary, dict)
+            or len(events) != 1
+            or any(events[0].get(k) != v for k, v in summary.items())
+            or report["stopped"] != summary["failed"]
+            or not verify_manifest(path, summary, rows)
         ):
             status = "child_receipt_unverified"
     return {
