@@ -1,5 +1,7 @@
 # JobHunter Execution TODO
 
+**2026-11-28 E3.1b increment 3:** [Combined A1 provider and candidate envelope](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT3.md) verified (7 new tests, 242 focused; 2 synthetic pending candidates, genuine missing duty rejected; 6 retained and 15 counterfactuals replayed). General schedule binding and A2 next; known semantic loss and live gates open. No real dispatch or production change.
+
 **2026-11-28 E3.1b increment 2:** [Independent R2/R3/R4 seams](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT2.md) verified (27 new tests, 235 focused; 2 motivational items, one corrected duty partition, 52 original board tags across 12 source versions). All four A1 seams available individually; combined provider/persistence and A2 remain open. No real dispatch or production change.
 
 **2026-11-27 E3.1b increment 1:** [A0 service rehearsal and R1 scoped repair](working-memory/2026-11-27_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT1.md) verified (15 new tests, 208 focused passed; 4/4 targeted retained items recovered, 0/6 full responses pass). Fixed D1 baseline failure and fresh synthetic pending persistence verified; complete A1 repairs/integration and A2 next. No real dispatch or production change; E3.1 open.

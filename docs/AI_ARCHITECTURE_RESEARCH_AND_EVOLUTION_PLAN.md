@@ -378,6 +378,7 @@ State vocabulary: REGISTERED / ROUTED / SCOPED / EXPERIMENTING / INVESTIGATED / 
 | 2026-11-27 | [E3.1a increment 4](working-memory/2026-11-27_P16_EVOLUTION_E3_1A_OFFLINE_LAB_INCREMENT4.md) | Runtime evidence and bounded offline foundation handoff; no live qualification |
 | 2026-11-27 | [E3.1b increment 1](working-memory/2026-11-27_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT1.md) | Fixed A0 service rehearsal and R1 item-level repair verified; complete A1 and A2 |
 | 2026-11-28 | [E3.1b increment 2](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT2.md) | R2/R3/R4 independent seams verified; combined A1 and A2 open |
+| 2026-11-28 | [E3.1b increment 3](working-memory/2026-11-28_P16_EVOLUTION_E3_1B_SEMANTIC_INCREMENT3.md) | Combined A1 guarded synthetic provider and private candidate envelope; retained controls verified, general binding and A2 remain |
 | Next | E3.1b continuation | OPEN within E3.1 in existing tracker |
 
 **Resume:** [E3.1](P16_SEMANTIC_ARCHITECTURE_EVOLUTION_PLAN.md), start offline AI Lab guard/runner; E2.6 froze selected bounded protocol, no winning architecture or model. E1 investigation closed; no selected implementation or model qualification. No change to E0–E5 sequencing, V9 or remaining DOC gates, B5/B6 gates or current local-only execution policy; AR.15 is a separately gated future capability. Explicit model comparison protocol refinement in E2/E3. Do not treat research interests as instructions to immediately implement every technology.

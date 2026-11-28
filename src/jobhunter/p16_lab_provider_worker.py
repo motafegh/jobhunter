@@ -50,6 +50,9 @@ SCENARIOS = frozenset(
         "stall",
         "a0-retained",
         "a0-synthetic",
+        "a1-synthetic",
+        "a1-motivation",
+        "a1-missing-duty",
     }
 )
 BASE = "http://127.0.0.1:18080/v1"
@@ -58,6 +61,7 @@ BASE = "http://127.0.0.1:18080/v1"
 def _child(root: Path, run_id: str, scenario: str) -> dict:
     if scenario not in SCENARIOS or not re.fullmatch(r"[a-zA-Z0-9][a-zA-Z0-9_-]{0,63}", run_id):
         raise ValueError("unsupported fixed scenario or run ID")
+    a1 = scenario.startswith("a1-")
     a0 = scenario in {"a0-retained", "a0-synthetic"}
     run_path = checked_path(root, f"data/local-acceptance/p16-evolution-e3/{run_id}")
     allowed_sqlite = (
@@ -120,6 +124,8 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     platform.platform = lambda *args, **kwargs: "offline-rehearsal"
     run = OfflineRun(root, run_id, diagnostic_only=True)
     run.start_session()
+    if a1:
+        run.event("a1_rehearsal_scope", actual_experiment_cell=False)
     if a0:
         run.event(
             "a0_rehearsal_scope",
@@ -167,6 +173,13 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
                 }
             )
         )
+        if a1:
+            from jobhunter.p16_lab_a1 import synthetic_reply
+
+            reply = synthetic_reply(motivation=scenario == "a1-motivation")
+            if scenario == "a1-missing-duty":
+                reply["responsibilities"] = []
+            content = json.dumps(reply)
         if scenario == "a0-retained":
             replies = a0_input[3]
             if reply_index >= len(replies):
@@ -261,6 +274,7 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     rt16.validate_v16_candidate_structured = validate16
     error = None
     a0_result = None
+    a1_result = None
     try:
         if scenario == "network_denied":
             try:
@@ -275,7 +289,11 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
             timeout_seconds=30,
             max_retries=0,
         )
-        if a0:
+        if a1:
+            from jobhunter.p16_lab_a1 import execute_a1, synthetic_input
+
+            a1_result = execute_a1(run, g, *synthetic_input(motivation=scenario == "a1-motivation"))
+        elif a0:
             from jobhunter.p16_lab_a0 import analyze_fresh
 
             result = analyze_fresh(run, *a0_input[:3], provider=p)
@@ -361,6 +379,7 @@ def _child(root: Path, run_id: str, scenario: str) -> dict:
     return {
         "scenario": scenario,
         "a0_result": a0_result,
+        "a1_result": a1_result,
         "a0_storage": a0_storage,
         "synthetic_only": True,
         "fixture_kind": "retained_response_replay" if scenario == "a0-retained" else "synthetic",
@@ -439,6 +458,23 @@ def rehearse_provider(root: Path, run_id: str, scenario: str, timeout: float = 2
                 )
             ):
                 status = "child_receipt_unverified"
+    if status == "child_completed" and scenario.startswith("a1-"):
+        candidate = path / "a1-candidate.json"
+        summary = report.get("a1_result")
+        events = [r for r in read_events(journal) if r["event"] == "a1_candidate_published"]
+        if summary is None:
+            if candidate.exists() or events or not report["stopped"]:
+                status = "child_receipt_unverified"
+        elif (
+            not isinstance(summary, dict)
+            or report["stopped"]
+            or not candidate.is_file()
+            or candidate.is_symlink()
+            or file_digest(candidate) != summary.get("candidate_sha256")
+            or len(events) != 1
+            or any(events[0].get(k) != v for k, v in summary.items())
+        ):
+            status = "child_receipt_unverified"
     return {
         "status": status,
         "elapsed_seconds": time.monotonic() - start,
